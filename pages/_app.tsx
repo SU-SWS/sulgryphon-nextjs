@@ -4,7 +4,11 @@ import {DrupalMenuLinkContent, getMenu} from "next-drupal";
 import {AppWrapper} from "../context/state";
 import "styles/globals.css"
 
-function DrupalApp({Component, pageProps}: AppProps) {
+interface DrupalAppProps extends AppProps {
+  menu: object
+}
+
+function DrupalApp({Component, pageProps}: DrupalAppProps) {
 
   return (
     <AppWrapper menu={pageProps.menu}>
