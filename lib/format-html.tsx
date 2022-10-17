@@ -1,6 +1,5 @@
-import {HTMLReactParserOptions, domToReact} from "html-react-parser"
+import {HTMLReactParserOptions, Element, domToReact} from "html-react-parser"
 import parse from "html-react-parser"
-import {Element} from "domhandler/lib/node"
 
 import {DrupalLink, DrupalLinkBigButton, DrupalLinkButton, DrupalLinkSecondaryButton} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";

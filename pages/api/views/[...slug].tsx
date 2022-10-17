@@ -1,38 +1,20 @@
-import Jsona from "jsona";
-import axios from "axios";
+import {DrupalNode, getView} from "next-drupal";
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 export default async function handler(req, res) {
   const {slug} = req.query
   const [viewId, displayId, options] = slug
   let [args, itemsToDisplay] = options.split(":")
 
-  let url = `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/views/${viewId}/${displayId}`;
+  const params = new DrupalJsonApiParams();
 
-  if (args) {
-    args = args.split('/');
-    url += '?';
-    for (let i = 0; i < args.length; i++) {
-      url += `views-argument[]=${args[i]}`
-      if (i !== args.length - 1) {
-        url += '&';
-      }
-    }
-    url += `&views-argument[]=0&views-argument[]=0&views-argument[]=0`;
+  if (args.length >= 1) {
+    params.addCustomParam({'views-argument': args.split('/')});
   }
-
   if (itemsToDisplay) {
-    if (args) {
-      url += `&page[limit]=${itemsToDisplay}`;
-    } else {
-      url += `?page[limit]=${itemsToDisplay}`
-    }
+    params.addPageLimit(itemsToDisplay);
   }
 
-  const items = await axios.get(url)
-    .then(({data}) => {
-      const dataFormatter = new Jsona()
-      return dataFormatter.deserialize(data);
-    });
-
-  res.status(200).json(items ?? [])
+  const view = await getView<DrupalNode>(`${viewId}--${displayId}`, {params: params.getQueryObject()});
+  res.status(200).json(view?.results);
 }
