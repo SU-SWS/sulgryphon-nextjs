@@ -1,0 +1,5 @@
+{
+  "rules": {
+    "ci": [".circleci", "blt", ".github"]
+  }
+}
