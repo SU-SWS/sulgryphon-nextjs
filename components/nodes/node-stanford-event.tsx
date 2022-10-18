@@ -2,8 +2,8 @@ import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
 import {Paragraph} from "@/components/paragraphs";
 import {Event} from "../../types/drupal";
 import {formatDate} from "@/lib/format-date";
-import {CalendarIcon} from "@heroicons/react/outline";
-import {MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/solid";
+import {CalendarIcon} from "@heroicons/react/20/solid";
+import {MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import formatHtml from "@/lib/format-html";
 import {EventJsonLd} from "next-seo";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
@@ -61,7 +61,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
     }
   }
 
-
+console.log(node.su_event_alt_loc);
   return (
     <MainContentLayout>
       <article {...props}>
@@ -107,20 +107,18 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
 
               {(node.su_event_location || node.su_event_alt_loc) &&
                   <div>
-                      <h3>Location</h3>
-
+                    <h3>Location</h3>
                     {node.su_event_location &&
                         <div>
-                            <MapIcon width={24}/>
-
-                            <div>{node.su_event_location.organization}</div>
-                            <div>{node.su_event_location.address_line1}</div>
-                            <div>{node.su_event_location.address_line2}</div>
-                            <div>{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
+                          <MapIcon width={24}/>
+                          <div>{node.su_event_location.organization}</div>
+                          <div>{node.su_event_location.address_line1}</div>
+                          <div>{node.su_event_location.address_line2}</div>
+                          <div>{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
                         </div>
                     }
 
-                    {node.su_event_alt_loc}
+                    <>{node.su_event_alt_loc}</>
 
                     {node.su_event_map_link &&
                         <DrupalLink href={node.su_event_map_link.url} className="su-block">

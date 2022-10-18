@@ -1,12 +1,12 @@
-import formatHtml from "@/lib/format-html";
 import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
-import {DrupalImage} from "@/components/simple/image";
-import {Paragraph} from "@/components/paragraphs";
-import {Person} from "../../types/drupal";
-import {MapIcon, PhoneIcon} from "@heroicons/react/solid";
+import {MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import {NextSeo} from "next-seo";
-import {MainContentLayout} from "@/components/layouts/main-content-layout";
 
+import {Person} from "../../types/drupal";
+import formatHtml from "@/lib/format-html";
+import {Paragraph} from "@/components/paragraphs";
+import {DrupalImage} from "@/components/simple/image";
+import {MainContentLayout} from "@/components/layouts/main-content-layout";
 
 interface PersonNodeProps {
   node: Person

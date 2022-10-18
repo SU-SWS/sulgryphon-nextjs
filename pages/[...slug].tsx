@@ -2,7 +2,7 @@ import * as React from "react"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
 import {DefaultSeo} from 'next-seo';
 import {
-  DrupalNode, DrupalParagraph,
+  DrupalNode,
   getPathsFromContext,
   getResourceFromContext,
   translatePathFromContext
@@ -50,6 +50,13 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
     }
   }
 
+  const overriddenPaths = [
+    '/events',
+    '/people',
+    '/news'
+  ];
+  paths = paths.filter(path => overriddenPaths.indexOf('/' + path.params.slug.join('/')) == -1);
+
   return {
     paths,
     fallback: "blocking",
@@ -92,18 +99,16 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
   switch (type) {
     case 'node--stanford_page':
       paragraphs = await fetchParagraphs(node.su_page_components);
-      node?.su_page_components.map((row, i) => {
-        node.su_page_components[i] = paragraphs.find(paragraph => paragraph.id === row.id);
+      node?.su_page_components.map((component, i) => {
+        node.su_page_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
       })
       break;
 
     case 'node--stanford_publication':
 
-      paragraphs = await fetchRowParagraphs(node.su_publication_components, 'su_pubs_components');
-      node?.su_publication_components.map((row, i) => {
-        row?.su_pubs_components.map((component, j) => {
-          node.su_publication_components[i].su_pubs_components[j] = paragraphs.find(paragraph => paragraph.id === component.id);
-        })
+      paragraphs = await fetchParagraphs(node.su_publication_components);
+      node?.su_publication_components.map((component, i) => {
+        node.su_publication_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
       })
       break;
 
