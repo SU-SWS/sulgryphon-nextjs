@@ -1,11 +1,11 @@
 import {DrupalMenuLinkContent} from "next-drupal";
 import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
-import {ChevronDownIcon, ChevronUpIcon, MenuIcon} from "@heroicons/react/solid";
 
 import {DrupalLink} from "@/components/simple/link";
 import {useAppContext} from "../../context/state";
 import GetActiveTrail from "@/lib/menu";
 import {useState} from "react";
+import {Bars4Icon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/20/solid";
 
 
 export const MainMenu = ({...props}) => {
@@ -22,7 +22,7 @@ export const MainMenu = ({...props}) => {
 
         <a className="su-block su-float-right " href="#" aria-label={`${menuOpen ? 'Close' : 'Open'} main menu`}
            onClick={() => setMenuOpen(!menuOpen)}>
-          <MenuIcon width={40} className="lg:su-hidden "/>
+          <Bars4Icon width={40} className="lg:su-hidden "/>
         </a>
 
       </div>
