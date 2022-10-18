@@ -1,11 +1,21 @@
 import App, {AppProps} from "next/app"
 import {DrupalMenuLinkContent, getMenu} from "next-drupal";
+import Router from "next/router"
+import {syncDrupalPreviewRoutes} from "next-drupal"
 
 import {AppWrapper} from "../context/state";
 import "styles/globals.css"
 
+Router.events.on("routeChangeStart", path => {
+  syncDrupalPreviewRoutes(path)
+})
+
+interface PageProps {
+  menu: DrupalMenuLinkContent[]
+}
+
 interface DrupalAppProps extends AppProps {
-  menu: object
+  pageProps: PageProps
 }
 
 function DrupalApp({Component, pageProps}: DrupalAppProps) {
