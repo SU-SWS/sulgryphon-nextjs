@@ -19,7 +19,7 @@
     "html-react-parser": "^3.0.4",
     "next": "^12.2.4",
     "next-drupal": "^1.2.1",
-    "next-seo": "^5.5.0",
+    "next-seo": "^5.8.0",
     "react": "^18.2.0",
     "react-accessible-dropdown-menu-hook": "^3.2.0",
     "react-dom": "^18.2.0",
