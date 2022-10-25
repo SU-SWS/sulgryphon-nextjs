@@ -7,16 +7,11 @@ import {DrupalImage} from "@/components/simple/image";
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
 
-    if (domNode instanceof Element) {
-      let {class: classes, href, src, alt, width, height} = domNode.attribs;
-      if (!classes) {
-        classes = '';
-      }
-
+    const fixClasses = (classes) => {
       classes = ` ${classes} `;
       classes = classes.replace(' align-center ', ' su-center ')
-        .replace(' align-left ', ' su-block su-float-left ')
-        .replace(' align-right ', ' su-block su-float-right ')
+        .replace(' align-left ', ' su-block su-float-left su-mr-20 ')
+        .replace(' align-right ', ' su-block su-float-right su-ml-20 ')
         .replace(' text-align-center ', ' su-text-center ')
         .replace(' su-intro-text ', ' su-text-[30px] ')
         .replace(' su-drop-cap ', ' first-letter:su-text-[35px] first-letter:su-font-bold ')
@@ -32,6 +27,46 @@ const options: HTMLReactParserOptions = {
         .filter(className => className.length >= 1)
         .filter((value, index, self) => self.indexOf(value) === index)
         .join(' ');
+      return classes;
+    }
+
+    const cleanMediaMarkup = (node: Element) => {
+      const wrapperDiv = node.children.find(child => child.name === 'div')
+      const picture = wrapperDiv.children.find(child => child.name === 'picture')
+      let image = wrapperDiv.children.find(child => child.name === 'img')
+
+      if (picture) {
+        image = picture.children.find(child => child.name === 'img')
+      }
+
+      if (image) {
+        let {src, alt, width, height} = image.attribs;
+        let {class: classes} = node.attribs;
+
+        return (
+          <span className={fixClasses(classes)}>
+            <DrupalImage
+              src={src}
+              alt={alt}
+              height={height}
+              width={width}
+              layout="intrinsic"
+              style={{float: 'right'}}
+            />
+          </span>
+        )
+      }
+
+      return <>{domToReact(node.children, options)}</>
+    }
+
+    if (domNode instanceof Element) {
+      let {class: classes, href, src, alt, width, height} = domNode.attribs;
+      if (!classes) {
+        classes = '';
+      }
+
+      classes = fixClasses(classes);
 
       switch (domNode.name) {
         case "a":
@@ -55,8 +90,11 @@ const options: HTMLReactParserOptions = {
           }
 
           if (classes?.indexOf('su-button') > -1) {
-            return <DrupalLinkButton href={href}
-                                     className={classes}>{domToReact(domNode.children, options)}</DrupalLinkButton>
+            return (
+              <DrupalLinkButton href={href} className={classes}>
+                {domToReact(domNode.children, options)}
+              </DrupalLinkButton>
+            )
           }
 
           return (
@@ -64,19 +102,8 @@ const options: HTMLReactParserOptions = {
               {domToReact(domNode.children, options)}
             </DrupalLink>
           )
-
-        case "img":
-          return <DrupalImage src={src} alt={alt} width={width ?? 100} height={height ?? 100}/>
-
-        case 'div':
-          if (classes.includes('media')) {
-            return <>{domToReact(domNode.children, options)}</>;
-          }
-          return <div className={classes}>{domToReact(domNode.children, options)}</div>
-
-        case 'picture':
-        case 'source':
-          return <>{domToReact(domNode.children, options)}</>;
+        case 'article':
+          return cleanMediaMarkup(domNode);
 
         case 'p':
           classes = classes + ' su-max-w-[100ch]';
@@ -85,6 +112,7 @@ const options: HTMLReactParserOptions = {
         case 'h3':
         case 'h4':
         case 'span':
+        case 'div':
           let NodeName = domNode.name
           return <NodeName className={classes}>{domToReact(domNode.children, options)}</NodeName>
       }
