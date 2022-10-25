@@ -7,14 +7,14 @@ export const ThreeColumn = ({config, items}) => {
 
   return (
     <div className="su-grid su-gap-2xl lg:su-grid-cols-3">
-      <div>
-        {leftItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
+      <div className="su-min-w-0">
+        {leftItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
-      <div>
-        {mainItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
+      <div className="su-min-w-0">
+        {mainItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
-      <div>
-        {rightItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
+      <div className="su-min-w-0">
+        {rightItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
     </div>
   )
