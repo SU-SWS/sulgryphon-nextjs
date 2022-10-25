@@ -1,19 +1,10 @@
-import {DrupalImage} from "@/components/simple/image";
-import {Oembed} from "@/components/simple/oembed";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
+import {ReactNodeLike} from "prop-types";
 
 interface CardProps {
-  video?: {
-    src: string
-    title: string
-  }
-  image?: {
-    src: string
-    alt: string
-    height: number
-    width: number
-  };
+  video?: ReactNodeLike
+  image?: ReactNodeLike
   superHeader?: string
   header?: string
   body?: string
@@ -33,19 +24,13 @@ export const Card = ({video, image, superHeader, header, body, link, linkStyle, 
 
       {image &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
-              <DrupalImage
-                  src={image.src}
-                  alt={image.alt}
-                  height={image.height}
-                  width={image.width}
-                  layout="responsive"
-              />
+            {image}
           </div>
       }
 
       {video &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-              <Oembed className="su-object-cover su-w-full su-h-full" src={video.src} title={video.title}/>
+            {video}
           </div>
       }
 

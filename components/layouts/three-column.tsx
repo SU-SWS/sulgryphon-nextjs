@@ -6,7 +6,7 @@ export const ThreeColumn = ({config, items}) => {
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');
 
   return (
-    <div className="su-grid su-grid-cols-3">
+    <div className="su-grid su-gap-2xl lg:su-grid-cols-3">
       <div>
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
       </div>

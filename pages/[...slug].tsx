@@ -19,7 +19,8 @@ interface NodePageProps {
 
 export default function NodePage({node, ...props}: NodePageProps) {
   if (!node) return null
-  return (<>
+  return (
+    <>
       <DefaultSeo
         title={node.title + ' | ' + process.env.NEXT_PUBLIC_SITE_NAME}
       />

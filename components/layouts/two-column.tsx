@@ -13,7 +13,7 @@ export const TwoColumn = ({config, items}) => {
   }
 
   return (
-    <div className={`su-grid ${gridClass}`}>
+    <div className={`su-grid su-gap-2xl ${gridClass}`}>
       <div>
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
       </div>

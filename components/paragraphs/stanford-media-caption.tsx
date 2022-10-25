@@ -1,8 +1,9 @@
-import {DrupalImage} from "@/components/simple/image";
-import {Oembed} from "@/components/simple/oembed";
+import Embed from "react-tiny-oembed";
+import Image from "next/image";
+
+import {MediaCaptionParagraph} from "../../types/drupal";
 import {DrupalLink} from "@/components/simple/link";
 import formatHtml from "@/lib/format-html";
-import {MediaCaptionParagraph} from "../../types/drupal";
 
 interface StanfordMediaCaptionProps {
   paragraph: MediaCaptionParagraph
@@ -11,28 +12,27 @@ interface StanfordMediaCaptionProps {
 
 export const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMediaCaptionProps) => {
 
-  const mediaName = paragraph.su_media_caption_media?.name;
   const videoUrl = paragraph.su_media_caption_media?.field_media_oembed_video;
-  const imageUrl = paragraph.su_media_caption_media?.field_media_image?.uri?.url;
+  const imageUrl = paragraph.su_media_caption_media?.field_media_image?.image_style_uri.breakpoint_2xl_2x;
 
   return (
     <figure className="su-text-right" {...props}>
 
       {imageUrl &&
-          <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-              <DrupalImage
-                  src={imageUrl}
-                  alt={paragraph.su_media_caption_media.field_media_image.resourceIdObjMeta.alt}
-                  height={paragraph.su_media_caption_media?.field_media_image?.resourceIdObjMeta?.height ?? '400'}
-                  width={paragraph.su_media_caption_media?.field_media_image?.resourceIdObjMeta?.width ?? '800'}
-                  layout="responsive"
-              />
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
+            <Image
+                src={imageUrl}
+                width={`1000px`}
+                height={`1000px`}
+                alt={paragraph.su_media_caption_media.field_media_image.resourceIdObjMeta.alt}
+                layout="fill"
+            />
           </div>
       }
 
       {videoUrl &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-              <Oembed className="su-w-full su-h-full" src={videoUrl} title={mediaName}/>
+            <Embed url={videoUrl}/>
           </div>
       }
 
@@ -43,7 +43,7 @@ export const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: Stanfo
       }
 
       {paragraph.su_media_caption_caption &&
-          <figcaption className="">
+          <figcaption className="su-float-right su-text-[16px]">
             {formatHtml(paragraph.su_media_caption_caption?.processed)}
           </figcaption>
       }
