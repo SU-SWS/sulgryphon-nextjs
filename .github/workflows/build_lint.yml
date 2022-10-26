@@ -4,7 +4,10 @@ on: [push]
 jobs:
   build-lint:
     runs-on: ubuntu-latest
-    image: node:18
+    container:
+      image: node:18.10
+      env:
+        NODE_ENV: development
     steps:
       - uses: actions/checkout@v2
       - name: Lint
