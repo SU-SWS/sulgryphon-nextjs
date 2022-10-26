@@ -3,14 +3,14 @@ import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 
 import {DrupalLink} from "@/components/simple/link";
 import {useAppContext} from "../../context/state";
-import getActiveTrail from "@/lib/menu";
+import GetActiveTrail from "@/lib/menu";
 import {useState} from "react";
 import {Bars4Icon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/20/solid";
 
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
-  const activeTrail = getActiveTrail(appContext.menu);
+  const activeTrail = GetActiveTrail(appContext.menu);
   const [menuOpen, setMenuOpen] = useState(false)
 
   if (typeof appContext.menu === 'undefined') {
@@ -58,7 +58,7 @@ export const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemPro
               <button {...buttonProps}
                       className="su-mx-[5px] su-text-white lg:su-text-cardinal-red hover:su-underline hover:su-text-black lg:su-border-l-[1px] lg:su-border-[#766253] su-float-right lg:su-float-none">
                   <span className="su-sr-only">
-                    {isOpen ? 'Close' : 'Open'} "{title}" submenu
+                    {isOpen ? 'Close' : 'Open'} &quot;{title}&quot; submenu
                   </span>
 
                 {isOpen ? <ChevronUpIcon aria-hidden={true} height={20}/> :

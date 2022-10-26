@@ -1,5 +1,5 @@
 import {useAppContext} from "../../context/state";
-import getActiveTrail from "@/lib/menu";
+import GetActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/menu/side-nav";
 import {DrupalMenuLinkContent} from "next-drupal";
 
@@ -12,7 +12,7 @@ interface MainLayoutProps {
 export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   const appContext = useAppContext();
 
-  const activeTrail = getActiveTrail(appContext.menu);
+  const activeTrail = GetActiveTrail(appContext.menu);
   let subTree;
 
   const cleanSubMenu = (menu: DrupalMenuLinkContent[], activeTrail: number[]) => {

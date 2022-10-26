@@ -1,9 +1,8 @@
 import {useRouter} from "next/router";
 
-const getActiveTrail = (menuItems, trail = []) => {
+const GetActiveTrail = (menuItems, trail = []) => {
   const router = useRouter()
   const currentPath = router.asPath;
-  // console.log(currentPath);
 
   let childTrail, currentTrail;
   for (let i = 0; i < menuItems.length; i++) {
@@ -15,7 +14,7 @@ const getActiveTrail = (menuItems, trail = []) => {
     }
 
     if (typeof menuItems[i].items === 'object') {
-      childTrail = getActiveTrail(menuItems[i].items, [...currentTrail]);
+      childTrail = GetActiveTrail(menuItems[i].items, [...currentTrail]);
       if (childTrail.length > 0) {
         return childTrail;
       }
@@ -26,4 +25,4 @@ const getActiveTrail = (menuItems, trail = []) => {
 
 }
 
-export default getActiveTrail;
+export default GetActiveTrail;
