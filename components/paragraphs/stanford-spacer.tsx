@@ -8,6 +8,6 @@ interface SpacerProps {
 
 export const StanfordSpacer = ({paragraph, siblingCount, ...props}: SpacerProps) => {
   return (
-    <div/>
+    <div className="su-min-h-[20px]"/>
   )
 }
