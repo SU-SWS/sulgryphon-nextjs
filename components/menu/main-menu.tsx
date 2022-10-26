@@ -3,14 +3,14 @@ import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 
 import {DrupalLink} from "@/components/simple/link";
 import {useAppContext} from "../../context/state";
-import GetActiveTrail from "@/lib/menu";
+import getActiveTrail from "@/lib/menu";
 import {useState} from "react";
 import {Bars4Icon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/20/solid";
 
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
-  const activeTrail = GetActiveTrail(appContext.menu);
+  const activeTrail = getActiveTrail(appContext.menu);
   const [menuOpen, setMenuOpen] = useState(false)
 
   if (typeof appContext.menu === 'undefined') {

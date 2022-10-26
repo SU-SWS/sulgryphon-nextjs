@@ -1,11 +1,11 @@
 import {Dialog} from '@headlessui/react'
-import {useState} from "react";
 
 interface ModalProps {
   title?: string
   description?: string
   isOpen: boolean
   onClose(): void
+  children: any
 }
 
 export const Modal = ({title, description, isOpen, onClose, ...props}: ModalProps) => {

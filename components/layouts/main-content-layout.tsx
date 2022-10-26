@@ -1,5 +1,5 @@
 import {useAppContext} from "../../context/state";
-import GetActiveTrail from "@/lib/menu";
+import getActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/menu/side-nav";
 import {DrupalMenuLinkContent} from "next-drupal";
 
@@ -12,7 +12,7 @@ interface MainLayoutProps {
 export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   const appContext = useAppContext();
 
-  const activeTrail = GetActiveTrail(appContext.menu);
+  const activeTrail = getActiveTrail(appContext.menu);
   let subTree;
 
   const cleanSubMenu = (menu: DrupalMenuLinkContent[], activeTrail: number[]) => {
@@ -28,7 +28,7 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
 
   if (activeTrail.length >= 1) {
     subTree = appContext.menu[activeTrail[0]]?.items;
-    if(subTree.length ===1){
+    if (subTree?.length === 1) {
       subTree = [];
     }
     cleanSubMenu(subTree ?? [], activeTrail.slice(1));
@@ -36,13 +36,13 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
 
   return (
     <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
-      {(subTree && subTree.length >= 1) &&
+      {(subTree?.length >= 1) &&
           <aside className="su-hidden lg:su-block su-col-span-1">
               <SideNav tree={subTree} className="su-sticky su-top-0"/>
           </aside>
       }
 
-      <section className={`su-col-span-4 ${subTree && subTree.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
+      <section className={`su-col-span-4 ${subTree?.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
         {props.children}
       </section>
     </main>

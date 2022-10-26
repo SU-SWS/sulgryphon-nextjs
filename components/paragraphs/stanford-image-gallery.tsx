@@ -9,11 +9,11 @@ import {Modal} from "@/components/simple/modal";
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph
   siblingCount?: number
+  className?: string
 }
 
 export const StanfordImageGallery = ({paragraph, siblingCount, ...props}: StanfordImageGalleryProps) => {
   const [modalOpen, setModalOpen] = useState(null);
-console.log(siblingCount);
 
   return (
     <div {...props} className={'su-max-w-[980px] su-mx-auto' + (props.className ?? '')}>
