@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-
 export const DrupalImage = ({src, alt = null, width = null, height = null, ...props}) => {
   let imgSrc = src.replace(/(^\/|\?.*?$)/g, '');
 
