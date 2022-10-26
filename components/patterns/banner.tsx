@@ -1,13 +1,8 @@
-import {DrupalImage} from "@/components/simple/image";
 import {Card} from "@/components/patterns/card";
+import {ReactNodeLike} from "prop-types";
 
 interface BannerProps {
-  image?: {
-    src: string
-    alt: string
-    height: number
-    width: number
-  };
+  image?: ReactNodeLike;
   superHeader?: string
   header?: string
   body?: string
@@ -28,16 +23,8 @@ export const Banner = ({image, header, superHeader, body, link, overlayPosition,
       {...props}
       className={`hero su-basefont-23 su-relative su-h-full su-mx-auto su-w-full lg:su-max-h-500 ${props.className ?? ''}`}>
 
-      <div className="su-h-full su-w-full su-overflow-hidden su-relative su-max-h-500 su-px-[50px] lg:su-p-0">
-        {image &&
-            <DrupalImage
-                src={image.src}
-                alt={image.alt}
-                height={image.height}
-                width={image.width}
-                layout="responsive"
-            />
-        }
+      <div className="su-h-full su-w-full su-overflow-hidden su-relative su-max-h-500 lg:su-min-h-[50rem] su-px-[50px] lg:su-p-0 su-bg-[grey]">
+        {image}
       </div>
 
       {hasCardText &&
