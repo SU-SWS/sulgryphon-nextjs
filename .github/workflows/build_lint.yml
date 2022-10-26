@@ -1,0 +1,13 @@
+
+name: Build & Lint
+on: [push]
+jobs:
+  build-lint:
+    runs-on: ubuntu-latest
+    image: node:18
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint
+        run: |
+          yarn
+          yarn lint
