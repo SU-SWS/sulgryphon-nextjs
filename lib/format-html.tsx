@@ -50,6 +50,10 @@ const options: HTMLReactParserOptions = {
         case 'article':
           return cleanMediaMarkup(domNode);
 
+        case 'pre':
+          nodeProps.className += 'su-whitespace-normal';
+          return <pre {...nodeProps}>{domToReact(domNode.children, options)}</pre>
+
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';
         case 'h1':
@@ -58,6 +62,13 @@ const options: HTMLReactParserOptions = {
         case 'h4':
         case 'span':
         case 'div':
+        case 'table':
+        case 'tr':
+        case 'th':
+        case 'td':
+        case 'ul':
+        case 'ol':
+        case 'li':
           let NodeName = domNode.name
           return <NodeName {...nodeProps}>{domToReact(domNode.children, options)}</NodeName>
       }
@@ -78,7 +89,9 @@ const fixClasses = (classes) => {
     .replace(' su-related-text ', ' su-shadow-lg su-p-30 ')
     .replace(' su-subheading ', ' su-text-[25px] ')
     .replace(' su-callout-text ', ' su-font-bold ')
-    .replace(/ plain-text | caption /, ' ')
+    .replace(/ plain-text | caption /g, ' ')
+    .replace(/tablesaw.*? /g, ' ')
+    .replace(/ +/g, ' ')
     .trim();
 
   classes = classes.split(' ')
