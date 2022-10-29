@@ -2,13 +2,14 @@ import {useRouter} from "next/router";
 
 const GetActiveTrail = (menuItems, trail = []) => {
   const router = useRouter()
+  const currentPath = router.asPath;
 
   let childTrail, currentTrail;
   for (let i = 0; i < menuItems.length; i++) {
     currentTrail = [...trail];
     currentTrail.push(i);
 
-    if (router.asPath === menuItems[i].url) {
+    if (currentPath === menuItems[i].url) {
       return currentTrail;
     }
 

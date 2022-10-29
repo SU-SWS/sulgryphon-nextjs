@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Embed from "react-tiny-oembed";
+
 import {CardParagraph} from "../../types/drupal";
 import {Card} from "@/components/patterns/card";
 
@@ -9,25 +12,25 @@ interface CardProps {
 
 export const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
 
-  const mediaName = paragraph?.su_card_media?.name;
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
+
   let video = null
   let image = null
+
   if (videoUrl) {
-    video = {
-      src: videoUrl,
-      title: mediaName
-    }
+    video = <Embed url={videoUrl}/>
   } else if (imageUrl) {
-    image = {
-      src: imageUrl,
-      alt: paragraph.su_card_media.field_media_image.resourceIdObjMeta.alt,
-      height: paragraph.su_card_media.field_media_image.resourceIdObjMeta.height,
-      width: paragraph.su_card_media.field_media_image.resourceIdObjMeta.width
-    }
+    image = <Image
+      src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
+      width={`1000px`}
+      height={`1000px`}
+      alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
+      layout="fill"
+    />
   }
   props.className = `${props?.className ?? ''} su-max-w-[980px] su-mx-auto`;
+
   return (
     <Card
       video={video}
@@ -40,5 +43,4 @@ export const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => 
       {...props}
     />
   )
-
 }

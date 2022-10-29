@@ -1,5 +1,5 @@
-import {Paragraph} from "@/components/paragraphs";
 import {DrupalParagraph} from "next-drupal";
+
 import {OneColumn} from "@/components/layouts/one-column";
 import {TwoColumn} from "@/components/layouts/two-column";
 import {ThreeColumn} from "@/components/layouts/three-column";
@@ -25,7 +25,7 @@ export const Rows = ({rows, rowField, ...props}: RowProps) => {
   })
 
   return (
-    <div {...props}>
+    <div className="su-grid su-grid-column su-gap-2xl su-mb-[40px]" {...props}>
       {Object.keys(layouts).map(layoutId =>
         <Row
           key={layoutId}

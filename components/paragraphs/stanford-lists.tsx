@@ -14,15 +14,15 @@ interface ListProps {
 export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) => {
   let itemsToDisplay = [];
 
-  if (paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id && paragraph.su_list_view?.resourceIdObjMeta?.display_id) {
-    const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
-    const {
-      data: listItems,
-      error
-    } = useSWR(`/api/views/${paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}/${paragraph.su_list_view.resourceIdObjMeta.display_id}/${paragraph.su_list_view.resourceIdObjMeta.arguments}:${paragraph.su_list_view.resourceIdObjMeta.items_to_display}`, fetcher)
+  const viewId = paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id
+  const displayId = paragraph.su_list_view?.resourceIdObjMeta?.display_id;
+  const args = paragraph.su_list_view.resourceIdObjMeta.arguments;
+  const numToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display;
 
-    itemsToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? listItems?.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : listItems;
-  }
+  const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
+  const {data: listItems} = useSWR(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`, fetcher)
+
+  itemsToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? listItems?.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : listItems;
   const gridClasses = {
     1: 'su-grid-cols-1',
     2: 'su-grid-cols-2',

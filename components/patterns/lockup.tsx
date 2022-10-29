@@ -1,7 +1,9 @@
+import {DrupalLink} from "@/components/simple/link";
+
 export const Lockup = () => {
   return (
     <div>
-      <a className="su-cc su-lockup su-no-underline su-inline-block" href="/">
+      <DrupalLink href="/" className="su-cc su-lockup su-no-underline su-inline-block">
         <div className="su-flex su-flex-col md:su-flex-row su-basefont-19">
           <div
             className=" su-logo su-text-cardinal-red su-type-4 su-leading-half su-pt-11 su-pr-7 su-mr-7 md:su-border-r su-border-solid su-border-black "> Stanford
@@ -11,7 +13,7 @@ export const Lockup = () => {
             {process.env.NEXT_PUBLIC_SITE_NAME}
           </div>
         </div>
-      </a>
+      </DrupalLink>
     </div>
   )
 }

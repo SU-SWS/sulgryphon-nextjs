@@ -61,7 +61,6 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
     }
   }
 
-console.log(node.su_event_alt_loc);
   return (
     <MainContentLayout>
       <article {...props}>

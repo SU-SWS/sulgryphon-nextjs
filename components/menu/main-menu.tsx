@@ -58,7 +58,7 @@ export const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemPro
               <button {...buttonProps}
                       className="su-mx-[5px] su-text-white lg:su-text-cardinal-red hover:su-underline hover:su-text-black lg:su-border-l-[1px] lg:su-border-[#766253] su-float-right lg:su-float-none">
                   <span className="su-sr-only">
-                    {isOpen ? 'Close' : 'Open'} "{title}" submenu
+                    {isOpen ? 'Close' : 'Open'} &quot;{title}&quot; submenu
                   </span>
 
                 {isOpen ? <ChevronUpIcon aria-hidden={true} height={20}/> :

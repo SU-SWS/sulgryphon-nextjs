@@ -1,4 +1,4 @@
-import {HTMLReactParserOptions, Element, domToReact} from "html-react-parser"
+import {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
 import parse from "html-react-parser"
 
 import {DrupalLink, DrupalLinkBigButton, DrupalLinkButton, DrupalLinkSecondaryButton} from "@/components/simple/link";
@@ -8,88 +8,127 @@ const options: HTMLReactParserOptions = {
   replace: (domNode) => {
 
     if (domNode instanceof Element) {
-      let {class: classes, href, src, alt, width, height} = domNode.attribs;
-      if (!classes) {
-        classes = '';
-      }
-
-      classes = ` ${classes} `;
-      classes = classes.replace(' align-center ', ' su-center ')
-        .replace(' align-left ', ' su-block su-float-left ')
-        .replace(' align-right ', ' su-block su-float-right ')
-        .replace(' text-align-center ', ' su-text-center ')
-        .replace(' su-intro-text ', ' su-text-[30px] ')
-        .replace(' su-drop-cap ', ' first-letter:su-text-[35px] first-letter:su-font-bold ')
-        .replace(' su-font-splash ', ' su-text-[46px] su-font-bold ')
-        .replace(' su-quote-text ', ` before:su-content-['"'] after:su-content-['"'] su-text-[37px] su-italic `)
-        .replace(' su-related-text ', ' su-shadow-lg su-p-30 ')
-        .replace(' su-subheading ', ' su-text-[25px] ')
-        .replace(' su-callout-text ', ' su-font-bold ')
-        .replace(/ plain-text | caption /, ' ')
-        .trim();
-
-      classes = classes.split(' ')
-        .filter(className => className.length >= 1)
-        .filter((value, index, self) => self.indexOf(value) === index)
-        .join(' ');
+      const nodeProps = attributesToProps(domNode.attribs);
+      nodeProps.className = fixClasses(nodeProps.className ?? '');
 
       switch (domNode.name) {
         case "a":
-          if (!href) {
-            href = '#';
+          // Error handle for <a> tags without an href.
+          if(!nodeProps.href){
+            nodeProps.href='#';
           }
-          if (classes?.indexOf('su-button--big') > -1) {
+
+          if (nodeProps.className.indexOf('su-button--big') > -1) {
             return (
-              <DrupalLinkBigButton href={href} className={classes}>
+              <DrupalLinkBigButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children, options)}
               </DrupalLinkBigButton>
             )
           }
 
-          if (classes?.indexOf('su-button--secondary') > -1) {
+          if (nodeProps.className.indexOf('su-button--secondary') > -1) {
             return (
-              <DrupalLinkSecondaryButton href={href} className={classes}>
+              <DrupalLinkSecondaryButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children, options)}
               </DrupalLinkSecondaryButton>
             )
           }
 
-          if (classes?.indexOf('su-button') > -1) {
-            return <DrupalLinkButton href={href}
-                                     className={classes}>{domToReact(domNode.children, options)}</DrupalLinkButton>
+          if (nodeProps.className.indexOf('su-button') > -1) {
+            return (
+              <DrupalLinkButton href={nodeProps.href} {...nodeProps}>
+                {domToReact(domNode.children, options)}
+              </DrupalLinkButton>
+            )
           }
 
           return (
-            <DrupalLink href={href} className={classes}>
+            <DrupalLink href={nodeProps.href} {...nodeProps}>
               {domToReact(domNode.children, options)}
             </DrupalLink>
           )
+        case 'article':
+          return cleanMediaMarkup(domNode);
 
-        case "img":
-          return <DrupalImage src={src} alt={alt} width={width ?? 100} height={height ?? 100}/>
-
-        case 'div':
-          if (classes.includes('media')) {
-            return <>{domToReact(domNode.children, options)}</>;
-          }
-          return <div className={classes}>{domToReact(domNode.children, options)}</div>
-
-        case 'picture':
-        case 'source':
-          return <>{domToReact(domNode.children, options)}</>;
+        case 'pre':
+          nodeProps.className += 'su-whitespace-normal';
+          return <pre {...nodeProps}>{domToReact(domNode.children, options)}</pre>
 
         case 'p':
-          classes = classes + ' su-max-w-[100ch]';
+          nodeProps.className += ' su-max-w-[100ch]';
         case 'h1':
         case 'h2':
         case 'h3':
         case 'h4':
         case 'span':
+        case 'div':
+        case 'table':
+        case 'tr':
+        case 'th':
+        case 'td':
+        case 'ul':
+        case 'ol':
+        case 'li':
           let NodeName = domNode.name
-          return <NodeName className={classes}>{domToReact(domNode.children, options)}</NodeName>
+          return <NodeName {...nodeProps}>{domToReact(domNode.children, options)}</NodeName>
       }
     }
-  },
+  }
+}
+
+const fixClasses = (classes) => {
+  classes = ` ${classes} `;
+  classes = classes.replace(' align-center ', ' su-center ')
+    .replace(' align-left ', ' su-block su-float-left su-mr-20 ')
+    .replace(' align-right ', ' su-block su-float-right su-ml-20 ')
+    .replace(' text-align-center ', ' su-text-center ')
+    .replace(' su-intro-text ', ' su-text-[30px] ')
+    .replace(' su-drop-cap ', ' first-letter:su-text-[35px] first-letter:su-font-bold ')
+    .replace(' su-font-splash ', ' su-text-[46px] su-font-bold ')
+    .replace(' su-quote-text ', ` before:su-content-['"'] after:su-content-['"'] su-text-[37px] su-italic `)
+    .replace(' su-related-text ', ' su-shadow-lg su-p-30 ')
+    .replace(' su-subheading ', ' su-text-[25px] ')
+    .replace(' su-callout-text ', ' su-font-bold ')
+    .replace(/ plain-text | caption /g, ' ')
+    .replace(/tablesaw.*? /g, ' ')
+    .replace(/ +/g, ' ')
+    .trim();
+
+  classes = classes.split(' ')
+    .filter(className => className.length >= 1)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .join(' ');
+  return classes;
+}
+
+const cleanMediaMarkup = (node: Element) => {
+  const wrapperDiv = node.children.find(child => child instanceof Element && child.name === 'div')
+  const picture = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'picture')
+  let image = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'img')
+
+  if (picture instanceof Element) {
+    image = picture.children.find(child => child instanceof Element && child.name === 'img')
+  }
+
+  if (image instanceof Element) {
+    let {src, alt, width, height} = image.attribs;
+    let {class: classes} = node.attribs;
+
+    return (
+      <span className={fixClasses(classes)}>
+        <DrupalImage
+          src={src}
+          alt={alt}
+          height={height}
+          width={width}
+          layout="intrinsic"
+          style={{float: 'right'}}
+        />
+      </span>
+    )
+  }
+
+  return <>{domToReact(node.children, options)}</>
 }
 
 const formatHtml = (html) => parse(html ?? '', options);
