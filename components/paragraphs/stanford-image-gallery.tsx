@@ -27,9 +27,8 @@ export const StanfordImageGallery = ({paragraph, siblingCount, ...props}: Stanfo
               <Image
                 src={image.su_gallery_image.image_style_uri.cta_1x_596x397}
                 width={`711`}
-                height={`400px`}
+                height={`400`}
                 alt={image.su_gallery_image.resourceIdObjMeta.alt}
-                layout="intrinsic"
               />
 
             </DrupalLink>
@@ -44,7 +43,6 @@ export const StanfordImageGallery = ({paragraph, siblingCount, ...props}: Stanfo
                   width={image.su_gallery_image.resourceIdObjMeta.width}
                   height={image.su_gallery_image.resourceIdObjMeta.height}
                   alt=""
-                  layout="intrinsic"
                 />
               </figure>
             </Modal>

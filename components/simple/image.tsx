@@ -7,8 +7,8 @@ export const DrupalImage = ({src, alt = null, width = null, height = null, ...pr
   return (
     <Image
       src={imgSrc}
-      width={`${width}px`}
-      height={`${height}px`}
+      width={width}
+      height={height}
       alt={alt}
       {...props}
     />

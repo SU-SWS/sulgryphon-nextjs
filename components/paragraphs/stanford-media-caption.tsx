@@ -21,11 +21,10 @@ export const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: Stanfo
       {imageUrl &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
             <Image
+                className="su-object-cover su-object-center"
                 src={imageUrl}
-                width={`1000px`}
-                height={`1000px`}
                 alt={paragraph.su_media_caption_media.field_media_image.resourceIdObjMeta.alt}
-                layout="fill"
+                fill={true}
             />
           </div>
       }

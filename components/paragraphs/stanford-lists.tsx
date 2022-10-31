@@ -1,14 +1,15 @@
 import useSWR from 'swr';
+import {DrupalNode} from "next-drupal";
 
 import {ListParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay, NodeListDisplay} from "@/nodes/index";
-import {DrupalNode} from "next-drupal";
 
 interface ListProps {
   paragraph: ListParagraph
   siblingCount?: number
+  className?: string
 }
 
 export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) => {
@@ -33,25 +34,26 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, paragraph.su_list_view?.resourceIdObjMeta?.display_id);
 
   return (
-    <div {...props}>
+    <div {...props} className={'su-max-w-[980px] su-mx-auto' + (props.className ?? '')}>
       {paragraph.su_list_headline && <h2 className={`su-text-center`}>{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description && <div>{formatHtml(paragraph.su_list_description.processed)}</div>}
 
-      <div className={`${isList ? '' : 'lg:su-grid'} su-gap-[50px] ${gridClass}`}>
+      <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}`}>
         {itemsToDisplay?.map(item => (
-          <ListItem
-            key={item.id}
-            node={item}
-            viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
-            displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
-          />
+          <div className={'su-pb-50 su-mb-50 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b' : '')} key={item.id}>
+            <ListItem
+              node={item}
+              viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
+              displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
+            />
+          </div>
         ))}
       </div>
 
       {paragraph.su_list_button &&
-          <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
-            {paragraph.su_list_button.title}
-          </DrupalLinkButton>}
+        <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
+          {paragraph.su_list_button.title}
+        </DrupalLinkButton>}
     </div>
   )
 }
@@ -76,7 +78,6 @@ interface ListItemProps {
 }
 
 const ListItem = ({node, viewId, displayId}: ListItemProps) => {
-
   const isList = useListDisplay(viewId, displayId);
   if (isList) {
     return <NodeListDisplay node={node}/>

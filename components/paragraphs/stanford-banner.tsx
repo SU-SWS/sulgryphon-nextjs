@@ -14,17 +14,12 @@ export const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps)
   let image = null
 
   if (imageUrl) {
-    image =
-      <div className="su-relative su-top-[-100%]">
-        <Image
-          className="su-absolute"
-          src={imageUrl}
-          alt={paragraph.su_banner_image.field_media_image.resourceIdObjMeta.alt}
-          height={paragraph.su_banner_image.field_media_image.resourceIdObjMeta.height}
-          width={paragraph.su_banner_image.field_media_image.resourceIdObjMeta.width}
-          layout="responsive"
-        />
-      </div>
+    image = <Image
+      className="su-object-cover su-object-center"
+      src={imageUrl}
+      alt={paragraph.su_banner_image.field_media_image.resourceIdObjMeta.alt}
+      fill={true}
+    />
   }
 
   return (
