@@ -21,7 +21,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
       />
 
 
-      <article {...props}>
+      <article {...props} className="su-mt-[50px]">
         {node.su_news_topics && node.su_news_topics.map(topic =>
           <div key={topic.id}>
             {topic.name}
@@ -29,10 +29,12 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
         )}
 
         <h1>{node.title}</h1>
-        {node.su_news_dek && <div>{node.su_news_dek}</div>}
+        {node.su_news_dek && <div className="su-mb-[2.31rem] md:su-mb-26 2xl:su-mb-27">{node.su_news_dek}</div>}
+        <span className="su-flex su-mb-04em">
+          {node.su_news_publishing_date && <div>{formatDate(node.su_news_publishing_date + ' 12:00:00')} |&nbsp;</div>}
+          {node.su_news_byline && <div>{node.su_news_byline}</div>}
+        </span>
 
-        {node.su_news_publishing_date && <div>{formatDate(node.su_news_publishing_date + ' 12:00:00')}</div>}
-        {node.su_news_byline && <div>{node.su_news_byline}</div>}
 
         {node?.su_news_banner?.field_media_image &&
             <DrupalImage
