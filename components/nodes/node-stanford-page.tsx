@@ -19,6 +19,17 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
     <>
       <NextSeo
         description={node.su_page_description}
+        openGraph={{
+          type: 'website',
+          title: node.title,
+          description: node.su_page_description,
+          images: [{
+            url: getFeaturedImageUrl(node, 'card_956x478'),
+            width: 956,
+            height: 478,
+            alt: getFeaturedImageAlt(node)
+          }]
+        }}
       />
       {!homepage &&
           <div className="su-cc">
@@ -40,10 +51,11 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
 
 export const NodeStanfordPageListItem = ({node, ...props}: BasicPageNodeProps) => {
 
-  let image = getFeaturedImageUrl(node);
-  if (image) {
+  let imageUrl = getFeaturedImageUrl(node);
+  let image;
+  if (imageUrl) {
     image = <Image
-      src={image}
+      src={imageUrl}
       alt=""
       fill={true}
     />
@@ -61,11 +73,11 @@ export const NodeStanfordPageListItem = ({node, ...props}: BasicPageNodeProps) =
         </div>
 
         {image &&
-          <div aria-hidden={true} className="su-col-span-1 su-overflow-hidden su-aspect-[16/9] su-relative">
-            <DrupalLink href={node.path.alias}>
-              {image}
-            </DrupalLink>
-          </div>
+            <div aria-hidden={true} className="su-col-span-1 su-overflow-hidden su-aspect-[16/9] su-relative">
+              <DrupalLink href={node.path.alias}>
+                {image}
+              </DrupalLink>
+            </div>
         }
       </div>
     </article>
@@ -73,10 +85,11 @@ export const NodeStanfordPageListItem = ({node, ...props}: BasicPageNodeProps) =
 }
 
 export const NodeStanfordPageCard = ({node, ...props}: BasicPageNodeProps) => {
-  let image = getFeaturedImageUrl(node);
-  if (image) {
+  let imageUrl = getFeaturedImageUrl(node);
+  let image;
+  if (imageUrl) {
     image = <Image
-      src={image}
+      src={imageUrl}
       alt=""
       fill={true}
     />
@@ -97,12 +110,19 @@ export const NodeStanfordPageCard = ({node, ...props}: BasicPageNodeProps) => {
   )
 }
 
-const getFeaturedImageUrl = (node: BasicPage) => {
-  if (node.su_page_image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x) {
-    return node.su_page_image.field_media_image.image_style_uri.breakpoint_2xl_1x
+const getFeaturedImageAlt = (node: BasicPage): string => {
+  if (node.su_page_image?.field_media_image?.resourceIdObjMeta?.alt) {
+    return node.su_page_image.field_media_image.resourceIdObjMeta.alt
+  }
+  return '';
+}
+
+const getFeaturedImageUrl = (node: BasicPage, imageStyle = 'breakpoint_2xl_1x'): null | string => {
+  if (node.su_page_image?.field_media_image?.image_style_uri?.[imageStyle]) {
+    return node.su_page_image.field_media_image.image_style_uri?.[imageStyle]
   }
 
-  if (node.su_page_banner?.su_banner_image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x) {
-    return node.su_page_banner.su_banner_image.field_media_image.image_style_uri.breakpoint_2xl_1x;
+  if (node.su_page_banner?.su_banner_image?.field_media_image?.image_style_uri?.[imageStyle]) {
+    return node.su_page_banner.su_banner_image.field_media_image.image_style_uri?.[imageStyle];
   }
 }

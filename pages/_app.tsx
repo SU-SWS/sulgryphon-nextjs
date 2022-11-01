@@ -2,9 +2,11 @@ import App, {AppProps} from "next/app"
 import {DrupalMenuLinkContent, getMenu} from "next-drupal";
 import Router from "next/router"
 import {syncDrupalPreviewRoutes} from "next-drupal"
+import {DefaultSeo} from "next-seo";
 
 import {AppWrapper} from "../context/state";
 import "styles/globals.css"
+import SEO from '../next-seo.config';
 
 Router.events.on("routeChangeStart", path => {
   syncDrupalPreviewRoutes(path)
@@ -22,6 +24,7 @@ function DrupalApp({Component, pageProps}: DrupalAppProps) {
 
   return (
     <AppWrapper menu={pageProps.menu}>
+      <DefaultSeo {...SEO} />
       <Component {...pageProps} />
     </AppWrapper>
   )

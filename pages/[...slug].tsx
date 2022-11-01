@@ -1,7 +1,6 @@
 import * as React from "react"
 import {GetStaticPathsResult, GetStaticPropsResult} from "next"
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
-import {DefaultSeo} from 'next-seo';
 import {
   DrupalNode,
   getPathsFromContext,
@@ -22,9 +21,6 @@ export default function NodePage({node, ...props}: NodePageProps) {
   if (!node) return null
   return (
     <>
-      <DefaultSeo
-        title={node.title + ' | ' + process.env.NEXT_PUBLIC_SITE_NAME}
-      />
       <PageLayout {...props}>
         <NodePageDisplay node={node}/>
       </PageLayout>

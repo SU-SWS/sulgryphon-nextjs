@@ -1,5 +1,4 @@
 import {GetStaticPropsResult} from "next"
-import {DefaultSeo} from "next-seo";
 import {DrupalNode, getResource} from "next-drupal"
 
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
@@ -14,9 +13,6 @@ interface HomePageProps {
 const HomePage = ({node, ...props}: HomePageProps) => {
   return (
     <>
-      <DefaultSeo
-        title={process.env.NEXT_PUBLIC_SITE_NAME}
-      />
       <PageLayout {...props}>
         <h1 className="su-hidden">{process.env.NEXT_PUBLIC_SITE_NAME}</h1>
         <NodeStanfordPage node={node} homepage/>
