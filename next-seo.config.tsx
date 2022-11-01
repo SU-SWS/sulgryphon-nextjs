@@ -1,6 +1,8 @@
 import {DefaultSeoProps} from 'next-seo';
 
 const config: DefaultSeoProps = {
+  title: process.env.NEXT_PUBLIC_SITE_NAME,
+  titleTemplate: '%s | ' + process.env.NEXT_PUBLIC_SITE_NAME,
   openGraph: {
     type: 'website',
     locale: 'en_IE',

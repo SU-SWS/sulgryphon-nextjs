@@ -18,6 +18,7 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
   return (
     <>
       <NextSeo
+        title={homepage ? '' : node.title}
         description={node.su_page_description}
         openGraph={{
           type: 'website',
