@@ -94,12 +94,16 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               <h2 className="su-mb-0">Contact</h2>
             </div>
 
-            {node.su_person_email &&
-                <div>
-                    <DrupalLink href={`mailto:${node.su_person_email}`}>
-                      {node.su_person_email}
-                    </DrupalLink>
-                </div>
+            {(node.su_person_email || node.su_person_mobile_phone) &&
+                <ul>
+                  <li>p {node.su_person_telephone}</li>
+                  <li>m {node.su_person_mobile_phone}</li>
+                  <li>f {node.su_person_fax}</li>
+                  <li>Mail Code: {node.su_person_fax}</li>
+                  <li><DrupalLink href={`mailto:${node.su_person_email}`}>
+                    {node.su_person_email}
+                  </DrupalLink></li>
+                </ul>
             }
 
             {(node.su_person_location_name || node.su_person_address) &&
