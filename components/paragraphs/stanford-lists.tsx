@@ -34,13 +34,13 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, paragraph.su_list_view?.resourceIdObjMeta?.display_id);
 
   return (
-    <div {...props} className={'su-max-w-[980px] su-mx-auto' + (props.className ?? '')}>
-      {paragraph.su_list_headline && <h2 className={`su-text-center`}>{paragraph.su_list_headline}</h2>}
-      {paragraph.su_list_description && <div>{formatHtml(paragraph.su_list_description.processed)}</div>}
+    <div {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
+      {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
+      {paragraph.su_list_description && <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
 
       <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}`}>
         {itemsToDisplay?.map(item => (
-          <div className={'su-pb-50 su-mb-50 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b' : '')} key={item.id}>
+          <div className={'su-pb-50 su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b' : '')} key={item.id}>
             <ListItem
               node={item}
               viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
