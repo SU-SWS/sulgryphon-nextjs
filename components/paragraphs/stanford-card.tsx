@@ -22,11 +22,10 @@ export const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => 
     video = <Embed url={videoUrl}/>
   } else if (imageUrl) {
     image = <Image
+      className="su-object-cover su-object-center"
       src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
-      width={`1000px`}
-      height={`1000px`}
       alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
-      layout="fill"
+      fill={true}
     />
   }
   props.className = `${props?.className ?? ''} su-max-w-[980px] su-mx-auto`;

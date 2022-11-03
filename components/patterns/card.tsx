@@ -6,7 +6,7 @@ interface CardProps {
   video?: ReactNodeLike
   image?: ReactNodeLike
   superHeader?: string
-  header?: string
+  header?: any
   body?: string
   link?: {
     url: string
