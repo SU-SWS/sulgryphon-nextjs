@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.3",
+    "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.12",
     "@tailwindcss/typography": "^0.5.2",
     "axios": "^1.1.3",
