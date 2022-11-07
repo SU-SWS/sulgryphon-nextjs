@@ -33,7 +33,7 @@ export default class ParagraphPreview extends Component<PreviewProps, PreviewSta
   setParagraphData({data}) {
     try {
       const jsonData = JSON.parse(data);
-      this.setState({paragraphData: drupal.deserialize(jsonData)})
+      this.setState({paragraphData: drupal.deserialize(jsonData) as DrupalParagraph})
     } catch (e) {
       this.setState({iframeId: data})
     }
