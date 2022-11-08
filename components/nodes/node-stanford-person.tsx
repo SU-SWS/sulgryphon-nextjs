@@ -7,6 +7,8 @@ import formatHtml from "@/lib/format-html";
 import {Paragraph} from "@/components/paragraphs";
 import {DrupalImage} from "@/components/simple/image";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
+import LinkIcon from "@heroicons/react/20/solid/LinkIcon";
+import EnvelopeIcon from "@heroicons/react/20/solid/EnvelopeIcon";
 
 interface PersonNodeProps {
   node: Person
@@ -99,9 +101,10 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                   <li>p {node.su_person_telephone}</li>
                   <li>m {node.su_person_mobile_phone}</li>
                   <li>f {node.su_person_fax}</li>
-                  <li>Mail Code: {node.su_person_fax}</li>
+                  <li>Mail Code: {node.su_person_mail_code}</li>
                   <li><DrupalLink href={`mailto:${node.su_person_email}`}>
                     {node.su_person_email}
+                    <EnvelopeIcon height={41} className="" />
                   </DrupalLink></li>
                 </ul>
             }
@@ -114,14 +117,30 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                     </div>
 
                   {node.su_person_location_name}
-                  {node?.su_person_address?.processed && formatHtml(node.su_person_address.processed)}
-                  {node.su_person_mail_code}
+                  {formatHtml(node.su_person_location_address.processed)}
                 </div>
             }
 
-
             {node?.su_person_map_url?.url &&
                 <DrupalLink href={node.su_person_map_url.url}>{node.su_person_map_url.title}</DrupalLink>}
+
+            <div className="su-flex su-no-wrap">
+              <LinkIcon width={41}/>
+              <h2 className="su-mb-0">Links</h2>
+            </div>
+            {console.log(node)}
+
+            <ul>
+              {node.su_person_links &&
+                node?.su_person_links.map(
+                  (link) => (
+                    <li>
+                      <DrupalLink href={link.uri} className={'ml-10 hover:text-blue-600'}>{link.title}</DrupalLink>
+                    </li>
+                  )
+                )
+              }
+            </ul>
 
           </div>
         </div>
