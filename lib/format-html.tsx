@@ -51,8 +51,17 @@ const options: HTMLReactParserOptions = {
           return cleanMediaMarkup(domNode);
 
         case 'pre':
-          nodeProps.className += 'su-whitespace-normal';
+          nodeProps.className += ' su-whitespace-normal';
           return <pre {...nodeProps}>{domToReact(domNode.children, options)}</pre>
+
+        case 'figure':
+          nodeProps.className += ' su-table';
+          return (
+            <figure {...nodeProps}>{domToReact(domNode.children, options)}</figure>
+          )
+        case 'figcaption':
+          nodeProps.className += ' su-table-caption su-text-center';
+          return <figcaption {...nodeProps} style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
 
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';
@@ -82,6 +91,7 @@ const fixClasses = (classes) => {
     .replace(' align-left ', ' su-block su-float-left su-mr-20 ')
     .replace(' align-right ', ' su-block su-float-right su-ml-20 ')
     .replace(' text-align-center ', ' su-text-center ')
+    .replace(' text-align-right ', ' su-text-right ')
     .replace(' su-intro-text ', ' su-text-[30px] ')
     .replace(' su-drop-cap ', ' first-letter:su-text-[35px] first-letter:su-font-bold ')
     .replace(' su-font-splash ', ' su-text-[46px] su-font-bold ')
@@ -117,12 +127,12 @@ const cleanMediaMarkup = (node: Element) => {
     return (
       <span className={fixClasses(classes)}>
         <DrupalImage
+          className="su-block"
           src={src}
           alt={alt}
           height={height}
           width={width}
           layout="intrinsic"
-          style={{float: 'right'}}
         />
       </span>
     )

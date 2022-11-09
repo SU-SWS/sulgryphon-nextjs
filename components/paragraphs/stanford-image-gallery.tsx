@@ -20,7 +20,7 @@ export const StanfordImageGallery = ({paragraph, siblingCount, ...props}: Stanfo
       {paragraph.su_gallery_headline && <h2 className="su-text-center su-text-m3">{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description.processed)}</div>}
 
-      <div className={`su-grid  su-gap-xl ` + (siblingCount >= 1 ? '' : 'lg:su-grid-cols-3')}>
+      <div className={`su-mb-40 su-grid su-gap-xl ` + (siblingCount >= 1 ? '' : 'lg:su-grid-cols-3')}>
         {paragraph.su_gallery_images.map(image =>
           <figure key={image.id} className="su-overflow-hidden su-aspect-[16/9] su-relative">
             <DrupalLink href={image.su_gallery_image.uri.url} className="su-block su-absolute" onClick={(e) => {e.preventDefault(); setModalOpen(image.id)}}>
