@@ -7,7 +7,7 @@ interface BasicPage extends DrupalNode {
   su_page_banner?: DrupalParagraph
   su_page_components?: DrupalParagraph[]
   su_page_description?: string
-  su_page_image?: DrupalMedia
+  su_page_image?: DrupalImageMedia
   su_shared_tabs?: DrupalTaxonomyTerm[]
 }
 

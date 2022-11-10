@@ -42,7 +42,7 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
           </aside>
       }
 
-      <section className={`su-col-span-4 ${subTree?.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
+      <section id="main-content" className={`su-col-span-4 ${subTree?.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
         {props.children}
       </section>
     </main>
