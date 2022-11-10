@@ -122,26 +122,23 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
             }
 
             {node?.su_person_map_url?.url &&
-                <DrupalLink href={node.su_person_map_url.url}>{node.su_person_map_url.title}</DrupalLink>}
+                <DrupalLink href={node.su_person_map_url.url}>{node.su_person_map_url.title}</DrupalLink>
+            }
 
-            <div className="su-flex su-no-wrap">
-              <LinkIcon width={41}/>
-              <h2 className="su-mb-0">Links</h2>
-            </div>
-            {console.log(node)}
-
-            <ul>
-              {node.su_person_links &&
-                node?.su_person_links.map(
-                  (link) => (
-                    <li>
+            {node?.su_person_links.length !== 0 &&
+              <div>
+                <h2>Links</h2>
+                <div>
+                  {node.su_person_links.map((link) =>
+                    <div>
                       <DrupalLink href={link.uri} className={'ml-10 hover:text-blue-600'}>{link.title}</DrupalLink>
-                    </li>
-                  )
-                )
-              }
-            </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            }
 
+            {console.log(node.su_person_links )}
           </div>
         </div>
       </article>
