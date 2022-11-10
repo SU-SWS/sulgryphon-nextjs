@@ -1,12 +1,19 @@
 import {PageLayout} from "@/components/layouts/page-layout";
+import {DrupalMenuLinkContent} from "next-drupal";
 
-export default function Custom404({...props}) {
+interface Custom404Props {
+
+}
+
+const Custom404 = ({...props}: Custom404Props) => {
   return (
     <PageLayout {...props}>
-      <div className="su-cc">
+      <div id="main-content" className="su-cc">
         <h1>404</h1>
         <p>Page not found</p>
       </div>
     </PageLayout>
   )
 }
+
+export default Custom404;

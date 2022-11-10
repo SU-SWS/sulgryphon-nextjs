@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Embed from "react-tiny-oembed";
 
 import {CardParagraph} from "../../types/drupal";
 import {Card} from "@/components/patterns/card";
+import Oembed from "@/components/simple/oembed";
+
 
 interface CardProps {
   paragraph: CardParagraph
@@ -18,8 +19,9 @@ export const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => 
   let video = null
   let image = null
 
+
   if (videoUrl) {
-    video = <Embed url={videoUrl}/>
+    video = <Oembed url={videoUrl} className="su-h-full"/>
   } else if (imageUrl) {
     image = <Image
       className="su-object-cover su-object-center"

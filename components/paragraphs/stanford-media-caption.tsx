@@ -1,9 +1,9 @@
-import Embed from "react-tiny-oembed";
 import Image from "next/image";
 
 import {MediaCaptionParagraph} from "../../types/drupal";
 import {DrupalLink} from "@/components/simple/link";
 import formatHtml from "@/lib/format-html";
+import Oembed from "@/components/simple/oembed";
 
 interface StanfordMediaCaptionProps {
   paragraph: MediaCaptionParagraph
@@ -31,7 +31,7 @@ export const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: Stanfo
 
       {videoUrl &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-            <Embed url={videoUrl}/>
+            <Oembed url={videoUrl} className="su-h-full"/>
           </div>
       }
 

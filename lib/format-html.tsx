@@ -1,8 +1,8 @@
-import {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
-import parse from "html-react-parser"
+import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
 
 import {DrupalLink, DrupalLinkBigButton, DrupalLinkButton, DrupalLinkSecondaryButton} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
+import Oembed from "@/components/simple/oembed";
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
@@ -14,8 +14,8 @@ const options: HTMLReactParserOptions = {
       switch (domNode.name) {
         case "a":
           // Error handle for <a> tags without an href.
-          if(!nodeProps.href){
-            nodeProps.href='#';
+          if (!nodeProps.href) {
+            nodeProps.href = '#';
           }
 
           if (nodeProps.className.indexOf('su-button--big') > -1) {
@@ -55,13 +55,14 @@ const options: HTMLReactParserOptions = {
           return <pre {...nodeProps}>{domToReact(domNode.children, options)}</pre>
 
         case 'figure':
-          nodeProps.className += ' su-table';
+          nodeProps.className += ' su-table su-mb-20';
           return (
             <figure {...nodeProps}>{domToReact(domNode.children, options)}</figure>
           )
         case 'figcaption':
           nodeProps.className += ' su-table-caption su-text-center';
-          return <figcaption {...nodeProps} style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
+          return <figcaption {...nodeProps}
+                             style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
 
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';
@@ -115,6 +116,19 @@ const cleanMediaMarkup = (node: Element) => {
   const wrapperDiv = node.children.find(child => child instanceof Element && child.name === 'div')
   const picture = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'picture')
   let image = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'img')
+
+  // Special handling of video media type.
+  if (node.attribs.class.indexOf('media--type-video') >= 0) {
+    const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
+    let {src: iframeSrc} = iframe instanceof Element && iframe.attribs;
+
+    iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');
+    return (
+      <div className="su-clear-both su-overflow-hidden su-aspect-[16/9] su-relative">
+        <Oembed className="su-h-full su-w-full" url={iframeSrc}/>
+      </div>
+    );
+  }
 
   if (picture instanceof Element) {
     image = picture.children.find(child => child instanceof Element && child.name === 'img')
