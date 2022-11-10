@@ -63,6 +63,9 @@ const options: HTMLReactParserOptions = {
           nodeProps.className += ' su-table-caption su-text-center';
           return <figcaption {...nodeProps}
                              style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
+        case 'iframe':
+          nodeProps.className += ' su-w-full';
+          return <iframe {...nodeProps}/>
 
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';
@@ -100,6 +103,7 @@ const fixClasses = (classes) => {
     .replace(' su-related-text ', ' su-shadow-lg su-p-30 ')
     .replace(' su-subheading ', ' su-text-[25px] ')
     .replace(' su-callout-text ', ' su-font-bold ')
+    .replace(' visually-hidden ', ' su-sr-only ')
     .replace(/ plain-text | caption /g, ' ')
     .replace(/tablesaw.*? /g, ' ')
     .replace(/ +/g, ' ')
