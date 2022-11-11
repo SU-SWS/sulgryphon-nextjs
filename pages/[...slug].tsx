@@ -1,8 +1,8 @@
-import * as React from "react"
-import {GetStaticPathsResult, GetStaticPropsResult} from "next"
+import {GetStaticPaths, GetStaticPathsResult, GetStaticProps, GetStaticPropsResult} from "next"
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {
-  DrupalNode,
+  DrupalMenuLinkContent,
+  DrupalNode, getMenu,
   getPathsFromContext,
   getResourceFromContext,
   translatePathFromContext
@@ -11,24 +11,25 @@ import {
 import {populateParagraphData} from "@/lib/fetch-paragraphs";
 import {PageLayout} from "@/components/layouts/page-layout";
 import {NodePageDisplay} from "@/nodes/index";
-import {cleanNode} from "@/lib/clean-node";
+import {AppWrapper} from "../context/state";
 
 interface NodePageProps {
   node: DrupalNode
+  menuTree: DrupalMenuLinkContent[]
 }
 
-export default function NodePage({node, ...props}: NodePageProps) {
+export default function NodePage({node, menuTree, ...props}: NodePageProps) {
   if (!node) return null
   return (
-    <>
+    <AppWrapper menu={menuTree}>
       <PageLayout {...props}>
         <NodePageDisplay node={node}/>
       </PageLayout>
-    </>
+    </AppWrapper>
   )
 }
 
-export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
+export const getStaticPaths: GetStaticPaths = async (context): Promise<GetStaticPathsResult> => {
   const params = new DrupalJsonApiParams();
   let fetchMore = true;
   let page = 0;
@@ -61,7 +62,7 @@ export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
   }
 }
 
-export async function getStaticProps(context): Promise<GetStaticPropsResult<NodePageProps>> {
+export const getStaticProps: GetStaticProps<{ node: DrupalNode }> = async (context): Promise<GetStaticPropsResult<NodePageProps>> => {
 
   const path = await translatePathFromContext(context);
 
@@ -103,10 +104,11 @@ export async function getStaticProps(context): Promise<GetStaticPropsResult<Node
     }
   }
 
-  cleanNode(node);
+  const {tree} = await getMenu('main');
   return {
     props: {
-      node
+      node,
+      menuTree: tree
     },
     revalidate: 60 * 60
   }
