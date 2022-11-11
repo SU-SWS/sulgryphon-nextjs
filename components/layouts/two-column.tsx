@@ -14,10 +14,10 @@ export const TwoColumn = ({config, items}) => {
 
   return (
     <div className={`su-grid su-gap-2xl ${gridClass}`}>
-      <div className="su-min-w-0">
+      <div className="su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
-      <div className="su-min-w-0">
+      <div className="su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
         {rightItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
     </div>

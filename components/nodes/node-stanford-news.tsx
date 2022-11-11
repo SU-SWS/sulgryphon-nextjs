@@ -1,7 +1,7 @@
 import {News} from "../../types/drupal";
 import {DrupalImage} from "@/components/simple/image";
 import {Paragraph} from "@/components/paragraphs";
-import {Oembed} from "@/components/simple/oembed";
+import Oembed from "@/components/simple/oembed";
 import {DrupalLink} from "@/components/simple/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {formatDate} from "@/lib/format-date";
@@ -140,8 +140,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
 
         {node?.su_news_banner?.field_media_oembed_video &&
             <Oembed
-                src={node.su_news_banner.field_media_oembed_video}
-                title={node.su_news_banner.name}
+                url={node.su_news_banner.field_media_oembed_video}
             />
         }
 

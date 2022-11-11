@@ -1,47 +1,41 @@
-import {GetStaticPropsResult} from "next"
-import {DefaultSeo, NextSeo} from "next-seo";
+import {GetStaticProps, GetStaticPropsResult} from "next"
 import {DrupalMenuLinkContent, DrupalNode, getMenu, getResource} from "next-drupal"
 
 import {NodeStanfordPage} from "@/components/nodes/node-stanford-page";
 import {PageLayout} from "@/components/layouts/page-layout"
-import {fetchParagraphs, fetchRowParagraphs} from "@/lib/fetch-paragraphs";
+import {populateParagraphData} from "@/lib/fetch-paragraphs";
+
+import {BasicPage} from "../types/drupal";
+import {AppWrapper} from "../context/state";
 
 interface HomePageProps {
-  node: DrupalNode,
-  menu: DrupalMenuLinkContent[],
+  node: DrupalNode
+  menuTree: DrupalMenuLinkContent[]
 }
 
-const HomePage = ({node, menu, ...props}: HomePageProps) => {
+const HomePage = ({node, menuTree, ...props}: HomePageProps) => {
   return (
-    <>
-      <DefaultSeo
-        title={process.env.NEXT_PUBLIC_SITE_NAME}
-      />
-      <PageLayout menu={menu} {...props}>
+    <AppWrapper menu={menuTree}>
+      <PageLayout {...props}>
         <h1 className="su-hidden">{process.env.NEXT_PUBLIC_SITE_NAME}</h1>
         <NodeStanfordPage node={node} homepage/>
       </PageLayout>
-    </>
+    </AppWrapper>
   )
 }
 
 export default HomePage;
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<HomePageProps>> {
-
+export const getStaticProps: GetStaticProps<{ node: BasicPage }> = async (): Promise<GetStaticPropsResult<HomePageProps>> => {
   const node = await getResource<DrupalNode>('node--stanford_page', process.env.DRUPAL_FRONT_PAGE)
-  const paragraphs = await fetchParagraphs(node.su_page_components);
-
-  node?.su_page_components.map((row, i) => {
-    node.su_page_components[i] = paragraphs.find(paragraph => paragraph.id === row.id);
-  })
+  await populateParagraphData(node);
   const {tree} = await getMenu('main');
 
   return {
     props: {
       node,
-      menu: tree
+      menuTree: tree
     },
-    revalidate: 60 * 5
+    revalidate: 60
   }
 }

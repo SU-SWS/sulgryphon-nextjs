@@ -9,7 +9,7 @@ interface StanfordWysiwygProps {
 
 export function StanfordWysiwyg({paragraph, siblingCount, ...props}: StanfordWysiwygProps) {
   return (
-    <div {...props} className={`su-max-w-[980px] su-mx-auto ${props.className ?? ''}`}>
+    <div {...props} className={`su-w-full su-max-w-[980px] su-mx-auto ${props.className ?? ''}`}>
       {formatHtml(paragraph?.su_wysiwyg_text?.processed)}
     </div>
   )

@@ -1,8 +1,8 @@
-import {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
-import parse from "html-react-parser"
+import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
 
 import {DrupalLink, DrupalLinkBigButton, DrupalLinkButton, DrupalLinkSecondaryButton} from "@/components/simple/link";
 import {DrupalImage} from "@/components/simple/image";
+import Oembed from "@/components/simple/oembed";
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
@@ -14,8 +14,8 @@ const options: HTMLReactParserOptions = {
       switch (domNode.name) {
         case "a":
           // Error handle for <a> tags without an href.
-          if(!nodeProps.href){
-            nodeProps.href='#';
+          if (!nodeProps.href) {
+            nodeProps.href = '#';
           }
 
           if (nodeProps.className.indexOf('su-button--big') > -1) {
@@ -51,8 +51,21 @@ const options: HTMLReactParserOptions = {
           return cleanMediaMarkup(domNode);
 
         case 'pre':
-          nodeProps.className += 'su-whitespace-normal';
+          nodeProps.className += ' su-whitespace-normal';
           return <pre {...nodeProps}>{domToReact(domNode.children, options)}</pre>
+
+        case 'figure':
+          nodeProps.className += ' su-table su-mb-20';
+          return (
+            <figure {...nodeProps}>{domToReact(domNode.children, options)}</figure>
+          )
+        case 'figcaption':
+          nodeProps.className += ' su-table-caption su-text-center';
+          return <figcaption {...nodeProps}
+                             style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
+        case 'iframe':
+          nodeProps.className += ' su-w-full';
+          return <iframe {...nodeProps}/>
 
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';
@@ -82,6 +95,7 @@ const fixClasses = (classes) => {
     .replace(' align-left ', ' su-block su-float-left su-mr-20 ')
     .replace(' align-right ', ' su-block su-float-right su-ml-20 ')
     .replace(' text-align-center ', ' su-text-center ')
+    .replace(' text-align-right ', ' su-text-right ')
     .replace(' su-intro-text ', ' su-text-[30px] ')
     .replace(' su-drop-cap ', ' first-letter:su-text-[35px] first-letter:su-font-bold ')
     .replace(' su-font-splash ', ' su-text-[46px] su-font-bold ')
@@ -89,6 +103,7 @@ const fixClasses = (classes) => {
     .replace(' su-related-text ', ' su-shadow-lg su-p-30 ')
     .replace(' su-subheading ', ' su-text-[25px] ')
     .replace(' su-callout-text ', ' su-font-bold ')
+    .replace(' visually-hidden ', ' su-sr-only ')
     .replace(/ plain-text | caption /g, ' ')
     .replace(/tablesaw.*? /g, ' ')
     .replace(/ +/g, ' ')
@@ -106,6 +121,19 @@ const cleanMediaMarkup = (node: Element) => {
   const picture = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'picture')
   let image = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'img')
 
+  // Special handling of video media type.
+  if (node.attribs.class.indexOf('media--type-video') >= 0) {
+    const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
+    let {src: iframeSrc} = iframe instanceof Element && iframe.attribs;
+
+    iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');
+    return (
+      <div className="su-clear-both su-overflow-hidden su-aspect-[16/9] su-relative">
+        <Oembed className="su-h-full su-w-full" url={iframeSrc}/>
+      </div>
+    );
+  }
+
   if (picture instanceof Element) {
     image = picture.children.find(child => child instanceof Element && child.name === 'img')
   }
@@ -117,12 +145,12 @@ const cleanMediaMarkup = (node: Element) => {
     return (
       <span className={fixClasses(classes)}>
         <DrupalImage
+          className="su-block"
           src={src}
           alt={alt}
           height={height}
           width={width}
           layout="intrinsic"
-          style={{float: 'right'}}
         />
       </span>
     )
