@@ -1,5 +1,4 @@
 import {News} from "../../types/drupal";
-import Image from "next/image";
 import {DrupalImage} from "@/components/simple/image";
 import {Paragraph} from "@/components/paragraphs";
 import Oembed from "@/components/simple/oembed";
@@ -39,49 +38,34 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
           <div className="su-flex md:su-order-last su-rs-mb-2">
             <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
               <li className="su-mr-1em">
-                <a
-                  href="https://www.facebook.com"
-                  className="su-text-black hocus:su-text-facebook su-transition-colors"
-                >
+                <DrupalLink className="su-text-black hocus:su-text-facebook su-transition-colors" href="https://www.facebook.com">
                   <span className="su-sr-only">Stanford Facebook</span>
                   <FacebookIcon />
-                </a>
+                </DrupalLink>
               </li>
               <li className="su-mr-1em">
-                <a
-                  href="https://twitter.com"
-                  className="su-text-black hocus:su-text-twitter su-transition-colors"
-                >
+                <DrupalLink className="su-text-black hocus:su-text-twitter su-transition-colors" href="https://twitter.com">
                   <span className="su-sr-only">Stanford Twitter</span>
                   <TwitterIcon />
-                </a>
+                </DrupalLink>
               </li>
               <li className="su-mr-1em">
-                <a
-                  href="https://www.linkedin.com/"
-                  className="su-text-black hocus:su-text-linkedin su-transition-colors"
-                >
+                <DrupalLink className="su-text-black hocus:su-text-linkedin su-transition-colors" href="https://www.linkedin.com/">
                   <span className="su-sr-only">Stanford LinkedIn</span>
                   <LinkedInIcon />
-                </a>
+                </DrupalLink>
               </li>
               <li className="su-mr-1em">
-                <a
-                  href="/"
-                  className="su-text-black  hocus:su-text-digital-blue su-transition-colors"
-                >
+                <DrupalLink className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href="/">
                   <span className="su-sr-only">Forward Email</span>
                   <EnvelopeIcon className="su-w-[28px]"/>
-                </a>
+                </DrupalLink>
               </li>
               <li className="su-mr-1em">
-                <a
-                  href="/"
-                  className="su-text-black su-text hocus:su-text-digital-blue su-transition-colors "
-                >
+                <DrupalLink className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href="/">
                   <span className="su-sr-only">Print Article</span>
                   <PrinterIcon className="su-w-[28px]"/>
-                </a>
+                </DrupalLink>
               </li>
             </ul>
           </div>
