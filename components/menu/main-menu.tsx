@@ -1,11 +1,11 @@
 import {DrupalMenuLinkContent} from "next-drupal";
 import {useEffect, useState} from "react";
-import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
-import {Bars4Icon, ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/20/solid";
+import {Bars3Icon, ChevronDownIcon, ChevronUpIcon, XMarkIcon} from "@heroicons/react/20/solid";
 
-import {DrupalLink} from "@/components/simple/link";
 import {useAppContext} from "../../context/state";
 import getActiveTrail from "@/lib/menu";
+import Link from "next/link";
+import SearchWorks from "@/components/search/search-works";
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
@@ -23,22 +23,54 @@ export const MainMenu = ({...props}) => {
   if (menuTree.length === 0) {
     return null;
   }
+
   return (
-    <div className="su-cc" {...props}>
-      <div className="su-w-full su-h-[60px]">
+    <div {...props}>
+      <Link href="#" className="lg:su-hidden su-text-black-true su-absolute su-top-0 su-right-20 su-no-underline"
+            onClick={() => setMenuOpen(!menuOpen)}>
+        {!menuOpen &&
+            <>
+              <Bars3Icon height={40} className="su-font-bold"/>
+              <span className="su-text-14"><span className="su-sr-only">Open </span>Menu</span>
+            </>
+        }
+        {menuOpen &&
+            <>
+              <XMarkIcon height={40} className="su-font-bold"/>
+              <span className="su-text-14">Close<span className="su-sr-only"> Menu</span></span>
+            </>
+        }
+      </Link>
 
-        <a className="su-block su-float-right " href="#" aria-label={`${menuOpen ? 'Close' : 'Open'} main menu`}
-           onClick={() => setMenuOpen(!menuOpen)}>
-          <Bars4Icon width={40} className="lg:su-hidden "/>
-        </a>
+      <div className="su-relative">
+        <div
+          className={"su-py-20 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-top-0 su-w-full su-z-10 lg:su-block " + (menuOpen ? "su-block" : "su-hidden")}>
+          <SearchWorks className="lg:su-hidden"/>
 
+          <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
+            {menuTree.map((item, i) =>
+              <MenuItem key={item.id} active={activeTrail?.[0] && i === activeTrail[0]} {...item}/>)
+            }
+          </ul>
+
+
+          <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
+            <span className="su-mr-20">Quick Links:</span>
+            <Link
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal su-mr-20"
+              href="/">My Account</Link>
+            <Link
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal su-mr-20"
+              href="/">Search Results</Link>
+            <Link
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal su-mr-20"
+              href="/">Accessibility</Link>
+            <Link className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal"
+                  href="/">Contact Us</Link>
+          </div>
+        </div>
       </div>
 
-      <ul
-        className={`su-list-unstyled su-bg-[#2e2d29] lg:su-bg-white lg:su-flex ${menuOpen ? 'su-block' : 'su-hidden'} lg:su-block`}>
-        {menuTree.map((item, i) => <MenuItem key={item.id}
-                                             active={activeTrail?.[0] && i === activeTrail[0]} {...item}/>)}
-      </ul>
     </div>
   )
 }
@@ -51,33 +83,49 @@ interface MenuItemProps {
   active?: boolean
 }
 
-export const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemProps) => {
-  const {buttonProps, isOpen} = useDropdownMenu(items?.length);
+const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemProps) => {
+  const [submenuOpen, setSubmenuOpen] = useState(false)
+
+  // Helper for tailwind JIT to add the classes.
+  const titleSpacing = [
+    'su-ml-[30px]',
+    'su-ml-[60px]',
+    'su-ml-[80px]',
+    'su-ml-[120px]'
+  ];
 
   return (
-    <li className="su-p-10">
-      <DrupalLink href={url}
-                  className={`su-text-white lg:su-text-cardinal-red su-no-underline su-pb-[10px] hover:su-underline ${active ? 'su-text-white lg:su-text-black hover:su-text-cardinal-red su-border-b-[6px] su-border-[#2e2d29]' : ''}`}>
-        {title}
-      </DrupalLink>
+    <li className={"su-m-0 su-p-0 su-relative lg:su-flex lg:su-flex-wrap"}>
+      <Link href={url}
+            className={"su-block su-text-white lg:su-text-black-true hover:su-text-white hover:su-bg-black lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline su-w-full su-p-20 su-border-b su-border-black su-w-[calc(100%-70px)]" + (menuLevel >= 1 ? " lg:su-border-fog-light" : " lg:su-border-0") + (items?.length > 0 ? " lg:su-pr-5" : "")}>
+        <span className={"su-block su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-0"}>{title}</span>
+      </Link>
 
-      {(items?.length > 0 && menuLevel < 1) &&
+      {(items?.length > 0) &&
           <>
-            <button {...buttonProps}
-                    className="su-mx-[5px] su-text-white lg:su-text-cardinal-red hover:su-underline hover:su-text-black lg:su-border-l-[1px] lg:su-border-[#766253] su-float-right lg:su-float-none">
-                  <span className="su-sr-only">
-                    {isOpen ? 'Close' : 'Open'} &quot;{title}&quot; submenu
-                  </span>
+            <button
+                className={"su-bg-black su-h-[70px] lg:su-h-auto su-w-[70px] su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 " + (menuLevel >= 1 ? 'lg:su-bg-fog-light' : 'lg:su-bg-transparent')}
+                onClick={() => setSubmenuOpen(!submenuOpen)}>
+              {submenuOpen &&
+                  <>
+                    <ChevronUpIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
+                    <span className="su-sr-only">Collapse submenu</span>
+                  </>
+              }
 
-              {isOpen ? <ChevronUpIcon aria-hidden={true} height={20}/> :
-                <ChevronDownIcon aria-hidden={true} height={20}/>}
+              {!submenuOpen &&
+                  <>
+                    <ChevronDownIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
+                    <span className="su-sr-only">Expand submenu</span>
+                  </>
+              }
             </button>
 
-            <ul
-                className={'su-w-[80%] lg:su-w-auto su-z-10 su-shadow-xl su-absolute su-list-unstyled su-bg-[#2e2d29] lg:su-bg-white ' + (isOpen ? '' : 'su-hidden')}
-                role="menu"
-            >
-              {items.map((item, i) => <MenuItem key={item.id} {...item} menuLevel={menuLevel + 1}/>)}
+            <ul className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[150%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel < 1 ? " lg:su-absolute" : "")}
+                role="menu">
+              {items.map((item, i) =>
+                <MenuItem key={item.id} {...item} menuLevel={menuLevel + 1}/>)
+              }
             </ul>
           </>
       }
