@@ -3,7 +3,9 @@ import {useRouter} from "next/router";
 const getActiveTrail = (menuItems, trail = []) => {
 
   const router = useRouter()
-  const currentPath = router.asPath;
+  const path = router.asPath;
+  const strEnd = path.search(/#|\?/);
+  const currentPath = path.substring(0, strEnd > 1 ?strEnd : path.length);
 
   let childTrail, currentTrail;
   for (let i = 0; i < menuItems.length; i++) {
