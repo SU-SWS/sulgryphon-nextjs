@@ -2,6 +2,7 @@ import {useRouter} from "next/router";
 import {DrupalMenuLinkContent} from "next-drupal";
 
 import {DrupalLink} from "@/components/simple/link";
+import Conditional from "@/components/simple/conditional";
 
 interface MainMenuProps {
   tree: DrupalMenuLinkContent[]
@@ -46,9 +47,9 @@ export const MenuItem = ({title, url, items, menuLevel, ...props}: MenuItemProps
         {title}
       </DrupalLink>
 
-      {typeof items === 'object' &&
-          <SideNav tree={items} menuLevel={menuLevel + 1}/>
-      }
+      <Conditional showWhen={typeof items === 'object'}>
+        <SideNav tree={items} menuLevel={menuLevel + 1}/>
+      </Conditional>
     </li>
   )
 }

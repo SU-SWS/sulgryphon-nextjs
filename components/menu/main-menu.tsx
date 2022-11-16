@@ -56,7 +56,6 @@ export const MainMenu = ({...props}) => {
             }
           </ul>
 
-
           <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
             <span className="su-mr-20">Quick Links:</span>
             <Link
@@ -84,31 +83,64 @@ interface MenuItemProps {
   items?: DrupalMenuLinkContent[]
   menuLevel?: number
   active?: boolean
+  expanded?: boolean
 }
 
-const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemProps) => {
+const MenuItem = ({title, url, items, active, expanded, menuLevel = 0}: MenuItemProps) => {
   const [submenuOpen, setSubmenuOpen] = useState(false)
 
   // Helper for tailwind JIT to add the classes.
   const titleSpacing = [
+    'lg:su-ml-[0px]',
+    'lg:su-ml-[30px]',
+    'lg:su-ml-[60px]',
+    'lg:su-ml-[90px]',
+    'lg:su-ml-[120px]',
+    'su-ml-[0px]',
     'su-ml-[30px]',
     'su-ml-[60px]',
-    'su-ml-[80px]',
+    'su-ml-[90px]',
     'su-ml-[120px]'
   ];
   const belowItems = items?.length > 0 ? items : [];
 
+  const getLinkBorderClasses = () => {
+    const classes = ['su-border-b', 'su-border-black'];
+
+    // If there are children under the menu item.
+    if (belowItems.length >= 1) {
+      classes.push(menuLevel == 0 ? 'lg:su-w-[calc(100%-40px)]' : 'lg:su-w-[calc(100%-70px)] lg:su-pr-0');
+    }
+
+    // Special treatment for the top level items.
+    if (menuLevel == 0) {
+      if (active) {
+        classes.push('lg:su-border-cardinal-red');
+        classes.push('lg:su-border-b-4');
+      } else {
+        classes.push('lg:su-border-0')
+      }
+    }
+
+    // Treatment to child items.
+    if (menuLevel >= 1) {
+      classes.push('lg:su-border-fog-light')
+    }
+    return classes.join(' ')
+  }
+
   return (
     <li className={"su-m-0 su-p-0 su-relative lg:su-flex lg:su-flex-wrap"}>
       <Link href={url}
-            className={"su-block su-text-white lg:su-text-black-true hover:su-text-white hover:su-bg-black lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline su-w-full su-p-20 su-border-b su-border-black lg:su-w-[calc(100%-70px)]" + (menuLevel >= 1 ? " lg:su-border-fog-light" : " lg:su-border-0")}>
-        <span className={"su-block su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-0"}>{title}</span>
+            className={"su-block su-text-white lg:su-text-black-true hover:su-text-white hover:su-bg-black lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
+        <span className={"su-block su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>{title}</span>
       </Link>
 
-      <Conditional showWhen={belowItems.length >= 1}>
+      <Conditional showWhen={belowItems.length >= 1 && expanded}>
         <MenuButton isOpen={submenuOpen} menuLevel={menuLevel} onButtonClick={() => setSubmenuOpen(!submenuOpen)}/>
         <ul
-          className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[150%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel < 1 ? " lg:su-absolute" : "")}
+          data-attribute-menu-leve={menuLevel}
+          className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
           role="menu">
           {belowItems.map((item, i) =>
             <MenuItem key={item.id} {...item} menuLevel={menuLevel + 1}/>)
@@ -122,7 +154,7 @@ const MenuItem = ({title, url, items, active, menuLevel = 0}: MenuItemProps) => 
 const MenuButton = ({isOpen, onButtonClick, menuLevel}) => {
   return (
     <button
-      className={"su-bg-black su-h-[70px] lg:su-h-auto su-w-[70px] su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 " + (menuLevel >= 1 ? 'lg:su-bg-fog-light' : 'lg:su-bg-transparent')}
+      className={"su-bg-black su-h-[70px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
       onClick={onButtonClick}>
       <Conditional showWhen={isOpen}>
         <ChevronUpIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
