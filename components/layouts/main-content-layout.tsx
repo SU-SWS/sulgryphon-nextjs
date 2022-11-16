@@ -2,6 +2,7 @@ import {useAppContext} from "../../context/state";
 import getActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/menu/side-nav";
 import {DrupalMenuLinkContent} from "next-drupal";
+import buildMenuTree from "@/lib/build-menu-tree";
 
 interface MainLayoutProps {
   fullWidth?: boolean;
@@ -11,8 +12,9 @@ interface MainLayoutProps {
 
 export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   const appContext = useAppContext();
+  const {items: tree} = buildMenuTree(appContext.menuItems)
 
-  const activeTrail = getActiveTrail(appContext.menu);
+  const activeTrail = getActiveTrail(tree);
   let subTree;
 
   const cleanSubMenu = (menu: DrupalMenuLinkContent[], activeTrail: number[]) => {
@@ -27,7 +29,7 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
 
 
   if (activeTrail.length >= 1) {
-    subTree = appContext.menu[activeTrail[0]]?.items;
+    subTree = tree[activeTrail[0]]?.items;
     if (subTree?.length === 1) {
       subTree = [];
     }

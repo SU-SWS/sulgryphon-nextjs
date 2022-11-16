@@ -1,14 +1,16 @@
 import { createContext, useContext } from 'react';
+import buildMenuTree from "@/lib/build-menu-tree";
 
-const AppContext = createContext({menu: []});
+const AppContext = createContext({menuItems: []});
 
-export function AppWrapper({menu, children }) {
+export function AppWrapperProvider({menuItems, children}) {
   return (
-    <AppContext.Provider value={{menu: menu}}>
+    <AppContext.Provider value={{menuItems: menuItems}}>
       {children}
     </AppContext.Provider>
   );
 }
+
 export function useAppContext() {
   return useContext(AppContext);
 }

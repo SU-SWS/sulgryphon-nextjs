@@ -6,35 +6,35 @@ import {PageLayout} from "@/components/layouts/page-layout"
 import {populateParagraphData} from "@/lib/fetch-paragraphs";
 
 import {BasicPage} from "../types/drupal";
-import {AppWrapper} from "../context/state";
+import {AppWrapperProvider} from "../context/state";
 
 interface HomePageProps {
   node: DrupalNode
-  menuTree: DrupalMenuLinkContent[]
+  menuItems: DrupalMenuLinkContent[]
 }
 
-const HomePage = ({node, menuTree, ...props}: HomePageProps) => {
+const HomePage = ({node, menuItems, ...props}: HomePageProps) => {
   return (
-    <AppWrapper menu={menuTree}>
+    <AppWrapperProvider menuItems={menuItems}>
       <PageLayout {...props}>
         <h1 className="su-hidden">{process.env.NEXT_PUBLIC_SITE_NAME}</h1>
         <NodeStanfordPage node={node} homepage/>
       </PageLayout>
-    </AppWrapper>
+    </AppWrapperProvider>
   )
 }
 
 export default HomePage;
 
-export const getStaticProps: GetStaticProps<{ node: BasicPage }> = async (): Promise<GetStaticPropsResult<HomePageProps>> => {
+export const getStaticProps: GetStaticProps<{ node: BasicPage, menuItems: DrupalMenuLinkContent[] }> = async (): Promise<GetStaticPropsResult<HomePageProps>> => {
   const node = await getResource<DrupalNode>('node--stanford_page', process.env.DRUPAL_FRONT_PAGE)
   await populateParagraphData(node);
-  const {tree} = await getMenu('main');
+  const {items} = await getMenu('main');
 
   return {
     props: {
       node,
-      menuTree: tree
+      menuItems: items
     },
     revalidate: 60
   }
