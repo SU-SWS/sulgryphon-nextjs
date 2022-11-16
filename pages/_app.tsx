@@ -10,7 +10,7 @@ Router.events.on("routeChangeStart", path => {
   syncDrupalPreviewRoutes(path)
 })
 
-function DrupalApp({Component, pageProps}: AppProps) {
+const DrupalApp = ({Component, pageProps}: AppProps) => {
   return (
     <>
       <DefaultSeo {...SEO} />
@@ -18,5 +18,6 @@ function DrupalApp({Component, pageProps}: AppProps) {
     </>
   )
 }
+
 
 export default DrupalApp;

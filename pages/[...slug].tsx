@@ -12,13 +12,15 @@ import {populateParagraphData} from "@/lib/fetch-paragraphs";
 import {PageLayout} from "@/components/layouts/page-layout";
 import {NodePageDisplay} from "@/nodes/index";
 import {AppWrapper} from "../context/state";
+import buildMenuTree from "@/lib/build-menu-tree";
 
 interface NodePageProps {
   node: DrupalNode
-  menuTree: DrupalMenuLinkContent[]
+  menuItems: DrupalMenuLinkContent[]
 }
 
-export default function NodePage({node, menuTree, ...props}: NodePageProps) {
+const NodePage = ({node, menuItems, ...props}: NodePageProps) => {
+  const {items: menuTree} = buildMenuTree(menuItems);
   if (!node) return null
   return (
     <AppWrapper menu={menuTree}>
@@ -28,6 +30,7 @@ export default function NodePage({node, menuTree, ...props}: NodePageProps) {
     </AppWrapper>
   )
 }
+export default NodePage;
 
 export const getStaticPaths: GetStaticPaths = async (context): Promise<GetStaticPathsResult> => {
   const params = new DrupalJsonApiParams();
@@ -62,7 +65,7 @@ export const getStaticPaths: GetStaticPaths = async (context): Promise<GetStatic
   }
 }
 
-export const getStaticProps: GetStaticProps<{ node: DrupalNode }> = async (context): Promise<GetStaticPropsResult<NodePageProps>> => {
+export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: DrupalMenuLinkContent[] }> = async (context): Promise<GetStaticPropsResult<NodePageProps>> => {
 
   const path = await translatePathFromContext(context);
 
@@ -104,11 +107,13 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode }> = async (conte
     }
   }
 
-  const {tree} = await getMenu('main');
+  // For some reason, using the `tree` here produces hydration issues. So just pass the simple array of menu items, and
+  // build the menu tree in the page component instead. ¯\_(ツ)_/¯
+  const {items} = await getMenu('main');
   return {
     props: {
       node,
-      menuTree: tree
+      menuItems: items
     },
     revalidate: 60 * 60
   }
