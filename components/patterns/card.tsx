@@ -47,7 +47,7 @@ export const Card = ({video, image, superHeader, header, footer, body, link, lin
         {body && <div>{formatHtml(body)}</div>}
 
         {footer &&
-            <h3 className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</h3>
+            <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</div>
         }
 
         {(link && linkStyle !== 'action') &&

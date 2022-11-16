@@ -1,16 +1,18 @@
+import React, {useEffect, useState} from "react";
 import {News} from "../../types/drupal";
 import {DrupalImage} from "@/components/simple/image";
+import Image from "next/image";
 import {Paragraph} from "@/components/paragraphs";
 import Oembed from "@/components/simple/oembed";
-import {DrupalLink} from "@/components/simple/link";
+import Link from "next/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {formatDate} from "@/lib/format-date";
 import { EnvelopeIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { FacebookIcon } from '@/components/simple/icons/FacebookIcon';
 import { TwitterIcon } from '@/components/simple/icons/TwitterIcon';
 import { LinkedInIcon } from '@/components/simple/icons/LinkedInIcon';
-import {NextSeo} from "next-seo";
 import {Card} from "@/components/patterns/card";
+import {NextSeo} from "next-seo";
 
 interface NewsNodeProps {
   node: News
@@ -24,48 +26,46 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
         title={node.title}
         canonical={node.su_news_source?.url}
       />
-
       <article {...props} className="su-mt-50">
-        {node.su_news_topics && node.su_news_topics.map(topic =>
-          <div key={topic.id}>
-            {topic.name}
-          </div>
+        {node.su_news_topics && node.su_news_topics.map((topic, index) =>
+            <span key={topic.id} className="su-text-digital-red su-font-semibold">
+              {(index ? ', ' : '') + topic.name} 
+            </span>
         )}
-
         <h1 className="su-type-5">{node.title}</h1>
         {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         <div className="md:su-flex su-rs-mb-7">
           <div className="su-flex md:su-order-last su-rs-mb-2">
             <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
               <li className="su-mr-1em">
-                <DrupalLink className="su-text-black hocus:su-text-facebook su-transition-colors" href="https://www.facebook.com">
+                <Link className="su-text-black hocus:su-text-facebook su-transition-colors" href={`http://www.facebook.com/sharer.php?u={window.location}&display=popup`}>
                   <span className="su-sr-only">Stanford Facebook</span>
                   <FacebookIcon />
-                </DrupalLink>
+                </Link>
               </li>
               <li className="su-mr-1em">
-                <DrupalLink className="su-text-black hocus:su-text-twitter su-transition-colors" href="https://twitter.com">
+                <Link className="su-text-black hocus:su-text-twitter su-transition-colors" href={`https://twitter.com/intent/tweet?url={window.location}&text=${node.title}`}>
                   <span className="su-sr-only">Stanford Twitter</span>
                   <TwitterIcon />
-                </DrupalLink>
+                </Link>
               </li>
               <li className="su-mr-1em">
-                <DrupalLink className="su-text-black hocus:su-text-linkedin su-transition-colors" href="https://www.linkedin.com/">
+                <Link className="su-text-black hocus:su-text-linkedin su-transition-colors" href={`https://www.linkedin.com/shareArticle?mini=true&url={window.location}&title=${node.title}`}>
                   <span className="su-sr-only">Stanford LinkedIn</span>
                   <LinkedInIcon />
-                </DrupalLink>
+                </Link>
               </li>
               <li className="su-mr-1em">
-                <DrupalLink className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href="/">
+                <Link className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href={`mailto:?subject=${node.title}&body={window.location}`}>
                   <span className="su-sr-only">Forward Email</span>
                   <EnvelopeIcon className="su-w-[28px]"/>
-                </DrupalLink>
+                </Link>
               </li>
               <li className="su-mr-1em">
-                <DrupalLink className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href="/">
+                <button onClick={() => window.print()} className="su-text-black  hocus:su-text-digital-blue su-transition-colors">
                   <span className="su-sr-only">Print Article</span>
                   <PrinterIcon className="su-w-[28px]"/>
-                </DrupalLink>
+                </button>
               </li>
             </ul>
           </div>
@@ -100,6 +100,15 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
 }
 
 export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
+  let imageUrl = getFeaturedImageUrl(node);
+  let image;
+  if (imageUrl) {
+    image = <Image
+      src={imageUrl}
+      alt=""
+      fill={true}
+    />
+  }
 
   return (
     <article {...props}>
@@ -108,9 +117,9 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
       </div>
       <div className="su-grid su-grid-cols-[65%_35%] su-gap-1">
         <div>
-          <DrupalLink className="su-text-digital-red su-no-underline hover:su-underline" href={node.path.alias}>
+          <Link className="su-text-digital-red su-no-underline hover:su-underline" href={node.path.alias}>
             <h2 className="su-type-2">{node.title}</h2>
-          </DrupalLink>
+          </Link>
           {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         </div>
         <div className="su-hidden lg:su-block">
@@ -124,45 +133,59 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
           }
         </div>
       </div>
-      {node.su_news_topics && node.su_news_topics.map(cardTopic =>
-        <div key={cardTopic.id} className="su-mt-10">
-          {cardTopic.name}
-        </div>
+      {node.su_news_topics && node.su_news_topics.map((cardTopic, index) =>
+        <span key={cardTopic.id} className="su-mt-10 su-text-digital-red su-font-semibold su-text-19">
+          {(index ? ', ' : '') + cardTopic.name}
+        </span>
       )}
     </article>
   )
 }
 
 export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
+  let imageUrl = getFeaturedImageUrl(node);
+  let image;
+  if (imageUrl) {
+    image = <Image
+      src={imageUrl}
+      alt=""
+      fill={true}
+    />
+  }
+
 
   return (
     <article {...props}>
       <Card
-        image={
-          <div>
-            {node?.su_news_featured_media?.field_media_image &&
-              <DrupalImage
-                  src={node.su_news_featured_media.field_media_image.uri.url}
-                  alt={node.su_news_featured_media.field_media_image.resourceIdObjMeta.alt}
-                  height={node.su_news_featured_media.field_media_image.resourceIdObjMeta.height}
-                  width={node.su_news_featured_media.field_media_image.resourceIdObjMeta.width}
-              />
-            }
-          </div>
-        }
+        image={image}
         header={
-          <DrupalLink className="su-text-black hover:su-underline" href={node.path.alias}>
+          <Link className="su-text-black hover:su-underline" href={node.path.alias}>
             {node.title}
-          </DrupalLink>
+          </Link>
         }
         footer={
           <div>
-            {node.su_news_topics && node.su_news_topics.map(topic =>
-          <div key={topic.id}>{topic.name}</div>
+            {node.su_news_topics && node.su_news_topics.map((topic, index) =>
+              <span key={topic.id}>
+                {(index ? ', ' : '') + topic.name}
+              </span>
            )}
           </div>
         }
       />
     </article>
   )
+}
+
+const getFeaturedImageAlt = (node: News): string => {
+  if (node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.alt) {
+    return node.su_news_featured_media.field_media_image.resourceIdObjMeta.alt
+  }
+  return '';
+}
+
+const getFeaturedImageUrl = (node: News, imageStyle = 'breakpoint_2xl_1x'): null | string => {
+  if (node.su_news_featured_media?.field_media_image?.image_style_uri?.[imageStyle]) {
+    return node.su_news_featured_media.field_media_image.image_style_uri?.[imageStyle]
+  }
 }

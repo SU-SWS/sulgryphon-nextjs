@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const LinkedInIcon = () => (
   <svg
     aria-hidden="true"
