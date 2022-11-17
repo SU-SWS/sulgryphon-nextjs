@@ -9,7 +9,7 @@ export const PageLayout = ({...props}) => {
   return (
     <div className="su-grid su-grid-rows-1 su-min-h-screen">
       <div>
-        <DrupalLink className="su-skiplink" href="#main-content">Skip to main content</DrupalLink>
+        <a className="su-skiplink" href="#main-content">Skip to main content</a>
         <PreviewAlert/>
         <IdentityBar/>
         <Header/>

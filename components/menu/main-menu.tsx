@@ -13,29 +13,25 @@ import OutsideClickHandler from "@/components/simple/outside-click-handler";
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
-  const {items: tree} = buildMenuTree(appContext.menuItems)
+  const {items: menuTree} = buildMenuTree(appContext.menuItems)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [menuTree, setMenuTree] = useState(tree)
   const [activeTrail, setActiveTrail] = useState([]);
   const router = useRouter();
   const submenuRefs = [];
 
   useEffect(() => {
-
-    // Use effect for the 404 page since `getStaticProps` isn't allowed there.
-    if (menuTree.length === 0) {
-      fetch('/api/menu').then(response => response.json())
-        .then(menuTree => setMenuTree(menuTree))
-    }
-
     // Set the active trail client side because the router path might be different than building server side.
     setActiveTrail(getActiveTrail(menuTree, router));
 
-    router.events.on('routeChangeComplete', handleClickFocusOutside)
-    return () => {
-      router.events.off('routeChangeError', handleClickFocusOutside)
+    const handleRouteChange = () => {
+      submenuRefs.map(ref => ref?.current?.closeSubmenus())
+      setMenuOpen(false)
     }
-  }, [menuTree, router]);
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeError', handleRouteChange)
+    }
+  }, [router]);
 
   const openCloseMenu = () => {
     setMenuOpen(!menuOpen);
