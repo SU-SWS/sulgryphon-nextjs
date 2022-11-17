@@ -62,7 +62,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
 
   return (
     <MainContentLayout>
-      <article {...props}>
+      <article {...props} className="su-mt-50">
         <EventJsonLd
           name={node.title}
           startDate={node.su_event_date_time?.value}
@@ -73,19 +73,19 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         {inPast && <div>Past Event</div>}
 
         {node.su_event_type && node.su_event_type.map(term =>
-          <div key={term.id}>
+          <div key={term.id} className="su-text-digital-red su-text-16 md:su-text-18 2xl:su-text-19">
             {term.name}
           </div>
         )}
-        <h1>{node.title}</h1>
-        {node.su_event_subheadline && <div className="su-mb-[20px]">{node.su_event_subheadline}</div>}
-        {node.su_event_dek && <div className="su-mb-[20px]">{node.su_event_dek}</div>}
+        <h1 className="su-type-5 su-rs-mb-neg2">{node.title}</h1>
+        {node.su_event_subheadline && <h2 className="su-type-3 su-rs-mb-1">{node.su_event_subheadline}</h2>}
+        {node.su_event_dek && <div className="su-rs-mb-4 su-text-16 md:su-text-21">{node.su_event_dek}</div>}
 
 
         {node.su_event_sponsor &&
-            <div className="su-mb-[20px]">
+            <div className="su-rs-pb-3">
               {node.su_event_sponsor.map((sponsor, index) =>
-                <div key={`event-sponsor-${index}`}>
+                <div key={`event-sponsor-${index}`} className="su-type-1">
                   {sponsor}
                 </div>
               )}
@@ -93,26 +93,28 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         }
 
         <div className="su-w-[80%] su-mx-auto su-shadow-sm su-border su-border-[#c6c6c6] su-p-[40px] su-mb-[50px]">
-          <h2>Event Details</h2>
+          <h2 className="su-type-1">Event Details:</h2>
           <div className="md:su-grid su-grid-cols-2">
             <div>
               <div>
                 <CalendarIcon width={24}/>
-                {dateTimeString}
-                {inPast && <div>This event has passed.</div>}
+                  <div className="su-text-16 md:su-text-18">
+                    {dateTimeString}
+                  </div>
+                {inPast && <div className="su-text-14 md:su-text-16 su-pt-4">This event has passed.</div>}
               </div>
 
 
               {(node.su_event_location || node.su_event_alt_loc) &&
                   <div>
-                    <h3>Location</h3>
+                    <h3 className="su-text-16 md:su-text-18">Location</h3>
                     {node.su_event_location &&
                         <div>
                           <MapIcon width={24}/>
-                          <div>{node.su_event_location.organization}</div>
-                          <div>{node.su_event_location.address_line1}</div>
-                          <div>{node.su_event_location.address_line2}</div>
-                          <div>{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
+                          <div className="su-text-16 md:su-text-18">{node.su_event_location.organization}</div>
+                          <div className="su-text-16 md:su-text-18">{node.su_event_location.address_line1}</div>
+                          <div className="su-text-16 md:su-text-18">{node.su_event_location.address_line2}</div>
+                          <div className="su-text-16 md:su-text-18">{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
                         </div>
                     }
 
@@ -131,7 +133,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
             <div>
               {(node.su_event_telephone || node.su_event_email) &&
                   <div>
-                      <PhoneIcon width={24}/><h3> Contact</h3>
+                      <PhoneIcon width={24}/><h3 className="su-text-16 md:su-text-18"> Contact</h3>
                     {node.su_event_telephone &&
                         <DrupalLink href={`tel:${node.su_event_telephone}`} className="su-block">
                           {node.su_event_telephone}
@@ -148,7 +150,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
               {node.su_event_audience.length > 0 &&
                   <div>
                       <UserGroupIcon width={24}/>
-                      <h3>This event is open to:</h3>
+                      <h3 className="su-text-16 md:su-text-18">This event is open to:</h3>
                     {node.su_event_audience.map(audience =>
                       <div key={audience.id}>{audience.name}</div>
                     )}
