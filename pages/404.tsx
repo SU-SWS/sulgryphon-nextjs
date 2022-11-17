@@ -1,5 +1,4 @@
 import {PageLayout} from "@/components/layouts/page-layout";
-import {DrupalMenuLinkContent} from "next-drupal";
 
 interface Custom404Props {
 

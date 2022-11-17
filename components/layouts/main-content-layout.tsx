@@ -28,14 +28,14 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   cleanSubtree(subTree);
 
   return (
-    <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
+    <main {...props} className={`${props.className ?? ''} lg:su-grid su-grid-cols-4 su-gap-xl ${fullWidth ? '' : 'su-cc'}`}>
       <Conditional showWhen={subTree?.length > 1 || subTree?.items?.length >= 1}>
         <aside className="su-hidden lg:su-block su-col-span-1">
           <SideNav menuTree={menuTree} subTree={subTree} className="su-sticky su-top-0"/>
         </aside>
       </Conditional>
 
-      <section id="main-content" className={`su-col-span-4 ${subTree?.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
+      <section id="main-content" className={subTree?.length >= 1 ? 'lg:su-col-span-3' : 'su-col-span-4'}>
         {props.children}
       </section>
     </main>

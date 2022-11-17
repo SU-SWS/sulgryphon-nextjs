@@ -130,20 +130,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [],
   const [submenuOpen, setSubmenuOpen] = useState(false)
   const active = activeTrail.includes(id);
 
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleRouteChanged = () => {
-      setSubmenuOpen(false);
-    }
-    // Close the submenu if the route changes.
-    router.events.on('routeChangeComplete', handleRouteChanged)
-
-    return () => {
-      router.events.off('routeChangeError', handleRouteChanged)
-    }
-  }, [router])
-
   // Helper for tailwind JIT to add the classes.
   const titleSpacing = [
     'lg:su-ml-[0px]',
@@ -161,12 +147,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [],
 
   const openCloseSubmenu = () => {
     setSubmenuOpen(!submenuOpen);
-  }
-
-  const handleClickFocusOutside = () => {
-    if (menuLevel === 0) {
-      setSubmenuOpen(false)
-    }
   }
 
   useImperativeHandle(ref, () => ({
@@ -267,7 +247,7 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [],
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
           role="menu">
           {belowItems.map((item, i) =>
-            <MenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1} ref={item.ref}/>)
+            <MenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>)
           }
         </ul>
       </Conditional>
