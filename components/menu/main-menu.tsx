@@ -1,7 +1,7 @@
 import {DrupalMenuLinkContent} from "next-drupal";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {Bars3Icon, ChevronDownIcon, ChevronUpIcon, XMarkIcon} from "@heroicons/react/20/solid";
 
 import {useAppContext} from "../../context/state";
@@ -18,22 +18,22 @@ export const MainMenu = ({...props}) => {
   const [menuTree, setMenuTree] = useState(tree)
   const [activeTrail, setActiveTrail] = useState([]);
   const router = useRouter();
+  const submenuRefs = [];
 
-  // Use effect for the 404 page since `getStaticProps` isn't allowed there.
   useEffect(() => {
-    const handleRouteChanged = () => {
-      setMenuOpen(false)
-    }
 
+    // Use effect for the 404 page since `getStaticProps` isn't allowed there.
     if (menuTree.length === 0) {
       fetch('/api/menu').then(response => response.json())
         .then(menuTree => setMenuTree(menuTree))
     }
-    router.events.on('routeChangeComplete', handleRouteChanged)
+
+    // Set the active trail client side because the router path might be different than building server side.
     setActiveTrail(getActiveTrail(menuTree, router));
 
+    router.events.on('routeChangeComplete', handleClickFocusOutside)
     return () => {
-      router.events.off('routeChangeError', handleRouteChanged)
+      router.events.off('routeChangeError', handleClickFocusOutside)
     }
   }, [menuTree, router]);
 
@@ -45,7 +45,19 @@ export const MainMenu = ({...props}) => {
     return null;
   }
 
+  const addItemRefs = (items) => {
+    items.map(item => {
+      if (item.items?.length > 0) {
+        item.ref = useRef();
+        submenuRefs.push(item.ref);
+        addItemRefs(item.items)
+      }
+    })
+  }
+  addItemRefs(menuTree);
+
   const handleClickFocusOutside = () => {
+    submenuRefs.map(ref => ref?.current?.closeSubmenus())
     setMenuOpen(false)
   }
 
@@ -77,7 +89,7 @@ export const MainMenu = ({...props}) => {
             <nav>
               <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
                 {menuTree.map((item, i) =>
-                  <MenuItem key={item.id} activeTrail={activeTrail} {...item}/>)
+                  <MenuItem key={item.id} activeTrail={activeTrail} {...item} ref={item.ref}/>)
                 }
               </ul>
             </nav>
@@ -113,7 +125,8 @@ interface MenuItemProps {
   expanded?: boolean
 }
 
-const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
+// eslint-disable-next-line react/display-name
+const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [], menuLevel = 0}: MenuItemProps, ref) => {
   const [submenuOpen, setSubmenuOpen] = useState(false)
   const active = activeTrail.includes(id);
 
@@ -156,6 +169,12 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
     }
   }
 
+  useImperativeHandle(ref, () => ({
+    closeSubmenus() {
+      setSubmenuOpen(false)
+    }
+  }))
+
   const getLinkBorderClasses = () => {
     const classes = ['su-border-b', 'su-border-black'];
 
@@ -193,12 +212,7 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
   }
 
   return (
-    <OutsideClickHandler
-      component="li"
-      onClickOutside={handleClickFocusOutside}
-      onFocusOutside={handleClickFocusOutside}
-      className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap"
-    >
+    <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
       <Conditional showWhen={url.length > 1}>
         <Link href={url.length >= 1 ? url : '#'}
               className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
@@ -253,13 +267,13 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
           role="menu">
           {belowItems.map((item, i) =>
-            <MenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>)
+            <MenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1} ref={item.ref}/>)
           }
         </ul>
       </Conditional>
-    </OutsideClickHandler>
+    </li>
   )
-}
+})
 
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
   return (
