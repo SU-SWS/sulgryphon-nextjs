@@ -9,14 +9,14 @@ const buildMenuTree = (
       items: [],
     }
   }
-
-  const children = links.filter((link) => link.parent === parent)
+  const thisLinks = [...links]
+  const children = thisLinks.filter((link) => link.parent === parent)
 
   return children.length
     ? {
       items: children.map((link) => ({
         ...link,
-        ...buildMenuTree(links, link.id),
+        ...buildMenuTree(thisLinks, link.id),
       })),
     }
     : {}

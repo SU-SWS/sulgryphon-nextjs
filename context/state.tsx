@@ -1,5 +1,4 @@
-import { createContext, useContext } from 'react';
-import buildMenuTree from "@/lib/build-menu-tree";
+import {createContext, useContext} from 'react';
 
 const AppContext = createContext({menuItems: []});
 

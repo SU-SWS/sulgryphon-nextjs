@@ -1,48 +1,39 @@
+import {useRouter} from "next/router";
+import {ReactNodeLike} from "prop-types";
+import {DrupalMenuLinkContent} from "next-drupal";
+
 import {useAppContext} from "../../context/state";
+import Conditional from "@/components/simple/conditional";
 import getActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/menu/side-nav";
-import {DrupalMenuLinkContent} from "next-drupal";
 import buildMenuTree from "@/lib/build-menu-tree";
 
 interface MainLayoutProps {
   fullWidth?: boolean;
   className?: string;
-  children: React.ReactNode;
+  children: ReactNodeLike;
 }
 
 export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   const appContext = useAppContext();
-  const {items: tree} = buildMenuTree(appContext.menuItems)
+  const {items: menuTree} = buildMenuTree(appContext.menuItems)
 
-  const activeTrail = getActiveTrail(tree);
-  let subTree;
+  const activeTrail = getActiveTrail(menuTree, useRouter());
+  const topMenuItem = activeTrail.length > 0 ? menuTree.find(item => item.id === activeTrail[0]) : false;
+  const subTree = topMenuItem && topMenuItem.items ? topMenuItem.items : [];
 
-  const cleanSubMenu = (menu: DrupalMenuLinkContent[], activeTrail: number[]) => {
-    menu.map((menuItem, i) => {
-      if (i !== activeTrail[0]) {
-        delete menuItem.items;
-      } else {
-        cleanSubMenu(menuItem.items ?? [], activeTrail.slice(1));
-      }
-    });
+  const cleanSubtree = (tree: DrupalMenuLinkContent[] = []) => {
+    tree.map(item => activeTrail.indexOf(item.id) === -1 ? delete item.items : cleanSubtree(item.items));
   }
-
-
-  if (activeTrail.length >= 1) {
-    subTree = tree[activeTrail[0]]?.items;
-    if (subTree?.length === 1) {
-      subTree = [];
-    }
-    cleanSubMenu(subTree ?? [], activeTrail.slice(1));
-  }
+  cleanSubtree(subTree);
 
   return (
     <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
-      {(subTree?.length >= 1) &&
-          <aside className="su-hidden lg:su-block su-col-span-1">
-              <SideNav tree={subTree} className="su-sticky su-top-0"/>
-          </aside>
-      }
+      <Conditional showWhen={subTree?.length > 0}>
+        <aside className="su-hidden lg:su-block su-col-span-1">
+          <SideNav menuTree={menuTree} subTree={subTree} className="su-sticky su-top-0"/>
+        </aside>
+      </Conditional>
 
       <section id="main-content" className={`su-col-span-4 ${subTree?.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
         {props.children}
