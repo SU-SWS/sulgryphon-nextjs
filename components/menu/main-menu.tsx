@@ -45,9 +45,13 @@ export const MainMenu = ({...props}) => {
     return null;
   }
 
+  const handleClickFocusOutside = () => {
+    setMenuOpen(false)
+  }
+
   return (
     <div {...props}>
-      <OutsideClickHandler onClickOutside={() => setMenuOpen(false)} onFocusOutside={() => setMenuOpen(false)}>
+      <OutsideClickHandler onClickOutside={handleClickFocusOutside} onFocusOutside={handleClickFocusOutside}>
         <button
           className="lg:su-hidden su-text-black-true su-absolute su-top-0 su-right-20 su-no-underline"
           onClick={openCloseMenu}
@@ -146,6 +150,12 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
     setSubmenuOpen(!submenuOpen);
   }
 
+  const handleClickFocusOutside = () => {
+    if (menuLevel === 0) {
+      setSubmenuOpen(false)
+    }
+  }
+
   const getLinkBorderClasses = () => {
     const classes = ['su-border-b', 'su-border-black'];
 
@@ -159,14 +169,12 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
       classes.push('lg:su-border-0')
 
       if (active) {
-        // classes.push('lg:su-border-cardinal-red');
-        // classes.push('lg:su-border-b-4');
         classes.push('after:su-content-[""]')
         classes.push('after:su-block')
         classes.push('after:su-absolute')
         classes.push('after:su-bottom-0')
         classes.push('after:su-left-20')
-        classes.push('after:su-bg-cardinal-red')
+        classes.push('lg:after:su-bg-cardinal-red')
         classes.push('after:su-h-[4px]')
         classes.push(belowItems.length == 0 ? 'after:su-w-[calc(100%-40px)]' : 'after:su-w-[calc(100%-80px)]')
       }
@@ -187,13 +195,13 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
   return (
     <OutsideClickHandler
       component="li"
-      onClickOutside={() => setSubmenuOpen(false)}
-      onFocusOutside={() => setSubmenuOpen(false)}
+      onClickOutside={handleClickFocusOutside}
+      onFocusOutside={handleClickFocusOutside}
       className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap"
     >
       <Conditional showWhen={url.length > 1}>
         <Link href={url.length >= 1 ? url : '#'}
-              className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white hover:su-bg-black lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
+              className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
           <div
             className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
             {title}
@@ -203,7 +211,7 @@ const MenuItem = ({id, title, url, items, expanded, activeTrail = [], menuLevel 
 
       <Conditional showWhen={url.length == 0}>
         <button
-          className={"su-flex su-block su-font-bold su-text-left su-text-white lg:su-text-black-true hover:su-text-white hover:su-bg-black lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"su-flex su-block su-font-bold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
           aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}

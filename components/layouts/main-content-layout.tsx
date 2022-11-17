@@ -29,7 +29,7 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
 
   return (
     <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
-      <Conditional showWhen={subTree?.length > 0}>
+      <Conditional showWhen={subTree?.length > 1 || subTree?.items?.length >= 1}>
         <aside className="su-hidden lg:su-block su-col-span-1">
           <SideNav menuTree={menuTree} subTree={subTree} className="su-sticky su-top-0"/>
         </aside>
