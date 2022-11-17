@@ -19,9 +19,12 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
   const {items: menuTree} = buildMenuTree(appContext.menuItems)
 
   const activeTrail = getActiveTrail(menuTree, useRouter());
+
+  // Peel off the menu items from the parent.
   const topMenuItem = activeTrail.length > 0 ? menuTree.find(item => item.id === activeTrail[0]) : false;
   const subTree = topMenuItem && topMenuItem.items ? topMenuItem.items : [];
 
+  // Remove child menu items that aren't in the active trail.
   const cleanSubtree = (tree: DrupalMenuLinkContent[] = []) => {
     tree.map(item => activeTrail.indexOf(item.id) === -1 ? delete item.items : cleanSubtree(item.items));
   }
@@ -39,7 +42,5 @@ export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
         {props.children}
       </section>
     </main>
-
   )
-
 }

@@ -20,27 +20,25 @@ export const MainMenu = ({...props}) => {
   const submenuRefs = [];
 
   useEffect(() => {
-    // Set the active trail client side because the router path might be different than building server side.
+    // Set the active trail client side because the router path might be different from building server side.
     setActiveTrail(getActiveTrail(menuTree, router));
 
-    const handleRouteChange = () => {
-      submenuRefs.map(ref => ref?.current?.closeSubmenus())
-      setMenuOpen(false)
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
+    // Close all menu and submenus after the route changes.
+    router.events.on('routeChangeComplete', handleClickFocusOutside)
     return () => {
-      router.events.off('routeChangeError', handleRouteChange)
+      router.events.off('routeChangeError', handleClickFocusOutside)
     }
   }, [router]);
-
-  const openCloseMenu = () => {
-    setMenuOpen(!menuOpen);
-  }
 
   if (menuTree.length === 0) {
     return null;
   }
 
+  const openCloseMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
+
+  // Add refs to menu items that have children. This allows us to forward the ref and close submenus later.
   const addItemRefs = (items) => {
     items.map(item => {
       if (item.items?.length > 0) {
@@ -52,6 +50,7 @@ export const MainMenu = ({...props}) => {
   }
   addItemRefs(menuTree);
 
+  // When clicking or focusing outside the main menu, close the main menu and all submenus.
   const handleClickFocusOutside = () => {
     submenuRefs.map(ref => ref?.current?.closeSubmenus())
     setMenuOpen(false)
@@ -122,7 +121,15 @@ interface MenuItemProps {
 }
 
 // eslint-disable-next-line react/display-name
-const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [], menuLevel = 0}: MenuItemProps, ref) => {
+const MenuItem = forwardRef(({
+                               id,
+                               title,
+                               url,
+                               items,
+                               expanded,
+                               activeTrail = [],
+                               menuLevel = 0
+                             }: MenuItemProps, ref) => {
   const [submenuOpen, setSubmenuOpen] = useState(false)
   const active = activeTrail.includes(id);
 
@@ -141,22 +148,25 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [],
   ];
   const belowItems = items?.length > 0 ? items : [];
 
+  // Expand/Collapse menu button click handler.
   const openCloseSubmenu = () => {
     setSubmenuOpen(!submenuOpen);
   }
 
+  // Forward ref function to close submenu from the parent.
   useImperativeHandle(ref, () => ({
     closeSubmenus() {
       setSubmenuOpen(false)
     }
   }))
 
+  // Add classes to the link item based on various conditions.
   const getLinkBorderClasses = () => {
     const classes = ['su-border-b', 'su-border-black'];
 
     // If there are children under the menu item.
     if (belowItems.length >= 1) {
-      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:su-w-[calc(100%-40px)]' : "") : 'lg:su-w-[calc(100%-70px)] lg:su-pr-0');
+      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:su-w-[calc(100%-40px)]' : "") : 'lg:su-w-[calc(100%-72px)] lg:su-pr-0 lg:su-mr-[2px]');
     }
 
     // Special treatment for the top level items.
@@ -225,7 +235,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, activeTrail = [],
           </div>
         </button>
       </Conditional>
-
 
       <Conditional showWhen={belowItems.length >= 1 && expanded}>
         <Conditional showWhen={url.length > 0}>

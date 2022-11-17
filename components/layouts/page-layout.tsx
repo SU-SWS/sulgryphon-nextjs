@@ -2,7 +2,6 @@ import {PreviewAlert} from "@/components/preview-alert"
 import {IdentityBar} from "@/components/patterns/identity-bar";
 import Header from "@/components/header";
 import {GlobalFooter} from "@/components/patterns/global-footer";
-import {DrupalLink} from "@/components/simple/link";
 
 export const PageLayout = ({...props}) => {
 
@@ -20,7 +19,5 @@ export const PageLayout = ({...props}) => {
         <GlobalFooter/>
       </div>
     </div>
-
   )
-
 }

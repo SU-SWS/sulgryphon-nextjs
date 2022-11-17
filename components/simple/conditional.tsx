@@ -1,6 +1,11 @@
 import {ReactNodeLike} from "prop-types";
 
-const Conditional = ({showWhen, children}: { showWhen: boolean, children: ReactNodeLike }) => {
+interface ConditionalProps {
+  showWhen: boolean
+  children: ReactNodeLike
+}
+
+const Conditional = ({showWhen, children}: ConditionalProps) => {
   if (showWhen) return <>{children}</>
   return <></>
 }

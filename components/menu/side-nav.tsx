@@ -29,7 +29,8 @@ export const SideNav = ({menuTree, subTree, menuLevel = 0, ...props}: MainMenuPr
     return null;
   }
   return (
-    <ul {...props} className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+    <ul {...props}
+        className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
       {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} menuLevel={menuLevel} {...item}/>)}
     </ul>
   )
@@ -57,17 +58,17 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel, items = []}: Side
 
   const getLinkClasses = () => {
     const classes = [depthClasses[menuLevel]];
-    if(isActive){
+    if (isActive) {
       classes.push('su-bg-foggy-light')
       classes.push('su-text-archway-light')
     }
     return classes.join(' ');
   }
 
-
   return (
     <li className={`su-m-0`}>
-      <DrupalLink href={url} className={"su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline " + getLinkClasses()}>
+      <DrupalLink href={url}
+                  className={"su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline " + getLinkClasses()}>
         {title}
       </DrupalLink>
 

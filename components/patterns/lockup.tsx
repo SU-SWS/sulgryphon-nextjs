@@ -1,7 +1,8 @@
 import Link from "next/link";
+
 import Logo from "@/components/simple/logo";
 
-export const Lockup = ({...props}) => {
+export const Lockup = (props) => {
   return (
     <div {...props}>
       <Link href="/" className="su-no-underline">
