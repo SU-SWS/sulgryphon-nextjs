@@ -1,7 +1,7 @@
 import {DrupalMenuLinkContent} from "next-drupal";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
+import {forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {Bars3Icon, ChevronDownIcon, ChevronUpIcon, XMarkIcon} from "@heroicons/react/20/solid";
 
 import {useAppContext} from "../../context/state";
@@ -13,11 +13,11 @@ import OutsideClickHandler from "@/components/simple/outside-click-handler";
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
-  const {items: menuTree} = buildMenuTree(appContext.menuItems)
+  const {items: menuTree} = useMemo(() => buildMenuTree(appContext.menuItems), [])
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeTrail, setActiveTrail] = useState([]);
-  const router = useRouter();
-  const submenuRefs = [];
+  const router = useRouter()
+  const submenuRefs = useMemo(() => [], []);
 
   useEffect(() => {
     // Set the active trail client side because the router path might be different from building server side.

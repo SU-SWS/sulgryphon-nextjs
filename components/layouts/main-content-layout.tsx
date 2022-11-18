@@ -1,12 +1,6 @@
-import {useRouter} from "next/router";
 import {ReactNodeLike} from "prop-types";
-import {DrupalMenuLinkContent} from "next-drupal";
 
-import {useAppContext} from "../../context/state";
-import Conditional from "@/components/simple/conditional";
-import getActiveTrail from "@/lib/menu";
 import {SideNav} from "@/components/menu/side-nav";
-import buildMenuTree from "@/lib/build-menu-tree";
 
 interface MainLayoutProps {
   fullWidth?: boolean;
@@ -14,32 +8,12 @@ interface MainLayoutProps {
   children: ReactNodeLike;
 }
 
-export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
-  const appContext = useAppContext();
-  const {items: menuTree} = buildMenuTree(appContext.menuItems)
-
-  const activeTrail = getActiveTrail(menuTree, useRouter());
-
-  // Peel off the menu items from the parent.
-  const topMenuItem = activeTrail.length > 0 ? menuTree.find(item => item.id === activeTrail[0]) : false;
-  const subTree = topMenuItem && topMenuItem.items ? topMenuItem.items : [];
-
-  // Remove child menu items that aren't in the active trail.
-  const cleanSubtree = (tree: DrupalMenuLinkContent[] = []) => {
-    tree.map(item => activeTrail.indexOf(item.id) === -1 ? delete item.items : cleanSubtree(item.items));
-  }
-  cleanSubtree(subTree);
-
+export const MainContentLayout = ({fullWidth, children}: MainLayoutProps) => {
   return (
-    <main {...props} className={`${props.className ?? ''} lg:su-grid su-grid-cols-4 su-gap-xl ${fullWidth ? '' : 'su-cc'}`}>
-      <Conditional showWhen={subTree?.length > 1 || subTree?.items?.length >= 1}>
-        <aside className="su-hidden lg:su-block su-col-span-1">
-          <SideNav menuTree={menuTree} subTree={subTree} className="su-sticky su-top-0"/>
-        </aside>
-      </Conditional>
-
-      <section id="main-content" className={subTree?.length >= 1 ? 'lg:su-col-span-3' : 'su-col-span-4'}>
-        {props.children}
+    <main className={`lg:su-flex su-justify-between su-gap-2xl ${fullWidth ? '' : 'su-cc'}`}>
+      <SideNav className="su-hidden lg:su-block su-w-4/12"/>
+      <section id="main-content" className="su-flex-1">
+        {children}
       </section>
     </main>
   )
