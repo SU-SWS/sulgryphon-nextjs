@@ -23,10 +23,15 @@ export const MainMenu = ({...props}) => {
     // Set the active trail client side because the router path might be different from building server side.
     setActiveTrail(getActiveTrail(menuTree, router));
 
+    const handleRouteChange = () => {
+      submenuRefs.map(ref => ref?.current?.closeSubmenus())
+      setMenuOpen(false)
+    }
+
     // Close all menu and submenus after the route changes.
-    router.events.on('routeChangeComplete', handleClickFocusOutside)
+    router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
-      router.events.off('routeChangeError', handleClickFocusOutside)
+      router.events.off('routeChangeError', handleRouteChange)
     }
   }, [router]);
 
