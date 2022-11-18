@@ -23,7 +23,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
 
-        <div className="su-flex su-no-wrap su-mb-[50px]">
+        <div className="su-flex su-no-wrap su-mb-[50px] su-mt-50">
 
           {node?.su_person_photo?.field_media_image &&
               <div className="su-mr-[20px]">
@@ -127,6 +127,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
             {node?.su_person_links.length !== 0 &&
               <div>
+                <LinkIcon height={41} className=""/>
                 <h2>Links</h2>
                 <div>
                   {node.su_person_links.map((link) =>
@@ -137,8 +138,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                 </div>
               </div>
             }
-
-            {console.log(node.su_person_links )}
+            {/*{console.log(node.su_person_links )}*/}
           </div>
         </div>
       </article>
