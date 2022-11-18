@@ -32,9 +32,16 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
             url={node.su_news_source?.url}
             title={node.title}
             images={node.su_news_featured_media?.field_media_image?.uri?.url}
+            section=""
+            keywords=""
+            dateCreated={node.su_news_publishing_date}
             datePublished={node.su_news_publishing_date}
+            dateModified=""
             authorName={node.su_news_byline}
             description={node.su_news_dek}
+            body=""
+            publisherName=""
+            publisherLogo=""
             isAccessibleForFree={true}
         />
         {node.su_news_topics && node.su_news_topics.map((topic, index) =>
