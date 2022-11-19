@@ -12,12 +12,15 @@ export const PageLayout = ({...props}) => {
         <PreviewAlert/>
         <IdentityBar/>
         <Header/>
-        {props.children}
+
+        <div>
+          {props.children}
+        </div>
       </div>
 
-      <div className="su-row-start-2 su-row-end-3">
+      <footer className="su-row-start-2 su-row-end-3">
         <GlobalFooter/>
-      </div>
+      </footer>
     </div>
   )
 }

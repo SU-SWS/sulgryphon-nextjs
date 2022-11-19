@@ -34,7 +34,6 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
         }}
       />
 
-      <div>
       <Conditional showWhen={!homepage}>
         <div className="su-cc">
           <h1 className={`su-mt-50 ${node.su_page_banner ? 'su-sr-only' : ''}`}>
@@ -46,7 +45,6 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
       <Conditional showWhen={node.su_page_banner?.id?.length > 1}>
         <StanfordBanner className="su-mb-50" paragraph={node.su_page_banner}/>
       </Conditional>
-      </div>
 
       <MainContentLayout fullWidth={homepage} {...props}>
         <Conditional showWhen={node.su_page_components.length > 0}>
