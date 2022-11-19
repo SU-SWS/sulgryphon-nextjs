@@ -1,7 +1,7 @@
 import {ReactNodeLike} from "prop-types";
 
 interface ConditionalProps {
-  showWhen: boolean
+  showWhen: boolean | any
   children: ReactNodeLike
 }
 

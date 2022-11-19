@@ -12,7 +12,6 @@ import {populateParagraphData} from "@/lib/fetch-paragraphs";
 import {PageLayout} from "@/components/layouts/page-layout";
 import {NodePageDisplay} from "@/nodes/index";
 import {AppWrapperProvider} from "../context/state";
-import buildMenuTree from "@/lib/build-menu-tree";
 
 interface NodePageProps {
   node: DrupalNode
