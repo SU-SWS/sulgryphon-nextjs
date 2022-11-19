@@ -61,7 +61,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
                 </Link>
               </li>
               <li className="su-mr-1em">
-                <Link className="su-text-black hocus:su-text-twitter su-transition-colors" href={`https://twitter.com/intent/tweet?url={window.location}&text=${currentUrl}`}>
+                <Link className="su-text-black hocus:su-text-twitter su-transition-colors" href={`https://twitter.com/intent/tweet?url=${currentUrl}&text=${node.title}`}>
                   <span className="su-sr-only">Stanford Twitter</span>
                   <TwitterIcon />
                 </Link>
@@ -75,13 +75,13 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
               <li className="su-mr-1em">
                 <Link className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href={`mailto:?subject=${node.title}&body=${currentUrl}`}>
                   <span className="su-sr-only">Forward Email</span>
-                  <EnvelopeIcon className="su-w-[28px]"/>
+                  <EnvelopeIcon width={28} />
                 </Link>
               </li>
               <li className="su-mr-1em">
                 <button onClick={() => window.print()} className="su-text-black  hocus:su-text-digital-blue su-transition-colors">
                   <span className="su-sr-only">Print Article</span>
-                  <PrinterIcon className="su-w-[28px]"/>
+                  <PrinterIcon width={28} />
                 </button>
               </li>
             </ul>
