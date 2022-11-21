@@ -7,6 +7,7 @@ interface CardProps {
   image?: ReactNodeLike
   superHeader?: string
   header?: any
+  footer?: ReactNodeLike
   body?: string
   link?: {
     url: string
@@ -16,7 +17,7 @@ interface CardProps {
   className?: string
 }
 
-export const Card = ({video, image, superHeader, header, body, link, linkStyle, ...props}: CardProps) => {
+export const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
 
   return (
     <div {...props}
@@ -44,6 +45,10 @@ export const Card = ({video, image, superHeader, header, body, link, linkStyle, 
         }
 
         {body && <div>{formatHtml(body)}</div>}
+
+        {footer &&
+            <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</div>
+        }
 
         {(link && linkStyle !== 'action') &&
             <DrupalLinkButton href={link.url}>
