@@ -35,7 +35,7 @@ export const MainMenu = ({...props}) => {
     // Close all menu and submenus after the route changes.
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
-      router.events.off('routeChangeError', handleRouteChange)
+      router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router]);
 
@@ -96,15 +96,15 @@ export const MainMenu = ({...props}) => {
             <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
               <span className="su-mr-20">Quick Links:</span>
               <Link
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal su-mr-20"
+                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
                 href="/">My Account</Link>
               <Link
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal su-mr-20"
+                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
                 href="/">Search Results</Link>
               <Link
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal su-mr-20"
+                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
                 href="/">Accessibility</Link>
-              <Link className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-font-normal"
+              <Link className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
                     href="/">Contact Us</Link>
             </div>
           </div>
@@ -147,6 +147,10 @@ const MenuItem = forwardRef(({
                                activeTrail = [],
                                menuLevel = 0
                              }: MenuItemProps, ref) => {
+
+  if (menuLevel >= 2) {
+    return null;
+  }
   const [submenuOpen, setSubmenuOpen] = useState(false)
   const active = activeTrail.includes(id);
 
@@ -183,7 +187,7 @@ const MenuItem = forwardRef(({
 
     // If there are children under the menu item.
     if (belowItems.length >= 1) {
-      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:su-w-[calc(100%-40px)]' : "") : 'lg:su-w-[calc(100%-72px)] lg:su-pr-0 lg:su-mr-[2px]');
+      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:su-w-[calc(100%-40px)]' : "") : ' lg:su-pr-0 lg:su-mr-[2px]');
     }
 
     // Special treatment for the top level items.
@@ -222,7 +226,7 @@ const MenuItem = forwardRef(({
     <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
       <Conditional showWhen={url.length > 1}>
         <Link href={url.length >= 1 ? url : '#'}
-              className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
+              className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
           <div
             className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
             {title}
@@ -232,7 +236,7 @@ const MenuItem = forwardRef(({
 
       <Conditional showWhen={url.length == 0}>
         <button
-          className={"su-flex su-block su-font-bold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline lg:hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"su-flex su-block su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
           aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}
@@ -252,7 +256,7 @@ const MenuItem = forwardRef(({
         </button>
       </Conditional>
 
-      <Conditional showWhen={belowItems.length >= 1 && expanded}>
+      <Conditional showWhen={menuLevel == 0 && belowItems.length >= 1 && expanded}>
         <Conditional showWhen={url.length > 0}>
           <DropDownButton
             isOpen={submenuOpen}
@@ -279,13 +283,13 @@ const MenuItem = forwardRef(({
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
   return (
     <button
-      className={"su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
+      className={"su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-25 after:su-z-5 hover:after:su-bg-cardinal-red" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
       onClick={onButtonClick}
       {...props}>
       <ChevronDownIcon
         className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (isOpen ? " su-scale-y-[-1]" : "")}
         height={40}/>
-      <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
+      <span className="su-sr-only">{(isOpen ? "Collapse" : "Expand") + " \"" + title.trim() + "\" submenu"}</span>
     </button>
   )
 }
