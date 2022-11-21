@@ -21,7 +21,57 @@ module.exports = {
   ],
   theme: {
     extend: {
-      gridTemplateColumns: {...twoColumn,...threeColumn}
+      gridTemplateColumns: {...twoColumn, ...threeColumn},
+      keyframes: {
+        "slide-up": {
+          "0%": {transform: "translateY(0%)"},
+          "100%": {transform: "translateY(-100%)", visibility: "hidden"}
+        },
+        "slide-down": {
+          "0%": {transform: "translateY(-100%)", visibility: "hidden"},
+          "100%": {transform: "translateY(0%)"}
+        },
+        "menu-x-morph-a": {
+          "0%": {},
+          "50%": {transform: "translateY(10px)"},
+          "100%": {transform: "translateY(10px) rotate(45deg)"}
+        },
+        "menu-x-morph-b": {
+          "0%": {},
+          "50%": {transform: "rotate(0deg)"},
+          "100%": {transform: "rotate(-45deg)"}
+        },
+        "menu-x-morph-c": {
+          "0%": {},
+          "50%": {transform: "translateY(-10px)"},
+          "100%": {transform: "translateY(-10px) rotate(-45deg)"}
+        },
+        "menu-x-morph-r-a": {
+          "0%": {},
+          "50%": {transform: "translateY(10px)"},
+          "100%": {transform: "translateY(10px) rotate(45deg)"}
+        },
+        "menu-x-morph-r-b": {
+          "0%": {},
+          "50%": {transform: "rotate(0deg)"},
+          "100%": {transform: "rotate(-45deg)"}
+        },
+        "menu-x-morph-r-c": {
+          "0%": {},
+          "50%": {transform: "translateY(-10px)"},
+          "100%": {transform: "translateY(-10px) rotate(-45deg)"}
+        }
+      },
+      animation: {
+        "slide-up": "slide-up .4s ease forwards",
+        "slide-down": "slide-down .4s ease forwards",
+        "menu-x-morph-a": "menu-x-morph-a .4s ease forwards",
+        "menu-x-morph-b": "menu-x-morph-b .4s ease forwards",
+        "menu-x-morph-c": "menu-x-morph-c .4s ease forwards",
+        "menu-x-morph-r-a": "menu-x-morph-r-a .4s ease reverse forwards",
+        "menu-x-morph-r-b": "menu-x-morph-r-b .4s ease reverse forwards",
+        "menu-x-morph-r-c": "menu-x-morph-r-c .4s ease reverse forwards"
+      }
     },
   },
   variants: {

@@ -1,54 +1,104 @@
 import {useRouter} from "next/router";
 import {DrupalMenuLinkContent} from "next-drupal";
+import Link from "next/link";
+import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
-import {DrupalLink} from "@/components/simple/link";
+import Conditional from "@/components/simple/conditional";
+import {useEffect, useMemo, useState} from "react";
+import getActiveTrail from "@/lib/menu";
+import {useAppContext} from "../../context/state";
+import buildMenuTree from "@/lib/build-menu-tree";
 
-interface MainMenuProps {
-  tree: DrupalMenuLinkContent[]
-  menuLevel?: number
-  className?: any
-}
+export const SideNav = (props) => {
+  const router = useRouter();
+  const appContext = useAppContext();
+  const {items: menuTree} = useMemo(() => buildMenuTree(appContext.menuItems), [appContext.menuItems])
+  const activeTrail = getActiveTrail(menuTree, router);
 
-export const SideNav = ({tree, menuLevel = 0, ...props}: MainMenuProps) => {
-  if (typeof tree === 'undefined') {
+  // Peel off the menu items from the parent.
+  const topMenuItem = activeTrail.length > 0 ? menuTree.find(item => item.id === activeTrail[0]) : false;
+  const subTree = useMemo(() => topMenuItem && topMenuItem.items ? topMenuItem.items : [], [activeTrail, topMenuItem]);
+
+  if (typeof subTree === 'undefined' || (subTree.length <= 1 && typeof subTree[0]?.items == 'undefined')) {
     return null;
   }
 
   return (
-    <ul {...props} className={`su-list-unstyled ${props.className ?? ''}`}>
-      {tree.map(item => <MenuItem key={item.id} menuLevel={menuLevel} {...item}/>)}
-    </ul>
+    <aside {...props}>
+      <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+        {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
+      </ul>
+    </aside>
   )
 }
 
-interface MenuItemProps {
+interface SideMenuItemProps {
+  id: string
   title: string
   url: string
   parentItemProps?: any
-  items?: DrupalMenuLinkContent[]
   menuLevel: number
+  activeTrail: string[]
+  items?: DrupalMenuLinkContent[]
 }
 
-export const MenuItem = ({title, url, items, menuLevel, ...props}: MenuItemProps) => {
-  const router = useRouter()
-  const isActive = router.asPath === url;
+const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: SideMenuItemProps) => {
+  const router = useRouter();
+  const isActive = activeTrail.length > 0 && activeTrail[activeTrail.length - 1] == id;
+  const [submenuOpen, setSubmenuOpen] = useState(activeTrail.indexOf(id) >= 0);
 
   const depthClasses = [
-    'su-ml-0',
-    'su-ml-[20px]',
-    'su-ml-[40px]',
-    'su-ml-[60px]',
+    'su-pl-30',
+    'su-pl-60',
+    'su-pl-90',
+    'su-pl-120',
   ]
+
+  const subnavOpenClose = () => {
+    setSubmenuOpen(!submenuOpen);
+  }
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setSubmenuOpen(activeTrail.indexOf(id) >= 0)
+    }
+    // Close all menu and submenus after the route changes.
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [activeTrail, id, isActive, router]);
+
   return (
     <li className={`su-m-0`}>
-      <DrupalLink href={url}
-                  className={`${depthClasses[menuLevel]} su-p-[5px] su-block su-no-underline su-relative hover:su-underline ${isActive ? 'su-text-black before:su-content-[""] before:su-w-[6px] before:su-h-full before:su-bg-black before:su-block before:su-absolute before:su-left-[-16px] before:su-top-0' : 'su-text-cardinal-red'}`}>
-        {title}
-      </DrupalLink>
+      <div className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light su-text-archway-light": "")}>
+        <Link href={url}
+              className={"su-flex-grow su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline"}>
+          {title}
+        </Link>
 
-      {typeof items === 'object' &&
-          <SideNav tree={items} menuLevel={menuLevel + 1}/>
-      }
+        <Conditional showWhen={items?.length > 0}>
+          <div className="su-relative su-flex su-items-center">
+            <button
+              className="su-mr-20 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-15 after:su-z-5 hover:after:su-bg-cardinal-red"
+              onClick={subnavOpenClose}
+              aria-haspopup="true"
+              aria-expanded={submenuOpen ? "true" : "false"}
+            >
+              <ChevronDownIcon width={40} className={"su-transition-all" + (submenuOpen ? " su-scale-y-[-1]" : "")}/>
+              <span className="su-sr-only">{(submenuOpen ? "Collapse" : "Expand") + " \"" + title.trim() + "\" submenu"}</span>
+            </button>
+          </div>
+        </Conditional>
+      </div>
+
+      <Conditional showWhen={items?.length > 0}>
+        <ul className={"su-list-unstyled" + (submenuOpen ? " su-block" : " su-hidden")}>
+          {items.map(item =>
+            <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>
+          )}
+        </ul>
+      </Conditional>
     </li>
   )
 }

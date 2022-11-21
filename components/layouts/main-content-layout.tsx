@@ -1,52 +1,20 @@
-import {useAppContext} from "../../context/state";
-import getActiveTrail from "@/lib/menu";
+import {ReactNodeLike} from "prop-types";
+
 import {SideNav} from "@/components/menu/side-nav";
-import {DrupalMenuLinkContent} from "next-drupal";
 
 interface MainLayoutProps {
   fullWidth?: boolean;
   className?: string;
-  children: React.ReactNode;
+  children: ReactNodeLike;
 }
 
-export const MainContentLayout = ({fullWidth, ...props}: MainLayoutProps) => {
-  const appContext = useAppContext();
-
-  const activeTrail = getActiveTrail(appContext.menu);
-  let subTree;
-
-  const cleanSubMenu = (menu: DrupalMenuLinkContent[], activeTrail: number[]) => {
-    menu.map((menuItem, i) => {
-      if (i !== activeTrail[0]) {
-        delete menuItem.items;
-      } else {
-        cleanSubMenu(menuItem.items ?? [], activeTrail.slice(1));
-      }
-    });
-  }
-
-
-  if (activeTrail.length >= 1) {
-    subTree = appContext.menu[activeTrail[0]]?.items;
-    if (subTree?.length === 1) {
-      subTree = [];
-    }
-    cleanSubMenu(subTree ?? [], activeTrail.slice(1));
-  }
-
+export const MainContentLayout = ({fullWidth, children}: MainLayoutProps) => {
   return (
-    <main {...props} className={`${props.className ?? ''} md:su-grid su-grid-cols-4 ${fullWidth ? '' : 'su-cc'}`}>
-      {(subTree?.length >= 1) &&
-          <aside className="su-hidden lg:su-block su-col-span-1">
-              <SideNav tree={subTree} className="su-sticky su-top-0"/>
-          </aside>
-      }
-
-      <section id="main-content" className={`su-col-span-4 ${subTree?.length >= 1 ? 'lg:su-col-span-3' : ''}`}>
-        {props.children}
+    <main className={`lg:su-flex su-justify-between su-gap-2xl ${fullWidth ? '' : 'su-cc'}`}>
+      <SideNav className="su-hidden lg:su-block su-w-4/12"/>
+      <section id="main-content" className="su-flex-1">
+        {children}
       </section>
     </main>
-
   )
-
 }

@@ -1,19 +1,24 @@
-import {DrupalLink} from "@/components/simple/link";
+import Link from "next/link";
 
-export const Lockup = () => {
+import Logo from "@/components/simple/logo";
+
+export const Lockup = (props) => {
   return (
-    <div>
-      <DrupalLink href="/" className="su-cc su-lockup su-no-underline su-inline-block">
-        <div className="su-flex su-flex-col md:su-flex-row su-basefont-19">
-          <div
-            className=" su-logo su-text-cardinal-red su-type-4 su-leading-half su-pt-11 su-pr-7 su-mr-7 md:su-border-r su-border-solid su-border-black "> Stanford
-          </div>
-          <div
-            className=" su-text-25 md:su-text-m2 su--mt-3 md:su-mt-0 su--ml-2 md:su-ml-0 su-font-regular su-relative su-top-6 su-text-black ">
-            {process.env.NEXT_PUBLIC_SITE_NAME}
+    <div {...props}>
+      <Link href="/" className="su-no-underline">
+        <div className="su-flex md:su-flex-row su-basefont-19">
+          <div><Logo /></div>
+
+          <div className="su-flex su-flex-wrap lg:su-items-center su-ml-10">
+            <div className="lg:su-flex su-items-baseline su-leading-none su-w-full lg:su-w-auto su-mt-15 lg:su-mt-0 su-logo su-text-cardinal-red su-type-4 su-mr-5 su-pr-5 lg:su-border-r su-border-solid su-border-black">
+              Stanford
+            </div>
+            <div className="su-w-full lg:su-w-auto su-text-20 lg:su-text-m2 su-font-regular su-text-black su-uppercase">
+              {process.env.NEXT_PUBLIC_SITE_NAME}
+            </div>
           </div>
         </div>
-      </DrupalLink>
+      </Link>
     </div>
   )
 }

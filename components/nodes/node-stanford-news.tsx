@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {News} from "../../types/drupal";
 import {DrupalImage} from "@/components/simple/image";
 import Image from "next/image";
@@ -121,6 +121,7 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
   let image;
   if (imageUrl) {
     image = <Image
+      className="su-object-cover su-object-center"
       src={imageUrl}
       alt=""
       fill={true}
@@ -160,16 +161,19 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
 }
 
 export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
-  let imageUrl = getFeaturedImageUrl(node);
-  let image;
-  if (imageUrl) {
-    image = <Image
-      src={imageUrl}
-      alt=""
-      fill={true}
-    />
-  }
 
+  const getImage = () => {
+    let imageUrl = getFeaturedImageUrl(node);
+    if (imageUrl) {
+      return <Image
+        className="su-object-cover su-object-center"
+        src={imageUrl}
+        alt=""
+        fill={true}
+      />
+    }
+  }
+  const image = useMemo(() => getImage(), [node]);
 
   return (
     <article {...props}>
