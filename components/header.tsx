@@ -5,8 +5,8 @@ import {MainMenu} from "@/components/menu/main-menu";
 
 const Header = () => {
   return (
-    <header className="su-shadow-lg su-mt-20 su-relative">
-      <div className="su-cc lg:su-flex su-justify-between">
+    <header className="su-shadow-lg su-relative">
+      <div className="su-pt-20 su-bg-white su-cc lg:su-flex su-justify-between su-relative su-z-20">
         <Lockup className="su-pb-20"/>
         <div className="su-hidden lg:su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
           <HeaderLink href="https://mylibrary.stanford.edu/" text="Accessibility"/>

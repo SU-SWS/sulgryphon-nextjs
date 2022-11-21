@@ -2,7 +2,7 @@ import {DrupalMenuLinkContent} from "next-drupal";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
-import {Bars3Icon, ChevronDownIcon, ChevronUpIcon, XMarkIcon} from "@heroicons/react/20/solid";
+import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
 import {useAppContext} from "../../context/state";
 import getActiveTrail from "@/lib/menu";
@@ -15,6 +15,9 @@ export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
   const {items: menuTree} = useMemo(() => buildMenuTree(appContext.menuItems), [])
   const [menuOpen, setMenuOpen] = useState(false)
+  // To prevent the sudden animation after the page initially loads, only add the certain animation after the button
+  // has been pressed at least once. That will then add the appropriate close animations only after loading.
+  const [addCloseAnimation, setAddCloseAnimation] = useState(false)
   const [activeTrail, setActiveTrail] = useState([]);
   const router = useRouter()
   const submenuRefs = useMemo(() => [], []);
@@ -22,12 +25,13 @@ export const MainMenu = ({...props}) => {
   useEffect(() => {
     // Set the active trail client side because the router path might be different from building server side.
     setActiveTrail(getActiveTrail(menuTree, router));
+  }, [menuTree, router])
 
+  useEffect(() => {
     const handleRouteChange = () => {
       submenuRefs.map(ref => ref?.current?.closeSubmenus())
       setMenuOpen(false)
     }
-
     // Close all menu and submenus after the route changes.
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
@@ -41,6 +45,7 @@ export const MainMenu = ({...props}) => {
 
   const openCloseMenu = () => {
     setMenuOpen(!menuOpen);
+    setAddCloseAnimation(true);
   }
 
   // Add refs to menu items that have children. This allows us to forward the ref and close submenus later.
@@ -65,25 +70,19 @@ export const MainMenu = ({...props}) => {
     <div {...props}>
       <OutsideClickHandler onClickOutside={handleClickFocusOutside} onFocusOutside={handleClickFocusOutside}>
         <button
-          className="lg:su-hidden su-text-black-true su-absolute su-top-0 su-right-20 su-no-underline"
+          className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
           onClick={openCloseMenu}
           aria-haspopup="true"
           aria-expanded={menuOpen ? "true" : "false"}
         >
-          <Conditional showWhen={!menuOpen}>
-            <Bars3Icon height={40} className="su-font-bold"/>
-            <span className="su-text-14"><span className="su-sr-only">Open </span>Menu</span>
-          </Conditional>
-
-          <Conditional showWhen={menuOpen}>
-            <XMarkIcon height={40} className="su-font-bold"/>
-            <span className="su-text-14">Close<span className="su-sr-only"> Menu</span></span>
-          </Conditional>
+          <MobileOpenMenuButtonIcon open={menuOpen} addCloseAnimation={addCloseAnimation}/>
+          {menuOpen ? "Close" : "Menu"}
         </button>
 
         <div className="su-relative">
           <div
-            className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-top-0 su-w-full su-z-10 lg:su-block " + (menuOpen ? "su-block" : "su-hidden")}>
+            aria-hidden={!menuOpen}
+            className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
             <SearchWorks className="lg:su-hidden"/>
 
             <nav>
@@ -111,6 +110,19 @@ export const MainMenu = ({...props}) => {
           </div>
         </div>
       </OutsideClickHandler>
+    </div>
+  )
+}
+
+const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
+  return (
+    <div className="su-w-[30px] su-mx-auto">
+      <div
+        className={"su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-a" : (addCloseAnimation ? " su-animate-menu-x-morph-r-a" : ""))}/>
+      <div
+        className={"su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-b" : (addCloseAnimation ? " su-animate-menu-x-morph-r-b" : ""))}/>
+      <div
+        className={"su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-c" : (addCloseAnimation ? " su-animate-menu-x-morph-r-c" : ""))}/>
     </div>
   )
 }
@@ -186,7 +198,11 @@ const MenuItem = forwardRef(({
         classes.push('after:su-left-20')
         classes.push('lg:after:su-bg-cardinal-red')
         classes.push('after:su-h-[4px]')
-        classes.push(belowItems.length == 0 ? 'after:su-w-[calc(100%-40px)]' : 'after:su-w-[calc(100%-80px)]')
+        classes.push(belowItems.length > 0 ? 'after:su-w-[calc(100%-60px)]' : 'after:su-w-[calc(100%-40px)]')
+      }
+
+      if (belowItems.length > 0) {
+        classes.push('lg:su-pr-5')
       }
     }
 
@@ -227,16 +243,11 @@ const MenuItem = forwardRef(({
           </div>
 
           <div
-            className={"su-flex su-items-center su-bg-black su-h-[69px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
-            <Conditional showWhen={submenuOpen}>
-              <ChevronUpIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
-              <span className="su-sr-only">Collapse &quot;{title}&quot; submenu</span>
-            </Conditional>
-
-            <Conditional showWhen={!submenuOpen}>
-              <ChevronDownIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
-              <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
-            </Conditional>
+            className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
+            <ChevronDownIcon
+              className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
+              height={40}/>
+            <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
           </div>
         </button>
       </Conditional>
@@ -268,17 +279,13 @@ const MenuItem = forwardRef(({
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
   return (
     <button
-      className={"su-bg-black su-h-[69px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
+      className={"su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
       onClick={onButtonClick}
       {...props}>
-      <Conditional showWhen={isOpen}>
-        <ChevronUpIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
-        <span className="su-sr-only">Collapse &quot;{title}&quot; submenu</span>
-      </Conditional>
-      <Conditional showWhen={!isOpen}>
-        <ChevronDownIcon className="su-text-white lg:su-text-black-true su-mx-auto" height={40}/>
-        <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
-      </Conditional>
+      <ChevronDownIcon
+        className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (isOpen ? " su-scale-y-[-1]" : "")}
+        height={40}/>
+      <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
     </button>
   )
 }
