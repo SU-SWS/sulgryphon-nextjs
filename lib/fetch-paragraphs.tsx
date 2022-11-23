@@ -8,18 +8,7 @@ export const fetchParagraphs = async (components: DrupalParagraph[]) => {
       component.id
     ))
   })
-  const paragraphs = await Promise.all(requests)
-
-  return paragraphs.map(paragraph => {
-    delete paragraph.links;
-    delete paragraph.parent_field_name;
-    delete paragraph.parent_type;
-    delete paragraph.parent_id;
-    delete paragraph.relationshipsNames;
-    delete paragraph.resourceIdObjMeta;
-    delete paragraph.revision_translation_affected;
-    return paragraph
-  })
+  return await Promise.all(requests)
 }
 
 export const populateParagraphData = async (node: DrupalNode) => {

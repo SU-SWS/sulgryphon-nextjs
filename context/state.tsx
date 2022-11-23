@@ -1,10 +1,10 @@
 import {createContext, useContext} from 'react';
 
-const AppContext = createContext({menuItems: []});
+const AppContext = createContext({menuItems: [], breadcrumbs: []});
 
-export function AppWrapperProvider({menuItems, children}) {
+export function AppWrapperProvider({menuItems, breadcrumbs, children}) {
   return (
-    <AppContext.Provider value={{menuItems: menuItems}}>
+    <AppContext.Provider value={{menuItems, breadcrumbs}}>
       {children}
     </AppContext.Provider>
   );

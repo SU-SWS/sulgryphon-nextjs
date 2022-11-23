@@ -284,3 +284,8 @@ interface DrupalPublicationCitation extends JsonApiResource {
   su_volume?: string
   su_year?: number
 }
+
+interface Breadcrumb {
+  href: string
+  text: string
+}

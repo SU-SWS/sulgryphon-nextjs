@@ -1,8 +1,9 @@
 import Link from "next/link";
+import {ComponentProps} from "react";
 
 import Logo from "@/components/simple/logo";
 
-interface LockupProps {
+interface LockupProps extends ComponentProps<any> {
   whiteText?: boolean
 }
 
@@ -11,7 +12,7 @@ export const Lockup = ({whiteText, ...props}: LockupProps) => {
     <div {...props}>
       <Link href="/" className="su-no-underline">
         <div className="su-flex md:su-flex-row su-basefont-19">
-          <div><Logo/></div>
+          <Logo/>
 
           <div className="su-flex su-flex-wrap lg:su-items-center su-ml-10">
             <div

@@ -1,18 +1,20 @@
 import {useEffect, useMemo, useState} from "react";
-import {News} from "../../types/drupal";
-import {DrupalImage} from "@/components/simple/image";
+import { NewsArticleJsonLd } from 'next-seo';
 import Image from "next/image";
+import Link from "next/link";
+
+import {News} from "../../types/drupal";
+import {formatDate} from "@/lib/format-date";
+import {DrupalImage} from "@/components/simple/image";
 import {Paragraph} from "@/components/paragraphs";
 import Oembed from "@/components/simple/oembed";
-import Link from "next/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import {formatDate} from "@/lib/format-date";
 import { EnvelopeIcon, PrinterIcon } from '@heroicons/react/24/solid';
 import { FacebookIcon } from '@/components/simple/icons/FacebookIcon';
 import { TwitterIcon } from '@/components/simple/icons/TwitterIcon';
 import { LinkedInIcon } from '@/components/simple/icons/LinkedInIcon';
 import {Card} from "@/components/patterns/card";
-import { NewsArticleJsonLd } from 'next-seo';
+import Conditional from "@/components/simple/conditional";
 
 interface NewsNodeProps {
   node: News
@@ -26,7 +28,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
   }, [])
 
   return (
-    <MainContentLayout>
+    <MainContentLayout pageTitle={node.title}>
       <article {...props} className="su-mt-50">
         <NewsArticleJsonLd
             url={node.su_news_source?.url}
@@ -44,12 +46,15 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
             publisherLogo=""
             isAccessibleForFree={true}
         />
-        {node.su_news_topics && node.su_news_topics.map((topic, index) =>
-            <span key={topic.id} className="su-text-digital-red su-font-semibold">
-              {(index ? ', ' : '') + topic.name} 
-            </span>
-        )}
-        <h1 className="su-type-5">{node.title}</h1>
+        <Conditional showWhen={node.su_news_topics}>
+          <div className="su-mb-20">
+            {node.su_news_topics.map((topic, index) =>
+              <span key={topic.id}
+                    className="su-text-digital-red su-font-semibold">{(index ? ', ' : '') + topic.name}</span>
+            )}
+          </div>
+        </Conditional>
+
         {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         <div className="md:su-flex su-rs-mb-7">
           <div className="su-flex md:su-order-last su-rs-mb-2">
