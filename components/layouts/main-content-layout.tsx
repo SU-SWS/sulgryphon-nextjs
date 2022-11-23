@@ -1,10 +1,11 @@
 import {ReactNodeLike} from "prop-types";
 import {HomeIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 
 import {SideNav} from "@/components/menu/side-nav";
 import Conditional from "@/components/simple/conditional";
-import {useState} from "react";
 
 interface MainLayoutProps {
   pageTitle: string | ReactNodeLike
@@ -60,7 +61,15 @@ export const MainContentLayout = ({fullWidth, header, pageTitle, children}: Main
 }
 
 const Breadcrumbs = (props) => {
-  const [trail, setTrail] = useState([{path: '/', name: 'Home'}])
+  const [trail, setTrail] = useState([])
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch('/api/breadcrumbs?path=' + router.asPath)
+      .then(resp => resp.json())
+      .then(data => setTrail(data))
+      .catch(() => setTrail([]));
+  }, [router])
 
   return (
     <Conditional showWhen={trail.length > 0}>
@@ -80,18 +89,18 @@ const Breadcrumbs = (props) => {
   )
 }
 
-const Crumb = ({path, name, currentPage = false, ...props}) => {
-  const icon = path == '/' ? <HomeIcon width={14}/> : null;
-  const text = path == '/' ? <span className="su-sr-only">Home</span> : name;
+const Crumb = ({href, text, currentPage = false, ...props}) => {
+  const icon = href == '/' ? <HomeIcon width={14}/> : null;
+  const linkText = href == '/' ? <span className="su-sr-only">Home</span> : text;
 
   return (
     <li {...props}>
       <Link
         aria-current={currentPage}
         className="su-font-normal su-inline-block su-text-white hover:su-text-white su-no-underline hover:su-underline"
-        href={path}>
+        href={href}>
         {icon}
-        {text}
+        {linkText}
       </Link>
     </li>
   )
