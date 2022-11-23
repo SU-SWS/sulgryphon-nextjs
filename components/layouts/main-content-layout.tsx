@@ -1,14 +1,10 @@
 import {ReactNodeLike} from "prop-types";
 import {HomeIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
-import {useRouter} from "next/router";
 
 import {SideNav} from "@/components/menu/side-nav";
 import Conditional from "@/components/simple/conditional";
-import Image from "next/image";
-import {useEffect, useState} from "react";
-import {getResourceByPath} from "next-drupal";
-
+import {useState} from "react";
 
 interface MainLayoutProps {
   pageTitle: string | ReactNodeLike
