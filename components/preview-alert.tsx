@@ -1,7 +1,7 @@
 import * as React from "react"
 import {useRouter} from "next/router"
 
-export function PreviewAlert() {
+const PreviewAlert = () => {
   const {isPreview} = useRouter()
   const [showPreviewAlert, setShowPreviewAlert] = React.useState<boolean>(false)
 
@@ -26,3 +26,4 @@ export function PreviewAlert() {
     </div>
   )
 }
+export default PreviewAlert

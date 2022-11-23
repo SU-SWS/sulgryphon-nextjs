@@ -16,6 +16,8 @@ interface BasicPageNodeProps {
 }
 
 export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNodeProps) => {
+  const pageTitle = homepage ? null : node.title;
+
   return (
     <>
       <NextSeo
@@ -34,19 +36,8 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
         }}
       />
 
-      <Conditional showWhen={!homepage}>
-        <div className="su-cc">
-          <h1 className={`su-mt-50 ${node.su_page_banner ? 'su-sr-only' : ''}`}>
-            {node.title}
-          </h1>
-        </div>
-      </Conditional>
-
-      <Conditional showWhen={node.su_page_banner?.id?.length > 1}>
-        <StanfordBanner className="su-mb-50" paragraph={node.su_page_banner}/>
-      </Conditional>
-
-      <MainContentLayout fullWidth={homepage} {...props}>
+      <MainContentLayout pageTitle={pageTitle} fullWidth={homepage} header={node.su_page_banner?.id?.length > 1 ?
+        <StanfordBanner className="su-mb-50" paragraph={node.su_page_banner}/> : null} {...props}>
         <Conditional showWhen={node.su_page_components.length > 0}>
           <article>
             <Rows rows={node.su_page_components} rowField="su_page_components"/>

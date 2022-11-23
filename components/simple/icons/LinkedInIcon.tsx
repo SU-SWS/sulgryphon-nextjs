@@ -1,13 +1,8 @@
-export const LinkedInIcon = () => (
+export const LinkedInIcon = (props) => (
   <svg
-    aria-hidden="true"
-    focusable="false"
-    data-prefix="fab"
-    data-icon="linkedin-in"
     width={24.5}
-    role="img"
-    xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 448 512"
+    {...props}
   >
     <path
       fill="currentColor"
