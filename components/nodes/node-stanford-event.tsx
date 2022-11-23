@@ -1,7 +1,7 @@
-import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
+import {DrupalLinkButton} from "@/components/simple/link";
+import Link from "next/link";
 import {Paragraph} from "@/components/paragraphs";
 import {Event} from "../../types/drupal";
-import {formatDate} from "@/lib/format-date";
 import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import formatHtml from "@/lib/format-html";
 import {EventJsonLd} from "next-seo";
@@ -48,16 +48,18 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         })
       }
     }
-
-    if (
-      (start.getHours() !== end.getHours() || start.getMinutes() !== end.getMinutes()) &&
-      (start.getHours() !== 0 && end.getHours() !== 23 && start.getMinutes() !== 0 && end.getMinutes() !== 59)
-    ) {
-      dateTimeString += ' - ' + end.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-      });
-    }
+  } else {
+    // Multiple days
+    dateTimeString = start.toLocaleDateString('en-us', {weekday: 'long'});
+    dateTimeString += ', ' + start.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    }) + ' - ' + end.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
   }
 
   return (
@@ -70,18 +72,18 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
           location={{name: node.su_event_location?.organization}}
           eventStatus="EventScheduled"
         />
-        {console.log(node)}
+
         {inPast && <div className="su-text-black-70 su-uppercase">Past Event</div>}
 
-        {node.su_event_type && node.su_event_type.map(term =>
+        {node.su_event_type.length > 0 && node.su_event_type.map(term =>
           <div key={term.id} className="su-text-digital-red su-text-16 md:su-text-18 2xl:su-text-19">
             {term.name}
           </div>
         )}
+
         <h1 className="su-type-4 su-rs-mb-neg2">{node.title}</h1>
         {node.su_event_subheadline && <h2 className="su-type-3 su-rs-mb-1">{node.su_event_subheadline}</h2>}
         {node.su_event_dek && <div className="su-rs-mb-4 su-text-16 md:su-text-21">{node.su_event_dek}</div>}
-
 
         {node.su_event_sponsor &&
             <div className="su-rs-pb-3">
@@ -100,13 +102,12 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
               <div>
                 <div className="su-flex su-flex-row su-items-start su-mt-20">
                   <CalendarIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]" />
-                  <div className="su-text-16 md:su-text-18">
+                  <time dateTime={node.su_event_date_time.value} className="su-text-16 md:su-text-18">
                     {dateTimeString}
-                  </div>
+                  </time>
                 </div>
-                {inPast && <div className="su-text-14 md:su-text-16 su-pt-4">This event has passed.</div>}
+                {inPast && <div className="su-text-14 md:su-text-16 su-pt-4 su-text-black-70 su-ml-[31px]">This event has passed.</div>}
               </div>
-
 
               {(node.su_event_location || node.su_event_alt_loc) &&
                   <div>
@@ -137,9 +138,9 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
                     }
 
                     {node.su_event_map_link &&
-                        <DrupalLink href={node.su_event_map_link.url} className="su-block su-ml-36">
-                          {node.su_event_map_link.title}
-                        </DrupalLink>
+                      <Link href={node.su_event_map_link.url} className="su-block su-ml-36">
+                        {node.su_event_map_link.title}
+                      </Link>
                     }
                   </div>
               }
@@ -153,14 +154,14 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
                       <h3 className="su-text-16 md:su-text-18">Contact</h3>
                     </div>
                     {node.su_event_telephone &&
-                        <DrupalLink href={`tel:${node.su_event_telephone}`} className="su-block su-mb-4 su-ml-36">
-                          {node.su_event_telephone}
-                        </DrupalLink>
+                      <Link href={`tel:${node.su_event_telephone}`} className="su-block su-mb-4 su-ml-36">
+                        {node.su_event_telephone}
+                      </Link>
                     }
                     {node.su_event_email &&
-                        <DrupalLink href={`mailto:${node.su_event_email}`} className="su-block su-ml-36 su-break-words">
-                          {node.su_event_email}
-                        </DrupalLink>
+                      <Link href={`mailto:${node.su_event_email}`} className="su-block su-ml-36 su-break-words">
+                        {node.su_event_email}
+                      </Link>
                     }
                   </div>
               }
@@ -189,7 +190,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         </div>
 
         {node.su_event_source &&
-            <DrupalLink href={node.su_event_source.url}>{node.su_event_source.title}</DrupalLink>
+          <Link href={node.su_event_source.url}>{node.su_event_source.title}</Link>
         }
 
         {node.su_event_components && node.su_event_components.map(paragraph =>
@@ -208,7 +209,13 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
   const shortMonth = date.toLocaleDateString("en-US", {
     month: "short",
   })
+  const shortMonthEnd = end.toLocaleDateString("en-US", {
+    month: "short",
+  })
   const day = date.toLocaleDateString("en-US", {
+    day: "numeric",
+  })
+  const dayEnd = end.toLocaleDateString("en-US", {
     day: "numeric",
   })
 
@@ -228,7 +235,7 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
       end.getMinutes() !== 59
     ) {
       if (start.getHours() !== end.getHours() || start.getMinutes() !== end.getMinutes()) {
-        dateTimeString += ' ' + start.toLocaleTimeString("en-US", {
+        dateTimeString += ' | ' + start.toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "numeric",
         }) + ' - ' + end.toLocaleTimeString("en-US", {
@@ -244,38 +251,49 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
         })
       }
     }
-
-    if (
-      (start.getHours() !== end.getHours() || start.getMinutes() !== end.getMinutes()) &&
-      (start.getHours() !== 0 && end.getHours() !== 23 && start.getMinutes() !== 0 && end.getMinutes() !== 59)
-    ) {
-      dateTimeString += ' - ' + end.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-      });
-    }
+  } else {
+    // Multiple days
+    dateTimeString = start.toLocaleDateString('en-us', {weekday: 'long'});
+    dateTimeString += ', ' + start.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    }) + ' - ' + end.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
   }
 
   return (
     <article {...props}>
-      { console.log(node) }
       <div>
         <div className="md:su-flex">
           <div className="su-mb-20 md:su-mb-0" aria-hidden="true">
             <div className="su-flex su-flex-row su-items-center su-justify-start md:su-min-w-[90px]">
               <div className="su-flex su-flex-col">
-                <span className="su-mb-4 su-mt-1 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonth}</span>
+                <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonth}</span>
                 <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{day}</span>
+                { start.getDate() !== end.getDate() && (
+                  <>
+                    <div className="su-text-center su-mt-6">- to -</div>
+                    <div className="su-flex su-flex-col">
+                      <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonthEnd}</span>
+                      <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{dayEnd}</span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
 
           <div>
-            {node.su_event_type && <div className="su-font-medium su-text-16 xl:su-text-18 2xl:su-text-19">{node.su_event_type[0].name}</div>}
+            {inPast && <span className="su-text-black-70 su-text-14 md:su-text-16 su-uppercase su-font-semibold">Past Event | </span>}
+            {node.su_event_type.length > 0 && <span className="su-font-semibold su-text-16 xl:su-text-18 2xl:su-text-19">{node.su_event_type[0].name}</span>}
 
-            <DrupalLink href={node.path.alias}>
-              <h2 className="su-text-digital-red su-type-2 hover:su-text-black su-no-underline">{node.title}</h2>
-            </DrupalLink>
+            <Link href={node.path.alias} className="su-text-digital-red hover:su-text-black su-no-underline">
+              <h2 className="su-type-2">{node.title}</h2>
+            </Link>
 
             {node.su_event_subheadline &&
               <div className="su-font-bold su-rs-mb-2">
@@ -291,8 +309,10 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
 
             <div className="su-mb-10">
               <CalendarIcon className="su-float-left su-mr-10" width={21}/>
-              {formatDate(node.su_event_date_time.value)}
-              <div>{start.toLocaleString()}</div>
+              <time dateTime={node.su_event_date_time.value}>
+                {dateTimeString}
+                {inPast && <div className="su-text-14 md:su-text-16 su-italic su-ml-[31px]">*This event has passed.</div>}
+              </time>
             </div>
             {node.su_event_alt_loc &&
               <div className="su-mb-5">
@@ -318,35 +338,96 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
 }
 
 export const NodeStanfordEventCard = ({node, ...props}: EventNodeProps) => {
-  const inPast = new Date(node.su_event_date_time?.value) < new Date();
   const date = new Date(node.su_event_date_time.value)
+  const start = new Date(node.su_event_date_time?.value);
+  const end = new Date(node.su_event_date_time?.end_value);
   const shortMonth = date.toLocaleDateString("en-US", {
+    month: "short",
+  })
+  const shortMonthEnd = end.toLocaleDateString("en-US", {
     month: "short",
   })
   const day = date.toLocaleDateString("en-US", {
     day: "numeric",
   })
+  const dayEnd = end.toLocaleDateString("en-US", {
+    day: "numeric",
+  })
+
+  let dateTimeString;
+  if (start.getMonth() === end.getMonth() && start.getDate() === end.getDate() && start.getFullYear() === end.getFullYear()) {
+    dateTimeString = start.toLocaleDateString('en-us', {weekday: 'long'});
+    dateTimeString += ', ' + start.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    })
+
+    if (
+      start.getHours() !== 0 ||
+      start.getMinutes() !== 0 ||
+      end.getHours() !== 23 ||
+      end.getMinutes() !== 59
+    ) {
+      if (start.getHours() !== end.getHours() || start.getMinutes() !== end.getMinutes()) {
+        dateTimeString += ' | ' + start.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+        }) + ' - ' + end.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          timeZoneName: "short",
+        })
+      } else {
+        dateTimeString += ' ' + start.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          timeZoneName: "short",
+        })
+      }
+    }
+  } else {
+    // Multiple days
+    dateTimeString = start.toLocaleDateString('en-us', {weekday: 'long'});
+    dateTimeString += ', ' + start.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    }) + ' - ' + end.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+  }
 
   return (
     <article className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
-      {console.log(node)}
       {node.su_event_date_time &&
         <div className="su-mb-20" aria-hidden="true">
           <div className="su-flex su-flex-row su-items-center su-justify-start md:su-min-w-[90px]">
             <div className="su-flex su-flex-col">
-              <span className="su-mb-4 su-mt-1 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonth}</span>
+              <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonth}</span>
               <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{day}</span>
             </div>
+            { start.getDate() !== end.getDate() && (
+              <>
+                <div className="su-text-center su-mx-6">- to -</div>
+                <div className="su-flex su-flex-col">
+                  <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonthEnd}</span>
+                  <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{dayEnd}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       }
 
-      {node.su_event_type && <div className="su-text-16 xl:su-text-18 2xl:su-text-19 su-text-digital-red">{node.su_event_type[0].name}</div>}
+      {node.su_event_type.length > 0 && <div className="su-text-16 xl:su-text-18 2xl:su-text-19 su-text-digital-red">{node.su_event_type[0].name}</div>}
 
-      <DrupalLink href={node.path.alias}
+      <Link href={node.path.alias}
           className="su-no-underline hover:su-text-digital-red hover:su-underline">
         <h2 className="su-text-black hover:su-text-digital-red su-type-1">{node.title}</h2>
-      </DrupalLink>
+      </Link>
 
       {node.su_event_subheadline &&
         <div className="su-font-bold su-rs-mb-3">
@@ -356,14 +437,18 @@ export const NodeStanfordEventCard = ({node, ...props}: EventNodeProps) => {
 
       <div className="su-mb-10 su-text-16 md:su-text-18">
         <CalendarIcon className="su-float-left su-mr-10" width={21}/>
-        {formatDate(node.su_event_date_time.value)}
+        <time dateTime={node.su_event_date_time.value} >
+          {dateTimeString}
+        </time>
       </div>
+
       {node.su_event_alt_loc &&
         <div className="su-mb-5 su-text-16 md:su-text-18">
           <MapIcon className="su-float-left su-mr-10" width={21}/>
           {formatHtml(node.su_event_alt_loc)}
         </div>
       }
+
       {node.su_event_location &&
         <div>
           <MapIcon className="su-float-left su-mr-10" width={21}/>

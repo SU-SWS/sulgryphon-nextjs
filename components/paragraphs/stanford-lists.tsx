@@ -62,6 +62,7 @@ const useListDisplay = (viewId, displayId) => {
   const display = `${viewId}:${displayId}`
   const listDisplays = [
     'stanford_events:list_page',
+    'stanford_events:past_events_list_block',
     'stanford_news:block_1',
     'stanford_publications:chicago_list',
     'stanford_publications:apa_list',
