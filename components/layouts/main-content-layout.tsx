@@ -6,6 +6,8 @@ import {useRouter} from "next/router";
 import {SideNav} from "@/components/menu/side-nav";
 import Conditional from "@/components/simple/conditional";
 import Image from "next/image";
+import {useEffect, useState} from "react";
+import {getResourceByPath} from "next-drupal";
 
 
 interface MainLayoutProps {
@@ -28,21 +30,19 @@ export const MainContentLayout = ({fullWidth, header, pageTitle, children}: Main
 
       {!header &&
           <div className="su-bg-black-true su-mb-50 su-relative su-overflow-hidden">
-            
 
+            <div className="su-relative su-z-10">
+              <Breadcrumbs className="su-cc su-text-white su-pt-20"/>
+              <h1 className="su-cc su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{pageTitle}</h1>
+            </div>
 
-            <Breadcrumbs className="su-cc su-text-white su-absolute su-top-10"/>
-            <h1 className="su-cc su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{pageTitle}</h1>
+            <div className="su-bg-interior-header-sprinkles su-absolute su-h-2/3 su-w-1/2 su-bottom-0 su-right-0">
+              <div className="su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
+                <div
+                    className="su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
 
-
-            <div className="su-hidden lg:su-block su-absolute su-bottom-0 su-right-0 after:su-content-[''] after:su-absolute after:su-h-full after:su-w-full after:su-bottom-0 after:su-right-0 after:su-bg-gradient-to-br after:su-from-black-true after:su-to-transparent">
-              <Image
-                  className=""
-                  src="/interior-sprinkles.png"
-                  alt=""
-                  width={936}
-                  height={305}
-              />
+                </div>
+              </div>
             </div>
 
             <div className="su-relative su-z-10">
@@ -64,32 +64,39 @@ export const MainContentLayout = ({fullWidth, header, pageTitle, children}: Main
 }
 
 const Breadcrumbs = (props) => {
-
-  const trail = ['/', '/resources'];
-  const router = useRouter();
+  const [trail, setTrail] = useState([{path: '/', name: 'Home'}])
 
   return (
-    <div {...props}>
-      <div className="su-flex su-text-14">
-        {trail.map((path, i) => <Crumb key={i} path={path} name="path title"
-                                       className={i == trail.length - 1 ? "" : "after:su-content-['/'] after:su-inline-block after:su-mx-5"}/>)}
-      </div>
-    </div>
+    <Conditional showWhen={trail.length > 0}>
+      <nav aria-label="breadcrumbs" {...props}>
+        <ol className="su-flex su-text-14 su-list-unstyled">
+          {trail.map((item, i) =>
+            <Crumb
+              {...item}
+              key={i}
+              currentPage={i == trail.length - 1}
+              className={i == trail.length - 1 ? "" : "after:su-content-['/'] after:su-inline-block after:su-mx-5"}
+            />
+          )}
+        </ol>
+      </nav>
+    </Conditional>
   )
 }
 
-const Crumb = ({path, name, ...props}) => {
+const Crumb = ({path, name, currentPage = false, ...props}) => {
   const icon = path == '/' ? <HomeIcon width={14}/> : null;
   const text = path == '/' ? <span className="su-sr-only">Home</span> : name;
 
   return (
-    <div {...props}>
+    <li {...props}>
       <Link
+        aria-current={currentPage}
         className="su-font-normal su-inline-block su-text-white hover:su-text-white su-no-underline hover:su-underline"
         href={path}>
         {icon}
         {text}
       </Link>
-    </div>
+    </li>
   )
 }
