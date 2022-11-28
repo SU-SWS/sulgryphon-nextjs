@@ -123,7 +123,8 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
 
     const crumbs = [{href: '/', text: 'Home'}];
     resources.map(resource => {
-      if (resource?.path?.alias) {
+      // If we have taxonomy term links, add those links for the breadcrumbs here.
+      if (resource?.path?.alias && resource?.title) {
         crumbs.push({href: resource.path.alias, text: resource.title})
       }
     })
