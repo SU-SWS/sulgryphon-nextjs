@@ -14,7 +14,7 @@ interface EntityTeaserProps {
 export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaserProps) => {
   const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
 
-  let entities = paragraph.su_entity_item.map(item => {
+  const entities = paragraph.su_entity_item.map(item => {
     const {data} = useSWR(`/api/node/${item.type}/${item.id}`, fetcher)
     return data ?? item;
   })
@@ -28,7 +28,7 @@ export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaser
   const gridCols = paragraph?.su_entity_item?.length >= 3 ? gridColClasses[3] : gridColClasses[paragraph?.su_entity_item?.length];
 
   return (
-    <div {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
+    <div {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
       {paragraph.su_entity_headline && <h2 className="su-text-center">{paragraph.su_entity_headline}</h2>}
       {paragraph.su_entity_description && <div className="su-mb-40">{formatHtml(paragraph.su_entity_description.processed)}</div>}
 
