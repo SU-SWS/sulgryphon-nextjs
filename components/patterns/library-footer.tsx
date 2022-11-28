@@ -61,11 +61,11 @@ const LibraryFooter = () => {
           <div className="su-inline-block md:su-block"><DrupalLinkButton href="#">Donate</DrupalLinkButton></div>
 
           <div className="su-flex su-mt-50 su-gap-lg su-justify-around">
-            <FooterLink href="#"><FacebookIcon/></FooterLink>
-            <FooterLink href="#"><LinkedInIcon/></FooterLink>
-            <FooterLink href="#"><TwitterIcon/></FooterLink>
-            <FooterLink href="#"><InstagramIcon className="su-fill-white" height={30}/></FooterLink>
-            <FooterLink href="#"><YoutubeIcon className="su-transition-all su-fill-white hover:su-fill-cool-grey" height={30}/></FooterLink>
+            <FooterLink href="#"><FacebookIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/></FooterLink>
+            <FooterLink href="#"><LinkedInIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/></FooterLink>
+            <FooterLink href="#"><TwitterIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/></FooterLink>
+            <FooterLink href="#"><InstagramIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/></FooterLink>
+            <FooterLink href="#"><YoutubeIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/></FooterLink>
           </div>
         </div>
       </div>

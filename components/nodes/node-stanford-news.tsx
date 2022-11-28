@@ -60,31 +60,31 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
           <div className="su-flex md:su-order-last su-rs-mb-2">
             <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
               <li className="su-mr-1em">
-                <Link className="su-text-black hocus:su-text-facebook su-transition-colors" href={`http://www.facebook.com/sharer.php?u=${currentUrl}&display=popup`}>
+                <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`http://www.facebook.com/sharer.php?u=${currentUrl}&display=popup`}>
                   <span className="su-sr-only">Stanford Facebook</span>
                   <FacebookIcon />
                 </Link>
               </li>
               <li className="su-mr-1em">
-                <Link className="su-text-black hocus:su-text-twitter su-transition-colors" href={`https://twitter.com/intent/tweet?url=${currentUrl}&text=${node.title}`}>
+                <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`https://twitter.com/intent/tweet?url=${currentUrl}&text=${node.title}`}>
                   <span className="su-sr-only">Stanford Twitter</span>
                   <TwitterIcon />
                 </Link>
               </li>
               <li className="su-mr-1em">
-                <Link className="su-text-black hocus:su-text-linkedin su-transition-colors" href={`https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${node.title}`}>
+                <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${node.title}`}>
                   <span className="su-sr-only">Stanford LinkedIn</span>
                   <LinkedInIcon />
                 </Link>
               </li>
               <li className="su-mr-1em">
-                <Link className="su-text-black  hocus:su-text-digital-blue su-transition-colors" href={`mailto:?subject=${node.title}&body=${currentUrl}`}>
+                <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`mailto:?subject=${node.title}&body=${currentUrl}`}>
                   <span className="su-sr-only">Forward Email</span>
                   <EnvelopeIcon width={28} />
                 </Link>
               </li>
               <li className="su-mr-1em">
-                <button onClick={() => window.print()} className="su-text-black  hocus:su-text-digital-blue su-transition-colors">
+                <button onClick={() => window.print()} className="su-text-black hocus:su-text-digital-blue su-transition-colors">
                   <span className="su-sr-only">Print Article</span>
                   <PrinterIcon width={28} />
                 </button>

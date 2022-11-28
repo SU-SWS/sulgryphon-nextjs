@@ -16,7 +16,7 @@ export const Lockup = ({whiteText, ...props}: LockupProps) => {
 
           <div className="su-flex su-flex-wrap lg:su-items-center su-ml-10">
             <div
-              className={"lg:su-flex su-items-baseline su-leading-none su-w-full lg:su-w-auto su-mt-15 lg:su-mt-0 su-logo su-type-4 su-mr-5 su-pr-5 lg:su-border-r su-border-solid su-border-black" + (whiteText ? " su-text-white" : " su-text-cardinal-red")}>
+              className={"lg:su-flex su-items-baseline su-leading-none su-w-full lg:su-w-auto su-mt-15 lg:su-mt-0 su-logo su-type-4 su-mr-5 su-pr-5 lg:su-border-r su-border-solid" + (whiteText ? " su-border-white su-text-white hocus:su-text-white" : " su-text-cardinal-red su-border-black")}>
               Stanford
             </div>
             <div
