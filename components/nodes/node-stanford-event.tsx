@@ -63,7 +63,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
   }
 
   return (
-    <MainContentLayout>
+    <MainContentLayout pageTitle={node.title}>
       <article {...props} className="su-mt-50">
         <EventJsonLd
           name={node.title}
@@ -81,7 +81,6 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
           </div>
         )}
 
-        <h1 className="su-type-4 su-rs-mb-neg2">{node.title}</h1>
         {node.su_event_subheadline && <h2 className="su-type-3 su-rs-mb-1">{node.su_event_subheadline}</h2>}
         {node.su_event_dek && <div className="su-rs-mb-4 su-text-16 md:su-text-21">{node.su_event_dek}</div>}
 

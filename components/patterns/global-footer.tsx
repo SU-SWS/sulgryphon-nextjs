@@ -1,4 +1,4 @@
-export const GlobalFooter = () => {
+const GlobalFooter = () => {
   return (
     <div className=" su-cc su-global-footer su-basefont-20 su-rs-py-1 su-text-white su-bg-cardinal-red ">
       <div className="su-flex su-flex-col lg:su-flex-row" title="Common Stanford resources">
@@ -89,3 +89,4 @@ export const GlobalFooter = () => {
     </div>
   )
 }
+export default GlobalFooter;

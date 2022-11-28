@@ -1,7 +1,8 @@
-import {PreviewAlert} from "@/components/preview-alert"
-import {IdentityBar} from "@/components/patterns/identity-bar";
+import PreviewAlert from "@/components/preview-alert"
+import IdentityBar from "@/components/patterns/identity-bar";
 import Header from "@/components/header";
-import {GlobalFooter} from "@/components/patterns/global-footer";
+import GlobalFooter from "@/components/patterns/global-footer";
+import LibraryFooter from "@/components/patterns/library-footer";
 
 export const PageLayout = ({...props}) => {
 
@@ -19,6 +20,7 @@ export const PageLayout = ({...props}) => {
       </div>
 
       <footer className="su-row-start-2 su-row-end-3">
+        <LibraryFooter/>
         <GlobalFooter/>
       </footer>
     </div>

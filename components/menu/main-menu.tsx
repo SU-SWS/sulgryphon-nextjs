@@ -70,7 +70,7 @@ export const MainMenu = ({...props}) => {
     <div {...props}>
       <OutsideClickHandler onClickOutside={handleClickFocusOutside} onFocusOutside={handleClickFocusOutside}>
         <button
-          className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
+          className="lg:su-hidden su-text-black-true su-absolute su-z-40 su-top-20 su-right-20 su-no-underline"
           onClick={openCloseMenu}
           aria-haspopup="true"
           aria-expanded={menuOpen ? "true" : "false"}
@@ -82,7 +82,7 @@ export const MainMenu = ({...props}) => {
         <div className="su-relative">
           <div
             aria-hidden={!menuOpen}
-            className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
+            className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-30 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
             <SearchWorks className="lg:su-hidden"/>
 
             <nav>

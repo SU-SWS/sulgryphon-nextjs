@@ -6,8 +6,11 @@ interface ConditionalProps {
 }
 
 const Conditional = ({showWhen, children}: ConditionalProps) => {
-  if (showWhen) return <>{children}</>
-  return <></>
+  return (
+    <>
+      {showWhen && <>{children}</>}
+    </>
+  )
 }
 
 export default Conditional

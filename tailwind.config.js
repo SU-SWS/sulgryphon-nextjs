@@ -22,6 +22,10 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {...twoColumn, ...threeColumn},
+      backgroundImage: {
+        "footer-sprinkles": "url('/footer-sprinkles.png')",
+        "interior-header-sprinkles": "url('/interior-header-sprinkles.png')"
+      },
       keyframes: {
         "slide-up": {
           "0%": {transform: "translateY(0%)"},
