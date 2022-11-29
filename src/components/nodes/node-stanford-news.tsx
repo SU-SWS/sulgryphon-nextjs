@@ -9,10 +9,10 @@ import {DrupalImage} from "@/components/simple/image";
 import {Paragraph} from "@/components/paragraphs";
 import Oembed from "@/components/simple/oembed";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import { EnvelopeIcon, PrinterIcon } from '@heroicons/react/24/solid';
-import { FacebookIcon } from '@/components/simple/icons/FacebookIcon';
-import { TwitterIcon } from '@/components/simple/icons/TwitterIcon';
-import { LinkedInIcon } from '@/components/simple/icons/LinkedInIcon';
+import {EnvelopeIcon, PrinterIcon} from '@heroicons/react/24/solid';
+import {FacebookIcon} from '@/components/simple/icons/FacebookIcon';
+import {TwitterIcon} from '@/components/simple/icons/TwitterIcon';
+import {LinkedInIcon} from '@/components/simple/icons/LinkedInIcon';
 import {Card} from "@/components/patterns/card";
 import Conditional from "@/components/simple/conditional";
 
@@ -49,8 +49,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
         <Conditional showWhen={node.su_news_topics}>
           <div className="su-mb-20">
             {node.su_news_topics.map((topic, index) =>
-              <span key={topic.id}
-                    className="su-text-digital-red su-font-semibold">{(index ? ', ' : '') + topic.name}</span>
+              <span key={topic.id} className="su-text-digital-red su-font-semibold">{(index ? ', ' : '') + topic.name}</span>
             )}
           </div>
         </Conditional>
@@ -132,7 +131,7 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
       fill={true}
     />
   }
-
+  const topics = node.su_news_topics?.filter(topic => topic.name?.length > 0) ?? [];
   return (
     <article {...props}>
       <div className="su-text-18 su-mb-14">
@@ -156,7 +155,7 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
           }
         </div>
       </div>
-      {node.su_news_topics && node.su_news_topics.map((cardTopic, index) =>
+      {topics.map((cardTopic, index) =>
         <span key={cardTopic.id} className="su-mt-10 su-text-digital-red su-font-semibold su-text-19">
           {(index ? ', ' : '') + cardTopic.name}
         </span>
@@ -166,7 +165,6 @@ export const NodeStanfordNewsListItem = ({node, ...props}: NewsNodeProps) => {
 }
 
 export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
-
   const getImage = () => {
     let imageUrl = getFeaturedImageUrl(node);
     if (imageUrl) {
@@ -179,6 +177,7 @@ export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
     }
   }
   const image = useMemo(() => getImage(), [node]);
+  const topics = node.su_news_topics?.filter(topic => topic.name?.length > 0) ?? [];
 
   return (
     <article {...props}>
@@ -191,7 +190,7 @@ export const NodeStanfordNewsCard = ({node, ...props}: NewsNodeProps) => {
         }
         footer={
           <div>
-            {node.su_news_topics && node.su_news_topics.map((topic, index) =>
+            {topics.map((topic, index) =>
               <span key={topic.id}>
                 {(index ? ', ' : '') + topic.name}
               </span>
