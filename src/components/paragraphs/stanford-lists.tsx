@@ -1,11 +1,12 @@
 import {DrupalNode} from "next-drupal";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 import {ListParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay, NodeListDisplay} from "@/nodes/index";
+import useOnScreen from "@/lib/use-on-screen";
 
 interface ListProps {
   paragraph: ListParagraph
@@ -14,6 +15,13 @@ interface ListProps {
 }
 
 export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) => {
+  const elemRef = useRef();
+  const elemRefValue = useOnScreen(elemRef);
+  const [isElemRef, setIsElemRef] = useState(false);
+
+  useEffect(() => {
+    if (!isElemRef) setIsElemRef(elemRefValue);
+  }, [elemRefValue, isElemRef])
 
   const [itemsToDisplay, setItemsToDisplay] = useState([])
 
@@ -23,12 +31,13 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
     const args = paragraph.su_list_view.resourceIdObjMeta.arguments;
     const numToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display;
 
-    axios.get(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`).then(response => {
-      const items = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
-      setItemsToDisplay(items);
-    });
-  }, [paragraph.su_list_view])
-
+    if (isElemRef) {
+      axios.get(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`).then(response => {
+        const items = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
+        setItemsToDisplay(items);
+      });
+    }
+  }, [isElemRef, paragraph.su_list_view])
 
   const gridClasses = {
     1: 'su-grid-cols-1',
@@ -40,7 +49,7 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, paragraph.su_list_view?.resourceIdObjMeta?.display_id);
 
   return (
-    <div {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
+    <div ref={elemRef} {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
       {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description &&
           <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
