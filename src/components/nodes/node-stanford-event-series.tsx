@@ -2,6 +2,7 @@ import {EventSeries} from "../../types/drupal";
 import {Paragraph} from "@/components/paragraphs";
 import {DrupalLink} from "@/components/simple/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
+import {NodeListDisplay} from "@/nodes/index";
 
 interface EventSeriesNodeProps {
   node: EventSeries
@@ -9,14 +10,28 @@ interface EventSeriesNodeProps {
 
 export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) => {
   return (
-    <MainContentLayout>
+    <MainContentLayout pageTitle={node.title}>
       <article {...props}>
-        <h1>{node.title}</h1>
-        {node.su_event_series_subheadline}
-        {node.su_event_series_dek}
-        {node.su_event_series_components && node.su_event_series_components.map(paragraph =>
-          <Paragraph key={paragraph.id} paragraph={paragraph}/>
-        )}
+        <div>
+          {node.su_event_series_subheadline}
+        </div>
+        <div>
+          {node.su_event_series_dek}
+        </div>
+        <div>
+          {node.su_event_series_components && node.su_event_series_components.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
+        </div>
+        {node.su_event_series_event && 
+          <div className={"su-my-40 su-grid su-gap-xl"}>
+            {node.su_event_series_event.map(item =>
+            <div className={"su-pb-50 su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none su-border-b"}>
+              <NodeListDisplay node={item} key={item.id}/>
+            </div>
+            )}
+          </div>
+        }
       </article>
     </MainContentLayout>
   )
