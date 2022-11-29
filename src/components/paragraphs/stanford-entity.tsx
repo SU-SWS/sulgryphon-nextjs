@@ -1,7 +1,8 @@
-import useSWR from "swr";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
-import formatHtml from "@/lib/format-html";
 import {EntityTeaserParagraph} from "../../types/drupal";
+import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay} from "@/nodes/index";
 
@@ -12,12 +13,13 @@ interface EntityTeaserProps {
 }
 
 export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaserProps) => {
-  const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
+  const [entities, setEntities] = useState(paragraph.su_entity_item)
+  useEffect(() => {
+    const requests = [];
+    entities.map(item => requests.push(axios.get(`/api/node/${item.type}/${item.id}`)))
 
-  const entities = paragraph.su_entity_item.map(item => {
-    const {data} = useSWR(`/api/node/${item.type}/${item.id}`, fetcher)
-    return data ?? item;
-  })
+    Promise.all(requests).then(responses => setEntities(responses.map(response => response.data)));
+  }, [paragraph.su_entity_item])
 
   const gridColClasses = {
     1: 'su-grid-cols-1',

@@ -1,11 +1,11 @@
-import useSWR from 'swr';
 import {DrupalNode} from "next-drupal";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 import {ListParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay, NodeListDisplay} from "@/nodes/index";
-import Conditional from "@/components/simple/conditional";
 
 interface ListProps {
   paragraph: ListParagraph
@@ -14,18 +14,22 @@ interface ListProps {
 }
 
 export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) => {
-  let itemsToDisplay;
 
-  const viewId = paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id
-  const displayId = paragraph.su_list_view?.resourceIdObjMeta?.display_id;
-  const args = paragraph.su_list_view.resourceIdObjMeta.arguments;
-  const numToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display;
+  const [itemsToDisplay, setItemsToDisplay] = useState([])
 
-  const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
-  const {data: listItems} = useSWR(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`, fetcher)
-  const apiReturnedItems = listItems ?? [];
+  useEffect(() => {
+    const viewId = paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id
+    const displayId = paragraph.su_list_view?.resourceIdObjMeta?.display_id;
+    const args = paragraph.su_list_view.resourceIdObjMeta.arguments;
+    const numToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display;
 
-  itemsToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? apiReturnedItems.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : apiReturnedItems;
+    axios.get(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`).then(response => {
+      const items = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
+      setItemsToDisplay(items);
+    });
+  }, [paragraph.su_list_view])
+
+
   const gridClasses = {
     1: 'su-grid-cols-1',
     2: 'su-grid-cols-2',
@@ -38,7 +42,8 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   return (
     <div {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
       {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
-      {paragraph.su_list_description && <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
+      {paragraph.su_list_description &&
+          <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
 
       <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}`}>
         {itemsToDisplay.map(item => (
@@ -55,9 +60,9 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
       </div>
 
       {paragraph.su_list_button &&
-        <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
-          {paragraph.su_list_button.title}
-        </DrupalLinkButton>}
+          <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
+            {paragraph.su_list_button.title}
+          </DrupalLinkButton>}
     </div>
   )
 }
