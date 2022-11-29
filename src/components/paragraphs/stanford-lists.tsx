@@ -14,7 +14,7 @@ interface ListProps {
 }
 
 export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) => {
-  let itemsToDisplay = [];
+  let itemsToDisplay;
 
   const viewId = paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id
   const displayId = paragraph.su_list_view?.resourceIdObjMeta?.display_id;
@@ -23,8 +23,9 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
 
   const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
   const {data: listItems} = useSWR(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`, fetcher)
+  const apiReturnedItems = listItems ?? [];
 
-  itemsToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? listItems?.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : listItems;
+  itemsToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? apiReturnedItems.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : apiReturnedItems;
   const gridClasses = {
     1: 'su-grid-cols-1',
     2: 'su-grid-cols-2',
@@ -33,11 +34,6 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
 
   const gridClass = siblingCount >= 1 ? gridClasses[1] : (itemsToDisplay?.length > 3 ? gridClasses[3] : gridClasses[itemsToDisplay?.length]);
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, paragraph.su_list_view?.resourceIdObjMeta?.display_id);
-
-  // Fallback if something above didn't work, make sure the var is an array.
-  if (typeof itemsToDisplay === 'undefined') {
-    itemsToDisplay = [];
-  }
 
   return (
     <div {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
