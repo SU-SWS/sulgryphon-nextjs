@@ -5,6 +5,7 @@ import {HomeIcon} from "@heroicons/react/20/solid";
 import {useAppContext} from "../../context/state";
 import {SideNav} from "@/components/menu/side-nav";
 import Conditional from "@/components/simple/conditional";
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 
 interface MainLayoutProps {
   pageTitle?: string | ReactNodeLike
@@ -17,7 +18,7 @@ interface MainLayoutProps {
 export const MainContentLayout = ({fullWidth, header, pageTitle, children}: MainLayoutProps) => {
 
   return (
-    <main>
+    <main className="su-mb-50">
       <Conditional showWhen={header}>
         <header className="su-w-full">
           {header}
@@ -26,39 +27,21 @@ export const MainContentLayout = ({fullWidth, header, pageTitle, children}: Main
       </Conditional>
 
       <Conditional showWhen={!header}>
-        <div className="su-bg-black-true su-mb-50 su-relative su-overflow-hidden">
+        <InternalHeaderBanner>
+          <Breadcrumbs className="su-cc su-text-white su-pt-20"/>
+          <Conditional showWhen={typeof pageTitle === 'string'}>
+            <h1 className="su-cc su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{pageTitle}</h1>
+          </Conditional>
 
-          <div className="su-relative su-z-10">
-            <Breadcrumbs className="su-cc su-text-white su-pt-20"/>
-            <Conditional showWhen={typeof pageTitle === 'string'}>
-              <h1 className="su-cc su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{pageTitle}</h1>
-            </Conditional>
-
-            <Conditional showWhen={typeof pageTitle != 'string'}>
-              {pageTitle}
-            </Conditional>
-          </div>
-
-          <div
-            className="su-bg-right-bottom lg:su-bg-interior-header-sprinkles su-absolute su-h-2/3 su-w-1/2 su-bottom-0 su-right-0">
-            <div className="su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
-              <div className="su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
-              {/*Empty elements. They are absolute positioned to provide visual affects only.*/}
-              </div>
-            </div>
-          </div>
-
-          <div className="su-relative su-z-10">
-            <svg viewBox="0 0 1500 70">
-              <path d="M0,71 Q500,65 800,20 Q1200,-30 1500,71" stroke="#fff" className="su-fill-white"></path>
-            </svg>
-          </div>
-        </div>
+          <Conditional showWhen={typeof pageTitle != 'string'}>
+            {pageTitle}
+          </Conditional>
+        </InternalHeaderBanner>
       </Conditional>
 
       <div className={`lg:su-flex su-justify-between su-gap-2xl ${fullWidth ? '' : 'su-cc'}`}>
         <SideNav className="su-hidden lg:su-block su-w-4/12"/>
-        <section id="main-content" className="su-flex-1">
+        <section id="main-content" className={"su-flex-1 " + (fullWidth ? 'su-mx-40 lg:su-mx-0' : '')}>
           {children}
         </section>
       </div>
