@@ -2,6 +2,7 @@ import {DrupalNode, getResource, getView} from "next-drupal";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 export default async function handler(req, res) {
+  const d = new Date();
   const {slug} = req.query
   const [viewId, displayId, options] = slug
   let [args, itemsToDisplay] = options.split(":")
@@ -14,6 +15,7 @@ export default async function handler(req, res) {
   if (itemsToDisplay) {
     params.addPageLimit(itemsToDisplay);
   }
+  console.log(d.getTime() / 1000, `${viewId}--${displayId}`);
 
   const view = await getView<DrupalNode>(`${viewId}--${displayId}`, {params: params.getQueryObject()});
   const requests = [];
@@ -24,5 +26,7 @@ export default async function handler(req, res) {
       result.id
     ))
   })
-  res.status(200).json(await Promise.all(requests));
+  const data = await Promise.all(requests)
+  console.log(d.getTime() / 1000, `${viewId}--${displayId}`);
+  res.status(200).json(data);
 }
