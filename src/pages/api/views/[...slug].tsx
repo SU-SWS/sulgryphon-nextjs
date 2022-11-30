@@ -15,8 +15,6 @@ export default async function handler(req, res) {
   if (itemsToDisplay) {
     params.addPageLimit(itemsToDisplay);
   }
-  const d = new Date();
-  console.log(d.getTime() / 1000, `${viewId}--${displayId}`);
 
   const view = await getView<DrupalNode>(`${viewId}--${displayId}`, {params: params.getQueryObject()});
   const requests = [];
@@ -27,9 +25,5 @@ export default async function handler(req, res) {
       result.id
     ))
   })
-  const data = await Promise.all(requests)
-  const endDate = new Date();
-  console.log(endDate.getTime() / 1000, `${viewId}--${displayId}`);
-  console.log(`${viewId}--${displayId}`, (d.getTime() - endDate.getTime())/1000 )
-  res.status(200).json(data);
+  res.status(200).json(await Promise.all(requests));
 }
