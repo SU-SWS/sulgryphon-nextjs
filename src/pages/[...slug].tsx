@@ -71,6 +71,7 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
   const d = new Date();
   const path = await translatePathFromContext(context);
   console.log(d.getTime() / 1000, path);
+  const startTime = d.getTime();
 
   if (!path) {
     return {
@@ -137,7 +138,9 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
   // build the menu tree in the page component instead. ¯\_(ツ)_/¯
   const {items} = await getMenu('main');
 
-  console.log(d.getTime() / 1000, node.title);
+  const end = new Date();
+  console.log(end.getTime() / 1000, node.title);
+  console.log(node.title, (end.getTime() - startTime) / 1000);
   return {
     props: {
       node,
