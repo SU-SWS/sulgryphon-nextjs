@@ -9,10 +9,10 @@ import {ArrowPathIcon} from "@heroicons/react/20/solid";
 const Oembed = ({url, ...props}) => {
   const elemRef = useRef();
   const elemRefValue = useOnScreen(elemRef);
-  const [isElemRef, setisElemRef] = useState(false);
+  const [isElemRef, setIsElemRef] = useState(false);
 
   useEffect(() => {
-    if (!isElemRef) setisElemRef(elemRefValue);
+    if (!isElemRef) setIsElemRef(elemRefValue);
   }, [elemRefValue, isElemRef])
 
   return (

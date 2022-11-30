@@ -68,7 +68,6 @@ export const getStaticPaths: GetStaticPaths = async (context): Promise<GetStatic
 }
 
 export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: DrupalMenuLinkContent[], breadcrumbs: Breadcrumb[] }> = async (context): Promise<GetStaticPropsResult<NodePageProps>> => {
-
   const path = await translatePathFromContext(context);
 
   if (!path) {
@@ -135,7 +134,6 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
   // For some reason, using the `tree` here produces hydration issues. So just pass the simple array of menu items, and
   // build the menu tree in the page component instead. ¯\_(ツ)_/¯
   const {items} = await getMenu('main');
-
   return {
     props: {
       node,

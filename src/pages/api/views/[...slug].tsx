@@ -2,6 +2,7 @@ import {DrupalNode, getResource, getView} from "next-drupal";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 export default async function handler(req, res) {
+
   const {slug} = req.query
   const [viewId, displayId, options] = slug
   let [args, itemsToDisplay] = options.split(":")
