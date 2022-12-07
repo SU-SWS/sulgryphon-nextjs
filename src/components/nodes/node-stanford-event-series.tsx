@@ -1,8 +1,11 @@
 import {EventSeries} from "../../types/drupal";
 import {Paragraph} from "@/components/paragraphs";
 import {DrupalLink} from "@/components/simple/link";
+import Link from "next/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {NodeListDisplay} from "@/nodes/index";
+import {Card} from "@/components/patterns/card";
+import Conditional from "@/components/simple/conditional";
 
 interface EventSeriesNodeProps {
   node: EventSeries
@@ -49,11 +52,21 @@ export const NodeStanfordEventSeriesListItem = ({node, ...props}: EventSeriesNod
 
 export const NodeStanfordEventSeriesCard = ({node, ...props}: EventSeriesNodeProps) => {
   return (
-    <article className="su-shadow-lg" {...props}>
-      <DrupalLink href={node.path.alias}
-                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
-        <h2 className="su-text-cardinal-red">{node.title}</h2>
-      </DrupalLink>
+    <article {...props}>
+      <Card
+        header={
+          <Link className="su-text-black hocus:su-underline hocus:su-text-digital-red" href={node.path.alias}>
+            {node.title}
+          </Link>
+        }
+        footer={
+          <Conditional showWhen={node.su_event_series_subheadline}>
+              <span className="su-text-black">
+                {node.su_event_series_subheadline}
+              </span>
+          </Conditional>
+        }
+      />
     </article>
   )
 }
