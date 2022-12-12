@@ -34,7 +34,7 @@ export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) 
         <Conditional showWhen={node.su_event_series_event}>
           <div className={"md:su-cc su-rs-my-6 su-grid su-gap-xl"}>
             {node.su_event_series_event.map(item =>
-              <div className={"su-pb-50 su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none su-border-b"}>
+              <div key={item.id} className={"su-pb-50 su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none su-border-b"}>
                 <NodeListDisplay node={item} key={item.id}/>
               </div>
             )}
