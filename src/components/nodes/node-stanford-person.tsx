@@ -1,12 +1,13 @@
 import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
 import {MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import {NextSeo} from "next-seo";
-
 import {Person} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {Paragraph} from "@/components/paragraphs";
 import {DrupalImage} from "@/components/simple/image";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
+import LinkIcon from "@heroicons/react/20/solid/LinkIcon";
+import EnvelopeIcon from "@heroicons/react/20/solid/EnvelopeIcon";
 
 interface PersonNodeProps {
   node: Person
@@ -21,7 +22,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
 
-        <div className="su-flex su-no-wrap su-mb-[50px]">
+        <div className="su-flex su-no-wrap su-mb-[50px] su-mt-50">
 
           {node?.su_person_photo?.field_media_image &&
               <div className="su-mr-[20px]">
@@ -94,12 +95,17 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               <h2 className="su-mb-0">Contact</h2>
             </div>
 
-            {node.su_person_email &&
-                <div>
-                    <DrupalLink href={`mailto:${node.su_person_email}`}>
-                      {node.su_person_email}
-                    </DrupalLink>
-                </div>
+            {(node.su_person_email || node.su_person_mobile_phone) &&
+                <ul>
+                  <li>p {node.su_person_telephone}</li>
+                  <li>m {node.su_person_mobile_phone}</li>
+                  <li>f {node.su_person_fax}</li>
+                  <li>Mail Code: {node.su_person_mail_code}</li>
+                  <li><DrupalLink href={`mailto:${node.su_person_email}`}>
+                    {node.su_person_email}
+                    <EnvelopeIcon height={41} className="" />
+                  </DrupalLink></li>
+                </ul>
             }
 
             {(node.su_person_location_name || node.su_person_address) &&
@@ -110,15 +116,28 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                     </div>
 
                   {node.su_person_location_name}
-                  {node?.su_person_address?.processed && formatHtml(node.su_person_address.processed)}
-                  {node.su_person_mail_code}
+                  {formatHtml(node.su_person_location_address.processed)}
                 </div>
             }
 
-
             {node?.su_person_map_url?.url &&
-                <DrupalLink href={node.su_person_map_url.url}>{node.su_person_map_url.title}</DrupalLink>}
+                <DrupalLink href={node.su_person_map_url.url}>{node.su_person_map_url.title}</DrupalLink>
+            }
 
+            {node?.su_person_links.length !== 0 &&
+              <div>
+                <LinkIcon height={41} className=""/>
+                <h2>Links</h2>
+                <div>
+                  {node.su_person_links.map((link) =>
+                    <div>
+                      <DrupalLink href={link.uri} className={'ml-10 hover:text-blue-600'}>{link.title}</DrupalLink>
+                    </div>
+                  )}
+                </div>
+              </div>
+            }
+            {/*{console.log(node.su_person_links )}*/}
           </div>
         </div>
       </article>
