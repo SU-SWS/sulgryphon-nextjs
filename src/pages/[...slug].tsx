@@ -138,7 +138,8 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
     props: {
       node,
       menuItems: items,
-      breadcrumbs: await getBreadcrumbs()
+      breadcrumbs: []
+      // breadcrumbs: await getBreadcrumbs()
     },
     revalidate: 60 * 60
   }
