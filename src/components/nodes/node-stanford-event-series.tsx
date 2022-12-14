@@ -5,6 +5,7 @@ import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {NodeListDisplay} from "@/nodes/index";
 import {Card} from "@/components/patterns/card";
 import Conditional from "@/components/simple/conditional";
+import {OneColumn} from "@/components/layouts/one-column";
 
 interface EventSeriesNodeProps {
   node: EventSeries
@@ -24,13 +25,11 @@ export const NodeStanfordEventSeries = ({node, ...props}: EventSeriesNodeProps) 
             {node.su_event_series_dek}
           </div>
         </Conditional>
+
         <Conditional showWhen={node.su_event_series_components}>
-          <div>
-            {node.su_event_series_components.map(paragraph =>
-              <Paragraph key={paragraph.id} paragraph={paragraph}/>
-            )}
-          </div>
+          <OneColumn items={node.su_event_series_components}/>
         </Conditional>
+
         <Conditional showWhen={node.su_event_series_event}>
           <div className={"md:su-cc su-rs-my-6 su-grid su-gap-xl"}>
             {node.su_event_series_event.map(item =>

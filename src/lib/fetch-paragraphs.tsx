@@ -51,7 +51,7 @@ export const populateParagraphData = async (node: DrupalNode) => {
       })
       break;
 
-    case 'node--event_series':
+    case 'node--stanford_event_series':
       paragraphs = await fetchParagraphs(node.su_event_series_components);
       node.su_event_series_components.map((component, i) => {
         node.su_event_series_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
