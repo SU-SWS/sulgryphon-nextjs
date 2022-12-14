@@ -14,7 +14,6 @@ export const NodeStanfordCourse = ({node, ...props}: CourseNodeProps) => {
   return (
     <MainContentLayout pageTitle={node.title}>
       <article {...props}>
-        { console.log(node) }
         <Conditional showWhen={node.su_course_academic_year}>
           {node.su_course_academic_year}
         </Conditional>
@@ -60,7 +59,6 @@ export const NodeStanfordCourse = ({node, ...props}: CourseNodeProps) => {
 export const NodeStanfordCourseListItem = ({node, ...props}: CourseNodeProps) => {
   return (
     <article {...props}>
-      { console.log(node) }
       <span className="su-font-bold su-leading-cozy">
         <Conditional showWhen={node.su_course_subject.name}>
           {node.su_course_subject.name}{' '}
@@ -86,9 +84,6 @@ export const NodeStanfordCourseListItem = ({node, ...props}: CourseNodeProps) =>
         </div>
       </Conditional>
       { node.body && <>{formatHtml(node.body.processed)}</>}
-      {/* <Conditional showWhen={node.body}>
-        <>{formatHtml(node.body.processed)}</>
-      </Conditional> */}
     </article>
   )
 }
