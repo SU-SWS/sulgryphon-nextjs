@@ -134,11 +134,15 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
   // For some reason, using the `tree` here produces hydration issues. So just pass the simple array of menu items, and
   // build the menu tree in the page component instead. ¯\_(ツ)_/¯
   const {items} = await getMenu('main');
+
+  // Disable the breadcrumbs. Keep this in case for the future.
+  // const breadcrumbs = await getBreadcrumbs();
+
   return {
     props: {
       node,
       menuItems: items,
-      breadcrumbs: await getBreadcrumbs()
+      breadcrumbs: []
     },
     revalidate: 60 * 60
   }

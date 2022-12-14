@@ -4,11 +4,11 @@ import Link from "next/link";
 import {useMemo} from "react";
 
 import {BasicPage} from "../../types/drupal";
-import {StanfordBanner} from "@/components/paragraphs/stanford-banner";
 import {Rows} from "@/components/paragraphs/row";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
 import Conditional from "@/components/simple/conditional";
+import HomeHeader from "@/components/patterns/home-header";
 
 interface BasicPageNodeProps {
   node: BasicPage
@@ -36,8 +36,7 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
         }}
       />
 
-      <MainContentLayout pageTitle={pageTitle} fullWidth={homepage} header={node.su_page_banner?.id?.length > 1 ?
-        <StanfordBanner className="su-mb-50" paragraph={node.su_page_banner}/> : null} {...props}>
+      <MainContentLayout pageTitle={pageTitle} fullWidth={homepage} header={homepage ? <HomeHeader/> : null}>
         <Conditional showWhen={node.su_page_components.length > 0}>
           <article>
             <Rows rows={node.su_page_components} rowField="su_page_components"/>
