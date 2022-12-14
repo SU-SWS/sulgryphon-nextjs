@@ -8,6 +8,7 @@ import {DrupalImage} from "@/components/simple/image";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import LinkIcon from "@heroicons/react/20/solid/LinkIcon";
 import EnvelopeIcon from "@heroicons/react/20/solid/EnvelopeIcon";
+import Conditional from "../simple/conditional";
 
 interface PersonNodeProps {
   node: Person
@@ -17,76 +18,82 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
   return (
     <MainContentLayout>
+      { console.log(node) }
       <article {...props}>
         <NextSeo
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
 
-        <div className="su-flex su-no-wrap su-mb-[50px] su-mt-50">
-
-          {node?.su_person_photo?.field_media_image &&
-              <div className="su-mr-[20px]">
-                  <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-                      <DrupalImage
-
-                          src={node.su_person_photo.field_media_image.uri.url}
-                          alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                          height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                          width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-                      />
-                  </div>
-              </div>
-          }
+        <div className="su-flex su-no-wrap su-rs-mb-neg2 su-mt-50">
+          <Conditional showWhen={node?.su_person_photo?.field_media_image}>
+            {node?.su_person_photo?.field_media_image &&
+                <div className="su-rs-mr-neg2">
+                    <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+                        <DrupalImage
+                            src={node.su_person_photo.field_media_image.uri.url}
+                            alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                            height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                            width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                        />
+                    </div>
+                </div>
+            }
+          </Conditional>
 
           <div>
-            {node.su_person_short_title}
+            <Conditional showWhen={node.su_person_short_title}>
+              {node.su_person_short_title}
+            </Conditional>
+            
             <h1>{node.title}</h1>
-            {node.su_person_full_title}
+            <Conditional showWhen={node.su_person_full_title}>
+              {node.su_person_full_title}
+            </Conditional>
           </div>
         </div>
 
         <div className="md:su-grid su-grid-cols-6 su-gap-[40px]">
           <div className="su-col-span-4">
             {node.body?.processed && <div>{formatHtml(node.body.processed)}</div>}
+            
+            <Conditional showWhen={node.su_person_components}>
+              {node.su_person_components.map(paragraph =>
+                <Paragraph key={paragraph.id} paragraph={paragraph}/>
+              )}
+            </Conditional>
 
-            {node.su_person_components && node.su_person_components.map(paragraph =>
-              <Paragraph key={paragraph.id} paragraph={paragraph}/>
-            )}
+            <Conditional showWhen={node.su_person_education}>
+              <div>
+                <h2>Education</h2>
+                {node.su_person_education}
+              </div>
+            </Conditional>
 
-            {node.su_person_education &&
-                <div>
-                    <h2>Education</h2>
-                  {node.su_person_education}
-                </div>
-            }
+            <Conditional showWhen={node.su_person_research}>
+              <div>
+                  <h2>Research</h2>
+                  <div className="su-grid su-grid-cols-2">
+                    {node.su_person_research.map((interest, index) =>
+                      <div key={`research-${index}`}>
+                        {formatHtml(interest.processed)}
+                      </div>
+                    )}
+                  </div>
+              </div>
+            </Conditional>
 
-            {node.su_person_research &&
-                <div>
-                    <h2>Research</h2>
-                    <div className="su-grid su-grid-cols-2">
-                      {node.su_person_research.map((interest, index) =>
-                        <div key={`research-${index}`}>
-                          {formatHtml(interest.processed)}
-                        </div>
-                      )}
-                    </div>
-                </div>
+            <Conditional showWhen={node.su_person_research_interests}>
+              {node.su_person_research_interests}
+            </Conditional>
 
-            }
-
-
-            {node.su_person_research_interests}
-
-            {node.su_person_affiliations &&
-                <div>
-                    <h2>Stanford Affiliations</h2>
-                  {node.su_person_affiliations.map((affiliation, index) =>
-                    <DrupalLinkButton key={`person-affiliation-${index}`} href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
-                  )}
-                </div>
-            }
-
-
+            <Conditional showWhen={node.su_person_affiliations}>
+              <div>
+                  <h2>Stanford Affiliations</h2>
+                {node.su_person_affiliations.map((affiliation, index) =>
+                  <DrupalLinkButton key={`person-affiliation-${index}`} href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
+                )}
+              </div>
+            </Conditional>
           </div>
 
           <div className="su-col-span-2">
