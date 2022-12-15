@@ -57,5 +57,12 @@ export const populateParagraphData = async (node: DrupalNode) => {
         node.su_event_series_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
       })
       break;
+
+    case 'node--sul_library':
+      paragraphs = await fetchParagraphs(node.su_library__paragraphs);
+      node?.su_library__paragraphs.map((component, i) => {
+        node.su_library__paragraphs[i] = paragraphs.find(paragraph => paragraph.id === component.id);
+      })
+      break;
   }
 }

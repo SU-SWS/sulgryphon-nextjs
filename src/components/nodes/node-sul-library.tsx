@@ -1,8 +1,9 @@
+import {useEffect, useState} from "react";
+import {Library} from "../../types/drupal";
+import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import {Library} from "../../types/drupal";
-import useSWR from 'swr';
-import formatHtml from "@/lib/format-html";
+import axios from "axios";
 
 
 interface SulLibraryNodeProps {
@@ -10,15 +11,23 @@ interface SulLibraryNodeProps {
 }
 
 export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
+  const [hours, setHours] = useState(null)
 
-  const fetcher = (...args) => fetch.apply(null, args).then(res => res.json())
-  const {data: circulationHours} = useSWR(`https://library-hours.stanford.edu/api/v1/library/${node.su_library__url_name}/location/library-circulation/hours/for/today`, fetcher)
-  const {data: referenceHours} = useSWR(`https://library-hours.stanford.edu/api/v1/library/${node.su_library__url_name}/location/reference/hours/for/today`, fetcher)
+  useEffect(() => {
+    axios.get('https://library-hours.stanford.edu/libraries.json')
+      .then(response => {
+        const branchHours = response.data.included.filter(item => node.su_library__hours === item.relationships.library.data.id.toLowerCase());
+        // TODO search for the branch hours and pick the correct set.
+        setHours(branchHours[0])
+      });
+  }, [node.su_library__hours])
+
+  const dayOfWeekName = new Date().toLocaleString('default', {weekday: 'long'});
+  const todayHours = hours && hours?.attributes?.hours?.find(day => day.weekday === dayOfWeekName);
 
   return (
-    <MainContentLayout>
+    <MainContentLayout pageTitle={node.title}>
       <article>
-        <h1>{node.title}</h1>
         {node.body && <div>{formatHtml(node.body.processed)}</div>}
 
         {node.su_library__access && <div><h2>About</h2>{node.su_library__access}</div>}
@@ -30,8 +39,7 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 
         <div>
           <h2>Hours</h2>
-          {referenceHours && <LibraryHours label="Reference" {...referenceHours[0]} />}
-          {circulationHours && <LibraryHours label="Library & circulation" {...circulationHours[0]} />}
+          {hours && <LibraryHours {...todayHours} />}
         </div>
 
       </article>
@@ -60,7 +68,7 @@ export const NodeSulLibraryCard = ({node, ...props}: SulLibraryNodeProps) => {
   )
 }
 
-const LibraryHours = ({label, closed, closes_at, opens_at, location_slug}) => {
+const LibraryHours = ({closed, closes_at, opens_at}) => {
 
   const closes = new Date(closes_at)
   const closeTime = closes.toLocaleTimeString("en-US", {
@@ -74,7 +82,6 @@ const LibraryHours = ({label, closed, closes_at, opens_at, location_slug}) => {
 
   return (
     <div>
-      <a href="#">{label}</a>
       {closed && <span>closed</span>}
       {!closed && <span>{openTime} - {closeTime}</span>}
     </div>

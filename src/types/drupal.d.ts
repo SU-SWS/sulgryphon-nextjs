@@ -112,17 +112,14 @@ interface Publication extends DrupalNode {
 }
 
 interface Library extends DrupalNode {
-  body: DrupalWysiwyg
-  su_library__access: string
-  su_library__accessibility: string
+  su_library__address: DrupalAddress
+  su_library__banner: DrupalImageMedia
+  su_library__contact_img: DrupalImageMedia
   su_library__email: string
-  su_library__equipment: DrupalTaxonomyTerm[]
-  su_library__location: string
-  su_library__parking: string
+  su_library__hours: string
+  su_library__map_link: DrupalLink
+  su_library__paragraphs: DrupalParagraph[]
   su_library__phone: number
-  su_library__short_name: string
-  su_library__type: DrupalTaxonomyTerm
-  su_library__url_name: string
 }
 
 // Paragraph Types.
