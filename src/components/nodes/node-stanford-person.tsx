@@ -24,19 +24,17 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
         />
 
         <div className="sm:su-flex su-no-wrap su-rs-mb-neg2 su-mt-50">
-          <Conditional showWhen={node?.su_person_photo?.field_media_image}>
-            {node?.su_person_photo?.field_media_image &&
-              <div className="su-rs-mr-neg2">
-                  <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-                      <DrupalImage
-                          src={node.su_person_photo.field_media_image.uri.url}
-                          alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                          height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                          width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-                      />
-                  </div>
-              </div>
-            }
+          <Conditional showWhen={node.su_person_photo.field_media_image}>
+            <div className="su-rs-mr-neg2">
+                <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+                    <DrupalImage
+                        src={node.su_person_photo.field_media_image.uri.url}
+                        alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                        height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                        width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                    />
+                </div>
+            </div>
           </Conditional>
 
           <div>
@@ -55,7 +53,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
         <div className="md:su-grid su-grid-cols-6 su-gap-[40px]">
           <div className="su-col-span-4">
-            {node.body?.processed && <div className="su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-8">{formatHtml(node.body.processed)}</div>}
+            {node.body?.processed && <div className="su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7">{formatHtml(node.body.processed)}</div>}
             
             <Conditional showWhen={node.su_person_components}>
               {node.su_person_components.map(paragraph =>
@@ -64,14 +62,14 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
             </Conditional>
 
             <Conditional showWhen={node.su_person_education}>
-              <div className="su-rs-mb-8">
+              <div className="su-rs-mb-7">
                 <h2 className="su-text-16 md:su-text-18">Education</h2>
                 {node.su_person_education}
               </div>
             </Conditional>
 
             <Conditional showWhen={node.su_person_research}>
-              <div className="su-rs-mb-8">
+              <div className="su-rs-mb-7">
                   <h2 className="su-text-16 md:su-text-18">Research</h2>
                   <div className="md:su-grid su-grid-cols-2">
                     {node.su_person_research.map((interest, index) =>
@@ -88,7 +86,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
             </Conditional>
 
             <Conditional showWhen={node.su_person_affiliations}>
-              <div className="su-rs-mb-8">
+              <div className="su-rs-mb-7">
                 <h2 className="su-text-16 md:su-text-18">Stanford Affiliations</h2>
                 {node.su_person_affiliations.map((affiliation, index) =>
                   <DrupalLinkButton key={`person-affiliation-${index}`} href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
@@ -98,64 +96,82 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
           </div>
 
           <div className="su-col-span-2">
-            <div className="su-rs-mb-8">
-              <div className="su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                <PhoneIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                <h2 className="su-text-16 md:su-text-18">Contact</h2>
-              </div>
-
-              {(node.su_person_email || node.su_person_mobile_phone) &&
-                  <ul className="su-list-none su-p-0">
+            <div className="su-rs-mb-7">
+              {(node.su_person_telephone || node.su_person_mobile_phone || node.su_person_fax || node.su_person_mail_code || node.su_person_email) &&
+              <>
+                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
+                  <PhoneIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+                  <h2 className="su-text-16 md:su-text-18">Contact</h2>
+                </div>
+                <ul className="su-list-none su-p-0 children:su-mb-0">
+                  <Conditional showWhen={node.su_person_telephone}>
                     <li>p {node.su_person_telephone}</li>
+                  </Conditional>
+                  <Conditional showWhen={node.su_person_mobile_phone}>
                     <li>m {node.su_person_mobile_phone}</li>
+                  </Conditional>
+                  <Conditional showWhen={node.su_person_fax}>
                     <li>f {node.su_person_fax}</li>
+                  </Conditional>
+                  <Conditional showWhen={node.su_person_mail_code}>
                     <li>Mail Code: {node.su_person_mail_code}</li>
+                  </Conditional>
+                  <Conditional showWhen={node.su_person_mail_code}>
                     <li>
                       <Link href={`mailto:${node.su_person_email}`}>
                         {node.su_person_email}
                         <EnvelopeIcon width={20} className="su-inline-block su-ml-4" />
                       </Link>
                     </li>
-                  </ul>
+                  </Conditional>
+                </ul>
+              </>
               }
             </div>
 
-            <div className="su-rs-mb-8">
-              {(node.su_person_location_name || node.su_person_address) &&
-                <div>
-                  <div className="su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                    <MapIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                    <h2 className="su-text-16 md:su-text-18">Location</h2>
-                  </div>
-                  <div>
-                    {node.su_person_location_name}
-                  </div>
-                  <div>
-                    {formatHtml(node.su_person_location_address.processed)}
-                  </div>
+            <div className="su-rs-mb-7">
+              <Conditional showWhen={(node.su_person_location_name || node.su_person_location_address || node.su_person_map_url)}>
+                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
+                  <MapIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+                  <h2 className="su-text-16 md:su-text-18">Location</h2>
                 </div>
-              }
 
-              {node?.su_person_map_url?.url &&
-                  <Link href={node.su_person_map_url.url}>{node.su_person_map_url.title}</Link>
-              }
+                <Conditional showWhen={node.su_person_location_name}>
+                  {node.su_person_location_name}
+                </Conditional>
+
+                {node.su_person_location_address?.processed && <div className="children:su-mb-0">
+                  {formatHtml(node.su_person_location_address.processed)}
+                </div>}
+                
+                {node?.su_person_map_url?.url &&
+                  <span>
+                    Map URL: <Link href={node.su_person_map_url.url}>{node.su_person_map_url.url}</Link>
+                  </span>
+                }
+              </Conditional>
             </div>
 
             {node?.su_person_links.length !== 0 &&
-              <div className="su-rs-mb-8">
-                <div className="su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                  <LinkIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
+              <div className="su-rs-mb-4">
+                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
+                  <LinkIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
                   <h2 className="su-text-16 md:su-text-18">Links</h2>
                 </div>
                 <div>
                   {node.su_person_links.map((link) =>
                     <div>
-                      <Link href={link.uri} className={'ml-10 hover:text-blue-600'}>{link.title}</Link>
+                      <Link href={link.uri} className={'su-leading su-no-underline su-text-blue-600 hocus:su-text-black'}>* {link.title}</Link>
                     </div>
                   )}
                 </div>
               </div>
             }
+
+            <Conditional showWhen={node.su_person_profile_link}>
+              <DrupalLinkButton className="su-rs-mb-4" href={node.su_person_profile_link.url}>{node.su_person_profile_link.title}</DrupalLinkButton>
+            </Conditional>
+
           </div>
         </div>
       </article>
