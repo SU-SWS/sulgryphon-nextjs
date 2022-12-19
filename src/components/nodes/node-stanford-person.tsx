@@ -17,7 +17,6 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
   return (
     <MainContentLayout>
-      { console.log(node) }
       <article {...props}>
         <NextSeo
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
@@ -39,21 +38,21 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
           <div>
             <Conditional showWhen={node.su_person_short_title}>
-              <div>{node.su_person_short_title}</div>
+              <div className="su-type-0 su-leading">{node.su_person_short_title}</div>
             </Conditional>
             <h1>{node.title}</h1>
             <Conditional showWhen={node.su_person_full_title}>
-              <div>{node.su_person_full_title}</div>
+              <div className="su-type-0 su-leading">{node.su_person_full_title}</div>
             </Conditional>
             <Conditional showWhen={node.su_person_pronouns}>
-              <div>Pronouns: {node.su_person_pronouns}</div>
+              <div className="su-type-0 su-leading">Pronouns: {node.su_person_pronouns}</div>
             </Conditional>
           </div>
         </div>
 
         <div className="md:su-grid su-grid-cols-6 su-gap-[40px]">
           <div className="su-col-span-4">
-            {node.body?.processed && <div className="su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7">{formatHtml(node.body.processed)}</div>}
+            {node.body?.processed && <div className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7">{formatHtml(node.body.processed)}</div>}
             
             <Conditional showWhen={node.su_person_components}>
               {node.su_person_components.map(paragraph =>
@@ -63,14 +62,14 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
             <Conditional showWhen={node.su_person_education}>
               <div className="su-rs-mb-7">
-                <h2 className="su-text-16 md:su-text-18">Education</h2>
+                <h2 className="su-type-0">Education</h2>
                 {node.su_person_education}
               </div>
             </Conditional>
 
             <Conditional showWhen={node.su_person_research}>
               <div className="su-rs-mb-7">
-                  <h2 className="su-text-16 md:su-text-18">Research</h2>
+                  <h2 className="su-type-0">Research</h2>
                   <div className="md:su-grid su-grid-cols-2">
                     {node.su_person_research.map((interest, index) =>
                       <div key={`research-${index}`} className="su-rs-mb-1">
@@ -87,7 +86,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
             <Conditional showWhen={node.su_person_affiliations}>
               <div className="su-rs-mb-7">
-                <h2 className="su-text-16 md:su-text-18">Stanford Affiliations</h2>
+                <h2 className="su-type-0">Stanford Affiliations</h2>
                 {node.su_person_affiliations.map((affiliation, index) =>
                   <DrupalLinkButton key={`person-affiliation-${index}`} href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
                 )}
@@ -101,7 +100,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               <>
                 <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
                   <PhoneIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
-                  <h2 className="su-text-16 md:su-text-18">Contact</h2>
+                  <h2 className="su-type-0">Contact</h2>
                 </div>
                 <ul className="su-list-none su-p-0 children:su-mb-0">
                   <Conditional showWhen={node.su_person_telephone}>
@@ -133,7 +132,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               <Conditional showWhen={(node.su_person_location_name || node.su_person_location_address || node.su_person_map_url)}>
                 <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
                   <MapIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
-                  <h2 className="su-text-16 md:su-text-18">Location</h2>
+                  <h2 className="su-type-0">Location</h2>
                 </div>
 
                 <Conditional showWhen={node.su_person_location_name}>
@@ -156,11 +155,11 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               <div className="su-rs-mb-4">
                 <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
                   <LinkIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
-                  <h2 className="su-text-16 md:su-text-18">Links</h2>
+                  <h2 className="su-type-0">Links</h2>
                 </div>
                 <div>
-                  {node.su_person_links.map((link) =>
-                    <div>
+                  {node.su_person_links.map((link, index) =>
+                    <div key={`person-link-${index}`}>
                       <Link href={link.uri} className={'su-leading su-no-underline su-text-blue-600 hocus:su-text-black'}>* {link.title}</Link>
                     </div>
                   )}
