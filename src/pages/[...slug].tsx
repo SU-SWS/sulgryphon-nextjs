@@ -79,11 +79,14 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
   // Check for redirect.
   if (path.redirect?.length) {
     const [redirect] = path.redirect
-    return {
-      redirect: {
-        destination: redirect.to,
-        permanent: redirect.status === "301",
-      },
+    const currentPath = '/' + (typeof context.params.slug === 'object' ? context.params.slug.join('/') : context.params.slug);
+    if (redirect.to != currentPath) {
+      return {
+        redirect: {
+          destination: redirect.to,
+          permanent: redirect.status === "301",
+        },
+      }
     }
   }
 
