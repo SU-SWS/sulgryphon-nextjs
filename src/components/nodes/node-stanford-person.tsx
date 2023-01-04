@@ -62,7 +62,11 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
             <Conditional showWhen={node.su_person_education}>
               <div className="su-rs-mb-7">
                 <h2 className="su-type-0">Education</h2>
-                {node.su_person_education}
+                {node.su_person_education.map((education, index) =>
+                  <div key={`person-education-${index}`} className="su-rs-mb-0">
+                    { education }
+                  </div>
+                )}
               </div>
             </Conditional>
 

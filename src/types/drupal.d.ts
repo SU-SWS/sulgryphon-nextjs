@@ -78,7 +78,7 @@ interface Person extends DrupalNode {
   su_person_admin_appts?: string
   su_person_affiliations?: DrupalLink[]
   su_person_components?: DrupalParagraph[]
-  su_person_education?: string
+  su_person_education?: string[]
   su_person_email?: string
   su_person_fax?: string
   su_person_first_name?: string
