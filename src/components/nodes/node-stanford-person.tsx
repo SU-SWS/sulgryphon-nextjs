@@ -170,9 +170,9 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               </div>
             }
 
-            <Conditional showWhen={node.su_person_profile_link}>
+            {node?.su_person_profile_link &&
               <DrupalLinkButton className="su-rs-mb-4" href={node.su_person_profile_link.url}>{node.su_person_profile_link.title}</DrupalLinkButton>
-            </Conditional>
+            }
 
           </div>
         </div>
@@ -186,7 +186,7 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
     <article {...props}>
       { console.log(node) }
       <Link href={node.path.alias}>
-        <h2 className="su-text-cardinal-red">{node.title}</h2>
+        <h2 className="su-text-digital-red">{node.title}</h2>
       </Link>
     </article>
   )
@@ -196,18 +196,20 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
     <article className="su-shadow-md su-p-30 su-mb-30" {...props}>
-      { console.log(node) }
       {node?.su_person_photo?.field_media_image &&
-          <DrupalImage
-              src={node.su_person_photo.field_media_image.uri.url}
-              alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-              height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-              width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-          />
+        <div className="su-flex su-justify-center su-rs-pb-2">
+            <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+                <DrupalImage
+                    src={node.su_person_photo.field_media_image.uri.url}
+                    alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                    height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                    width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                />
+            </div>
+        </div>
       }
-      <Link href={node.path.alias}
-                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black su-text-center">
-        <h2>{node.title}</h2>
+      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black su-text-center">
+        <h2 className="su-type-2">{node.title}</h2>
       </Link>
       <div className="su-text-center">{node.su_person_short_title}</div>
     </article>
