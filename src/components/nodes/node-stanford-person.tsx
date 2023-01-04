@@ -21,10 +21,9 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
         <NextSeo
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
-
         <div className="sm:su-flex su-no-wrap su-rs-mb-neg2 su-mt-50">
           <Conditional showWhen={node.su_person_photo.field_media_image}>
-            <div className="su-rs-mr-neg2">
+            <div className="su-rs-mr-4">
                 <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
                     <DrupalImage
                         src={node.su_person_photo.field_media_image.uri.url}
@@ -115,7 +114,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                   <Conditional showWhen={node.su_person_mail_code}>
                     <li>Mail Code: {node.su_person_mail_code}</li>
                   </Conditional>
-                  <Conditional showWhen={node.su_person_mail_code}>
+                  <Conditional showWhen={node.su_person_email}>
                     <li>
                       <Link href={`mailto:${node.su_person_email}`}>
                         {node.su_person_email}
@@ -128,7 +127,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               }
             </div>
 
-            <div className="su-rs-mb-7">
+            <div className="su-rs-mb-7 children:su-leading">
               <Conditional showWhen={(node.su_person_location_name || node.su_person_location_address || node.su_person_map_url)}>
                 <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
                   <MapIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
@@ -144,9 +143,9 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                 </div>}
                 
                 {node?.su_person_map_url?.url &&
-                  <span>
+                  <div>
                     Map URL: <Link href={node.su_person_map_url.url}>{node.su_person_map_url.url}</Link>
-                  </span>
+                  </div>
                 }
               </Conditional>
             </div>
@@ -181,6 +180,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
     <article {...props}>
+      { console.log(node) }
       <Link href={node.path.alias}>
         <h2 className="su-text-cardinal-red">{node.title}</h2>
       </Link>
@@ -192,6 +192,7 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
     <article className="su-shadow-md su-p-30 su-mb-30" {...props}>
+      { console.log(node) }
       {node?.su_person_photo?.field_media_image &&
           <DrupalImage
               src={node.su_person_photo.field_media_image.uri.url}
