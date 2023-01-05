@@ -183,11 +183,24 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
 export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
-    <article {...props}>
-      { console.log(node) }
-      <Link href={node.path.alias}>
-        <h2 className="su-text-digital-red">{node.title}</h2>
+    <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
+      {/* { console.log(node) } */}
+      {node?.su_person_photo?.field_media_image &&
+        <div className="su-rs-pb-neg1">
+            <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+                <DrupalImage
+                    src={node.su_person_photo.field_media_image.uri.url}
+                    alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                    height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                    width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                />
+            </div>
+        </div>
+      }
+      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black">
+        <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
       </Link>
+      <div className="">{node.su_person_short_title}</div>
     </article>
   )
 }
@@ -195,7 +208,7 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
-    <article className="su-shadow-md su-p-30 su-mb-30" {...props}>
+    <article className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
       {node?.su_person_photo?.field_media_image &&
         <div className="su-flex su-justify-center su-rs-pb-2">
             <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
