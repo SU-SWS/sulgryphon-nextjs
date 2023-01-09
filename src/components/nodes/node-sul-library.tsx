@@ -3,6 +3,8 @@ import {Library} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
+import {Paragraph} from "@/components/paragraphs";
+import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 
 
@@ -28,20 +30,48 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
   return (
     <MainContentLayout pageTitle={node.title}>
       <article>
-        {node.body && <div>{formatHtml(node.body.processed)}</div>}
+        { console.log(node) }
+        {/* {node.body && <div>{formatHtml(node.body.processed)}</div>} */}
+        {/* {node.su_library__access && <div><h2>About</h2>{node.su_library__access}</div>} */}
+        {/* {node.su_library__accessibility && <div><h2>Accessibility</h2>{node.su_library__accessibility}</div>} */}
+        {/* {node.su_library__parking && <div><h2>Transit and Parking</h2>{node.su_library__parking}</div>} */}
 
-        {node.su_library__access && <div><h2>About</h2>{node.su_library__access}</div>}
-        {node.su_library__accessibility && <div><h2>Accessibility</h2>{node.su_library__accessibility}</div>}
-        {node.su_library__email && <div><h2>Email</h2>{node.su_library__email}</div>}
-        {node.su_library__location && <div><h2>Location</h2>{node.su_library__location}</div>}
-        {node.su_library__parking && <div><h2>Transit and Parking</h2>{node.su_library__parking}</div>}
-        {node.su_library__phone && <div><h2>Phone</h2>{node.su_library__phone}</div>}
-
-        <div>
-          <h2>Hours</h2>
-          {hours && <LibraryHours {...todayHours} />}
+        <div className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3">
+          {node.su_library__phone && 
+            <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
+              <PhoneIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+              {node.su_library__phone}
+            </div>
+          }
+          {node.su_library__email && 
+            <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
+              <EnvelopeIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+              {node.su_library__email}
+            </div>
+          }
+          {node.su_library__address &&
+            <div className="su-relative su-mt-40 md:su-mt-20 su-mb-4">
+              <MapPinIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+              <div className="su-text-16 md:su-text-18">{node.su_library__address.address_line1}</div>
+              <div className="su-text-16 md:su-text-18">{node.su_library__address.address_line2}</div>
+              <div className="su-text-16 md:su-text-18">{node.su_library__address.locality}, {node.su_library__address.administrative_area} {node.su_library__address.postal_code}</div>
+            </div>
+          }
+          {hours &&
+            <div className="su-relative su-mt-40 md:su-mt-20 su-mb-4">
+              <ClockIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+              {hours && <LibraryHours {...todayHours} />}
+            </div>
+          }
         </div>
 
+        {node.su_library__paragraphs && 
+          <div className="su-rs-py-1">
+            {node.su_library__paragraphs.map(paragraph =>
+              <Paragraph key={paragraph.id} paragraph={paragraph}/>
+            )}
+          </div>
+        }
       </article>
     </MainContentLayout>
   )
