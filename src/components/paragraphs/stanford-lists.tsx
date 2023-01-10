@@ -86,6 +86,7 @@ const useListDisplay = (viewId, displayId) => {
     'stanford_publications:apa_list',
     'stanford_basic_pages:basic_page_type_list',
     'stanford_courses:default_list_viewfield_block',
+    // 'stanford_person:grid_list_all',
   ];
   return listDisplays.indexOf(display) > -1;
 }
