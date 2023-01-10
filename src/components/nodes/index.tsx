@@ -1,21 +1,36 @@
-import * as React from "react";
-import {NodeStanfordCourse, NodeStanfordCourseCard, NodeStanfordCourseListItem} from "@/nodes/node-stanford-course";
-import {NodeStanfordEvent, NodeStanfordEventCard, NodeStanfordEventListItem} from "@/nodes/node-stanford-event";
-import {
-  NodeStanfordEventSeries,
-  NodeStanfordEventSeriesCard,
-  NodeStanfordEventSeriesListItem
-} from "@/nodes/node-stanford-event-series";
-import {NodeStanfordNews, NodeStanfordNewsCard, NodeStanfordNewsListItem} from "@/nodes/node-stanford-news";
-import {NodeStanfordPage, NodeStanfordPageCard, NodeStanfordPageListItem} from "@/nodes/node-stanford-page";
-import {NodeStanfordPerson, NodeStanfordPersonCard, NodeStanfordPersonListItem} from "@/nodes/node-stanford-person";
-import {
-  NodeStanfordPublication,
-  NodeStanfordPublicationCard,
-  NodeStanfordPublicationListItem
-} from "@/nodes/node-stanford-publication";
+import dynamic from 'next/dynamic'
 
-import {NodeSulLibrary, NodeSulLibraryCard, NodeSUlLibraryListItem} from "@/nodes/node-sul-library";
+const NodeStanfordCourse = dynamic(() => import("./node-stanford-course").then((mod) => mod.NodeStanfordCourse));
+const NodeStanfordCourseCard = dynamic(() => import("./node-stanford-course").then((mod) => mod.NodeStanfordCourseCard));
+const NodeStanfordCourseListItem = dynamic(() => import("./node-stanford-course").then((mod) => mod.NodeStanfordCourseListItem));
+
+const NodeStanfordEvent = dynamic(() => import("./node-stanford-event").then((mod) => mod.NodeStanfordEvent));
+const NodeStanfordEventCard = dynamic(() => import("./node-stanford-event").then((mod) => mod.NodeStanfordEventCard));
+const NodeStanfordEventListItem = dynamic(() => import("./node-stanford-event").then((mod) => mod.NodeStanfordEventListItem));
+
+const NodeStanfordEventSeries = dynamic(() => import("./node-stanford-event-series").then((mod) => mod.NodeStanfordEventSeries));
+const NodeStanfordEventSeriesCard = dynamic(() => import("./node-stanford-event-series").then((mod) => mod.NodeStanfordEventSeriesCard));
+const NodeStanfordEventSeriesListItem = dynamic(() => import("./node-stanford-event-series").then((mod) => mod.NodeStanfordEventSeriesListItem));
+
+const NodeStanfordNews = dynamic(() => import("./node-stanford-news").then((mod) => mod.NodeStanfordNews));
+const NodeStanfordNewsCard = dynamic(() => import("./node-stanford-news").then((mod) => mod.NodeStanfordNewsCard));
+const NodeStanfordNewsListItem = dynamic(() => import("./node-stanford-news").then((mod) => mod.NodeStanfordNewsListItem));
+
+const NodeStanfordPage = dynamic(() => import("./node-stanford-page").then((mod) => mod.NodeStanfordPage));
+const NodeStanfordPageCard = dynamic(() => import("./node-stanford-page").then((mod) => mod.NodeStanfordPageCard));
+const NodeStanfordPageListItem = dynamic(() => import("./node-stanford-page").then((mod) => mod.NodeStanfordPageListItem));
+
+const NodeStanfordPerson = dynamic(() => import("./node-stanford-person").then((mod) => mod.NodeStanfordPerson));
+const NodeStanfordPersonCard = dynamic(() => import("./node-stanford-person").then((mod) => mod.NodeStanfordPersonCard));
+const NodeStanfordPersonListItem = dynamic(() => import("./node-stanford-person").then((mod) => mod.NodeStanfordPersonListItem));
+
+const NodeStanfordPublication = dynamic(() => import("./node-stanford-publication").then((mod) => mod.NodeStanfordPublication));
+const NodeStanfordPublicationCard = dynamic(() => import("./node-stanford-publication").then((mod) => mod.NodeStanfordPublicationCard));
+const NodeStanfordPublicationListItem = dynamic(() => import("./node-stanford-publication").then((mod) => mod.NodeStanfordPublicationListItem));
+
+const NodeSulLibrary = dynamic(() => import("./node-sul-library").then((mod) => mod.NodeSulLibrary));
+const NodeSulLibraryCard = dynamic(() => import("./node-sul-library").then((mod) => mod.NodeSulLibraryCard));
+const NodeSUlLibraryListItem = dynamic(() => import("./node-sul-library").then((mod) => mod.NodeSUlLibraryListItem));
 
 interface NodeProps {
   node: any

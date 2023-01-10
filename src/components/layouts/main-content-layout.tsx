@@ -1,11 +1,12 @@
 import {ReactNodeLike} from "prop-types";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {HomeIcon} from "@heroicons/react/20/solid";
 
 import {useAppContext} from "../../context/state";
-import {SideNav} from "@/components/menu/side-nav";
 import Conditional from "@/components/simple/conditional";
-import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
+const SideNav = dynamic(() => import("../menu/side-nav").then((mod) => mod.SideNav));
+const InternalHeaderBanner = dynamic(() => import("../../components/patterns/internal-header-banner"));
 
 interface MainLayoutProps {
   pageTitle?: string | ReactNodeLike

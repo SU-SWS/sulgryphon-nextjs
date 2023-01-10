@@ -1,29 +1,22 @@
-import {useEffect, useState} from "react";
 import {Library} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import axios from "axios";
-
+import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 
 interface SulLibraryNodeProps {
   node: Library;
 }
 
 export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
-  const [hours, setHours] = useState(null)
+  const hours = useLibraryHours()
+  const currentDay = new Date().toISOString().substring(0, 10)
+  const libraryHours = hours[node.su_library__hours]
+  let todayHours;
 
-  useEffect(() => {
-    axios.get('https://library-hours.stanford.edu/libraries.json')
-      .then(response => {
-        const branchHours = response.data.included.filter(item => node.su_library__hours === item.relationships.library.data.id.toLowerCase());
-        // TODO search for the branch hours and pick the correct set.
-        setHours(branchHours[0])
-      });
-  }, [node.su_library__hours])
-
-  const dayOfWeekName = new Date().toLocaleString('default', {weekday: 'long'});
-  const todayHours = hours && hours?.attributes?.hours?.find(day => day.weekday === dayOfWeekName);
+  if (libraryHours) {
+    todayHours = libraryHours.locations[Object.keys(libraryHours.locations)[0]].find(day => day.day === currentDay);
+  }
 
   return (
     <MainContentLayout pageTitle={node.title}>
@@ -39,7 +32,7 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 
         <div>
           <h2>Hours</h2>
-          {hours && <LibraryHours {...todayHours} />}
+          {todayHours && <LibraryHours {...todayHours} />}
         </div>
 
       </article>
