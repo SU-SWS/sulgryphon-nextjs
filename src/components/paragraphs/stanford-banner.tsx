@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import {BannerParagraph} from "../../types/drupal";
 import {Banner} from "@/components/patterns/banner";
-import Image from "next/image";
 
 interface BannerProps {
   paragraph: BannerParagraph

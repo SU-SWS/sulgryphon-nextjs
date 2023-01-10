@@ -37,7 +37,7 @@ export const Card = ({video, image, superHeader, header, footer, body, link, lin
         </div>
       </Conditional>
 
-      <div className="su-flex su-flex-col card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
+      <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
         <Conditional showWhen={superHeader}>
           <span className="su-type-0 su-mb-0 su-leading-display su-font-bold">{superHeader}</span>
         </Conditional>

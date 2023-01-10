@@ -1,11 +1,13 @@
-import {StanfordWysiwyg} from "@/components/paragraphs/stanford-wysiwyg";
-import {StanfordCard} from "@/components/paragraphs/stanford-card";
-import {StanfordBanner} from "@/components/paragraphs/stanford-banner";
-import {StanfordImageGallery} from "@/components/paragraphs/stanford-image-gallery";
-import {StanfordMediaCaption} from "@/components/paragraphs/stanford-media-caption";
-import {StanfordLists} from "@/components/paragraphs/stanford-lists";
-import {StanfordEntity} from "@/components/paragraphs/stanford-entity";
-import {StanfordSpacer} from "@/components/paragraphs/stanford-spacer";
+import dynamic from "next/dynamic";
+
+const StanfordWysiwyg = dynamic(() => import("./stanford-wysiwyg").then((mod) => mod.StanfordWysiwyg));
+const StanfordCard = dynamic(() => import("./stanford-card").then((mod) => mod.StanfordCard));
+const StanfordBanner = dynamic(() => import("./stanford-banner").then((mod) => mod.StanfordBanner));
+const StanfordImageGallery = dynamic(() => import("./stanford-image-gallery").then((mod) => mod.StanfordImageGallery));
+const StanfordMediaCaption = dynamic(() => import("./stanford-media-caption").then((mod) => mod.StanfordMediaCaption));
+const StanfordLists = dynamic(() => import("./stanford-lists").then((mod) => mod.StanfordLists));
+const StanfordEntity = dynamic(() => import("./stanford-entity").then((mod) => mod.StanfordEntity));
+const StanfordSpacer = dynamic(() => import("./stanford-spacer").then((mod) => mod.StanfordSpacer));
 
 interface ParagraphProps {
   paragraph: any;

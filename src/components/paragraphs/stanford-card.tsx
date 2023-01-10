@@ -4,7 +4,6 @@ import {CardParagraph} from "../../types/drupal";
 import {Card} from "@/components/patterns/card";
 import Oembed from "@/components/simple/oembed";
 
-
 interface CardProps {
   paragraph: CardParagraph
   siblingCount?: number
