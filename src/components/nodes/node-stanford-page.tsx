@@ -196,7 +196,7 @@ const TodayHours = (props) => {
     isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
   }
 
-  const imageUrl = library.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageUrl = library.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const image = <Image
     className="su-object-cover su-object-center"
     src={imageUrl}
