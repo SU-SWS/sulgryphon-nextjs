@@ -42,7 +42,7 @@ export const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: Stanfo
       }
 
       {paragraph.su_media_caption_caption &&
-          <figcaption className="su-float-right su-text-[16px]">
+          <figcaption className="su-float-right su-text-15">
             {formatHtml(paragraph.su_media_caption_caption?.processed)}
           </figcaption>
       }

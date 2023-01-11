@@ -10,6 +10,7 @@ import SearchWorks from "@/components/search/search-works";
 import buildMenuTree from "@/lib/build-menu-tree";
 import Conditional from "@/components/simple/conditional";
 import OutsideClickHandler from "@/components/simple/outside-click-handler";
+import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
@@ -19,8 +20,10 @@ export const MainMenu = ({...props}) => {
   // has been pressed at least once. That will then add the appropriate close animations only after loading.
   const [addCloseAnimation, setAddCloseAnimation] = useState(false)
   const [activeTrail, setActiveTrail] = useState([]);
+
   const router = useRouter()
   const submenuRefs = useMemo(() => [], []);
+  const isDesktop = useIsDesktop();
 
   useEffect(() => {
     // Set the active trail client side because the router path might be different from building server side.
@@ -88,7 +91,13 @@ export const MainMenu = ({...props}) => {
             <nav>
               <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
                 {menuTree.map((item, i) =>
-                  <MenuItem key={item.id} activeTrail={activeTrail} {...item} ref={item.ref}/>)
+                  <MenuItem
+                    key={item.id}
+                    activeTrail={activeTrail}
+                    {...item}
+                    ref={item.ref}
+                    tabIndex={(menuOpen || isDesktop) ? 0 : -1}
+                  />)
                 }
               </ul>
             </nav>
@@ -133,20 +142,13 @@ interface MenuItemProps {
   url: string
   items?: DrupalMenuLinkContent[]
   menuLevel?: number
+  tabIndex?: number
   activeTrail?: string[]
   expanded?: boolean
 }
 
 // eslint-disable-next-line react/display-name
-const MenuItem = forwardRef(({
-                               id,
-                               title,
-                               url,
-                               items,
-                               expanded,
-                               activeTrail = [],
-                               menuLevel = 0
-                             }: MenuItemProps, ref) => {
+const MenuItem = forwardRef(({id, title, url, items, expanded, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps, ref) => {
 
   if (menuLevel >= 2) {
     return null;
@@ -225,8 +227,11 @@ const MenuItem = forwardRef(({
   return (
     <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
       <Conditional showWhen={url.length > 1}>
-        <Link href={url.length >= 1 ? url : '#'}
-              className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}>
+        <Link
+          tabIndex={tabIndex}
+          href={url.length >= 1 ? url : '#'}
+          className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+        >
           <div
             className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
             {title}
@@ -236,6 +241,7 @@ const MenuItem = forwardRef(({
 
       <Conditional showWhen={url.length == 0}>
         <button
+          tabIndex={tabIndex}
           className={"su-flex su-block su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
           aria-haspopup="true"
@@ -265,6 +271,7 @@ const MenuItem = forwardRef(({
             title={title}
             aria-haspopup="true"
             aria-expanded={submenuOpen ? "true" : "false"}
+            tabIndex={tabIndex}
           />
         </Conditional>
         <ul
@@ -272,7 +279,13 @@ const MenuItem = forwardRef(({
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
           role="menu">
           {belowItems.map((item, i) =>
-            <MenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>)
+            <MenuItem
+              key={item.id}
+              activeTrail={activeTrail}
+              {...item}
+              menuLevel={menuLevel + 1}
+              tabIndex={submenuOpen ? 0 : -1}
+            />)
           }
         </ul>
       </Conditional>

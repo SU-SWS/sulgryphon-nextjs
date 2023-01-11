@@ -61,7 +61,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
       year: "numeric",
     })
   }
-
+console.log(node.su_event_source);
   return (
     <MainContentLayout pageTitle={node.title}>
       <article {...props} className="su-mt-50">
@@ -189,7 +189,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
         </div>
 
         {node.su_event_source &&
-          <Link href={node.su_event_source.url}>{node.su_event_source.title}</Link>
+          <Link href={node.su_event_source.url}>{node.su_event_source.title? node.su_event_source.title: 'View this event'}</Link>
         }
 
         {node.su_event_components && node.su_event_components.map(paragraph =>
@@ -272,13 +272,13 @@ export const NodeStanfordEventListItem = ({node, ...props}: EventNodeProps) => {
             <div className="su-flex su-flex-row su-items-center su-justify-start md:su-min-w-[90px]">
               <div className="su-flex su-flex-col">
                 <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonth}</span>
-                <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{day}</span>
+                <span className="su-font-bold su-leading-trim su-text-m4 su-text-center">{day}</span>
                 { start.getDate() !== end.getDate() && (
                   <>
                     <div className="su-text-center su-mt-6">- to -</div>
                     <div className="su-flex su-flex-col">
                       <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonthEnd}</span>
-                      <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{dayEnd}</span>
+                      <span className="su-font-bold su-leading-trim su-text-m4 su-text-center">{dayEnd}</span>
                     </div>
                   </>
                 )}
@@ -406,14 +406,14 @@ export const NodeStanfordEventCard = ({node, ...props}: EventNodeProps) => {
           <div className="su-flex su-flex-row su-items-center su-justify-start md:su-min-w-[90px]">
             <div className="su-flex su-flex-col">
               <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonth}</span>
-              <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{day}</span>
+              <span className="su-font-bold su-leading-trim su-text-m4 su-text-center">{day}</span>
             </div>
             { start.getDate() !== end.getDate() && (
               <>
                 <div className="su-text-center su-mx-6">- to -</div>
                 <div className="su-flex su-flex-col">
                   <span className="su-mb-10 su-mt-6 su-uppercase su-font-semibold su-text-center su-leading-none su-text-16 md:su-text-18">{shortMonthEnd}</span>
-                  <span className="su-font-bold su-leading-trim su-text-[39px] md:su-text-[44px] su-text-center">{dayEnd}</span>
+                  <span className="su-font-bold su-leading-trim su-text-m4 su-text-center">{dayEnd}</span>
                 </div>
               </>
             )}
