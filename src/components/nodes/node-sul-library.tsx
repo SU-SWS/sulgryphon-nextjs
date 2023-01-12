@@ -28,7 +28,7 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
   return (
     <MainContentLayout pageTitle={node.title} header={<LibraryBanner/>} {...props}>
       <article>
-        { console.log(node) }
+        {/* { console.log(node) } */}
 
         {node.su_library__paragraphs && 
           <div className="su-rs-py-1">
@@ -59,7 +59,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
       <div
         className="su-bg-right-bottom lg:su-bg-home-banner-sprinkles su-absolute su-h-2/3 su-w-3/4 su-bottom-0 su-right-0">
         <div className="su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
-          <div className="su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute su-w-full su-h-full"> */}
+          <div className="su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
             {/*Empty elements. They are absolute positioned to provide visual affects only.*/}
           </div>
         </div>
