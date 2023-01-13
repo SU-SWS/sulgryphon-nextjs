@@ -26,9 +26,9 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
   }
 
   return (
-    <MainContentLayout pageTitle={node.title} header={<LibraryBanner/>} {...props}>
+    <MainContentLayout pageTitle={node.title} header={<LibraryBanner node={undefined}/>} {...props}>
       <article>
-        {/* { console.log(node) } */}
+        { console.log(node) }
 
         {node.su_library__paragraphs && 
           <div className="su-rs-py-1">
@@ -43,25 +43,19 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 }
 
 const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
+  const [selectedLibrary, setSelectedLibrary] = useState(null);
+  const libraries = useNodeList('sul_library');
+  const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
+
   return (
     <div className="su-bg-black-true su-mb-100 su-relative">
       <div className="su-cc su-relative su-z-10 su-top-50 md:su-top-100 md:su-mx-40 md:su-min-h-[300px]">
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
-          <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
-            <h1 className="su-cc">Green Library</h1>
-            {/* <h1 className="su-cc">{node.su_library__title}</h1> */}
+          <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
+            <h1 className="su-cc">{library?.title}</h1>
           </div>
           
           <TodayHours className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
-        </div>
-      </div>
-
-      <div
-        className="su-bg-right-bottom lg:su-bg-home-banner-sprinkles su-absolute su-h-2/3 su-w-3/4 su-bottom-0 su-right-0">
-        <div className="su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
-          <div className="su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
-            {/*Empty elements. They are absolute positioned to provide visual affects only.*/}
-          </div>
         </div>
       </div>
 
@@ -203,31 +197,19 @@ const TodayHours = (props) => {
                 </>
               }
             </div>
+            <div className="su-relative su-pb-70 md:su-pb-40">
+              <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
+              <select
+                id="library-hours"
+                className="su-absolute su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
+                onChange={e => setSelectedLibrary(e.target.value)}
+              >
+                {Object.keys(libraries).map(index =>
+                  <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
+                )}
+              </select>
+            </div>
 
-            <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-            <select
-              id="library-hours"
-              className="su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
-              onChange={e => setSelectedLibrary(e.target.value)}
-            >
-              {Object.keys(libraries).map(index =>
-                <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
-              )}
-            </select>
-
-            {/* <div className="su-text-black su-flex su-justify-between" aria-live="polite">
-
-              <div><ClockIcon className="su-inline" width={15}/> {isOpen ? 'Open' : 'Closed'}</div>
-              <div>
-                {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "numeric",
-                }) : 'Opens at ' + openTime.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "numeric",
-                }))}
-              </div>
-            </div> */}
           </>
         }
       />
