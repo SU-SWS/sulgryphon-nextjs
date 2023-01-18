@@ -23,7 +23,7 @@ export const MainContentLayout = ({fullWidth, header, pageTitle, children}: Main
       <Conditional showWhen={header}>
         <header className="su-w-full">
           {header}
-          <h1 className="su-cc">{pageTitle}</h1>
+          {pageTitle && <h1 className="su-cc">{pageTitle}</h1>}
         </header>
       </Conditional>
 
