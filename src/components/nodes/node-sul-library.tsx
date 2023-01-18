@@ -26,9 +26,14 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
   }
 
   return (
-    <MainContentLayout pageTitle={node.title} header={<LibraryBanner node={undefined}/>} {...props}>
+    <MainContentLayout header={<LibraryBanner node={node} />} {...props}>
       <article>
         { console.log(node) }
+
+        {/* <div>
+          <h2>Hours</h2>
+          {todayHours && <LibraryHours {...todayHours} />}
+        </div> */}
 
         {node.su_library__paragraphs && 
           <div className="su-rs-py-1">
@@ -43,28 +48,44 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 }
 
 const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
-  const [selectedLibrary, setSelectedLibrary] = useState(null);
-  const libraries = useNodeList('sul_library');
-  const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
+  const imageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  let image = null
+
+  if (imageUrl) {
+    image = <Image
+      className="su-object-cover su-object-center"
+      src={imageUrl}
+      alt={node.su_library__banner.field_media_image.resourceIdObjMeta.alt}
+      fill={true}
+    />
+  }
 
   return (
-    <div className="su-bg-black-true su-mb-100 su-relative">
-      <div className="su-cc su-relative su-z-10 su-top-50 md:su-top-100 md:su-mx-40 md:su-min-h-[300px]">
-        <div className="xl:su-mx-20 md:su-flex su-justify-between">
-          <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
-            <h1 className="su-cc">{library?.title}</h1>
+    <>
+      <div className="su-bg-black-true su-mb-100 su-relative">
+        <div className="su-absolute su-h-full su-w-full" >
+          <div className="su-w-full su-h-full su-overflow-hidden su-relative su-min-h-[30rem] lg:su-min-h-[50rem]">
+            {image}
           </div>
-          
-          <TodayHours className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
+        </div>    
+        <div className="su-absolute su-block su-w-full su-h-full su-top-0 su-bg-gradient-to-b su-to-black-true su-from-transparent" aria-hidden="true"></div>
+        <div className="su-cc su-relative su-z-10 su-top-50 md:su-top-100 md:su-mx-40 md:su-min-h-[300px]">
+          <div className="xl:su-mx-20 md:su-flex su-justify-between">
+            <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
+              <h1 className="su-type-4 su-font-serif">{node.title}</h1>
+            </div>
+            
+            <TodayHours className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
+          </div>
+        </div>
+
+        <div className="su-relative">
+          <svg viewBox="0 0 1500 70">
+            <path d="M0,71 Q500,65 800,20 Q1200,-30 1500,71" stroke="#fff" className="su-fill-white"></path>
+          </svg>
         </div>
       </div>
-
-      <div className="su-relative">
-        <svg viewBox="0 0 1500 70">
-          <path d="M0,71 Q500,65 800,20 Q1200,-30 1500,71" stroke="#fff" className="su-fill-white"></path>
-        </svg>
-      </div>
-    </div>
+    </>
   )
 }
 
