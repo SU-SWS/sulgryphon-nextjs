@@ -61,7 +61,7 @@ export const NodeStanfordEvent = ({node, ...props}: EventNodeProps) => {
       year: "numeric",
     })
   }
-console.log(node.su_event_source);
+
   return (
     <MainContentLayout pageTitle={node.title}>
       <article {...props} className="su-mt-50">

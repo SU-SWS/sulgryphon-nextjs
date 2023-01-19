@@ -123,8 +123,16 @@ interface Library extends DrupalNode {
 }
 
 // Paragraph Types.
+interface LayoutParagraphsBehaviors {
+  layout_paragraphs: {
+    parent_uuid: string
+    region: string
+  }
+}
+
 interface BannerParagraph extends DrupalParagraph {
   behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
     hero_pattern?: {
       overlay_position?: string
     }
@@ -137,7 +145,12 @@ interface BannerParagraph extends DrupalParagraph {
 }
 
 interface CardParagraph extends DrupalParagraph {
-  behavior_settings?: object
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_card_styles?: {
+      orientation: string
+    }
+  }
   su_card_body?: DrupalWysiwyg
   su_card_header?: string
   su_card_link?: DrupalLink
@@ -147,7 +160,9 @@ interface CardParagraph extends DrupalParagraph {
 }
 
 interface ImageGalleryParagraph extends DrupalParagraph {
-  behavior_settings?: object
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
   su_gallery_button?: DrupalLink
   su_gallery_description?: DrupalWysiwyg
   su_gallery_headline?: string
@@ -155,7 +170,9 @@ interface ImageGalleryParagraph extends DrupalParagraph {
 }
 
 interface ListParagraph extends DrupalParagraph {
-  behavior_settings?: object
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
   su_list_button?: DrupalLink
   su_list_description?: DrupalWysiwyg
   su_list_headline?: string
@@ -163,6 +180,14 @@ interface ListParagraph extends DrupalParagraph {
 }
 
 interface EntityTeaserParagraph extends DrupalParagraph {
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_teaser_styles?: {
+      orientation: string
+      background: string
+      background_sprinkles: string
+    }
+  }
   su_entity_button?: DrupalLink
   su_entity_description?: DrupalWysiwyg
   su_entity_headline?: string
@@ -170,14 +195,18 @@ interface EntityTeaserParagraph extends DrupalParagraph {
 }
 
 interface MediaCaptionParagraph extends DrupalParagraph {
-  behavior_settings?: object
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
   su_media_caption_caption?: DrupalWysiwyg
   su_media_caption_link?: DrupalLink
   su_media_caption_media?: DrupalMedia
 }
 
 interface WysiwygParagraph extends DrupalParagraph {
-  behavior_settings?: object
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
   su_wysiwyg_text?: DrupalWysiwyg
 }
 
@@ -251,7 +280,7 @@ interface DrupalName {
   title?: string
 }
 
-interface DrupalViewField  {
+interface DrupalViewField {
   id: string
   resourceIdObjMeta: {
     arguments?: string
