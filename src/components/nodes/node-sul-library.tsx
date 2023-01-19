@@ -68,7 +68,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
             {image}
           </div>
         </div>    
-        <div className="su-absolute su-block su-w-full su-h-full su-top-0 su-bg-gradient-to-b su-to-black-true su-from-transparent" aria-hidden="true"></div>
+        <div className="su-absolute su-block su-w-full su-h-full su-top-0 su-bg-gradient-to-tl su-to-black-true su-from-transparent" aria-hidden="true"></div>
         <div className="su-cc su-relative su-z-10 su-top-50 md:su-top-100 md:su-mx-40 md:su-min-h-[300px]">
           <div className="xl:su-mx-20 md:su-flex su-justify-between">
             <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
@@ -169,22 +169,29 @@ const TodayHours = (props) => {
         image={image}
         footer={
           <>
-            <div className="su-basefont-23 su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
+            <div className="su-leading-tight su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
               {library.su_library__phone && 
-                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                  <PhoneIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-0 su-mb-4">
+                  <PhoneIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[2px] su-mr-3 md:su-mr-0"/>
                   {library.su_library__phone}
                 </div>
               }
               {library.su_library__email && 
-                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                  <EnvelopeIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
-                  {library.su_library__email}
-                </div>
+                <>
+                  <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-18 su-mb-4">
+                    <EnvelopeIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[3px] su-mr-3 md:su-mr-0"/>
+                    {library.su_library__email}
+                  </div>
+                  <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`mailto:${library.su_library__email}`}>
+                    <span>{library.su_library__email}</span>
+                    <EnvelopeIcon width={28} />
+                  </Link>
+                
+                </>
               }
               {library.su_library__address &&
-                <div className="su-relative su-mt-40 md:su-mt-20 su-mb-4">
-                  <MapPinIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+                <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
+                  <MapPinIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[2px] su-mr-3 md:su-mr-0"/>
                   {library.su_library__map_link ? (
                     <Link href={library.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
                       <div>{library.su_library__address.address_line1}</div>
@@ -202,8 +209,8 @@ const TodayHours = (props) => {
               }
               {hours &&
                 <>
-                  <div className="su-relative su-mt-40 md:su-mt-20 su-mb-4">
-                    <ClockIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+                  <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
+                    <ClockIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
                     {isOpen ? 'Open' : 'Closed'}
                   </div>
                   <div>
