@@ -30,10 +30,10 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
       <article>
         { console.log(node) }
 
-        {/* <div>
+        <div>
           <h2>Hours</h2>
           {todayHours && <LibraryHours {...todayHours} />}
-        </div> */}
+        </div>
 
         {node.su_library__paragraphs && 
           <div className="su-rs-py-1">
@@ -172,7 +172,7 @@ const TodayHours = (props) => {
             <div className="su-leading-tight su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
               {library.su_library__phone && 
                 <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-0 su-mb-4">
-                  <PhoneIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[2px] su-mr-3 md:su-mr-0"/>
+                  <PhoneIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
                   {library.su_library__phone}
                 </div>
               }
@@ -180,13 +180,10 @@ const TodayHours = (props) => {
                 <>
                   <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-18 su-mb-4">
                     <EnvelopeIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[3px] su-mr-3 md:su-mr-0"/>
-                    {library.su_library__email}
+                    <Link className="su-no-underline hocus:su-underline" href={`mailto:${library.su_library__email}`}>
+                      {library.su_library__email}
+                    </Link>
                   </div>
-                  <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`mailto:${library.su_library__email}`}>
-                    <span>{library.su_library__email}</span>
-                    <EnvelopeIcon width={28} />
-                  </Link>
-                
                 </>
               }
               {library.su_library__address &&
@@ -229,13 +226,22 @@ const TodayHours = (props) => {
               <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
               <select
                 id="library-hours"
-                className="su-absolute su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
-                onChange={e => setSelectedLibrary(e.target.value)}
+                className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
+                // onChange={e => setSelectedLibrary(e.target.value)}
+                
               >
-                {Object.keys(libraries).map(index =>
+                <option selected>Mon: 10am - 8pm</option>
+                <option disabled>Tue: 10am - 8pm</option>
+                <option disabled>Wed: 10am - 8pm</option>
+                <option disabled>Thu: 10am - 8pm</option>
+                <option disabled>Fri: 10am - 8pm</option>
+                <option disabled>Sat: 10am - 8pm</option>
+                <option disabled>Sun: 10am - 8pm</option>
+                {/* {Object.keys(libraries).map(index =>
                   <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
-                )}
+                )} */}
               </select>
+              
             </div>
 
           </>
