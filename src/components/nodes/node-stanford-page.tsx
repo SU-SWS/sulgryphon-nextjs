@@ -212,32 +212,33 @@ const TodayHours = (props) => {
         image={image}
         header="Today&apos;s Hours"
         footer={
-          <>
-            <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-            <select
-              id="library-hours"
-              className="su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
-              onChange={e => setSelectedLibrary(e.target.value)}
-            >
-              {Object.keys(libraries).map(index =>
-                <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
-              )}
-            </select>
+          <div className="su-relative su-pb-100 md:su-rs-pb-6">
+            <div className="su-absolute">
+              <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
+              <select
+                id="library-hours"
+                className="su-w-full su-leading-display su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
+                onChange={e => setSelectedLibrary(e.target.value)}
+              >
+                {Object.keys(libraries).map(index =>
+                  <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
+                )}
+              </select>
 
-            <div className="su-text-black su-flex su-justify-between" aria-live="polite">
-
-              <div><ClockIcon className="su-inline" width={15}/> {isOpen ? 'Open' : 'Closed'}</div>
-              <div>
-                {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "numeric",
-                }) : 'Opens at ' + openTime.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "numeric",
-                }))}
+              <div className="su-text-black su-flex su-justify-between" aria-live="polite">
+                <div><ClockIcon className="su-inline" width={15}/> {isOpen ? 'Open' : 'Closed'}</div>
+                <div>
+                  {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                  }) : 'Opens at ' + openTime.toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                  }))}
+                </div>
               </div>
             </div>
-          </>
+          </div>
         }
       />
     </div>
