@@ -6,6 +6,7 @@ import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay} from "@/nodes/index";
 import useOnScreen from "@/lib/use-on-screen";
+import Conditional from "@/components/simple/conditional";
 
 interface EntityTeaserProps {
   paragraph: EntityTeaserParagraph
@@ -39,9 +40,18 @@ export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaser
   }
 
   const gridCols = paragraph?.su_entity_item?.length >= 3 ? gridColClasses[3] : gridColClasses[paragraph?.su_entity_item?.length];
+  const wrapperClasses = paragraph.behavior_settings?.sul_teaser_styles?.background === 'black' ? 'su-text-white su-py-40': '';
 
   return (
-    <div ref={elemRef} {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
+    <div ref={elemRef} {...props}
+         className={'su-relative su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + wrapperClasses + ' ' + (props.className ?? '')}>
+      <Conditional showWhen={paragraph.behavior_settings?.sul_teaser_styles?.background === 'black'}>
+        <div className="su-absolute su-z-[-10] su-h-full su-w-screen su-top-0 su-left-[calc(-50vw+50%)] su-bg-black-true">
+
+        </div>
+      </Conditional>
+
+
       {paragraph.su_entity_headline && <h2 className="su-text-center">{paragraph.su_entity_headline}</h2>}
       {paragraph.su_entity_description && <div className="su-mb-40">{formatHtml(paragraph.su_entity_description.processed)}</div>}
 

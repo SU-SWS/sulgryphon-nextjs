@@ -1,8 +1,14 @@
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
 
-import {DrupalLink, DrupalLinkBigButton, DrupalLinkButton, DrupalLinkSecondaryButton} from "@/components/simple/link";
-import {DrupalImage} from "@/components/simple/image";
-import Oembed from "@/components/simple/oembed";
+const DrupalActionLink = dynamic(() => import("../components/simple/link").then((mod) => mod.DrupalActionLink));
+const DrupalLinkBigButton = dynamic(() => import("../components/simple/link").then((mod) => mod.DrupalLinkBigButton));
+const DrupalLinkButton = dynamic(() => import("../components/simple/link").then((mod) => mod.DrupalLinkButton));
+const DrupalLinkSecondaryButton = dynamic(() => import("../components/simple/link").then((mod) => mod.DrupalLinkSecondaryButton));
+const DrupalImage = dynamic(() => import("../components/simple/image").then((mod) => mod.DrupalImage));
+const Oembed = dynamic(() => import("../components/simple/oembed"));
+
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
@@ -42,10 +48,19 @@ const options: HTMLReactParserOptions = {
             )
           }
 
+          if (nodeProps.className.indexOf('su-link--action') > -1) {
+            return (
+              <DrupalActionLink href={nodeProps.href} {...nodeProps}>
+                {domToReact(domNode.children, options)}
+              </DrupalActionLink>
+            )
+          }
+
+          nodeProps.className += ' su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red';
           return (
-            <DrupalLink href={nodeProps.href} {...nodeProps}>
+            <Link href={nodeProps.href} {...nodeProps}>
               {domToReact(domNode.children, options)}
-            </DrupalLink>
+            </Link>
           )
         case 'article':
           return cleanMediaMarkup(domNode);
@@ -66,6 +81,10 @@ const options: HTMLReactParserOptions = {
         case 'iframe':
           nodeProps.className += ' su-w-full';
           return <iframe {...nodeProps}/>
+
+        case 'blockquote':
+          nodeProps.className += ' su-pl-40 su-relative before:su-block before:su-absolute before:su-left-0 before:su-top-0 before:su-content-[\'\'] before:su-h-full before:su-w-5 before:su-bg-black-20';
+          return <blockquote {...nodeProps}>{domToReact(domNode.children, options)}</blockquote>
 
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';

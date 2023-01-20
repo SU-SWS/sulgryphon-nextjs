@@ -18,9 +18,10 @@ interface CardProps {
   }
   linkStyle?: string
   className?: string
+  horizontal?: boolean
 }
 
-export const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
+export const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, horizontal = false, ...props}: CardProps) => {
   return (
     <div {...props}
          className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
