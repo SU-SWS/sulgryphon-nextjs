@@ -57,7 +57,8 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
         {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         <div className="md:su-flex su-rs-mb-7">
           <div className="su-flex md:su-order-last su-rs-mb-2">
-            <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
+            <Conditional showWhen={!node.su_news_hide_social}>
+              <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
               <li className="su-mr-1em">
                 <Link className="su-text-black hocus:su-text-digital-blue su-transition-colors" href={`http://www.facebook.com/sharer.php?u=${currentUrl}&display=popup`}>
                   <span className="su-sr-only">Stanford Facebook</span>
@@ -89,6 +90,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
                 </button>
               </li>
             </ul>
+            </Conditional>
           </div>
           <div>
             {node.su_news_publishing_date && <>{formatDate(node.su_news_publishing_date + ' 12:00:00')} |&nbsp;</>}

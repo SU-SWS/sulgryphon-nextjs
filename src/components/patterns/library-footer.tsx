@@ -58,14 +58,31 @@ const LibraryFooter = () => {
         </div>
         <div>
           <h2 className="su-text-m1 su-mb-20">Support Stanford Libraries</h2>
-          <div className="su-inline-block md:su-block"><DrupalLinkButton href="#">Donate</DrupalLinkButton></div>
+          <div className="su-inline-block md:su-block">
+            <DrupalLinkButton href="#">Donate</DrupalLinkButton>
+          </div>
 
           <div className="su-flex su-mt-50 su-gap-lg su-justify-around">
-            <FooterLink href="#"><FacebookIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/></FooterLink>
-            <FooterLink href="#"><LinkedInIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/></FooterLink>
-            <FooterLink href="#"><TwitterIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/></FooterLink>
-            <FooterLink href="#"><InstagramIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/></FooterLink>
-            <FooterLink href="#"><YoutubeIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/></FooterLink>
+            <FooterLink href="#">
+              <FacebookIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
+              <span className="su-sr-only">Facebook</span>
+            </FooterLink>
+            <FooterLink href="#">
+              <LinkedInIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
+              <span className="su-sr-only">LinkedIn</span>
+            </FooterLink>
+            <FooterLink href="#">
+              <TwitterIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
+              <span className="su-sr-only">Twitter</span>
+            </FooterLink>
+            <FooterLink href="#">
+              <InstagramIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/>
+              <span className="su-sr-only">Instagram</span>
+            </FooterLink>
+            <FooterLink href="#">
+              <YoutubeIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/>
+              <span className="su-sr-only">Youtube</span>
+            </FooterLink>
           </div>
         </div>
       </div>
@@ -74,7 +91,11 @@ const LibraryFooter = () => {
 }
 
 const FooterLink = ({href, children}) => {
-  return <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white" href={href}>{children}</Link>
+  return (
+    <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white" href={href}>
+      {children}
+    </Link>
+  )
 }
 
 export default LibraryFooter;

@@ -69,6 +69,7 @@ interface News extends DrupalNode {
   su_news_source?: DrupalLink
   su_news_topics?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
+  su_news_hide_social?: boolean
 }
 
 interface Person extends DrupalNode {
