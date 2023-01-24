@@ -21,12 +21,12 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
         <NextSeo
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
-        <div className="sm:su-flex su-no-wrap su-rs-mb-neg2 su-mt-50">
+        <div className="sm:su-flex su-no-wrap su-rs-mb-5 su-mt-50">
           <Conditional showWhen={node.su_person_photo.field_media_image}>
             <div className="su-rs-mr-4">
                 <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
                     <DrupalImage
-                        src={node.su_person_photo.field_media_image.uri.url}
+                        src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
                         alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
                         height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
                         width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
@@ -51,7 +51,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
         <div className="md:su-grid su-grid-cols-6 su-gap-[40px]">
           <div className="su-col-span-4">
-            {node.body?.processed && <div className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7">{formatHtml(node.body.processed)}</div>}
+            {node.body?.processed && <div className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7 md:su-w-10/12 ">{formatHtml(node.body.processed)}</div>}
             
             <Conditional showWhen={node.su_person_components}>
               {node.su_person_components.map(paragraph =>
@@ -184,12 +184,11 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
     <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
-      {/* { console.log(node) } */}
       {node?.su_person_photo?.field_media_image &&
-        <div className="su-rs-pb-neg1">
+        <div className="su-rs-pb-1">
             <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
                 <DrupalImage
-                    src={node.su_person_photo.field_media_image.uri.url}
+                    src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
                     alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
                     height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
                     width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
@@ -200,7 +199,7 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
       <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black">
         <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
       </Link>
-      <div className="">{node.su_person_short_title}</div>
+      <div className="su-type-0 su-leading-snug">{node.su_person_short_title}</div>
     </article>
   )
 }
@@ -213,7 +212,7 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
         <div className="su-flex su-justify-center su-rs-pb-2">
             <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
                 <DrupalImage
-                    src={node.su_person_photo.field_media_image.uri.url}
+                    src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
                     alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
                     height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
                     width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
@@ -222,9 +221,9 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
         </div>
       }
       <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black su-text-center">
-        <h2 className="su-type-2">{node.title}</h2>
+        <h2 className="su-type-1">{node.title}</h2>
       </Link>
-      <div className="su-text-center">{node.su_person_short_title}</div>
+      <div className="su-text-center su-type-0">{node.su_person_short_title}</div>
     </article>
   )
 }
