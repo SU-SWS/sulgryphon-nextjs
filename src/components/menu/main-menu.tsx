@@ -84,7 +84,7 @@ export const MainMenu = ({...props}) => {
 
         <div className="su-relative">
           <div
-            aria-hidden={!menuOpen}
+            aria-hidden={!isDesktop && !menuOpen}
             className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-30 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
             <SearchWorks className="su-mx-40 lg:su-hidden"/>
 
@@ -275,7 +275,8 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, tabIndex = 0, act
           />
         </Conditional>
         <ul
-          data-attribute-menu-leve={menuLevel}
+          aria-hidden={!submenuOpen}
+          data-attribute-menu-level={menuLevel}
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
           role="menu">
           {belowItems.map((item, i) =>
