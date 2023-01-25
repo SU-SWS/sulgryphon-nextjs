@@ -1,11 +1,11 @@
 import {DrupalLinkButton} from "@/components/simple/link";
+import Image from "next/image";
 import Link from "next/link";
 import {EnvelopeIcon, LinkIcon, MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import {NextSeo} from "next-seo";
 import {Person} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {Paragraph} from "@/components/paragraphs";
-import {DrupalImage} from "@/components/simple/image";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import Conditional from "../simple/conditional";
 
@@ -16,20 +16,20 @@ interface PersonNodeProps {
 export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
   return (
-    <MainContentLayout>
+    <MainContentLayout pageTitle={node.title}>
       <article {...props}>
         <NextSeo
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
         <div className="sm:su-flex su-no-wrap su-rs-mb-5 su-mt-50">
           <Conditional showWhen={node.su_person_photo.field_media_image}>
-            <div className="su-rs-mr-4">
+            <div className="su-rs-mr-4 su-rs-mb-1 sm:su-mb-[0rem] ">
                 <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-                    <DrupalImage
-                        src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                        alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                        height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                        width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                    <Image
+                      src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                      alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                      height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                      width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
                     />
                 </div>
             </div>
@@ -39,7 +39,6 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
             <Conditional showWhen={node.su_person_short_title}>
               <div className="su-type-0 su-leading">{node.su_person_short_title}</div>
             </Conditional>
-            <h1>{node.title}</h1>
             <Conditional showWhen={node.su_person_full_title}>
               <div className="su-type-0 su-leading">{node.su_person_full_title}</div>
             </Conditional>
@@ -59,7 +58,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               )}
             </Conditional>
 
-            <Conditional showWhen={node.su_person_education}>
+            <Conditional showWhen={node.su_person_education.length > 0}>
               <div className="su-rs-mb-7">
                 <h2 className="su-type-0">Education</h2>
                 {node.su_person_education.map((education, index) =>
@@ -70,7 +69,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               </div>
             </Conditional>
 
-            <Conditional showWhen={node.su_person_research}>
+            <Conditional showWhen={node.su_person_research.length > 0}>
               <div className="su-rs-mb-7">
                   <h2 className="su-type-0">Research</h2>
                   <div className="md:su-grid su-grid-cols-2">
@@ -87,7 +86,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               {node.su_person_research_interests}
             </Conditional>
 
-            <Conditional showWhen={node.su_person_affiliations}>
+            <Conditional showWhen={node.su_person_affiliations.length > 0}>
               <div className="su-rs-mb-7">
                 <h2 className="su-type-0">Stanford Affiliations</h2>
                 {node.su_person_affiliations.map((affiliation, index) =>
@@ -154,7 +153,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               </Conditional>
             </div>
 
-            {node?.su_person_links.length !== 0 &&
+            <Conditional showWhen={node.su_person_links.length > 0}>
               <div className="su-rs-mb-4">
                 <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
                   <LinkIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
@@ -168,7 +167,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                   )}
                 </div>
               </div>
-            }
+            </Conditional>
 
             {node?.su_person_profile_link &&
               <DrupalLinkButton className="su-rs-mb-4" href={node.su_person_profile_link.url}>{node.su_person_profile_link.title}</DrupalLinkButton>
@@ -186,14 +185,14 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
     <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
       {node?.su_person_photo?.field_media_image &&
         <div className="su-rs-pb-1">
-            <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-                <DrupalImage
-                    src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                    alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                    height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                    width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-                />
-            </div>
+          <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+            <Image
+              src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+              alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+              height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+              width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+            />
+          </div>
         </div>
       }
       <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black">
@@ -210,14 +209,14 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
     <article className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
       {node?.su_person_photo?.field_media_image &&
         <div className="su-flex su-justify-center su-rs-pb-2">
-            <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-                <DrupalImage
-                    src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                    alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                    height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                    width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-                />
-            </div>
+          <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+            <Image
+              src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+              alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+              height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+              width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+            />
+          </div>
         </div>
       }
       <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black su-text-center">
