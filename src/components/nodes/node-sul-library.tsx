@@ -53,6 +53,10 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   console.log('hours', hours)
   console.log('selectedHours', selectedHours)
 
+  if (Object.keys(hours).length === 0) {
+    return null;
+  }
+
   const date = new Date()
 
   let todayHours;
