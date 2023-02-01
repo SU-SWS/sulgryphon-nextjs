@@ -102,7 +102,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
     <>
       <div className="su-bg-black-true su-mb-100 su-relative">
         <div className="su-absolute su-h-full su-w-full" >
-          <div className="su-w-full su-h-full su-overflow-hidden su-relative su-min-h-[30rem] lg:su-min-h-[50rem]">
+          <div className="su-w-full su-h-full su-overflow-hidden su-relative">
             {bannerImage}
           </div>
         </div>    
