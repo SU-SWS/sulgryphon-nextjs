@@ -74,14 +74,26 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
     isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
   }
 
-  const imageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
-  let image = null
+  const bannerImageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  let bannerImage = null
 
-  if (imageUrl) {
-    image = <Image
+  if (bannerImageUrl) {
+    bannerImage = <Image
       className="su-object-cover su-object-center"
-      src={imageUrl}
+      src={bannerImageUrl}
       alt={node.su_library__banner.field_media_image.resourceIdObjMeta.alt}
+      fill={true}
+    />
+  }
+
+  const contactImageUrl = node.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  let contactImage = null
+
+  if (contactImageUrl) {
+    contactImage = <Image
+      className="su-object-cover su-object-center"
+      src={contactImageUrl}
+      alt={node.su_library__contact_img.field_media_image.resourceIdObjMeta.alt}
       fill={true}
     />
   }
@@ -91,7 +103,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
       <div className="su-bg-black-true su-mb-100 su-relative">
         <div className="su-absolute su-h-full su-w-full" >
           <div className="su-w-full su-h-full su-overflow-hidden su-relative su-min-h-[30rem] lg:su-min-h-[50rem]">
-            {image}
+            {bannerImage}
           </div>
         </div>    
         <div className="su-absolute su-block su-w-full su-h-full su-top-0 su-bg-gradient-to-tl su-to-black-true su-from-transparent" aria-hidden="true"></div>
@@ -104,7 +116,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
             <div className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]">
               <Card
                 className="su-border-0 su-rounded"
-                image={image}
+                image={contactImage}
                 footer={
                   <>
                     <div className="su-leading-tight su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
