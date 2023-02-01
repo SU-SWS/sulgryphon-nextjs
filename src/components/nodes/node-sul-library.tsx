@@ -16,25 +16,10 @@ interface SulLibraryNodeProps {
 }
 
 export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
-  const hours = useLibraryHours()
-  const currentDay = new Date().toISOString().substring(0, 10)
-  const libraryHours = hours[node.su_library__hours]
-  let todayHours;
-
-  if (libraryHours) {
-    todayHours = libraryHours.locations[Object.keys(libraryHours.locations)[0]].find(day => day.day === currentDay);
-  }
 
   return (
     <MainContentLayout header={<LibraryBanner node={node} />} {...props}>
       <article>
-        { console.log(node) }
-
-        <div>
-          <h2>Hours</h2>
-          {todayHours && <LibraryHours {...todayHours} />}
-        </div>
-
         {node.su_library__paragraphs && 
           <div className="su-rs-py-1">
             {node.su_library__paragraphs.map(paragraph =>
@@ -48,6 +33,43 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 }
 
 const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
+  const toISOStringWithTimezone = date => {
+    const tzOffset = -date.getTimezoneOffset();
+    const diff = tzOffset >= 0 ? '+' : '-';
+    const pad = n => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
+    return date.getFullYear() +
+      '-' + pad(date.getMonth() + 1) +
+      '-' + pad(date.getDate()) +
+      'T' + pad(date.getHours()) +
+      ':' + pad(date.getMinutes()) +
+      ':' + pad(date.getSeconds()) +
+      diff + pad(tzOffset / 60) +
+      ':' + pad(tzOffset % 60);
+  };
+
+  const currentDay = toISOStringWithTimezone(new Date()).substring(0, 10);
+  const hours = useLibraryHours()
+  const selectedHours = hours[node.su_library__hours]
+  console.log('hours', hours)
+  console.log('selectedHours', selectedHours)
+
+  const date = new Date()
+
+  let todayHours;
+  if (selectedHours) {
+    todayHours = selectedHours?.primary_hours?.find(day => day.day === currentDay);
+  }
+
+  const libraryHours = selectedHours?.primary_hours.find(day => day.day === date.toISOString().substring(0, 10));
+
+  let openTime, closeTime, isOpen = false;
+
+  if (!libraryHours.closed) {
+    openTime = new Date(libraryHours.opens_at);
+    closeTime = new Date(libraryHours.closes_at);
+    isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
+  }
+
   const imageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
   let image = null
 
@@ -74,8 +96,74 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
             <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
               <h1 className="su-type-4 su-font-serif">{node.title}</h1>
             </div>
-            
-            <TodayHours className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
+
+            <div className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]">
+              <Card
+                className="su-border-0 su-rounded"
+                image={image}
+                footer={
+                  <>
+                    <div className="su-leading-tight su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
+                      {node.su_library__phone && 
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-0 su-mb-4">
+                          <PhoneIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
+                          {node.su_library__phone}
+                        </div>
+                      }
+                      {node.su_library__email && 
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-18 su-mb-4">
+                          <EnvelopeIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[3px] su-mr-3 md:su-mr-0"/>
+                          <Link className="su-no-underline hocus:su-underline" href={`mailto:${node.su_library__email}`}>
+                            {node.su_library__email}
+                          </Link>
+                        </div>
+                      }
+                      {node.su_library__address &&
+                        <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
+                          <MapPinIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[2px] su-mr-3 md:su-mr-0"/>
+                          {node.su_library__map_link ? (
+                            <Link href={node.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
+                              <div>{node.su_library__address.address_line1}</div>
+                              <div>{node.su_library__address.address_line2}</div>
+                              <div>{node.su_library__address.locality}, {node.su_library__address.administrative_area} {node.su_library__address.postal_code}</div>
+                            </Link>
+                          ): (
+                            <>
+                              <div>{node.su_library__address.address_line1}</div>
+                              <div>{node.su_library__address.address_line2}</div>
+                              <div>{node.su_library__address.locality}, {node.su_library__address.administrative_area} {node.su_library__address.postal_code}</div>
+                            </>
+                          )}
+                        </div>
+                      }
+                      {hours &&
+                        <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
+                          <ClockIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
+                          {isOpen ? 'Open' : 'Closed'}
+                        </div>
+                      }
+                    </div>
+                    {hours &&
+                      <div className="su-relative su-pb-70 md:su-pb-40">
+                        <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
+                        <select
+                          id="library-hours"
+                          className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
+                          // onChange={e => setSelectedLibrary(e.target.value)}
+                          
+                        >
+                          {selectedHours?.primary_hours.map(index =>
+                              <option key={index}>
+                                <LibraryHours key={index} {...index} />
+                              </option>
+                            )}
+                        </select>
+                      </div>
+                    }
+                  </>
+                }
+              />
+            </div>
           </div>
         </div>
 
@@ -110,7 +198,7 @@ export const NodeSulLibraryCard = ({node, ...props}: SulLibraryNodeProps) => {
   )
 }
 
-const LibraryHours = ({closed, closes_at, opens_at}) => {
+const LibraryHours = ({closed, closes_at, opens_at, weekday, day}) => {
 
   const closes = new Date(closes_at)
   const closeTime = closes.toLocaleTimeString("en-US", {
@@ -124,129 +212,10 @@ const LibraryHours = ({closed, closes_at, opens_at}) => {
 
   return (
     <div>
-      {closed && <span>closed</span>}
-      {!closed && <span>{openTime} - {closeTime}</span>}
-    </div>
-  )
-}
-
-const TodayHours = (props) => {
-  const [selectedLibrary, setSelectedLibrary] = useState(null);
-
-  const libraries = useNodeList('sul_library');
-  const hours = useLibraryHours();
-
-  if (libraries.length === 0 || Object.keys(hours).length === 0) {
-    return null;
-  }
-
-  const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
-  const selectedHours = hours[library.su_library__hours]
-
-  const date = new Date()
-  const libraryHours = selectedHours.locations[Object.keys(selectedHours.locations)[0]].find(day => day.day === date.toISOString().substring(0, 10));
-  let openTime, closeTime, isOpen = false, closedAllDay = libraryHours.closed;
-
-  if (!libraryHours.closed) {
-    openTime = new Date(libraryHours.opens_at);
-    closeTime = new Date(libraryHours.closes_at);
-    isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
-  }
-
-  const imageUrl = library.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
-  const image = <Image
-    className="su-object-cover su-object-center"
-    src={imageUrl}
-    alt=""
-    fill={true}
-  />
-
-  return (
-    <div {...props}>
-
-      <Card
-        className="su-border-0 su-rounded"
-        image={image}
-        footer={
-          <>
-            <div className="su-leading-tight su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
-              {library.su_library__phone && 
-                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-0 su-mb-4">
-                  <PhoneIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
-                  {library.su_library__phone}
-                </div>
-              }
-              {library.su_library__email && 
-                <>
-                  <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-18 su-mb-4">
-                    <EnvelopeIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[3px] su-mr-3 md:su-mr-0"/>
-                    <Link className="su-no-underline hocus:su-underline" href={`mailto:${library.su_library__email}`}>
-                      {library.su_library__email}
-                    </Link>
-                  </div>
-                </>
-              }
-              {library.su_library__address &&
-                <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
-                  <MapPinIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[2px] su-mr-3 md:su-mr-0"/>
-                  {library.su_library__map_link ? (
-                    <Link href={library.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
-                      <div>{library.su_library__address.address_line1}</div>
-                      <div>{library.su_library__address.address_line2}</div>
-                      <div>{library.su_library__address.locality}, {library.su_library__address.administrative_area} {library.su_library__address.postal_code}</div>
-                    </Link>
-                  ): (
-                    <>
-                      <div>{library.su_library__address.address_line1}</div>
-                      <div>{library.su_library__address.address_line2}</div>
-                      <div>{library.su_library__address.locality}, {library.su_library__address.administrative_area} {library.su_library__address.postal_code}</div>
-                    </>
-                  )}
-                </div>
-              }
-              {hours &&
-                <>
-                  <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
-                    <ClockIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
-                    {isOpen ? 'Open' : 'Closed'}
-                  </div>
-                  <div>
-                    {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                    }) : 'Opens at ' + openTime.toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                    }))}
-                  </div>
-                </>
-              }
-            </div>
-            <div className="su-relative su-pb-70 md:su-pb-40">
-              <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-              <select
-                id="library-hours"
-                className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
-                // onChange={e => setSelectedLibrary(e.target.value)}
-                
-              >
-                <option selected>Mon: 10am - 8pm</option>
-                <option disabled>Tue: 10am - 8pm</option>
-                <option disabled>Wed: 10am - 8pm</option>
-                <option disabled>Thu: 10am - 8pm</option>
-                <option disabled>Fri: 10am - 8pm</option>
-                <option disabled>Sat: 10am - 8pm</option>
-                <option disabled>Sun: 10am - 8pm</option>
-                {/* {Object.keys(libraries).map(index =>
-                  <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
-                )} */}
-              </select>
-              
-            </div>
-
-          </>
-        }
-      />
+      {closed && <span>{weekday.slice(0,3)}: Closed</span>}
+      {/* {closed && <span>{weekday.slice(0,3)} {day.slice(5, 10).replaceAll('-', '/')}: Closed</span>} */}
+      {!closed && <span>{weekday.slice(0,3)}: {openTime} - {closeTime}</span>}
+      {/* {!closed && <span>{weekday.slice(0,3)} {day.slice(5, 10).replaceAll('-', '/')}: {openTime} - {closeTime}</span>} */}
     </div>
   )
 }
