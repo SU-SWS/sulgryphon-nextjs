@@ -1,6 +1,7 @@
 import {Library} from "../../types/drupal";
 import Link from "next/link";
 import Image from "next/image";
+import { useId } from 'react';
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
 import {Paragraph} from "@/components/paragraphs";
@@ -29,6 +30,7 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 }
 
 const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
+  const inputId = useId();
   const hours = useLibraryHours()
 
   if (Object.keys(hours).length === 0) {
@@ -59,7 +61,6 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   }
   
   const date = new Date()
-  console.log('date: ', date)
   let openTime, closeTime, isOpen = false;
 
   if (!todayHours.closed) {
@@ -148,15 +149,15 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                       }
                       {hours &&
                         <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
-                          <ClockIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mr-12"/>
+                          <ClockIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mt-01em md:su-mt-0 su-mr-12"/>
                           {isOpen ? 'Open' : 'Closed'}
                         </div>
                       }
                     </div>
                     {libraryPrimaryHours &&
                       <div className="su-relative su-pb-70 md:su-pb-40">
-                        <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-                        <select id="library-hours" className="su-absolute su-leading-none su-w-full su-text-black su-py-20 su-mb-20 su-rounded su-shadow su-type-1">
+                        <label htmlFor={inputId + '-libraryhours'} className="su-sr-only">Choose a library</label>
+                        <select id={inputId + '-libraryhours'} className="su-absolute su-leading-none su-w-full su-text-black su-py-20 su-mb-20 su-rounded su-shadow su-type-1">
                           {libraryPrimaryHours.map(date =>
                               <option key={`library-hours-${date.day}`} selected={date.day === currentDay} disabled={date.day !== currentDay} value={date.day}>
                                 <LibraryHours key={date} {...date} />
