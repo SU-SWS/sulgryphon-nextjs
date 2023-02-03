@@ -147,7 +147,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                         </div>
                       }
                       {hours &&
-                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 ">
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
                           <ClockIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mr-12"/>
                           {isOpen ? 'Open' : 'Closed'}
                         </div>
