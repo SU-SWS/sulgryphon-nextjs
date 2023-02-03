@@ -1,13 +1,10 @@
 import {Library} from "../../types/drupal";
-import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/simple/link";
 import Link from "next/link";
 import Image from "next/image";
-import { useState} from "react";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
 import {Paragraph} from "@/components/paragraphs";
-import {useNodeList} from "@/lib/hooks/useNodeList";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
@@ -33,6 +30,12 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 }
 
 const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
+  const hours = useLibraryHours()
+
+  if (Object.keys(hours).length === 0) {
+    return null;
+  }
+
   const toISOStringWithTimezone = date => {
     const tzOffset = -date.getTimezoneOffset();
     const diff = tzOffset >= 0 ? '+' : '-';
@@ -48,29 +51,30 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   };
 
   const currentDay = toISOStringWithTimezone(new Date()).substring(0, 10);
-  const hours = useLibraryHours()
-  const selectedHours = hours[node.su_library__hours]
+  console.log('currentDay: ', currentDay)
+  const libraryHours = hours[node.su_library__hours];
+  const libraryPrimaryHours = libraryHours?.primary_hours;
   console.log('hours', hours)
-  console.log('selectedHours', selectedHours)
-
-  if (Object.keys(hours).length === 0) {
-    return null;
-  }
-
-  const date = new Date()
-
+  console.log('libraryHours', libraryHours)
+  console.log('libraryPrimaryHours', libraryPrimaryHours)
+  
   let todayHours;
-  if (selectedHours) {
-    todayHours = selectedHours?.primary_hours?.find(day => day.day === currentDay);
+  if (libraryPrimaryHours) {
+    todayHours = libraryPrimaryHours.find(day => day.day === currentDay);
+    console.log('today hours: ', todayHours)
   }
-
-  const libraryHours = selectedHours?.primary_hours.find(day => day.day === date.toISOString().substring(0, 10));
-
+  
+  // const libraryHours = selectedHours?.primary_hours.find(day => day.day === currentDay);
+  // const libraryHours = selectedHours?.primary_hours.find(day => day.day === date.toISOString().substring(0, 10));
+  // console.log('library hours: ', libraryHours);
+  
+  const date = new Date()
+  console.log('date: ', date)
   let openTime, closeTime, isOpen = false;
 
-  if (!libraryHours.closed) {
-    openTime = new Date(libraryHours.opens_at);
-    closeTime = new Date(libraryHours.closes_at);
+  if (!todayHours.closed) {
+    openTime = new Date(todayHours.opens_at);
+    closeTime = new Date(todayHours.closes_at);
     isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
   }
 
@@ -162,14 +166,9 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                     {hours &&
                       <div className="su-relative su-pb-70 md:su-pb-40">
                         <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-                        <select
-                          id="library-hours"
-                          className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
-                          // onChange={e => setSelectedLibrary(e.target.value)}
-                          
-                        >
-                          {selectedHours?.primary_hours.map(index =>
-                              <option key={index}>
+                        <select id="library-hours" className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow">
+                          {libraryHours?.primary_hours.map(index =>
+                              <option key={index} selected={index.day === currentDay} disabled={index.day !== currentDay}>
                                 <LibraryHours key={index} {...index} />
                               </option>
                             )}
