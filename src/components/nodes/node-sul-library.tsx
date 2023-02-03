@@ -204,7 +204,7 @@ export const NodeSulLibraryCard = ({node, ...props}: SulLibraryNodeProps) => {
   )
 }
 
-const LibraryHours = ({closed, closes_at, opens_at, weekday, day}) => {
+const LibraryHours = ({closed, closes_at, opens_at, weekday}) => {
 
   const closes = new Date(closes_at)
   const closeTime = closes.toLocaleTimeString("en-US", {
