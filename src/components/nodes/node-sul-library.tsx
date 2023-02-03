@@ -51,22 +51,13 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   };
 
   const currentDay = toISOStringWithTimezone(new Date()).substring(0, 10);
-  console.log('currentDay: ', currentDay)
   const libraryHours = hours[node.su_library__hours];
   const libraryPrimaryHours = libraryHours?.primary_hours;
-  console.log('hours', hours)
-  console.log('libraryHours', libraryHours)
-  console.log('libraryPrimaryHours', libraryPrimaryHours)
   
   let todayHours;
   if (libraryPrimaryHours) {
     todayHours = libraryPrimaryHours.find(day => day.day === currentDay);
-    console.log('today hours: ', todayHours)
   }
-  
-  // const libraryHours = selectedHours?.primary_hours.find(day => day.day === currentDay);
-  // const libraryHours = selectedHours?.primary_hours.find(day => day.day === date.toISOString().substring(0, 10));
-  // console.log('library hours: ', libraryHours);
   
   const date = new Date()
   console.log('date: ', date)
@@ -163,13 +154,13 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                         </div>
                       }
                     </div>
-                    {hours &&
+                    {libraryPrimaryHours &&
                       <div className="su-relative su-pb-70 md:su-pb-40">
                         <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
                         <select id="library-hours" className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow">
-                          {libraryHours?.primary_hours.map(index =>
-                              <option key={index} selected={index.day === currentDay} disabled={index.day !== currentDay}>
-                                <LibraryHours key={index} {...index} />
+                          {libraryPrimaryHours.map(date =>
+                              <option key={`library-hours-${date.day}`} selected={date.day === currentDay} disabled={date.day !== currentDay} value={date.day}>
+                                <LibraryHours key={date} {...date} />
                               </option>
                             )}
                         </select>
@@ -228,9 +219,7 @@ const LibraryHours = ({closed, closes_at, opens_at, weekday, day}) => {
   return (
     <div>
       {closed && <span>{weekday.slice(0,3)}: Closed</span>}
-      {/* {closed && <span>{weekday.slice(0,3)} {day.slice(5, 10).replaceAll('-', '/')}: Closed</span>} */}
       {!closed && <span>{weekday.slice(0,3)}: {openTime} - {closeTime}</span>}
-      {/* {!closed && <span>{weekday.slice(0,3)} {day.slice(5, 10).replaceAll('-', '/')}: {openTime} - {closeTime}</span>} */}
     </div>
   )
 }
