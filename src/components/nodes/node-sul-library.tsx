@@ -97,7 +97,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
     <>
       <div className="su-bg-black-true su-mb-100 su-relative">
         <div className="su-absolute su-h-full su-w-full" >
-          <div className="su-w-full su-h-full su-overflow-hidden su-relative">
+          <div className="su-hidden md:su-block su-w-full su-h-full su-overflow-hidden su-relative">
             {bannerImage}
           </div>
         </div>    
@@ -114,24 +114,24 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                 image={contactImage}
                 footer={
                   <>
-                    <div className="su-leading-tight su-text-black su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
+                    <div className="su-leading-tight su-text-black md:su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
                       {node.su_library__phone && 
-                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-0 su-mb-4">
-                          <PhoneIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mb-4 su-type-1">
+                          <PhoneIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mr-12"/>
                           {node.su_library__phone}
                         </div>
                       }
                       {node.su_library__email && 
-                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-18 su-mb-4">
-                          <EnvelopeIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[3px] su-mr-3 md:su-mr-0"/>
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
+                          <EnvelopeIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-02em su-mt-01em su-mr-12"/>
                           <Link className="su-no-underline hocus:su-underline" href={`mailto:${node.su_library__email}`}>
                             {node.su_library__email}
                           </Link>
                         </div>
                       }
                       {node.su_library__address &&
-                        <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
-                          <MapPinIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[2px] su-mr-3 md:su-mr-0"/>
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
+                          <MapPinIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mt-01em su-mr-12"/>
                           {node.su_library__map_link ? (
                             <Link href={node.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
                               <div>{node.su_library__address.address_line1}</div>
@@ -148,8 +148,8 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                         </div>
                       }
                       {hours &&
-                        <div className="su-relative su-mt-40 md:su-mt-18 su-mb-4">
-                          <ClockIcon width={18} className="md:su-absolute md:su-left-[-38px] md:su-top-[1px] su-mr-3 md:su-mr-0"/>
+                        <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 ">
+                          <ClockIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mr-12"/>
                           {isOpen ? 'Open' : 'Closed'}
                         </div>
                       }
@@ -157,7 +157,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                     {libraryPrimaryHours &&
                       <div className="su-relative su-pb-70 md:su-pb-40">
                         <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-                        <select id="library-hours" className="su-absolute su-leading-none su-w-full su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow">
+                        <select id="library-hours" className="su-absolute su-leading-none su-w-full su-text-black su-py-20 su-mb-20 su-rounded su-shadow su-type-1">
                           {libraryPrimaryHours.map(date =>
                               <option key={`library-hours-${date.day}`} selected={date.day === currentDay} disabled={date.day !== currentDay} value={date.day}>
                                 <LibraryHours key={date} {...date} />
