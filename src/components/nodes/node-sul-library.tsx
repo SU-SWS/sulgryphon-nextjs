@@ -1,5 +1,4 @@
 import {Library} from "../../types/drupal";
-import {DrupalLink} from "@/components/simple/link";
 import Link from "next/link";
 import Image from "next/image";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
@@ -123,7 +122,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                       }
                       {node.su_library__email && 
                         <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
-                          <EnvelopeIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-02em su-mt-01em su-mr-12"/>
+                          <EnvelopeIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-02em su-mt-01em md:su-mt-0 su-mr-12"/>
                           <Link className="su-no-underline hocus:su-underline" href={`mailto:${node.su_library__email}`}>
                             {node.su_library__email}
                           </Link>
@@ -131,7 +130,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
                       }
                       {node.su_library__address &&
                         <div className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
-                          <MapPinIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mt-01em su-mr-12"/>
+                          <MapPinIcon width={19} className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mt-01em md:su-mt-0 su-mr-12"/>
                           {node.su_library__map_link ? (
                             <Link href={node.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
                               <div>{node.su_library__address.address_line1}</div>
@@ -183,27 +182,6 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   )
 }
 
-export const NodeSUlLibraryListItem = ({node, ...props}: SulLibraryNodeProps) => {
-  return (
-    <article {...props}>
-      <DrupalLink href={node.path.alias}>
-        <h2 className="su-text-cardinal-red">{node.title}</h2>
-      </DrupalLink>
-    </article>
-  )
-}
-
-export const NodeSulLibraryCard = ({node, ...props}: SulLibraryNodeProps) => {
-  return (
-    <article className="su-shadow-lg" {...props}>
-      <DrupalLink href={node.path.alias}
-                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
-        <h2 className="su-text-cardinal-red">{node.title}</h2>
-      </DrupalLink>
-    </article>
-  )
-}
-
 const LibraryHours = ({closed, closes_at, opens_at, weekday}) => {
 
   const closes = new Date(closes_at)
@@ -221,5 +199,26 @@ const LibraryHours = ({closed, closes_at, opens_at, weekday}) => {
       {closed && <span>{weekday.slice(0,3)}: Closed</span>}
       {!closed && <span>{weekday.slice(0,3)}: {openTime} - {closeTime}</span>}
     </div>
+  )
+}
+
+export const NodeSUlLibraryListItem = ({node, ...props}: SulLibraryNodeProps) => {
+  return (
+    <article {...props}>
+      <Link href={node.path.alias}>
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </Link>
+    </article>
+  )
+}
+
+export const NodeSulLibraryCard = ({node, ...props}: SulLibraryNodeProps) => {
+  return (
+    <article className="su-shadow-lg" {...props}>
+      <Link href={node.path.alias}
+                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </Link>
+    </article>
   )
 }
