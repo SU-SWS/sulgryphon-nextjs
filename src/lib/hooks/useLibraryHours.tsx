@@ -13,6 +13,7 @@ export const useLibraryHours = () => {
             locations[place.id.toLowerCase()] = {
               name: place.attributes.name,
               type: place.type,
+              primary_hours: place.attributes.hours,
               locations: {}
             }
           })
