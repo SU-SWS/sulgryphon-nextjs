@@ -1,5 +1,5 @@
 import {DrupalPublicationCitation, Publication} from "../../types/drupal";
-import {DrupalLink} from "@/components/simple/link";
+import Link from "next/link";
 import {Rows} from "@/components/paragraphs/row";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 
@@ -20,7 +20,7 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 
         {node.su_publication_citation && <Citation citation={node.su_publication_citation}/>}
         {node.su_publication_cta &&
-            <DrupalLink href={node.su_publication_cta.url}>{node.su_publication_cta.title}</DrupalLink>}
+            <Link href={node.su_publication_cta.url}>{node.su_publication_cta.title}</Link>}
       </article>
     </MainContentLayout>
   )
@@ -29,9 +29,9 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 export const NodeStanfordPublicationListItem = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
-      <DrupalLink href={node.path.alias}>
+      <Link href={node.path.alias}>
         <h2 className="su-text-cardinal-red">{node.title}</h2>
-      </DrupalLink>
+      </Link>
     </article>
   )
 }
@@ -39,10 +39,10 @@ export const NodeStanfordPublicationListItem = ({node, ...props}: PublicationNod
 export const NodeStanfordPublicationCard = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article className="su-shadow-lg" {...props}>
-      <DrupalLink href={node.path.alias}
+      <Link href={node.path.alias}
                   className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
         <h2 className="su-text-cardinal-red">{node.title}</h2>
-      </DrupalLink>
+      </Link>
     </article>
   )
 }
