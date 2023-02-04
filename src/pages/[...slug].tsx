@@ -91,6 +91,11 @@ export const getStaticProps: GetStaticProps<{ node: DrupalNode, menuItems: Drupa
   }
 
   const type = path.jsonapi.resourceName
+  if (type === 'node--sul_study_place') {
+    return {
+      notFound: true,
+    }
+  }
 
   let node = await getResourceFromContext<DrupalNode>(type, context)
   // At this point, we know the path exists, and it points to a resource.

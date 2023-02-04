@@ -123,6 +123,14 @@ interface Library extends DrupalNode {
   su_library__phone: number
 }
 
+interface StudyPlace extends DrupalNode {
+  sul_study__a11y: DrupalTaxonomyTerm[]
+  sul_study__branch: Library
+  sul_study__map: DrupalLink
+  sul_study__features: DrupalTaxonomyTerm[]
+  sul_study__type: DrupalTaxonomyTerm
+}
+
 // Paragraph Types.
 interface LayoutParagraphsBehaviors {
   layout_paragraphs: {

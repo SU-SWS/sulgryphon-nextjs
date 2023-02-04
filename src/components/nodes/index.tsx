@@ -32,6 +32,10 @@ const NodeSulLibrary = dynamic(() => import("./node-sul-library").then((mod) => 
 const NodeSulLibraryCard = dynamic(() => import("./node-sul-library").then((mod) => mod.NodeSulLibraryCard));
 const NodeSUlLibraryListItem = dynamic(() => import("./node-sul-library").then((mod) => mod.NodeSUlLibraryListItem));
 
+const NodeStudyPlace = dynamic(() => import("./node-sul-study-place").then((mod) => mod.NodeStudyPlace));
+const NodeStudyPlaceCard = dynamic(() => import("./node-sul-study-place").then((mod) => mod.NodeStudyPlaceCard));
+const NodeStudyPlaceListItem = dynamic(() => import("./node-sul-study-place").then((mod) => mod.NodeStudyPlaceListItem));
+
 interface NodeProps {
   node: any
 }
@@ -47,6 +51,7 @@ export const NodePageDisplay= ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_person" && <NodeStanfordPerson node={node} {...props}/>}
       {node.type === "node--stanford_publication" && <NodeStanfordPublication node={node} {...props}/>}
       {node.type === "node--sul_library" && <NodeSulLibrary node={node} {...props}/>}
+      {node.type === "node--sul_study_place" && <NodeStudyPlace node={node} {...props}/>}
     </>
   )
 }
@@ -62,6 +67,7 @@ export const NodeCardDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_person" && <NodeStanfordPersonCard node={node} {...props}/>}
       {node.type === "node--stanford_publication" && <NodeStanfordPublicationCard node={node} {...props}/>}
       {node.type === "node--sul_library" && <NodeSulLibraryCard node={node} {...props}/>}
+      {node.type === "node--sul_study_place" && <NodeStudyPlace node={node} {...props}/>}
     </>
   )
 }
@@ -77,6 +83,7 @@ export const NodeListDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_person" && <NodeStanfordPersonListItem node={node} {...props}/>}
       {node.type === "node--stanford_publication" && <NodeStanfordPublicationListItem node={node} {...props}/>}
       {node.type === "node--sul_library" && <NodeSUlLibraryListItem node={node} {...props}/>}
+      {node.type === "node--sul_study_place" && <NodeStudyPlaceListItem node={node} {...props}/>}
     </>
   )
 }
