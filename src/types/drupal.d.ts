@@ -9,6 +9,7 @@ interface BasicPage extends DrupalNode {
   su_page_description?: string
   su_page_image?: DrupalImageMedia
   su_shared_tabs?: DrupalTaxonomyTerm[]
+  layout_selection: DrupalLayoutSelection
 }
 
 interface Course extends DrupalNode {
@@ -243,6 +244,12 @@ interface DrupalEmbeddableMedia extends DrupalMedia {
 }
 
 // Field Structures.
+interface DrupalLayoutSelection {
+  id: string
+  resourceIdObjMeta: {
+    drupal_internal__target_id: string
+  }
+}
 interface DrupalWysiwyg {
   format: string
   processed: string;

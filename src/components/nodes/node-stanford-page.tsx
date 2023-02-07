@@ -41,7 +41,7 @@ export const NodeStanfordPage = ({node, homepage = false, ...props}: BasicPageNo
 
       <MainContentLayout
         pageTitle={pageTitle}
-        fullWidth={homepage}
+        fullWidth={homepage || node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full'}
         header={homepage ? <HomepageBanner/> : null}
         {...props}
       >
