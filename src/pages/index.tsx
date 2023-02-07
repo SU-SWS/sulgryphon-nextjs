@@ -9,7 +9,7 @@ import {BasicPage} from "../types/drupal";
 import {AppWrapperProvider} from "../context/state";
 
 interface HomePageProps {
-  node: DrupalNode
+  node: BasicPage
   menuItems: DrupalMenuLinkContent[]
 }
 

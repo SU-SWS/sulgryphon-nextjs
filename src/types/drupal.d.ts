@@ -9,7 +9,7 @@ interface BasicPage extends DrupalNode {
   su_page_description?: string
   su_page_image?: DrupalImageMedia
   su_shared_tabs?: DrupalTaxonomyTerm[]
-  layout_selection: DrupalLayoutSelection
+  layout_selection?: DrupalLayoutSelection
 }
 
 interface Course extends DrupalNode {
