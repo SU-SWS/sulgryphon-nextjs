@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import {StudyPlace} from "../../types/drupal";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 
@@ -30,7 +31,7 @@ export const NodeStudyPlaceCard = ({node, ...props}: StudyPlaceNodeProps) => {
   return (
     <article className="su-shadow-lg" {...props}>
       <Link href={node.path.alias}
-                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+            className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
         <h2 className="su-text-cardinal-red">{node.title}</h2>
       </Link>
     </article>

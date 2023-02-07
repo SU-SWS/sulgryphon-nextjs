@@ -7,6 +7,8 @@ import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {NodeCardDisplay, NodeListDisplay} from "@/nodes/index";
 import useOnScreen from "@/lib/use-on-screen";
+import dynamic from "next/dynamic";
+const StudyPlaceFilteringList = dynamic(() => import("../views/study-places").then((mod) => mod.StudyPlaceFilteringList));
 
 interface ListProps {
   paragraph: ListParagraph
@@ -57,24 +59,18 @@ export const StanfordLists = ({paragraph, siblingCount, ...props}: ListProps) =>
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, displayNotGrid());
 
   return (
-    <div ref={elemRef} {...props} className={'su-max-w-[980px] su-mx-auto su-mb-40 ' + (props.className ?? '')}>
+    <div ref={elemRef} {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
       {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description &&
           <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
 
-      <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}`}>
-        {itemsToDisplay.map(item => (
-          <div
-            className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
-            key={item.id}>
-            <ListItem
-              node={item}
-              viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
-              displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
-            />
-          </div>
-        ))}
-      </div>
+      <List
+        itemsToDisplay={itemsToDisplay}
+        gridClass={gridClass}
+        isList={isList}
+        viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
+        displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
+      />
 
       {paragraph.su_list_button &&
           <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
@@ -103,6 +99,29 @@ interface ListItemProps {
   node: DrupalNode
   viewId: string
   displayId: string
+}
+
+const List = ({itemsToDisplay, gridClass, isList, viewId, displayId}) => {
+
+  if (viewId === 'sul_study_places' && displayId === 'study_places') {
+    return <StudyPlaceFilteringList items={itemsToDisplay}/>
+  }
+
+  return (
+    <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}`}>
+      {itemsToDisplay.map(item => (
+        <div
+          className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
+          key={item.id}>
+          <ListItem
+            node={item}
+            viewId={viewId}
+            displayId={displayId}
+          />
+        </div>
+      ))}
+    </div>
+  )
 }
 
 const ListItem = ({node, viewId, displayId}: ListItemProps) => {

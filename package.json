@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^1.0.0-beta.6",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@tailwindcss/typography": "^0.5.2",
@@ -23,6 +24,7 @@
     "next-seo": "^5.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-select": "^5.7.0",
     "react-tiny-oembed": "^1.1.0",
     "swr": "^2.0.0",
     "xml2js": "^0.4.23"
