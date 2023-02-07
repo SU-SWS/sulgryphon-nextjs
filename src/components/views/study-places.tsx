@@ -1,10 +1,14 @@
-import {useId, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {NodeStudyPlaceCard} from "@/nodes/node-sul-study-place";
+import Select from "react-select";
 
 export const StudyPlaceFilteringList = ({items}) => {
-  const formRef = useRef(null)
-  const fieldId = useId();
+  const typeRef = useRef(null);
+  const libraryRef = useRef(null);
+  const a11yRef = useRef(null);
+  const featureRef = useRef(null);
+
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
 
@@ -15,77 +19,109 @@ export const StudyPlaceFilteringList = ({items}) => {
 
   items.map(item => {
     item.sul_study__a11y.map(term => {
-      if (a11yOptions.findIndex(option => option.id === term.id) === -1) {
-        a11yOptions.push({id: term.id, name: term.name})
+      if (a11yOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
+        a11yOptions.push({value: term.id, label: term.name})
       }
     })
     item.sul_study__features.map(term => {
-      if (featureOptions.findIndex(option => option.id === term.id) === -1) {
-        featureOptions.push({id: term.id, name: term.name})
+      if (featureOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
+        featureOptions.push({value: term.id, label: term.name})
       }
     })
-    if (typeOfStudies.findIndex(option => option.id === item.sul_study__type.id) === -1) {
-      typeOfStudies.push({id: item.sul_study__type.id, name: item.sul_study__type.name})
+    if (typeOfStudies.findIndex(option => option.value === item.sul_study__type.id) === -1 && item.sul_study__type.name) {
+      typeOfStudies.push({value: item.sul_study__type.id, label: item.sul_study__type.name})
     }
-    if (libraryOptions.findIndex(option => option.id === item.sul_study__branch.id) === -1) {
-      libraryOptions.push({id: item.sul_study__branch.id, name: item.sul_study__branch.title})
+    if (libraryOptions.findIndex(option => option.value === item.sul_study__branch.id) === -1 && item.sul_study__branch.title) {
+      libraryOptions.push({value: item.sul_study__branch.id, label: item.sul_study__branch.title})
     }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const selectedLibrary = formRef.current['library'].value
-    const selectedType = formRef.current['type'].value
-    const selectedA11y = formRef.current['a11y'].value
-    const selectedFeatures = formRef.current['features'].value
+    const selectedTypes = typeRef.current.getValue().map(option => option.value);
+    const selectedLibraries = libraryRef.current.getValue().map(option => option.value);
+    const selectedA11y = a11yRef.current.getValue().map(option => option.value);
+    const selectedFeatures = featureRef.current.getValue().map(option => option.value);
 
     const filteredItems = items.filter(item =>
-      (!selectedLibrary || item.sul_study__branch.id === selectedLibrary) &&
-      (!selectedType || item.sul_study__type.id === selectedType) &&
-      (!selectedA11y || item.sul_study__a11y.filter(term => term.id === selectedA11y).length > 0) &&
-      (!selectedFeatures || item.sul_study__features.filter(term => term.id === selectedFeatures).length > 0)
+      (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
+      (!selectedTypes.length || selectedTypes.indexOf(item.sul_study__type.id) != -1) &&
+      (!selectedA11y.length || item.sul_study__a11y.filter(term => selectedA11y.indexOf(term.id) != -1).length > 0) &&
+      (!selectedFeatures.length || item.sul_study__features.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0)
     );
     setItemsToDisplay(filteredItems)
   }
 
+  const handleReset = (e) => {
+    e.preventDefault();
+    typeRef.current.clearValue();
+    libraryRef.current.clearValue();
+    a11yRef.current.clearValue();
+    featureRef.current.clearValue();
+    setItemsToDisplay(items)
+  }
+
+  useEffect(() => setItemsToDisplay(items), [items])
+
   return (
     <div>
-      <form ref={formRef}>
-        <label htmlFor={fieldId + '-type'}>Type</label>
-        <select id={fieldId + '-type'} name="type">
-          <option value="">- Choose a Type -</option>
-          {typeOfStudies.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
-        </select>
+      <form>
+        <div className="su-grid su-grid-cols-4 su-gap-xl su-mb-10">
+          <div>
+            <Select
+              ref={typeRef}
+              aria-label="Type of place"
+              placeholder="Type"
+              options={typeOfStudies}
+              name="type"
+              isMulti
+            />
+          </div>
+          <div>
+            <Select
+              ref={libraryRef}
+              aria-label="Library Branch Location"
+              placeholder="Library"
+              options={libraryOptions}
+              name="library"
+              isMulti
+            />
+          </div>
+          <div>
+            <Select
+              ref={a11yRef}
+              aria-label="Accessible features"
+              placeholder="Accessibility"
+              options={a11yOptions}
+              name="a11y"
+              isMulti
+            />
+          </div>
+          <div>
+            <Select
+              ref={featureRef}
+              aria-label="Equipment/Features"
+              placeholder="Equipment"
+              options={featureOptions}
+              name="features"
+              isMulti
+            />
+          </div>
+        </div>
 
-        <label htmlFor={fieldId + '-library'}>Library</label>
-        <select id={fieldId + '-library'} name="library">
-          <option value="">- Choose a Branch -</option>
-          {libraryOptions.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
-        </select>
-
-        <label htmlFor={fieldId + '-a11y'}>Accessibility Options</label>
-        <select id={fieldId + '-a11y'} name="a11y">
-          <option value="">- Choose Accessibility options -</option>
-          {a11yOptions.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
-        </select>
-
-        <label htmlFor={fieldId + '-features'}>Features</label>
-        <select id={fieldId + '-features'} name="features">
-          <option value="">- Choose Some Features -</option>
-          {featureOptions.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
-        </select>
-
-        <button className="su-button" onClick={handleSubmit}>
+        <button className="su-button su-mr-20" onClick={handleSubmit}>
           Filter
         </button>
-
-        <p>Showing {itemsToDisplay.length} of {items.length}</p>
-        <ul ref={parent} className="su-list-unstyled su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
-          {itemsToDisplay.map(item => <li key={item.id}><NodeStudyPlaceCard node={item}/></li>)}
-        </ul>
-
+        <button className="su-button" onClick={handleReset}>
+          Reset
+        </button>
       </form>
+
+
+      <p>Showing {itemsToDisplay.length} of {items.length}</p>
+      <ul ref={parent} className="su-list-unstyled su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
+        {itemsToDisplay.map(item => <li key={item.id}><NodeStudyPlaceCard node={item}/></li>)}
+      </ul>
     </div>
   )
 }
