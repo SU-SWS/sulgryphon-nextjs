@@ -20,7 +20,7 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 
   return (
     <MainContentLayout pageTitle={node.title}>
-      {console.log('node', node)}
+      {/* {console.log('node', node)} */}
       <article {...props}>
         <Conditional showWhen={node.su_publication_citation.citation_type}>
           <div className="su-text-16 md:su-text-18 2xl:su-text-19 su-rs-mb-2">
@@ -31,7 +31,7 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
         <div className="lg:su-grid su-grid-cols-6 su-gap-[40px] su-rs-mb-7">
           <Conditional showWhen={node.su_publication_components.length > 0}>
             <div className="su-col-span-4">
-              <div className="su-rs-mb-7 md:su-w-11/12 ">
+              <div className="su-rs-mb-7 lg:su-w-11/12 ">
                 {node.su_publication_components && <Rows rows={node.su_publication_components} rowField="su_pubs_components"/>}
               </div>
             </div>
