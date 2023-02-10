@@ -20,7 +20,7 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 
   return (
     <MainContentLayout pageTitle={node.title}>
-      {/* {console.log('node', node)} */}
+      {console.log('node', node)}
       <article {...props}>
         <Conditional showWhen={node.su_publication_citation.citation_type}>
           <div className="su-text-16 md:su-text-18 2xl:su-text-19 su-rs-mb-2">
@@ -41,10 +41,10 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
             <div className="lg:su-rs-pl-3 lg:su-border-l su-border-black-10">
               <Conditional showWhen={node.su_publication_citation.su_author.length > 0}>
                 <div className="su-rs-mb-2">
-                    <h2 className="su-text-16 md:su-text-18 2xl:su-text-19">Author(s)</h2>
+                    <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Author(s)</h2>
                     <div>
                       {node.su_publication_citation.su_author && node.su_publication_citation.su_author.map((author, index) =>
-                        <div key={`citation-author-${index}`}>
+                        <div key={`citation-author-${index}` } className="su-text-16 md:su-text-18 2xl:su-text-19">
                           {author.given} {author.family}
                         </div>
                       )}
@@ -54,16 +54,29 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 
               <Conditional showWhen={node.su_publication_citation.su_publisher}>
                 <div className="su-rs-mb-2">
-                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19">Publisher</h2>
-                  {node.su_publication_citation.su_publisher}
+                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Publisher</h2>
+                  <div className="su-text-16 md:su-text-18 2xl:su-text-19">
+                    {node.su_publication_citation.su_publisher}
+                  </div>
+                </div>
+              </Conditional>
+
+              <Conditional showWhen={node.su_publication_citation.su_journal_publisher}>
+                <div className="su-rs-mb-2">
+                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Journal Name</h2>
+                  <div className="su-text-16 md:su-text-18 2xl:su-text-19">
+                    {node.su_publication_citation.su_journal_publisher}
+                  </div>
                 </div>
               </Conditional>
 
               <Conditional showWhen={node.su_publication_citation.su_year}>
-                <div className="su-rs-mb-4">
-                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19">Publication Date</h2>
+                <div className="su-rs-mb-2">
+                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Publication Date</h2>
                   <Conditional showWhen={node.su_publication_citation.su_month && node.su_publication_citation.su_day}>
-                    {getMonthName(node.su_publication_citation.su_month)} {node.su_publication_citation.su_day}, {node.su_publication_citation.su_year}
+                    <div className="su-text-16 md:su-text-18 2xl:su-text-19">
+                      {getMonthName(node.su_publication_citation.su_month)} {node.su_publication_citation.su_day}, {node.su_publication_citation.su_year}
+                    </div>
                   </Conditional>
                   <Conditional showWhen={node.su_publication_citation.su_month && !node.su_publication_citation.su_day}>
                     {node.su_publication_citation.su_month}, {node.su_publication_citation.su_year}
@@ -73,10 +86,28 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
                   </Conditional>
                 </div>
               </Conditional>
+              
+              <Conditional showWhen={node.su_publication_citation.su_genre}>
+                <div className="su-rs-mb-2">
+                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Type of Dissertation</h2>
+                  <div className="su-text-16 md:su-text-18 2xl:su-text-19">
+                    {node.su_publication_citation.su_genre}
+                  </div>
+                </div>
+              </Conditional>
+
+              <Conditional showWhen={node.su_publication_citation.su_doi}>
+                <div className="su-rs-mb-2">
+                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">DOI</h2>
+                  <div className="su-text-16 md:su-text-18 2xl:su-text-19">
+                    {node.su_publication_citation.su_doi}
+                  </div>
+                </div>
+              </Conditional>
             </div>
 
             {node.su_publication_cta &&
-              <div className="lg:su-rs-pl-3">
+              <div className="lg:su-rs-pl-3 su-rs-pt-2">
                 <DrupalLinkButton href={node.su_publication_cta.url}>{node.su_publication_cta.title}</DrupalLinkButton>
               </div>            
             }
