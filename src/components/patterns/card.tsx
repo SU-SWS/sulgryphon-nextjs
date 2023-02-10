@@ -8,7 +8,7 @@ import Conditional from "@/components/simple/conditional";
 interface CardProps {
   video?: ReactNodeLike
   image?: ReactNodeLike
-  superHeader?: string
+  superHeader?: any
   header?: any
   footer?: ReactNodeLike
   body?: string

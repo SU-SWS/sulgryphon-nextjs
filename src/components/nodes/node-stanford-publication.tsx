@@ -3,7 +3,8 @@ import Link from "next/link";
 import {DrupalLinkButton} from "@/components/simple/link";
 import {Rows} from "@/components/paragraphs/row";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import Conditional from "../simple/conditional";
+import {Card} from "@/components/patterns/card";
+import Conditional from "@/components/simple/conditional";
 
 interface PublicationNodeProps {
   node: Publication
@@ -20,7 +21,7 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 
   return (
     <MainContentLayout pageTitle={node.title}>
-      {console.log('node', node)}
+      {/* {console.log('node', node)} */}
       <article {...props}>
         <Conditional showWhen={node.su_publication_citation.citation_type}>
           <div className="su-text-16 md:su-text-18 2xl:su-text-19 su-rs-mb-2">
@@ -132,20 +133,46 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 export const NodeStanfordPublicationListItem = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
+      {console.log('node', node)}
       <Link href={node.path.alias}>
         <h2 className="su-text-cardinal-red">{node.title}</h2>
       </Link>
+      {node.su_publication_citation && <Citation citation={node.su_publication_citation}/>}
     </article>
   )
 }
 
 export const NodeStanfordPublicationCard = ({node, ...props}: PublicationNodeProps) => {
+  const topics = node.su_publication_topics?.filter(topic => topic.name?.length > 0) ?? [];
   return (
-    <article className="su-shadow-lg" {...props}>
-      <Link href={node.path.alias}
-                  className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
+    <article {...props}>
+      <Card
+        superHeader={
+          <Conditional showWhen={node.su_publication_citation.citation_type}>
+            <div className="su-text-16 md:su-text-18 2xl:su-text-19 su-rs-mb-neg2">
+              {node?.su_publication_citation?.citation_type?.resourceIdObjMeta?.drupal_internal__target_id}
+            </div>
+          </Conditional>
+        }
+        header={
+          <Link className="su-text-black hover:su-underline" href={node.path.alias}>
+            {node.title}
+          </Link>
+        }
+        footer={
+          <div>
+            {topics.map((topic, index) =>
+              <span key={topic.id}>
+                {(index ? ', ' : '') + topic.name}
+              </span>
+          )}
+          </div>
+        }
+      />
+      {/* {console.log('node', node)} */}
+      {/* <Link href={node.path.alias} className="su-no-underline su-text-cardinal-red hover:su-underline hover:su-text-black">
         <h2 className="su-text-cardinal-red">{node.title}</h2>
-      </Link>
+      </Link> */}
     </article>
   )
 }
