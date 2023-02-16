@@ -41,7 +41,10 @@ export const MainContentLayout = ({fullWidth, header, pageTitle, children}: Main
       </Conditional>
 
       <div className={`lg:su-flex su-justify-between su-gap-2xl ${fullWidth ? '' : 'su-cc'}`}>
-        <Conditional showWhen={!fullWidth}><SideNav className="su-hidden lg:su-block su-w-4/12"/></Conditional>
+        <Conditional showWhen={!fullWidth}>
+          <aside className="lg:su-w-4/12"><SideNav/></aside>
+        </Conditional>
+
         <section id="main-content" className={"su-flex-1 " + (fullWidth ? 'su-mx-40 lg:su-mx-0' : '')}>
           {children}
         </section>

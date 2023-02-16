@@ -220,6 +220,19 @@ interface WysiwygParagraph extends DrupalParagraph {
   su_wysiwyg_text?: DrupalWysiwyg
 }
 
+interface ContactCardParagraph extends DrupalParagraph {
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
+  sul_contact__branch?: Library
+  sul_contact__link?: DrupalLink
+  sul_contact__email?: string
+  sul_contact__hours?: string
+  sul_contact__image?: DrupalImageMedia
+  sul_contact__phone?: string
+  sul_contact__title?: string
+}
+
 // Media Types.
 interface DrupalImageMedia extends DrupalMedia {
   field_media_image: DrupalFile

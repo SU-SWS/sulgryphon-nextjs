@@ -1,13 +1,16 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {NodeStudyPlaceCard} from "@/nodes/node-sul-study-place";
 import Select from "react-select";
+import Conditional from "@/components/simple/conditional";
+import {SignalIcon} from "@heroicons/react/20/solid";
 
 export const StudyPlaceFilteringList = ({items}) => {
   const typeRef = useRef(null);
   const libraryRef = useRef(null);
   const a11yRef = useRef(null);
   const featureRef = useRef(null);
+  const inputId = useId();
 
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
@@ -66,9 +69,10 @@ export const StudyPlaceFilteringList = ({items}) => {
   return (
     <div>
       <form>
-        <div className="su-grid su-grid-cols-4 su-gap-xl su-mb-10">
+        <div className="su-grid su-grid-cols-1 lg:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
           <div>
             <Select
+              instanceId={`${inputId}-type`}
               ref={typeRef}
               aria-label="Type of place"
               placeholder="Type"
@@ -79,6 +83,7 @@ export const StudyPlaceFilteringList = ({items}) => {
           </div>
           <div>
             <Select
+              instanceId={`${inputId}-branch`}
               ref={libraryRef}
               aria-label="Library Branch Location"
               placeholder="Library"
@@ -89,6 +94,7 @@ export const StudyPlaceFilteringList = ({items}) => {
           </div>
           <div>
             <Select
+              instanceId={`${inputId}-a11y`}
               ref={a11yRef}
               aria-label="Accessible features"
               placeholder="Accessibility"
@@ -99,6 +105,7 @@ export const StudyPlaceFilteringList = ({items}) => {
           </div>
           <div>
             <Select
+              instanceId={`${inputId}-features`}
               ref={featureRef}
               aria-label="Equipment/Features"
               placeholder="Equipment"
@@ -117,11 +124,22 @@ export const StudyPlaceFilteringList = ({items}) => {
         </button>
       </form>
 
+      <Conditional showWhen={items.length == 0}>
+        <SignalIcon width={50} className="su-animate-ping su-mx-auto su-my-50" />
+      </Conditional>
 
-      <p>Showing {itemsToDisplay.length} of {items.length}</p>
-      <ul ref={parent} className="su-list-unstyled su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
-        {itemsToDisplay.map(item => <li key={item.id}><NodeStudyPlaceCard node={item}/></li>)}
-      </ul>
+      <Conditional showWhen={items.length > 0}>
+        <p>Showing {itemsToDisplay.length} of {items.length}</p>
+        <Conditional showWhen={itemsToDisplay.length > 0}>
+          <ul ref={parent} className="su-list-unstyled su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
+            {itemsToDisplay.map(item => <li key={item.id}><NodeStudyPlaceCard node={item}/></li>)}
+          </ul>
+        </Conditional>
+
+        <Conditional showWhen={itemsToDisplay.length == 0}>
+          <p>No items match the search.</p>
+        </Conditional>
+      </Conditional>
     </div>
   )
 }

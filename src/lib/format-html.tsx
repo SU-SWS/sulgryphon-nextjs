@@ -1,6 +1,8 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
+import Conditional from "@/components/simple/conditional";
+import Image from "next/image";
 
 const DrupalActionLink = dynamic(() => import("../components/simple/link").then((mod) => mod.DrupalActionLink));
 const DrupalLinkBigButton = dynamic(() => import("../components/simple/link").then((mod) => mod.DrupalLinkBigButton));
@@ -163,14 +165,27 @@ const cleanMediaMarkup = (node: Element) => {
 
     return (
       <span className={fixClasses(classes)}>
-        <DrupalImage
-          className="su-block"
-          src={src}
-          alt={alt}
-          height={height}
-          width={width}
-          layout="intrinsic"
-        />
+        <Conditional showWhen={width && height}>
+          <DrupalImage
+            className="su-block"
+            src={src}
+            alt={alt}
+            height={height}
+            width={width}
+            layout="intrinsic"
+          />
+        </Conditional>
+
+        <Conditional showWhen={!width || !height}>
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+            <Image
+              className="su-object-cover su-object-center"
+              src={src}
+              alt={alt}
+              fill={true}
+            />
+          </div>
+        </Conditional>
       </span>
     )
   }

@@ -8,12 +8,14 @@ import {useEffect, useMemo, useState} from "react";
 import getActiveTrail from "@/lib/menu";
 import {useAppContext} from "../../context/state";
 import buildMenuTree from "@/lib/build-menu-tree";
+import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 
-export const SideNav = (props) => {
+export const SideNav = () => {
   const router = useRouter();
   const appContext = useAppContext();
   const {items: menuTree} = useMemo(() => buildMenuTree(appContext.menuItems), [appContext.menuItems])
   const activeTrail = getActiveTrail(menuTree, router);
+  const isDesktop = useIsDesktop();
 
   // Peel off the menu items from the parent.
   const topMenuItem = activeTrail.length > 0 ? menuTree.find(item => item.id === activeTrail[0]) : false;
@@ -24,11 +26,11 @@ export const SideNav = (props) => {
   }
 
   return (
-    <aside {...props}>
-      <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
-        {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
-      </ul>
-    </aside>
+    <>
+    <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+      {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
+    </ul>
+    </>
   )
 }
 

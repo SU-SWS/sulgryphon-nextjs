@@ -185,6 +185,9 @@ const TodayHours = (props) => {
 
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
   const selectedHours = hours[library.su_library__hours]
+  if(!selectedHours){
+    return null;
+  }
 
   const date = new Date()
   const libraryHours = selectedHours.locations[Object.keys(selectedHours.locations)[0]].find(day => day.day === date.toISOString().substring(0, 10));
