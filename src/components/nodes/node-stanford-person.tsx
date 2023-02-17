@@ -195,7 +195,7 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
           </div>
         </div>
       }
-      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black">
+      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hocus:su-underline hocus:su-text-black">
         <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
       </Link>
       <div className="su-type-0 su-leading-snug">{node.su_person_short_title}</div>
@@ -206,9 +206,9 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
-    <article className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
+    <article className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t-5 sm:su-border-t su-border-b sm:su-border-b-5 su-border-solid su-border-black-10 su-border-t-digital-red sm:su-border-t-black-10 sm:su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
       {node?.su_person_photo?.field_media_image &&
-        <div className="su-flex su-justify-center su-rs-pb-2">
+        <div className="su-flex su-justify-center su-rs-pb-4">
           <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
             <Image
               src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
@@ -219,10 +219,18 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
           </div>
         </div>
       }
-      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black su-text-center">
-        <h2 className="su-type-1">{node.title}</h2>
+      <Link href={node.path.alias} className="su-no-underline hocus:su-text-digital-red hocus:su-underline su-text-black">
+        <h2 className="su-type-1 su-rs-mb-neg2 su-font-serif">{node.title}</h2>
       </Link>
-      <div className="su-text-center su-type-0">{node.su_person_short_title}</div>
+      <Conditional showWhen={node.su_person_full_title}>
+        <div className="su-type-0 su-rs-mb-neg2     ">{node.su_person_full_title}</div>
+      </Conditional>
+        <Conditional showWhen={node.su_person_email}>
+          <Link href={`mailto:${node.su_person_email}`}>
+            {node.su_person_email}
+            <EnvelopeIcon width={20} className="su-inline-block su-ml-4" />
+          </Link>
+        </Conditional>
     </article>
   )
 }
