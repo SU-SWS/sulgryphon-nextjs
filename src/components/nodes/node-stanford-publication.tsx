@@ -132,7 +132,6 @@ export const NodeStanfordPublication = ({node, ...props}: PublicationNodeProps) 
 export const NodeStanfordPublicationListItem = ({node, ...props}: PublicationNodeProps) => {
   return (
     <article {...props}>
-      {console.log('node', node)}
       <Link href={node.path.alias}>
         <h2 className="su-text-cardinal-red">{node.title}</h2>
       </Link>
