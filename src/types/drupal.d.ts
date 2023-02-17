@@ -220,6 +220,19 @@ interface WysiwygParagraph extends DrupalParagraph {
   su_wysiwyg_text?: DrupalWysiwyg
 }
 
+interface CollectionParagraph extends DrupalParagraph {
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
+  sul_collection_heading: string
+  sul_collection_card: CollectionCardParagraph[]
+}
+
+interface CollectionCardParagraph extends DrupalParagraph {
+  sul_card_info: string
+  sul_card: CardParagraph
+}
+
 interface ContactCardParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
@@ -263,6 +276,7 @@ interface DrupalLayoutSelection {
     drupal_internal__target_id: string
   }
 }
+
 interface DrupalWysiwyg {
   format: string
   processed: string;
