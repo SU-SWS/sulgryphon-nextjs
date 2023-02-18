@@ -12,6 +12,7 @@ import SearchWorks from "@/components/search/search-works";
 import {useNodeList} from "@/lib/hooks/useNodeList";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon} from "@heroicons/react/24/outline";
+import {Wave} from "@/components/simple/wave";
 
 interface BasicPageNodeProps {
   node: BasicPage
@@ -165,9 +166,7 @@ const HomepageBanner = () => {
       </div>
 
       <div className="su-relative">
-        <svg viewBox="0 0 1500 70">
-          <path d="M0,71 Q500,65 800,20 Q1200,-30 1500,71" stroke="#fff" className="su-fill-white"></path>
-        </svg>
+        <Wave/>
       </div>
     </div>
   )

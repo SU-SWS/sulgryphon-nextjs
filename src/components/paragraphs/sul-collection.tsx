@@ -1,6 +1,8 @@
 import {CollectionParagraph} from "../../types/drupal";
 import {StanfordCard} from "@/components/paragraphs/stanford-card";
 import {useEffect, useId, useState} from "react";
+import {AboveHeaderBorder} from "@/components/simple/above-header-border";
+import Conditional from "@/components/simple/conditional";
 
 interface CollectionProps {
   paragraph: CollectionParagraph
@@ -20,8 +22,10 @@ export const SulCollection = ({paragraph, siblingCount}: CollectionProps) => {
 
   return (
     <section aria-labelledby={paragraph.id}>
-      <div className="su-w-[87px] su-h-[3px] su-bg-black"></div>
-      <h2 id={paragraph.id}>{paragraph.sul_collection_heading}</h2>
+      <Conditional showWhen={paragraph.sul_collection_heading}>
+        <AboveHeaderBorder/>
+        <h2 id={paragraph.id}>{paragraph.sul_collection_heading}</h2>
+      </Conditional>
 
       <div className={"su-gap-lg " + (siblingCount > 0 ? '' : 'lg:su-flex')}>
         <ul className={"su-list-unstyled " + (siblingCount > 0 ? '' : 'lg:su-w-1/3')}>

@@ -12,7 +12,7 @@ const LibraryFooter = () => {
   return (
     <div className="su-bg-black-true su-text-white su-pb-30">
       <div className="su-bg-footer-sprinkles su-bg-repeat">
-        <svg viewBox="0 0 1500 100" className="su-bg-gradient-to-t su-from-black-true su-to-transparent">
+        <svg viewBox="0 0 1500 100" aria-hidden={true} className="su-bg-gradient-to-t su-from-black-true su-to-transparent">
           <path d="M1500,0 L1500,100 1200,100 1200,0" className="su-fill-black-true"></path>
           <path d="M0,0 Q500,10 700,45 Q1200,130 1500,0" stroke="#fff" className="su-fill-white"></path>
         </svg>

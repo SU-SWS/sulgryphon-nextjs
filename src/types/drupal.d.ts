@@ -233,6 +233,15 @@ interface CollectionCardParagraph extends DrupalParagraph {
   sul_card: CardParagraph
 }
 
+interface FeaturedCollectionParagraph extends DrupalParagraph {
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+  }
+  sul_collection__cards: CardParagraph[]
+  sul_collection__headline?: string
+  sul_collection__link?: DrupalLink
+}
+
 interface ContactCardParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors

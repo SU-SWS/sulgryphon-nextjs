@@ -19,6 +19,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      scale: {
+        '-100': '-1'
+      },
       gridTemplateColumns: {...twoColumn, ...threeColumn},
       backgroundImage: {
         "footer-sprinkles": "url('/footer-sprinkles.png')",

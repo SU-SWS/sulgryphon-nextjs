@@ -7,6 +7,7 @@ import {Card} from "@/components/patterns/card";
 import {Paragraph} from "@/components/paragraphs";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import {Wave} from "@/components/simple/wave";
 
 interface SulLibraryNodeProps {
   node: Library;
@@ -174,9 +175,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
         </div>
 
         <div className="su-relative">
-          <svg viewBox="0 0 1500 70">
-            <path d="M0,71 Q500,65 800,20 Q1200,-30 1500,71" stroke="#fff" className="su-fill-white"></path>
-          </svg>
+          <Wave/>
         </div>
       </div>
     </>
