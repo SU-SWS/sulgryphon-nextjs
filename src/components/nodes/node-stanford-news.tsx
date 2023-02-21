@@ -2,6 +2,7 @@ import {useEffect, useMemo, useState} from "react";
 import { NewsArticleJsonLd } from 'next-seo';
 import Image from "next/image";
 import Link from "next/link";
+import {EnvelopeIcon, PrinterIcon} from '@heroicons/react/24/solid';
 
 import {News} from "../../types/drupal";
 import {formatDate} from "@/lib/format-date";
@@ -9,7 +10,6 @@ import {DrupalImage} from "@/components/simple/image";
 import {Paragraph} from "@/components/paragraphs";
 import Oembed from "@/components/simple/oembed";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import {EnvelopeIcon, PrinterIcon} from '@heroicons/react/24/solid';
 import {FacebookIcon} from '@/components/simple/icons/FacebookIcon';
 import {TwitterIcon} from '@/components/simple/icons/TwitterIcon';
 import {LinkedInIcon} from '@/components/simple/icons/LinkedInIcon';
@@ -46,6 +46,7 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
             publisherLogo=""
             isAccessibleForFree={true}
         />
+        <div className="su-cc">
         <Conditional showWhen={node.su_news_topics}>
           <div className="su-mb-20">
             {node.su_news_topics.map((topic, index) =>
@@ -97,14 +98,17 @@ export const NodeStanfordNews = ({node, ...props}: NewsNodeProps) => {
             {node.su_news_byline && <>{node.su_news_byline}</>}
           </div>
         </div>
-
+        </div>
         {node?.su_news_banner?.field_media_image &&
-          <DrupalImage
-            src={node.su_news_banner.field_media_image.uri.url}
-            alt={node.su_news_banner.field_media_image.resourceIdObjMeta.alt}
-            height={node.su_news_banner.field_media_image.resourceIdObjMeta.height}
-            width={node.su_news_banner.field_media_image.resourceIdObjMeta.width}
-          />
+            <div>
+              <DrupalImage
+                  className="su-mx-auto"
+                  src={node.su_news_banner.field_media_image.image_style_uri.breakpoint_2xl_2x}
+                  alt={node.su_news_banner.field_media_image.resourceIdObjMeta.alt}
+                  height={node.su_news_banner.field_media_image.resourceIdObjMeta.height}
+                  width={node.su_news_banner.field_media_image.resourceIdObjMeta.width}
+              />
+            </div>
         }
 
         {node?.su_news_banner?.field_media_oembed_video &&

@@ -10,7 +10,7 @@ import {useAppContext} from "../../context/state";
 import buildMenuTree from "@/lib/build-menu-tree";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 
-export const SideNav = () => {
+export const SideNav = (props) => {
   const router = useRouter();
   const appContext = useAppContext();
   const {items: menuTree} = useMemo(() => buildMenuTree(appContext.menuItems), [appContext.menuItems])
@@ -26,11 +26,11 @@ export const SideNav = () => {
   }
 
   return (
-    <>
-    <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
-      {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
-    </ul>
-    </>
+    <aside {...props}>
+      <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+        {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
+      </ul>
+    </aside>
   )
 }
 
