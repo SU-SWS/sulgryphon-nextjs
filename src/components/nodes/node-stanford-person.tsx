@@ -230,7 +230,7 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
         </Conditional>
         <Conditional showWhen={node.su_person_email}>
           <Link href={`mailto:${node.su_person_email}`}>
-            <EnvelopeIcon width={20} className="su-inline-block su-ml-4" />
+            <EnvelopeIcon width={20} className="su-inline-block su-mr-4" />
             {node.su_person_email}
           </Link>
         </Conditional>
