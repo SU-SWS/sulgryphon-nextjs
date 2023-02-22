@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 let twoColumn = {}, threeColumn = {}, i;
 for (i = 1; i <= 4; i++) {
   twoColumn[`1-${i}`] = `1fr ${i}fr`;
@@ -82,5 +84,20 @@ module.exports = {
   },
   variants: {
     extend: {},
-  }
+  },
+  plugins: [
+    plugin(function ({addComponents, config}) {
+      addComponents({
+        '.button': {
+          borderRadius: '9999px',
+          padding: '1.1rem 2.6rem',
+          lineHeight: '1.2',
+          fontSize: '2.0rem',
+          '&:active, &:hover, &:focus': {
+            backgroundColor:config('theme.colors.cardinal-red.dark'),
+          },
+        }
+      })
+    }),
+  ]
 }
