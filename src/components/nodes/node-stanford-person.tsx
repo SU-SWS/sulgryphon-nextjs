@@ -8,6 +8,7 @@ import formatHtml from "@/lib/format-html";
 import {Paragraph} from "@/components/paragraphs";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import Conditional from "../simple/conditional";
+import { SizeMe } from 'react-sizeme'
 
 interface PersonNodeProps {
   node: Person
@@ -22,7 +23,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
           openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
         />
         <div className="sm:su-flex su-no-wrap su-rs-mb-5 su-mt-50">
-          <Conditional showWhen={node.su_person_photo.field_media_image}>
+          {node.su_person_photo?.field_media_image && 
             <div className="su-rs-mr-4 su-rs-mb-1 sm:su-mb-[0rem] ">
                 <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
                     <Image
@@ -33,7 +34,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
                     />
                 </div>
             </div>
-          </Conditional>
+          }
 
           <div>
             <Conditional showWhen={node.su_person_short_title}>
@@ -182,20 +183,24 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
 export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
-    <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
-      {node?.su_person_photo?.field_media_image &&
+    <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black lg:su-rs-pt-2 lg:su-rs-px-2 lg:su-rs-pb-3 " {...props}>
+      {node.su_person_photo?.field_media_image &&
         <div className="su-rs-pb-1">
-          <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-            <Image
-              src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-              alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-              height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-              width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-            />
-          </div>
+          <SizeMe>
+            {({ size }) => (
+              <div className={size.width < 300 ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[215px] su-h-[215px] su-overflow-hidden"}>
+                <Image
+                  src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                  alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                  height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                  width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                />
+              </div>
+            )}
+          </SizeMe>
         </div>
       }
-      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black">
+      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hocus:su-underline hocus:su-text-black">
         <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
       </Link>
       <div className="su-type-0 su-leading-snug">{node.su_person_short_title}</div>
@@ -206,23 +211,74 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
-    <article className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
-      {node?.su_person_photo?.field_media_image &&
-        <div className="su-flex su-justify-center su-rs-pb-2">
-          <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-            <Image
-              src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-              alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-              height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-              width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-            />
-          </div>
-        </div>
-      }
-      <Link href={node.path.alias} className="su-no-underline su-text-digital-red hover:su-underline hover:su-text-black su-text-center">
-        <h2 className="su-type-1">{node.title}</h2>
-      </Link>
-      <div className="su-text-center su-type-0">{node.su_person_short_title}</div>
-    </article>
+    <SizeMe>
+      {({ size }) => (
+        <>
+          {size.width < 510 ?
+            <article className="su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t-5 su-border-b su-border-solid su-border-black-10 su-border-t-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-70" {...props}>
+              {node?.su_person_photo?.field_media_image &&
+                <div className={size.width < 300 ? "su-relative su-flex su-justify-center su-pb-70" : "su-relative su-flex su-justify-center su-pb-80"}>
+                  <div className="su-absolute su-top-[-11rem]">
+                    <div className={size.width < 300 ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden"}>
+                      <Image
+                        src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                        alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                        height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                        width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                      />
+                    </div>
+                  </div>
+                </div>
+              }
+              <div>
+                <Link href={node.path.alias} className="su-no-underline hocus:su-text-digital-red hocus:su-underline su-text-black">
+                  <h2 className={size.width < 300 ? "su-type-0 su-rs-mb-neg2 su-font-serif": "su-type-1 su-rs-mb-neg2 su-font-serif"}>{node.title}</h2>
+                </Link>
+                <Conditional showWhen={node.su_person_full_title}>
+                  <div className={size.width < 300 ? "su-text-18 su-rs-mb-neg2" : "su-type-0 su-rs-mb-neg2"}>{node.su_person_full_title}</div>
+                </Conditional>
+                <Conditional showWhen={node.su_person_email}>
+                  <Link href={`mailto:${node.su_person_email}`} className={size.width < 300 ? "su-no-underline hocus:su-underline su-text-digital-blue su-text-18" : "su-no-underline hocus:su-underline su-text-digital-blue"}>
+                    <div className="su-flex su-items-center su-truncate">
+                      <EnvelopeIcon width={size.width < 300 ? 14 : 20} className="su-flex-shrink-0 su-mr-3" />
+                      {node.su_person_email}
+                    </div>
+                  </Link>
+                </Conditional>
+              </div>
+            </article>
+          :
+            <article className="su-flex su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t su-border-b-5 su-border-solid su-border-black-10  su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-0" {...props}>
+              {node?.su_person_photo?.field_media_image &&
+                <div className="su-flex su-justify-center su-mr-50">
+                  <div className="su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden">
+                    <Image
+                      src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                      alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                      height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                      width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                    />
+                  </div>
+                </div>
+              }
+              <div>
+                <Link href={node.path.alias} className="su-no-underline hocus:su-text-digital-red hocus:su-underline su-text-black">
+                  <h2 className="su-type-1 su-rs-mb-neg2 su-font-serif">{node.title}</h2>
+                </Link>
+                <Conditional showWhen={node.su_person_full_title}>
+                  <div className="su-type-0 su-rs-mb-neg2">{node.su_person_full_title}</div>
+                </Conditional>
+                <Conditional showWhen={node.su_person_email}>
+                  <Link href={`mailto:${node.su_person_email}`} className="su-no-underline hocus:su-underline su-text-digital-blue">
+                    <EnvelopeIcon width={20} className="su-inline-block su-mr-6" />
+                    {node.su_person_email}
+                  </Link>
+                </Conditional>
+              </div>
+            </article>
+          }
+        </>
+      )}
+    </SizeMe>
   )
 }
