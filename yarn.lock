@@ -184,13 +184,6 @@
   resolved "https://registry.npmjs.org/@formkit/auto-animate/-/auto-animate-1.0.0-beta.6.tgz"
   integrity sha512-PVDhLAlr+B4Xb7e+1wozBUWmXa6BFU8xUPR/W/E+TsQhPS1qkAdAsJ25keEnFrcePSnXHrOsh3tiFbEToOzV9w==
 
-"@headlessui/react@^1.7.3":
-  version "1.7.11"
-  resolved "https://registry.npmjs.org/@headlessui/react/-/react-1.7.11.tgz"
-  integrity sha512-EaDbVgcyiylhtskZZf4Qb/JiiByY7cYbd0qgZ9xm2pm2X7hKojG0P4TaQYKgPOV3vojPhd/pZyQh3nmRkkcSyw==
-  dependencies:
-    client-only "^0.0.1"
-
 "@heroicons/react@^2.0.12":
   version "2.0.15"
   resolved "https://registry.npmjs.org/@heroicons/react/-/react-2.0.15.tgz"
@@ -738,7 +731,7 @@ chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
-client-only@0.0.1, client-only@^0.0.1:
+client-only@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz"
   integrity sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==
@@ -2777,6 +2770,11 @@ synckit@^0.8.4:
   dependencies:
     "@pkgr/utils" "^2.3.1"
     tslib "^2.5.0"
+
+tabbable@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.1.1.tgz#40cfead5ed11be49043f04436ef924c8890186a0"
+  integrity sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==
 
 tailwindcss@^3.0.23, tailwindcss@^3.0.24:
   version "3.2.6"
