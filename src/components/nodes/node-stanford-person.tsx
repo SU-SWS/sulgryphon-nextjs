@@ -183,17 +183,21 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
 export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) => {
   return (
-    <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-rs-pt-2 su-rs-px-2 su-rs-pb-3 " {...props}>
+    <article className="su-grid su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black lg:su-rs-pt-2 lg:su-rs-px-2 lg:su-rs-pb-3 " {...props}>
       {node.su_person_photo?.field_media_image &&
         <div className="su-rs-pb-1">
-          <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
-            <Image
-              src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-              alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-              height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-              width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-            />
-          </div>
+          <SizeMe>
+            {({ size }) => (
+              <div className={size.width < 300 ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[215px] su-h-[215px] su-overflow-hidden"}>
+                <Image
+                  src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                  alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                  height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                  width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                />
+              </div>
+            )}
+          </SizeMe>
         </div>
       }
       <Link href={node.path.alias} className="su-no-underline su-text-digital-red hocus:su-underline hocus:su-text-black">
@@ -207,7 +211,7 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
-    <SizeMe monitorHeight>
+    <SizeMe>
       {({ size }) => (
         <>
           {size.width < 510 ?
