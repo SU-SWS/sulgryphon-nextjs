@@ -1,7 +1,10 @@
 module.exports = {
   poweredByHeader: false,
   images: {
-    domains: [process.env.NEXT_IMAGE_DOMAIN]
+    domains: [
+        process.env.NEXT_IMAGE_DOMAIN,
+        'exhibits.stanford.edu',
+    ]
   },
   async headers() {
     if (process.env.NEXT_PUBLIC_NOBOTS === 'true') {
