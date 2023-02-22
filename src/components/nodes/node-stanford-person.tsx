@@ -8,6 +8,7 @@ import formatHtml from "@/lib/format-html";
 import {Paragraph} from "@/components/paragraphs";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import Conditional from "../simple/conditional";
+import { SizeMe } from 'react-sizeme'
 
 interface PersonNodeProps {
   node: Person
@@ -206,35 +207,78 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
 export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
 
   return (
-    <article className="su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t-5 sm:su-border-t su-border-b sm:su-border-b-5 su-border-solid su-border-black-10 su-border-t-digital-red sm:su-border-t-black-10 sm:su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-70 sm:su-mt-0" {...props}>
-      {node?.su_person_photo?.field_media_image &&
-        <div className="su-relative sm:su-static su-flex su-justify-center su-pb-80 sm:su-rs-pb-4">
-          <div className="su-absolute sm:su-static su-top-[-11rem]">
-            <div className="su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden">
-              <Image
-                src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
-              />
-            </div>
-          </div>
-        </div>
-      }
-      <div>
-        <Link href={node.path.alias} className="su-no-underline hocus:su-text-digital-red hocus:su-underline su-text-black">
-          <h2 className="su-type-1 su-rs-mb-neg2 su-font-serif">{node.title}</h2>
-        </Link>
-        <Conditional showWhen={node.su_person_full_title}>
-          <div className="su-type-0 su-rs-mb-neg2">{node.su_person_full_title}</div>
-        </Conditional>
-        <Conditional showWhen={node.su_person_email}>
-          <Link href={`mailto:${node.su_person_email}`}>
-            <EnvelopeIcon width={20} className="su-inline-block su-mr-4" />
-            {node.su_person_email}
-          </Link>
-        </Conditional>
-      </div>
-    </article>
+    <SizeMe monitorHeight>
+      {({ size }) => (
+        <article className="su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t-5 sm:su-border-t su-border-b sm:su-border-b-5 su-border-solid su-border-black-10 su-border-t-digital-red sm:su-border-t-black-10 sm:su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-70 sm:su-mt-0" {...props}>
+          {size.width < 510 ?
+            <>
+              {node?.su_person_photo?.field_media_image &&
+                <div className="su-relative sm:su-static su-flex su-justify-center su-pb-80 sm:su-rs-pb-4">
+                  <div className="su-absolute sm:su-static su-top-[-11rem]">
+                    <div className="su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden">
+                      <Image
+                        src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                        alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                        height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                        width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                      />
+                    </div>
+                  </div>
+                </div>
+              }
+              <div>
+                <Link href={node.path.alias} className="su-no-underline hocus:su-text-digital-red hocus:su-underline su-text-black">
+                  <h2 className="su-type-1 su-rs-mb-neg2 su-font-serif">{node.title}</h2>
+                </Link>
+                <Conditional showWhen={node.su_person_full_title}>
+                  <div className="su-type-0 su-rs-mb-neg2">{node.su_person_full_title}</div>
+                </Conditional>
+                <Conditional showWhen={node.su_person_email}>
+                  <Link href={`mailto:${node.su_person_email}`}>
+                    <EnvelopeIcon width={20} className="su-inline-block su-mr-4" />
+                    {node.su_person_email}
+                  </Link>
+                </Conditional>
+              </div>
+              <div>My width is {size.width}px</div>
+              <div>My height is {size.height}px</div>
+            </>
+          :
+            <>
+              {node?.su_person_photo?.field_media_image &&
+                <div className="su-relative sm:su-static su-flex su-justify-center su-pb-80 sm:su-rs-pb-4">
+                  <div className="su-absolute sm:su-static su-top-[-11rem]">
+                    <div className="su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden">
+                      <Image
+                        src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
+                        alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
+                        height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
+                        width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                      />
+                    </div>
+                  </div>
+                </div>
+              }
+              <div>
+                <Link href={node.path.alias} className="su-no-underline hocus:su-text-digital-red hocus:su-underline su-text-black">
+                  <h2 className="su-type-1 su-rs-mb-neg2 su-font-serif">{node.title}</h2>
+                </Link>
+                <Conditional showWhen={node.su_person_full_title}>
+                  <div className="su-type-0 su-rs-mb-neg2">{node.su_person_full_title}</div>
+                </Conditional>
+                <Conditional showWhen={node.su_person_email}>
+                  <Link href={`mailto:${node.su_person_email}`}>
+                    <EnvelopeIcon width={20} className="su-inline-block su-mr-4" />
+                    {node.su_person_email}
+                  </Link>
+                </Conditional>
+              </div>
+              <div>My width is {size.width}px</div>
+              <div>My height is {size.height}px</div>
+            </>
+          }
+        </article>
+      )}
+    </SizeMe>
   )
 }
