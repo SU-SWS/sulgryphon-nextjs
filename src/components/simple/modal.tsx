@@ -1,102 +1,68 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
-import {tabbable} from 'tabbable';
-
-import useFocusTrap from "@/lib/hooks/useFocusTrap";
-
+import FocusTrap from "focus-trap-react";
+import Conditional from "@/components/simple/conditional";
+import {useAutoAnimate} from "@formkit/auto-animate/react";
 
 const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {
   const closeButton = useRef(null);
   const modalBodyRef = useRef(null);
-
-  // Find the last tabbable item within the modal body.
-  const getLastTabbableItem = () => {
-    if (!modalBodyRef.current) return null;
-    const focusableItems = tabbable(modalBodyRef.current);
-    const lastTabbableItem = focusableItems.length
-      ? focusableItems[focusableItems.length - 1]
-      : closeButton.current;
-    return lastTabbableItem;
-  };
-
-  // Mimick the structure of a React ref so it works with UseFocusTrap hook.
-  const [lastTabbableRef, setLastTabbableRef] = useState({
-    current: getLastTabbableItem(),
-  });
-
-  // Update focus trap when child content changes.
-  useEffect(() => {
-    setLastTabbableRef({current: getLastTabbableItem()});
-  }, [children]);
-
-  useFocusTrap(closeButton, lastTabbableRef, isOpen);
+  const [animationParent] = useAutoAnimate()
 
   const lockScroll = () => {
-    const overlay = document.querySelector('.su-modal');
-    const scrollbarWidth = `${overlay.offsetWidth - overlay.clientWidth}px`;
-
-    document
-      .getElementsByTagName('html')[0]
-      .setAttribute('style', 'overflow-y: hidden!important');
-    document.getElementsByTagName('body')[0].style.paddingRight =
-      scrollbarWidth;
-    document.getElementsByTagName('body')[0].style.overflowY = 'hidden';
-    document.getElementsByTagName('body')[0].style.position = 'fixed';
-    document.getElementsByTagName('body')[0].style.left = '0';
-    document.getElementsByTagName('body')[0].style.right = '0';
+    document.getElementsByTagName('body')[0].style.height = '100vh';
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden';
   };
 
   const unlockScroll = () => {
-    document
-      .getElementsByTagName('html')[0]
-      .setAttribute('style', 'overflow-y: visible!important');
-    document.getElementsByTagName('body')[0].style.paddingRight = '0';
-    document.getElementsByTagName('body')[0].style.overflowY = 'visible';
-    document.getElementsByTagName('body')[0].style.position = 'relative';
-    document.getElementsByTagName('body')[0].style.left = 'unset';
-    document.getElementsByTagName('body')[0].style.right = 'unset';
+    document.getElementsByTagName('body')[0].style.height = 'auto';
+    document.getElementsByTagName('body')[0].style.overflow = 'auto';
   };
 
   useEffect(() => {
-    if (isOpen) {
-      lockScroll();
-      if (initialFocus) {
-        initialFocus.current.focus();
-      } else {
-        closeButton.current.focus();
-      }
-    } else {
-      unlockScroll();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    isOpen ? lockScroll() : unlockScroll();
   }, [isOpen]);
 
   return (
-    <div
-      className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[60] su-bg-black-80 su-bg-opacity-[90%] " + (isOpen ? 'su-flex' : 'su-hidden')}
-      aria-label={ariaLabel}
-      aria-hidden={!isOpen}
-      aria-modal={isOpen}
-      role="dialog"
-      tabIndex={-1}
-    >
-      <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
-        <div className={""}>
-          <button
-            type="button"
-            ref={closeButton}
-            onClick={onClose}
-            className={"su-text-white hocus:su-bg-transparent su-font-semibold hocus:su-underline su-text-m1 su-flex su-items-end focus:su-outline-none"}
-            aria-label="Close modal"
+    <div ref={animationParent}>
+      <Conditional showWhen={isOpen}>
+        <FocusTrap
+          active={isOpen}
+          focusTrapOptions={{
+            initialFocus: () => initialFocus?.current ? initialFocus.current : false,
+            fallbackFocus: closeButton.current,
+            returnFocusOnDeactivate: true
+          }}
+        >
+          <div
+            className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[60] su-bg-black su-bg-opacity-[97%] su-flex"}
+            aria-label={ariaLabel}
+            aria-hidden={!isOpen}
+            aria-modal={isOpen}
+            role="dialog"
+            tabIndex={-1}
           >
-            Close
-            <XMarkIcon className={""} aria-hidden/>
-          </button>
-        </div>
-        <div ref={modalBodyRef}>
-          {children}
-        </div>
-      </div>
+            <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
+              <div ref={modalBodyRef}
+                   className="su-w-full su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]">
+                {children}
+              </div>
+
+              <div className={""}>
+                <button
+                  type="button"
+                  ref={closeButton}
+                  onClick={onClose}
+                  className={"su-absolute su-right-50 su-top-50 su-text-white"}
+                  aria-label="Close modal"
+                >
+                  <XMarkIcon className={""} width={25} aria-hidden/>
+                </button>
+              </div>
+            </div>
+          </div>
+        </FocusTrap>
+      </Conditional>
     </div>
   );
 };

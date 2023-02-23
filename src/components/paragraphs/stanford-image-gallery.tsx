@@ -4,7 +4,8 @@ import Image from "next/image";
 import {ImageGalleryParagraph} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink, DrupalLinkButton} from "@/components/simple/link";
-import {Modal} from "@/components/simple/modal";
+import Modal from "@/components/simple/modal";
+import Conditional from "@/components/simple/conditional";
 
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph
@@ -36,14 +37,24 @@ export const StanfordImageGallery = ({paragraph, siblingCount, ...props}: Stanfo
                 <figcaption className="su-text-right">{formatHtml(image.su_gallery_caption)}</figcaption>}
 
 
-            <Modal isOpen={modalOpen === image.id} onClose={() => setModalOpen(null)} title={image.su_gallery_image.resourceIdObjMeta.alt} description={image.su_gallery_caption}>
-              <figure>
+            <Modal
+              isOpen={modalOpen === image.id}
+              onClose={() => setModalOpen(null)}
+              ariaLabel={image.su_gallery_image.resourceIdObjMeta.alt}
+            >
+              <figure className="su-h-full su-relative">
                 <Image
                   src={image.su_gallery_image.image_style_uri.breakpoint_2xl_2x}
-                  width={image.su_gallery_image.resourceIdObjMeta.width}
-                  height={image.su_gallery_image.resourceIdObjMeta.height}
-                  alt=""
+                  alt={image.su_gallery_image.resourceIdObjMeta.alt}
+                  fill={true}
+                  className={`su-mx-auto su-block su-max-h-full su-object-contain su-max-h-[${image.su_gallery_image.resourceIdObjMeta.height}px]`}
                 />
+
+                <Conditional showWhen={image.su_gallery_caption}>
+                  <figcaption className="su-absolute su-z-[100] su-text-white">
+                    {image.su_gallery_caption}
+                  </figcaption>
+                </Conditional>
               </figure>
             </Modal>
 

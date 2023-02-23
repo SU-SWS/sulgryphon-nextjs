@@ -6,13 +6,15 @@ import {SizeMe} from 'react-sizeme'
 import {useEffect, useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {NextSeo} from "next-seo";
+import dynamic from "next/dynamic";
 
 import {Person} from "../../types/drupal";
 import formatHtml from "@/lib/format-html";
-import {Paragraph} from "@/components/paragraphs";
-import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import Conditional from "../simple/conditional";
-import Modal from "@/components/simple/modal";
+
+const Modal = dynamic(() => import("../simple/modal"));
+const MainContentLayout = dynamic(() => import("../layouts/main-content-layout").then((mod) => mod.MainContentLayout));
+const Paragraph = dynamic(() => import("../paragraphs/index").then((mod) => mod.Paragraph));
 
 interface PersonNodeProps {
   node: Person
@@ -182,7 +184,9 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
               <LibCal libcalId={node.sul_person__libcal_id}/>
             </Conditional>
 
-            <LibGuides guides={node.lib_guides}/>
+            <Conditional showWhen={node.lib_guides.length > 0}>
+              <LibGuides guides={node.lib_guides}/>
+            </Conditional>
 
             {node?.su_person_profile_link &&
                 <DrupalLinkButton className="su-rs-mb-4"
@@ -198,6 +202,7 @@ export const NodeStanfordPerson = ({node, ...props}: PersonNodeProps) => {
 
 const LibCal = ({libcalId}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const iframeRef = useRef(null);
   return (
     <>
       <button className="su-button" onClick={() => setModalOpen(true)}>
@@ -208,9 +213,14 @@ const LibCal = ({libcalId}) => {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         ariaLabel="Foo Bar"
-        initialFocus={null}
+        initialFocus={iframeRef}
       >
-        Foo Bar Baz
+        <iframe
+          ref={iframeRef}
+          src={`https://appointments.library.stanford.edu/widget/appointments?u=${libcalId}&lid=0&gid=0&iid=5247&t=Make%20an%20appointment`}
+          title="Schedule an appointment"
+          className="su-w-full su-h-full"
+        />
       </Modal>
     </>
   )
@@ -218,7 +228,6 @@ const LibCal = ({libcalId}) => {
 
 const LibGuides = ({guides}) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
-
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
 
   return (
@@ -270,13 +279,13 @@ const LibGuideSection = ({heading, guides}) => {
 
       <Conditional showWhen={moreGuides.length > 0}>
         <button
-          className="su-button"
+          className="su-button su-mx-auto su-block"
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}
                 aria-controls={containerId}
         >
-          {showMore ? 'Show More' : 'Show Less'} <span className="su-sr-only">{heading}</span>
+          {showMore ? `Show ${moreGuides.length} More` : 'Show Less'} <span className="su-sr-only">{heading}</span>
         </button>
       </Conditional>
     </>
@@ -309,6 +318,10 @@ export const NodeStanfordPersonListItem = ({node, ...props}: PersonNodeProps) =>
         <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
       </Link>
       <div className="su-type-0 su-leading-snug">{node.su_person_short_title}</div>
+
+      <Conditional showWhen={node.sul_person__libcal_id}>
+        <LibCal libcalId={node.sul_person__libcal_id}/>
+      </Conditional>
     </article>
   )
 }
@@ -357,6 +370,10 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
                     </div>
                   </Link>
                 </Conditional>
+
+                <Conditional showWhen={node.sul_person__libcal_id}>
+                  <LibCal libcalId={node.sul_person__libcal_id}/>
+                </Conditional>
               </div>
             </article>
             :
@@ -388,6 +405,10 @@ export const NodeStanfordPersonCard = ({node, ...props}: PersonNodeProps) => {
                     <EnvelopeIcon width={20} className="su-inline-block su-mr-6"/>
                     {node.su_person_email}
                   </Link>
+                </Conditional>
+
+                <Conditional showWhen={node.sul_person__libcal_id}>
+                  <LibCal libcalId={node.sul_person__libcal_id}/>
                 </Conditional>
               </div>
             </article>
