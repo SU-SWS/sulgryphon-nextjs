@@ -6,11 +6,11 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
 import {useAppContext} from "../../context/state";
 import getActiveTrail from "@/lib/menu";
-import SearchWorks from "@/components/search/search-works";
 import buildMenuTree from "@/lib/build-menu-tree";
 import Conditional from "@/components/simple/conditional";
 import OutsideClickHandler from "@/components/simple/outside-click-handler";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
+import {SearchForm} from "@/components/search/search-form";
 
 export const MainMenu = ({...props}) => {
   const appContext = useAppContext();
@@ -86,7 +86,7 @@ export const MainMenu = ({...props}) => {
           <div
             aria-hidden={!isDesktop && !menuOpen}
             className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-30 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
-            <SearchWorks className="su-mx-40 lg:su-hidden"/>
+            <SearchForm className="su-mx-40 lg:su-hidden"/>
 
             <nav>
               <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">

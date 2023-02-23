@@ -1,16 +1,16 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export const useExhibits = (query) => {
+export const useSiteSearch = (query, limit = 9999) => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
     const fetchResults = async () => {
-      const url = `https://exhibits.stanford.edu/exhibit_finder?q=${query}`
+      const url = `/api/site-search?q=${query}`
       await axios.get(url)
         .then(result => setResults(result.data))
     }
     if (query) fetchResults();
   }, [query])
-  return results;
+  return results.slice(0, limit);
 }

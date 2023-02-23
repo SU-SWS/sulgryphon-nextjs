@@ -1,15 +1,18 @@
 import {GetStaticProps, GetStaticPropsResult} from "next"
 import {DrupalMenuLinkContent, getMenu} from "next-drupal"
+import Image from "next/image";
+import Link from "next/link";
+import {useRouter} from "next/router";
+import {useId} from "react";
 
 import {PageLayout} from "@/components/layouts/page-layout"
 import {AppWrapperProvider} from "../context/state";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
-import {useRouter} from "next/router";
-import {useSearchWorks} from "@/lib/hooks/useSearchWorks";
 import {useExhibits} from "@/lib/hooks/useExhibits";
-import Image from "next/image";
-import Link from "next/link";
-import {useEarthWorks} from "@/lib/hooks/useEarthWorks";
+import {useSiteSearch} from "@/lib/hooks/useSiteSearch";
+import Conditional from "@/components/simple/conditional";
+import {SearchForm} from "@/components/search/search-form";
+import {useLibGuideSearch} from "@/lib/hooks/useLibGuideSearch";
 
 interface SearchPageProps {
   menuItems: DrupalMenuLinkContent[]
@@ -30,73 +33,128 @@ export default Search;
 
 const SearchResults = () => {
   const router = useRouter()
-  const query = router.query?.q;
-  if (!query) {
-    return null;
-  }
+  const query = router.query?.q ?? '';
+  const id = useId();
+
   return (
-    <div className="su-grid su-grid-cols-2">
-      <CatalogResults query={query}/>
-      <ArticlesResults query={query}/>
-      <GuidesResults query={query}/>
-      <WebsiteResults query={query}/>
-      <ExhibitsResults query={query}/>
-      <EarthWorksResults query={query}/>
-    </div>
+    <>
+      <SearchForm className="su-border su-rounded su-mb-30 su-max-w-500 su-mx-auto"/>
+
+      <div className="su-grid su-grid-cols-2 su-gap-xl">
+        <CatalogResults query={query} id={id + '-catalog'}/>
+        <ArticlesResults query={query} id={id + '-catalog'}/>
+        <GuidesResults query={query} id={id + '-catalog'}/>
+        <WebsiteResults query={query} id={id + '-catalog'}/>
+        <ExhibitsResults query={query} id={id + '-catalog'}/>
+        <EarthWorksResults query={query} id={id + '-catalog'}/>
+      </div>
+    </>
   )
 }
 
-const CatalogResults = ({query}) => {
+const CatalogResults = ({query, ...props}) => {
   // const results = useSearchWorks(query);
   return (
-    <div>Catalog</div>
-  )
-}
-const ArticlesResults = ({query}) => {
-  // const results = useSearchWorks(query, true);
-  return (
-    <div>ArticlesResults</div>
-  )
-}
-const GuidesResults = ({query}) => {
-  return (
-    <div>GuidesResults</div>
-  )
-}
-const WebsiteResults = ({query}) => {
-  return (
-    <div>WebsiteResults</div>
-  )
-}
-const ExhibitsResults = ({query}) => {
-  const results = useExhibits(query)
-  return (
-    <div>
-      <h2>Exhibits</h2>
-      <p>Digital showcases for research and teaching.</p>
-      <ul className="su-list-unstyled">
-        {results.map(result =>
-          <li key={'exhibits-' + result.id} className="su-grid su-grid-cols-2">
-            <ResultItem
-              title={result.title}
-              subtitle={result.subtitle}
-              url={`https://exhibits.stanford.edu/${result.id}`}
-              image={result.thumbnail_url}
-            />
-          </li>
-        )}
-      </ul>
+    <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
+      <h2>Catalog</h2>
+      <p>Physical and digital books, media, journals, archives, and databases.</p>
     </div>
   )
 }
-const EarthWorksResults = ({query}) => {
-  // const results = useEarthWorks(query);
+const ArticlesResults = ({query, ...props}) => {
+  // const results = useSearchWorks(query, true);
   return (
-    <div>EarthworksResults</div>
+    <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
+      <h2>Articles+</h2>
+      <p>Journal articles, e-books, and other e-resources.</p>
+    </div>
+  )
+}
+const GuidesResults = ({query, ...props}) => {
+  const results = useLibGuideSearch(query);
+  return (
+    <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
+      <h2>Guides</h2>
+      <p>Course- and topic-based guides to collections, tools, and services.</p>
+      <Conditional showWhen={results.length == 0}>
+        <p>No guide results found.</p>
+      </Conditional>
+
+      <Conditional showWhen={results.length > 0}>
+        <ul className="su-list-unstyled">
+          {results.slice(0, 3).map(guide =>
+            <li key={guide.id}>
+              <Link href={guide.url}>{guide.title}</Link>
+            </li>
+          )}
+        </ul>
+      </Conditional>
+
+    </div>
   )
 }
 
-const ResultItem = ({title, subtitle, image, url}) => {
+const WebsiteResults = ({query, ...props}) => {
+  const results = useSiteSearch(query);
+  return (
+    <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
+      <h2>Library Websites</h2>
+      <p>Library info; guides & content by subject specialists</p>
+
+      <Conditional showWhen={results.length == 0}>
+        <p>No website results found.</p>
+      </Conditional>
+
+      <Conditional showWhen={results.length > 0}>
+        <ul className="su-list-unstyled">
+          {results.slice(0, 3).map(result =>
+            <li key={'exhibits-' + result.id} className="su-grid su-grid-cols-2">
+              <Link href={result.path}>{result.title}</Link>
+            </li>
+          )}
+        </ul>
+      </Conditional>
+    </div>
+  )
+}
+const ExhibitsResults = ({query, ...props}) => {
+  const results = useExhibits(query)
+  return (
+    <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
+      <h2>Exhibits</h2>
+      <p>Digital showcases for research and teaching.</p>
+      <Conditional showWhen={results.length == 0}>
+        <p>No exhibits results found.</p>
+      </Conditional>
+
+      <Conditional showWhen={results.length > 0}>
+        <ul className="su-list-unstyled">
+          {results.slice(0, 3).map(result =>
+            <li key={'exhibits-' + result.id} className="su-grid su-grid-cols-2">
+              <ResultItem
+                title={result.title}
+                subtitle={result.subtitle}
+                url={`https://exhibits.stanford.edu/${result.id}`}
+                image={result.thumbnail_url}
+              />
+            </li>
+          )}
+        </ul>
+      </Conditional>
+    </div>
+  )
+}
+const EarthWorksResults = ({query, ...props}) => {
+  // const results = useEarthWorks(query);
+  return (
+    <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
+      <h2>EarthWorks</h2>
+      <p>Geospatial content, including GIS datasets, digitized maps, and census data.</p>
+    </div>
+  )
+}
+
+const ResultItem = ({title, url, subtitle, image}) => {
   return (
     <>
       <div className="su-max-w-200 su-overflow-hidden su-aspect-[4/3] su-relative" aria-hidden="true">

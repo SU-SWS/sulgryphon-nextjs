@@ -8,11 +8,11 @@ import {Rows} from "@/components/paragraphs/row";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
 import Conditional from "@/components/simple/conditional";
-import SearchWorks from "@/components/search/search-works";
 import {useNodeList} from "@/lib/hooks/useNodeList";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {Wave} from "@/components/simple/wave";
+import {SearchForm} from "@/components/search/search-form";
 
 interface BasicPageNodeProps {
   node: BasicPage
@@ -148,7 +148,7 @@ const HomepageBanner = () => {
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
           <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
             <h2>What can we help you find?</h2>
-            <SearchWorks className="su-mb-20"/>
+            <SearchForm className="su-mb-20"/>
             <p>Search gives results from this site, the catalog, articles+, guides, online exhibits, and Yewno.</p>
           </div>
 
