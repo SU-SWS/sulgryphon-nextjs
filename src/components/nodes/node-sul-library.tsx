@@ -16,7 +16,7 @@ interface SulLibraryNodeProps {
 export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 
   return (
-    <MainContentLayout header={<LibraryBanner node={node} />} {...props}>
+    <MainContentLayout header={node.sul_library__type === 'branch' ? <LibraryBanner node={node} /> : null} pageTitle={node.sul_library__type === 'center' ? node.title : null} {...props}>
       <article>
         {node.su_library__paragraphs && 
           <div className="su-rs-py-1">
