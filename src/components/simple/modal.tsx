@@ -29,7 +29,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {
         <FocusTrap
           active={isOpen}
           focusTrapOptions={{
-            initialFocus: () => initialFocus?.current ? initialFocus.current : false,
+            initialFocus: () => initialFocus?.current ?? false,
             fallbackFocus: closeButton.current,
             returnFocusOnDeactivate: true
           }}
@@ -40,7 +40,6 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {
             aria-hidden={!isOpen}
             aria-modal={isOpen}
             role="dialog"
-            tabIndex={-1}
           >
             <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
               <div ref={modalBodyRef}
