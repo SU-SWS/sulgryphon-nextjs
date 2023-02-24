@@ -1,17 +1,14 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export const useSiteSearch = (query, limit = 9999, callback = null) => {
+export const useSiteSearch = (query, limit = 9999) => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
     const fetchResults = async () => {
       const url = `/api/site-search?q=${query}`
       await axios.get(url)
-        .then(result => {
-          setResults(result.data);
-          callback?.(result.data)
-        })
+        .then(result => setResults(result.data))
         .catch(e => console.error(e.message))
     }
     if (query) fetchResults();

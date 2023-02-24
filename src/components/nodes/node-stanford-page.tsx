@@ -8,7 +8,7 @@ import {Rows} from "@/components/paragraphs/row";
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
 import Conditional from "@/components/simple/conditional";
-import {useNodeList} from "@/lib/hooks/useNodeList";
+import {useEntityList} from "@/lib/hooks/useEntityList";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {Wave} from "@/components/simple/wave";
@@ -175,7 +175,7 @@ const HomepageBanner = () => {
 const TodayHours = (props) => {
   const [selectedLibrary, setSelectedLibrary] = useState(null);
 
-  const libraries = useNodeList('sul_library');
+  const libraries = useEntityList('node', 'sul_library');
   const hours = useLibraryHours();
 
   if (libraries.length === 0 || Object.keys(hours).length === 0) {

@@ -28,7 +28,7 @@ export const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityTeaser
   useEffect(() => {
     if (isElemRef) {
       const requests = [];
-      entities.map(item => requests.push(axios.get(`/api/node/${item.type}/${item.id}`)))
+      entities.map(item => requests.push(axios.get(`/api/entity/node/${item.type}/${item.id}`)))
       Promise.all(requests).then(responses => setEntities(responses.map(response => response.data)));
     }
   }, [isElemRef, paragraph.su_entity_item])

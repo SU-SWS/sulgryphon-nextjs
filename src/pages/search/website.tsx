@@ -12,7 +12,6 @@ import {SearchForm} from "@/components/search/search-form";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import Conditional from "@/components/simple/conditional";
 
-
 interface SearchPageProps {
   menuItems: DrupalMenuLinkContent[]
 }
@@ -35,25 +34,39 @@ const SearchResults = () => {
   const router = useRouter()
   const query = router.query?.q ?? '';
   const [displayedResults, setDisplayedResults] = useState([])
-  const results = useSiteSearch(query, 999, items => setDisplayedResults(items.slice(0, 25)));
+  const results = useSiteSearch(query);
+  const shownItems = displayedResults.length == 0 && results.length > 0 ? results.slice(0, 10) : displayedResults;
 
   return (
     <>
       <SearchForm className="su-border su-rounded su-mb-30 su-max-w-500 su-mx-auto" action="/search/website"/>
-      <ul ref={animationParent} className="su-list-unstyled">
-        {displayedResults.map(node =>
+      <ol ref={animationParent}>
+        {shownItems.map(node =>
           <li key={node.id}>
-            <Link href={node.path}>{node.title}</Link>
+            <ResultItem
+              path={node.path}
+              title={node.title}
+              imageId={node.image}
+            />
           </li>
         )}
 
-        <Conditional showWhen={results.length > displayedResults.length}>
-          <button className="su-button" onClick={() => setDisplayedResults(results.slice(0, displayedResults.length + 10))}>
+        <Conditional showWhen={results.length > shownItems.length}>
+          <button className="su-button" onClick={() => setDisplayedResults(results.slice(0, shownItems.length + 10))}>
             View More Results
           </button>
         </Conditional>
-      </ul>
+      </ol>
     </>
+  )
+}
+
+const ResultItem = ({path, title, imageId}) => {
+
+  return (
+    <div>
+      <Link href={path}>{title}</Link>
+    </div>
   )
 }
 
