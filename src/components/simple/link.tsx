@@ -50,10 +50,10 @@ export const DrupalActionLink = ({href, children = null, buttonProps = null, ...
     <DrupalLink
       href={href}
       {...props}
-      className={(props.className ?? '') + " su-relative su-pr-30 hocus:su-text-brick su-no-underline"}
+      className={(props.className ?? '') + " su-relative su-pr-30 hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10"}
     >
       {children}
-      <ChevronRightIcon className="su-inline su-h-full su-absolute su-top-0 su-right-0 su-h-full"/>
+      <ChevronRightIcon className="su-inline su-h-full su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
     </DrupalLink>
   )
 }
