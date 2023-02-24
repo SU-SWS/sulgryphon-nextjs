@@ -55,25 +55,23 @@ export const Card = ({video, image, superHeader, header, footer, body, link, lin
           <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</div>
         </Conditional>
 
-        <Conditional showWhen={link}>
-          {(!linkStyle) &&
-              <DrupalLinkButton href={link.url}>
-                {link.title}
-              </DrupalLinkButton>
-          }
+        {(!linkStyle && link) &&
+          <DrupalLinkButton href={link.url}>
+            {link.title}
+          </DrupalLinkButton>
+        }
 
-          {(linkStyle === 'secondary_button') &&
-              <DrupalLinkSecondaryButton href={link.url}>
-                {link.title}
-              </DrupalLinkSecondaryButton>
-          }
+        {(linkStyle === 'secondary_button' && link) &&
+          <DrupalLinkSecondaryButton href={link.url}>
+            {link.title}
+          </DrupalLinkSecondaryButton>
+        }
 
-          {(linkStyle === 'cta_button') &&
-              <DrupalActionLink href={link.url}>
-                {link.title}
-              </DrupalActionLink>
-          }
-        </Conditional>
+        {(linkStyle === 'cta_button' && link) &&
+          <DrupalActionLink href={link.url}>
+            {link.title}
+          </DrupalActionLink>
+        }
 
       </div>
     </div>
