@@ -17,15 +17,15 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 
   return (
     <MainContentLayout header={node.sul_library__type === 'branch' ? <LibraryBanner node={node} /> : null} pageTitle={node.sul_library__type === 'center' ? node.title : null} {...props}>
-      <article>
-        {node.su_library__paragraphs && 
+      {node.su_library__paragraphs.length > 0 && 
+        <article>
           <div className="su-rs-py-1">
             {node.su_library__paragraphs.map(paragraph =>
               <Paragraph key={paragraph.id} paragraph={paragraph}/>
             )}
           </div>
-        }
-      </article>
+        </article>
+      }
     </MainContentLayout>
   )
 }
