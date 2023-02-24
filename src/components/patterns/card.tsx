@@ -16,7 +16,7 @@ interface CardProps {
     url: string
     title: string
   }
-  linkStyle?: string
+  linkStyle?: any
   className?: string
   horizontal?: boolean
 }
@@ -54,6 +54,9 @@ export const Card = ({video, image, superHeader, header, footer, body, link, lin
         <Conditional showWhen={footer}>
           <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</div>
         </Conditional>
+
+        {console.log(linkStyle)}
+        {console.log(horizontal)}
 
         {(link && linkStyle !== 'action') &&
             <DrupalLinkButton href={link.url}>
