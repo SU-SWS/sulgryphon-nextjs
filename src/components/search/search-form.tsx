@@ -2,7 +2,7 @@ import {MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {useId} from "react";
 import {useRouter} from "next/router";
 
-export const SearchForm = ({placeholder = "Search", action = "/search", ...props}) => {
+export const SearchForm = ({placeholder = "Search", action = "https://library.stanford.edu/all", ...props}) => {
   const inputId = useId();
   const router = useRouter()
   const query = router.query?.q as string ?? '';
