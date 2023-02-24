@@ -9,6 +9,7 @@ export const useLibGuideSearch = (query) => {
       const url = `/api/libguide-search?q=${query}`
       await axios.get(url)
         .then(result => setResults(result.data))
+        .catch(e => console.error(e.message))
     }
     fetchResults();
   }, [query])

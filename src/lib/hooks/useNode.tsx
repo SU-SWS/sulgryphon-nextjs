@@ -8,6 +8,7 @@ export const useNode = (nodeType, uuid) => {
     const fetchList = async () => {
       await axios.get(`/api/node/node--${nodeType}/${uuid}`)
         .then(result => setNode(result.data))
+        .catch(e => console.error(e.message))
     }
     fetchList();
   }, [nodeType, uuid])

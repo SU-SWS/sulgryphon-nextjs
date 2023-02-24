@@ -13,6 +13,8 @@ import {useSiteSearch} from "@/lib/hooks/useSiteSearch";
 import Conditional from "@/components/simple/conditional";
 import {SearchForm} from "@/components/search/search-form";
 import {useLibGuideSearch} from "@/lib/hooks/useLibGuideSearch";
+import {useSearchWorks} from "@/lib/hooks/useSearchWorks";
+import {useEarthWorks} from "@/lib/hooks/useEarthWorks";
 
 interface SearchPageProps {
   menuItems: DrupalMenuLinkContent[]
@@ -53,7 +55,8 @@ const SearchResults = () => {
 }
 
 const CatalogResults = ({query, ...props}) => {
-  // const results = useSearchWorks(query);
+
+  const results = useSearchWorks(query);
   return (
     <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
       <h2>Catalog</h2>
@@ -62,7 +65,7 @@ const CatalogResults = ({query, ...props}) => {
   )
 }
 const ArticlesResults = ({query, ...props}) => {
-  // const results = useSearchWorks(query, true);
+  const results = useSearchWorks(query, true);
   return (
     <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
       <h2>Articles+</h2>
@@ -145,7 +148,7 @@ const ExhibitsResults = ({query, ...props}) => {
   )
 }
 const EarthWorksResults = ({query, ...props}) => {
-  // const results = useEarthWorks(query);
+  const results = useEarthWorks(query);
   return (
     <div className="su-border su-p-30 su-border-t-4 su-border-t-cardinal-red" {...props}>
       <h2>EarthWorks</h2>

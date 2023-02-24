@@ -9,6 +9,7 @@ export const useEarthWorks = (query) => {
       const url = `https://earthworks.stanford.edu?q=${query}&rows=10&format=json`
       await axios.get(url)
         .then(result => setResults(result.data))
+        .catch(e => console.error(e.message))
     }
     fetchResults();
   }, [query])

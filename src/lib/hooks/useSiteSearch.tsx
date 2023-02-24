@@ -9,6 +9,7 @@ export const useSiteSearch = (query, limit = 9999) => {
       const url = `/api/site-search?q=${query}`
       await axios.get(url)
         .then(result => setResults(result.data))
+        .catch(e => console.error(e.message))
     }
     if (query) fetchResults();
   }, [query])

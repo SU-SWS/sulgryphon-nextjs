@@ -24,6 +24,7 @@ export const useLibraryHours = () => {
           });
           setHours(locations);
         })
+        .catch(e => console.error(e.message))
     }
     fetchList();
   }, [])
