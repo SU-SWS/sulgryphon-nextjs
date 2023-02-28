@@ -31,10 +31,6 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   const inputId = useId();
   const hours = useLibraryHours()
 
-  if (Object.keys(hours).length === 0) {
-    return null;
-  }
-
   const toISOStringWithTimezone = date => {
     const tzOffset = -date.getTimezoneOffset();
     const diff = tzOffset >= 0 ? '+' : '-';
@@ -61,7 +57,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   const date = new Date()
   let openTime, closeTime, isOpen = false;
 
-  if (!todayHours.closed) {
+  if (Object.keys(hours).length !== 0 && !todayHours.closed) {
     openTime = new Date(todayHours.opens_at);
     closeTime = new Date(todayHours.closes_at);
     isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
