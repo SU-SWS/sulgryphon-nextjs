@@ -4,10 +4,11 @@ import Image from "next/image";
 import { useId } from 'react';
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
-import {Paragraph} from "@/components/paragraphs";
+import {Rows} from "@/components/paragraphs/row";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import {Wave} from "@/components/simple/wave";
+import Conditional from "@/components/simple/conditional";
 
 interface SulLibraryNodeProps {
   node: Library;
@@ -16,16 +17,12 @@ interface SulLibraryNodeProps {
 export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 
   return (
-    <MainContentLayout header={<LibraryBanner node={node} />} {...props}>
-      <article>
-        {node.su_library__paragraphs && 
-          <div className="su-rs-py-1">
-            {node.su_library__paragraphs.map(paragraph =>
-              <Paragraph key={paragraph.id} paragraph={paragraph}/>
-            )}
-          </div>
-        }
-      </article>
+    <MainContentLayout header={node.sul_library__type === 'branch' ? <LibraryBanner node={node} /> : null} pageTitle={node.sul_library__type === 'branch' ? null : node.title} {...props}>
+      <Conditional showWhen={node.su_library__paragraphs.length > 0}>
+        <article>
+          <Rows rows={node.su_library__paragraphs} rowField="su_library__paragraphs"/>
+        </article>
+      </Conditional>
     </MainContentLayout>
   )
 }
@@ -33,10 +30,6 @@ export const NodeSulLibrary = ({node, ...props}: SulLibraryNodeProps) => {
 const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   const inputId = useId();
   const hours = useLibraryHours()
-
-  if (Object.keys(hours).length === 0) {
-    return null;
-  }
 
   const toISOStringWithTimezone = date => {
     const tzOffset = -date.getTimezoneOffset();
@@ -64,7 +57,7 @@ const LibraryBanner = ({node, ...props}: SulLibraryNodeProps) => {
   const date = new Date()
   let openTime, closeTime, isOpen = false;
 
-  if (!todayHours.closed) {
+  if (Object.keys(hours).length !== 0 && !todayHours.closed) {
     openTime = new Date(todayHours.opens_at);
     closeTime = new Date(todayHours.closes_at);
     isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
