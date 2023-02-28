@@ -14,7 +14,7 @@ export const DrupalLinkButton = ({href, children = null, buttonProps = null, ...
     <DrupalLink
       href={href}
       {...props}
-      className={(props.className ?? '') + " su-rounded-full su-cta-button su-font-regular su-leading-display su-block su-w-fit su-no-underline hocus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-bg-digital-red hover:su-bg-cardinal-red-dark focus:su-bg-black-true active:su-bg-black-true su-text-white hocus:su-text-white su-rs-mt-neg1"}
+      className={(props.className ?? '') + " su-rounded-full su-cta-button su-font-semibold su-leading-display su-block su-w-fit su-no-underline hocus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-bg-digital-red hover:su-bg-cardinal-red-dark focus:su-bg-black-true active:su-bg-black-true su-text-white hocus:su-text-white su-rs-mt-neg1"}
     >
       {children}
     </DrupalLink>
