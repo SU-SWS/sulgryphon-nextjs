@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useId } from 'react';
 import {MainContentLayout} from "@/components/layouts/main-content-layout";
 import {Card} from "@/components/patterns/card";
-import {Paragraph} from "@/components/paragraphs";
 import {Rows} from "@/components/paragraphs/row";
 import {useLibraryHours} from "@/lib/hooks/useLibraryHours";
 import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from "@heroicons/react/24/outline";
