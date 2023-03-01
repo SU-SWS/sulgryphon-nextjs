@@ -1,5 +1,4 @@
 import {DrupalNode, getResource, getResourceCollection} from "next-drupal";
-import {cleanNode} from "@/lib/clean-node";
 
 export default async function handler(req, res) {
   const [type, id] = req.query.slug;

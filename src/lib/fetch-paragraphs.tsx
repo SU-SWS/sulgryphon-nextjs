@@ -1,4 +1,5 @@
 import {DrupalNode, DrupalParagraph, getResource} from "next-drupal";
+import axios from "axios";
 
 export const fetchParagraphs = async (components: DrupalParagraph[]) => {
   const requests = [];
@@ -49,6 +50,7 @@ export const populateParagraphData = async (node: DrupalNode) => {
       node.su_person_components.map((component, i) => {
         node.su_person_components[i] = paragraphs.find(paragraph => paragraph.id === component.id);
       })
+      node.lib_guides = await fetchLibGuides(node.sul_person__libguide_id);
       break;
 
     case 'node--stanford_event_series':
@@ -65,4 +67,40 @@ export const populateParagraphData = async (node: DrupalNode) => {
       })
       break;
   }
+}
+
+const fetchLibGuides = async (id) => {
+  if (!id) {
+    return [];
+  }
+  const oauthConfig = {
+    client_id: process.env.LIBGUIDE_CLIENT_ID,
+    client_secret: process.env.LIBGUIDE_CLIENT_SECRET,
+    grant_type: 'client_credentials'
+  };
+
+  try {
+    const token = await axios.post('https://lgapi-us.libapps.com/1.2/oauth/token', oauthConfig)
+      .then(response => response.data.access_token)
+
+    const guidesConfig = {
+      headers: {'Authorization': 'Bearer ' + token},
+    }
+    const data = await axios.get(`https://lgapi-us.libapps.com/1.2/guides?account_ids=${id}`, guidesConfig)
+      .then(response => response.data);
+
+    const guides = [];
+    data.map(guide => {
+      guides.push({
+        id: guide.id,
+        title: guide.name,
+        url: guide.url,
+        type: guide.type_label
+      })
+    });
+
+    return guides
+  } catch (e) {
+  }
+  return [];
 }

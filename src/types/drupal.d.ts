@@ -101,6 +101,14 @@ interface Person extends DrupalNode {
   su_person_telephone?: string
   su_person_type_group?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
+  sul_person__libcal_id?: number
+  sul_person__libguide_id?: number
+  lib_guides: LibGuide[]
+}
+interface LibGuide {
+  id: string
+  title: string
+  url: string
 }
 
 interface Publication extends DrupalNode {
