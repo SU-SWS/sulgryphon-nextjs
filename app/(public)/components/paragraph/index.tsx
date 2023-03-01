@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+<<<<<<< HEAD:app/(public)/components/paragraph/index.tsx
 const StanfordWysiwyg = dynamic(() => import("./stanford-wysiwyg"));
 const StanfordCard = dynamic(() => import("./stanford-card"));
 const StanfordBanner = dynamic(() => import("./stanford-banner"));
@@ -10,6 +11,7 @@ const StanfordEntity = dynamic(() => import("./stanford-entity"));
 const StanfordSpacer = dynamic(() => import("./stanford-spacer"));
 const SulCollection = dynamic(() => import("./sul-collection"));
 const SulFeaturedCollection = dynamic(() => import("./sul-featured-collection"));
+const SulContactCard = dynamic(() => import("./sul-contact-card"));
 
 interface ParagraphProps {
   paragraph: any;
@@ -38,7 +40,9 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--collection' &&
           <SulCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--sul_feat_collection' &&
-          <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+			{paragraph.type === 'paragraph--sul_contact_card' &&
+          <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
     </>
   );
 }
