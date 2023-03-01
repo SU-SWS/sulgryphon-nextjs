@@ -167,6 +167,7 @@ interface CardParagraph extends DrupalParagraph {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_card_styles?: {
       orientation: string
+      link_display_style?: string
     }
   }
   su_card_body?: DrupalWysiwyg

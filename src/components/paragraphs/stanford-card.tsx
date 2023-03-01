@@ -39,7 +39,7 @@ export const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => 
       superHeader={paragraph.su_card_super_header}
       body={paragraph?.su_card_body?.processed}
       link={paragraph?.su_card_link}
-      linkStyle={paragraph?.su_card_link_display}
+      linkStyle={paragraph.behavior_settings.sul_card_styles?.link_display_style}
       horizontal={paragraph.behavior_settings?.sul_card_styles?.orientation === 'horizontal'}
       {...props}
     />

@@ -2,7 +2,7 @@ import {ReactNodeLike} from "prop-types";
 import Link from "next/link";
 
 import formatHtml from "@/lib/format-html";
-import {DrupalLinkButton} from "@/components/simple/link";
+import {DrupalActionLink, DrupalLinkButton, DrupalLinkSecondaryButton,} from "@/components/simple/link";
 import Conditional from "@/components/simple/conditional";
 
 interface CardProps {
@@ -55,16 +55,22 @@ export const Card = ({video, image, superHeader, header, footer, body, link, lin
           <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</div>
         </Conditional>
 
-        {(link && linkStyle !== 'action') &&
-            <DrupalLinkButton href={link.url}>
-              {link.title}
-            </DrupalLinkButton>
+        {(!linkStyle && link) &&
+          <DrupalLinkButton href={link.url}>
+            {link.title}
+          </DrupalLinkButton>
         }
 
-        {(link && linkStyle === 'action') &&
-            <Link href={link.url}>
-              {link.title}
-            </Link>
+        {(linkStyle === 'secondary_button' && link) &&
+          <DrupalLinkSecondaryButton href={link.url}>
+            {link.title}
+          </DrupalLinkSecondaryButton>
+        }
+
+        {(linkStyle === 'cta_button' && link) &&
+          <DrupalActionLink href={link.url}>
+            {link.title}
+          </DrupalActionLink>
         }
 
       </div>
