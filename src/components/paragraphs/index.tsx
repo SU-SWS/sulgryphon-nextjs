@@ -10,6 +10,7 @@ const StanfordEntity = dynamic(() => import("./stanford-entity").then((mod) => m
 const StanfordSpacer = dynamic(() => import("./stanford-spacer").then((mod) => mod.StanfordSpacer));
 const SulCollection = dynamic(() => import("./sul-collection").then((mod) => mod.SulCollection));
 const SulFeaturedCollection = dynamic(() => import("./sul-featured-collection").then((mod) => mod.SulFeaturedCollection));
+const SulContactCard = dynamic(() => import("./sul-contact-card").then((mod) => mod.SulContactCard));
 
 interface ParagraphProps {
   paragraph: any;
@@ -40,6 +41,8 @@ export const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) =
           <SulCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
       {paragraph.type === 'paragraph--sul_feat_collection' &&
           <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--sul_contact_card' &&
+          <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
     </>
   );
 }
