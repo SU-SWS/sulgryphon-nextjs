@@ -1,0 +1,14 @@
+import Link from "next/link";
+import {EventSeries} from "../../../../src/types/drupal";
+
+const StanfordEventSeriesListItem = ({node, ...props}: { node: EventSeries }) => {
+  // Not being utilized anywhere currently
+  return (
+    <article {...props}>
+      <Link href={node.path.alias}>
+        <h2 className="su-text-cardinal-red">{node.title}</h2>
+      </Link>
+    </article>
+  )
+}
+export default StanfordEventSeriesListItem;

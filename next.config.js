@@ -1,5 +1,8 @@
 module.exports = {
   poweredByHeader: false,
+  experimental: {
+    appDir: true,
+  },
   images: {
     domains: [process.env.NEXT_IMAGE_DOMAIN]
   },
