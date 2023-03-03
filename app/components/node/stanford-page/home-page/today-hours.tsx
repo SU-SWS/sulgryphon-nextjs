@@ -20,18 +20,20 @@ const TodayHours = ({libraries, ...props}) => {
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
   const selectedHours = hours[library.su_library__hours]
 
-  if(!selectedHours){
+
+  if (!selectedHours) {
     return null;
   }
 
   const date = new Date()
-  const libraryHours = selectedHours.locations[Object.keys(selectedHours.locations)[0]].find(day => day.day === date.toISOString().substring(0, 10));
+  const libraryHours = selectedHours.primary_hours.find(day => day.day === date.toISOString().substring(0, 10));
+
   let openTime, closeTime, isOpen = false, closedAllDay = libraryHours.closed;
 
   if (!libraryHours.closed) {
     openTime = new Date(libraryHours.opens_at);
     closeTime = new Date(libraryHours.closes_at);
-    isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
+    isOpen = date > openTime && date < closeTime;
   }
 
   const imageUrl = library.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
@@ -69,9 +71,11 @@ const TodayHours = ({libraries, ...props}) => {
                   {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
                     hour: "numeric",
                     minute: "numeric",
+                    timeZone: 'America/Los_Angeles'
                   }) : 'Opens at ' + openTime.toLocaleTimeString("en-US", {
                     hour: "numeric",
                     minute: "numeric",
+                    timeZone: 'America/Los_Angeles'
                   }))}
                 </div>
               </div>

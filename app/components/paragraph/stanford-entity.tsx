@@ -1,14 +1,14 @@
 "use client";
 
-import {useEffect, useRef, useState} from "react";
-import useOnScreen from "../../lib/hooks/useOnScreen";
-import axios from "axios";
 import Conditional from "../utils/conditional";
 import formatHtml from "../../lib/format-html";
 import {NodeCardDisplay} from "../node";
 import {DrupalLinkButton} from "../patterns/link";
+import {useEffect, useRef, useState} from "react";
+import useOnScreen from "../../lib/hooks/useOnScreen";
+import axios from "axios";
 
-const StanfordEntity = async ({paragraph, siblingCount, ...props}) => {
+const StanfordEntity = ({paragraph, siblingCount, ...props}) => {
   const elemRef = useRef();
   const elemRefValue = useOnScreen(elemRef);
   const [isElemRef, setIsElemRef] = useState(false);
@@ -22,7 +22,7 @@ const StanfordEntity = async ({paragraph, siblingCount, ...props}) => {
   useEffect(() => {
     if (isElemRef) {
       const requests = [];
-      entities.map(item => requests.push(axios.get(`/api/node/${item.type}/${item.id}`)))
+      entities.map(item => requests.push(axios.get(`/api/entity/${item.type}/${item.id}`)))
       Promise.all(requests).then(responses => setEntities(responses.map(response => response.data)));
     }
   }, [isElemRef, paragraph.su_entity_item])
@@ -49,7 +49,7 @@ const StanfordEntity = async ({paragraph, siblingCount, ...props}) => {
       {paragraph.su_entity_headline && <h2 className="su-text-center">{paragraph.su_entity_headline}</h2>}
       {paragraph.su_entity_description && <div className="su-mb-40">{formatHtml(paragraph.su_entity_description.processed)}</div>}
 
-      {paragraph.su_entity_item &&
+      {entities &&
           <div className={"su-my-40 su-grid su-gap-xl " + (siblingCount > 0 ? "" : gridCols)}>
             {entities.map(item =>
               <NodeCardDisplay node={item} key={item.id}/>

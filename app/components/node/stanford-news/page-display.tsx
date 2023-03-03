@@ -13,6 +13,7 @@ import NewsSocialLink from "./news-social-link";
 import {News} from "../../../../src/types/drupal";
 import {formatDate} from "../../../lib/format-date";
 import {getResource} from "../../../lib/drupal/get-resource";
+import NewsPrintButton from "./print-button";
 
 const StanfordNews = async({node, ...props}: { node: News }) => {
   const requests = [];
@@ -94,11 +95,7 @@ const StanfordNews = async({node, ...props}: { node: News }) => {
                   </NewsSocialLink>
                 </li>
                 <li className="su-mr-1em">
-                  <button onClick={() => window.print()}
-                          className="su-text-black hocus:su-text-digital-blue su-transition-colors">
-                    <span className="su-sr-only">Print Article</span>
-                    <PrinterIcon width={28}/>
-                  </button>
+                  <NewsPrintButton/>
                 </li>
               </ul>
             </Conditional>

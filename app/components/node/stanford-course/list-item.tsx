@@ -1,4 +1,4 @@
-import Conditional from "@/components/simple/conditional";
+import Conditional from "../../utils/conditional";
 import Link from "next/link";
 import formatHtml from "../../../lib/format-html";
 import {Course} from "../../../../src/types/drupal";

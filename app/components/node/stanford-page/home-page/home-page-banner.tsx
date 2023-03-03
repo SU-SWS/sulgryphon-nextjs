@@ -1,4 +1,4 @@
-import {Wave} from "@/components/simple/wave";
+import Wave from "../../../patterns/wave";
 import SearchForm from "../../../search/search-form";
 import TodayHours from "./today-hours";
 import {getResourceCollection} from "../../../../lib/drupal/get-resource";

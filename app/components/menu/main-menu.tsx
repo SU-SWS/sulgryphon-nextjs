@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {forwardRef, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
+import {useIsDesktop} from "../../lib/hooks/useIsDesktop";
 import useActiveTrail from "../../lib/hooks/useActiveTrail";
 import OutsideClickHandler from "../utils/outside-click-handler";
 import {DrupalMenuLinkContent} from "next-drupal";

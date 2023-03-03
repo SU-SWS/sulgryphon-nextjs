@@ -4,51 +4,66 @@ import Link from "next/link";
 import {Event} from "../../../../src/types/drupal";
 
 const StanfordEventCard = ({node, ...props}: { node: Event }) => {
-  const date = new Date(node.su_event_date_time.value)
   const start = new Date(node.su_event_date_time?.value);
   const end = new Date(node.su_event_date_time?.end_value);
-  const shortMonth = date.toLocaleDateString("en-US", {
+
+  const shortMonth = start.toLocaleDateString("en-US", {
     month: "short",
+    timeZone: 'America/Los_Angeles'
   })
   const shortMonthEnd = end.toLocaleDateString("en-US", {
     month: "short",
+    timeZone: 'America/Los_Angeles'
   })
-  const day = date.toLocaleDateString("en-US", {
+  const day = start.toLocaleDateString("en-US", {
     day: "numeric",
+    timeZone: 'America/Los_Angeles'
   })
   const dayEnd = end.toLocaleDateString("en-US", {
     day: "numeric",
+    timeZone: 'America/Los_Angeles'
   })
 
   let dateTimeString;
+
+  // Same Day Display
   if (start.getMonth() === end.getMonth() && start.getDate() === end.getDate() && start.getFullYear() === end.getFullYear()) {
     dateTimeString = start.toLocaleDateString('en-us', {weekday: 'long'});
     dateTimeString += ', ' + start.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
-      year: "numeric"
+      year: "numeric",
+      timeZone: 'America/Los_Angeles'
     })
 
+    // Not ALl Day.
     if (
       start.getHours() !== 0 ||
       start.getMinutes() !== 0 ||
       end.getHours() !== 23 ||
       end.getMinutes() !== 59
     ) {
+
       if (start.getHours() !== end.getHours() || start.getMinutes() !== end.getMinutes()) {
-        dateTimeString += ' | ' + start.toLocaleTimeString("en-US", {
+        dateTimeString += ' | ';
+        dateTimeString += start.toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "numeric",
-        }) + ' - ' + end.toLocaleTimeString("en-US", {
+          timeZone: 'America/Los_Angeles'
+        });
+        dateTimeString += ' - ';
+        dateTimeString += end.toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "numeric",
           timeZoneName: "short",
+          timeZone: 'America/Los_Angeles'
         })
       } else {
         dateTimeString += ' ' + start.toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "numeric",
           timeZoneName: "short",
+          timeZone: 'America/Los_Angeles'
         })
       }
     }
@@ -58,13 +73,18 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
     dateTimeString += ', ' + start.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
-      year: "numeric"
+      year: "numeric",
+      timeZone: 'America/Los_Angeles'
     }) + ' - ' + end.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric",
+      timeZone: 'America/Los_Angeles'
     })
   }
+
+  // Fix difference between server side render and client side render. Replace any strange characters.
+  dateTimeString = dateTimeString.replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
 
   return (
     <article

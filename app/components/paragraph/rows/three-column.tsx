@@ -11,10 +11,10 @@ const ThreeColumn = ({config, items}) => {
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
       <div className="su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
-        {mainItems.map(item => <Paragraph key={item.id} paragraph={item} />)}
+        {mainItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
       <div className="su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
-        {rightItems.map(item => <Paragraph key={item.id} paragraph={item} />)}
+        {rightItems.map(item => <Paragraph key={item.id} paragraph={item} siblingCount={9}/>)}
       </div>
     </div>
   )

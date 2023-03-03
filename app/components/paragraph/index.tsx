@@ -17,7 +17,6 @@ interface ParagraphProps {
 }
 
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
-
   return (
     <>
       {paragraph.type === 'paragraph--stanford_card' &&

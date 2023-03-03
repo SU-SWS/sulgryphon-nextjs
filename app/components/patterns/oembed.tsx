@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const Embed = dynamic(() => import("react-tiny-oembed"));
 
-import useOnScreen from "@/lib/use-on-screen";
+import useOnScreen from "../../lib/hooks/useOnScreen";
 import {ArrowPathIcon} from "@heroicons/react/20/solid";
 
 const Oembed = ({url, ...props}) => {

@@ -12,10 +12,10 @@ interface FeaturedCollectionProps {
   siblingCount?: number
 }
 
-const SulFeaturedCollection = async ({paragraph, siblingCount}: FeaturedCollectionProps) => {
+const SulFeaturedCollection = ({paragraph, siblingCount = 1}: FeaturedCollectionProps) => {
 
   return (
-    <section className="su-max-w-1500 su-mx-auto">
+    <section className="su-px-40 2xl:su-px-0 su-max-w-1500 su-mx-auto">
       <Conditional showWhen={paragraph.sul_collection__headline || paragraph.sul_collection__link.url}>
         <AboveHeaderBorder/>
         <header className="md:su-flex su-justify-between su-mb-80">

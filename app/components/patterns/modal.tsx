@@ -3,7 +3,7 @@
 import React, {useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import FocusTrap from "focus-trap-react";
-import Conditional from "@/components/simple/conditional";
+import Conditional from "../utils/conditional";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 
 const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {

@@ -11,7 +11,7 @@ interface CollectionProps {
   siblingCount?: number
 }
 
-const SulCollection = ({paragraph, siblingCount}: CollectionProps) => {
+const SulCollection = ({paragraph, siblingCount = 1}: CollectionProps) => {
   const elementId = useId()
   const [displayedCard, setDisplayedCard] = useState(paragraph.sul_collection_card[0].id)
 

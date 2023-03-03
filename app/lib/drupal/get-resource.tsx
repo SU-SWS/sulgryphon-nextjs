@@ -3,6 +3,43 @@ import {stringify} from "qs"
 
 import {deserialize, buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContext} from "./utils";
 
+export async function getResourceFromContext<T extends JsonApiResource>(
+  type: string,
+  context: GetStaticPropsContext,
+  options?: {
+    prefix?: string
+    deserialize?: boolean
+    params?: JsonApiParams
+    accessToken?: AccessToken
+    isVersionable?: boolean
+  }
+): Promise<T> {
+  options = {
+    deserialize: true,
+    // Add support for revisions for node by default.
+    // TODO: Make this required before stable?
+    isVersionable: /^node--/.test(type),
+    ...options,
+  }
+
+  const path = getPathFromContext(context, options?.prefix)
+
+  const previewData = context.previewData as { resourceVersion?: string }
+
+  const resource = await getResourceByPath<T>(path, {
+    deserialize: options.deserialize,
+    isVersionable: options.isVersionable,
+    locale: context.locale,
+    defaultLocale: context.defaultLocale,
+    params: {
+      resourceVersion: previewData?.resourceVersion,
+      ...options?.params,
+    },
+  })
+
+  return resource
+}
+
 export async function getResourceByPath<T extends JsonApiResource>(
   path: string,
   options?: {

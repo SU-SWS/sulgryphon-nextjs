@@ -21,11 +21,13 @@ const SecondaryMenu = ({menuItems}) => {
   }
 
   return (
-    <nav>
-      <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
-        {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
-      </ul>
-    </nav>
+    <aside className="lg:su-w-4/12">
+      <nav>
+        <ul className="su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+          {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
+        </ul>
+      </nav>
+    </aside>
   )
 }
 

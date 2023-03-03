@@ -10,7 +10,7 @@ interface CardProps {
   className?: string
 }
 
-const StanfordCard = async ({paragraph, siblingCount, ...props}: CardProps) => {
+const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
 
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;

@@ -1,14 +1,16 @@
 import {AccessToken, DrupalMenuLinkContent, JsonApiWithLocaleOptions} from "next-drupal/src/types";
-import axios from "axios";
-import {buildUrl, deserialize} from "./utils";
+import {buildUrl, deserialize, buildHeaders} from "./utils";
 
-export const getMenu = async (name, options?: {
-  deserialize?: boolean
-  accessToken?: AccessToken
-} & JsonApiWithLocaleOptions): Promise<{
-  items: DrupalMenuLinkContent[]
-  tree: DrupalMenuLinkContent[]
-}> => {
+export async function getMenu<T extends DrupalMenuLinkContent>(
+  name: string,
+  options?: {
+    deserialize?: boolean
+    accessToken?: AccessToken
+  } & JsonApiWithLocaleOptions
+): Promise<{
+  items: T[]
+  tree: T[]
+}> {
   options = {
     deserialize: true,
     ...options,
@@ -18,11 +20,20 @@ export const getMenu = async (name, options?: {
     options?.locale && options.locale !== options.defaultLocale
       ? `/${options.locale}`
       : ""
-  const url = buildUrl(`${localePrefix}/jsonapi/menu_items/${name}`);
-  const menuData = await axios.get(url.toString())
-    .then(response => response.data);
 
-  const items = options.deserialize ? deserialize(menuData) : menuData;
+  const url = buildUrl(`${localePrefix}/jsonapi/menu_items/${name}`)
+
+  const response = await fetch(url.toString(), {
+    headers: await buildHeaders(options),
+  })
+
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+
+  const data = await response.json()
+
+  const items = options.deserialize ? deserialize(data) : data
 
   const { items: tree } = buildMenuTree(items)
 
