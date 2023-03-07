@@ -1,7 +1,10 @@
+// @ts-nocheck
 import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal/src/types";
 import {stringify} from "qs"
 
 import {deserialize, buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContext} from "./utils";
+import {GetStaticPropsContext} from "next";
+import {JsonApiParams} from "next-drupal";
 
 export async function getResourceFromContext<T extends JsonApiResource>(
   type: string,

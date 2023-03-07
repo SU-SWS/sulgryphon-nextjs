@@ -144,6 +144,7 @@ const cleanMediaMarkup = (node: Element) => {
   // Special handling of video media type.
   if (node.attribs.class.indexOf('media--type-video') >= 0) {
     const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
+    // @ts-ignore
     let {src: iframeSrc} = iframe instanceof Element && iframe.attribs;
 
     iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');

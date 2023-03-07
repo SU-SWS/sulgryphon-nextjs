@@ -8,7 +8,7 @@ const useActiveTrail = (menuItems) => {
   const [activeTrail, setActiveTrail] = useState([])
   const currentPath = usePathname();
   useEffect(() => {
-    const getActiveTrail = (menuItems, trail = []) => {
+    const getActiveTrail = (menuItems, trail: string[] = []) => {
       let childTrail, currentTrail;
       for (let i = 0; i < menuItems.length; i++) {
         currentTrail = [...trail];

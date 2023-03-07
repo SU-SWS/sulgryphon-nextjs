@@ -18,7 +18,7 @@ export const GET = async (request: NextRequest, { params }) => {
   }
 
   const view = await getView<DrupalNode>(`${viewId}--${displayId}`, {params: drupalParams.getQueryObject()});
-  const requests = [];
+  const requests: PromiseLike<any>[] = [];
 
   view.results.map(result => {
     requests.push(getResource<DrupalNode>(

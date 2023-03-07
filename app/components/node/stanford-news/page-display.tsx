@@ -2,7 +2,6 @@ import {NewsArticleJsonLd} from "next-seo";
 import Oembed from "../../patterns/oembed";
 import {ParagraphRows} from "../../paragraph/rows/rows";
 import Image from "next/image";
-import {PrinterIcon} from "@heroicons/react/24/solid";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 
 import LinkedInIcon from "../../patterns/icons/LinkedInIcon";
@@ -15,9 +14,14 @@ import {formatDate} from "../../../lib/format-date";
 import {getResource} from "../../../lib/drupal/get-resource";
 import NewsPrintButton from "./print-button";
 
-const StanfordNews = async({node, ...props}: { node: News }) => {
-  const requests = [];
-  node.su_news_components.map(component => requests.push(getResource(component.type, component.id)));
+export const StanfordNews = ({node, ...props}: { node: News }) => {
+  // @ts-ignore
+  return <NewsPageDisplay node={node} {...props}/>
+}
+
+const NewsPageDisplay = async({node, ...props}: { node: News }) => {
+  const requests: PromiseLike<any>[] = [];
+  node.su_news_components?.map(component => requests.push(getResource(component.type, component.id)));
   node.su_news_components = await Promise.all(requests);
 
   return (
@@ -29,25 +33,26 @@ const StanfordNews = async({node, ...props}: { node: News }) => {
         images={node.su_news_featured_media?.field_media_image?.uri?.url}
         section=""
         keywords=""
-        dateCreated={node.su_news_publishing_date}
-        datePublished={node.su_news_publishing_date}
+        dateCreated={node.su_news_publishing_date ?? ''}
+        datePublished={node.su_news_publishing_date ?? ''}
         dateModified=""
-        authorName={node.su_news_byline}
-        description={node.su_news_dek}
+        authorName={node.su_news_byline ?? ''}
+        description={node.su_news_dek ?? ''}
         body=""
         publisherName=""
         publisherLogo=""
         isAccessibleForFree={true}
       />
       <div className="su-cc">
-        <Conditional showWhen={node.su_news_topics}>
-          <div className="su-mb-20">
-            {node.su_news_topics.map((topic, index) =>
-              <span key={topic.id}
-                    className="su-text-digital-red su-font-semibold">{(index ? ', ' : '') + topic.name}</span>
-            )}
-          </div>
-        </Conditional>
+
+        {(node.su_news_topics && node.su_news_topics.length > 0) &&
+            <div className="su-mb-20">
+              {node.su_news_topics.map((topic, index) =>
+                <span key={topic.id}
+                      className="su-text-digital-red su-font-semibold">{(index ? ', ' : '') + topic.name}</span>
+              )}
+            </div>
+        }
 
         {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         <div className="md:su-flex su-rs-mb-7">

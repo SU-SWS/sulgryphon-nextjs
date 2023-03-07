@@ -1,12 +1,21 @@
 "use client";
 
-import React, {useEffect, useRef} from 'react';
+import React, {MutableRefObject, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import FocusTrap from "focus-trap-react";
 import Conditional from "../utils/conditional";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
+import {ReactNodeLike} from "prop-types";
 
-const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {
+interface ModalProps {
+  children: ReactNodeLike
+  isOpen: boolean
+  onClose: () => void
+  ariaLabel: string
+  initialFocus?: MutableRefObject<any> | null
+}
+
+const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: ModalProps) => {
   const closeButton = useRef(null);
   const modalBodyRef = useRef(null);
   const [animationParent] = useAutoAnimate()
@@ -25,6 +34,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {
     isOpen ? lockScroll() : unlockScroll();
   }, [isOpen]);
 
+
   return (
     <div ref={animationParent}>
       <Conditional showWhen={isOpen}>
@@ -32,6 +42,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}) => {
           active={isOpen}
           focusTrapOptions={{
             initialFocus: () => initialFocus?.current ?? false,
+            // @ts-ignore
             fallbackFocus: closeButton.current,
             returnFocusOnDeactivate: true
           }}

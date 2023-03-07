@@ -1,16 +1,22 @@
-import {getResourceFromContext} from "../lib/drupal/get-resource";
-import {getMenu} from "../lib/drupal/get-menu";
+import Conditional from "../components/utils/conditional";
 import InternalHeaderBanner from "../components/patterns/internal-header-banner";
 import SecondaryMenu from "../components/menu/secondary-menu";
-import Conditional from "../components/utils/conditional";
-import {translatePathFromContext} from "../lib/drupal/translate-path";
-import {DrupalNode} from "next-drupal";
 import dynamic from "next/dynamic";
+import {DrupalNode} from "next-drupal";
+import {Library} from "../../src/types/drupal";
+import {getMenu} from "../lib/drupal/get-menu";
+import {getResourceFromContext} from "../lib/drupal/get-resource";
+import {notFound} from "next/navigation";
+import {translatePathFromContext} from "../lib/drupal/translate-path";
+import {ReactNodeLike} from "prop-types";
 
 const LibraryHeader = dynamic(() => import("../components/node/sul-library/library-header"));
 
-const NodeLayout = async ({children, ...context}) => {
+const Layout = async ({children, ...context}: {children: ReactNodeLike}) => {
   const path = await translatePathFromContext(context);
+  if (!path || !path.jsonapi) {
+    notFound();
+  }
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
 
   const {tree} = await getMenu('main');
@@ -19,7 +25,7 @@ const NodeLayout = async ({children, ...context}) => {
   return (
     <div>
       <Conditional showWhen={node.type === 'node--sul_library'}>
-        <LibraryHeader node={node}/>
+        <LibraryHeader node={node as Library}/>
       </Conditional>
 
       <Conditional showWhen={node.type != 'node--sul_library'}>
@@ -46,4 +52,4 @@ const NodeLayout = async ({children, ...context}) => {
   )
 }
 
-export default NodeLayout;
+export default Layout;

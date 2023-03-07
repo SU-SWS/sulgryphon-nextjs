@@ -37,7 +37,7 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
 
     if (isElemRef) {
       axios.get(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`).then(response => {
-        const items = paragraph.su_list_view.resourceIdObjMeta.items_to_display >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
+        const items = (paragraph.su_list_view?.resourceIdObjMeta?.items_to_display ?? 0) >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
         setItemsToDisplay(items);
       });
     }
@@ -61,6 +61,7 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, displayNotGrid());
 
   return (
+    // @ts-ignore
     <div ref={elemRef} {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
       {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description &&

@@ -6,9 +6,15 @@ import {ParagraphRows} from "../../paragraph/rows/rows";
 import {Event} from "../../../../src/types/drupal";
 import {getResource} from "../../../lib/drupal/get-resource";
 
-const StanfordEvent = async ({node, ...props}: { node: Event }) => {
-  const requests = [];
-  node.su_event_components.map(component => requests.push(getResource(component.type, component.id)));
+export const StanfordEvent = ({node, ...props}: { node: Event }) => {
+  // @ts-ignore
+  return <EventPageDisplay node={node} {...props}/>
+}
+
+
+const EventPageDisplay = async ({node, ...props}: { node: Event }) => {
+  const requests: Promise<any>[] = [];
+  node.su_event_components?.map(component => requests.push(getResource(component.type, component.id)));
   node.su_event_components = await Promise.all(requests);
 
   const inPast = new Date(node.su_event_date_time?.value) < new Date();
@@ -74,7 +80,7 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
 
         {inPast && <div className="su-text-black-70 su-uppercase">Past Event</div>}
 
-        {node.su_event_type.length > 0 && node.su_event_type.map(term =>
+        {(node.su_event_type && node.su_event_type.length > 0) && node.su_event_type.map(term =>
           <div key={term.id} className="su-text-digital-red su-text-16 md:su-text-18 2xl:su-text-19">
             {term.name}
           </div>
@@ -167,7 +173,7 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
                   </div>
               }
 
-              {node.su_event_audience.length > 0 &&
+              {(node.su_event_audience && node.su_event_audience?.length > 0) &&
                   <div>
                     <div className="su-flex su-flex-row su-items-start su-mt-40 su-mb-4">
                       <UserGroupIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>

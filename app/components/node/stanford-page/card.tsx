@@ -6,7 +6,7 @@ import Card from "../../patterns/card";
 
 const StanfordPageCard = ({node, ...props}: { node: BasicPage }) => {
 
-  const getFeaturedImageUrl = (node: BasicPage, imageStyle = 'breakpoint_2xl_1x'): null | string => {
+  const getFeaturedImageUrl = (node: BasicPage, imageStyle = 'breakpoint_2xl_1x'): string => {
     if (node.su_page_image?.field_media_image?.image_style_uri?.[imageStyle]) {
       return node.su_page_image.field_media_image.image_style_uri?.[imageStyle]
     }
@@ -14,6 +14,7 @@ const StanfordPageCard = ({node, ...props}: { node: BasicPage }) => {
     if (node.su_page_banner?.su_banner_image?.field_media_image?.image_style_uri?.[imageStyle]) {
       return node.su_page_banner.su_banner_image.field_media_image.image_style_uri?.[imageStyle];
     }
+    return '';
   }
 
   const getImage = () => {

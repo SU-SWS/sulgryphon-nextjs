@@ -1,5 +1,12 @@
 import axios from "axios";
 
+interface Guide {
+  id: string
+  title: string
+  url: string
+  type: string
+}
+
 const fetchLibGuides = async (id) => {
   if (!id) {
     return [];
@@ -20,7 +27,7 @@ const fetchLibGuides = async (id) => {
     const data = await axios.get(`https://lgapi-us.libapps.com/1.2/guides?account_ids=${id}`, guidesConfig)
       .then(response => response.data);
 
-    const guides = [];
+    const guides: Guide[] = [];
     data.map(guide => {
       guides.push({
         id: guide.id,

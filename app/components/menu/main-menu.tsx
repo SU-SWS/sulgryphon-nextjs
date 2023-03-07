@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {forwardRef, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {forwardRef, MutableRefObject, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "../../lib/hooks/useIsDesktop";
 import useActiveTrail from "../../lib/hooks/useActiveTrail";
@@ -16,7 +16,8 @@ const MainMenu = ({menuItems}) => {
   const activeTrail = useActiveTrail(menuItems);
   const isDesktop = useIsDesktop();
 
-  const submenuRefs = useMemo(() => [], []);
+  const submenuRefs: MutableRefObject<any>[] = useMemo(() => [], []);
+
   const addItemRefs = (items) => {
     items.map(item => {
       if (item.items?.length > 0) {
@@ -98,6 +99,7 @@ interface MenuItemProps {
   menuLevel: number
 }
 
+
 const MenuItem = forwardRef(({
                                id,
                                title,
@@ -129,7 +131,7 @@ const MenuItem = forwardRef(({
     'su-ml-[90px]',
     'su-ml-[120px]'
   ];
-  const belowItems = items?.length > 0 ? items : [];
+  const belowItems = (items && items?.length > 0) ? items : [];
 
   // Expand/Collapse menu button click handler.
   const openCloseSubmenu = () => {
@@ -253,6 +255,7 @@ const MenuItem = forwardRef(({
     </li>
   )
 })
+MenuItem.displayName = "Menu Item";
 
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
   return (

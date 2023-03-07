@@ -12,11 +12,16 @@ import LibGuides from "./libguide";
 import {getResource} from "../../../lib/drupal/get-resource";
 import fetchLibGuides from "../../../lib/libguides";
 
+export const StanfordPerson = ({node, ...props}: { node: Person }) => {
+  // @ts-ignore
+  return <PersonPageDisplay node={node} {...props}/>
+}
 
-const StanfordPerson = async ({node, ...props}: { node: Person }) => {
-  const requests = [];
-  node.su_person_components.map(component => requests.push(getResource(component.type, component.id)));
+const PersonPageDisplay = async ({node, ...props}: { node: Person }) => {
+  const requests: PromiseLike<any>[] = [];
+  node.su_person_components?.map(component => requests.push(getResource(component.type, component.id)));
   node.su_person_components = await Promise.all(requests);
+
   node.lib_guides = node.sul_person__libguide_id ? await fetchLibGuides(node.sul_person__libguide_id) : [];
 
   return (
@@ -31,9 +36,9 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
               <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
                 <Image
                     src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                    alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt}
-                    height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                    width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                    alt={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+                    height={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height}
+                    width={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width}
                 />
               </div>
             </div>
@@ -59,43 +64,43 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
           <ParagraphRows items={node.su_person_components}/>
 
-          <Conditional showWhen={node.su_person_education.length > 0}>
-            <div className="su-rs-mb-7">
-              <h2 className="su-type-0">Education</h2>
-              {node.su_person_education.map((education, index) =>
-                <div key={`person-education-${index}`} className="su-rs-mb-0">
-                  {education}
-                </div>
-              )}
-            </div>
-          </Conditional>
-
-          <Conditional showWhen={node.su_person_research.length > 0}>
-            <div className="su-rs-mb-7">
-              <h2 className="su-type-0">Research</h2>
-              <div className="md:su-grid su-grid-cols-2">
-                {node.su_person_research.map((interest, index) =>
-                  <div key={`research-${index}`} className="su-rs-mb-1">
-                    {formatHtml(interest.processed)}
+          {(node.su_person_education && node.su_person_education.length > 0) &&
+              <div className="su-rs-mb-7">
+                <h2 className="su-type-0">Education</h2>
+                {node.su_person_education.map((education, index) =>
+                  <div key={`person-education-${index}`} className="su-rs-mb-0">
+                    {education}
                   </div>
                 )}
               </div>
-            </div>
-          </Conditional>
+          }
+
+          {(node.su_person_research && node.su_person_research.length > 0) &&
+              <div className="su-rs-mb-7">
+                <h2 className="su-type-0">Research</h2>
+                <div className="md:su-grid su-grid-cols-2">
+                  {node.su_person_research.map((interest, index) =>
+                    <div key={`research-${index}`} className="su-rs-mb-1">
+                      {formatHtml(interest.processed)}
+                    </div>
+                  )}
+                </div>
+              </div>
+          }
 
           <Conditional showWhen={node.su_person_research_interests}>
             {node.su_person_research_interests}
           </Conditional>
 
-          <Conditional showWhen={node.su_person_affiliations.length > 0}>
-            <div className="su-rs-mb-7">
-              <h2 className="su-type-0">Stanford Affiliations</h2>
-              {node.su_person_affiliations.map((affiliation, index) =>
-                <DrupalLinkButton key={`person-affiliation-${index}`}
-                                  href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
-              )}
-            </div>
-          </Conditional>
+          {(node.su_person_affiliations && node.su_person_affiliations.length > 0) &&
+              <div className="su-rs-mb-7">
+                <h2 className="su-type-0">Stanford Affiliations</h2>
+                {node.su_person_affiliations.map((affiliation, index) =>
+                  <DrupalLinkButton key={`person-affiliation-${index}`}
+                                    href={affiliation.url}>{affiliation.title}</DrupalLinkButton>
+                )}
+              </div>
+          }
         </div>
 
         <div className="su-col-span-2">
@@ -156,22 +161,22 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
             </Conditional>
           </div>
 
-          <Conditional showWhen={node.su_person_links.length > 0}>
-            <div className="su-rs-mb-4">
-              <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                <LinkIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
-                <h2 className="su-type-0">Links</h2>
+          {(node.su_person_links && node.su_person_links.length > 0) &&
+              <div className="su-rs-mb-4">
+                <div className="su-relative su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
+                  <LinkIcon width={26} className="md:su-absolute md:su-left-[-32px] su-mr-3 md:su-mr-0"/>
+                  <h2 className="su-type-0">Links</h2>
+                </div>
+                <div>
+                  {node.su_person_links.map((link, index) =>
+                    <div key={`person-link-${index}`}>
+                      <Link href={link.uri}
+                            className={'su-leading su-no-underline su-text-blue-600 hocus:su-text-black'}>* {link.title}</Link>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div>
-                {node.su_person_links.map((link, index) =>
-                  <div key={`person-link-${index}`}>
-                    <Link href={link.uri}
-                          className={'su-leading su-no-underline su-text-blue-600 hocus:su-text-black'}>* {link.title}</Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          </Conditional>
+          }
 
           <Conditional showWhen={node.sul_person__libcal_id}>
             <LibCal libcalId={node.sul_person__libcal_id}/>

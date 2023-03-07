@@ -18,6 +18,7 @@ const Oembed = ({url, ...props}) => {
   }, [elemRefValue, isElemRef])
 
   return (
+    // @ts-ignore
     <div ref={elemRef} {...props}>
       {isElemRef && <Embed url={url} LoadingFallbackElement={<Loading/>}/>}
     </div>

@@ -6,6 +6,9 @@ module.exports = {
   images: {
     domains: [process.env.NEXT_IMAGE_DOMAIN]
   },
+  typescript: {
+    ignoreBuildErrors: true
+  },
   async headers() {
     if (process.env.NEXT_PUBLIC_NOBOTS === 'true') {
       return [

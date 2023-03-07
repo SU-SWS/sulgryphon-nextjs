@@ -111,7 +111,7 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
           </div>
       }
 
-      {node.su_event_type.length > 0 && <div
+      {(node.su_event_type && node.su_event_type.length > 0) && <div
           className="su-text-16 xl:su-text-18 2xl:su-text-19 su-text-digital-red">{node.su_event_type[0].name}</div>}
 
       <Link href={node.path.alias}

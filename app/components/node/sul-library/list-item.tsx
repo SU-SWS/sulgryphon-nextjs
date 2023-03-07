@@ -11,4 +11,4 @@ const SulLibraryListItem = ({node, ...props}: {node: Library}) => {
   )
 }
 
-export default SUlLibraryListItem;
+export default SulLibraryListItem;

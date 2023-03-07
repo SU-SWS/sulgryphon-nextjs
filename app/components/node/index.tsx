@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic'
+import * as DrupalTypes from "../../../src/types/drupal";
 
 const StanfordCourse = dynamic(() => import("./stanford-course/page-display"));
 const StanfordCourseCard = dynamic(() => import("./stanford-course/card"));
 const StanfordCourseListItem = dynamic(() => import("./stanford-course/list-item"));
 
-const StanfordEvent = dynamic(() => import("./stanford-event/page-display"));
+const StanfordEvent = dynamic( () => import("./stanford-event/page-display"));
 const StanfordEventCard = dynamic(() => import("./stanford-event/card"));
 const StanfordEventListItem = dynamic(() => import("./stanford-event/list-item"));
 
@@ -82,7 +83,7 @@ export const NodeListDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_page" && <StanfordPageListItem node={node} {...props}/>}
       {node.type === "node--stanford_person" && <StanfordPersonListItem node={node} {...props}/>}
       {node.type === "node--stanford_publication" && <StanfordPublicationListItem node={node} {...props}/>}
-      {node.type === "node--sul_library" && <SUlLibraryListItem node={node} {...props}/>}
+      {node.type === "node--sul_library" && <SUlLibraryListItem node={node as DrupalTypes.Library} {...props}/>}
       {node.type === "node--sul_study_place" && <StudyPlaceListItem node={node} {...props}/>}
     </>
   )

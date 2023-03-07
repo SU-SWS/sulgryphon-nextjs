@@ -4,9 +4,14 @@ import {ParagraphRows} from "../../paragraph/rows/rows";
 import {DrupalLinkButton} from "../../patterns/link";
 import {getResource} from "../../../lib/drupal/get-resource";
 
-const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
-  const requests = [];
-  node.su_publication_components.map(component => requests.push(getResource(component.type, component.id)));
+export const StanfordPublication = ({node, ...props}: { node: Publication }) => {
+  // @ts-ignore
+  return <PublicationNodeDisplay node={node} {...props}/>
+}
+
+const PublicationNodeDisplay = async ({node, ...props}: { node: Publication }) => {
+  const requests: PromiseLike<any>[] = [];
+  node.su_publication_components?.map(component => requests.push(getResource(component.type, component.id)));
   node.su_publication_components = await Promise.all(requests);
 
   const getMonthName = monthNumber => {
@@ -35,18 +40,18 @@ const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
         <div className="su-col-span-2">
           <div className="lg:su-rs-pl-3 lg:su-border-l su-border-black-10">
-            <Conditional showWhen={node.su_publication_citation?.su_author.length > 0}>
-              <div className="su-rs-mb-2">
-                <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Author(s)</h2>
-                <div>
-                  {node.su_publication_citation?.su_author.map((author, index) =>
-                    <div key={`citation-author-${index}`} className="su-text-16 md:su-text-18 2xl:su-text-19">
-                      {author.given} {author.family}
-                    </div>
-                  )}
+            {(node.su_publication_citation?.su_author && node.su_publication_citation?.su_author.length > 0) &&
+                <div className="su-rs-mb-2">
+                  <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-mb-01em">Author(s)</h2>
+                  <div>
+                    {node.su_publication_citation?.su_author.map((author, index) =>
+                      <div key={`citation-author-${index}`} className="su-text-16 md:su-text-18 2xl:su-text-19">
+                        {author.given} {author.family}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Conditional>
+            }
 
             <Conditional showWhen={node.su_publication_citation?.su_publisher}>
               <div className="su-rs-mb-2">

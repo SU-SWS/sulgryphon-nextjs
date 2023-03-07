@@ -17,8 +17,8 @@ const SulCollection = ({paragraph, siblingCount = 1}: CollectionProps) => {
 
   useEffect(() => {
     // Avoid settings the focus when rendering the component.
-    if (document.activeElement.id === elementId + 'button-' + displayedCard) {
-      document.getElementById(elementId + 'card-' + displayedCard).focus();
+    if (document?.activeElement && document.activeElement.id === elementId + 'button-' + displayedCard) {
+      document.getElementById(elementId + 'card-' + displayedCard)?.focus();
     }
   }, [displayedCard])
 

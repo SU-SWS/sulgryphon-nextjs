@@ -3,6 +3,7 @@ import Image from "next/image";
 import {CardParagraph} from "../../../src/types/drupal";
 import Card from "../patterns/card";
 import Oembed from "../patterns/oembed";
+import {ReactNodeLike} from "prop-types";
 
 interface CardProps {
   paragraph: CardParagraph
@@ -15,8 +16,8 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
 
-  let video = null
-  let image = null
+  let video: ReactNodeLike | null = null
+  let image: ReactNodeLike | null = null
 
   if (videoUrl) {
     video = <Oembed url={videoUrl} className="su-h-full"/>

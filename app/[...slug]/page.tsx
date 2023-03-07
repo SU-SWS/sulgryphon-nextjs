@@ -1,7 +1,7 @@
 import {getResourceFromContext} from "../lib/drupal/get-resource";
 import {getPathsFromContext} from "../lib/drupal/get-paths";
 import NodePageDisplay from "../components/node";
-import {redirect} from "next/navigation";
+import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "../lib/drupal/translate-path";
 import {DrupalNode} from "next-drupal";
 
@@ -9,6 +9,9 @@ export const revalidate = 60;
 
 const NodePage = async (context) => {
   const path = await translatePathFromContext(context);
+  if (!path || !path.jsonapi) {
+    notFound();
+  }
 
   // Check for redirect.
   if (path.redirect?.length) {
@@ -19,6 +22,7 @@ const NodePage = async (context) => {
       redirect(destination.to)
     }
   }
+
 
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
 

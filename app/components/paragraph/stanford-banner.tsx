@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import {BannerParagraph} from "../../../src/types/drupal";
 import Banner from "../patterns/banner";
+import {ReactNodeLike} from "prop-types";
 
 interface BannerProps {
   paragraph: BannerParagraph
@@ -12,13 +13,13 @@ interface BannerProps {
 const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps) => {
 
   const imageUrl = paragraph?.su_banner_image?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
-  let image = null
+  let image: ReactNodeLike | null = null
 
   if (imageUrl) {
     image = <Image
       className="su-object-cover su-object-center"
       src={imageUrl}
-      alt={paragraph.su_banner_image.field_media_image.resourceIdObjMeta.alt}
+      alt={paragraph.su_banner_image?.field_media_image?.resourceIdObjMeta.alt}
       fill={true}
     />
   }

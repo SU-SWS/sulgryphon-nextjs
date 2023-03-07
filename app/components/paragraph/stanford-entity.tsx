@@ -21,7 +21,7 @@ const StanfordEntity = ({paragraph, siblingCount, ...props}) => {
 
   useEffect(() => {
     if (isElemRef) {
-      const requests = [];
+      const requests: PromiseLike<any>[] = [];
       entities.map(item => requests.push(axios.get(`/api/entity/${item.type}/${item.id}`)))
       Promise.all(requests).then(responses => setEntities(responses.map(response => response.data)));
     }
@@ -37,6 +37,7 @@ const StanfordEntity = ({paragraph, siblingCount, ...props}) => {
   const wrapperClasses = paragraph.behavior_settings?.sul_teaser_styles?.background === 'black' ? 'su-text-white su-py-40': '';
 
   return (
+    // @ts-ignore
     <div ref={elemRef} {...props}
          className={'su-relative su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + wrapperClasses + ' ' + (props.className ?? '')}>
       <Conditional showWhen={paragraph.behavior_settings?.sul_teaser_styles?.background === 'black'}>

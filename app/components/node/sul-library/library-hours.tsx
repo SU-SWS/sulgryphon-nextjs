@@ -20,7 +20,7 @@ const LibraryHeaderHours = ({node}: { node: Library }) => {
   const rightNow = new Date()
   const today = rightNow.toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
 
-  const hourOptions = [];
+  const hourOptions: any = [];
 
   let isOpen = false;
   libraryPrimaryHours.map(dayHours => {

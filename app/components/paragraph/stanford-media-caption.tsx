@@ -23,7 +23,7 @@ const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMedia
             <Image
                 className="su-object-cover su-object-center"
                 src={imageUrl}
-                alt={paragraph.su_media_caption_media.field_media_image.resourceIdObjMeta.alt}
+                alt={paragraph.su_media_caption_media?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
                 fill={true}
             />
           </div>

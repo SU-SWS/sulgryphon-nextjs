@@ -7,7 +7,7 @@ import useLibraryHours from "../../../../lib/hooks/useLibraryHours";
 import {useState} from "react";
 
 const TodayHours = ({libraries, ...props}) => {
-  const [selectedLibrary, setSelectedLibrary] = useState(null);
+  const [selectedLibrary, setSelectedLibrary] = useState('');
 
   const hours = useLibraryHours();
 

@@ -7,7 +7,7 @@ export async function translatePath(
   options?: {
     accessToken?: AccessToken
   }
-): Promise<DrupalTranslatedPath> {
+): Promise<DrupalTranslatedPath | null> {
   const url = buildUrl("/router/translate-path", {
     path,
   })
@@ -31,7 +31,7 @@ export async function translatePathFromContext(
     accessToken?: AccessToken
     prefix?: string
   }
-): Promise<DrupalTranslatedPath> {
+): Promise<DrupalTranslatedPath | null> {
   options = {
     prefix: "",
     ...options,

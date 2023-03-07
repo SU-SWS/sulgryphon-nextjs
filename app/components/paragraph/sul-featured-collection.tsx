@@ -16,20 +16,22 @@ const SulFeaturedCollection = ({paragraph, siblingCount = 1}: FeaturedCollection
 
   return (
     <section className="su-px-40 2xl:su-px-0 su-max-w-1500 su-mx-auto">
-      <Conditional showWhen={paragraph.sul_collection__headline || paragraph.sul_collection__link.url}>
-        <AboveHeaderBorder/>
-        <header className="md:su-flex su-justify-between su-mb-80">
-          <Conditional showWhen={paragraph.sul_collection__headline}>
-            <h2 className="su-mb-0">{paragraph.sul_collection__headline}</h2>
-          </Conditional>
-          <Conditional showWhen={paragraph.sul_collection__link.url}>
-            <Link href={paragraph.sul_collection__link.url} className="su-mt-auto">
-              {paragraph.sul_collection__link.title}
-              <ChevronRightIcon className="su-inline" width={20}/>
-            </Link>
-          </Conditional>
-        </header>
-      </Conditional>
+      {(paragraph.sul_collection__headline || paragraph.sul_collection__link?.url) &&
+          <>
+            <AboveHeaderBorder/>
+            <header className="md:su-flex su-justify-between su-mb-80">
+              <Conditional showWhen={paragraph.sul_collection__headline}>
+                <h2 className="su-mb-0">{paragraph.sul_collection__headline}</h2>
+              </Conditional>
+              <Conditional showWhen={paragraph.sul_collection__link?.url}>
+                <Link href={paragraph.sul_collection__link?.url ?? '#'} className="su-mt-auto">
+                  {paragraph.sul_collection__link?.title}
+                  <ChevronRightIcon className="su-inline" width={20}/>
+                </Link>
+              </Conditional>
+            </header>
+          </>
+      }
 
       <div className="su-relative">
         <ul className={"su-list-unstyled su-grid-cols-3 su-gap-xl " + (siblingCount > 0 ? '' : 'md:su-grid')}>

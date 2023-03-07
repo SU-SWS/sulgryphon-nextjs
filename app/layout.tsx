@@ -1,9 +1,12 @@
 import LibraryFooter from "./components/layout/library-footer";
 import GlobalFooter from "./components/layout/global-footer";
 import Header from "./components/layout/header";
+import {getMenu} from "./lib/drupal/get-menu";
 import "./styles/globals.css"
 
-export default function RootLayout({children}: { children: React.ReactNode }) {
+const RootLayout = async ({children}: { children: React.ReactNode }) => {
+  const {tree} = await getMenu('main');
+
   return (
     <html>
     <head/>
@@ -12,7 +15,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     <div className="su-grid su-grid-rows-1 su-min-h-screen">
       <div>
         <a className="su-skiplink" href="#main-content">Skip to main content</a>
-        <Header/>
+        <Header menuItems={tree}/>
 
         <div>
           {children}
@@ -28,3 +31,4 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     </html>
   )
 }
+export default RootLayout;

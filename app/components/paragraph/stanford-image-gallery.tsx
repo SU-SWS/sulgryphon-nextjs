@@ -16,8 +16,8 @@ interface StanfordImageGalleryProps {
   className?: string
 }
 
-const StanfordImageGallery = ({paragraph, siblingCount, ...props}: StanfordImageGalleryProps) => {
-  const [modalOpen, setModalOpen] = useState(null);
+const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordImageGalleryProps) => {
+  const [modalOpen, setModalOpen] = useState('');
 
   return (
     <div {...props} className={'su-max-w-[980px] su-mx-auto' + (props.className ?? '')}>
@@ -35,7 +35,7 @@ const StanfordImageGallery = ({paragraph, siblingCount, ...props}: StanfordImage
                 src={image.su_gallery_image.image_style_uri.cta_1x_596x397}
                 width={`711`}
                 height={`400`}
-                alt={image.su_gallery_image.resourceIdObjMeta.alt}
+                alt={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
               />
 
             </Link>
@@ -45,15 +45,15 @@ const StanfordImageGallery = ({paragraph, siblingCount, ...props}: StanfordImage
 
             <Modal
               isOpen={modalOpen === image.id}
-              onClose={() => setModalOpen(null)}
-              ariaLabel={image.su_gallery_image.resourceIdObjMeta.alt}
+              onClose={() => setModalOpen('')}
+              ariaLabel={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
             >
               <figure className="su-h-full su-relative">
                 <Image
                   src={image.su_gallery_image.image_style_uri.breakpoint_2xl_2x}
-                  alt={image.su_gallery_image.resourceIdObjMeta.alt}
+                  alt={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
                   fill={true}
-                  className={`su-mx-auto su-block su-max-h-full su-object-contain su-max-h-[${image.su_gallery_image.resourceIdObjMeta.height}px]`}
+                  className="su-mx-auto su-block su-max-h-full su-object-contain"
                 />
 
                 <Conditional showWhen={image.su_gallery_caption}>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Conditional from "../../utils/conditional";
 
 const StanfordPageListItem = ({node, ...props}: {node:BasicPage}) => {
-  const getFeaturedImageUrl = (node: BasicPage, imageStyle = 'breakpoint_2xl_1x'): null | string => {
+  const getFeaturedImageUrl = (node: BasicPage, imageStyle = 'breakpoint_2xl_1x'): boolean | string => {
     if (node.su_page_image?.field_media_image?.image_style_uri?.[imageStyle]) {
       return node.su_page_image.field_media_image.image_style_uri?.[imageStyle]
     }
@@ -13,6 +13,7 @@ const StanfordPageListItem = ({node, ...props}: {node:BasicPage}) => {
     if (node.su_page_banner?.su_banner_image?.field_media_image?.image_style_uri?.[imageStyle]) {
       return node.su_page_banner.su_banner_image.field_media_image.image_style_uri?.[imageStyle];
     }
+    return false;
   }
 
   const getImage = () => {
@@ -20,7 +21,7 @@ const StanfordPageListItem = ({node, ...props}: {node:BasicPage}) => {
     if (imageUrl) {
       return <Image
         className="su-object-cover su-object-center"
-        src={imageUrl}
+        src={imageUrl as string}
         alt=""
         fill={true}
       />

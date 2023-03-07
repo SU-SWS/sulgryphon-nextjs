@@ -1,12 +1,9 @@
 import Link from "next/link";
 import Lockup from "../patterns/lockup";
 import MainMenu from "../menu/main-menu";
-import {getMenu} from "../../lib/drupal/get-menu";
 import IdentityBar from "./identity-bar";
 
-const Header = async () => {
-  const {tree} = await getMenu('main');
-
+const Header = ({menuItems}) => {
   return (
     <>
       <IdentityBar/>
@@ -19,7 +16,7 @@ const Header = async () => {
             <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
           </div>
         </div>
-        <MainMenu menuItems={tree}/>
+        <MainMenu menuItems={menuItems}/>
       </header>
     </>
   )

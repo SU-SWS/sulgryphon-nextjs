@@ -32,7 +32,7 @@ interface Event extends DrupalNode {
   su_event_audience?: DrupalTaxonomyTerm[]
   su_event_components?: DrupalParagraph[]
   su_event_cta?: DrupalLink
-  su_event_date_time?: DrupalSmartDate
+  su_event_date_time: DrupalSmartDate
   su_event_dek?: string
   su_event_email?: string
   su_event_groups?: DrupalTaxonomyTerm[]

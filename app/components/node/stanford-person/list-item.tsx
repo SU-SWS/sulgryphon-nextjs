@@ -14,12 +14,12 @@ const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
             <SizeMe>
               {({size}) => (
                 <div
-                  className={size.width < 300 ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[215px] su-h-[215px] su-overflow-hidden"}>
+                  className={(size.width && size.width < 300) ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[215px] su-h-[215px] su-overflow-hidden"}>
                   <Image
-                    src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                    alt={node.su_person_photo.field_media_image.resourceIdObjMeta.alt ?? ''}
-                    height={node.su_person_photo.field_media_image.resourceIdObjMeta.height}
-                    width={node.su_person_photo.field_media_image.resourceIdObjMeta.width}
+                    src={node.su_person_photo?.field_media_image.image_style_uri.medium_square}
+                    alt={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+                    height={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height}
+                    width={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width}
                   />
                 </div>
               )}

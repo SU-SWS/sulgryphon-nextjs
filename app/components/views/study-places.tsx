@@ -6,7 +6,10 @@ import Select from "react-select";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import Conditional from "../utils/conditional";
 import SulStudyPlaceCard from "../node/sul-study-place/card";
-
+interface SelectOption {
+  value: string
+  label: string
+}
 const StudyPlaceFilteringList = ({items}) => {
   const typeRef = useRef(null);
   const libraryRef = useRef(null);
@@ -17,10 +20,10 @@ const StudyPlaceFilteringList = ({items}) => {
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
 
-  const typeOfStudies = [];
-  const a11yOptions = [];
-  const featureOptions = [];
-  const libraryOptions = [];
+  const typeOfStudies: SelectOption[] = [];
+  const a11yOptions: SelectOption[] = [];
+  const featureOptions: SelectOption[] = [];
+  const libraryOptions: SelectOption[] = [];
 
   items.map(item => {
     item.sul_study__a11y.map(term => {
@@ -43,9 +46,13 @@ const StudyPlaceFilteringList = ({items}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // @ts-ignore
     const selectedTypes = typeRef.current.getValue().map(option => option.value);
+    // @ts-ignore
     const selectedLibraries = libraryRef.current.getValue().map(option => option.value);
+    // @ts-ignore
     const selectedA11y = a11yRef.current.getValue().map(option => option.value);
+    // @ts-ignore
     const selectedFeatures = featureRef.current.getValue().map(option => option.value);
 
     const filteredItems = items.filter(item =>
@@ -59,9 +66,13 @@ const StudyPlaceFilteringList = ({items}) => {
 
   const handleReset = (e) => {
     e.preventDefault();
+    // @ts-ignore
     typeRef.current.clearValue();
+    // @ts-ignore
     libraryRef.current.clearValue();
+    // @ts-ignore
     a11yRef.current.clearValue();
+    // @ts-ignore
     featureRef.current.clearValue();
     setItemsToDisplay(items)
   }

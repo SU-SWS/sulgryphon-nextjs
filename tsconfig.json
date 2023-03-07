@@ -20,13 +20,13 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": [
-        "src/components/*"
+        "app/components/*"
       ],
-      "@/nodes/*": [
+      "@/components/node/*": [
         "src/components/nodes/*"
       ],
       "@/lib/*": [
-        "src/lib/*"
+        "app/lib/*"
       ]
     },
     "incremental": true,
@@ -39,8 +39,8 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "app/**/*.tsx",
+    "pages/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [

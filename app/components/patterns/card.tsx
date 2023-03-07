@@ -60,9 +60,9 @@ const Card = ({video, image, superHeader, header, footer, body, link, linkStyle,
           </DrupalLinkButton>
         }
 
-        {(linkStyle === 'secondary_button' && link) &&
+        {(linkStyle === 'secondary_button' && link?.title) &&
           <DrupalLinkSecondaryButton href={link.url}>
-            {link.title}
+            {link?.title}
           </DrupalLinkSecondaryButton>
         }
 

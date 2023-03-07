@@ -93,7 +93,7 @@ const StanfordEventListItem = ({node, ...props}: { node: Event }) => {
 
           <div>
             {inPast && <span className="su-text-black-70 su-text-14 md:su-text-16 su-uppercase su-font-semibold">Past Event | </span>}
-            {node.su_event_type.length > 0 && <span
+            {(node.su_event_type && node.su_event_type.length > 0) && <span
                 className="su-font-semibold su-text-16 xl:su-text-18 2xl:su-text-19">{node.su_event_type[0].name}</span>}
 
             <Link href={node.path.alias} className="su-text-digital-red hover:su-text-black su-no-underline">

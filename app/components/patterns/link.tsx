@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 
-export const DrupalLinkButton = ({href, children = null, buttonProps = null, ...props}) => {
+export const DrupalLinkButton = ({href, children, buttonProps = null, ...props}) => {
   return (
     <Link
       href={href}
@@ -13,7 +13,7 @@ export const DrupalLinkButton = ({href, children = null, buttonProps = null, ...
   )
 }
 
-export const DrupalLinkSecondaryButton = ({href, children = null, buttonProps = null, ...props}) => {
+export const DrupalLinkSecondaryButton = ({href, children, buttonProps = null, ...props}) => {
   return (
     <Link
       href={href}
@@ -25,7 +25,7 @@ export const DrupalLinkSecondaryButton = ({href, children = null, buttonProps = 
   )
 }
 
-export const DrupalLinkBigButton = ({href, children = null, buttonProps = null, ...props}) => {
+export const DrupalLinkBigButton = ({href, children, buttonProps = null, ...props}) => {
   return (
     <Link
       href={href}
@@ -37,7 +37,7 @@ export const DrupalLinkBigButton = ({href, children = null, buttonProps = null, 
   )
 }
 
-export const DrupalActionLink = ({href, children = null, buttonProps = null, ...props}) => {
+export const DrupalActionLink = ({href, children, buttonProps = null, ...props}) => {
   return (
     <Link
       href={href}

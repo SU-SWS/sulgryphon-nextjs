@@ -9,7 +9,6 @@ export async function getView<T>(
   } & JsonApiWithLocaleOptions
 ): Promise<{
   results: T
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
   meta: Record<string, any>
   links: {
     [key in "next" | "prev" | "self"]?: {

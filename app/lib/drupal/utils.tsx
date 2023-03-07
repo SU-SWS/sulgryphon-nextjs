@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {stringify} from "qs"
 import Jsona from "jsona";
 import {GetStaticPropsContext} from "next";

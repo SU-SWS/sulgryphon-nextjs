@@ -1,11 +1,16 @@
 import Conditional from "../../utils/conditional";
 import {ParagraphRows} from "../../paragraph/rows/rows";
 import {NodeListDisplay} from "../index";
-import {EventSeries} from "../../../../src/types/drupal";
+import {Event, EventSeries} from "../../../../src/types/drupal";
 import {getResource} from "../../../lib/drupal/get-resource";
 
-const StanfordEventSeries = async ({node, ...props}: { node: EventSeries }) => {
-  const requests = [];
+export const StanfordEventSeries = ({node, ...props}: { node: Event }) => {
+  // @ts-ignore
+  return <EventSeriesPageDisplay node={node} {...props}/>
+}
+
+const EventSeriesPageDisplay = async ({node, ...props}: { node: EventSeries }) => {
+  const requests: PromiseLike<any>[] = [];
   node.su_event_series_components.map(component => requests.push(getResource(component.type, component.id)));
   node.su_event_series_components = await Promise.all(requests);
 

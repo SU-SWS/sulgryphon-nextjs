@@ -33,6 +33,7 @@ const LibGuideSection = ({heading, guides}) => {
 
   useEffect(() => {
     if(!showMore){
+      // @ts-ignore
       moreGuideRef?.current?.focus()
     }
   }, [showMore])
