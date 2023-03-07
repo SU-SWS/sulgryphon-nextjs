@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 
-import {FeaturedCollectionParagraph} from "../../../src/types/drupal";
-import Conditional from "../utils/conditional";
-import AboveHeaderBorder from "../patterns/above-header-border";
-import StanfordCard from "./stanford-card";
-import Wave from "../patterns/wave";
+import {FeaturedCollectionParagraph} from "@/lib/drupal/drupal";
+import Conditional from "@/components/utils/conditional";
+import AboveHeaderBorder from "@/components/patterns/above-header-border";
+import StanfordCard from "@/components/paragraph/stanford-card";
+import Wave from "@/components/patterns/wave";
 
 interface FeaturedCollectionProps {
   paragraph: FeaturedCollectionParagraph

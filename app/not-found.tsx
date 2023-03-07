@@ -1,4 +1,4 @@
-import InternalHeaderBanner from "./components/patterns/internal-header-banner";
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 
 const NotFound = () => {
   return (

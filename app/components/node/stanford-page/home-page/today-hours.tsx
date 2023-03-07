@@ -3,7 +3,7 @@
 import Card from "../../../patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
-import useLibraryHours from "../../../../lib/hooks/useLibraryHours";
+import useLibraryHours from "@/lib/hooks/useLibraryHours";
 import {useState} from "react";
 
 const TodayHours = ({libraries, ...props}) => {

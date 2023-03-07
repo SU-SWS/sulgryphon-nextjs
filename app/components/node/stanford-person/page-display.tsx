@@ -1,16 +1,16 @@
-import {Person} from "../../../../src/types/drupal";
+import {Person} from "@/lib/drupal/drupal";
 import {NextSeo} from "next-seo";
 import Image from "next/image";
 import Conditional from "../../utils/conditional";
 import {ParagraphRows} from "../../paragraph/rows/rows";
-import formatHtml from "../../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "../../patterns/link";
 import {EnvelopeIcon, LinkIcon, MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import LibCal from "./libcal";
 import LibGuides from "./libguide";
-import {getResource} from "../../../lib/drupal/get-resource";
-import fetchLibGuides from "../../../lib/libguides";
+import {getResource} from "@/lib/drupal/get-resource";
+import fetchLibGuides from "@/lib/libguides";
 
 export const StanfordPerson = ({node, ...props}: { node: Person }) => {
   // @ts-ignore

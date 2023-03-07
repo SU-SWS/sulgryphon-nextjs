@@ -3,8 +3,8 @@ import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/
 import Link from "next/link";
 import {DrupalLinkButton} from "../../patterns/link";
 import {ParagraphRows} from "../../paragraph/rows/rows";
-import {Event} from "../../../../src/types/drupal";
-import {getResource} from "../../../lib/drupal/get-resource";
+import {Event} from "@/lib/drupal/drupal";
+import {getResource} from "@/lib/drupal/get-resource";
 
 export const StanfordEvent = ({node, ...props}: { node: Event }) => {
   // @ts-ignore

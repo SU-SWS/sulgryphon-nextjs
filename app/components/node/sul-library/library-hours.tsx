@@ -1,8 +1,8 @@
 "use client";
 
-import useLibraryHours from "../../../lib/hooks/useLibraryHours";
+import useLibraryHours from "@/lib/hooks/useLibraryHours";
 import {useId} from "react";
-import {Library} from "../../../../src/types/drupal";
+import {Library} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
 

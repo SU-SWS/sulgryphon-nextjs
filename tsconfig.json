@@ -22,9 +22,6 @@
       "@/components/*": [
         "app/components/*"
       ],
-      "@/components/node/*": [
-        "src/components/nodes/*"
-      ],
       "@/lib/*": [
         "app/lib/*"
       ]

@@ -3,12 +3,12 @@
 import Link from "next/link";
 import {forwardRef, MutableRefObject, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import {useIsDesktop} from "../../lib/hooks/useIsDesktop";
-import useActiveTrail from "../../lib/hooks/useActiveTrail";
-import OutsideClickHandler from "../utils/outside-click-handler";
+import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
+import useActiveTrail from "@/lib/hooks/useActiveTrail";
+import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {DrupalMenuLinkContent} from "next-drupal";
-import Conditional from "../utils/conditional";
-import SearchForm from "../search/search-form";
+import Conditional from "@/components/utils/conditional";
+import SearchForm from "@/components/search/search-form";
 
 const MainMenu = ({menuItems}) => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -55,7 +55,7 @@ const MainMenu = ({menuItems}) => {
         <div className="su-relative">
           <div
             aria-hidden={!isDesktop && !menuOpen}
-            className={"su-py-20 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-30 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
+            className={"su-py-20 md:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-30 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
             <SearchForm action="https://library.stanford.edu/all" className="su-mx-40 lg:su-hidden"/>
             <nav>
               <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">

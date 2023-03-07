@@ -3,7 +3,7 @@
 import React, {MutableRefObject, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import FocusTrap from "focus-trap-react";
-import Conditional from "../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {ReactNodeLike} from "prop-types";
 

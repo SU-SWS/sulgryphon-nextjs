@@ -1,6 +1,6 @@
 import {getResourceByPath} from "next-drupal/src/get-resource";
-import HomePageNode from "./components/node/stanford-page/home-page/page-display";
-import {BasicPage} from "../src/types/drupal";
+import HomePageNode from "@/components/node/stanford-page/home-page/page-display";
+import {BasicPage} from "@/lib/drupal/drupal";
 
 export const revalidate = 60;
 

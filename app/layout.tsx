@@ -1,6 +1,6 @@
-import LibraryFooter from "./components/layout/library-footer";
-import GlobalFooter from "./components/layout/global-footer";
-import Header from "./components/layout/header";
+import LibraryFooter from "@/components/layout/library-footer";
+import GlobalFooter from "@/components/layout/global-footer";
+import Header from "@/components/layout/header";
 import {getMenu} from "./lib/drupal/get-menu";
 import "./styles/globals.css"
 

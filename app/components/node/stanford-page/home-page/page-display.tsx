@@ -1,7 +1,7 @@
 import HomePageBanner from "./home-page-banner";
-import {BasicPage} from "../../../../../src/types/drupal";
+import {BasicPage} from "@/lib/drupal/drupal";
 import {ParagraphRows} from "../../../paragraph/rows/rows";
-import {getResource} from "../../../../lib/drupal/get-resource";
+import {getResource} from "@/lib/drupal/get-resource";
 
 const HomePageNode = async ({node}: BasicPage) => {
   const requests: PromiseLike<any>[] = [];

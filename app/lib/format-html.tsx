@@ -1,7 +1,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
-import Conditional from "../components/utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import Image from "next/image";
 
 const DrupalActionLink = dynamic(() => import("../components/patterns/link").then((mod) => mod.DrupalActionLink));

@@ -1,7 +1,7 @@
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {DrupalNode} from "next-drupal";
-import {getResource} from "../../../lib/drupal/get-resource";
-import {getView} from "../../../lib/drupal/get-view";
+import {getResource} from "@/lib/drupal/get-resource";
+import {getView} from "@/lib/drupal/get-view";
 import {NextRequest, NextResponse} from "next/server";
 
 export const GET = async (request: NextRequest, { params }) => {

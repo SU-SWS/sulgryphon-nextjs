@@ -1,8 +1,8 @@
 import Conditional from "../../utils/conditional";
 import {ParagraphRows} from "../../paragraph/rows/rows";
 import {NodeListDisplay} from "../index";
-import {Event, EventSeries} from "../../../../src/types/drupal";
-import {getResource} from "../../../lib/drupal/get-resource";
+import {Event, EventSeries} from "@/lib/drupal/drupal";
+import {getResource} from "@/lib/drupal/get-resource";
 
 export const StanfordEventSeries = ({node, ...props}: { node: Event }) => {
   // @ts-ignore

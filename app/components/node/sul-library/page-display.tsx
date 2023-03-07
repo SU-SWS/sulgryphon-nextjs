@@ -1,7 +1,7 @@
 import Conditional from "../../utils/conditional";
-import {Library} from "../../../../src/types/drupal";
+import {Library} from "@/lib/drupal/drupal";
 import {ParagraphRows} from "../../paragraph/rows/rows";
-import {getResource} from "../../../lib/drupal/get-resource";
+import {getResource} from "@/lib/drupal/get-resource";
 
 export const SulLibrary = ({node, ...props}: { node: Library }) => {
   // @ts-ignore

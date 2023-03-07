@@ -1,6 +1,6 @@
 import Conditional from "../../utils/conditional";
 import Link from "next/link";
-import {Course} from "../../../../src/types/drupal";
+import {Course} from "@/lib/drupal/drupal";
 
 const StanfordCourseCard = ({node, ...props}: { node: Course }) => {
   return (

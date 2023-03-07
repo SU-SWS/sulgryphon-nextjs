@@ -1,6 +1,6 @@
 import {ReactNodeLike} from "prop-types";
-import Conditional from "../utils/conditional";
-import Card from "./card";
+import Conditional from "@/components/utils/conditional";
+import Card from "@/components/patterns/card";
 
 interface BannerProps {
   image?: ReactNodeLike;

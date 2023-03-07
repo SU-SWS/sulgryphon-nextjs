@@ -1,13 +1,13 @@
 import Link from "next/link";
-import Lockup from "../patterns/lockup";
-import MainMenu from "../menu/main-menu";
-import IdentityBar from "./identity-bar";
+import Lockup from "@/components/patterns/lockup";
+import MainMenu from "@/components/menu/main-menu";
+import IdentityBar from "@/components/layout/identity-bar";
 
 const Header = ({menuItems}) => {
   return (
     <>
       <IdentityBar/>
-      <header className="su-shadow-lg su-relative">
+      <header className="su-shadow-lg su-relative su-sticky su-top-0 su-bg-white su-z-30">
         <div className="su-pt-20 su-bg-white su-cc lg:su-flex su-justify-between su-relative su-z-40">
           <Lockup className="su-pb-20"/>
           <div className="su-hidden lg:su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">

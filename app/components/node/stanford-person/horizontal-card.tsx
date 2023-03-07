@@ -3,7 +3,7 @@ import Link from "next/link";
 import Conditional from "../../utils/conditional";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
-import {Person} from "../../../../src/types/drupal";
+import {Person} from "@/lib/drupal/drupal";
 
 const HorizontalPersonCard = ({node, ...props}: {node: Person}) => {
   return (

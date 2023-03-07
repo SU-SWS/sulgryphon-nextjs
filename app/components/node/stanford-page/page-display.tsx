@@ -1,7 +1,7 @@
 import {NextSeo} from "next-seo";
-import {ParagraphRows} from "../../paragraph/rows/rows";
-import {getResource} from "../../../lib/drupal/get-resource";
-import {BasicPage} from "../../../../src/types/drupal";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import {getResource} from "@/lib/drupal/get-resource";
+import {BasicPage} from "@/lib/drupal/drupal";
 
 export const StanfordPage = ({node, ...props}: { node: BasicPage }) => {
   // @ts-ignore

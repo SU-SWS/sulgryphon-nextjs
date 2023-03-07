@@ -1,13 +1,13 @@
 "use client"
 
-import {ImageGalleryParagraph} from "../../../src/types/drupal";
+import {ImageGalleryParagraph} from "@/lib/drupal/drupal";
 import Link from "next/link";
 import Image from "next/image";
 import Conditional from "../utils/conditional";
 import {DrupalLinkButton} from "../patterns/link";
 import Modal from "../patterns/modal";
 import {useState} from "react";
-import formatHtml from "../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 
 
 interface StanfordImageGalleryProps {
@@ -27,7 +27,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
       <div className={`su-mb-40 su-grid su-gap-xl ` + (siblingCount >= 1 ? '' : 'lg:su-grid-cols-3')}>
         {paragraph.su_gallery_images.map(image =>
           <figure key={image.id} className="su-overflow-hidden su-aspect-[16/9] su-relative">
-            <Link href={image.su_gallery_image.uri.url} className="su-block su-absolute" onClick={(e) => {
+            <Link href={image.su_gallery_image.image_style_uri.responsive_large} className="su-block su-absolute" onClick={(e) => {
               e.preventDefault();
               setModalOpen(image.id)
             }}>

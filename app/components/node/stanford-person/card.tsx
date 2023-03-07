@@ -1,23 +1,17 @@
-import {Person} from "../../../../src/types/drupal";
-import {SizeMe} from "react-sizeme";
+import {Person} from "@/lib/drupal/drupal";
+
 import VerticalPersonCard from "./vertical-card";
 import HorizontalPersonCard from "./horizontal-card";
+import {useResizeDetector} from "react-resize-detector";
+
 
 const StanfordPersonCard = ({node, ...props}: { node: Person }) => {
-
+  const {width, ref} = useResizeDetector();
+  const Card = (width && width > 510) ? HorizontalPersonCard : VerticalPersonCard;
   return (
-    <SizeMe>
-      {({size}) => (
-        <>
-          {(size.width && size.width < 510) &&
-              <VerticalPersonCard node={node} currentWidth={size.width} {...props}/>
-          }
-          {(!size.width || (size.width && size.width >= 510)) &&
-              <HorizontalPersonCard node={node}  {...props}/>
-          }
-        </>
-      )}
-    </SizeMe>
+    <div ref={ref} {...props}>
+      <Card node={node} {...props}/>
+    </div>
   )
 }
 export default StanfordPersonCard;

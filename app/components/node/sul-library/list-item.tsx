@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {Library} from "../../../../src/types/drupal";
+import {Library} from "@/lib/drupal/drupal";
 
 const SulLibraryListItem = ({node, ...props}: {node: Library}) => {
   return (

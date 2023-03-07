@@ -1,36 +1,32 @@
 "use client";
 
-import {useEffect, useState} from "react";
-
 import {usePathname} from "next/navigation";
 
 const useActiveTrail = (menuItems) => {
-  const [activeTrail, setActiveTrail] = useState([])
   const currentPath = usePathname();
-  useEffect(() => {
-    const getActiveTrail = (menuItems, trail: string[] = []) => {
-      let childTrail, currentTrail;
-      for (let i = 0; i < menuItems.length; i++) {
-        currentTrail = [...trail];
-        currentTrail.push(menuItems[i].id);
 
-        if (currentPath === menuItems[i].url) {
-          return currentTrail;
-        }
+  const getActiveTrail = (menuItems, trail: string[] = []) => {
+    let childTrail, currentTrail;
+    for (let i = 0; i < menuItems.length; i++) {
+      currentTrail = [...trail];
+      currentTrail.push(menuItems[i].id);
 
-        if (typeof menuItems[i].items === 'object') {
-          childTrail = getActiveTrail(menuItems[i].items, [...currentTrail]);
-          if (childTrail.length > 0) {
-            return childTrail;
-          }
-        }
-
+      if (currentPath === menuItems[i].url) {
+        return currentTrail;
       }
-      return [];
+
+      if (typeof menuItems[i].items === 'object') {
+        childTrail = getActiveTrail(menuItems[i].items, [...currentTrail]);
+        if (childTrail.length > 0) {
+          return childTrail;
+        }
+      }
+
     }
-    setActiveTrail(getActiveTrail(menuItems));
-  }, [currentPath])
-  return activeTrail;
+    return [];
+  }
+
+  return getActiveTrail(menuItems);
 }
 
 export default useActiveTrail;

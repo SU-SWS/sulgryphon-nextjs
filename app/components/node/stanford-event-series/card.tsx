@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Card from "../../patterns/card";
 import Conditional from "../../utils/conditional";
-import {EventSeries} from "../../../../src/types/drupal";
+import {EventSeries} from "@/lib/drupal/drupal";
 
 const StanfordEventSeriesCard = ({node, ...props}: { node: EventSeries }) => {
   return (

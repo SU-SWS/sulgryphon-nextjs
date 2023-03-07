@@ -1,5 +1,5 @@
 import {ReactNodeLike} from "prop-types";
-import Wave from "./wave";
+import Wave from "@/components/patterns/wave";
 
 interface InternalHeaderBannerProps {
   children: ReactNodeLike

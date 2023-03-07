@@ -1,6 +1,6 @@
 "use client";
 
-import {CollectionParagraph} from "../../../src/types/drupal";
+import {CollectionParagraph} from "@/lib/drupal/drupal";
 import {useEffect, useId, useState} from "react";
 import Conditional from "../utils/conditional";
 import AboveHeaderBorder from "../patterns/above-header-border";

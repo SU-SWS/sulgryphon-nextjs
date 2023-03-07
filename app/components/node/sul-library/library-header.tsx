@@ -1,4 +1,4 @@
-import {Library} from "../../../../src/types/drupal";
+import {Library} from "@/lib/drupal/drupal";
 import Card from "../../patterns/card";
 import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";

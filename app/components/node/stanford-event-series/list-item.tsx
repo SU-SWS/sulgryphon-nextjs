@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {EventSeries} from "../../../../src/types/drupal";
+import {EventSeries} from "@/lib/drupal/drupal";
 
 const StanfordEventSeriesListItem = ({node, ...props}: { node: EventSeries }) => {
   // Not being utilized anywhere currently

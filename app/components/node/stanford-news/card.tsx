@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {News} from "../../../../src/types/drupal";
+import {News} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import {useMemo} from "react";
 import Card from "../../patterns/card";

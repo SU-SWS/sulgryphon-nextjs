@@ -4,8 +4,9 @@ import {useEffect, useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import Select from "react-select";
 import {SignalIcon} from "@heroicons/react/20/solid";
-import Conditional from "../utils/conditional";
-import SulStudyPlaceCard from "../node/sul-study-place/card";
+import Conditional from "@/components/utils/conditional";
+import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
+
 interface SelectOption {
   value: string
   label: string

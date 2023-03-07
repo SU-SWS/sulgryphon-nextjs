@@ -1,4 +1,4 @@
-import Paragraph from "../index";
+import Paragraph from "@/components/paragraph";
 
 const ThreeColumn = ({config, items}) => {
   const leftItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'left');

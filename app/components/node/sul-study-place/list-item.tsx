@@ -1,4 +1,4 @@
-import {StudyPlace} from "../../../../src/types/drupal";
+import {StudyPlace} from "@/lib/drupal/drupal";
 
 const SulStudyPlaceListItem = ({node}: { node: StudyPlace }) => {
   return (

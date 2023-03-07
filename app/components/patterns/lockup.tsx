@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {ComponentProps} from "react";
 
-import Logo from "./logo";
+import Logo from "@/components/patterns/logo";
 
 interface LockupProps extends ComponentProps<any> {
   whiteText?: boolean

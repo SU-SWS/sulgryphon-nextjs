@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {CardParagraph} from "../../../src/types/drupal";
+import {CardParagraph} from "@/lib/drupal/drupal";
 import Card from "../patterns/card";
 import Oembed from "../patterns/oembed";
 import {ReactNodeLike} from "prop-types";

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import {News} from "../../../../src/types/drupal";
-import {formatDate} from "../../../lib/format-date";
+import {News} from "@/lib/drupal/drupal";
+import {formatDate} from "@/lib/format-date";
 
 const StanfordNewsListItem = ({node, ...props}: {node: News}) => {
 

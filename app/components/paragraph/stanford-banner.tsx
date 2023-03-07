@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {BannerParagraph} from "../../../src/types/drupal";
+import {BannerParagraph} from "@/lib/drupal/drupal";
 import Banner from "../patterns/banner";
 import {ReactNodeLike} from "prop-types";
 

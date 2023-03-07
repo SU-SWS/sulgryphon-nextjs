@@ -1,8 +1,8 @@
 import {ReactNodeLike} from "prop-types";
 
-import formatHtml from "../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 import Conditional from "../utils/conditional";
-import {DrupalLinkButton, DrupalLinkSecondaryButton, DrupalActionLink} from "./link";
+import {DrupalLinkButton, DrupalLinkSecondaryButton, DrupalActionLink} from "@/components/patterns/link";
 
 interface CardProps {
   video?: ReactNodeLike

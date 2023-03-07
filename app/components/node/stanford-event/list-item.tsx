@@ -1,6 +1,6 @@
-import {Event} from "../../../../src/types/drupal";
+import {Event} from "@/lib/drupal/drupal";
 import {CalendarIcon, MapIcon} from "@heroicons/react/20/solid";
-import formatHtml from "../../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 import Link from "next/link";
 
 const StanfordEventListItem = ({node, ...props}: { node: Event }) => {

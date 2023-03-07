@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {useMemo} from "react";
 import Link from "next/link";
-import {BasicPage} from "../../../../src/types/drupal";
+import {BasicPage} from "@/lib/drupal/drupal";
 import Card from "../../patterns/card";
 
 const StanfordPageCard = ({node, ...props}: { node: BasicPage }) => {

@@ -4,8 +4,8 @@ import {useMemo, useState} from "react";
 import {DrupalMenuLinkContent} from "next-drupal";
 import Link from "next/link";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import useActiveTrail from "../../lib/hooks/useActiveTrail";
-import {useIsDesktop} from "../../lib/hooks/useIsDesktop";
+import useActiveTrail from "@/lib/hooks/useActiveTrail";
+import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import Conditional from "../utils/conditional";
 
 const SecondaryMenu = ({menuItems}) => {

@@ -24,8 +24,8 @@
     "next-seo": "^5.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-resize-detector": "^8.0.4",
     "react-select": "^5.7.0",
-    "react-sizeme": "^3.0.2",
     "react-tiny-oembed": "^1.1.0",
     "swr": "^2.0.0",
     "xml2js": "^0.4.23"

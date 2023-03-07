@@ -1,7 +1,7 @@
 import Conditional from "../../utils/conditional";
 import Link from "next/link";
-import formatHtml from "../../../lib/format-html";
-import {Course} from "../../../../src/types/drupal";
+import formatHtml from "@/lib/format-html";
+import {Course} from "@/lib/drupal/drupal";
 
 const StanfordCourseListItem = ({node, ...props}: { node: Course }) => {
   return (

@@ -1,7 +1,7 @@
 import Wave from "../../../patterns/wave";
 import SearchForm from "../../../search/search-form";
 import TodayHours from "./today-hours";
-import {getResourceCollection} from "../../../../lib/drupal/get-resource";
+import {getResourceCollection} from "@/lib/drupal/get-resource";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 const HomePageBanner = async () => {

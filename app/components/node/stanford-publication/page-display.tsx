@@ -1,8 +1,8 @@
-import {Publication} from "../../../../src/types/drupal";
+import {Publication} from "@/lib/drupal/drupal";
 import Conditional from "../../utils/conditional";
 import {ParagraphRows} from "../../paragraph/rows/rows";
 import {DrupalLinkButton} from "../../patterns/link";
-import {getResource} from "../../../lib/drupal/get-resource";
+import {getResource} from "@/lib/drupal/get-resource";
 
 export const StanfordPublication = ({node, ...props}: { node: Publication }) => {
   // @ts-ignore

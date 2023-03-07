@@ -1,4 +1,4 @@
-import {Publication} from "../../../../src/types/drupal";
+import {Publication} from "@/lib/drupal/drupal";
 import Card from "../../patterns/card";
 import Conditional from "../../utils/conditional";
 import Link from "next/link";

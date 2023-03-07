@@ -9,9 +9,9 @@ import TwitterIcon from "../../patterns/icons/TwitterIcon";
 import FacebookIcon from "../../patterns/icons/FacebookIcon";
 import Conditional from "../../utils/conditional";
 import NewsSocialLink from "./news-social-link";
-import {News} from "../../../../src/types/drupal";
-import {formatDate} from "../../../lib/format-date";
-import {getResource} from "../../../lib/drupal/get-resource";
+import {News} from "@/lib/drupal/drupal";
+import {formatDate} from "@/lib/format-date";
+import {getResource} from "@/lib/drupal/get-resource";
 import NewsPrintButton from "./print-button";
 
 export const StanfordNews = ({node, ...props}: { node: News }) => {

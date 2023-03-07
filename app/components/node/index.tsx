@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import * as DrupalTypes from "../../../src/types/drupal";
+import * as DrupalTypes from "@/lib/drupal/drupal";
 
 const StanfordCourse = dynamic(() => import("./stanford-course/page-display"));
 const StanfordCourseCard = dynamic(() => import("./stanford-course/card"));

@@ -1,5 +1,5 @@
-import formatHtml from "../../lib/format-html";
-import {WysiwygParagraph} from "../../../src/types/drupal";
+import formatHtml from "@/lib/format-html";
+import {WysiwygParagraph} from "@/lib/drupal/drupal";
 
 interface StanfordWysiwygProps {
   paragraph: WysiwygParagraph

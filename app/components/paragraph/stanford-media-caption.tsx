@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import {MediaCaptionParagraph} from "../../../src/types/drupal";
-import formatHtml from "../../lib/format-html";
+import {MediaCaptionParagraph} from "@/lib/drupal/drupal";
+import formatHtml from "@/lib/format-html";
 import Oembed from "../patterns/oembed";
 import Link from "next/link";
 

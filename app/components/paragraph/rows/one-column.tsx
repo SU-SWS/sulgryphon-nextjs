@@ -1,4 +1,4 @@
-import Paragraph from "../index";
+import Paragraph from "@/components/paragraph";
 import {DrupalParagraph} from "next-drupal";
 
 const OneColumn = ({config = {}, items}) => {

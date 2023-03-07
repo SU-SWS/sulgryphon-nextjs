@@ -1,4 +1,4 @@
-import Paragraph from "../index";
+import Paragraph from "@/components/paragraph";
 
 const TwoColumn = ({config, items}) => {
 

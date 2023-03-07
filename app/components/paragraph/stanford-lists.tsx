@@ -1,11 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import {ListParagraph} from "../../../src/types/drupal";
+import {ListParagraph} from "@/lib/drupal/drupal";
 import {useEffect, useRef, useState} from "react";
-import useOnScreen from "../../lib/hooks/useOnScreen";
+import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
-import formatHtml from "../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "../patterns/link";
 import {DrupalNode} from "next-drupal";
 import {NodeCardDisplay, NodeListDisplay} from "../node";

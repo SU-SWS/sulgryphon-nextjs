@@ -1,11 +1,11 @@
 "use client";
 
 import Conditional from "../utils/conditional";
-import formatHtml from "../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 import {NodeCardDisplay} from "../node";
 import {DrupalLinkButton} from "../patterns/link";
 import {useEffect, useRef, useState} from "react";
-import useOnScreen from "../../lib/hooks/useOnScreen";
+import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
 
 const StanfordEntity = ({paragraph, siblingCount, ...props}) => {

@@ -1,7 +1,7 @@
 import {CalendarIcon, MapIcon} from "@heroicons/react/20/solid";
-import formatHtml from "../../../lib/format-html";
+import formatHtml from "@/lib/format-html";
 import Link from "next/link";
-import {Event} from "../../../../src/types/drupal";
+import {Event} from "@/lib/drupal/drupal";
 
 const StanfordEventCard = ({node, ...props}: { node: Event }) => {
   const start = new Date(node.su_event_date_time?.value);

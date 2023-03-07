@@ -1,8 +1,8 @@
-import {getResourceFromContext} from "../lib/drupal/get-resource";
-import {getPathsFromContext} from "../lib/drupal/get-paths";
-import NodePageDisplay from "../components/node";
+import {getResourceFromContext} from "@/lib/drupal/get-resource";
+import {getPathsFromContext} from "@/lib/drupal/get-paths";
+import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
-import {translatePathFromContext} from "../lib/drupal/translate-path";
+import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {DrupalNode} from "next-drupal";
 
 export const revalidate = 60;

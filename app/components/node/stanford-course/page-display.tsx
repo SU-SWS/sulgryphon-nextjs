@@ -1,6 +1,6 @@
 import Conditional from "../../utils/conditional";
-import formatHtml from "../../../lib/format-html";
-import {Course} from "../../../../src/types/drupal";
+import formatHtml from "@/lib/format-html";
+import {Course} from "@/lib/drupal/drupal";
 import Link from "next/link";
 
 
