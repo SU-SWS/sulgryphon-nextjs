@@ -16,3 +16,28 @@
   width: 100%;
   height: 100%;
 }
+
+h1, h2, h3, h4, h5 {
+  @apply su-font-serif;
+}
+h1 {
+  @apply su-type-6;
+}
+/* .section-header {
+  @apply su-type-5;
+  letter-spacing: -0.0075em;
+} */
+h2 {
+  @apply su-type-4;
+  letter-spacing: -0.005em;
+}
+h3 {
+  @apply su-type-3;
+  letter-spacing: -0.003em;
+}
+h4 {
+  @apply su-type-2;
+}
+h5 {
+  @apply su-type-1;
+}
