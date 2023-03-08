@@ -27,7 +27,6 @@
     "react-resize-detector": "^8.0.4",
     "react-select": "^5.7.0",
     "react-tiny-oembed": "^1.1.0",
-    "swr": "^2.0.0",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

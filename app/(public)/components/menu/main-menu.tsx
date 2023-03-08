@@ -57,11 +57,12 @@ const MainMenu = ({menuItems}) => {
           <div
             aria-hidden={!isDesktop && !menuOpen}
             className={"su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
-            <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all" inputProps={{className:"su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
+            <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
+                        inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
             <nav>
               <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
                 {menuItems.map(item =>
-                  <MenuItem key={item.id} {...item} activeTrail={activeTrail}/>
+                  <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
                 )}
 
                 <li className="su-hidden lg:su-flex su-items-center su-ml-20">
@@ -74,16 +75,21 @@ const MainMenu = ({menuItems}) => {
             <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
               <span className="su-mr-20">Quick Links:</span>
               <Link
+                onClick={handleClickFocusOutside}
                 className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
                 href="/">My Account</Link>
               <Link
+                onClick={handleClickFocusOutside}
                 className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
                 href="/">Search Results</Link>
               <Link
+                onClick={handleClickFocusOutside}
                 className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
                 href="/">Accessibility</Link>
-              <Link className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
-                    href="/">Contact Us</Link>
+              <Link
+                onClick={handleClickFocusOutside}
+                className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
+                href="/">Contact Us</Link>
             </div>
           </div>
         </div>
@@ -102,6 +108,7 @@ interface MenuItemProps {
   tabIndex: number
   activeTrail: string[]
   menuLevel: number
+  onClick: () => {}
 }
 
 
@@ -111,9 +118,10 @@ const MenuItem = forwardRef(({
                                url,
                                items,
                                expanded,
+                               onClick,
                                tabIndex = 0,
                                activeTrail = [],
-                               menuLevel = 0
+                               menuLevel = 0,
                              }: MenuItemProps, ref) => {
 
 
@@ -195,6 +203,7 @@ const MenuItem = forwardRef(({
     <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
       <Conditional showWhen={url.length > 1}>
         <Link
+          onClick={onClick}
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
@@ -253,6 +262,7 @@ const MenuItem = forwardRef(({
               {...item}
               menuLevel={menuLevel + 1}
               tabIndex={submenuOpen ? 0 : -1}
+              onClick={onClick}
             />)
           }
         </ul>
