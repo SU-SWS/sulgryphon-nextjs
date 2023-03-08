@@ -9,6 +9,7 @@ import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {DrupalMenuLinkContent} from "next-drupal";
 import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
+import SearchModal from "@/components/search/search-modal";
 
 const MainMenu = ({menuItems}) => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -43,7 +44,7 @@ const MainMenu = ({menuItems}) => {
     <div className="lg:su-cc">
       <OutsideClickHandler onClickOutside={handleClickFocusOutside} onFocusOutside={handleClickFocusOutside}>
         <button
-          className="lg:su-hidden su-text-black-true su-absolute su-z-40 su-top-20 su-right-20 su-no-underline"
+          className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
           onClick={openCloseMenu}
           aria-haspopup="true"
           aria-expanded={menuOpen ? "true" : "false"}
@@ -55,13 +56,17 @@ const MainMenu = ({menuItems}) => {
         <div className="su-relative">
           <div
             aria-hidden={!isDesktop && !menuOpen}
-            className={"su-py-20 md:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-30 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
-            <SearchForm action="https://library.stanford.edu/all" className="su-mx-40 lg:su-hidden"/>
+            className={"su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
+            <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all" inputProps={{className:"su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
             <nav>
               <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
                 {menuItems.map(item =>
                   <MenuItem key={item.id} {...item} activeTrail={activeTrail}/>
                 )}
+
+                <li className="su-hidden lg:su-flex su-items-center">
+                  <SearchModal/>
+                </li>
               </ul>
             </nav>
 
@@ -215,7 +220,7 @@ const MenuItem = forwardRef(({
           </div>
 
           <div
-            className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
+            className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-10 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
             <ChevronDownIcon
               className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
               height={40}/>
@@ -273,7 +278,7 @@ const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
   return (
     <button
-      className={"su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-25 after:su-z-5 hover:after:su-bg-cardinal-red" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
+      className={"su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-25 after:su-z-5 " + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
       onClick={onButtonClick}
       {...props}>
       <ChevronDownIcon

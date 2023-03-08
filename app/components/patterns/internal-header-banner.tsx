@@ -8,7 +8,7 @@ interface InternalHeaderBannerProps {
 const InternalHeaderBanner = ({children}: InternalHeaderBannerProps) => {
   return (
     <div className="su-bg-black-true su-mb-50 su-relative su-overflow-hidden">
-      <div className="su-relative su-z-10">
+      <div className="su-relative su-z-[1]">
         {children}
       </div>
 
@@ -20,7 +20,7 @@ const InternalHeaderBanner = ({children}: InternalHeaderBannerProps) => {
         </div>
       </div>
 
-      <div className="su-relative su-z-10">
+      <div className="su-relative">
         <Wave/>
       </div>
     </div>
