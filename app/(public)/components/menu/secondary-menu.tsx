@@ -49,7 +49,7 @@ const SecondaryMenu = ({menuItems}) => {
         <Conditional showWhen={!isDesktop}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="su-block su-w-2/3 su-mx-auto su-flex su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
+            className="su-block su-w-2/3 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
             aria-haspopup="true"
             aria-expanded={menuOpen ? "true" : "false"}
           >
