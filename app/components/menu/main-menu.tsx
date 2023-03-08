@@ -64,7 +64,7 @@ const MainMenu = ({menuItems}) => {
                   <MenuItem key={item.id} {...item} activeTrail={activeTrail}/>
                 )}
 
-                <li className="su-hidden lg:su-flex su-items-center">
+                <li className="su-hidden lg:su-flex su-items-center su-ml-20">
                   <SearchModal/>
                 </li>
               </ul>

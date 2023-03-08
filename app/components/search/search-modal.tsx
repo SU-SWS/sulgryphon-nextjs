@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {MagnifyingGlassIcon} from "@heroicons/react/20/solid";
+import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
 import {useRef, useState} from "react";
 import Modal from "@/components/patterns/modal";
 import SearchForm from "@/components/search/search-form";
