@@ -14,7 +14,8 @@ for (i = 1; i <= 4; i++) {
 
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}"
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}"
   ],
   presets: [
     require('decanter')
