@@ -1,5 +1,8 @@
+"use client";
+
 import {MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {useId} from "react";
+import {useSearchParams} from "next/navigation";
 
 const SearchForm = ({action, inputProps = {}, ...props}) => {
   inputProps = {
@@ -8,7 +11,7 @@ const SearchForm = ({action, inputProps = {}, ...props}) => {
     name: "q",
     ...inputProps
   }
-
+  const params = useSearchParams();
   const inputId = useId();
   return (
     <div {...props}>
@@ -16,6 +19,7 @@ const SearchForm = ({action, inputProps = {}, ...props}) => {
         <label htmlFor={inputId + '-searchworks'} className="su-sr-only">Text search</label>
         <input
           id={inputId + '-search'}
+          defaultValue={(params ? params.get('q') : '') as string}
           {...inputProps}
         />
         <button className="su-bg-cardinal-red su-rounded-full su-p-5 su-absolute su-top-5 su-right-10">
