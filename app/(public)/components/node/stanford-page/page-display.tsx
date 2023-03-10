@@ -1,18 +1,10 @@
 import {NextSeo} from "next-seo";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
-import {getResource} from "@/lib/drupal/get-resource";
 import {BasicPage} from "@/lib/drupal/drupal";
+import fetchComponents from "@/lib/fetch-components";
 
-export const StanfordPage = ({node, ...props}: { node: BasicPage }) => {
-  // @ts-ignore
-  return <BasicPagePageDisplay node={node} {...props}/>
-}
-
-
-const BasicPagePageDisplay = async ({node}: { node: BasicPage }) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_page_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_page_components = await Promise.all(requests);
+const StanfordPage = async ({node}: { node: BasicPage }) => {
+  node.su_page_components = await fetchComponents(node.su_page_components ?? []);
 
   const getFeaturedImageAlt = (node): string => {
     if (node.su_page_image?.field_media_image?.resourceIdObjMeta?.alt) {

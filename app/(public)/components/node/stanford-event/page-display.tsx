@@ -1,21 +1,13 @@
 import {EventJsonLd} from "next-seo";
 import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
-import {DrupalLinkButton} from "../../patterns/link";
-import {ParagraphRows} from "../../paragraph/rows/rows";
+import {DrupalLinkButton} from "@/components/patterns/link";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {Event} from "@/lib/drupal/drupal";
-import {getResource} from "@/lib/drupal/get-resource";
+import fetchComponents from "@/lib/fetch-components";
 
-export const StanfordEvent = ({node, ...props}: { node: Event }) => {
-  // @ts-ignore
-  return <EventPageDisplay node={node} {...props}/>
-}
-
-
-const EventPageDisplay = async ({node, ...props}: { node: Event }) => {
-  const requests: Promise<any>[] = [];
-  node.su_event_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_event_components = await Promise.all(requests);
+const StanfordEvent = async ({node, ...props}: { node: Event }) => {
+  node.su_event_components = await fetchComponents(node.su_event_components??[]);
 
   const inPast = new Date(node.su_event_date_time?.value) < new Date();
   const start = new Date(node.su_event_date_time?.value);

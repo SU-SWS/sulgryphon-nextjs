@@ -1,18 +1,12 @@
 import {Publication} from "@/lib/drupal/drupal";
-import Conditional from "../../utils/conditional";
-import {ParagraphRows} from "../../paragraph/rows/rows";
-import {DrupalLinkButton} from "../../patterns/link";
-import {getResource} from "@/lib/drupal/get-resource";
+import Conditional from "@/components/utils/conditional";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import {DrupalLinkButton} from "@/components/patterns/link";
+import fetchComponents from "@/lib/fetch-components";
 
-export const StanfordPublication = ({node, ...props}: { node: Publication }) => {
-  // @ts-ignore
-  return <PublicationNodeDisplay node={node} {...props}/>
-}
+const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
-const PublicationNodeDisplay = async ({node, ...props}: { node: Publication }) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_publication_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_publication_components = await Promise.all(requests);
+  node.su_publication_components = await fetchComponents(node.su_publication_components??[])
 
   const getMonthName = monthNumber => {
     const date = new Date();

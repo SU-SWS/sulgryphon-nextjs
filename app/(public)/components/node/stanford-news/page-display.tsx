@@ -1,28 +1,21 @@
 import {NewsArticleJsonLd} from "next-seo";
-import Oembed from "../../patterns/oembed";
-import {ParagraphRows} from "../../paragraph/rows/rows";
+import Oembed from "@/components/patterns/oembed";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 
-import LinkedInIcon from "../../patterns/icons/LinkedInIcon";
-import TwitterIcon from "../../patterns/icons/TwitterIcon";
-import FacebookIcon from "../../patterns/icons/FacebookIcon";
-import Conditional from "../../utils/conditional";
-import NewsSocialLink from "./news-social-link";
+import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon";
+import TwitterIcon from "@/components/patterns/icons/TwitterIcon";
+import FacebookIcon from "@/components/patterns/icons/FacebookIcon";
+import Conditional from "@/components/utils/conditional";
+import NewsSocialLink from "@/components/node/stanford-news/news-social-link";
 import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
-import {getResource} from "@/lib/drupal/get-resource";
-import NewsPrintButton from "./print-button";
+import NewsPrintButton from "@/components/node/stanford-news/print-button";
+import fetchComponents from "@/lib/fetch-components";
 
-export const StanfordNews = ({node, ...props}: { node: News }) => {
-  // @ts-ignore
-  return <NewsPageDisplay node={node} {...props}/>
-}
-
-const NewsPageDisplay = async({node, ...props}: { node: News }) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_news_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_news_components = await Promise.all(requests);
+const StanfordNews = async ({node, ...props}: { node: News }) => {
+  node.su_news_components = await fetchComponents(node.su_news_components ?? [])
 
   return (
     <article {...props} className="su-mt-50">

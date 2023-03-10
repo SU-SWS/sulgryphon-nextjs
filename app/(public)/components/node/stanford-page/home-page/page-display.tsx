@@ -1,13 +1,10 @@
 import HomePageBanner from "./home-page-banner";
 import {BasicPage} from "@/lib/drupal/drupal";
-import {ParagraphRows} from "../../../paragraph/rows/rows";
-import {getResource} from "@/lib/drupal/get-resource";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import fetchComponents from "@/lib/fetch-components";
 
 const HomePageNode = async ({node}: BasicPage) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_page_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_page_components = await Promise.all(requests);
-
+  node.su_page_components = fetchComponents(node.su_page_components ?? []);
 
   return (
     <div>

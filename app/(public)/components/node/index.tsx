@@ -5,30 +5,37 @@ const StanfordCourse = dynamic(() => import("./stanford-course/page-display"));
 const StanfordCourseCard = dynamic(() => import("./stanford-course/card"));
 const StanfordCourseListItem = dynamic(() => import("./stanford-course/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const StanfordEvent = dynamic( () => import("./stanford-event/page-display"));
 const StanfordEventCard = dynamic(() => import("./stanford-event/card"));
 const StanfordEventListItem = dynamic(() => import("./stanford-event/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const StanfordEventSeries = dynamic(() => import("./stanford-event-series/page-display"));
 const StanfordEventSeriesCard = dynamic(() => import("./stanford-event-series/card"));
 const StanfordEventSeriesListItem = dynamic(() => import("./stanford-event-series/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const StanfordNews = dynamic(() => import("./stanford-news/page-display"));
 const StanfordNewsCard = dynamic(() => import("./stanford-news/card"));
 const StanfordNewsListItem = dynamic(() => import("./stanford-news/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const StanfordPage = dynamic(() => import("./stanford-page/page-display"));
 const StanfordPageCard = dynamic(() => import("./stanford-page/card"));
 const StanfordPageListItem = dynamic(() => import("./stanford-page/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const StanfordPerson = dynamic(() => import("./stanford-person/page-display"));
 const StanfordPersonCard = dynamic(() => import("./stanford-person/card"));
 const StanfordPersonListItem = dynamic(() => import("./stanford-person/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const StanfordPublication = dynamic(() => import("./stanford-publication/page-display"));
 const StanfordPublicationCard = dynamic(() => import("./stanford-publication/card"));
 const StanfordPublicationListItem = dynamic(() => import("./stanford-publication/list-item"));
 
+{/* @ts-expect-error Async Server Component */}
 const SulLibrary = dynamic(() => import("./sul-library/page-display"));
 const SulLibraryCard = dynamic(() => import("./sul-library/card"));
 const SulLibraryListItem = dynamic(() => import("./sul-library/list-item"));

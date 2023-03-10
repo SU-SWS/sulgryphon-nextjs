@@ -1,27 +1,19 @@
 import {Person} from "@/lib/drupal/drupal";
 import {NextSeo} from "next-seo";
 import Image from "next/image";
-import Conditional from "../../utils/conditional";
-import {ParagraphRows} from "../../paragraph/rows/rows";
+import Conditional from "@/components/utils/conditional";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import formatHtml from "@/lib/format-html";
-import {DrupalLinkButton} from "../../patterns/link";
+import {DrupalLinkButton} from "@/components/patterns/link";
 import {EnvelopeIcon, LinkIcon, MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import LibCal from "./libcal";
 import LibGuides from "./libguide";
-import {getResource} from "@/lib/drupal/get-resource";
 import fetchLibGuides from "@/lib/libguides";
+import fetchComponents from "@/lib/fetch-components";
 
-export const StanfordPerson = ({node, ...props}: { node: Person }) => {
-  // @ts-ignore
-  return <PersonPageDisplay node={node} {...props}/>
-}
-
-const PersonPageDisplay = async ({node, ...props}: { node: Person }) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_person_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_person_components = await Promise.all(requests);
-
+const StanfordPerson = async ({node, ...props}: { node: Person }) => {
+  node.su_person_components = await fetchComponents(node.su_person_components ?? []);
   node.lib_guides = node.sul_person__libguide_id ? await fetchLibGuides(node.sul_person__libguide_id) : [];
 
   return (
