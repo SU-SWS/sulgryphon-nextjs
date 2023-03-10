@@ -15,7 +15,7 @@ import {
 import Conditional from "@/components/utils/conditional";
 import {useSearchParams} from "next/navigation";
 import {useSearchResults} from "@/lib/hooks/useSearchResults";
-import {SignalIcon} from "@heroicons/react/20/solid";
+import Loading from "@/components/patterns/icons/loading";
 
 const StanfordCourseListItem = dynamic(() => import("../../components/node/stanford-course/list-item"));
 const StanfordEventListItem = dynamic(() => import("../../components/node/stanford-event/list-item"));
@@ -30,10 +30,10 @@ const SearchResults = () => {
   const params = useSearchParams();
   const [data, loading] = useSearchResults(params ? params.get('q') as string : '');
   if (loading) {
-    return <SignalIcon width={50} className="su-animate-ping su-mx-auto su-my-50" />
+    return <Loading/>
   }
   return (
-    <div>
+    <div aria-live="polite">
       <Conditional showWhen={data.length === 0}>
         <p>No results found for your search. Please try again.</p>
       </Conditional>

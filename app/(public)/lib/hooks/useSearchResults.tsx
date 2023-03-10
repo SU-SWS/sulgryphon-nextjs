@@ -11,6 +11,7 @@ export const useSearchResults = (query: string): [DrupalNode[], boolean, any] =>
     (
       async function () {
         try {
+          setLoading(true);
           const response = await axios.get(`/api/search?q=${query}`)
           setData(response.data)
         } catch (err) {
