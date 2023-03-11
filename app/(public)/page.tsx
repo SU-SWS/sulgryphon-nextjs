@@ -10,7 +10,6 @@ const getHomePageNode = async (): Promise<BasicPage> => {
 
 const Page = async () => {
   const node = await getHomePageNode();
-
   return (
     <div>
       {/* @ts-ignore */}

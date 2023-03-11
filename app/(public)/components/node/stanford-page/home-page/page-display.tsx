@@ -4,7 +4,7 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import fetchComponents from "@/lib/fetch-components";
 
 const HomePageNode = async ({node}: BasicPage) => {
-  node.su_page_components = fetchComponents(node.su_page_components ?? []);
+  node.su_page_components = await fetchComponents(node.su_page_components ?? []);
 
   return (
     <div>
