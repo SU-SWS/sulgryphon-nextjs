@@ -17,7 +17,7 @@ import {DrupalParagraph} from "next-drupal";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
   node.su_news_components = await fetchComponents(node.su_news_components ?? []) as DrupalParagraph[]
-
+  node.su_news_components = node.su_news_components.filter(item => item?.id?.length > 0);
   return (
     <article {...props} className="su-mt-50">
       <NewsArticleJsonLd
