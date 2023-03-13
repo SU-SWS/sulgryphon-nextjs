@@ -1,3 +1,5 @@
+"use client";
+
 import {Person} from "@/lib/drupal/drupal";
 
 import VerticalPersonCard from "./vertical-card";
