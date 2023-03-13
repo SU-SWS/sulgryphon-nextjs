@@ -40,6 +40,7 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       body={paragraph?.su_card_body?.processed}
       link={paragraph?.su_card_link}
       linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
+      backgroundColor={(!paragraph.behavior_settings?.sul_card_styles?.background ? 'white' : paragraph.behavior_settings?.sul_card_styles?.background)}
       horizontal={paragraph.behavior_settings?.sul_card_styles?.orientation === 'horizontal'}
       {...props}
     />

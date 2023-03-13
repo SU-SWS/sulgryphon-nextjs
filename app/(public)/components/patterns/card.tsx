@@ -18,12 +18,17 @@ interface CardProps {
   linkStyle?: string
   className?: string
   horizontal?: boolean
+  backgroundColor?: string
 }
 
-const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, horizontal = false, ...props}: CardProps) => {
+const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, backgroundColor, horizontal = false, ...props}: CardProps) => {
   return (
     <div {...props}
-         className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
+         className={`card su-block su-w-full su-basefont-23  su-leading-display  su-border su-border-solid su-border-black-10 su-shadow-md
+           ${props.className ?? ''}
+           ${(backgroundColor == 'black' ? 'su-bg-black su-text-white' : 'su-bg-white su-text-black')}
+         `}>
+      {console.log(backgroundColor)}
 
       <Conditional showWhen={image}>
         <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
@@ -43,7 +48,7 @@ const Card = ({video, image, superHeader, header, footer, body, link, linkStyle,
         </Conditional>
 
         <Conditional showWhen={header}>
-          <h3 className="su-leading-display su-font-sans su-font-bold su-type-2 su-mb-03em">{header}</h3>
+          <h3 className="su-leading-display su-font-sans su-font-bold su-type-2 su-mb-03em">Header: {header}</h3>
         </Conditional>
 
         <Conditional showWhen={body}>
