@@ -3,10 +3,11 @@ import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
-  node.su_publication_components = await fetchComponents(node.su_publication_components??[])
+  node.su_publication_components = await fetchComponents(node.su_publication_components??[]) as DrupalParagraph[];
 
   const getMonthName = monthNumber => {
     const date = new Date();

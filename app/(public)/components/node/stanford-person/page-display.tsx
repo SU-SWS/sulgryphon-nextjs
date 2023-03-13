@@ -11,9 +11,10 @@ import LibCal from "./libcal";
 import LibGuides from "./libguide";
 import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
-  node.su_person_components = await fetchComponents(node.su_person_components ?? []);
+  node.su_person_components = await fetchComponents(node.su_person_components ?? []) as DrupalParagraph[];
   node.lib_guides = node.sul_person__libguide_id ? await fetchLibGuides(node.sul_person__libguide_id) : [];
 
   return (

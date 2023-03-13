@@ -23,7 +23,6 @@ const NodePage = async (context) => {
     }
   }
 
-
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
 
   return (

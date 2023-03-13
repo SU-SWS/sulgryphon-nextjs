@@ -5,9 +5,10 @@ import {DrupalLinkButton} from "@/components/patterns/link";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {Event} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordEvent = async ({node, ...props}: { node: Event }) => {
-  node.su_event_components = await fetchComponents(node.su_event_components??[]);
+  node.su_event_components = await fetchComponents(node.su_event_components??[]) as DrupalParagraph[];
 
   const inPast = new Date(node.su_event_date_time?.value) < new Date();
   const start = new Date(node.su_event_date_time?.value);

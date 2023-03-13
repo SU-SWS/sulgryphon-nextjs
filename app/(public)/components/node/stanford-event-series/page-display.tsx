@@ -3,9 +3,10 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {NodeListDisplay} from "@/components/node";
 import {EventSeries} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordEventSeries = async ({node, ...props}: { node: EventSeries }) => {
-  node.su_event_series_components = await fetchComponents(node.su_event_series_components??[]);
+  node.su_event_series_components = await fetchComponents(node.su_event_series_components??[]) as DrupalParagraph[];
 
   return (
     <article {...props}>

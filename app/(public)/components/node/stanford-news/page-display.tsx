@@ -13,9 +13,10 @@ import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
 import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
-  node.su_news_components = await fetchComponents(node.su_news_components ?? [])
+  node.su_news_components = await fetchComponents(node.su_news_components ?? []) as DrupalParagraph[]
 
   return (
     <article {...props} className="su-mt-50">

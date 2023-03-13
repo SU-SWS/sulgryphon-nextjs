@@ -2,9 +2,10 @@ import {NextSeo} from "next-seo";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {BasicPage} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordPage = async ({node}: { node: BasicPage }) => {
-  node.su_page_components = await fetchComponents(node.su_page_components ?? []);
+  node.su_page_components = await fetchComponents(node.su_page_components ?? []) as DrupalParagraph[];
 
   const getFeaturedImageAlt = (node): string => {
     if (node.su_page_image?.field_media_image?.resourceIdObjMeta?.alt) {
