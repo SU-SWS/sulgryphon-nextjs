@@ -47,7 +47,7 @@ const StanfordEntity = ({paragraph, siblingCount, ...props}) => {
       </Conditional>
 
 
-      {paragraph.su_entity_headline && <h2 className="su-text-center">{paragraph.su_entity_headline}</h2>}
+      {paragraph.su_entity_headline && <h2 className="su-text-center su-type-5 su-tracking-[-0.0075em]">{paragraph.su_entity_headline}</h2>}
       {paragraph.su_entity_description && <div className="su-mb-40">{formatHtml(paragraph.su_entity_description.processed)}</div>}
 
       {entities &&

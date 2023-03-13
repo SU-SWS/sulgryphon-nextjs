@@ -12,6 +12,11 @@ for (i = 1; i <= 4; i++) {
   threeColumn[`1-1-${i}`] = `1fr 1fr ${i}fr`;
 }
 
+const path = require('path');
+
+// Path to custom Tailwind plugins for SUL
+const dir = path.resolve(__dirname, 'app/(public)/tailwind/plugins');
+
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -87,18 +92,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    plugin(function ({addComponents, config}) {
-      addComponents({
-        '.button': {
-          borderRadius: '9999px',
-          padding: '1.1rem 2.6rem',
-          lineHeight: '1.2',
-          fontSize: '2.0rem',
-          '&:active, &:hover, &:focus': {
-            backgroundColor:config('theme.colors.cardinal-red.dark'),
-          },
-        }
-      })
-    }),
+    require(`${dir}/components/simple/sul-button.js`)(),
+    require(`${dir}/components/typography/sul-typography.js`)(),
   ]
 }

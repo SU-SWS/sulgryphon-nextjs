@@ -26,7 +26,7 @@ const SulCollection = ({paragraph, siblingCount = 1}: CollectionProps) => {
     <section aria-labelledby={paragraph.id}>
       <Conditional showWhen={paragraph.sul_collection_heading}>
         <AboveHeaderBorder/>
-        <h2 id={paragraph.id}>{paragraph.sul_collection_heading}</h2>
+        <h2 id={paragraph.id} className="su-type-5 su-tracking-[-0.0075em]">{paragraph.sul_collection_heading}</h2>
       </Conditional>
 
       <div className={"su-gap-lg " + (siblingCount > 0 ? '' : 'lg:su-flex')}>
