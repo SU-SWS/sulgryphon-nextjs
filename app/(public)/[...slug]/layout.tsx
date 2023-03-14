@@ -26,7 +26,13 @@ const getLayoutData = async (context): Promise<[DrupalNode, DrupalMenuLinkConten
 }
 
 const Layout = async ({children, ...context}: { children: ReactNodeLike }) => {
-  const [node, tree, fullWidth] = await getLayoutData(context);
+  let node: DrupalNode, tree: DrupalMenuLinkContent[], fullWidth: boolean;
+  try {
+    [node, tree, fullWidth] = await getLayoutData(context);
+  } catch (e) {
+    notFound();
+  }
+
   return (
     <div>
       <Conditional showWhen={node.type === 'node--sul_library'}>
