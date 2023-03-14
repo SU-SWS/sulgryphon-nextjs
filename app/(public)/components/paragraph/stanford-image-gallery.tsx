@@ -40,7 +40,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
 
             </Link>
             {image.su_gallery_caption &&
-                <figcaption className="su-text-right">{formatHtml(image.su_gallery_caption)}</figcaption>}
+                <figcaption className="su-text-right su-italic su-leading su-text-19">{formatHtml(image.su_gallery_caption)}</figcaption>}
 
 
             <Modal
@@ -57,7 +57,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
                 />
 
                 <Conditional showWhen={image.su_gallery_caption}>
-                  <figcaption className="su-absolute su-z-[100] su-text-white">
+                  <figcaption className="su-absolute su-z-[100] su-text-white su-italic su-leading su-text-19">
                     {image.su_gallery_caption}
                   </figcaption>
                 </Conditional>
