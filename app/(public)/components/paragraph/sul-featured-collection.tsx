@@ -21,7 +21,7 @@ const SulFeaturedCollection = ({paragraph, siblingCount = 1}: FeaturedCollection
             <AboveHeaderBorder/>
             <header className="md:su-flex su-justify-between su-mb-80">
               <Conditional showWhen={paragraph.sul_collection__headline}>
-                <h2 className="su-mb-0 su-type-5 su-tracking-[-0.0075em]">{paragraph.sul_collection__headline}</h2>
+                <h2 className="su-mb-0 su-type-5">{paragraph.sul_collection__headline}</h2>
               </Conditional>
               <Conditional showWhen={paragraph.sul_collection__link?.url}>
                 <Link href={paragraph.sul_collection__link?.url ?? '#'} className="su-self-center">
