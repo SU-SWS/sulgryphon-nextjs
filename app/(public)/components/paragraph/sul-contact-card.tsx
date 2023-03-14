@@ -16,8 +16,6 @@ interface ContactCardProps {
 const SulContactCard = ({paragraph, siblingCount}: ContactCardProps) => {
 	const {width, ref} = useResizeDetector();
   const hours = useLibraryHours()
-  // console.log('paragraph: ', paragraph)
-  // console.log('hours', hours)
 
   const toISOStringWithTimezone = date => {
     const tzOffset = -date.getTimezoneOffset();
@@ -35,15 +33,12 @@ const SulContactCard = ({paragraph, siblingCount}: ContactCardProps) => {
 
   const currentDay = toISOStringWithTimezone(new Date()).substring(0, 10);
   const libraryHours = paragraph.sul_contact__branch?.su_library__hours ? hours[paragraph.sul_contact__branch?.su_library__hours] : [];
-  // console.log('library hours: ', libraryHours)
   const libraryPrimaryHours = libraryHours?.primary_hours;
   
   let todayHours;
   if (libraryPrimaryHours) {
     todayHours = libraryPrimaryHours.find(day => day.day === currentDay);
   }
-  // console.log('todaysHours', todayHours)
-  // console.log('libraryPrimaryHours', libraryPrimaryHours)
   
   const date = new Date()
   let openTime, closeTime, isOpen = false, closedAllDay = todayHours?.closed;
@@ -101,10 +96,6 @@ const SulContactCard = ({paragraph, siblingCount}: ContactCardProps) => {
 									</div>
 									<Conditional showWhen={paragraph.sul_contact__branch?.su_library__hours}>
 										<div className="su-text-white" aria-live="polite">
-											{/* { console.log('openTime: ', openTime) }
-											{ console.log('closeTime: ', closeTime) }
-											{ console.log('isOpen: ', isOpen) }
-											{ console.log('closedAllDay: ', closedAllDay) } */}
 											<div className="su-flex">
 												{isOpen ? 'Open ' : 'Closed '}
 												/
