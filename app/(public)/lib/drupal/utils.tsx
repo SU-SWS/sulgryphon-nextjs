@@ -121,7 +121,7 @@ export async function getJsonApiIndex(
   })
 
   if (!response.ok) {
-    throw new Error(response.statusText)
+    throw new Error(url.toString(), response.statusText)
   }
 
   return await response.json()

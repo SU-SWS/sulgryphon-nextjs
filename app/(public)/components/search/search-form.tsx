@@ -8,7 +8,12 @@ interface keyable {
   [key: string]: any
 }
 
-const SearchForm = ({action = '/search', inputProps = {}, ...props}: { action: string, inputProps: keyable }) => {
+interface FormProps extends keyable {
+  action: string,
+  inputProps?: keyable
+}
+
+const SearchForm = ({action = '/search', inputProps = {}, ...props}: FormProps) => {
   const params = useSearchParams();
   const inputId = useId();
 
