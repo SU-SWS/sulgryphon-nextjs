@@ -24,7 +24,7 @@ const HorizontalPersonCard = ({node, ...props}: {node: Person}) => {
       <div>
         <Link href={node.path.alias}
               className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
-          <h2 className="su-type-1 su-rs-mb-neg2">{node.title}</h2>
+          <h2 className="su-type-2 su-rs-mb-neg2">{node.title}</h2>
         </Link>
         <Conditional showWhen={node.su_person_full_title}>
           <div className="su-type-0 su-rs-mb-neg2">{node.su_person_full_title}</div>
