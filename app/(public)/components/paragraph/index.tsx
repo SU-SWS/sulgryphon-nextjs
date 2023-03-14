@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 
-<<<<<<< HEAD:app/(public)/components/paragraph/index.tsx
 const StanfordWysiwyg = dynamic(() => import("./stanford-wysiwyg"));
 const StanfordCard = dynamic(() => import("./stanford-card"));
 const StanfordBanner = dynamic(() => import("./stanford-banner"));
