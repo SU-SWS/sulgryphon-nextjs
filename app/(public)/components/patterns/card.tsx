@@ -43,7 +43,7 @@ const Card = ({video, image, superHeader, header, footer, body, link, linkStyle,
         </Conditional>
 
         <Conditional showWhen={header}>
-          <h3 className="su-leading-display su-font-sans su-font-bold su-type-2 su-mb-03em">{header}</h3>
+          <h3 className="su-leading-tight su-tracking-[-0.005em] su-font-bold su-type-2 su-mb-03em">{header}</h3>
         </Conditional>
 
         <Conditional showWhen={body}>

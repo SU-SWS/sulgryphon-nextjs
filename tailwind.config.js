@@ -92,7 +92,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require(`${dir}/base/base.js`)(),
     require(`${dir}/components/simple/sul-button.js`)(),
-    require(`${dir}/components/typography/sul-typography.js`)(),
   ]
 }
