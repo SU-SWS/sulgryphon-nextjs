@@ -1,5 +1,3 @@
-const plugin = require('tailwindcss/plugin')
-
 let twoColumn = {}, threeColumn = {}, i;
 for (i = 1; i <= 4; i++) {
   twoColumn[`1-${i}`] = `1fr ${i}fr`;
@@ -15,7 +13,7 @@ for (i = 1; i <= 4; i++) {
 const path = require('path');
 
 // Path to custom Tailwind plugins for SUL
-const dir = path.resolve(__dirname, 'app/(public)/tailwind/plugins');
+const dir = path.resolve(__dirname, 'app/(public)/styles/tailwind/plugins');
 
 module.exports = {
   content: [
