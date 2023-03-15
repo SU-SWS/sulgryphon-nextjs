@@ -9,12 +9,12 @@ const StanfordImageGallery = dynamic(() => import("./stanford-image-gallery"));
 const StanfordMediaCaption = dynamic(() => import("./stanford-media-caption"));
 const StanfordLists = dynamic(() => import("./stanford-lists"));
 
-{/* @ts-expect-error Async Server Component */}
+/* @ts-expect-error Async Server Component */
 const StanfordEntity = dynamic(() => import("./stanford-entity"));
 const StanfordSpacer = dynamic(() => import("./stanford-spacer"));
 const SulCollection = dynamic(() => import("./sul-collection"));
 const SulFeaturedCollection = dynamic(() => import("./sul-featured-collection"));
-const SulContactCard = dynamic(() => import("./sul-contact-card"));
+const SulContactCard = dynamic(() => import("./sul-contact-card/index"));
 
 interface ParagraphProps {
   paragraph: any;
@@ -34,27 +34,27 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       </Conditional>
 
       {paragraph.type === 'paragraph--stanford_card' &&
-        <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_banner' &&
-        <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_gallery' &&
-        <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_media_caption' &&
-        <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-        <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_lists' &&
-        <StanfordLists paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordLists paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_entity' &&
-        <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_spacer' &&
-        <StanfordSpacer paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordSpacer paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--collection' &&
-        <SulCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <SulCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--sul_feat_collection' &&
-        <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+          <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
       {paragraph.type === 'paragraph--sul_contact_card' &&
-        <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+          <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
     </>
   );
 }
