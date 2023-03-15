@@ -1,6 +1,5 @@
 import {NewsArticleJsonLd} from "next-seo";
 import Oembed from "@/components/patterns/oembed";
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 
@@ -13,11 +12,12 @@ import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
 import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import fetchComponents from "@/lib/fetch-components";
-import {DrupalParagraph} from "next-drupal";
+import Paragraph from "@/components/paragraph";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
-  node.su_news_components = await fetchComponents(node.su_news_components ?? []) as DrupalParagraph[]
+  node.su_news_components = await fetchComponents(node.su_news_components ?? [])
   node.su_news_components = node.su_news_components.filter(item => item?.id?.length > 0);
+
   return (
     <article {...props} className="su-mt-50">
       <NewsArticleJsonLd
@@ -101,12 +101,13 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
           </div>
           <div>
             {node.su_news_publishing_date && <>{formatDate(node.su_news_publishing_date + ' 12:00:00')} |&nbsp;</>}
-            {node.su_news_byline && <>{node.su_news_byline}</>}
+            {node.su_news_byline}
           </div>
         </div>
       </div>
+
       {node?.su_news_banner?.field_media_image &&
-          <div>
+          <figure className="su-mb-50">
             <Image
                 className="su-mx-auto"
                 src={node.su_news_banner.field_media_image.image_style_uri.breakpoint_2xl_2x}
@@ -114,18 +115,33 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
                 height={node.su_news_banner.field_media_image.resourceIdObjMeta.height}
                 width={node.su_news_banner.field_media_image.resourceIdObjMeta.width}
             />
-          </div>
+
+            {node.su_news_banner_media_caption &&
+                <figcaption className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">
+                  {node.su_news_banner_media_caption}
+                </figcaption>
+            }
+
+          </figure>
       }
 
       {node?.su_news_banner?.field_media_oembed_video &&
-          <Oembed
-              url={node.su_news_banner.field_media_oembed_video}
-          />
+          <figure className="su-mb-50">
+            <Oembed
+                url={node.su_news_banner.field_media_oembed_video}
+            />
+            {node.su_news_banner_media_caption &&
+                <figcaption className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">
+                  {node.su_news_banner_media_caption}
+                </figcaption>
+            }
+          </figure>
       }
 
-      {node.su_news_banner_media_caption &&
-          <div className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">{node.su_news_banner_media_caption}</div>}
-      <ParagraphRows items={node.su_news_components}/>
+
+      <div className="su-mb-50">
+        {node.su_news_components.map(component => <Paragraph key={component.id} paragraph={component}/>)}
+      </div>
     </article>
   )
 }

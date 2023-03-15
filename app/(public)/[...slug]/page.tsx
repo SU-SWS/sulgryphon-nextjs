@@ -7,7 +7,7 @@ import {DrupalNode} from "next-drupal";
 
 export const revalidate = 60;
 
-const NodePage = async (context) => {
+const fetchNodeData = async (context) => {
   const path = await translatePathFromContext(context);
   if (!path || !path.jsonapi) {
     notFound();
@@ -23,7 +23,17 @@ const NodePage = async (context) => {
     }
   }
 
-  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+  return await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+}
+
+const NodePage = async (context) => {
+
+  let node: DrupalNode;
+  try {
+    node = await fetchNodeData(context);
+  } catch (e) {
+    notFound();
+  }
 
   return (
     <NodePageDisplay node={node}/>
@@ -32,7 +42,11 @@ const NodePage = async (context) => {
 
 export default NodePage;
 
-export const generateStaticParams = async () => {
-  const paths = await getPathsFromContext('node--stanford_page', {})
-  return paths.map(path => typeof path !== "string" ? path?.params : path);
+export const generateStaticParams = async (context) => {
+  try {
+    const paths = await getPathsFromContext('node--stanford_page', {})
+    return paths.map(path => typeof path !== "string" ? path?.params : path);
+  } catch (e) {
+  }
+  return [];
 }

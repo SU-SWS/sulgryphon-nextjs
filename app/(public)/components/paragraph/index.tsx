@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import Conditional from "@/components/utils/conditional";
+import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 
 const StanfordWysiwyg = dynamic(() => import("./stanford-wysiwyg"));
 const StanfordCard = dynamic(() => import("./stanford-card"));
@@ -21,6 +23,15 @@ interface ParagraphProps {
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   return (
     <>
+      <Conditional showWhen={paragraph.status != undefined && !paragraph.status}>
+        <div className="su-bg-illuminating-light su-py-30 su-mb-20">
+          <div className="su-cc su-text-m2 su-flex su-gap-lg">
+            <ExclamationCircleIcon width={40}/>
+            Unpublished Content
+          </div>
+        </div>
+      </Conditional>
+
       {paragraph.type === 'paragraph--stanford_card' &&
           <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_banner' &&

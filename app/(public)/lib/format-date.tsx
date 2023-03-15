@@ -4,5 +4,6 @@ export function formatDate(input: string): string {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "America/Los_Angeles"
   })
 }

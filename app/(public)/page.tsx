@@ -4,15 +4,11 @@ import {BasicPage} from "@/lib/drupal/drupal";
 
 export const revalidate = 60;
 
-const getHomePageNode = async (): Promise<BasicPage> => {
-  return await getResourceByPath('/');
-}
-
 const Page = async () => {
-  const node = await getHomePageNode();
+  const node: BasicPage = await getResourceByPath('/');
   return (
     <div>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error Async Server Component */}
       <HomePageNode node={node}/>
     </div>
   )
