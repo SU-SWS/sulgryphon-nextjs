@@ -1,0 +1,40 @@
+
+name: Build & Lint
+on:
+  push:
+    branches:
+      - '1.x'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  update-branches:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.10
+      env:
+        NODE_ENV: development
+        NEXT_PUBLIC_DRUPAL_BASE_URL: ${{ secrets.NEXT_PUBLIC_DRUPAL_BASE_URL }}
+        NEXT_IMAGE_DOMAIN: ${{ secrets.NEXT_IMAGE_DOMAIN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set git settings
+        run: |
+          git config --global user.email "sws-developers@lists.stanford.edu"
+          git config --global user.name "Github Actions"
+      - name: Update Dev Branch
+        run: |
+          git checkout 1.x
+          git pull 1.x
+          git checkout dev
+          git pull dev
+          git rebase 1.x --quiet
+          git push dev
+      - name: Update Test Branch
+        run: |
+          git checkout 1.x
+          git pull 1.x
+          git checkout test
+          git pull test
+          git rebase 1.x --quiet
+          git push test
