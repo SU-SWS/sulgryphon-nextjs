@@ -8,7 +8,7 @@ import fetchComponents from "@/lib/fetch-components";
 import {DrupalParagraph} from "next-drupal";
 
 const StanfordEvent = async ({node, ...props}: { node: Event }) => {
-  node.su_event_components = await fetchComponents(node.su_event_components ?? []) as DrupalParagraph[];
+  node.su_event_components = await fetchComponents(node.su_event_components ?? []);
   node.su_event_components = node.su_event_components.filter(item => item?.id?.length > 0);
 
   const inPast = new Date(node.su_event_date_time?.value) < new Date();

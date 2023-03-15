@@ -7,7 +7,7 @@ import {DrupalParagraph} from "next-drupal";
 
 const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
-  node.su_publication_components = await fetchComponents(node.su_publication_components ?? []) as DrupalParagraph[];
+  node.su_publication_components = await fetchComponents(node.su_publication_components ?? []);
   node.su_publication_components = node.su_publication_components.filter(item => item?.id?.length > 0);
 
   const getMonthName = monthNumber => {
