@@ -1,5 +1,5 @@
 
-name: Build & Lint
+name: Update Dev & Test Branches
 on:
   push:
     branches:
@@ -17,7 +17,10 @@ jobs:
         NEXT_PUBLIC_DRUPAL_BASE_URL: ${{ secrets.NEXT_PUBLIC_DRUPAL_BASE_URL }}
         NEXT_IMAGE_DOMAIN: ${{ secrets.NEXT_IMAGE_DOMAIN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        width:
+          fetch-depth: 0
+          ref: 1.x
       - name: Set git settings
         run: |
           git config --global user.email "sws-developers@lists.stanford.edu"
