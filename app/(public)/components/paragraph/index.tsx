@@ -21,27 +21,27 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   return (
     <>
       {paragraph.type === 'paragraph--stanford_card' &&
-          <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_banner' &&
-          <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_gallery' &&
-          <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_media_caption' &&
-          <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-          <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_lists' &&
-          <StanfordLists paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordLists paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_entity' &&
-          <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_spacer' &&
-          <StanfordSpacer paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordSpacer paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--collection' &&
-          <SulCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <SulCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--sul_feat_collection' &&
-          <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
-			{paragraph.type === 'paragraph--sul_contact_card' &&
-          <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+        <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--sul_contact_card' &&
+        <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
     </>
   );
 }
