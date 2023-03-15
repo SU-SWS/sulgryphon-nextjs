@@ -63,7 +63,7 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
   return (
     // @ts-ignore
     <div ref={elemRef} {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
-      {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
+      {paragraph.su_list_headline && <h2 className="su-text-center su-type-5">{paragraph.su_list_headline}</h2>}
       {paragraph.su_list_description &&
           <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
 

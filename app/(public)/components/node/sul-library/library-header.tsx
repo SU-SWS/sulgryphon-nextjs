@@ -47,7 +47,7 @@ const LibraryBanner = ({node}: { node: Library }) => {
       <div className="su-cc su-relative su-z-10 su-top-50 md:su-top-100 md:su-mx-40 md:su-min-h-[300px]">
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
           <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
-            <h1 className="su-type-4 su-font-serif">{node.title}</h1>
+            <h1 className="su-type-4">{node.title}</h1>
           </div>
 
           <div className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]">

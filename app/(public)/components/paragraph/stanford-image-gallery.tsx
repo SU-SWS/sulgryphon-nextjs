@@ -21,7 +21,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
 
   return (
     <div {...props} className={'su-max-w-[980px] su-mx-auto' + (props.className ?? '')}>
-      {paragraph.su_gallery_headline && <h2 className="su-text-center su-text-m3">{paragraph.su_gallery_headline}</h2>}
+      {paragraph.su_gallery_headline && <h2 className="su-text-center su-type-5">{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description.processed)}</div>}
 
       <div className={`su-mb-40 su-grid su-gap-xl ` + (siblingCount >= 1 ? '' : 'lg:su-grid-cols-3')}>
@@ -40,7 +40,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
 
             </Link>
             {image.su_gallery_caption &&
-                <figcaption className="su-text-right">{formatHtml(image.su_gallery_caption)}</figcaption>}
+                <figcaption className="su-text-right su-italic su-leading su-text-19">{formatHtml(image.su_gallery_caption)}</figcaption>}
 
 
             <Modal
@@ -57,7 +57,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
                 />
 
                 <Conditional showWhen={image.su_gallery_caption}>
-                  <figcaption className="su-absolute su-z-[100] su-text-white">
+                  <figcaption className="su-absolute su-z-[100] su-text-white su-italic su-leading su-text-19">
                     {image.su_gallery_caption}
                   </figcaption>
                 </Conditional>

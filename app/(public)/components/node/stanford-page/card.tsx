@@ -36,7 +36,7 @@ const StanfordPageCard = ({node, ...props}: { node: BasicPage }) => {
       <Card
         image={image}
         header={
-          <Link className="su-text-black hover:su-underline" href={node.path.alias}>
+          <Link className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red" href={node.path.alias}>
             {node.title}
           </Link>
         }

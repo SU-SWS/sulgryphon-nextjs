@@ -115,8 +115,8 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
           className="su-text-16 xl:su-text-18 2xl:su-text-19 su-text-digital-red">{node.su_event_type[0].name}</div>}
 
       <Link href={node.path.alias}
-            className="su-no-underline hover:su-text-digital-red hover:su-underline">
-        <h2 className="su-text-black hover:su-text-digital-red su-type-1">{node.title}</h2>
+            className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
+        <h2 className="su-type-2">{node.title}</h2>
       </Link>
 
       {node.su_event_subheadline &&
