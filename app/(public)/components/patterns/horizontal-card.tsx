@@ -1,5 +1,3 @@
-'use client';
-
 import {ReactNodeLike} from "prop-types";
 
 import formatHtml from "@/lib/format-html";
@@ -22,11 +20,11 @@ interface CardProps {
   horizontal?: boolean
 }
 
-const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, horizontal = false, ...props}: CardProps) => {
+const HoizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, horizontal = false, ...props}: CardProps) => {
   return (
     <div {...props}
          className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
-  <h1>Vertical</h1>
+        <h1>Horzontial</h1>
       <Conditional showWhen={image}>
         <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
           {image}
@@ -77,6 +75,5 @@ const Card = ({video, image, superHeader, header, footer, body, link, linkStyle,
       </div>
     </div>
   )
-
 }
-export default Card;
+export default HoizontalCard;
