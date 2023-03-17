@@ -105,6 +105,7 @@ interface Person extends DrupalNode {
   sul_person__libguide_id?: number
   lib_guides: LibGuide[]
 }
+
 interface LibGuide {
   id: string
   title: string
@@ -191,6 +192,9 @@ interface ImageGalleryParagraph extends DrupalParagraph {
 interface ListParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_list_styles?: {
+      link_display_style?: string
+    }
   }
   su_list_button?: DrupalLink
   su_list_description?: DrupalWysiwyg
@@ -245,6 +249,9 @@ interface CollectionCardParagraph extends DrupalParagraph {
 interface FeaturedCollectionParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_feat_collections_styles?: {
+      link_display_style?: string
+    }
   }
   sul_collection__cards: CardParagraph[]
   sul_collection__headline?: string

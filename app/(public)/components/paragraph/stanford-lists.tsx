@@ -6,9 +6,10 @@ import {useEffect, useRef, useState} from "react";
 import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
 import formatHtml from "@/lib/format-html";
-import {DrupalLinkButton} from "../patterns/link";
+import {DrupalActionLink, DrupalLink, DrupalLinkButton, DrupalLinkSecondaryButton} from "../patterns/link";
 import {DrupalNode} from "next-drupal";
 import {NodeCardDisplay, NodeListDisplay} from "../node";
+import AboveHeaderBorder from "@/components/patterns/above-header-border";
 
 const StudyPlaceFilteringList = dynamic(() => import("../views/study-places"));
 
@@ -62,8 +63,25 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
 
   return (
     // @ts-ignore
-    <div ref={elemRef} {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
-      {paragraph.su_list_headline && <h2 className="su-text-center su-type-5">{paragraph.su_list_headline}</h2>}
+    <div ref={elemRef} {...props}
+         className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
+      <div className="su-flex su-gap-2xl">
+        {paragraph.su_list_headline &&
+            <h2 className="su-text-left su-type-5 su-flex-grow">
+              <AboveHeaderBorder/>
+              {paragraph.su_list_headline}
+            </h2>
+        }
+
+        <div>
+          <DrupalLink
+            url={paragraph.su_list_button?.url}
+            title={paragraph.su_list_button?.title}
+            style={paragraph.behavior_settings?.sul_list_styles?.link_display_style}
+          />
+        </div>
+      </div>
+
       {paragraph.su_list_description &&
           <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
 
@@ -74,11 +92,6 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
         viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
         displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
       />
-
-      {paragraph.su_list_button &&
-          <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
-            {paragraph.su_list_button.title}
-          </DrupalLinkButton>}
     </div>
   )
 }

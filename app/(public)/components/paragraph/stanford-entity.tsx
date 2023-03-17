@@ -15,7 +15,7 @@ const StanfordEntity = async ({paragraph, siblingCount, ...props}) => {
     3: 'lg:su-grid-cols-3',
   }
 
-  const gridCols = paragraph?.su_entity_item?.length >= 3 ? gridColClasses[3] : gridColClasses[paragraph?.su_entity_item?.length];
+  const gridCols = entities.length >= 3 ? gridColClasses[3] : gridColClasses[entities.length];
   const wrapperClasses = paragraph.behavior_settings?.sul_teaser_styles?.background === 'black' ? 'su-text-white su-py-40' : '';
 
   return (
