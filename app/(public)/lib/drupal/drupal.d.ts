@@ -264,6 +264,17 @@ interface ContactCardParagraph extends DrupalParagraph {
   sul_contact__title?: string
 }
 
+interface ButtonParagraph extends DrupalParagraph {
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_button_styles?: {
+      background?: string
+    }
+  }
+  sul_button_link: DrupalLink
+  sul_button_headline?: string
+}
+
 // Media Types.
 interface DrupalImageMedia extends DrupalMedia {
   field_media_image: DrupalFile

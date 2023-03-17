@@ -15,6 +15,7 @@ const StanfordSpacer = dynamic(() => import("./stanford-spacer"));
 const SulCollection = dynamic(() => import("./sul-collection"));
 const SulFeaturedCollection = dynamic(() => import("./sul-featured-collection"));
 const SulContactCard = dynamic(() => import("./sul-contact-card/index"));
+const SulButton = dynamic(() => import("./sul-button"));
 
 interface ParagraphProps {
   paragraph: any;
@@ -55,6 +56,8 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
       {paragraph.type === 'paragraph--sul_contact_card' &&
           <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+      {paragraph.type === 'paragraph--sul_button' &&
+          <SulButton paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
     </>
   );
 }
