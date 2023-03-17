@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 
 import {CardParagraph} from "@/lib/drupal/drupal";
@@ -13,8 +14,8 @@ interface CardProps {
 }
 
 const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
-  const horizontal = paragraph.behavior_settings?.sul_card_styles?.orientation
-  const Card = horizontal ? HorizontalCard : VerticalCard ;
+  const horizontal = paragraph.behavior_settings?.sul_card_styles?.orientation;
+  const Card = horizontal ? HorizontalCard : VerticalCard;
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
 
@@ -31,7 +32,7 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       fill={true}
     />
   }
-  props.className = `${props?.className ?? ''} su-max-w-[980px] su-mx-auto`;
+  props.className = `${props?.className ?? ''} ${horizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto`;
 
   return (
     <Card
@@ -42,7 +43,7 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       body={paragraph?.su_card_body?.processed}
       link={paragraph?.su_card_link}
       linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
-      horizontal
+      backgroundSprinkles={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
       {...props}
     />
   )

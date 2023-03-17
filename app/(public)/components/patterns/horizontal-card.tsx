@@ -3,6 +3,8 @@ import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import Conditional from "../utils/conditional";
 import {DrupalLinkButton, DrupalLinkSecondaryButton, DrupalActionLink} from "@/components/patterns/link";
+import Image from "next/image";
+import {useResizeDetector} from "react-resize-detector";
 
 interface CardProps {
   video?: ReactNodeLike
@@ -17,27 +19,30 @@ interface CardProps {
   }
   linkStyle?: string
   className?: string
-  horizontal?: boolean
+  backgroundSprinkles ?: string
 }
 
-const HoizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, horizontal = false, ...props}: CardProps) => {
+const HorizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, backgroundSprinkles, ...props}: CardProps) => {
+  console.log(backgroundSprinkles)
   return (
     <div {...props}
-         className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
-        <h1>Horzontial</h1>
-      <Conditional showWhen={image}>
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
-          {image}
-        </div>
-      </Conditional>
+         className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-black su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-flex-wrap ${props.className ?? ''}`}>
 
-      <Conditional showWhen={video}>
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-          {video}
-        </div>
-      </Conditional>
+      <div className={"su-w-full md:su-w-1/2 su-p-32"}>
+        <Conditional showWhen={image}>
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+            {image}
+          </div>
+        </Conditional>
 
-      <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
+        <Conditional showWhen={video}>
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
+            {video}
+          </div>
+        </Conditional>
+      </div>
+
+      <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4 su-w-full md:su-w-1/2 su-p-32">
         <Conditional showWhen={superHeader}>
           <span className="su-type-0 su-mb-0 su-leading-display su-font-bold">{superHeader}</span>
         </Conditional>
@@ -76,4 +81,4 @@ const HoizontalCard = ({video, image, superHeader, header, footer, body, link, l
     </div>
   )
 }
-export default HoizontalCard;
+export default HorizontalCard;

@@ -168,6 +168,7 @@ interface CardParagraph extends DrupalParagraph {
     sul_card_styles?: {
       orientation: string
       link_display_style?: string
+      background_sprinkles?: string
     }
   }
   su_card_body?: DrupalWysiwyg

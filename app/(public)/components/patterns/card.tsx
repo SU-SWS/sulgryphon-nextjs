@@ -19,14 +19,12 @@ interface CardProps {
   }
   linkStyle?: string
   className?: string
-  horizontal?: boolean
 }
 
-const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, horizontal = false, ...props}: CardProps) => {
+const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
   return (
     <div {...props}
          className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
-  <h1>Vertical</h1>
       <Conditional showWhen={image}>
         <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
           {image}
