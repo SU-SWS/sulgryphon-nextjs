@@ -28,7 +28,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
     <div {...props}
          className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-black su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-flex-wrap ${props.className ?? ''}`}>
 
-      <div className={"su-w-full md:su-w-1/2 su-p-32"}>
+      <div className={"su-w-full md:su-w-1/2 su-p-32 md:su-mt-0 su-mt-[-5rem] md:su-mb-0 su-mb-[1rem]"}>
         <Conditional showWhen={image}>
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
             {image}
@@ -44,7 +44,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
 
       <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4 su-w-full md:su-w-1/2 su-p-32">
         <Conditional showWhen={superHeader}>
-          <span className="su-type-0 su-mb-0 su-leading-display su-font-bold">{superHeader}</span>
+          <span className="su-type-0 su-mb-0 su-leading-display su-font-bold su-underline">{superHeader}</span>
         </Conditional>
 
         <Conditional showWhen={header}>
