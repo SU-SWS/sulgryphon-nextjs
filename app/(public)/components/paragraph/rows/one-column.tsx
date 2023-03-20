@@ -6,7 +6,7 @@ const OneColumn = ({items, fullWidth = false, config = {}}) => {
   return (
     <div className="su-grid su-grid-col su-gap-2xl">
       {items.map(item =>
-        <Paragraph key={item.id} paragraph={item as DrupalParagraph} siblingCount={fullWidth ? 0 : 9}/>
+        <Paragraph key={item.id} paragraph={item as DrupalParagraph} siblingCount={0}/>
       )}
     </div>
   )
