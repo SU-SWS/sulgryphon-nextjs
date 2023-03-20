@@ -13,11 +13,16 @@ import {formatDate} from "@/lib/format-date";
 import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import fetchComponents from "@/lib/fetch-components";
 import Paragraph from "@/components/paragraph";
+import {redirect} from "next/navigation";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
   node.su_news_components = await fetchComponents(node.su_news_components ?? [])
   node.su_news_components = node.su_news_components.filter(item => item?.id?.length > 0);
 
+  // Redirect the user to the external source.
+  if (node.su_news_source?.url && node.su_news_source?.url?.length > 0) {
+    redirect(node.su_news_source?.url);
+  }
   return (
     <article {...props} className="su-mt-50">
       <NewsArticleJsonLd
