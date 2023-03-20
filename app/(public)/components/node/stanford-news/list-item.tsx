@@ -28,23 +28,18 @@ const StanfordNewsListItem = ({node, ...props}: {node: News}) => {
       <div className="su-text-18 su-mb-14">
         {node.su_news_publishing_date && <>{formatDate(node.su_news_publishing_date + ' 12:00:00')}</>}
       </div>
-      <div className="su-grid su-grid-cols-[65%_35%] su-gap-1">
+      <div className={"su-grid su-gap-2xl " + (image ? "su-grid-cols-3-1": "")}>
         <div>
           <Link className="su-text-digital-red su-no-underline hover:su-underline" href={node.path.alias}>
             <h2 className="su-type-2">{node.title}</h2>
           </Link>
           {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         </div>
-        <div className="su-hidden lg:su-block">
-          {node?.su_news_featured_media?.field_media_image &&
-              <Image
-                  src={node.su_news_featured_media.field_media_image.uri.url}
-                  alt={node.su_news_featured_media.field_media_image.resourceIdObjMeta.alt}
-                  height={node.su_news_featured_media.field_media_image.resourceIdObjMeta.height}
-                  width={node.su_news_featured_media.field_media_image.resourceIdObjMeta.width}
-              />
-          }
-        </div>
+        {image &&
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+            {image}
+          </div>
+        }
       </div>
       {topics.map((cardTopic, index) =>
         <span key={cardTopic.id} className="su-mt-10 su-text-digital-red su-font-semibold su-text-19">

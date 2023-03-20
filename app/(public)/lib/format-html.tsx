@@ -163,6 +163,10 @@ const cleanMediaMarkup = (node: Element) => {
     let {src, alt, width, height} = image.attribs;
     let {class: classes} = node.attribs;
 
+    if(src.substring(0, 1) === '/'){
+      src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src;
+    }
+
     return (
       <span className={fixClasses(classes)}>
         <Conditional showWhen={width && height}>

@@ -196,6 +196,10 @@ interface ListParagraph extends DrupalParagraph {
     sul_list_styles?: {
       link_display_style?: string
     }
+    list_paragraph?: {
+      hide_empty?: boolean
+      empty_message?: string
+    }
   }
   su_list_button?: DrupalLink
   su_list_description?: DrupalWysiwyg
