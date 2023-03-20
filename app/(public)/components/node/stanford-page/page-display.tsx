@@ -24,7 +24,7 @@ const StanfordPage = async ({node}: { node: BasicPage }) => {
     }
     return '';
   }
-
+  const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full';
   return (
     <>
       <NextSeo
@@ -45,7 +45,7 @@ const StanfordPage = async ({node}: { node: BasicPage }) => {
       />
 
       <article>
-        <ParagraphRows items={node.su_page_components}/>
+        <ParagraphRows items={node.su_page_components} fullWidth={fullWidth}/>
       </article>
     </>
   )

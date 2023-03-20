@@ -47,6 +47,7 @@ interface Event extends DrupalNode {
   su_event_telephone?: string
   su_event_type?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
+  sul_event__image?: DrupalImageMedia
 }
 
 interface EventSeries extends DrupalNode {
