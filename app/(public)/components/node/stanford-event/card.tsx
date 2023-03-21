@@ -46,10 +46,6 @@ const getTimeString = (start: Date, end: Date): string => {
   }
 
   // All Day display.
-  console.log('startHour', startHour);
-  console.log('startMinute', startMinute);
-  console.log('endHour', endHour);
-  console.log('endMinute', endMinute);
   if (
     (startHour === 24 || startHour === 0) &&
     startMinute === 0 &&
@@ -94,7 +90,6 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
 
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
-  ;
 
   let imageUrl = node.sul_event__image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x;
 
