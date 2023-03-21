@@ -1,4 +1,3 @@
-"use client"
 import {CalendarDaysIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import {Event} from "@/lib/drupal/drupal";
