@@ -66,6 +66,7 @@ const LibraryHeaderHours = ({node}: { node: Library }) => {
         aria-label="Day of the week hours"
         options={hourOptions}
         defaultValue={hourOptions.find(option => option.value === today)}
+        isSearchable={false}
       />
     </>
   )
