@@ -5,18 +5,33 @@ import {Event} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";
 
-
 const getTimeString = (start: Date, end: Date): string => {
-  const startHour = parseInt(start.toLocaleTimeString("en-US", {hour: "numeric", hour12: false, timeZone: 'America/Los_Angeles'}))
-  const startMinute = parseInt(start.toLocaleTimeString("en-US", {minute: "numeric", hour12: false, timeZone: 'America/Los_Angeles'}))
+  const startHour = parseInt(start.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    hour12: false,
+    timeZone: 'America/Los_Angeles'
+  }))
+  const startMinute = parseInt(start.toLocaleTimeString("en-US", {
+    minute: "numeric",
+    hour12: false,
+    timeZone: 'America/Los_Angeles'
+  }))
 
-  const endHour = parseInt(end.toLocaleTimeString("en-US", {hour: "numeric", hour12: false, timeZone: 'America/Los_Angeles'}))
-  const endMinute = parseInt(end.toLocaleTimeString("en-US", {minute: "numeric", hour12: false, timeZone: 'America/Los_Angeles'}))
+  const endHour = parseInt(end.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    hour12: false,
+    timeZone: 'America/Los_Angeles'
+  }))
+  const endMinute = parseInt(end.toLocaleTimeString("en-US", {
+    minute: "numeric",
+    hour12: false,
+    timeZone: 'America/Los_Angeles'
+  }))
 
-  let dateTimeString;
+  let dateTimeString: string;
 
   // Multiple days.
-  if(start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'}) != end.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})){
+  if (start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'}) != end.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})) {
     dateTimeString = start.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -32,15 +47,19 @@ const getTimeString = (start: Date, end: Date): string => {
   }
 
   // All Day display.
+  console.log('startHour', startHour);
+  console.log('startMinute', startMinute);
+  console.log('endHour', endHour);
+  console.log('endMinute', endMinute);
   if (
-    startHour === 24 &&
+    (startHour === 24 || startHour === 0) &&
     startMinute === 0 &&
     endHour === 23 &&
     endMinute === 59
   ) {
     return 'All Day';
   }
-  
+
 
   // Different start and end times.
   if (startHour !== endHour || startMinute !== endMinute) {
@@ -57,7 +76,7 @@ const getTimeString = (start: Date, end: Date): string => {
       timeZone: 'America/Los_Angeles'
     })
     return dateTimeString;
-  } 
+  }
 
   // Start and end times are the same, just display the start time.
   return start.toLocaleTimeString("en-US", {
@@ -75,7 +94,8 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
   const startDay = parseInt(start.toLocaleDateString("en-US", {day: "numeric", timeZone: 'America/Los_Angeles'}))
 
   // Fix difference between server side render and client side render. Replace any strange characters.
-  const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');;
+  const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
+  ;
 
   let imageUrl = node.sul_event__image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x;
 
@@ -84,10 +104,10 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
       {imageUrl &&
           <div className="su-overflow-hidden su-aspect-[4/3] su-relative su-mb-40" aria-hidden="true">
             <Image
-              className="su-object-cover su-object-center"
-              src={imageUrl}
-              alt=""
-              fill={true}
+                className="su-object-cover su-object-center"
+                src={imageUrl}
+                alt=""
+                fill={true}
             />
           </div>
       }
