@@ -1,15 +1,19 @@
 "use client";
 
+import {useRef, useState} from "react";
 import {StudyPlace} from "@/lib/drupal/drupal";
 import Link from "next/link";
 import Image from "next/image";
 import {ClockIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import useLibraryHours from "@/lib/hooks/useLibraryHours";
 import Conditional from "@/components/utils/conditional";
-import { DrupalActionLink } from "@/components/patterns/link";
 import {useResizeDetector} from "react-resize-detector";
+import Modal from "@/components/patterns/modal";
+import {ChevronRightIcon} from "@heroicons/react/20/solid";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const iframeRef = useRef(null);
   const {width, ref} = useResizeDetector();
   const hours = useLibraryHours()
 
@@ -111,11 +115,26 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
               {/* {(node.sul_study__features && node.sul_study__features.length > 4) && */}
               {node.sul_study__features &&
-                <DrupalActionLink href="#">
-                  Show all features
-                </DrupalActionLink>
-              }
-              
+                <>
+                  <button className="su-relative su-pr-30 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold" onClick={() => setModalOpen(true)}>
+                  <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
+                    Show all features
+                  </button>
+            
+                  <Modal
+                    isOpen={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    ariaLabel="Foo Bar"
+                    initialFocus={iframeRef}
+                  >
+                    <div className="su-bg-white su-rs-p4">
+                      <div>
+                        Hello World
+                      </div>
+                    </div>
+                  </Modal>
+                </>
+              }              
             </div>
           </div>
         </div>
