@@ -74,11 +74,13 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
     />
   }
 
+  const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
+
   return (
     <>
       {console.log('node 3: ', node)}
       <div ref={ref} className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded " + ((width && width < 768) && " su-flex-col")}>
-        <div className={"su-overflow-hidden su-aspect-[16/9] su-relative " + ((width && width > 767) && " su-w-1/2")}>
+        <div className={"su-overflow-hidden su-aspect-[4/3] su-relative " + ((width && width > 767) && " su-w-1/2")}>
           {contactImage}
         </div>
 
@@ -105,7 +107,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
               {(node.sul_study__features && node.sul_study__features.length > 0) &&
                 <ul className="su-ml-10 su-rs-mb-2">
-                  {node.sul_study__features.map((feature, index) =>
+                  {features.map((feature, index) =>
                     <li key={`feature-${index}`} className="su-type-1 su-leading-display">
                       {feature.name}
                     </li>
@@ -128,8 +130,44 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                     initialFocus={iframeRef}
                   >
                     <div className="su-bg-white su-rs-p4">
-                      <div>
-                        Hello World
+                      <div ref={ref} className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded " + ((width && width < 768) && " su-flex-col")}>
+                        <div className={"su-overflow-hidden su-aspect-[4/3] su-relative " + ((width && width > 767) && " su-w-1/2")}>
+                          {contactImage}
+                        </div>
+
+                        <div className={"card-body su-items-start su-rs-px-2 su-rs-py-3 " + ((width && width > 767) && " su-w-1/2")}>
+                          <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
+                            <h2 className="su-type-3 su-rs-mb-1">{node.sul_study__type.name}</h2>
+                            <div className="su-leading-tight">
+
+                              <Conditional showWhen={node.sul_study__branch?.su_library__hours}>
+                                <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-neg2 su-type-1">
+                                  <ClockIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
+                                  <div aria-live="polite">
+                                    {!closedAllDay && (isOpen ? 'Closes at ' + libraryCloseTime : 'Opens at ' + libraryOpenTime)}
+                                  </div>
+                                </div>
+                              </Conditional>
+
+                              <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
+                                <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
+                                <Link href={node.sul_study__branch?.path.alias} className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red">
+                                  <div>{node.title}</div>
+                                </Link>	
+                              </div>
+
+                              {(node.sul_study__features && node.sul_study__features.length > 0) &&
+                                <ul className="su-ml-10 su-rs-mb-2">
+                                  {features.map((feature, index) =>
+                                    <li key={`feature-${index}`} className="su-type-1 su-leading-display">
+                                      {feature.name}
+                                    </li>
+                                  )}
+                                </ul>
+                              }
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </Modal>
