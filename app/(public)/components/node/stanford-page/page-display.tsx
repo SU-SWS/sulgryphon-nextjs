@@ -1,4 +1,4 @@
-import {NextSeo} from "next-seo";
+
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {BasicPage} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
@@ -26,28 +26,9 @@ const StanfordPage = async ({node}: { node: BasicPage }) => {
   }
   const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full';
   return (
-    <>
-      <NextSeo
-        useAppDir={true}
-        title={node.title}
-        description={node.su_page_description}
-        openGraph={{
-          type: 'website',
-          title: node.title,
-          description: node.su_page_description,
-          images: [{
-            url: getFeaturedImageUrl(node, 'card_956x478'),
-            width: 956,
-            height: 478,
-            alt: getFeaturedImageAlt(node)
-          }]
-        }}
-      />
-
-      <article>
-        <ParagraphRows items={node.su_page_components} fullWidth={fullWidth}/>
-      </article>
-    </>
+    <article>
+      <ParagraphRows items={node.su_page_components} fullWidth={fullWidth}/>
+    </article>
   )
 }
 

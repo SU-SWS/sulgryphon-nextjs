@@ -1,4 +1,3 @@
-import {NewsArticleJsonLd} from "next-seo";
 import Oembed from "@/components/patterns/oembed";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
@@ -25,23 +24,6 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
   }
   return (
     <article {...props} className="su-mt-50">
-      <NewsArticleJsonLd
-        useAppDir={true}
-        url={node.su_news_source?.url ?? node.path.alias}
-        title={node.title}
-        images={node.su_news_featured_media?.field_media_image?.uri?.url}
-        section=""
-        keywords=""
-        dateCreated={node.su_news_publishing_date ?? ''}
-        datePublished={node.su_news_publishing_date ?? ''}
-        dateModified=""
-        authorName={node.su_news_byline ?? ''}
-        description={node.su_news_dek ?? ''}
-        body=""
-        publisherName=""
-        publisherLogo=""
-        isAccessibleForFree={true}
-      />
       <div className="su-cc">
 
         {(node.su_news_topics && node.su_news_topics.length > 0) &&

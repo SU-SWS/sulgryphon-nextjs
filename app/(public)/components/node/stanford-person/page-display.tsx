@@ -1,5 +1,4 @@
 import {Person} from "@/lib/drupal/drupal";
-import {NextSeo} from "next-seo";
 import Image from "next/image";
 import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
@@ -20,10 +19,6 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
   return (
     <article {...props}>
-      <NextSeo
-        useAppDir={true}
-        openGraph={{profile: {firstName: node.su_person_first_name, lastName: node.su_person_last_name}}}
-      />
       <div className="sm:su-flex su-no-wrap su-rs-mb-5 su-mt-50">
         {node.su_person_photo?.field_media_image &&
             <div className="su-rs-mr-4 su-rs-mb-1 sm:su-mb-[0rem] ">

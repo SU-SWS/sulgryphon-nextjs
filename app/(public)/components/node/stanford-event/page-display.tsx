@@ -1,4 +1,3 @@
-import {EventJsonLd} from "next-seo";
 import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import {DrupalLinkButton} from "@/components/patterns/link";
@@ -62,15 +61,6 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
 
   return (
     <article {...props} className="su-mt-50">
-      <EventJsonLd
-        useAppDir={true}
-        name={node.title}
-        startDate={node.su_event_date_time?.value}
-        endDate={node.su_event_date_time?.end_value}
-        location={{name: node.su_event_location?.organization}}
-        eventStatus="EventScheduled"
-      />
-
       {inPast && <div className="su-text-black-70 su-uppercase">Past Event</div>}
 
       {(node.su_event_type && node.su_event_type.length > 0) && node.su_event_type.map(term =>

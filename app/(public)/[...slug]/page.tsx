@@ -4,6 +4,8 @@ import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {DrupalNode} from "next-drupal";
+import {Metadata} from "next";
+import {getNodeMetadata} from "./metadata";
 
 export const revalidate = 60;
 
@@ -24,6 +26,11 @@ const fetchNodeData = async (context) => {
   }
 
   return await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+}
+
+export const generateMetadata = async (context): Promise<Metadata> => {
+  const node: DrupalNode = await fetchNodeData(context);
+  return getNodeMetadata(node);
 }
 
 const NodePage = async (context) => {

@@ -2,11 +2,22 @@ import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
 import {getMenu} from "./lib/drupal/get-menu";
-import {NextSeo} from "next-seo";
 import "./styles/globals.css"
 
-import SEO from '../../next-seo.config';
 import {DrupalMenuLinkContent} from "next-drupal";
+
+export const metadata = {
+  title: process.env.NEXT_PUBLIC_SITE_NAME,
+  openGraph: {
+    type: 'website',
+    locale: 'en_IE',
+    url: 'https://library.stanford.edu',
+    siteName: process.env.NEXT_PUBLIC_SITE_NAME,
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+}
 
 const RootLayout = async ({children}: { children: React.ReactNode }) => {
   let tree: DrupalMenuLinkContent[] = [];
@@ -16,10 +27,7 @@ const RootLayout = async ({children}: { children: React.ReactNode }) => {
   }
 
   return (
-    <html>
-    <head>
-      <NextSeo useAppDir={true} {...SEO} />
-    </head>
+    <html lang="en">
     <body>
 
     <div className="su-grid su-grid-rows-1 su-min-h-screen">
