@@ -1,15 +1,15 @@
 "use client";
 
-import Card from "../../../patterns/card";
+import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
-import useLibraryHours from "@/lib/hooks/useLibraryHours";
+import useLibraryHours, {DayHours, LibraryHoursType} from "@/lib/hooks/useLibraryHours";
 import {useState} from "react";
 
 const TodayHours = ({libraries, ...props}) => {
   const [selectedLibrary, setSelectedLibrary] = useState('');
 
-  const hours = useLibraryHours();
+  const hours = useLibraryHours() as LibraryHoursType;
 
   libraries = libraries.filter(library => Object.keys(hours).indexOf(library.su_library__hours) >= 0)
 
@@ -26,11 +26,11 @@ const TodayHours = ({libraries, ...props}) => {
   }
 
   const date = new Date()
-  const libraryHours = selectedHours.primary_hours.find(day => day.day === date.toISOString().substring(0, 10));
+  const libraryHours = selectedHours.primaryHours.find(day => day.day === date.toISOString().substring(0, 10)) as DayHours;
 
   let openTime, closeTime, isOpen = false, closedAllDay = libraryHours.closed;
 
-  if (!libraryHours.closed) {
+  if (!libraryHours.closed && libraryHours.opens_at && libraryHours.closes_at) {
     openTime = new Date(libraryHours.opens_at);
     closeTime = new Date(libraryHours.closes_at);
     isOpen = date > openTime && date < closeTime;

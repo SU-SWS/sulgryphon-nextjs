@@ -124,14 +124,15 @@ interface Publication extends DrupalNode {
 }
 
 interface Library extends DrupalNode {
-  su_library__address: DrupalAddress
-  su_library__banner: DrupalImageMedia
-  su_library__contact_img: DrupalImageMedia
-  su_library__email: string
-  su_library__hours: string
-  su_library__map_link: DrupalLink
-  su_library__paragraphs: DrupalParagraph[]
-  su_library__phone: number
+  su_library__address?: DrupalAddress
+  su_library__banner?: DrupalImageMedia
+  su_library__contact_img?: DrupalImageMedia
+  su_library__email?: string
+  su_library__hours?: string
+  su_library__map_link?: DrupalLink
+  su_library__paragraphs?: DrupalParagraph[]
+  su_library__phone?: number
+  sul_library__a11y?: DrupalWysiwyg
 }
 
 interface StudyPlace extends DrupalNode {

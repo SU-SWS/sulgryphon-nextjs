@@ -1,58 +1,38 @@
 "use client";
 
-import useLibraryHours from "@/lib/hooks/useLibraryHours";
+import useLibraryHours, {LocationHours} from "@/lib/hooks/useLibraryHours";
 import {useId} from "react";
 import {Library} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
+import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
 
 const LibraryHeaderHours = ({node}: { node: Library }) => {
-  const inputId = useId();
-  const hours = useLibraryHours();
+  if (!node.su_library__hours) {
+    return null;
+  }
 
-  const libraryHours = hours[node.su_library__hours];
-  const libraryPrimaryHours = libraryHours?.primary_hours;
+  const inputId = useId();
+  const libraryHours = useLibraryHours(node.su_library__hours) as LocationHours;
+  const libraryPrimaryHours = libraryHours?.primaryHours;
 
   if (!libraryPrimaryHours) {
     return null;
   }
 
-  const rightNow = new Date()
-  const today = rightNow.toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
+  const hourOptions = getLibrarySelectOptions(libraryPrimaryHours);
+  if (hourOptions.length === 0) {
+    return null;
+  }
 
-  const hourOptions: any = [];
+  const today = new Date().toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
+  const todayHours = hourOptions.find(option => option.value === today)
 
-  let isOpen = false;
-  libraryPrimaryHours.map(dayHours => {
-    let label = new Date(dayHours.day).toLocaleString('en-us', {weekday: 'short', timeZone: 'UTC'});
+  const open = new Date(todayHours.opens ?? '');
+  const closed = new Date(todayHours.closes ?? '');
 
-    const open = new Date(dayHours.opens_at ?? '');
-    const closed = new Date(dayHours.closes_at ?? '');
-
-    if (label === today) {
-      isOpen = dayHours.closed ? false : open <= rightNow && closed >= rightNow;
-    }
-
-    const dayNumber = new Date(dayHours.day).getDay();
-    const dayOfWeek = label;
-
-    label += ': ';
-    if (dayHours.closed) {
-      label += ' Closed';
-    } else {
-      const openTime = open.toLocaleString('en-us', {
-        timeStyle: 'short',
-        timeZone: 'America/Los_Angeles'
-      });
-      const closeTime = closed.toLocaleString('en-us', {
-        timeStyle: 'short',
-        timeZone: 'America/Los_Angeles'
-      });
-      label += `${openTime} - ${closeTime}`
-    }
-    hourOptions.push({day: dayNumber, value: dayOfWeek, isDisabled: dayOfWeek != today, label})
-  })
-  hourOptions.sort((a, b) => a.day - b.day);
+  const rightNow = new Date();
+  const isOpen = todayHours.closed ? false : open <= rightNow && closed >= rightNow;
 
   return (
     <>
@@ -65,7 +45,7 @@ const LibraryHeaderHours = ({node}: { node: Library }) => {
         instanceId={`${inputId}-hours`}
         aria-label="Day of the week hours"
         options={hourOptions}
-        defaultValue={hourOptions.find(option => option.value === today)}
+        defaultValue={todayHours}
         isSearchable={false}
       />
     </>

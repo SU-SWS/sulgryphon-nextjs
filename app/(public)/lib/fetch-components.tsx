@@ -3,6 +3,7 @@ import {getResource} from "@/lib/drupal/get-resource";
 const fetchComponents = async (components: T[]): Promise<T[]> => {
   const requests: PromiseLike<any>[] = [];
   components.map(component => requests.push(getResource(component.type, component.id)));
+  // @ts-ignore
   return Promise.all(requests.map(p => p.catch(() => null)));
 }
 
