@@ -14,22 +14,22 @@ interface SelectOption {
 const StudyPlaceFilteringList = ({items}) => {
   const typeRef = useRef(null);
   const libraryRef = useRef(null);
-  const a11yRef = useRef(null);
   const featureRef = useRef(null);
+  const capacityRef = useRef(null);
   const inputId = useId();
 
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
 
   const typeOfStudies: SelectOption[] = [];
-  const a11yOptions: SelectOption[] = [];
   const featureOptions: SelectOption[] = [];
+  const capacityOptions: SelectOption[] = [];
   const libraryOptions: SelectOption[] = [];
 
   items.map(item => {
-    item.sul_study__a11y.map(term => {
-      if (a11yOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
-        a11yOptions.push({value: term.id, label: term.name})
+    item.sul_study__capacity?.map(term => {
+      if (capacityOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
+        capacityOptions.push({value: term.id, label: term.name})
       }
     })
     item.sul_study__features.map(term => {
@@ -52,14 +52,14 @@ const StudyPlaceFilteringList = ({items}) => {
     // @ts-ignore
     const selectedLibraries = libraryRef.current.getValue().map(option => option.value);
     // @ts-ignore
-    const selectedA11y = a11yRef.current.getValue().map(option => option.value);
+    const selectedCapacity = capacityRef.current.getValue().map(option => option.value);
     // @ts-ignore
     const selectedFeatures = featureRef.current.getValue().map(option => option.value);
 
     const filteredItems = items.filter(item =>
       (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
       (!selectedTypes.length || selectedTypes.indexOf(item.sul_study__type.id) != -1) &&
-      (!selectedA11y.length || item.sul_study__a11y.filter(term => selectedA11y.indexOf(term.id) != -1).length > 0) &&
+      (!selectedCapacity.length || item.sul_study__capacity.filter(term => selectedCapacity.indexOf(term.id) != -1).length > 0) &&
       (!selectedFeatures.length || item.sul_study__features.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0)
     );
     setItemsToDisplay(filteredItems)
@@ -72,7 +72,7 @@ const StudyPlaceFilteringList = ({items}) => {
     // @ts-ignore
     libraryRef.current.clearValue();
     // @ts-ignore
-    a11yRef.current.clearValue();
+    capacityRef.current.clearValue();
     // @ts-ignore
     featureRef.current.clearValue();
     setItemsToDisplay(items)
@@ -110,12 +110,12 @@ const StudyPlaceFilteringList = ({items}) => {
           </div>
           <div>
             <Select
-              instanceId={`${inputId}-a11y`}
-              ref={a11yRef}
-              aria-label="Accessible features"
-              placeholder="Accessibility"
-              options={a11yOptions}
-              name="a11y"
+              instanceId={`${inputId}-capacity`}
+              ref={capacityRef}
+              aria-label="Library Branch Capacity"
+              placeholder="Capacity"
+              options={capacityOptions}
+              name="capacity"
               isMulti
               isSearchable={false}
             />
@@ -149,8 +149,8 @@ const StudyPlaceFilteringList = ({items}) => {
       <Conditional showWhen={items.length > 0}>
         <p>Showing {itemsToDisplay.length} of {items.length}</p>
         <Conditional showWhen={itemsToDisplay.length > 0}>
-          <ul ref={parent} className="su-list-unstyled su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
-            {itemsToDisplay.map(item => <li key={item.id}><SulStudyPlaceCard node={item}/></li>)}
+          <ul ref={parent} className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
+            {itemsToDisplay.map(item => <li key={item.id} className="su-rs-mb-3 md:su-mb-0"><SulStudyPlaceCard node={item}/></li>)}
           </ul>
         </Conditional>
 
