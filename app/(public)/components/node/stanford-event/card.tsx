@@ -129,18 +129,18 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
           </h2>
 
           <div className="su-flex su-mb-20">
-            <CalendarDaysIcon width={20} className="su-mr-20"/>
+            <CalendarDaysIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
             {start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})}
           </div>
 
           <div className="su-flex su-mb-20">
-            <ClockIcon width={20} className="su-mr-20"/>
+            <ClockIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
             <div>{dateTimeString}</div>
           </div>
 
           {node.su_event_map_link?.url &&
               <div className="su-flex su-mb-20">
-                <MapPinIcon width={20} className="su-mr-20"/>
+                <MapPinIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
                 <Link href={node.su_event_map_link?.url}>
                   {node.su_event_map_link?.title}
                 </Link>

@@ -12,7 +12,7 @@ export const revalidate = 60;
 const fetchNodeData = async (context) => {
   const path = await translatePathFromContext(context);
   if (!path || !path.jsonapi) {
-    notFound();
+    throw 'Unable to translate path';
   }
 
   // Check for redirect.
@@ -29,12 +29,16 @@ const fetchNodeData = async (context) => {
 }
 
 export const generateMetadata = async (context): Promise<Metadata> => {
-  const node: DrupalNode = await fetchNodeData(context);
+  let node: DrupalNode;
+  try {
+    node = await fetchNodeData(context);
+  } catch (e) {
+    return {};
+  }
   return getNodeMetadata(node);
 }
 
 const NodePage = async (context) => {
-
   let node: DrupalNode;
   try {
     node = await fetchNodeData(context);

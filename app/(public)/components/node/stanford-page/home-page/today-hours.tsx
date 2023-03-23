@@ -4,9 +4,11 @@ import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import useLibraryHours, {DayHours, LibraryHoursType} from "@/lib/hooks/useLibraryHours";
-import {useState} from "react";
+import {useId, useState} from "react";
+import Select from "react-select";
 
 const TodayHours = ({libraries, ...props}) => {
+  const formId = useId();
   const [selectedLibrary, setSelectedLibrary] = useState('');
 
   const hours = useLibraryHours() as LibraryHoursType;
@@ -37,12 +39,27 @@ const TodayHours = ({libraries, ...props}) => {
   }
 
   const imageUrl = library.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
-  const image = <Image
-    className="su-object-cover su-object-center"
-    src={imageUrl}
-    alt=""
-    fill={true}
-  />
+  let image;
+
+  if (imageUrl) {
+    image = <Image
+      className="su-object-cover su-object-center"
+      src={imageUrl}
+      alt=""
+      fill={true}
+    />
+  }
+
+  interface option {
+    value: string
+    label: string
+  }
+
+  const libraryOptions: option[] = [];
+
+  Object.keys(libraries).map(i => {
+    libraryOptions.push({value: libraries[i].id, label: libraries[i].title})
+  })
 
   return (
     <div {...props}>
@@ -50,22 +67,23 @@ const TodayHours = ({libraries, ...props}) => {
       <Card
         className="su-border-0 su-rounded"
         image={image}
-        header="Today&apos;s Hours"
         footer={
           <div className="su-relative su-pb-100 md:su-rs-pb-6">
-            <div className="su-absolute">
-              <label htmlFor="library-hours" className="su-sr-only">Choose a library</label>
-              <select
-                id="library-hours"
-                className="su-w-full su-leading-display su-text-black su-text-20 su-py-20 su-mb-20 su-rounded su-shadow"
-                onChange={e => setSelectedLibrary(e.target.value)}
-              >
-                {Object.keys(libraries).map(index =>
-                  <option key={index} value={libraries[index].id}>{libraries[index].title}</option>
-                )}
-              </select>
+            <div className="su-absolute su-w-full">
+              <h3 id={formId} className="su-text-black su-leading-tight su-font-bold su-type-2 su-mb-03em">
+                Today&apos;s Hours
+              </h3>
+              <Select
+                className="su-text-black-true su-mb-10"
+                instanceId={`${formId}-hours`}
+                aria-labelledby={formId}
+                options={libraryOptions}
+                defaultValue={libraryOptions[0]}
+                isSearchable={false}
+                onChange={(item: option) => setSelectedLibrary(item.value)}
+              />
 
-              <div className="su-text-black su-flex su-justify-between" aria-live="polite">
+              <div className="su-text-black  su-flex su-gap-sm su-justify-between" aria-live="polite">
                 <div><ClockIcon className="su-inline" width={15}/> {isOpen ? 'Open' : 'Closed'}</div>
                 <div>
                   {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
