@@ -10,6 +10,7 @@ import Conditional from "@/components/utils/conditional";
 import {useResizeDetector} from "react-resize-detector";
 import Modal from "@/components/patterns/modal";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
+import LibCal from "./libcal";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -81,8 +82,11 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
       {console.log('node 3: ', node)}
       <div ref={ref} className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded " + ((width && width < 768) && " su-flex-col")}>
         <div className={"su-overflow-hidden su-aspect-[4/3] su-relative " + ((width && width > 767) && " su-w-1/2")}>
-          {contactImage}
+          {contactImage}          
         </div>
+        <Conditional showWhen={node.sul_study__libcal_id}>
+          <LibCal libcalId={node.sul_study__libcal_id}/>
+        </Conditional>
 
         <div className={"card-body su-items-start su-rs-px-2 su-rs-py-3 " + ((width && width > 767) && " su-w-1/2")}>
           <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
@@ -119,8 +123,8 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
               {node.sul_study__features &&
                 <>
                   <button className="su-relative su-pr-30 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold" onClick={() => setModalOpen(true)}>
-                  <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
                     Show all features
+                    <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
                   </button>
             
                   <Modal
