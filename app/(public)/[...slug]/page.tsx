@@ -52,7 +52,7 @@ export default NodePage;
 export const generateStaticParams = async (context) => {
   try {
     const paths = await getPathsFromContext('node--stanford_page', {})
-    return paths.map(path => typeof path !== "string" ? path?.params : path);
+    return paths.slice(0, 50).map(path => typeof path !== "string" ? path?.params : path);
   } catch (e) {
   }
   return [];
