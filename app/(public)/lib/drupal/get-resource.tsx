@@ -1,8 +1,11 @@
 // @ts-nocheck
+import "server-only";
+
 import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal/src/types";
 import {stringify} from "qs"
 
-import {deserialize, buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContext} from "./utils";
+import {buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContext} from "./utils";
+import {deserialize} from "@/lib/drupal/deserialize";
 import {GetStaticPropsContext} from "next";
 import {JsonApiParams} from "next-drupal";
 
@@ -215,6 +218,5 @@ export async function getResource<T extends JsonApiResource>(
   }
 
   const json = await response.json()
-
   return options.deserialize ? deserialize(json) : json
 }

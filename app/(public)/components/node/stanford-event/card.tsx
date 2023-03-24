@@ -96,14 +96,14 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
   return (
     <article {...props}>
       {imageUrl &&
-          <div className="su-overflow-hidden su-aspect-[4/3] su-relative su-mb-40" aria-hidden="true">
-            <Image
-                className="su-object-cover su-object-center"
-                src={imageUrl}
-                alt=""
-                fill={true}
-            />
-          </div>
+        <div className="su-overflow-hidden su-aspect-[4/3] su-relative su-mb-40" aria-hidden="true">
+          <Image
+            className="su-object-cover su-object-center"
+            src={imageUrl}
+            alt=""
+            fill={true}
+          />
+        </div>
       }
 
       <div className="su-flex su-gap-xl">
@@ -114,13 +114,10 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
         </div>
 
         <div>
-          {node.su_event_type &&
-              <ul className="su-list-unstyled su-font-semibold su-mb-10">
-                {node.su_event_type.map(eventType =>
-                  <li key={eventType.id} className="su-inline su-mr-5">{eventType.name}</li>
-                )}
-              </ul>
+          {node.su_event_type?.[0]?.name &&
+            <div className="su-inline su-mr-5 su-font-semibold su-mb-10">{node.su_event_type?.[0].name}</div>
           }
+
           <h2 className="su-text-m2">
             <Link href={node.path.alias}
                   className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
@@ -139,12 +136,12 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
           </div>
 
           {node.su_event_map_link?.url &&
-              <div className="su-flex su-mb-20">
-                <MapPinIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
-                <Link href={node.su_event_map_link?.url}>
-                  {node.su_event_map_link?.title}
-                </Link>
-              </div>
+            <div className="su-flex su-mb-20">
+              <MapPinIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
+              <Link href={node.su_event_map_link?.url}>
+                {node.su_event_map_link?.title}
+              </Link>
+            </div>
           }
         </div>
       </div>

@@ -2,11 +2,30 @@ import Link from "next/link";
 import Lockup from "@/components/patterns/lockup";
 import MainMenu from "@/components/menu/main-menu";
 import IdentityBar from "@/components/layout/identity-bar";
+import {getResource} from "@/lib/drupal/get-resource";
+import GlobalMessage from "@/components/patterns/global-message";
+import {DrupalMenuLinkContent} from "next-drupal";
+import {getMenu} from "@/lib/drupal/get-menu";
 
-const Header = ({menuItems}) => {
+const Header = async () => {
+  let globalMessage;
+  try {
+    globalMessage = await getResource('config_pages--stanford_global_message', '');
+  } catch (e) {
+  }
+
+  let tree: DrupalMenuLinkContent[] = [];
+  try {
+    ({tree} = await getMenu('main'));
+  } catch (e) {
+  }
+
   return (
     <>
       <IdentityBar/>
+
+      {globalMessage?.[0]?.su_global_msg_enabled && <GlobalMessage configPage={globalMessage[0]}/>}
+
       <header className="su-shadow-lg su-relative su-sticky su-top-0 su-bg-white su-z-20">
         <div className="su-pt-20 su-bg-white su-cc lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
           <Lockup className="su-pb-20"/>
@@ -16,7 +35,7 @@ const Header = ({menuItems}) => {
             <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
           </div>
         </div>
-        <MainMenu menuItems={menuItems}/>
+        <MainMenu menuItems={tree}/>
       </header>
     </>
   )

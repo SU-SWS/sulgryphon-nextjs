@@ -1,10 +1,8 @@
 import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
-import {getMenu} from "./lib/drupal/get-menu";
-import "./styles/globals.css"
 
-import {DrupalMenuLinkContent} from "next-drupal";
+import "./styles/globals.css"
 
 export const metadata = {
   title: process.env.NEXT_PUBLIC_SITE_NAME,
@@ -19,12 +17,7 @@ export const metadata = {
   },
 }
 
-const RootLayout = async ({children}: { children: React.ReactNode }) => {
-  let tree: DrupalMenuLinkContent[] = [];
-  try {
-    ({tree} = await getMenu('main'));
-  } catch (e) {
-  }
+const RootLayout = ({children}: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
@@ -33,7 +26,8 @@ const RootLayout = async ({children}: { children: React.ReactNode }) => {
     <div className="su-grid su-grid-rows-1 su-min-h-screen">
       <div>
         <a className="su-skiplink" href="#main-content">Skip to main content</a>
-        <Header menuItems={tree}/>
+        {/* @ts-expect-error Async Server Component */}
+        <Header/>
 
         <div>
           {children}

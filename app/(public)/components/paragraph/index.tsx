@@ -9,7 +9,6 @@ const StanfordImageGallery = dynamic(() => import("./stanford-image-gallery"));
 const StanfordMediaCaption = dynamic(() => import("./stanford-media-caption"));
 const StanfordLists = dynamic(() => import("./stanford-lists"));
 
-/* @ts-expect-error Async Server Component */
 const StanfordEntity = dynamic(() => import("./stanford-entity"));
 const StanfordSpacer = dynamic(() => import("./stanford-spacer"));
 const SulCollection = dynamic(() => import("./sul-collection"));

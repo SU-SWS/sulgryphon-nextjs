@@ -65,12 +65,18 @@ const getMetadataForEventPage = (node: Event) => {
   }
 }
 const getMetadataForNewsPage = (node: News) => {
+  console.log(node.su_news_publishing_date);
+  let publishTime;
+  if (node.su_news_publishing_date) {
+    publishTime = new Date(node.su_news_publishing_date).toISOString()
+  }
+
   return {
     description: node.su_news_dek,
     openGraph: {
       type: "article",
       description: node.su_news_dek,
-      publishedTime: new Date(node.su_news_publishing_date ?? "" as string).toISOString(),
+      publishedTime: publishTime ?? null,
       tag: node.su_news_topics?.map(term => term.name) ?? [],
     }
   }

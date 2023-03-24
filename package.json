@@ -23,9 +23,11 @@
     "next-drupal": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.2",
     "react-resize-detector": "^8.0.4",
     "react-select": "^5.7.0",
     "react-tiny-oembed": "^1.1.0",
+    "server-only": "^0.0.1",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

@@ -1,8 +1,9 @@
 // @ts-nocheck
+import "server-only";
+
 import {GetStaticPathsContext, GetStaticPathsResult} from "next";
 import {AccessToken, JsonApiParams, Locale} from "next-drupal/src/types";
 import {getResourceCollection} from "@/lib/drupal/get-resource";
-
 
 export const getPathsFromContext = async (
   types: string | string[],
