@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {deserialize} from "@/lib/drupal/utils";
+import {deserialize} from "@/lib/drupal/deserialize";
 
 export interface DayHours {
   day: string

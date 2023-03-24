@@ -116,11 +116,11 @@ interface LibGuide {
 interface Publication extends DrupalNode {
   su_publication_author_ref: DrupalNode[]
   su_publication_citation: DrupalPublicationCitation
-  su_publication_components: DrupalParagraph[]
-  su_publication_cta: DrupalLink
-  su_publication_image: DrupalImageMedia
-  su_publication_topics: DrupalTaxonomyTerm[]
-  su_shared_tags: DrupalTaxonomyTerm[]
+  su_publication_components?: DrupalParagraph[]
+  su_publication_cta?: DrupalLink
+  su_publication_image?: DrupalImageMedia
+  su_publication_topics?: DrupalTaxonomyTerm[]
+  su_shared_tags?: DrupalTaxonomyTerm[]
 }
 
 interface Library extends DrupalNode {
@@ -309,6 +309,16 @@ interface DrupalGalleryImageMedia extends DrupalMedia {
 interface DrupalEmbeddableMedia extends DrupalMedia {
   field_media_embeddable_code?: string
   field_media_embeddable_oembed?: string
+}
+
+// Config Pages
+interface GlobalMessageType {
+  su_global_msg_type: string
+  su_global_msg_enabled: boolean
+  su_global_msg_link?: DrupalLink
+  su_global_msg_header?: string
+  su_global_msg_label?: string
+  su_global_msg_message?: DrupalWysiwyg
 }
 
 // Field Structures.

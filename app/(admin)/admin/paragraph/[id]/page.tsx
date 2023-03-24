@@ -3,9 +3,10 @@
 import React, {Component, createRef, RefObject} from 'react';
 import {DrupalParagraph} from "next-drupal";
 import {ArrowPathIcon} from "@heroicons/react/20/solid";
-
-import {deserialize} from "@/lib/drupal/utils";
 import Paragraph from "@/components/paragraph";
+import Jsona from "jsona";
+import {deserialize} from "@/lib/drupal/deserialize";
+const dataFormatter = new Jsona()
 
 interface PreviewProps {
 

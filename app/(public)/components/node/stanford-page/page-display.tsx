@@ -1,4 +1,3 @@
-
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {BasicPage} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";

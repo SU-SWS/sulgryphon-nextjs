@@ -1,6 +1,10 @@
+// @ts-nocheck
+import "server-only";
+
 import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal";
 import {GetStaticPropsContext} from "next";
-import {buildHeaders, buildUrl, deserialize} from "@/lib/drupal/utils";
+import {buildHeaders, buildUrl} from "@/lib/drupal/utils";
+import {deserialize} from "@/lib/drupal/deserialize";
 
 export async function getSearchIndex<T = JsonApiResource[]>(
   name: string,
@@ -49,7 +53,7 @@ export async function getSearchIndexFromContext<T = JsonApiResource[]>(
 
   return await getSearchIndex<T>(name, {
     ...options,
-    locale: context.locale,
+    locale: context.local,
     defaultLocale: context.defaultLocale,
   })
 }

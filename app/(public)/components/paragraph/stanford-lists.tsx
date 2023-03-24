@@ -6,9 +6,10 @@ import {useEffect, useRef, useState} from "react";
 import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
 import formatHtml from "@/lib/format-html";
-import {DrupalActionLink, DrupalLink, DrupalLinkButton, DrupalLinkSecondaryButton} from "../patterns/link";
+import {DrupalLink} from "@/components/patterns/link";
 import {DrupalNode} from "next-drupal";
-import {NodeCardDisplay, NodeListDisplay} from "../node";
+import NodeCardDisplay from "@/components/node/node-card";
+import NodeListDisplay from "@/components/node/node-list-display";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 
 const StudyPlaceFilteringList = dynamic(() => import("../views/study-places"));

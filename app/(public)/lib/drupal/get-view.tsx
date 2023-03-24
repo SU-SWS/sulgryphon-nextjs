@@ -1,5 +1,8 @@
+import "server-only";
+
 import {AccessToken, JsonApiWithLocaleOptions} from "next-drupal";
-import {buildHeaders, buildUrl, deserialize} from "./utils";
+import {buildHeaders, buildUrl} from "./utils";
+import {deserialize} from "@/lib/drupal/deserialize";
 
 export async function getView<T>(
   name: string,

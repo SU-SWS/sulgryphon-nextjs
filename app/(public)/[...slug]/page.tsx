@@ -16,26 +16,26 @@ const fetchNodeData = async (context) => {
   }
 
   // Check for redirect.
-  if (path.redirect?.length) {
+  if (path.redirect?.[0].to) {
     const currentPath = '/' + (typeof context.params.slug === 'object' ? context.params.slug.join('/') : context.params.slug);
     const [destination] = path.redirect;
 
     if (destination.to != currentPath) {
-      redirect(destination.to)
+      throw `redirect:${destination.to}`;
     }
   }
 
-  return await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+  return getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
 }
 
 export const generateMetadata = async (context): Promise<Metadata> => {
-  let node: DrupalNode;
   try {
-    node = await fetchNodeData(context);
+    const node: DrupalNode = await fetchNodeData(context);
+    return getNodeMetadata(node);
   } catch (e) {
-    return {};
+    // Probably a 404 or redirect page.
   }
-  return getNodeMetadata(node);
+  return {};
 }
 
 const NodePage = async (context) => {
@@ -43,6 +43,10 @@ const NodePage = async (context) => {
   try {
     node = await fetchNodeData(context);
   } catch (e) {
+    if (e.indexOf('redirect:') === 0) {
+      const [, redirectTo] = e.split(':');
+      redirect(redirectTo);
+    }
     notFound();
   }
 

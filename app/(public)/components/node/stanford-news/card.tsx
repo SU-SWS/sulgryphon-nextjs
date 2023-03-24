@@ -3,7 +3,7 @@ import {News} from "@/lib/drupal/drupal";
 import Image from "next/image";
 
 const StanfordNewsCard = ({node, ...props}: { node: News }) => {
-  const imageUrl = node.su_news_banner?.field_media_image.image_style_uri?.breakpoint_2xl_1x || node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1x
+  const imageUrl = node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_1x || node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1x
   return (
     <article {...props}>
       {imageUrl &&

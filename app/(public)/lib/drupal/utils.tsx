@@ -1,19 +1,12 @@
 // @ts-nocheck
+import "server-only";
 
 import {stringify} from "qs"
-import Jsona from "jsona";
 import {GetStaticPropsContext} from "next";
 import {AccessToken, Locale} from "next-drupal/src/types";
 import {getAccessToken} from "./get-access-token";
 
-const dataFormatter = new Jsona()
 const JSONAPI_PREFIX = process.env.DRUPAL_JSONAPI_PREFIX || "/jsonapi"
-
-export const deserialize = (body, options?) => {
-  if (!body) return null
-
-  return dataFormatter.deserialize(body, options)
-}
 
 export const buildUrl = (
   path: string,
