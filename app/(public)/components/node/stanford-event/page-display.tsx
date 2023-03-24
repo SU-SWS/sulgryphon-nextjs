@@ -10,7 +10,7 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   node.su_event_components = await fetchComponents(node.su_event_components ?? []) as DrupalParagraph[];
   node.su_event_components = node.su_event_components.filter(item => item?.id?.length > 0);
 
-  const inPast = new Date(node.su_event_date_time?.value) < new Date();
+  const inPast = new Date(node.su_event_date_time?.end_value) < new Date();
   const start = new Date(node.su_event_date_time?.value);
   const end = new Date(node.su_event_date_time?.end_value);
 
@@ -95,8 +95,9 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
                 </time>
               </div>
               {inPast &&
-                  <div className="su-text-14 md:su-text-16 su-pt-4 su-text-black-70 su-ml-[31px]">This event has
-                    passed.</div>}
+                  <div className="su-text-14 md:su-text-16 su-pt-4 su-text-black-70 su-ml-[31px]">
+                    This event has passed.
+                  </div>}
             </div>
 
             {(node.su_event_location || node.su_event_alt_loc) &&
