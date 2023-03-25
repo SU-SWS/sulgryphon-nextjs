@@ -29,7 +29,11 @@ module.exports = {
       backgroundImage: {
         "footer-sprinkles": "url('/footer-sprinkles.png')",
         "interior-header-sprinkles": "url('/interior-header-sprinkles.png')",
-        "home-banner-sprinkles": "url('/home-banner-sprinkles.png')"
+        "home-banner-sprinkles": "url('/home-banner-sprinkles.png')",
+        "card-bottom-right-sprinkles": "url('/sprinkles/sprinkles-bottom-right-horizontal-card.png')",
+        "card-bottom-left-sprinkles": "url('/sprinkles/sprinkles-bottom-left-horizontal-card.png')",
+        "card-top-right-sprinkles": "url('/sprinkles/sprinkles-top-left-horizontal-card.png')",
+        "card-top-left-sprinkles": "url('/sprinkles/sprinkles-top-right-horizontal-card.png')"
       },
       keyframes: {
         "slide-up": {

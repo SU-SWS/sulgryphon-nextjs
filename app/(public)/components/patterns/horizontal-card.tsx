@@ -3,6 +3,7 @@ import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import Conditional from "../utils/conditional";
 import {DrupalLinkButton, DrupalLinkSecondaryButton, DrupalActionLink} from "@/components/patterns/link";
+import {TopRightSprinkles, TopLeftSprinkles,BottomLeftSprinkles,BottomRightSprinkles} from "@/components/patterns/card-sprinkles";
 import Image from "next/image";
 import {useResizeDetector} from "react-resize-detector";
 
@@ -26,9 +27,18 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
   console.log(backgroundSprinkles)
   return (
     <div {...props}
-         className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-black su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-flex-wrap ${props.className ?? ''}`}>
+         className={`card su-block su-w-full su-relative su-basefont-23 su-leading-display su-bg-black-true su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-mt-[9rem] md:su-p-20 su-p-50 su-pt-80 su-flex-wrap ${props.className ?? ''}
+         `}>
 
-      <div className={"su-w-full md:su-w-1/2 su-p-32 md:su-mt-0 su-mt-[-5rem] md:su-mb-0 su-mb-[1rem]"}>
+      {(backgroundSprinkles == 'top_right') &&
+        <TopRightSprinkles></TopRightSprinkles>
+      }
+
+      {(backgroundSprinkles == 'top_left') &&
+        <TopLeftSprinkles></TopLeftSprinkles>
+      }
+
+      <div className={"su-w-full md:su-w-1/2 md:su-mt-0 su-mt-[-14rem]"}>
         <Conditional showWhen={image}>
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
             {image}
@@ -42,7 +52,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
         </Conditional>
       </div>
 
-      <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4 su-w-full md:su-w-1/2 su-p-32">
+      <div className="card-body su-items-start md:su-rs-px-2 su-rs-pt-2 su-rs-pb-4 su-w-full md:su-w-1/2 su-pb-32 su-pb-64">
         <Conditional showWhen={superHeader}>
           <span className="su-type-0 su-mb-0 su-leading-display su-font-bold su-underline">{superHeader}</span>
         </Conditional>
@@ -78,6 +88,15 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
         }
 
       </div>
+
+      {(backgroundSprinkles == 'bottom_right') &&
+        <BottomRightSprinkles></BottomRightSprinkles>
+      }
+
+      {(backgroundSprinkles == 'bottom_left') &&
+        <BottomLeftSprinkles></BottomLeftSprinkles>
+      }
+
     </div>
   )
 }
