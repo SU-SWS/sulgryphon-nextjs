@@ -27,7 +27,7 @@ const Header = async () => {
       {globalMessage?.[0]?.su_global_msg_enabled && <GlobalMessage configPage={globalMessage[0]}/>}
 
       <header className="su-shadow-lg su-relative su-sticky su-top-0 su-bg-white su-z-20">
-        <div className="su-pt-20 su-bg-white su-cc lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
+        <div className="su-pt-20 su-bg-white su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
           <Lockup className="su-pb-20"/>
           <div className="su-hidden lg:su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
             <HeaderLink href="https://mylibrary.stanford.edu/" text="Accessibility"/>

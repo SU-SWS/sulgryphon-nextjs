@@ -26,17 +26,17 @@ const SecondaryMenu = ({menuItems}) => {
     setMenuOpen(false)
   }
 
-  const getCurrentPageTitle = (menu) => {
-    for (let i = 0; i < menu.length; i++) {
-      if (menu[i].id === activeTrail.at(-1)) {
-        return menu[i].title
-      }
-      if (menu[i].items && menu[i].items.length > 0) {
-        return getCurrentPageTitle(menu[i].items)
-      }
+  const getCurrentPageTitle = (items, trail) => {
+    const currentItem = items.find(item => item.id === trail.at(0));
+    if (currentItem.id === activeTrail.at(-1)) {
+      return currentItem.title;
+    }
+
+    if (currentItem.items?.length > 0 && trail.length > 1) {
+      return getCurrentPageTitle(currentItem.items, trail.slice(1));
     }
   }
-  const currentPageTitle = getCurrentPageTitle(menuItems);
+  const currentPageTitle = useMemo(() => getCurrentPageTitle(menuItems, activeTrail), [activeTrail, menuItems]);
 
   return (
     <>

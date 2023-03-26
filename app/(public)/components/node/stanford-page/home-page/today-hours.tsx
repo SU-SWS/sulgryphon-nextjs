@@ -6,13 +6,21 @@ import Image from "next/image";
 import useLibraryHours, {DayHours, LibraryHoursType} from "@/lib/hooks/useLibraryHours";
 import {useId, useState} from "react";
 import Select from "react-select";
+import {ErrorBoundary} from "react-error-boundary";
 
 const TodayHours = ({libraries, ...props}) => {
+  return (
+    <ErrorBoundary fallback={<></>}>
+      <LibrariesTodayHours libraries={libraries} {...props}/>
+    </ErrorBoundary>
+  )
+}
+
+const LibrariesTodayHours = ({libraries, ...props}) => {
   const formId = useId();
   const [selectedLibrary, setSelectedLibrary] = useState('');
 
   const hours = useLibraryHours() as LibraryHoursType;
-
   libraries = libraries.filter(library => Object.keys(hours).indexOf(library.su_library__hours) >= 0)
 
   if (libraries.length === 0 || Object.keys(hours).length === 0) {
@@ -22,15 +30,19 @@ const TodayHours = ({libraries, ...props}) => {
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
   const selectedHours = hours[library.su_library__hours]
 
-
   if (!selectedHours) {
     return null;
   }
 
   const date = new Date()
-  const libraryHours = selectedHours.primaryHours.find(day => day.day === date.toISOString().substring(0, 10)) as DayHours;
 
-  let openTime, closeTime, isOpen = false, closedAllDay = libraryHours.closed;
+  const libraryHours = selectedHours.primaryHours.find(day => {
+    // Set the time so that it works with UTC time.
+    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString('en-us', {weekday: "long", timeZone: 'America/Los_Angeles'})
+    return dayDate === date.toLocaleDateString('en-us', {weekday: "long", timeZone: 'America/Los_Angeles'})
+  }) as DayHours;
+
+  let openTime, closeTime, isOpen = false, closedAllDay = libraryHours?.closed;
 
   if (!libraryHours.closed && libraryHours.opens_at && libraryHours.closes_at) {
     openTime = new Date(libraryHours.opens_at);
@@ -39,16 +51,6 @@ const TodayHours = ({libraries, ...props}) => {
   }
 
   const imageUrl = library.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
-  let image;
-
-  if (imageUrl) {
-    image = <Image
-      className="su-object-cover su-object-center"
-      src={imageUrl}
-      alt=""
-      fill={true}
-    />
-  }
 
   interface option {
     value: string
@@ -56,7 +58,6 @@ const TodayHours = ({libraries, ...props}) => {
   }
 
   const libraryOptions: option[] = [];
-
   Object.keys(libraries).map(i => {
     libraryOptions.push({value: libraries[i].id, label: libraries[i].title})
   })
@@ -66,7 +67,12 @@ const TodayHours = ({libraries, ...props}) => {
 
       <Card
         className="su-border-0 su-rounded"
-        image={image}
+        image={imageUrl && <Image
+          className="su-object-cover su-object-center"
+          src={imageUrl}
+          alt=""
+          fill={true}
+        />}
         footer={
           <div className="su-relative su-pb-100 md:su-rs-pb-6">
             <div className="su-absolute su-w-full">

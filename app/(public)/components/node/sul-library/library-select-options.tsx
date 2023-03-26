@@ -5,23 +5,24 @@ export const getLibrarySelectOptions = (libraryHours) => {
   const hourOptions: any = [];
 
   libraryHours.map(dayHours => {
-    let label = new Date(dayHours.day).toLocaleString('en-us', {weekday: 'short', timeZone: 'UTC'});
+    const day = new Date(dayHours.day + " 20:00:00")
+    let label = day.toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
 
     const open = new Date(dayHours.opens_at ?? '');
     const closed = new Date(dayHours.closes_at ?? '');
 
-    const dayNumber = new Date(dayHours.day).getDay();
+    const dayNumber = day.getDay();
     const dayOfWeek = label;
 
     label += ': ';
     if (dayHours.closed) {
       label += ' Closed';
     } else {
-      const openTime = open.toLocaleString('en-us', {
+      const openTime = open.toLocaleTimeString('en-us', {
         timeStyle: 'short',
         timeZone: 'America/Los_Angeles'
       });
-      const closeTime = closed.toLocaleString('en-us', {
+      const closeTime = closed.toLocaleTimeString('en-us', {
         timeStyle: 'short',
         timeZone: 'America/Los_Angeles'
       });

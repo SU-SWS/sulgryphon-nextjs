@@ -19,6 +19,7 @@ const SulButton = dynamic(() => import("./sul-button"));
 interface ParagraphProps {
   paragraph: any;
   siblingCount?: number;
+  [key: string]: any
 }
 
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {

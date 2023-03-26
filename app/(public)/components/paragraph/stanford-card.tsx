@@ -29,7 +29,6 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       fill={true}
     />
   }
-  props.className = `${props?.className ?? ''} su-max-w-[980px] su-mx-auto`;
 
   return (
     <Card

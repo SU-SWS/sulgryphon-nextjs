@@ -43,8 +43,8 @@ const Row = ({layoutSettings, items, fullWidth = false}) => {
   return (
     <>
       {layoutSettings.layout === 'sul_helper_1_column' && <OneColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
-      {layoutSettings.layout === 'sul_helper_2_column' && <TwoColumn config={layoutSettings.config} items={items}/>}
-      {layoutSettings.layout === 'sul_helper_3_column' && <ThreeColumn config={layoutSettings.config} items={items}/>}
+      {layoutSettings.layout === 'sul_helper_2_column' && <TwoColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
+      {layoutSettings.layout === 'sul_helper_3_column' && <ThreeColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
     </>
   )
 }

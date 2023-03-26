@@ -50,33 +50,34 @@ const StanfordEntity = ({paragraph, siblingCount, ...props}) => {
 
   return (
     // @ts-ignore
-    <div ref={elemRef} {...props}
-         className={'su-relative su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + wrapperClasses + ' ' + (props.className ?? '')}>
-      <Conditional showWhen={paragraph.behavior_settings?.sul_teaser_styles?.background === 'black'}>
-        <div
-          className="su-absolute su-z-[-10] su-h-full su-w-screen su-top-0 su-left-[calc(-50vw+50%)] su-bg-black-true">
-        </div>
-      </Conditional>
+    <div ref={elemRef} {...props}>
+      <div className={wrapperClasses}>
+        <Conditional showWhen={paragraph.behavior_settings?.sul_teaser_styles?.background === 'black'}>
+          <div
+            className="su-absolute su-z-[-10] su-h-full su-w-screen su-top-0 su-left-[calc(-50vw+50%)] su-bg-black-true">
+          </div>
+        </Conditional>
 
-      {paragraph.su_entity_headline && <h2 className="su-text-center su-type-5">{paragraph.su_entity_headline}</h2>}
-      {paragraph.su_entity_description &&
-        <div className="su-mb-40">{formatHtml(paragraph.su_entity_description.processed)}</div>}
+        {paragraph.su_entity_headline && <h2 className="su-text-center su-type-5">{paragraph.su_entity_headline}</h2>}
+        {paragraph.su_entity_description &&
+          <div className="su-mb-40">{formatHtml(paragraph.su_entity_description.processed)}</div>}
 
-      {entities &&
-        <div className={"su-my-40 su-grid su-gap-2xl " + (siblingCount > 0 ? "" : gridCols)}>
-          {entities.map((item, i) =>
-            <div key={item.id}
-                 className={((i + 1 === entities.length || i + 1 % 3 === 0) ? "" : "su-relative before:su-content-[''] before:su-w-1 before:su-absolute before:su-top-0 before:su-h-full before:su-right-[-25px] lg:before:su-bg-black-30")}>
+        {entities &&
+          <div className={"su-my-40 su-grid su-gap-2xl " + (siblingCount > 0 ? "" : gridCols)}>
+            {entities.map((item, i) =>
+              <div key={item.id}
+                   className={((i + 1 === entities.length || i + 1 % 3 === 0) ? "" : "su-relative before:su-content-[''] before:su-w-1 before:su-absolute before:su-top-0 before:su-h-full before:su-right-[-25px] lg:before:su-bg-black-30")}>
                 <NodeCardDisplay node={item} key={item.id}/>
-            </div>
-          )}
-        </div>
-      }
-      {paragraph.su_entity_button &&
-        <DrupalLinkButton href={paragraph.su_entity_button.url} className="su-block su-mx-auto">
-          {paragraph.su_entity_button.title}
-        </DrupalLinkButton>
-      }
+              </div>
+            )}
+          </div>
+        }
+        {paragraph.su_entity_button &&
+          <DrupalLinkButton href={paragraph.su_entity_button.url} className="su-block su-mx-auto">
+            {paragraph.su_entity_button.title}
+          </DrupalLinkButton>
+        }
+      </div>
     </div>
   )
 

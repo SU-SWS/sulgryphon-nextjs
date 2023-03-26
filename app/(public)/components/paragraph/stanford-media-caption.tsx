@@ -16,8 +16,7 @@ const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMedia
   const imageUrl = paragraph.su_media_caption_media?.field_media_image?.image_style_uri.breakpoint_2xl_2x;
 
   return (
-    <figure className="su-text-right" {...props}>
-
+    <figure {...props}>
       {imageUrl &&
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
             <Image
@@ -42,7 +41,7 @@ const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMedia
       }
 
       {paragraph.su_media_caption_caption &&
-          <figcaption className="su-float-right su-text-19 su-italic su-leading">
+          <figcaption className="su-text-right su-float-right su-text-19 su-italic su-leading">
             {formatHtml(paragraph.su_media_caption_caption?.processed)}
           </figcaption>
       }

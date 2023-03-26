@@ -29,7 +29,7 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
         {/* @ts-expect-error Async Server Component */}
         <Header/>
 
-        <div>
+        <div className="su-mb-50">
           {children}
         </div>
       </div>

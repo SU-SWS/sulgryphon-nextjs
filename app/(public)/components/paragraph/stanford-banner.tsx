@@ -13,7 +13,7 @@ interface BannerProps {
 const StanfordBanner = ({paragraph, siblingCount, ...props}: BannerProps) => {
 
   const imageUrl = paragraph?.su_banner_image?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
-  let image: ReactNodeLike | null = null
+  let image: ReactNodeLike;
 
   if (imageUrl) {
     image = <Image
