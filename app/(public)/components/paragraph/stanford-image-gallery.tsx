@@ -13,7 +13,6 @@ import formatHtml from "@/lib/format-html";
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph
   siblingCount?: number
-  className?: string
 }
 
 const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordImageGalleryProps) => {

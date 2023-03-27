@@ -11,16 +11,28 @@ import {DrupalNode} from "next-drupal";
 import NodeCardDisplay from "@/components/node/node-card";
 import NodeListDisplay from "@/components/node/node-list-display";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
+import {ErrorBoundary} from "react-error-boundary";
 
 const StudyPlaceFilteringList = dynamic(() => import("../views/study-places"));
 
 interface ListProps {
   paragraph: ListParagraph
   siblingCount?: number
-  className?: string
 }
 
 const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
+  return (
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
+      <StanfordListsComponent paragraph={paragraph} siblingCount={siblingCount} {...props}/>
+    </ErrorBoundary>
+  )
+}
+
+
+const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
   const hideEmpty = paragraph.behavior_settings?.list_paragraph?.hide_empty;
   const emptyMessage = paragraph.behavior_settings?.list_paragraph?.empty_message;
 
@@ -74,10 +86,10 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
     <div ref={elemRef} {...props}>
       <div className="su-flex su-gap-2xl">
         {paragraph.su_list_headline &&
-            <h2 className="su-text-left su-type-5 su-flex-grow">
-              <AboveHeaderBorder/>
-              {paragraph.su_list_headline}
-            </h2>
+          <h2 className="su-text-left su-type-5 su-flex-grow">
+            <AboveHeaderBorder/>
+            {paragraph.su_list_headline}
+          </h2>
         }
 
         <div>
@@ -90,19 +102,24 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
       </div>
 
       {paragraph.su_list_description &&
-          <div className="su-mb-40">
-            {formatHtml(paragraph.su_list_description.processed)}
-          </div>
+        <div className="su-mb-40">
+          {formatHtml(paragraph.su_list_description.processed)}
+        </div>
       }
 
-      <List
-        emptyMessage={emptyMessage}
-        itemsToDisplay={itemsToDisplay}
-        gridClass={gridClass}
-        isList={isList}
-        viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
-        displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
-      />
+      <ErrorBoundary
+        fallback={<></>}
+        onError={e => console.error(e.message)}
+      >
+        <List
+          emptyMessage={emptyMessage}
+          itemsToDisplay={itemsToDisplay}
+          gridClass={gridClass}
+          isList={isList}
+          viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
+          displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
+        />
+      </ErrorBoundary>
     </div>
   )
 }
@@ -145,11 +162,17 @@ const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessag
         <div
           className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
           key={item.id}>
-          <ListItem
-            node={item}
-            viewId={viewId}
-            displayId={displayId}
-          />
+
+          <ErrorBoundary
+            fallback={<></>}
+            onError={e => console.error(e.message)}
+          >
+            <ListItem
+              node={item}
+              viewId={viewId}
+              displayId={displayId}
+            />
+          </ErrorBoundary>
         </div>
       ))}
     </div>

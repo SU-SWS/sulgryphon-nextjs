@@ -4,7 +4,6 @@ import {WysiwygParagraph} from "@/lib/drupal/drupal";
 interface StanfordWysiwygProps {
   paragraph: WysiwygParagraph
   siblingCount?: number
-  className?: string
 }
 
 const StanfordWysiwyg = ({paragraph, siblingCount, ...props}: StanfordWysiwygProps) => {

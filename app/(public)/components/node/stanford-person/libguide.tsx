@@ -1,23 +1,35 @@
 "use client";
 
-import Conditional from "../../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import Link from "next/link";
 import {useEffect, useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
+import {LibGuide} from "@/lib/drupal/drupal";
+import {ErrorBoundary} from "react-error-boundary";
 
-const LibGuides = ({guides}) => {
+const LibGuides = ({guides}: { guides: LibGuide[] }) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
 
   return (
     <div>
-      <Conditional showWhen={courseGuides.length > 0}>
-        <LibGuideSection heading="Course Guides" guides={courseGuides}/>
-      </Conditional>
+      <ErrorBoundary
+        fallback={<></>}
+        onError={e => console.error(e.message)}
+      >
+        <Conditional showWhen={courseGuides.length > 0}>
+          <LibGuideSection heading="Course Guides" guides={courseGuides}/>
+        </Conditional>
+      </ErrorBoundary>
 
-      <Conditional showWhen={topicGuides.length > 0}>
-        <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
-      </Conditional>
+      <ErrorBoundary
+        fallback={<></>}
+        onError={e => console.error(e.message)}
+      >
+        <Conditional showWhen={topicGuides.length > 0}>
+          <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
+        </Conditional>
+      </ErrorBoundary>
     </div>
   )
 }
@@ -32,7 +44,7 @@ const LibGuideSection = ({heading, guides}) => {
   const containerId = useId();
 
   useEffect(() => {
-    if(!showMore){
+    if (!showMore) {
       // @ts-ignore
       moreGuideRef?.current?.focus()
     }
@@ -63,7 +75,7 @@ const LibGuideSection = ({heading, guides}) => {
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}
-                aria-controls={containerId}
+          aria-controls={containerId}
         >
           {showMore ? `Show ${moreGuides.length} More` : 'Show Less'} <span className="su-sr-only">{heading}</span>
         </button>

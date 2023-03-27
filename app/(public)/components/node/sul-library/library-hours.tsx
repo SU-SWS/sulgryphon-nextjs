@@ -6,8 +6,20 @@ import {Library} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
+import {ErrorBoundary} from "react-error-boundary";
 
 const LibraryHeaderHours = ({node}: { node: Library }) => {
+  return (
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
+      <LibraryHeaderHoursComponent node={node}/>
+    </ErrorBoundary>
+  )
+}
+
+const LibraryHeaderHoursComponent = ({node}: { node: Library }) => {
   if (!node.su_library__hours) {
     return null;
   }

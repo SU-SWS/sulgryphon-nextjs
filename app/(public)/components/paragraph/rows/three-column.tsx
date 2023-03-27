@@ -1,6 +1,11 @@
 import Paragraph from "@/components/paragraph";
+import {DrupalParagraph} from "next-drupal";
 
-const ThreeColumn = ({config, items, fullWidth}) => {
+interface LayoutProps {
+  items: DrupalParagraph[],
+  fullWidth?: boolean
+}
+const ThreeColumn = ({items, fullWidth}: LayoutProps) => {
   const leftItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'left');
   const mainItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'main');
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');

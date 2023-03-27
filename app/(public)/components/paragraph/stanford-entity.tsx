@@ -7,8 +7,26 @@ import {DrupalLinkButton} from "../patterns/link";
 import {useEffect, useRef, useState} from "react";
 import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
+import {ErrorBoundary} from "react-error-boundary";
+import {EntityTeaserParagraph} from "@/lib/drupal/drupal";
 
-const StanfordEntity = ({paragraph, siblingCount, ...props}) => {
+interface EntityProps {
+  paragraph: EntityTeaserParagraph
+  siblingCount?: number
+}
+
+const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityProps) => {
+  return (
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
+      <StanfordEntityComponent paragraph={paragraph} siblingCount={siblingCount} {...props}/>
+    </ErrorBoundary>
+  )
+}
+
+const StanfordEntityComponent = ({paragraph, siblingCount, ...props}: EntityProps) => {
   const [entities, setEntities] = useState(paragraph.su_entity_item?.filter(entity => entity?.path?.alias) ?? [])
 
   const elemRef = useRef();

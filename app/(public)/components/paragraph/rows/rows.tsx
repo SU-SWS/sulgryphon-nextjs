@@ -12,6 +12,7 @@ interface RowProps {
 
 export const ParagraphRows = ({items, fullWidth = false, ...props}: RowProps) => {
   const layouts = {};
+
   items.map(item => {
     if (item?.behavior_settings?.layout_paragraphs?.layout) {
       layouts[item.id] = item;

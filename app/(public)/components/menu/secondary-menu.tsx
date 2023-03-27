@@ -8,8 +8,20 @@ import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import Conditional from "@/components/utils/conditional";
 import OutsideClickHandler from "@/components/utils/outside-click-handler";
+import {ErrorBoundary} from "react-error-boundary";
 
-const SecondaryMenu = ({menuItems}) => {
+const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+  return (
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
+      <SecondaryMenuComponent menuItems={menuItems}/>
+    </ErrorBoundary>
+  )
+}
+
+const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const activeTrail = useActiveTrail(menuItems);
   const isDesktop = useIsDesktop()
