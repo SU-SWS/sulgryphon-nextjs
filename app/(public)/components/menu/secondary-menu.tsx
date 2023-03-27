@@ -9,6 +9,7 @@ import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import Conditional from "@/components/utils/conditional";
 import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {ErrorBoundary} from "react-error-boundary";
+import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 
 const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   return (
@@ -92,7 +93,7 @@ interface SideMenuItemProps {
   title: string
   url: string
   parentItemProps?: any
-  menuLevel: number
+  menuLevel?: number
   activeTrail: string[]
   items?: DrupalMenuLinkContent[]
 }
@@ -117,8 +118,11 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
     <li className={`su-m-0`}>
       <div
         className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light su-text-archway-light" : "")}>
-        <Link href={url}
-              className={"su-flex-grow su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline"}>
+        <Link
+          href={url}
+          className={"su-flex-grow su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline"}
+          onClick={() => syncDrupalPreviewRoutes(url)}
+        >
           {title}
         </Link>
 
