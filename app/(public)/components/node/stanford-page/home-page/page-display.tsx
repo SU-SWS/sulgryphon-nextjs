@@ -11,7 +11,7 @@ const HomePageNode = async ({node}: {node: BasicPage}) => {
     <div>
       {/* @ts-expect-error Async Server Component */}
       <HomePageBanner/>
-      <ParagraphRows items={node.su_page_components}/>
+      <ParagraphRows items={node.su_page_components} fullWidth/>
     </div>
   )
 }

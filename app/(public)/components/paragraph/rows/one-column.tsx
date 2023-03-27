@@ -7,12 +7,12 @@ const OneColumn = ({items, fullWidth = false, config = {}}) => {
     'paragraph--sul_feat_collection',
   ];
 
-  const paddingClass = fullWidth ? "su-px-40 lg:px-0": "";
+  const paddingClass = fullWidth ? "su-px-40 xl:su-px-0": "";
 
   return (
     <div className="su-grid su-grid-col su-gap-2xl">
       {items.map(item =>
-        <Paragraph key={item.id} paragraph={item as DrupalParagraph} siblingCount={0} className={"su-relative " + (fullWidthItems.indexOf(item.type) >= 0 ? "" : "su-w-full su-max-w-[980px] su-mx-auto ") + paddingClass}/>
+        <Paragraph key={item.id} paragraph={item as DrupalParagraph} siblingCount={0} className={"su-relative su-w-full su-mx-auto " + (fullWidthItems.indexOf(item.type) >= 0 ? "" : " su-max-w-[980px] ") + paddingClass}/>
       )}
     </div>
   )

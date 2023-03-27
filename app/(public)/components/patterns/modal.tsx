@@ -48,7 +48,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
           }}
         >
           <div
-            className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[95%] su-flex"}
+            className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[80%] su-flex"}
             aria-label={ariaLabel}
             aria-hidden={!isOpen}
             aria-modal={isOpen}
@@ -64,10 +64,9 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
                   type="button"
                   ref={closeButton}
                   onClick={onClose}
-                  className={"su-absolute su-right-50 su-top-50 su-text-white"}
-                  aria-label="Close modal"
+                  className={"su-absolute su-right-50 su-top-50 su-text-white su-flex"}
                 >
-                  <XMarkIcon className={""} width={25} aria-hidden/>
+                  Close<span className="su-sr-only"> Overlay</span><XMarkIcon className="su-ml-10" width={25} aria-hidden/>
                 </button>
               </div>
             </div>
