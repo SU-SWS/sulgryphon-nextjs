@@ -93,6 +93,7 @@ const StudyPlaceFilteringList = ({items}) => {
               options={typeOfStudies}
               name="type"
               isMulti
+              isSearchable={false}
             />
           </div>
           <div>
@@ -104,6 +105,7 @@ const StudyPlaceFilteringList = ({items}) => {
               options={libraryOptions}
               name="library"
               isMulti
+              isSearchable={false}
             />
           </div>
           <div>
@@ -115,6 +117,7 @@ const StudyPlaceFilteringList = ({items}) => {
               options={a11yOptions}
               name="a11y"
               isMulti
+              isSearchable={false}
             />
           </div>
           <div>
@@ -126,6 +129,7 @@ const StudyPlaceFilteringList = ({items}) => {
               options={featureOptions}
               name="features"
               isMulti
+              isSearchable={false}
             />
           </div>
         </div>

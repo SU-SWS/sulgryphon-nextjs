@@ -1,4 +1,5 @@
 'use client';
+
 import Image from "next/image";
 
 import {CardParagraph} from "@/lib/drupal/drupal";
@@ -32,8 +33,8 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       fill={true}
     />
   }
-  props.className = `${props?.className ?? ''} ${horizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto`;
-
+  props.className = `${props?.className ?? ''} ${horizontal ? '' : ''}  su-mx-auto`;
+  console.log(horizontal)
   return (
     <Card
       video={video}

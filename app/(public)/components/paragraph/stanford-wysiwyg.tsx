@@ -4,12 +4,11 @@ import {WysiwygParagraph} from "@/lib/drupal/drupal";
 interface StanfordWysiwygProps {
   paragraph: WysiwygParagraph
   siblingCount?: number
-  className?: string
 }
 
 const StanfordWysiwyg = ({paragraph, siblingCount, ...props}: StanfordWysiwygProps) => {
   return (
-    <div {...props} className={`su-w-full su-max-w-[980px] su-mx-auto ${props.className ?? ''}`}>
+    <div {...props}>
       {formatHtml(paragraph?.su_wysiwyg_text?.processed)}
     </div>
   )

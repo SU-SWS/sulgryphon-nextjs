@@ -1,6 +1,7 @@
 "use client";
 
 import {usePathname} from "next/navigation";
+import {useMemo} from "react";
 
 const useActiveTrail = (menuItems) => {
   const currentPath = usePathname();
@@ -25,8 +26,7 @@ const useActiveTrail = (menuItems) => {
     }
     return [];
   }
-
-  return getActiveTrail(menuItems);
+  return useMemo(() => getActiveTrail(menuItems), [menuItems, currentPath]);
 }
 
 export default useActiveTrail;

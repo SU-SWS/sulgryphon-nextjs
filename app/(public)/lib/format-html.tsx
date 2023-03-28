@@ -76,7 +76,7 @@ const options: HTMLReactParserOptions = {
             <figure {...nodeProps}>{domToReact(domNode.children, options)}</figure>
           )
         case 'figcaption':
-          nodeProps.className += ' su-table-caption su-text-center';
+          nodeProps.className += ' su-table-caption su-text-center su-italic su-leading su-text-19';
           return <figcaption {...nodeProps}
                              style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
         case 'iframe':
@@ -162,6 +162,10 @@ const cleanMediaMarkup = (node: Element) => {
   if (image instanceof Element) {
     let {src, alt, width, height} = image.attribs;
     let {class: classes} = node.attribs;
+
+    if (src.substring(0, 1) === '/') {
+      src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src;
+    }
 
     return (
       <span className={fixClasses(classes)}>

@@ -1,8 +1,9 @@
-import Wave from "../../../patterns/wave";
-import SearchForm from "../../../search/search-form";
+import Wave from "@/components/patterns/wave";
+import SearchForm from "@/components/search/search-form";
 import TodayHours from "./today-hours";
 import {getResourceCollection} from "@/lib/drupal/get-resource";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+import Link from "next/link";
 
 const HomePageBanner = async () => {
   const params = new DrupalJsonApiParams();
@@ -15,8 +16,14 @@ const HomePageBanner = async () => {
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
           <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
             <h2>What can we help you find?</h2>
-            <SearchForm action="https://library.stanford.edu" className="su-mb-20"/>
-            <p>Search gives results from this site, the catalog, articles+, guides, online exhibits, and Yewno.</p>
+            <SearchForm action="https://library.stanford.edu/all" className="su-mb-20"/>
+            <p>
+              Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
+              , <Link href="https://searchworks.stanford.edu/articles" className="su-text-white hocus:su-text-white hocus:su-no-underline">articles+</Link>
+              , <Link href="https://guides.library.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">guides</Link>
+              , <Link href="https://exhibits.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">online exhibits</Link>
+              , and <Link href="https://earthworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">EarthWorks</Link>.
+            </p>
           </div>
 
           <TodayHours libraries={libraries} className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>

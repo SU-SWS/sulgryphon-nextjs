@@ -1,19 +1,17 @@
 import HomePageBanner from "./home-page-banner";
 import {BasicPage} from "@/lib/drupal/drupal";
-import {ParagraphRows} from "../../../paragraph/rows/rows";
-import {getResource} from "@/lib/drupal/get-resource";
+import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import fetchComponents from "@/lib/fetch-components";
+import {DrupalParagraph} from "next-drupal";
 
-const HomePageNode = async ({node}: BasicPage) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_page_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_page_components = await Promise.all(requests);
-
+const HomePageNode = async ({node}: {node: BasicPage}) => {
+  node.su_page_components = await fetchComponents(node.su_page_components ?? []) as DrupalParagraph[];
 
   return (
     <div>
       {/* @ts-expect-error Async Server Component */}
       <HomePageBanner/>
-      <ParagraphRows items={node.su_page_components}/>
+      <ParagraphRows items={node.su_page_components} fullWidth/>
     </div>
   )
 }

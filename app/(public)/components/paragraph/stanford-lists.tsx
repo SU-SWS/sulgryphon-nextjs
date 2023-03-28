@@ -6,19 +6,36 @@ import {useEffect, useRef, useState} from "react";
 import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
 import formatHtml from "@/lib/format-html";
-import {DrupalLinkButton} from "../patterns/link";
+import {DrupalLink} from "@/components/patterns/link";
 import {DrupalNode} from "next-drupal";
-import {NodeCardDisplay, NodeListDisplay} from "../node";
+import NodeCardDisplay from "@/components/node/node-card";
+import NodeListDisplay from "@/components/node/node-list-display";
+import AboveHeaderBorder from "@/components/patterns/above-header-border";
+import {ErrorBoundary} from "react-error-boundary";
 
 const StudyPlaceFilteringList = dynamic(() => import("../views/study-places"));
 
 interface ListProps {
   paragraph: ListParagraph
   siblingCount?: number
-  className?: string
 }
 
 const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
+  return (
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
+      <StanfordListsComponent paragraph={paragraph} siblingCount={siblingCount} {...props}/>
+    </ErrorBoundary>
+  )
+}
+
+
+const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
+  const hideEmpty = paragraph.behavior_settings?.list_paragraph?.hide_empty;
+  const emptyMessage = paragraph.behavior_settings?.list_paragraph?.empty_message;
+
   const elemRef = useRef();
   const elemRefValue = useOnScreen(elemRef);
   const [isElemRef, setIsElemRef] = useState(false);
@@ -60,25 +77,49 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
 
   const isList = useListDisplay(paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id, displayNotGrid());
 
+  if (hideEmpty && itemsToDisplay.length === 0) {
+    return null;
+  }
+
   return (
     // @ts-ignore
-    <div ref={elemRef} {...props} className={'su-max-w-[980px] su-w-full su-mx-auto su-mb-40 ' + (props.className ?? '')}>
-      {paragraph.su_list_headline && <h2 className="su-text-center">{paragraph.su_list_headline}</h2>}
+    <div ref={elemRef} {...props}>
+      <div className="su-flex su-gap-2xl">
+        {paragraph.su_list_headline &&
+          <h2 className="su-text-left su-type-5 su-flex-grow">
+            <AboveHeaderBorder/>
+            {paragraph.su_list_headline}
+          </h2>
+        }
+
+        <div>
+          <DrupalLink
+            url={paragraph.su_list_button?.url}
+            title={paragraph.su_list_button?.title}
+            style={paragraph.behavior_settings?.sul_list_styles?.link_display_style}
+          />
+        </div>
+      </div>
+
       {paragraph.su_list_description &&
-          <div className="su-mb-40">{formatHtml(paragraph.su_list_description.processed)}</div>}
+        <div className="su-mb-40">
+          {formatHtml(paragraph.su_list_description.processed)}
+        </div>
+      }
 
-      <List
-        itemsToDisplay={itemsToDisplay}
-        gridClass={gridClass}
-        isList={isList}
-        viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
-        displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
-      />
-
-      {paragraph.su_list_button &&
-          <DrupalLinkButton href={paragraph.su_list_button.url} className="su-block su-mx-auto">
-            {paragraph.su_list_button.title}
-          </DrupalLinkButton>}
+      <ErrorBoundary
+        fallback={<></>}
+        onError={e => console.error(e.message)}
+      >
+        <List
+          emptyMessage={emptyMessage}
+          itemsToDisplay={itemsToDisplay}
+          gridClass={gridClass}
+          isList={isList}
+          viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
+          displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
+        />
+      </ErrorBoundary>
     </div>
   )
 }
@@ -102,9 +143,14 @@ interface ListItemProps {
   node: DrupalNode
   viewId: string
   displayId: string
+  emptyMessage?: string
 }
 
-const List = ({itemsToDisplay, gridClass, isList, viewId, displayId}) => {
+const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessage}) => {
+
+  if (itemsToDisplay.length === 0 && emptyMessage) {
+    return <div>{emptyMessage}</div>
+  }
 
   if (viewId === 'sul_study_places' && displayId === 'study_places') {
     return <StudyPlaceFilteringList items={itemsToDisplay}/>
@@ -116,11 +162,17 @@ const List = ({itemsToDisplay, gridClass, isList, viewId, displayId}) => {
         <div
           className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
           key={item.id}>
-          <ListItem
-            node={item}
-            viewId={viewId}
-            displayId={displayId}
-          />
+
+          <ErrorBoundary
+            fallback={<></>}
+            onError={e => console.error(e.message)}
+          >
+            <ListItem
+              node={item}
+              viewId={viewId}
+              displayId={displayId}
+            />
+          </ErrorBoundary>
         </div>
       ))}
     </div>

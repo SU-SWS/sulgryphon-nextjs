@@ -47,6 +47,7 @@ interface Event extends DrupalNode {
   su_event_telephone?: string
   su_event_type?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
+  sul_event__image?: DrupalImageMedia
 }
 
 interface EventSeries extends DrupalNode {
@@ -105,6 +106,7 @@ interface Person extends DrupalNode {
   sul_person__libguide_id?: number
   lib_guides: LibGuide[]
 }
+
 interface LibGuide {
   id: string
   title: string
@@ -114,22 +116,23 @@ interface LibGuide {
 interface Publication extends DrupalNode {
   su_publication_author_ref: DrupalNode[]
   su_publication_citation: DrupalPublicationCitation
-  su_publication_components: DrupalParagraph[]
-  su_publication_cta: DrupalLink
-  su_publication_image: DrupalImageMedia
-  su_publication_topics: DrupalTaxonomyTerm[]
-  su_shared_tags: DrupalTaxonomyTerm[]
+  su_publication_components?: DrupalParagraph[]
+  su_publication_cta?: DrupalLink
+  su_publication_image?: DrupalImageMedia
+  su_publication_topics?: DrupalTaxonomyTerm[]
+  su_shared_tags?: DrupalTaxonomyTerm[]
 }
 
 interface Library extends DrupalNode {
-  su_library__address: DrupalAddress
-  su_library__banner: DrupalImageMedia
-  su_library__contact_img: DrupalImageMedia
-  su_library__email: string
-  su_library__hours: string
-  su_library__map_link: DrupalLink
-  su_library__paragraphs: DrupalParagraph[]
-  su_library__phone: number
+  su_library__address?: DrupalAddress
+  su_library__banner?: DrupalImageMedia
+  su_library__contact_img?: DrupalImageMedia
+  su_library__email?: string
+  su_library__hours?: string
+  su_library__map_link?: DrupalLink
+  su_library__paragraphs?: DrupalParagraph[]
+  su_library__phone?: number
+  sul_library__a11y?: DrupalWysiwyg
 }
 
 interface StudyPlace extends DrupalNode {
@@ -192,6 +195,13 @@ interface ImageGalleryParagraph extends DrupalParagraph {
 interface ListParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_list_styles?: {
+      link_display_style?: string
+    }
+    list_paragraph?: {
+      hide_empty?: boolean
+      empty_message?: string
+    }
   }
   su_list_button?: DrupalLink
   su_list_description?: DrupalWysiwyg
@@ -246,6 +256,9 @@ interface CollectionCardParagraph extends DrupalParagraph {
 interface FeaturedCollectionParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_feat_collections_styles?: {
+      link_display_style?: string
+    }
   }
   sul_collection__cards: CardParagraph[]
   sul_collection__headline?: string
@@ -263,6 +276,17 @@ interface ContactCardParagraph extends DrupalParagraph {
   sul_contact__image?: DrupalImageMedia
   sul_contact__phone?: string
   sul_contact__title?: string
+}
+
+interface ButtonParagraph extends DrupalParagraph {
+  behavior_settings?: {
+    layout_paragraphs?: LayoutParagraphsBehaviors
+    sul_button_styles?: {
+      background?: string
+    }
+  }
+  sul_button_link: DrupalLink
+  sul_button_headline?: string
 }
 
 // Media Types.
@@ -286,6 +310,16 @@ interface DrupalGalleryImageMedia extends DrupalMedia {
 interface DrupalEmbeddableMedia extends DrupalMedia {
   field_media_embeddable_code?: string
   field_media_embeddable_oembed?: string
+}
+
+// Config Pages
+interface GlobalMessageType {
+  su_global_msg_type: string
+  su_global_msg_enabled: boolean
+  su_global_msg_link?: DrupalLink
+  su_global_msg_header?: string
+  su_global_msg_label?: string
+  su_global_msg_message?: DrupalWysiwyg
 }
 
 // Field Structures.

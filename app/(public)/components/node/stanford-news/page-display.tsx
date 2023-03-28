@@ -1,48 +1,29 @@
-import {NewsArticleJsonLd} from "next-seo";
-import Oembed from "../../patterns/oembed";
-import {ParagraphRows} from "../../paragraph/rows/rows";
+import Oembed from "@/components/patterns/oembed";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 
-import LinkedInIcon from "../../patterns/icons/LinkedInIcon";
-import TwitterIcon from "../../patterns/icons/TwitterIcon";
-import FacebookIcon from "../../patterns/icons/FacebookIcon";
-import Conditional from "../../utils/conditional";
-import NewsSocialLink from "./news-social-link";
+import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon";
+import TwitterIcon from "@/components/patterns/icons/TwitterIcon";
+import FacebookIcon from "@/components/patterns/icons/FacebookIcon";
+import Conditional from "@/components/utils/conditional";
+import NewsSocialLink from "@/components/node/stanford-news/news-social-link";
 import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
-import {getResource} from "@/lib/drupal/get-resource";
-import NewsPrintButton from "./print-button";
+import NewsPrintButton from "@/components/node/stanford-news/print-button";
+import fetchComponents from "@/lib/fetch-components";
+import Paragraph from "@/components/paragraph";
+import {redirect} from "next/navigation";
 
-export const StanfordNews = ({node, ...props}: { node: News }) => {
-  // @ts-ignore
-  return <NewsPageDisplay node={node} {...props}/>
-}
+const StanfordNews = async ({node, ...props}: { node: News }) => {
+  node.su_news_components = await fetchComponents(node.su_news_components ?? [])
+  node.su_news_components = node.su_news_components.filter(item => item?.id?.length > 0);
 
-const NewsPageDisplay = async({node, ...props}: { node: News }) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_news_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_news_components = await Promise.all(requests);
-
+  // Redirect the user to the external source.
+  if (node.su_news_source?.url && node.su_news_source?.url?.length > 0) {
+    redirect(node.su_news_source?.url);
+  }
   return (
     <article {...props} className="su-mt-50">
-      <NewsArticleJsonLd
-        useAppDir={true}
-        url={node.su_news_source?.url ?? node.path.alias}
-        title={node.title}
-        images={node.su_news_featured_media?.field_media_image?.uri?.url}
-        section=""
-        keywords=""
-        dateCreated={node.su_news_publishing_date ?? ''}
-        datePublished={node.su_news_publishing_date ?? ''}
-        dateModified=""
-        authorName={node.su_news_byline ?? ''}
-        description={node.su_news_dek ?? ''}
-        body=""
-        publisherName=""
-        publisherLogo=""
-        isAccessibleForFree={true}
-      />
       <div className="su-cc">
 
         {(node.su_news_topics && node.su_news_topics.length > 0) &&
@@ -107,12 +88,13 @@ const NewsPageDisplay = async({node, ...props}: { node: News }) => {
           </div>
           <div>
             {node.su_news_publishing_date && <>{formatDate(node.su_news_publishing_date + ' 12:00:00')} |&nbsp;</>}
-            {node.su_news_byline && <>{node.su_news_byline}</>}
+            {node.su_news_byline}
           </div>
         </div>
       </div>
+
       {node?.su_news_banner?.field_media_image &&
-          <div>
+          <figure className="su-mb-50">
             <Image
                 className="su-mx-auto"
                 src={node.su_news_banner.field_media_image.image_style_uri.breakpoint_2xl_2x}
@@ -120,18 +102,33 @@ const NewsPageDisplay = async({node, ...props}: { node: News }) => {
                 height={node.su_news_banner.field_media_image.resourceIdObjMeta.height}
                 width={node.su_news_banner.field_media_image.resourceIdObjMeta.width}
             />
-          </div>
+
+            {node.su_news_banner_media_caption &&
+                <figcaption className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">
+                  {node.su_news_banner_media_caption}
+                </figcaption>
+            }
+
+          </figure>
       }
 
       {node?.su_news_banner?.field_media_oembed_video &&
-          <Oembed
-              url={node.su_news_banner.field_media_oembed_video}
-          />
+          <figure className="su-mb-50">
+            <Oembed
+                url={node.su_news_banner.field_media_oembed_video}
+            />
+            {node.su_news_banner_media_caption &&
+                <figcaption className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">
+                  {node.su_news_banner_media_caption}
+                </figcaption>
+            }
+          </figure>
       }
 
-      {node.su_news_banner_media_caption &&
-          <div className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">{node.su_news_banner_media_caption}</div>}
-      <ParagraphRows items={node.su_news_components}/>
+
+      <div className="su-mb-50">
+        {node.su_news_components.map(component => <Paragraph key={component.id} paragraph={component}/>)}
+      </div>
     </article>
   )
 }

@@ -2,12 +2,16 @@
 
 import {useRef, useState} from "react";
 import Modal from "../../patterns/modal";
+import {ErrorBoundary} from "react-error-boundary";
 
 const LibCal = ({libcalId}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const iframeRef = useRef(null);
   return (
-    <>
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
       <button className="su-button" onClick={() => setModalOpen(true)}>
         Schedule an appointment
       </button>
@@ -25,7 +29,7 @@ const LibCal = ({libcalId}) => {
           className="su-w-full su-h-full"
         />
       </Modal>
-    </>
+    </ErrorBoundary>
   )
 }
 export default LibCal;

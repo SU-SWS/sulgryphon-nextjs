@@ -1,9 +1,6 @@
 import {AppProps} from "next/app"
 import Router from "next/router"
 import {syncDrupalPreviewRoutes} from "next-drupal"
-import {DefaultSeo} from "next-seo";
-
-import SEO from '../next-seo.config';
 
 Router.events.on("routeChangeStart", path => {
   syncDrupalPreviewRoutes(path)
@@ -12,7 +9,6 @@ Router.events.on("routeChangeStart", path => {
 const DrupalApp = ({Component, pageProps}: AppProps) => {
   return (
     <>
-      <DefaultSeo {...SEO} />
       <Component {...pageProps} />
     </>
   )

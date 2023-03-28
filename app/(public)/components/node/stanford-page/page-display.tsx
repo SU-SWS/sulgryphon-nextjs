@@ -1,18 +1,10 @@
-import {NextSeo} from "next-seo";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
-import {getResource} from "@/lib/drupal/get-resource";
 import {BasicPage} from "@/lib/drupal/drupal";
+import fetchComponents from "@/lib/fetch-components";
 
-export const StanfordPage = ({node, ...props}: { node: BasicPage }) => {
-  // @ts-ignore
-  return <BasicPagePageDisplay node={node} {...props}/>
-}
-
-
-const BasicPagePageDisplay = async ({node}: { node: BasicPage }) => {
-  const requests: PromiseLike<any>[] = [];
-  node.su_page_components?.map(component => requests.push(getResource(component.type, component.id)));
-  node.su_page_components = await Promise.all(requests);
+const StanfordPage = async ({node}: { node: BasicPage }) => {
+  node.su_page_components = await fetchComponents(node.su_page_components ?? []);
+  node.su_page_components = node.su_page_components.filter(item => item?.id?.length > 0);
 
   const getFeaturedImageAlt = (node): string => {
     if (node.su_page_image?.field_media_image?.resourceIdObjMeta?.alt) {
@@ -31,30 +23,11 @@ const BasicPagePageDisplay = async ({node}: { node: BasicPage }) => {
     }
     return '';
   }
-
+  const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full';
   return (
-    <>
-      <NextSeo
-        useAppDir={true}
-        title={node.title}
-        description={node.su_page_description}
-        openGraph={{
-          type: 'website',
-          title: node.title,
-          description: node.su_page_description,
-          images: [{
-            url: getFeaturedImageUrl(node, 'card_956x478'),
-            width: 956,
-            height: 478,
-            alt: getFeaturedImageAlt(node)
-          }]
-        }}
-      />
-
-      <article>
-        <ParagraphRows items={node.su_page_components}/>
-      </article>
-    </>
+    <article>
+      <ParagraphRows items={node.su_page_components} fullWidth={fullWidth}/>
+    </article>
   )
 }
 

@@ -10,6 +10,7 @@ import {DrupalMenuLinkContent} from "next-drupal";
 import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
+import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 
 const MainMenu = ({menuItems}) => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -35,7 +36,7 @@ const MainMenu = ({menuItems}) => {
     setAddCloseAnimation(true);
   }
   // When clicking or focusing outside the main menu, close the main menu and all submenus.
-  const handleClickFocusOutside = () => {
+  const handleClickFocusOutside = (e) => {
     submenuRefs.map(ref => ref?.current?.closeSubmenus())
     setMenuOpen(false)
   }
@@ -203,7 +204,7 @@ const MenuItem = forwardRef(({
     <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
       <Conditional showWhen={url.length > 1}>
         <Link
-          onClick={onClick}
+          onClick={() => {syncDrupalPreviewRoutes(url); onClick()}}
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}

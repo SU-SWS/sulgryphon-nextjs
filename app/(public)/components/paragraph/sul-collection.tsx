@@ -11,7 +11,7 @@ interface CollectionProps {
   siblingCount?: number
 }
 
-const SulCollection = ({paragraph, siblingCount = 1}: CollectionProps) => {
+const SulCollection = ({paragraph, siblingCount = 0, ...props}: CollectionProps) => {
   const elementId = useId()
   const [displayedCard, setDisplayedCard] = useState(paragraph.sul_collection_card[0].id)
 
@@ -23,10 +23,10 @@ const SulCollection = ({paragraph, siblingCount = 1}: CollectionProps) => {
   }, [displayedCard])
 
   return (
-    <section aria-labelledby={paragraph.id}>
+    <section aria-labelledby={paragraph.id} {...props}>
       <Conditional showWhen={paragraph.sul_collection_heading}>
         <AboveHeaderBorder/>
-        <h2 id={paragraph.id}>{paragraph.sul_collection_heading}</h2>
+        <h2 id={paragraph.id} className="su-type-5">{paragraph.sul_collection_heading}</h2>
       </Conditional>
 
       <div className={"su-gap-lg " + (siblingCount > 0 ? '' : 'lg:su-flex')}>

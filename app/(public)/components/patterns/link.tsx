@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
+import {ReactNodeLike} from "prop-types";
 
 export const DrupalLinkButton = ({href, children, buttonProps = null, ...props}) => {
   return (
@@ -47,5 +48,22 @@ export const DrupalActionLink = ({href, children, buttonProps = null, ...props})
       {children}
       <ChevronRightIcon className="su-inline su-h-full su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
     </Link>
+  )
+}
+
+interface keyable {
+  [key: string]: any
+}
+
+export const DrupalLink = ({url, title, style,children, props}: { url?: string, title?: string, style?: string, children?:ReactNodeLike, props?: keyable }) => {
+  if (!url) {
+    return null;
+  }
+  const LinkComponent = style === 'secondary_button' ? DrupalLinkSecondaryButton : (style === 'cta_button' ? DrupalActionLink : DrupalLinkButton);
+  return (
+    <LinkComponent href={url} {...props}>
+      {title}
+      {children}
+    </LinkComponent>
   )
 }

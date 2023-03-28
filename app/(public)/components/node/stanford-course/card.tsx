@@ -22,7 +22,7 @@ const StanfordCourseCard = ({node, ...props}: { node: Course }) => {
         </span>
       </div>
       <Link href={node.path.alias}
-            className="su-text-digital-red hocus:su-text-digital-red su-no-underline hocus:su-underline">
+            className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
         <h2 className="su-type-2">{node.title}</h2>
       </Link>
     </article>
