@@ -28,7 +28,6 @@ const Card = ({
                 body,
                 link,
                 linkStyle,
-                horizontal = false,
                 ...props
               }: CardProps) => {
   return (
