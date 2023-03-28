@@ -1,5 +1,3 @@
-'use client';
-
 import {ReactNodeLike} from "prop-types";
 
 import formatHtml from "@/lib/format-html";

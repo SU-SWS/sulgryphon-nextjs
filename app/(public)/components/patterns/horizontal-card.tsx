@@ -5,7 +5,6 @@ import Conditional from "../utils/conditional";
 import {DrupalLinkButton, DrupalLinkSecondaryButton, DrupalActionLink} from "@/components/patterns/link";
 import {TopRightSprinkles, TopLeftSprinkles,BottomLeftSprinkles,BottomRightSprinkles} from "@/components/patterns/card-sprinkles";
 import Image from "next/image";
-import {useResizeDetector} from "react-resize-detector";
 
 interface CardProps {
   video?: ReactNodeLike
