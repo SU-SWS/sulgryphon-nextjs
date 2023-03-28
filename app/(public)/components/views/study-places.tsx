@@ -28,12 +28,12 @@ const StudyPlaceFilteringList = ({items}) => {
   const libraryOptions: SelectOption[] = [];
 
   items.map(item => {
-    item.sul_study__capacity.map(term => {
+    item.sul_study__capacity?.map(term => {
       if (capacityOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
         capacityOptions.push({value: term.id, label: term.name})
       }
     })
-    item.sul_study__features.map(term => {
+    item.sul_study__features?.map(term => {
       if (featureOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
         featureOptions.push({value: term.id, label: term.name})
       }

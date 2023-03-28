@@ -55,7 +55,9 @@ const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListPro
     if (isElemRef) {
       axios.get(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`).then(response => {
         const items = (paragraph.su_list_view?.resourceIdObjMeta?.items_to_display ?? 0) >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
-        setItemsToDisplay(items);
+        setItemsToDisplay(items.filter(item => !!item));
+      }).catch(e => {
+        console.log(e);
       });
     }
   }, [isElemRef, paragraph.su_list_view])

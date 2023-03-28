@@ -7,7 +7,7 @@ const fetchComponents = async (components: JsonApiResource[]): Promise<JsonApiRe
   const requests: PromiseLike<any>[] = [];
   components.map(component => requests.push(getResource(component.type, component.id)));
   // @ts-ignore
-  return Promise.all(requests.map(p => p.catch(() => null)));
+  return Promise.all(requests.map(p => p.catch((e) => {console.log(e); return null})));
 }
 
 export default fetchComponents;
