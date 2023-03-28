@@ -25,8 +25,7 @@ interface CardProps {
 const HorizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, backgroundSprinkles, ...props}: CardProps) => {
   return (
     <div {...props}
-         className={`card su-block su-w-full su-relative su-basefont-23 su-leading-display su-bg-black-true su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-mt-[9rem] md:su-px-80 md:su-pb-80 md:su-pt-120 su-p-40 su-flex-wrap ${props.className ?? ''}
-         `}>
+         className={`card su-block su-w-full su-relative su-basefont-23 su-leading-display su-bg-black-true su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-mt-[9rem] md:su-px-80 md:su-pb-80 md:su-pt-120 su-p-40 su-flex-wrap ${props.className ?? ''}`}>
 
       {(backgroundSprinkles == 'top_right') &&
         <TopRightSprinkles></TopRightSprinkles>

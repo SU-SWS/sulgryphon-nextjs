@@ -16,8 +16,6 @@ interface CardProps {
 
 const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
   const horizontal = paragraph?.behavior_settings?.sul_card_styles?.orientation;
-  horizontal ? 'horizontal' : ''
-  horizontal
   const Card = horizontal ? HorizontalCard : VerticalCard;
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
@@ -35,7 +33,7 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       fill={true}
     />
   }
-  props.className = `${props?.className ?? ''} ${horizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto`;
+  props.className = `${props?.className ?? ''} ${horizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto `;
   return (
     <Card
       video={video}

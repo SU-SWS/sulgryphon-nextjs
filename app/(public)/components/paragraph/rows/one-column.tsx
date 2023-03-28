@@ -18,7 +18,7 @@ const OneColumn = ({items, fullWidth = false}: LayoutProps) => {
     <div className="su-grid su-grid-col su-gap-2xl">
       {items.map(item =>
         <Paragraph key={item.id} paragraph={item as DrupalParagraph} siblingCount={0}
-                   className={"su-relative su-w-full su-mx-auto " + (fullWidthItems.indexOf(item.type) >= 0 ? "" : " su-max-w-[980px] ") + paddingClass}/>
+                   className={"su-relative su-w-full su-mx-auto " + (fullWidthItems.indexOf(item.type) >= 0 || item.type == "paragraph--stanford_card" ? "" : " su-max-w-[980px] ") + paddingClass}/>
       )}
     </div>
   )
