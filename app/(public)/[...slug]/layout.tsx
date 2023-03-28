@@ -19,7 +19,9 @@ const getNode = async (context): Promise<[DrupalNode, boolean]> => {
     notFound();
   }
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
-  const fullWidth = node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full';
+  const fullWidth = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
+    (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
+
   return [node, fullWidth];
 }
 

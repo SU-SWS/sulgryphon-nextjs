@@ -31,7 +31,7 @@ const LibraryAdditionalHoursComponent = ({node}: { node: Library }) => {
 
   return (
     <div
-      className={"su-mb-50 su-grid su-gap-2xl " + (additionalLocations?.length > 0 && node.sul_library__a11y?.processed ? "lg:su-grid-cols-1-1" : "")}>
+      className={"su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-mb-50 su-grid su-gap-2xl " + (additionalLocations?.length > 0 && node.sul_library__a11y?.processed ? "lg:su-grid-cols-1-1" : "")}>
       {node.sul_library__a11y?.processed &&
         <div className="su-order-last lg:su-order-first">
           <h2 className="su-text-m3">Accessibility</h2>
