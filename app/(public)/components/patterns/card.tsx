@@ -31,10 +31,10 @@ const Card = ({
                 ...props
               }: CardProps) => {
   return (
-    <div {...props}
-         className={`card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md ${props.className ?? ''}`}>
+    <div {...props}>
+      <div className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">
 
-           <Conditional showWhen={image}>
+        <Conditional showWhen={image}>
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
             {image}
           </div>
@@ -68,6 +68,7 @@ const Card = ({
             title={link?.title}
             style={linkStyle}
           />
+        </div>
       </div>
     </div>
   )
