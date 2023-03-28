@@ -1,8 +1,8 @@
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
-import {DrupalNode} from "next-drupal";
-import {getResource} from "@/lib/drupal/get-resource";
+import {DrupalView} from "next-drupal";
 import {getView} from "@/lib/drupal/get-view";
 import {NextRequest, NextResponse} from "next/server";
+import fetchComponents from "@/lib/fetch-components";
 
 export const GET = async (request: NextRequest, {params}) => {
   const [viewId, displayId, options] = params.slug
@@ -16,15 +16,7 @@ export const GET = async (request: NextRequest, {params}) => {
     drupalParams.addPageLimit(itemsToDisplay);
   }
 
-  const view = await getView<DrupalNode>(`${viewId}--${displayId}`, {params: drupalParams.getQueryObject()});
-  const requests: PromiseLike<any>[] = [];
-
-  view.results.map(result => {
-    requests.push(getResource<DrupalNode>(
-      result.type,
-      result.id
-    ))
-  })
-
-  return NextResponse.json(await Promise.all(requests));
+  const view = await getView<Promise<DrupalView>>(`${viewId}--${displayId}`, {params: drupalParams.getQueryObject()});
+  // @ts-ignore
+  return NextResponse.json(await fetchComponents(view.results));
 }
