@@ -9,17 +9,15 @@ const LibCal = ({libcalId}) => {
   const iframeRef = useRef(null);
   return (
     <>
-      <button className="su-bg-black-true su-text-white " onClick={() => setModalOpen(true)}>
-        <div className="su-flex su-justify-end su-items-center">
-            <div className="su-text-white">
-                <CalendarDaysIcon className="su-text-white su-bg-black-20" />
-            </div>
-            <div className="su-relative su-pr-30 su-font-bold hocus:su-text-illuminating-dark su-no-underline">
-                Reserve Space
-                <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full"/>
-            </div>
+      <button className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1" onClick={() => setModalOpen(true)}>
+        <div className="su-flex su-justify-end su-items-center su-gap-xs">
+          <div className="su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
+          <CalendarDaysIcon className="su-inline-block su-flex-shrink-0 su-w-[24px]"/>
+          <div className="su-relative su-pr-30 su-font-bold su-no-underline">
+            Reserve Space
+            <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full"/>
+          </div>
         </div>
-        
       </button>
 
       <Modal
