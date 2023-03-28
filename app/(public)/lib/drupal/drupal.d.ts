@@ -133,6 +133,7 @@ interface Library extends DrupalNode {
   su_library__paragraphs?: DrupalParagraph[]
   su_library__phone?: number
   sul_library__a11y?: DrupalWysiwyg
+  layout_selection?: DrupalLayoutSelection
 }
 
 interface StudyPlace extends DrupalNode {
