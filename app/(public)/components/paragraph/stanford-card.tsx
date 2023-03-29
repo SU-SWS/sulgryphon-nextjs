@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import {CardParagraph} from "@/lib/drupal/drupal";
-import VerticalCard from "../patterns/card";
+import Card from "../patterns/card";
 import HorizontalCard from "../patterns/horizontal-card";
 import Oembed from "../patterns/oembed";
 import {ReactNodeLike} from "prop-types";
@@ -15,8 +15,7 @@ interface CardProps {
 }
 
 const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
-  const horizontal = paragraph?.behavior_settings?.sul_card_styles?.orientation;
-  const Card = horizontal ? HorizontalCard : VerticalCard;
+  const isHorizontal = paragraph?.behavior_settings?.sul_card_styles?.orientation === 'horizontal';
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
 
@@ -33,7 +32,23 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       fill={true}
     />
   }
-  props.className = `${props?.className ?? ''} ${horizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto `;
+  props.className = `${props?.className ?? ''} ${isHorizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto `;
+
+  if (isHorizontal) {
+    return (
+      <HorizontalCard
+        video={video}
+        image={image}
+        header={paragraph.su_card_header}
+        superHeader={paragraph.su_card_super_header}
+        body={paragraph?.su_card_body?.processed}
+        link={paragraph?.su_card_link}
+        linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
+        backgroundSprinkles={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
+        {...props}
+      />
+    )
+  }
   return (
     <Card
       video={video}
@@ -43,9 +58,9 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
       body={paragraph?.su_card_body?.processed}
       link={paragraph?.su_card_link}
       linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
-      backgroundSprinkles={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
       {...props}
     />
   )
+
 }
 export default StanfordCard;
