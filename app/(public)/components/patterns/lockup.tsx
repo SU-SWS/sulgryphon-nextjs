@@ -18,7 +18,7 @@ const Lockup = ({whiteText, ...props}: LockupProps) => {
           <div className="su-flex su-flex-col lg:su-flex-row su-items-baseline su-ml-10">
             <div className="lg:su-border-r-3 su-border-black su-pr-10 su-mr-10 su-mb-5">
               <span className="su-sr-only">Stanford</span>
-              <StanfordWordMark className="su-text-cardinal-red-dark" height={35} aria-hidden/>
+              <StanfordWordMark className={whiteText ? " su-text-white" : "su-text-cardinal-red-dark"} height={35} aria-hidden/>
             </div>
 
             <div className={"su-text-m2 su-semibold lg:su-font-regular su-text-black su-uppercase" + (whiteText ? " su-text-white" : "")}>
