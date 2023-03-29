@@ -28,16 +28,14 @@ const StudyPlaceFilteringList = ({items}) => {
   const libraryOptions: SelectOption[] = [];
 
   items.map(item => {
-    item.sul_study__capacity?.map(term => {
-      if (capacityOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
-        capacityOptions.push({value: term.id, label: term.name})
-      }
-    })
     item.sul_study__features?.map(term => {
       if (featureOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
         featureOptions.push({value: term.id, label: term.name})
       }
     })
+    if (capacityOptions.findIndex(option => option.value === item.sul_study__capacity?.id) === -1 && item.sul_study__capacity?.name) {
+      capacityOptions.push({value: item.sul_study__capacity.id, label: item.sul_study__capacity.name})
+    }
     if (typeOfStudies.findIndex(option => option.value === item.sul_study__type.id) === -1 && item.sul_study__type.name) {
       typeOfStudies.push({value: item.sul_study__type.id, label: item.sul_study__type.name})
     }
