@@ -35,7 +35,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
 
         {(backgroundSprinkles == 'top_left') && <TopLeftSprinkles/>}
 
-        <div className={"su-w-full md:su-w-1/2 md:su-mt-0 su-mt-[-14rem] su-z-10"}>
+        <div className={"su-w-full md:su-w-1/2 md:su-mt-0 sm:su-mt-[-14rem] su-mt-[-9rem] su-z-10"}>
           <Conditional showWhen={image}>
             <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
               {image}
