@@ -73,7 +73,7 @@ const StudyPlaceHoursComponent = ({node}: { node: StudyPlace }) => {
 
   return (
     <div className="su-flex su-text-black-true su-mb-20 su-type-1">
-      <ClockIcon width={19} className="su-inline su-mr-10"/>
+      <ClockIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
       <div aria-live="polite">
         {!closedAllDay && (isOpen ? 'Closes at ' + StudyPlaceCloseTime : 'Opens at ' + StudyPlaceOpenTime)}
       </div>
