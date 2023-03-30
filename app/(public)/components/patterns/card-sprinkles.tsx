@@ -1,6 +1,6 @@
 export const TopRightSprinkles = () => {
   return (
-    <div className="su-w-2/3 su-h-2/3 su-absolute su-top-[-26px] su-right-0 su-bg-no-repeat su-bg-card-top-right-sprinkles su-bg-right"/>
+    <div className="su-w-2/3 su-h-2/3 su-absolute su-top-[-52px] su-right-0 su-bg-no-repeat su-bg-card-top-right-sprinkles su-bg-right"/>
   )
 }
 
