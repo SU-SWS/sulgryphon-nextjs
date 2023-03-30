@@ -138,7 +138,7 @@ interface Library extends DrupalNode {
 
 interface StudyPlace extends DrupalNode {
   sul_study__branch: Library
-  sul_study__capacity?: DrupalTaxonomyTerm[]
+  sul_study__capacity: DrupalTaxonomyTerm
   sul_study__features?: DrupalTaxonomyTerm[]
   sul_study__type: DrupalTaxonomyTerm
 }
