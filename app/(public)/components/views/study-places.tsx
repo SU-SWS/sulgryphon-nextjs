@@ -80,7 +80,7 @@ const StudyPlaceFilteringList = ({items}) => {
   useEffect(() => setItemsToDisplay(items), [items])
 
   return (
-    <div>
+    <div className="su-rs-p-1">
       <form>
         <div className="su-grid su-grid-cols-1 lg:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
           <div>
@@ -148,7 +148,7 @@ const StudyPlaceFilteringList = ({items}) => {
       <Conditional showWhen={items.length > 0}>
         <p>Showing {itemsToDisplay.length} of {items.length}</p>
         <Conditional showWhen={itemsToDisplay.length > 0}>
-          <ul ref={parent} className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl" aria-live="polite">
+          <ul ref={parent} className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl su-rs-pt-1" aria-live="polite">
             {itemsToDisplay.map(item => <li key={item.id} className="su-rs-mb-3 md:su-mb-0"><SulStudyPlaceCard node={item}/></li>)}
           </ul>
         </Conditional>

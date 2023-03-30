@@ -109,9 +109,12 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                 </Link>	
               </div>
 
-              {(node.sul_study__features && node.sul_study__features.length > 0) &&
-                <ul className="su-ml-10 su-rs-mb-2">
-                  {features.map((feature, index) =>
+              {(node.sul_study__capacity || features) &&
+                <ul className="su-ml-10 su-rs-mb-1">
+                  {node.sul_study__capacity &&
+                    <li className="su-type-1 su-leading-display">{node.sul_study__capacity.name}</li>
+                  }
+                  {features && features.map((feature, index) =>
                     <li key={`feature-${index}`} className="su-type-1 su-leading-display">
                       {feature.name}
                     </li>
@@ -119,8 +122,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                 </ul>
               }
 
-              {/* {(node.sul_study__features && node.sul_study__features.length > 4) && */}
-              {node.sul_study__features &&
+              {(features && features.length > 4) &&
                 <>
                   <button className="su-relative su-pr-30 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold" onClick={() => setModalOpen(true)}>
                     Show all features

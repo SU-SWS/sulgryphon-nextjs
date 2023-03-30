@@ -13,6 +13,7 @@ const OneColumn = ({items, config = {}, fullWidth = false}: LayoutProps) => {
   const fullWidthItems = [
     'paragraph--stanford_banner',
     'paragraph--sul_feat_collection',
+    'paragraph--stanford_lists',
     'paragraph--stanford_card',
   ];
 
