@@ -5,62 +5,17 @@ import {StudyPlace} from "@/lib/drupal/drupal";
 import Link from "next/link";
 import Image from "next/image";
 import {ClockIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import useLibraryHours from "@/lib/hooks/useLibraryHours";
 import Conditional from "@/components/utils/conditional";
 import {useResizeDetector} from "react-resize-detector";
 import Modal from "@/components/patterns/modal";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
+import StudyPlaceHours from "./study-place-today-hours";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const iframeRef = useRef(null);
   const {width, ref} = useResizeDetector();
-  const hours = useLibraryHours()
-
-  const toISOStringWithTimezone = date => {
-    const tzOffset = -date.getTimezoneOffset();
-    const diff = tzOffset >= 0 ? '+' : '-';
-    const pad = n => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
-    return date.getFullYear() +
-      '-' + pad(date.getMonth() + 1) +
-      '-' + pad(date.getDate()) +
-      'T' + pad(date.getHours()) +
-      ':' + pad(date.getMinutes()) +
-      ':' + pad(date.getSeconds()) +
-      diff + pad(tzOffset / 60) +
-      ':' + pad(tzOffset % 60);
-  };
-
-  const currentDay = toISOStringWithTimezone(new Date()).substring(0, 10);
-  const libraryHours = node.sul_study__branch?.su_library__hours ? hours[node.sul_study__branch?.su_library__hours] : [];
-  const libraryPrimaryHours = libraryHours?.primary_hours;
-
-  let todayHours;
-  if (libraryPrimaryHours) {
-    todayHours = libraryPrimaryHours.find(day => day.day === currentDay);
-  }
-
-  const date = new Date()
-  let openTime, closeTime, isOpen = false, closedAllDay = todayHours?.closed;
-
-  if (Object.keys(hours).length !== 0 && !todayHours?.closed) {
-    openTime = new Date(todayHours?.opens_at);
-    closeTime = new Date(todayHours?.closes_at);
-    isOpen = date.getTime() > openTime.getTime() && date.getTime() < closeTime.getTime();
-  }
-
-  let libraryCloseTime = closeTime?.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: 'America/Los_Angeles'
-  })
-
-  let libraryOpenTime = openTime?.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: 'America/Los_Angeles'
-  })
 
   const contactImageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
 
@@ -84,6 +39,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
         <div className={"su-overflow-hidden su-aspect-[4/3] su-relative " + ((width && width > 767) && " su-w-1/2")}>
           {contactImage}          
         </div>
+
         <Conditional showWhen={node.sul_study__libcal_id}>
           <LibCal libcalId={node.sul_study__libcal_id}/>
         </Conditional>
@@ -94,12 +50,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
             <div className="su-leading-tight">
 
               <Conditional showWhen={node.sul_study__branch?.su_library__hours}>
-                <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-neg2 su-type-1">
-                  <ClockIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
-                  <div aria-live="polite">
-                    {!closedAllDay && (isOpen ? 'Closes at ' + libraryCloseTime : 'Opens at ' + libraryOpenTime)}
-                  </div>
-                </div>
+                <StudyPlaceHours node={node}/>
               </Conditional>
 
               <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
@@ -147,12 +98,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                             <div className="su-leading-tight">
 
                               <Conditional showWhen={node.sul_study__branch?.su_library__hours}>
-                                <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-neg2 su-type-1">
-                                  <ClockIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
-                                  <div aria-live="polite">
-                                    {!closedAllDay && (isOpen ? 'Closes at ' + libraryCloseTime : 'Opens at ' + libraryOpenTime)}
-                                  </div>
-                                </div>
+                                <StudyPlaceHours node={node}/>
                               </Conditional>
 
                               <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
@@ -171,6 +117,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                                   )}
                                 </ul>
                               }
+
                             </div>
                           </div>
                         </div>
@@ -178,7 +125,8 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                     </div>
                   </Modal>
                 </>
-              }              
+              }
+
             </div>
           </div>
         </div>
