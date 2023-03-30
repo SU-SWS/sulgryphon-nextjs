@@ -4,9 +4,10 @@ import {DrupalParagraph} from "next-drupal";
 interface LayoutProps {
   items: DrupalParagraph[],
   fullWidth?: boolean
+  config?: {}
 }
 
-const OneColumn = ({items, fullWidth = false}: LayoutProps) => {
+const OneColumn = ({items, config = {}, fullWidth = false}: LayoutProps) => {
 
   // Items that will manage their widths/gutters directly in the component.
   const fullWidthItems = [

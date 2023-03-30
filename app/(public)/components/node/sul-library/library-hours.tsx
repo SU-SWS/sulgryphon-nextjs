@@ -8,24 +8,24 @@ import {ClockIcon} from "@heroicons/react/24/outline";
 import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
 import {ErrorBoundary} from "react-error-boundary";
 
-const LibraryHeaderHours = ({node}: { node: Library }) => {
+const LibraryHeaderHours = ({hoursId}: { hoursId?: string }) => {
   return (
     <ErrorBoundary
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
-      <LibraryHeaderHoursComponent node={node}/>
+      <LibraryHeaderHoursComponent hoursId={hoursId}/>
     </ErrorBoundary>
   )
 }
 
-const LibraryHeaderHoursComponent = ({node}: { node: Library }) => {
-  if (!node.su_library__hours) {
+const LibraryHeaderHoursComponent = ({hoursId}: { hoursId?: string }) => {
+  if (!hoursId) {
     return null;
   }
 
   const inputId = useId();
-  const libraryHours = useLibraryHours(node.su_library__hours) as LocationHours;
+  const libraryHours = useLibraryHours(hoursId) as LocationHours;
   const libraryPrimaryHours = libraryHours?.primaryHours;
 
   if (!libraryPrimaryHours) {

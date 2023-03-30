@@ -1,3 +1,4 @@
+import "server-only";
 import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import NodeListDisplay from "@/components/node/node-list-display";

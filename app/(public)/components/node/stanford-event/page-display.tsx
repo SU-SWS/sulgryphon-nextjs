@@ -1,3 +1,4 @@
+import "server-only";
 import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import {DrupalLinkButton} from "@/components/patterns/link";

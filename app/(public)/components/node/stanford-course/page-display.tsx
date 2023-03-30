@@ -1,8 +1,8 @@
-import Conditional from "../../utils/conditional";
+import "server-only";
+import Conditional from "@/components/utils/conditional";
 import formatHtml from "@/lib/format-html";
 import {Course} from "@/lib/drupal/drupal";
 import Link from "next/link";
-
 
 const StanfordCourse = ({node, ...props}: { node: Course }) => {
 

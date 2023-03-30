@@ -1,7 +1,6 @@
 import Conditional from "@/components/utils/conditional";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import SecondaryMenu from "@/components/menu/secondary-menu";
-import dynamic from "next/dynamic";
 import {DrupalMenuLinkContent, DrupalNode} from "next-drupal";
 import {Library} from "@/lib/drupal/drupal";
 import {getMenu} from "@/lib/drupal/get-menu";
@@ -10,8 +9,7 @@ import {notFound} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {ReactNodeLike} from "prop-types";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
-
-const LibraryHeader = dynamic(() => import("../components/node/sul-library/library-header"));
+import LibraryHeader from "@/components/node/sul-library/library-header";
 
 const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   const path = await translatePathFromContext(context);

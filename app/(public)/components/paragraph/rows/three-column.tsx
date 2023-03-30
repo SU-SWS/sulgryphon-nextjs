@@ -4,12 +4,14 @@ import {DrupalParagraph} from "next-drupal";
 interface LayoutProps {
   items: DrupalParagraph[],
   fullWidth?: boolean
+  config: {}
 }
-const ThreeColumn = ({items, fullWidth}: LayoutProps) => {
+
+const ThreeColumn = ({items, config = {}, fullWidth = false}: LayoutProps) => {
   const leftItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'left');
   const mainItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'main');
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');
-  const paddingClass = fullWidth ? "su-px-40 lg:px-0": "";
+  const paddingClass = fullWidth ? "su-px-40 lg:px-0" : "";
   return (
     <div className={"su-max-w-1500 su-w-full su-mx-auto su-grid su-gap-2xl lg:su-grid-cols-3 " + paddingClass}>
       <div className="su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">

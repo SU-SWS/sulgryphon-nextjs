@@ -1,3 +1,4 @@
+import "server-only";
 import Oembed from "@/components/patterns/oembed";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
@@ -13,9 +14,10 @@ import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import fetchComponents from "@/lib/fetch-components";
 import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
+import {DrupalParagraph} from "next-drupal";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
-  node.su_news_components = await fetchComponents(node.su_news_components ?? [])
+  node.su_news_components = await fetchComponents(node.su_news_components ?? []) as DrupalParagraph[]
   node.su_news_components = node.su_news_components.filter(item => item?.id?.length > 0);
 
   // Redirect the user to the external source.

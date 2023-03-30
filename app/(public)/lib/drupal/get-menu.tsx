@@ -36,9 +36,15 @@ export async function getMenu<T extends DrupalMenuLinkContent>(
 
   const data = await response.json()
 
-  const items = options.deserialize ? deserialize(data) : data
-
-  const { items: tree } = buildMenuTree(items)
+  let items = options.deserialize ? deserialize(data) : data
+  items = items.map(item => ({
+    id: item.id,
+    title: item.title,
+    url: item.url,
+    parent: item.parent,
+    expanded: item.expanded
+  }));
+  const {items: tree} = buildMenuTree(items)
 
   return {
     items,
