@@ -12,6 +12,7 @@ const OneColumn = ({items, fullWidth = false}: LayoutProps) => {
   const fullWidthItems = [
     'paragraph--stanford_banner',
     'paragraph--sul_feat_collection',
+    'paragraph--stanford_card',
   ];
 
   const paddingClass = fullWidth ? "su-px-40 xl:su-px-0" : "";

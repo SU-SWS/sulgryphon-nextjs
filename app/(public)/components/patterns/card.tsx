@@ -17,7 +17,6 @@ interface CardProps {
   }
   linkStyle?: string
   className?: string
-  horizontal?: boolean
 }
 
 const Card = ({
@@ -29,7 +28,6 @@ const Card = ({
                 body,
                 link,
                 linkStyle,
-                horizontal = false,
                 ...props
               }: CardProps) => {
   return (
@@ -65,13 +63,11 @@ const Card = ({
             <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">{footer}</div>
           </Conditional>
 
-
           <DrupalLink
             url={link?.url}
             title={link?.title}
             style={linkStyle}
           />
-
         </div>
       </div>
     </div>
