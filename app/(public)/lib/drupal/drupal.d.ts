@@ -314,7 +314,7 @@ interface DrupalEmbeddableMedia extends DrupalMedia {
 }
 
 // Config Pages
-interface GlobalMessageType {
+interface GlobalMessageType extends JsonApiResource {
   su_global_msg_type: string
   su_global_msg_enabled: boolean
   su_global_msg_link?: DrupalLink

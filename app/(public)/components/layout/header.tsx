@@ -2,17 +2,11 @@ import Link from "next/link";
 import Lockup from "@/components/patterns/lockup";
 import MainMenu from "@/components/menu/main-menu";
 import IdentityBar from "@/components/layout/identity-bar";
-import {getResource} from "@/lib/drupal/get-resource";
 import GlobalMessage from "@/components/layout/global-message";
 import {DrupalMenuLinkContent} from "next-drupal";
 import {getMenu} from "@/lib/drupal/get-menu";
 
 const Header = async () => {
-  let globalMessage;
-  try {
-    globalMessage = await getResource('config_pages--stanford_global_message', '');
-  } catch (e) {
-  }
 
   let tree: DrupalMenuLinkContent[] = [];
   try {
@@ -23,10 +17,8 @@ const Header = async () => {
   return (
     <>
       <IdentityBar/>
-
-      {globalMessage?.[0]?.su_global_msg_enabled &&
-          <GlobalMessage configPage={globalMessage[0]}/>
-      }
+      {/* @ts-expect-error Async Server Component */}
+      <GlobalMessage/>
 
       <header className="su-shadow-lg su-relative su-sticky su-top-0 su-bg-white su-z-20">
         <div className="su-pt-20 su-bg-white su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
