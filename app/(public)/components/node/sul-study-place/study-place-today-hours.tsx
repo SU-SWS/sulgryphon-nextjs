@@ -22,34 +22,19 @@ const StudyPlaceHoursComponent = ({node}: { node: StudyPlace }) => {
   }
 
   const StudyPlaceHours = useLibraryHours(node.sul_study__branch?.su_library__hours) as LocationHours;
-  console.log('libraryHours', StudyPlaceHours)
   const StudyPlacePrimaryHours = StudyPlaceHours?.primaryHours;
-  console.log('StudyPlacePrimaryHours', StudyPlacePrimaryHours)
 
   if (!StudyPlacePrimaryHours) {
     return null;
   }
 
-  // Fix timezone issues
-  const toISOStringWithTimezone = date => {
-    const tzOffset = -date.getTimezoneOffset();
-    const diff = tzOffset >= 0 ? '+' : '-';
-    const pad = n => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
-    return date.getFullYear() +
-      '-' + pad(date.getMonth() + 1) +
-      '-' + pad(date.getDate()) +
-      'T' + pad(date.getHours()) +
-      ':' + pad(date.getMinutes()) +
-      ':' + pad(date.getSeconds()) +
-      diff + pad(tzOffset / 60) +
-      ':' + pad(tzOffset % 60);
-  };
-
-  const currentDay = toISOStringWithTimezone(new Date()).substring(0, 10);
-
-  const StudyPlaceTodayHours = StudyPlacePrimaryHours.find(day => day.day === currentDay) as DayHours;
-
   const date = new Date()
+
+  const StudyPlaceTodayHours = StudyPlacePrimaryHours.find(day => {
+    // Set the time so that it works with UTC time.
+    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString('en-us', {weekday: "long", timeZone: 'America/Los_Angeles'})
+    return dayDate === date.toLocaleDateString('en-us', {weekday: "long", timeZone: 'America/Los_Angeles'})
+  }) as DayHours;
 
   let openTime, closeTime, isOpen = false, closedAllDay = StudyPlaceTodayHours?.closed;
 
