@@ -7,7 +7,6 @@ interface LayoutProps {
 }
 
 const OneColumn = ({items, fullWidth = false}: LayoutProps) => {
-
   // Items that will manage their widths/gutters directly in the component.
   const fullWidthItems = [
     'paragraph--stanford_banner',
