@@ -50,7 +50,7 @@ const StudyPlaceModal = ({node}: { node: StudyPlace }) => {
       >
         <div ref={ref} className={"su-bg-white su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-row"}>
           {largeWidth &&
-            <div className="su-rs-px-3 su-rs-py-3 su-w-1/2">
+            <div className="su-hidden md:su-block su-rs-px-3 su-rs-py-3 su-w-1/2">
               <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
                 {contactImage}
               </div>

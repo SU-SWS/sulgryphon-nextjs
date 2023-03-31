@@ -2,7 +2,7 @@
 
 import {useRef, useState} from "react";
 import Modal from "../../patterns/modal";
-import { CalendarDaysIcon, CalendarIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { CalendarDaysIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 const LibCal = ({libcalId}) => {
   const [modalOpen, setModalOpen] = useState(false);
