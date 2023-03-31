@@ -1,12 +1,10 @@
 import {StudyPlace} from "@/lib/drupal/drupal";
 
 const SulStudyPlace = ({node, ...props}: { node: StudyPlace }) => {
-  console.log(node)
 
   return (
     <>
-      {console.log('node: ', node)}
-      Course
+      Place of Study
     </>
   )
 }

@@ -26,7 +26,6 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
   return (
     <>
-      {console.log('node 3: ', node)}
       <div className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-col"}>
         <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
           {contactImage}          
