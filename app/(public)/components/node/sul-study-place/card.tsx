@@ -35,9 +35,9 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
             <h2 className="su-type-3 su-rs-mb-1">{node.sul_study__type.name}</h2>
             <div className="su-leading-tight">
 
-              <Conditional showWhen={node.sul_study__branch?.su_library__hours}>
-                <StudyPlaceHours node={node}/>
-              </Conditional>
+              {node.sul_study__branch?.su_library__hours &&
+                <StudyPlaceHours hoursId={node.sul_study__branch.su_library__hours}/>
+              }
 
               <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
                 <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>

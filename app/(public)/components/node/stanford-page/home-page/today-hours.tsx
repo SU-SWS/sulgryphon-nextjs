@@ -3,11 +3,13 @@
 import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
-import useLibraryHours, {DayHours, LibraryHoursType} from "@/lib/hooks/useLibraryHours";
 import {PropsWithoutRef, useId, useState} from "react";
+import {DrupalImageMedia} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ErrorBoundary} from "react-error-boundary";
-import {DrupalImageMedia} from "@/lib/drupal/drupal";
+import CachedClientFetch from "@/components/utils/cached-client-fetch";
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
+import {Library} from "@/lib/drupal/drupal";
 
 interface HoursProps extends PropsWithoutRef<any> {
   libraries: {id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia}[]
@@ -16,57 +18,40 @@ interface HoursProps extends PropsWithoutRef<any> {
 const TodayHours = ({libraries, ...props}: HoursProps) => {
   return (
     <ErrorBoundary fallback={<></>}>
-      <LibrariesTodayHours libraries={libraries} {...props}/>
+      <CachedClientFetch>
+        <LibrariesTodayHours libraries={libraries as Library[]} {...props}/>
+      </CachedClientFetch>
     </ErrorBoundary>
   )
 }
 
-const LibrariesTodayHours = ({libraries, ...props}) => {
+interface option {
+  value: string
+  label: string
+}
+
+const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) => {
+  if (libraries.length === 0) return null;
+
   const formId = useId();
-  const [selectedLibrary, setSelectedLibrary] = useState('');
-
-  const hours = useLibraryHours() as LibraryHoursType;
-  libraries = libraries.filter(library => Object.keys(hours).indexOf(library.su_library__hours) >= 0)
-
-  if (libraries.length === 0 || Object.keys(hours).length === 0) {
-    return null;
-  }
-
+  const [selectedLibrary, setSelectedLibrary] = useState(libraries.at(0)?.id);
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
-  const selectedHours = hours[library.su_library__hours]
+  const libraryHours = useTodayLibraryHours(library?.su_library__hours);
 
-  if (!selectedHours) {
-    return null;
-  }
+  let hoursDisplay: string | boolean = '';
+  let isOpen: boolean = false;
 
-  const date = new Date()
-
-  const libraryHours = selectedHours.primaryHours.find(day => {
-    // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString('en-us', {weekday: "long", timeZone: 'America/Los_Angeles'})
-    return dayDate === date.toLocaleDateString('en-us', {weekday: "long", timeZone: 'America/Los_Angeles'})
-  }) as DayHours;
-
-  let openTime, closeTime, isOpen = false, closedAllDay = libraryHours?.closed;
-
-  if (!libraryHours.closed && libraryHours.opens_at && libraryHours.closes_at) {
-    openTime = new Date(libraryHours.opens_at);
-    closeTime = new Date(libraryHours.closes_at);
-    isOpen = date > openTime && date < closeTime;
-  }
-
-  const imageUrl = library.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
-
-  interface option {
-    value: string
-    label: string
-  }
-
-  const libraryOptions: option[] = [];
+  let libraryOptions: option[] = [];
   Object.keys(libraries).map(i => {
     libraryOptions.push({value: libraries[i].id, label: libraries[i].title})
   })
 
+  if (libraryHours) {
+    const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = libraryHours
+    hoursDisplay = !closedAllDay && (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
+  }
+
+  const imageUrl = library?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x || library?.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_md_2x
   return (
     <div {...props}>
 
@@ -89,23 +74,14 @@ const LibrariesTodayHours = ({libraries, ...props}) => {
                 instanceId={`${formId}-hours`}
                 aria-labelledby={formId}
                 options={libraryOptions}
-                defaultValue={libraryOptions[0]}
-                isSearchable={false}
+                defaultValue={libraryOptions.find(option => option.value === selectedLibrary)}
                 onChange={(item: option) => setSelectedLibrary(item.value)}
               />
 
               <div className="su-text-black  su-flex su-gap-sm su-justify-between" aria-live="polite">
                 <div><ClockIcon className="su-inline" width={15}/> {isOpen ? 'Open' : 'Closed'}</div>
                 <div>
-                  {!closedAllDay && (isOpen ? 'Closes at ' + closeTime.toLocaleTimeString("en-US", {
-                    hour: "numeric",
-                    minute: "numeric",
-                    timeZone: 'America/Los_Angeles'
-                  }) : 'Opens at ' + openTime.toLocaleTimeString("en-US", {
-                    hour: "numeric",
-                    minute: "numeric",
-                    timeZone: 'America/Los_Angeles'
-                  }))}
+                  {hoursDisplay}
                 </div>
               </div>
             </div>

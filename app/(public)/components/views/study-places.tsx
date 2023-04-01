@@ -1,16 +1,18 @@
 "use client";
 
-import {useEffect, useId, useRef, useState} from "react";
+import {useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import Select from "react-select";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import Conditional from "@/components/utils/conditional";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
+import {StudyPlace} from "@/lib/drupal/drupal";
 
 interface SelectOption {
   value: string
   label: string
 }
+
 const StudyPlaceFilteringList = ({items}) => {
   const typeRef = useRef(null);
   const libraryRef = useRef(null);
@@ -54,12 +56,13 @@ const StudyPlaceFilteringList = ({items}) => {
     // @ts-ignore
     const selectedFeatures = featureRef.current.getValue().map(option => option.value);
 
-    const filteredItems = items.filter(item =>
+    const filteredItems = items.filter((item: StudyPlace) =>
       (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
       (!selectedTypes.length || selectedTypes.indexOf(item.sul_study__type.id) != -1) &&
-      (!selectedCapacity.length || item.sul_study__capacity.filter(term => selectedCapacity.indexOf(term.id) != -1).length > 0) &&
-      (!selectedFeatures.length || item.sul_study__features.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0)
+      (!selectedCapacity.length || selectedCapacity.indexOf(item.sul_study__capacity?.id) != -1) &&
+      (!selectedFeatures.length || (item.sul_study__features && item.sul_study__features.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0))
     );
+
     setItemsToDisplay(filteredItems)
   }
 
@@ -76,8 +79,6 @@ const StudyPlaceFilteringList = ({items}) => {
     setItemsToDisplay(items)
   }
 
-  useEffect(() => setItemsToDisplay(items), [items])
-
   return (
     <div className="md:su-rs-p-1 su-max-w-1500 su-mx-auto">
       <form>
@@ -92,6 +93,7 @@ const StudyPlaceFilteringList = ({items}) => {
               name="type"
               isMulti
               isSearchable={false}
+              isDisabled={capacityOptions.length == 0}
             />
           </div>
           <div>
@@ -104,6 +106,7 @@ const StudyPlaceFilteringList = ({items}) => {
               name="library"
               isMulti
               isSearchable={false}
+              isDisabled={capacityOptions.length == 0}
             />
           </div>
           <div>
@@ -116,6 +119,7 @@ const StudyPlaceFilteringList = ({items}) => {
               name="capacity"
               isMulti
               isSearchable={false}
+              isDisabled={capacityOptions.length == 0}
             />
           </div>
           <div>
@@ -128,6 +132,7 @@ const StudyPlaceFilteringList = ({items}) => {
               name="features"
               isMulti
               isSearchable={false}
+              isDisabled={capacityOptions.length == 0}
             />
           </div>
         </div>
@@ -141,14 +146,22 @@ const StudyPlaceFilteringList = ({items}) => {
       </form>
 
       <Conditional showWhen={items.length == 0}>
-        <SignalIcon width={50} className="su-animate-ping su-mx-auto su-my-50" />
+        <SignalIcon width={50} className="su-animate-ping su-mx-auto su-my-50"/>
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
         <p>Showing {itemsToDisplay.length} of {items.length}</p>
         <Conditional showWhen={itemsToDisplay.length > 0}>
-          <ul ref={parent} className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl su-rs-pt-1" aria-live="polite">
-            {itemsToDisplay.map(item => <li key={item.id} className="su-rs-mb-3 md:su-mb-0"><SulStudyPlaceCard node={item}/></li>)}
+          <ul
+            ref={parent}
+            className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl su-rs-pt-1"
+            aria-live="polite"
+          >
+            {itemsToDisplay.map(item =>
+              <li key={item.id} className="su-rs-mb-3 md:su-mb-0">
+                <SulStudyPlaceCard node={item}/>
+              </li>
+            )}
           </ul>
         </Conditional>
 
