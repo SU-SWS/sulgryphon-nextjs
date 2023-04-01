@@ -10,26 +10,21 @@ import StudyPlaceModal from "./study-place-modal";
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
   const contactImageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
-
-  let contactImage
-
-  if (contactImageUrl) {
-    contactImage = <Image
-      className="su-object-cover su-object-center su-static"
-      src={contactImageUrl}
-      alt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
-      fill={true}
-    />
-  }
-
   const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
 
   return (
     <>
       <div className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-col"}>
-        <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
-          {contactImage}          
-        </div>
+        {contactImageUrl &&
+          <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
+            <Image
+              className="su-object-cover su-object-center su-static"
+              src={contactImageUrl}
+              alt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+              fill={true}
+            />
+          </div>
+        }
 
         <Conditional showWhen={node.sul_study__libcal_id}>
           <LibCal libcalId={node.sul_study__libcal_id}/>

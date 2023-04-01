@@ -12,7 +12,6 @@ interface SelectOption {
   label: string
 }
 const StudyPlaceFilteringList = ({items}) => {
-  console.log('items', items)
   const typeRef = useRef(null);
   const libraryRef = useRef(null);
   const featureRef = useRef(null);
@@ -80,7 +79,7 @@ const StudyPlaceFilteringList = ({items}) => {
   useEffect(() => setItemsToDisplay(items), [items])
 
   return (
-    <div className="md:su-rs-p-1">
+    <div className="md:su-rs-p-1 su-max-w-1500 su-mx-auto">
       <form>
         <div className="su-grid su-grid-cols-1 lg:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
           <div>
