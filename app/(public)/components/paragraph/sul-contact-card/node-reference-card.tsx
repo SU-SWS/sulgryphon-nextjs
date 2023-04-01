@@ -7,6 +7,7 @@ import Conditional from "@/components/utils/conditional";
 import {useResizeDetector} from "react-resize-detector";
 import {ContactCardParagraph} from "@/lib/drupal/drupal";
 import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node-reference-card-hours";
+import CachedClientFetch from "@/components/utils/cached-client-fetch";
 
 const NodeReferenceCard = ({paragraph}: { paragraph: ContactCardParagraph }) => {
   const {width, ref} = useResizeDetector();
@@ -51,7 +52,9 @@ const NodeReferenceCard = ({paragraph}: { paragraph: ContactCardParagraph }) => 
 
           <div className="su-leading-tight md:su-rs-pr-2 su-text-white">
 
-            <NodeReferenceCardHours branchId={paragraph.sul_contact__branch?.su_library__hours}/>
+            <CachedClientFetch>
+              <NodeReferenceCardHours branchId={paragraph.sul_contact__branch?.su_library__hours}/>
+            </CachedClientFetch>
 
             <Conditional showWhen={paragraph.sul_contact__branch?.su_library__phone}>
               <div className="su-relative su-flex su-flex-row su-items-center su-rs-mb-0 su-type-1">

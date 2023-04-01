@@ -7,6 +7,7 @@ import Select from "react-select";
 import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
 import {useId} from "react";
 import {ErrorBoundary} from "react-error-boundary";
+import CachedClientFetch from "@/components/utils/cached-client-fetch";
 
 const LibraryAdditionalHours = ({node}: { node: Library }) => {
   return (
@@ -14,7 +15,9 @@ const LibraryAdditionalHours = ({node}: { node: Library }) => {
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
-      <LibraryAdditionalHoursComponent node={node}/>
+      <CachedClientFetch>
+        <LibraryAdditionalHoursComponent node={node}/>
+      </CachedClientFetch>
     </ErrorBoundary>
   )
 }

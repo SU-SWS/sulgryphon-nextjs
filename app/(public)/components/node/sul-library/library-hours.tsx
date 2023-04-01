@@ -1,12 +1,12 @@
 "use client";
 
-import useLibraryHours, {LocationHours} from "@/lib/hooks/useLibraryHours";
 import {useId} from "react";
 import {Library} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
-import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
 import {ErrorBoundary} from "react-error-boundary";
+import CachedClientFetch from "@/components/utils/cached-client-fetch";
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 
 const LibraryHeaderHours = ({node}: { node: Library }) => {
   return (
@@ -14,37 +14,27 @@ const LibraryHeaderHours = ({node}: { node: Library }) => {
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
-      <LibraryHeaderHoursComponent node={node}/>
+      <CachedClientFetch>
+        <LibraryHeaderHoursComponent node={node}/>
+      </CachedClientFetch>
     </ErrorBoundary>
   )
 }
 
 const LibraryHeaderHoursComponent = ({node}: { node: Library }) => {
+  const inputId = useId();
+
   if (!node.su_library__hours) {
     return null;
   }
+  const hours = useTodayLibraryHours(node.su_library__hours);
 
-  const inputId = useId();
-  const libraryHours = useLibraryHours(node.su_library__hours) as LocationHours;
-  const libraryPrimaryHours = libraryHours?.primaryHours;
-
-  if (!libraryPrimaryHours) {
+  if (!hours) {
     return null;
   }
-
-  const hourOptions = getLibrarySelectOptions(libraryPrimaryHours);
-  if (hourOptions.length === 0) {
-    return null;
-  }
-
+  const {isOpen, selectOptions} = hours;
   const today = new Date().toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
-  const todayHours = hourOptions.find(option => option.value === today)
-
-  const open = new Date(todayHours.opens ?? '');
-  const closed = new Date(todayHours.closes ?? '');
-
-  const rightNow = new Date();
-  const isOpen = todayHours.closed ? false : open <= rightNow && closed >= rightNow;
+  const todayHours = selectOptions.find(option => option.value === today)
 
   return (
     <>
@@ -56,7 +46,7 @@ const LibraryHeaderHoursComponent = ({node}: { node: Library }) => {
         className="su-text-black-true"
         instanceId={`${inputId}-hours`}
         aria-label="Day of the week hours"
-        options={hourOptions}
+        options={selectOptions}
         defaultValue={todayHours}
         isSearchable={false}
       />

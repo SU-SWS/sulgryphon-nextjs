@@ -9,6 +9,12 @@ const HomePageBanner = async () => {
   const params = new DrupalJsonApiParams();
   params.addFilter('su_library__hours', null, 'IS NOT NULL');
   const libraries = await getResourceCollection('node--sul_library', {params: params.getQueryObject()});
+  const libraryItems = libraries.map(node => ({
+    id: node.id,
+    title: node.title,
+    su_library__hours: node.su_library__hours,
+    su_library__contact_img: node.su_library__contact_img
+  }))
 
   return (
     <div className="su-bg-black-true su-mb-100 su-relative">
@@ -26,7 +32,7 @@ const HomePageBanner = async () => {
             </p>
           </div>
 
-          <TodayHours libraries={libraries} className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
+          <TodayHours libraries={libraryItems} className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
         </div>
       </div>
 
