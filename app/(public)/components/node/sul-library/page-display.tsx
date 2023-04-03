@@ -1,8 +1,11 @@
+import "server-only";
+
 import {Library} from "@/lib/drupal/drupal";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import fetchComponents from "@/lib/fetch-components";
 import LibraryAdditionalHours from "@/components/node/sul-library/library-additional-hours";
 import {DrupalParagraph} from "next-drupal";
+import formatHtml from "@/lib/format-html";
 
 const SulLibrary = async ({node, ...props}: { node: Library }) => {
   node.su_library__paragraphs = await fetchComponents(node.su_library__paragraphs ?? []) as DrupalParagraph[];
@@ -11,7 +14,20 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
 
   return (
     <article className="su-mb-50" {...props}>
-      <LibraryAdditionalHours node={node}/>
+
+      {(node.sul_library__a11y?.processed || node.su_library__hours) &&
+        <div className="su-max-w-1500 su-mx-auto su-mb-50 su-flex su-gap-2xl">
+          {node.sul_library__a11y?.processed &&
+            <div className="su-order-last lg:su-order-first su-flex-1">
+              <h2 className="su-text-m3">Accessibility</h2>
+              {formatHtml(node.sul_library__a11y?.processed)}
+            </div>
+          }
+
+          <LibraryAdditionalHours hoursId={node.su_library__hours}/>
+        </div>
+      }
+
       <ParagraphRows items={node.su_library__paragraphs} fullWidth={fullWidth}/>
     </article>
   )

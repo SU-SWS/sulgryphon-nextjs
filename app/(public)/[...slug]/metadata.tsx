@@ -5,7 +5,7 @@ interface keyable {
   [key: string]: any
 }
 
-export const getNodeMetadata = (node: DrupalNode) => {
+export const getNodeMetadata = (node: DrupalNode):keyable => {
   let metadata: keyable = {};
   switch (node.type) {
     case 'node--stanford_page':

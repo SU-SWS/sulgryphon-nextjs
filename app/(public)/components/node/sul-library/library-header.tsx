@@ -1,9 +1,9 @@
 import {Library} from "@/lib/drupal/drupal";
-import Card from "../../patterns/card";
+import Card from "@/components/patterns/card";
 import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import {MapPinIcon} from "@heroicons/react/24/outline";
-import Wave from "../../patterns/wave";
+import Wave from "@/components/patterns/wave";
 import Image from "next/image";
 import LibraryHeaderHours from "./library-hours";
 
@@ -87,7 +87,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
                       </div>
                     }
                   </div>
-                  <LibraryHeaderHours node={node}/>
+                  <LibraryHeaderHours hoursId={node.su_library__hours}/>
                 </>
               }
             />

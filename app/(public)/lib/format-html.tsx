@@ -1,15 +1,14 @@
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
 import Conditional from "@/components/utils/conditional";
 import Image from "next/image";
-
-const DrupalActionLink = dynamic(() => import("../components/patterns/link").then((mod) => mod.DrupalActionLink));
-const DrupalLinkBigButton = dynamic(() => import("../components/patterns/link").then((mod) => mod.DrupalLinkBigButton));
-const DrupalLinkButton = dynamic(() => import("../components/patterns/link").then((mod) => mod.DrupalLinkButton));
-const DrupalLinkSecondaryButton = dynamic(() => import("../components/patterns/link").then((mod) => mod.DrupalLinkSecondaryButton));
-const Oembed = dynamic(() => import("../components/patterns/oembed"));
-
+import {
+  DrupalActionLink,
+  DrupalLinkBigButton,
+  DrupalLinkButton,
+  DrupalLinkSecondaryButton
+} from "@/components/patterns/link";
+import Oembed from "@/components/patterns/oembed";
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {

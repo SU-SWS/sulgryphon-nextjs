@@ -1,9 +1,7 @@
 import {DrupalParagraph} from "next-drupal";
-import dynamic from "next/dynamic";
-
-const OneColumn = dynamic(() => import("./one-column"));
-const TwoColumn = dynamic(() => import("./two-column"));
-const ThreeColumn = dynamic(() => import("./three-column"));
+import OneColumn from "@/components/paragraph/rows/one-column";
+import TwoColumn from "@/components/paragraph/rows/two-column";
+import ThreeColumn from "@/components/paragraph/rows/three-column";
 
 interface RowProps {
   items: DrupalParagraph[]

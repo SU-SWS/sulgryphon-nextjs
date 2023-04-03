@@ -8,7 +8,11 @@ import {useId, useState} from "react";
 import Select from "react-select";
 import {ErrorBoundary} from "react-error-boundary";
 
-const TodayHours = ({libraries, ...props}) => {
+interface Props {
+  libraries: [{id: string, title: string, su_library__hours: string}]
+}
+
+const TodayHours = ({libraries, ...props}: Props) => {
   return (
     <ErrorBoundary fallback={<></>}>
       <LibrariesTodayHours libraries={libraries} {...props}/>

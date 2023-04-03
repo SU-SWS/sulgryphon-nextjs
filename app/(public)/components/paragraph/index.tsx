@@ -1,20 +1,17 @@
-import dynamic from "next/dynamic";
 import Conditional from "@/components/utils/conditional";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
-
-const StanfordWysiwyg = dynamic(() => import("./stanford-wysiwyg"));
-const StanfordCard = dynamic(() => import("./stanford-card"));
-const StanfordBanner = dynamic(() => import("./stanford-banner"));
-const StanfordImageGallery = dynamic(() => import("./stanford-image-gallery"));
-const StanfordMediaCaption = dynamic(() => import("./stanford-media-caption"));
-const StanfordLists = dynamic(() => import("./stanford-lists"));
-
-const StanfordEntity = dynamic(() => import("./stanford-entity"));
-const StanfordSpacer = dynamic(() => import("./stanford-spacer"));
-const SulCollection = dynamic(() => import("./sul-collection"));
-const SulFeaturedCollection = dynamic(() => import("./sul-featured-collection"));
-const SulContactCard = dynamic(() => import("./sul-contact-card/index"));
-const SulButton = dynamic(() => import("./sul-button"));
+import StanfordCard from "@/components/paragraph/stanford-card";
+import StanfordBanner from "@/components/paragraph/stanford-banner";
+import StanfordImageGallery from "@/components/paragraph/stanford-image-gallery";
+import StanfordMediaCaption from "@/components/paragraph/stanford-media-caption";
+import StanfordWysiwyg from "@/components/paragraph/stanford-wysiwyg";
+import StanfordLists from "@/components/paragraph/stanford-lists";
+import StanfordEntity from "@/components/paragraph/stanford-entity";
+import StanfordSpacer from "@/components/paragraph/stanford-spacer";
+import SulCollection from "@/components/paragraph/sul-collection";
+import SulFeaturedCollection from "@/components/paragraph/sul-featured-collection";
+import SulContactCard from "@/components/paragraph/sul-contact-card";
+import SulButton from "@/components/paragraph/sul-button";
 
 interface ParagraphProps {
   paragraph: any;

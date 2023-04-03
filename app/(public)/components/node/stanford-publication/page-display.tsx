@@ -1,3 +1,5 @@
+import "server-only";
+
 import {Publication} from "@/lib/drupal/drupal";
 import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
@@ -7,7 +9,7 @@ import {DrupalParagraph} from "next-drupal";
 
 const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
-  node.su_publication_components = await fetchComponents(node.su_publication_components ?? []);
+  node.su_publication_components = await fetchComponents(node.su_publication_components ?? []) as DrupalParagraph[];
   node.su_publication_components = node.su_publication_components.filter(item => item?.id?.length > 0);
 
   const getMonthName = monthNumber => {
@@ -112,7 +114,7 @@ const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
         </div>
       </div>
 
-      <Conditional showWhen={node.su_publication_topics.length > 0}>
+      <Conditional showWhen={node.su_publication_topics && node.su_publication_topics.length > 0}>
         <div className="su-border-t su-border-black-10">
           <h2 className="su-text-16 md:su-text-18 2xl:su-text-19 su-font-bold su-rs-pt-0">Related Topics</h2>
           <div className="su-text-16 md:su-text-18 2xl:su-text-19 su-rs-mb-2">
