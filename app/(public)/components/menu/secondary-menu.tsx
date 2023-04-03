@@ -1,6 +1,6 @@
 "use client";
 
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {DrupalMenuLinkContent} from "next-drupal";
 import Link from "next/link";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
@@ -23,6 +23,7 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
 }
 
 const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+  const [javascriptEnabled, setJavascriptEnabled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false)
   const activeTrail = useActiveTrail(menuItems);
   const isDesktop = useIsDesktop()
@@ -50,6 +51,7 @@ const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[
     }
   }
   const currentPageTitle = useMemo(() => getCurrentPageTitle(menuItems, activeTrail), [activeTrail, menuItems]);
+  useEffect(() =>  setJavascriptEnabled(true), []);
 
   return (
     <>
@@ -59,10 +61,10 @@ const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[
       </Conditional>
 
       <aside className="lg:su-w-4/12 su-relative">
-        <Conditional showWhen={!isDesktop}>
+        <Conditional showWhen={!isDesktop && javascriptEnabled}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="su-block su-w-2/3 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
+            className="su-block su-w-5/6 lg:su-w-2/3 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
             aria-haspopup="true"
             aria-expanded={menuOpen ? "true" : "false"}
           >
@@ -74,10 +76,11 @@ const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[
             <span className="su-sr-only">{menuOpen ? 'Close' : 'Open'} Side Navigation</span>
           </button>
         </Conditional>
-        <Conditional showWhen={(isDesktop || menuOpen)}>
+
+        <Conditional showWhen={isDesktop || menuOpen || !javascriptEnabled}>
           <OutsideClickHandler onClickOutside={closeMobileMenu} onFocusOutside={closeMobileMenu} component="div">
             <ul
-              className="su-absolute lg:su-relative su-z-40 lg:su-z-0 su-top-0 su-left-0 su-w-full su-bg-white su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+              className={(javascriptEnabled ? "su-absolute" : "") + " lg:su-relative su-z-40 lg:su-z-0 su-top-0 su-left-0 su-w-full su-bg-white su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway"}>
               {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
             </ul>
           </OutsideClickHandler>
