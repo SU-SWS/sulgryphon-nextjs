@@ -30,8 +30,6 @@ const StudyPlaceModal = ({node}: { node: StudyPlace }) => {
     />
   }
 
-  const largeWidth = (width && width > 550);
-
   const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
   return (
     <ErrorBoundary
@@ -49,17 +47,15 @@ const StudyPlaceModal = ({node}: { node: StudyPlace }) => {
         ariaLabel="Features Modal"
       >
         <div ref={ref} className={"su-bg-white su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-row"}>
-          {largeWidth &&
-            <div className="su-hidden md:su-block su-rs-px-3 su-rs-py-3 su-w-1/2">
-              <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
-                {contactImage}
-              </div>
-
-              <Conditional showWhen={node.sul_study__libcal_id}>
-                <LibCal libcalId={node.sul_study__libcal_id}/>
-              </Conditional>
+          <div className="su-hidden md:su-block su-rs-px-3 su-rs-py-3 su-w-1/2">
+            <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
+              {contactImage}
             </div>
-          }
+
+            <Conditional showWhen={node.sul_study__libcal_id}>
+              <LibCal libcalId={node.sul_study__libcal_id}/>
+            </Conditional>
+          </div>
 
           <div className={"card-body su-items-start su-rs-px-3 su-rs-pb-3 su-rs-pt-7 md:su-rs-pt-3 su-w-full " + ((width && width > 600) && " su-w-1/2")}>
             <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
