@@ -17,17 +17,6 @@ const StudyPlaceModal = ({node}: { node: StudyPlace }) => {
 
   const contactImageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
 
-  let contactImage
-
-  if (contactImageUrl) {
-    contactImage = <Image
-      className="su-object-cover su-object-center su-static"
-      src={contactImageUrl}
-      alt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
-      fill={true}
-    />
-  }
-
   const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
   return (
     <ErrorBoundary
@@ -46,16 +35,23 @@ const StudyPlaceModal = ({node}: { node: StudyPlace }) => {
       >
         <div className={"su-bg-white su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-row"}>
           <div className="su-hidden md:su-block su-rs-px-3 su-rs-py-3 su-w-1/2">
-            <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
-              {contactImage}
-            </div>
+            {contactImageUrl &&
+              <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
+                <Image
+                  className="su-object-cover su-object-center su-static"
+                  src={contactImageUrl}
+                  alt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+                  fill={true}
+                />
+              </div>
+            }
 
             <Conditional showWhen={node.sul_study__libcal_id}>
               <LibCal libcalId={node.sul_study__libcal_id}/>
             </Conditional>
           </div>
 
-          <div className={"card-body su-items-start su-rs-px-3 su-rs-pb-3 su-rs-pt-7 md:su-rs-pt-3 su-w-full "}>
+          <div className="card-body su-items-start su-rs-px-3 su-rs-pb-3 su-rs-pt-7 md:su-rs-pt-3 su-w-full">
             <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
               <h2 className="su-type-3 su-rs-mb-1">{node.sul_study__type.name}</h2>
               <div className="su-leading-tight">
@@ -76,8 +72,8 @@ const StudyPlaceModal = ({node}: { node: StudyPlace }) => {
                     {node.sul_study__capacity &&
                       <li className="su-type-1 su-leading-display">{node.sul_study__capacity.name}</li>
                     }
-                    {features && features.slice(0,4).map((feature, index) =>
-                      <li key={`feature-${index}`} className="su-type-1 su-leading-display">
+                    {features && features.map(feature =>
+                      <li key={`feature-${feature.id}`} className="su-type-1 su-leading-display">
                         {feature.name}
                       </li>
                     )}

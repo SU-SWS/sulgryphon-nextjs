@@ -51,8 +51,8 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                   {node.sul_study__capacity &&
                     <li className="su-type-1 su-leading-display">{node.sul_study__capacity.name}</li>
                   }
-                  {features && features.slice(0,4).map((feature, index) =>
-                    <li key={`feature-${index}`} className="su-type-1 su-leading-display">
+                  {features && features.slice(0, 4).map(feature =>
+                    <li key={`feature-${feature.id}`} className="su-type-1 su-leading-display">
                       {feature.name}
                     </li>
                   )}
