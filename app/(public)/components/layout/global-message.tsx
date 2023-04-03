@@ -15,6 +15,9 @@ const GlobalMessage = async () => {
   let response;
   try {
     response = await getResourceCollection('config_pages--stanford_global_message');
+    if (response.length === 0) {
+      return null;
+    }
   } catch (e) {
     return null;
   }

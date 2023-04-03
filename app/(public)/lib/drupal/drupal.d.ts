@@ -111,6 +111,7 @@ interface LibGuide {
   id: string
   title: string
   url: string
+  type: string
 }
 
 interface Publication extends DrupalNode {

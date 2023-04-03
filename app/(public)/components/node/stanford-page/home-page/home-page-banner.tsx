@@ -4,11 +4,16 @@ import TodayHours from "./today-hours";
 import {getResourceCollection} from "@/lib/drupal/get-resource";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import Link from "next/link";
+import {Library} from "@/lib/drupal/drupal";
 
 const HomePageBanner = async () => {
   const params = new DrupalJsonApiParams();
   params.addFilter('su_library__hours', null, 'IS NOT NULL');
-  const libraries = await getResourceCollection('node--sul_library', {params: params.getQueryObject()});
+
+  const libraries: Library[] = await getResourceCollection('node--sul_library', {params: params.getQueryObject()});
+
+  // Trim all the fat.
+  const trimmedLibraries = libraries.map(library => ({id: library.id, title: library.title, su_library__hours: library.su_library__hours}))
 
   return (
     <div className="su-bg-black-true su-mb-100 su-relative">
@@ -26,7 +31,7 @@ const HomePageBanner = async () => {
             </p>
           </div>
 
-          <TodayHours libraries={libraries} className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
+          <TodayHours libraries={trimmedLibraries} className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]"/>
         </div>
       </div>
 

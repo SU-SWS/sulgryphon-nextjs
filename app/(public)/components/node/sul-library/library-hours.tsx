@@ -2,7 +2,6 @@
 
 import useLibraryHours, {LocationHours} from "@/lib/hooks/useLibraryHours";
 import {useId} from "react";
-import {Library} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
