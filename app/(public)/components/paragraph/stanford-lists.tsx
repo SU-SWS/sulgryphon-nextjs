@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import {ListParagraph} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/patterns/link";
@@ -12,8 +11,7 @@ import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useDataFetch from "@/lib/hooks/useDataFetch";
 import Loading from "@/components/patterns/icons/loading";
-
-const StudyPlaceFilteringList = dynamic(() => import("../views/study-places"));
+import StudyPlaceFilteringList from "@/components/views/study-places";
 
 interface ListProps {
   paragraph: ListParagraph
@@ -69,7 +67,7 @@ const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListPro
 
   return (
     <div {...props}>
-      <div className="su-flex su-gap-2xl su-max-w-[980px] su-mx-auto">
+      <div className="su-flex su-gap-2xl su-px-40 lg:su-px-0 su-max-w-[980px] su-mx-auto">
         {paragraph.su_list_headline &&
           <h2 className="su-text-left su-type-5 su-flex-grow">
             <AboveHeaderBorder/>
@@ -87,7 +85,7 @@ const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListPro
       </div>
 
       {paragraph.su_list_description &&
-        <div className="su-mb-40 su-max-w-[980px] su-mx-auto">
+        <div className="su-mb-40 su-max-w-[980px] su-px-40 lg:su-px-0 su-mx-auto">
           {formatHtml(paragraph.su_list_description.processed)}
         </div>
       }
@@ -147,7 +145,7 @@ const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessag
   }
 
   return (
-    <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass} su-max-w-[980px] su-mx-auto`}>
+    <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}  su-px-40 lg:su-px-0 su-max-w-[980px] su-mx-auto`}>
       {itemsToDisplay.map(item => (
         <div
           className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
