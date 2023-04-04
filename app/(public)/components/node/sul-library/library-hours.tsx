@@ -1,33 +1,31 @@
 "use client";
 
 import {useId} from "react";
-import {Library} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 
-const LibraryHeaderHours = ({node}: { node: Library }) => {
+const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
   return (
     <ErrorBoundary
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
       <CachedClientFetch>
-        <LibraryHeaderHoursComponent node={node}/>
+        <LibraryHeaderHoursComponent hoursId={hoursId}/>
       </CachedClientFetch>
     </ErrorBoundary>
   )
 }
 
-const LibraryHeaderHoursComponent = ({node}: { node: Library }) => {
-  const inputId = useId();
-
-  if (!node.su_library__hours) {
+const LibraryHeaderHoursComponent = ({hoursId}: {  hoursId: string }) => {
+  if (!hoursId) {
     return null;
   }
-  const hours = useTodayLibraryHours(node.su_library__hours);
+  const inputId = useId();
+  const hours = useTodayLibraryHours(hoursId);
 
   if (!hours) {
     return null;
