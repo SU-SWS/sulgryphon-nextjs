@@ -8,6 +8,7 @@ import {Library} from "@/lib/drupal/drupal";
 
 const HomePageBanner = async () => {
   const params = new DrupalJsonApiParams();
+
   params.addFilter('su_library__hours', null, 'IS NOT NULL')
     .addInclude(['su_library__contact_img.field_media_image'])
 

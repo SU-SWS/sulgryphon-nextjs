@@ -8,9 +8,7 @@ Router.events.on("routeChangeStart", path => {
 
 const DrupalApp = ({Component, pageProps}: AppProps) => {
   return (
-    <>
-      <Component {...pageProps} />
-    </>
+    <Component {...pageProps} />
   )
 }
 

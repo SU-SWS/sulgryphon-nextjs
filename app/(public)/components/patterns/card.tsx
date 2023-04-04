@@ -19,17 +19,7 @@ interface CardProps {
   className?: string
 }
 
-const Card = ({
-                video,
-                image,
-                superHeader,
-                header,
-                footer,
-                body,
-                link,
-                linkStyle,
-                ...props
-              }: CardProps) => {
+const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
   return (
     <div {...props}>
       <div className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">

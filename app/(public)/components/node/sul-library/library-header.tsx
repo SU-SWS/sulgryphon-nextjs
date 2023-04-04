@@ -87,7 +87,9 @@ const LibraryHeader = ({node}: { node: Library }) => {
                       </div>
                     }
                   </div>
-                  <LibraryHeaderHours hoursId={node.su_library__hours}/>
+                  {node.su_library__hours &&
+                    <LibraryHeaderHours hoursId={node.su_library__hours}/>
+                  }
                 </>
               }
             />

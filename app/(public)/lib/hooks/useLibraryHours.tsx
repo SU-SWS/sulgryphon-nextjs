@@ -1,8 +1,7 @@
 "use client"
 
-import {useEffect, useState} from "react";
-import axios from "axios";
 import {deserialize} from "@/lib/drupal/deserialize";
+import useDataFetch from "@/lib/hooks/useDataFetch";
 
 export interface DayHours {
   day: string
@@ -30,45 +29,39 @@ export interface LibraryHoursType {
 }
 
 const useLibraryHours = (branchId: string | null = null) => {
-  const [hours, setHours] = useState({});
+  const {isLoading, error, data} = useDataFetch('https://library-hours.stanford.edu/libraries.json');
 
-  useEffect(() => {
-    const fetchList = async () => {
-      await axios.get('https://library-hours.stanford.edu/libraries.json')
-        .then(result => {
+  if (isLoading) return [];
+  if (error) return []
 
-          const deserializedData = deserialize(result.data);
-          if (!deserializedData) {
-            return;
-          }
 
-          const locations = {};
-          deserializedData.map(place => {
-            locations[place.id.toLowerCase()] = {
-              name: place.name,
-              type: place.type,
-              primaryHours: place.hours,
-              additionalLocations: []
-            }
+  const deserializedData = deserialize(data);
+  if (!deserializedData) {
+    return [];
+  }
 
-            place.locations.map(additionalPlace => {
-              const location = result.data.included.find(a => a.id == additionalPlace.id);
-
-              if (location.attributes.primary) {
-                return;
-              }
-              locations[place.id.toLowerCase()].additionalLocations.push({
-                id: additionalPlace.id.toLowerCase(),
-                name: additionalPlace.name,
-                hours: location.attributes.hours
-              })
-            })
-          });
-          setHours(branchId ? locations[branchId] as LocationHours : locations as LibraryHoursType);
-        })
+  const locations = {};
+  deserializedData.map(place => {
+    locations[place.id.toLowerCase()] = {
+      name: place.name,
+      type: place.type,
+      primaryHours: place.hours,
+      additionalLocations: []
     }
-    fetchList();
-  }, [branchId])
-  return hours;
+
+    place.locations.map(additionalPlace => {
+      const location = data.included.find(a => a.id == additionalPlace.id);
+
+      if (location.attributes.primary) {
+        return;
+      }
+      locations[place.id.toLowerCase()].additionalLocations.push({
+        id: additionalPlace.id.toLowerCase(),
+        name: additionalPlace.name,
+        hours: location.attributes.hours
+      })
+    })
+  });
+  return branchId ? locations[branchId] : locations;
 }
 export default useLibraryHours;

@@ -1,12 +1,10 @@
-import "server-only";
-
 import {StudyPlace} from "@/lib/drupal/drupal";
 
 const SulStudyPlace = ({node, ...props}: { node: StudyPlace }) => {
 
   return (
     <>
-      Course
+      Place of Study
     </>
   )
 }

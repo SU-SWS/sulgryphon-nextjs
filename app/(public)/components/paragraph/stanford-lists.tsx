@@ -1,10 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import {ListParagraph} from "@/lib/drupal/drupal";
-import {useEffect, useRef, useState} from "react";
-import useOnScreen from "@/lib/hooks/useOnScreen";
-import axios from "axios";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/patterns/link";
 import {DrupalNode} from "next-drupal";
@@ -12,8 +8,10 @@ import NodeCardDisplay from "@/components/node/node-card";
 import NodeListDisplay from "@/components/node/node-list-display";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import {ErrorBoundary} from "react-error-boundary";
-
-const StudyPlaceFilteringList = dynamic(() => import("../views/study-places"));
+import CachedClientFetch from "@/components/utils/cached-client-fetch";
+import useDataFetch from "@/lib/hooks/useDataFetch";
+import Loading from "@/components/patterns/icons/loading";
+import StudyPlaceFilteringList from "@/components/views/study-places";
 
 interface ListProps {
   paragraph: ListParagraph
@@ -26,39 +24,25 @@ const StanfordLists = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
-      <StanfordListsComponent paragraph={paragraph} siblingCount={siblingCount} {...props}/>
+      <CachedClientFetch>
+        <StanfordListsComponent paragraph={paragraph} siblingCount={siblingCount} {...props}/>
+      </CachedClientFetch>
     </ErrorBoundary>
   )
 }
 
 
 const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListProps) => {
+  const viewId = paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id
+  const displayId = paragraph.su_list_view?.resourceIdObjMeta?.display_id;
+  const args = paragraph.su_list_view.resourceIdObjMeta.arguments;
+  const numToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display;
+
   const hideEmpty = paragraph.behavior_settings?.list_paragraph?.hide_empty;
   const emptyMessage = paragraph.behavior_settings?.list_paragraph?.empty_message;
 
-  const elemRef = useRef();
-  const elemRefValue = useOnScreen(elemRef);
-  const [isElemRef, setIsElemRef] = useState(false);
-
-  useEffect(() => {
-    if (!isElemRef) setIsElemRef(elemRefValue);
-  }, [elemRefValue, isElemRef])
-
-  const [itemsToDisplay, setItemsToDisplay] = useState([])
-
-  useEffect(() => {
-    const viewId = paragraph.su_list_view?.resourceIdObjMeta?.drupal_internal__target_id
-    const displayId = paragraph.su_list_view?.resourceIdObjMeta?.display_id;
-    const args = paragraph.su_list_view.resourceIdObjMeta.arguments;
-    const numToDisplay = paragraph.su_list_view.resourceIdObjMeta.items_to_display;
-
-    if (isElemRef) {
-      axios.get(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`).then(response => {
-        const items = (paragraph.su_list_view?.resourceIdObjMeta?.items_to_display ?? 0) >= 1 ? response.data.slice(0, paragraph.su_list_view.resourceIdObjMeta.items_to_display) : response.data;
-        setItemsToDisplay(items);
-      });
-    }
-  }, [isElemRef, paragraph.su_list_view])
+  const {isLoading, data} = useDataFetch(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`)
+  const itemsToDisplay = isLoading ? [] : data;
 
   const gridClasses = {
     1: 'su-grid-cols-1',
@@ -82,9 +66,8 @@ const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListPro
   }
 
   return (
-    // @ts-ignore
-    <div ref={elemRef} {...props}>
-      <div className="su-flex su-gap-2xl">
+    <div {...props}>
+      <div className="su-flex su-gap-2xl su-px-40 lg:su-px-0 su-max-w-[980px] su-mx-auto">
         {paragraph.su_list_headline &&
           <h2 className="su-text-left su-type-5 su-flex-grow">
             <AboveHeaderBorder/>
@@ -102,24 +85,29 @@ const StanfordListsComponent = ({paragraph, siblingCount = 1, ...props}: ListPro
       </div>
 
       {paragraph.su_list_description &&
-        <div className="su-mb-40">
+        <div className="su-mb-40 su-max-w-[980px] su-px-40 lg:su-px-0 su-mx-auto">
           {formatHtml(paragraph.su_list_description.processed)}
         </div>
       }
 
-      <ErrorBoundary
-        fallback={<></>}
-        onError={e => console.error(e.message)}
-      >
-        <List
-          emptyMessage={emptyMessage}
-          itemsToDisplay={itemsToDisplay}
-          gridClass={gridClass}
-          isList={isList}
-          viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
-          displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
-        />
-      </ErrorBoundary>
+      {isLoading && <Loading/>}
+      {!isLoading &&
+        <ErrorBoundary
+          fallback={<></>}
+          onError={e => console.error(e.message)}
+        >
+
+          <List
+            emptyMessage={emptyMessage}
+            itemsToDisplay={itemsToDisplay}
+            gridClass={gridClass}
+            isList={isList}
+            viewId={paragraph.su_list_view.resourceIdObjMeta.drupal_internal__target_id}
+            displayId={paragraph.su_list_view.resourceIdObjMeta.display_id}
+          />
+
+        </ErrorBoundary>
+      }
     </div>
   )
 }
@@ -157,7 +145,7 @@ const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessag
   }
 
   return (
-    <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}`}>
+    <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}  su-px-40 lg:su-px-0 su-max-w-[980px] su-mx-auto`}>
       {itemsToDisplay.map(item => (
         <div
           className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}

@@ -64,9 +64,9 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
                   type="button"
                   ref={closeButton}
                   onClick={onClose}
-                  className={"su-absolute su-right-50 su-top-50 su-text-white su-flex"}
+                  className={"su-absolute su-right-50 su-top-50 su-text-black md:su-text-white su-flex"}
                 >
-                  Close<span className="su-sr-only"> Overlay</span><XMarkIcon className="su-ml-10" width={25} aria-hidden/>
+                  Close<span className="su-sr-only"> Overlay</span><XMarkIcon className="su-ml-10 su-mt-[-3px] " width={25} aria-hidden/>
                 </button>
               </div>
             </div>

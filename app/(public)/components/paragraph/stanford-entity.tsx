@@ -27,7 +27,7 @@ const StanfordEntity = ({paragraph, siblingCount, ...props}: EntityProps) => {
   )
 }
 
-const StanfordEntityComponent = ({paragraph, siblingCount, ...props}: EntityProps) => {
+const StanfordEntityComponent = ({paragraph, siblingCount = 0, ...props}: EntityProps) => {
   const [entities, setEntities] = useState(paragraph.su_entity_item?.filter(entity => entity?.path?.alias) ?? [])
 
   const elemRef = useRef();
@@ -43,7 +43,7 @@ const StanfordEntityComponent = ({paragraph, siblingCount, ...props}: EntityProp
     const getFullEntityData = async () => {
       const requests: PromiseLike<any>[] = [];
 
-      paragraph.su_entity_item.map(item => {
+      paragraph.su_entity_item?.map(item => {
         // Deleted items will be uknown. Don't fetch those.
         if (item.type !== 'unknown' && item.id) {
           requests.push(axios.get(`/api/entity/${item.type}/${item.id}`).then(response => response.data));
