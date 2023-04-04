@@ -1,11 +1,5 @@
-import {DrupalParagraph} from "next-drupal";
 
-interface SpacerProps {
-  paragraph: DrupalParagraph
-  siblingCount?: number
-}
-
-const StanfordSpacer = ({paragraph, siblingCount, ...props}: SpacerProps) => {
+const StanfordSpacer = () => {
   return (
     <div className="su-min-h-[20px]"/>
   )

@@ -8,12 +8,13 @@ import {Library} from "@/lib/drupal/drupal";
 
 const HomePageBanner = async () => {
   const params = new DrupalJsonApiParams();
-  params.addFilter('su_library__hours', null, 'IS NOT NULL');
+  params.addFilter('su_library__hours', null, 'IS NOT NULL')
+    .addInclude(['su_library__contact_img.field_media_image'])
 
   const libraries: Library[] = await getResourceCollection('node--sul_library', {params: params.getQueryObject()});
 
   // Trim all the fat.
-  const trimmedLibraries = libraries.map(library => ({id: library.id, title: library.title, su_library__hours: library.su_library__hours}))
+  const trimmedLibraries = libraries.map(library => ({id: library.id, title: library.title, su_library__hours: library.su_library__hours, su_library__contact_img: library.su_library__contact_img}))
 
   return (
     <div className="su-bg-black-true su-mb-100 su-relative">
@@ -50,6 +51,5 @@ const HomePageBanner = async () => {
     </div>
   )
 }
-
 
 export default HomePageBanner;

@@ -9,6 +9,7 @@ import useOnScreen from "@/lib/hooks/useOnScreen";
 import axios from "axios";
 import {ErrorBoundary} from "react-error-boundary";
 import {EntityTeaserParagraph} from "@/lib/drupal/drupal";
+import useIsCentered from "@/lib/hooks/useIsCentered";
 
 interface EntityProps {
   paragraph: EntityTeaserParagraph
@@ -32,6 +33,7 @@ const StanfordEntityComponent = ({paragraph, siblingCount, ...props}: EntityProp
   const elemRef = useRef();
   const elemRefValue = useOnScreen(elemRef);
   const [isElemRef, setIsElemRef] = useState(false);
+  const isCentered = useIsCentered(elemRef);
 
   useEffect(() => {
     if (!isElemRef) setIsElemRef(elemRefValue);
@@ -72,8 +74,7 @@ const StanfordEntityComponent = ({paragraph, siblingCount, ...props}: EntityProp
       <div className={wrapperClasses}>
         <Conditional showWhen={paragraph.behavior_settings?.sul_teaser_styles?.background === 'black'}>
           <div
-            className="su-absolute su-z-[-10] su-h-full su-w-screen su-top-0 su-left-[calc(-50vw+50%)] su-bg-black-true">
-          </div>
+            className={"su-absolute su-z-[-10] su-h-full su-top-0 su-bg-black-true " + (isCentered ? "su-w-screen su-left-[calc(-50vw+50%)]" : "su-w-full")}/>
         </Conditional>
 
         {paragraph.su_entity_headline && <h2 className="su-text-center su-type-5">{paragraph.su_entity_headline}</h2>}

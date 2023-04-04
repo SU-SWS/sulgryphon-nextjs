@@ -6,7 +6,6 @@ import {CardParagraph} from "@/lib/drupal/drupal";
 import Card from "../patterns/card";
 import HorizontalCard from "../patterns/horizontal-card";
 import Oembed from "../patterns/oembed";
-import {ReactNodeLike} from "prop-types";
 
 interface CardProps {
   paragraph: CardParagraph
@@ -19,26 +18,18 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
   const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
 
-  let video: ReactNodeLike | null = null
-  let image: ReactNodeLike | null = null
-
-  if (videoUrl) {
-    video = <Oembed url={videoUrl} className="su-h-full"/>
-  } else if (imageUrl) {
-    image = <Image
-      className="su-object-cover su-object-center"
-      src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
-      alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
-      fill={true}
-    />
-  }
   props.className = `${props?.className ?? ''} ${isHorizontal ? '' : 'su-max-w-[980px]'}  su-mx-auto `;
 
   if (isHorizontal) {
     return (
       <HorizontalCard
-        video={video}
-        image={image}
+        video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+        image={imageUrl && <Image
+          className="su-object-cover su-object-center"
+          src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
+          alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
+          fill={true}
+        />}
         header={paragraph.su_card_header}
         superHeader={paragraph.su_card_super_header}
         body={paragraph?.su_card_body?.processed}
@@ -51,8 +42,13 @@ const StanfordCard = ({paragraph, siblingCount, ...props}: CardProps) => {
   }
   return (
     <Card
-      video={video}
-      image={image}
+      video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+      image={imageUrl && <Image
+        className="su-object-cover su-object-center"
+        src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
+        alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
+        fill={true}
+      />}
       header={paragraph.su_card_header}
       superHeader={paragraph.su_card_super_header}
       body={paragraph?.su_card_body?.processed}

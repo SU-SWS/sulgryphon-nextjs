@@ -12,11 +12,11 @@ import SulCollection from "@/components/paragraph/sul-collection";
 import SulFeaturedCollection from "@/components/paragraph/sul-featured-collection";
 import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
+import {PropsWithoutRef} from "react";
 
-interface ParagraphProps {
+interface ParagraphProps extends PropsWithoutRef<any>{
   paragraph: any;
   siblingCount?: number;
-  [key: string]: any
 }
 
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
@@ -46,15 +46,36 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--stanford_entity' &&
           <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_spacer' &&
-          <StanfordSpacer paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <StanfordSpacer/>}
       {paragraph.type === 'paragraph--collection' &&
-          <SulCollection paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+          <SulCollection
+            cards={paragraph.sul_collection_card}
+            heading={paragraph.sul_collection_heading}
+            siblingCount={siblingCount}
+            {...props}
+          />
+      }
       {paragraph.type === 'paragraph--sul_feat_collection' &&
-          <SulFeaturedCollection paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+        <SulFeaturedCollection
+          headline={paragraph.sul_collection__headline}
+          link={paragraph.sul_collection__link}
+          cards={paragraph.sul_collection__cards}
+          styles={paragraph.behavior_settings?.sul_feat_collections_styles}
+          siblingCount={siblingCount}
+          {...props}
+        />
+      }
       {paragraph.type === 'paragraph--sul_contact_card' &&
-          <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+        <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
       {paragraph.type === 'paragraph--sul_button' &&
-          <SulButton paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+        <SulButton
+          headline={paragraph.sul_button_headline}
+          link={paragraph.sul_button_link}
+          siblingCount={siblingCount}
+          styles={paragraph.behavior_settings?.sul_button_styles}
+          {...props}
+        />
+      }
     </>
   );
 }

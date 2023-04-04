@@ -1,19 +1,20 @@
 "use client";
 
-import {CollectionParagraph} from "@/lib/drupal/drupal";
-import {useEffect, useId, useState} from "react";
+import {CardParagraph} from "@/lib/drupal/drupal";
+import {PropsWithoutRef, useEffect, useId, useState} from "react";
 import Conditional from "../utils/conditional";
 import AboveHeaderBorder from "../patterns/above-header-border";
 import StanfordCard from "./stanford-card";
 
-interface CollectionProps {
-  paragraph: CollectionParagraph
+interface CollectionProps extends PropsWithoutRef<any> {
+  cards: CardParagraph[]
+  heading?: string
   siblingCount?: number
 }
 
-const SulCollection = ({paragraph, siblingCount = 0, ...props}: CollectionProps) => {
+const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionProps) => {
   const elementId = useId()
-  const [displayedCard, setDisplayedCard] = useState(paragraph.sul_collection_card[0].id)
+  const [displayedCard, setDisplayedCard] = useState(cards[0].id)
 
   useEffect(() => {
     // Avoid settings the focus when rendering the component.
@@ -23,15 +24,15 @@ const SulCollection = ({paragraph, siblingCount = 0, ...props}: CollectionProps)
   }, [displayedCard])
 
   return (
-    <section aria-labelledby={paragraph.id} {...props}>
-      <Conditional showWhen={paragraph.sul_collection_heading}>
+    <section aria-labelledby={`${elementId}-heading`} {...props}>
+      <Conditional showWhen={heading}>
         <AboveHeaderBorder/>
-        <h2 id={paragraph.id} className="su-type-5">{paragraph.sul_collection_heading}</h2>
+        <h2 id={`${elementId}-heading`} className="su-type-5">{heading}</h2>
       </Conditional>
 
       <div className={"su-gap-lg " + (siblingCount > 0 ? '' : 'lg:su-flex')}>
         <ul className={"su-list-unstyled " + (siblingCount > 0 ? '' : 'lg:su-w-1/3')}>
-          {paragraph.sul_collection_card.map(card =>
+          {cards.map(card =>
             <li key={'button-' + card.id}>
               <button
                 id={elementId + 'button-' + card.id}
@@ -45,7 +46,7 @@ const SulCollection = ({paragraph, siblingCount = 0, ...props}: CollectionProps)
         </ul>
 
         <ul className={"su-list-unstyled " + (siblingCount > 0 ? '' : 'lg:su-w-2/3')}>
-          {paragraph.sul_collection_card.map(card =>
+          {cards.map(card =>
             <li key={'card-' + card.id} id={elementId + 'card-' + card.id}
                 className={displayedCard === card.id ? 'su-block' : 'su-hidden'} tabIndex={-1}>
               <StanfordCard paragraph={card.sul_card}/>

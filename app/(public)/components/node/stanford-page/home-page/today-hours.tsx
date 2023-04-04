@@ -4,15 +4,16 @@ import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import useLibraryHours, {DayHours, LibraryHoursType} from "@/lib/hooks/useLibraryHours";
-import {useId, useState} from "react";
+import {PropsWithoutRef, useId, useState} from "react";
 import Select from "react-select";
 import {ErrorBoundary} from "react-error-boundary";
+import {DrupalImageMedia} from "@/lib/drupal/drupal";
 
-interface Props {
-  libraries: [{id: string, title: string, su_library__hours: string}]
+interface HoursProps extends PropsWithoutRef<any> {
+  libraries: {id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia}[]
 }
 
-const TodayHours = ({libraries, ...props}: Props) => {
+const TodayHours = ({libraries, ...props}: HoursProps) => {
   return (
     <ErrorBoundary fallback={<></>}>
       <LibrariesTodayHours libraries={libraries} {...props}/>
