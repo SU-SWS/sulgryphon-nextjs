@@ -11,8 +11,19 @@ import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
 import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
+import {ErrorBoundary} from "react-error-boundary";
+import FallbackMainMenu from "@/components/menu/fallback-main-menu";
 
 const MainMenu = ({menuItems}) => {
+  return (
+    <ErrorBoundary fallback={<FallbackMainMenu menuItems={menuItems}/>}>
+      <Menu menuItems={menuItems}/>
+    </ErrorBoundary>
+  )
+}
+
+
+const Menu = ({menuItems}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [addCloseAnimation, setAddCloseAnimation] = useState(false)
   const activeTrail = useActiveTrail(menuItems);

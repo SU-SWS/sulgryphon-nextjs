@@ -24,7 +24,6 @@ const fetchNodeData = async (context) => {
       throw `redirect:${destination.to}`;
     }
   }
-
   return getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
 }
 
