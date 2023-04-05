@@ -1,6 +1,7 @@
 import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
+import Editori11y from "./editori11y";
 
 import "./styles/globals.css"
 
@@ -21,6 +22,7 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
+    <Editori11y/>
     <body>
 
     <div className="su-grid su-grid-rows-1 su-min-h-screen">
