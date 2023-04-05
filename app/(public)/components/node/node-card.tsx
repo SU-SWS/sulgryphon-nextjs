@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import {ErrorBoundary} from "react-error-boundary";
+import {PropsWithRef} from "react";
 
 const StanfordCourseCard = dynamic(() => import("./stanford-course/card"));
 const StanfordEventCard = dynamic(() => import("./stanford-event/card"));
@@ -13,7 +14,7 @@ const StanfordPublicationCard = dynamic(() => import("./stanford-publication/car
 const SulLibraryCard = dynamic(() => import("./sul-library/card"));
 const SulStudyPlaceCard = dynamic(() => import("./sul-study-place/card"));
 
-interface NodeProps {
+interface NodeProps extends PropsWithRef<any>{
   node: any
 }
 

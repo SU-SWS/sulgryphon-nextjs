@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 
 export const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {

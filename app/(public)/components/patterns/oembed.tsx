@@ -1,26 +1,20 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
-import dynamic from "next/dynamic";
-
-const Embed = dynamic(() => import("react-tiny-oembed"));
-
-import useOnScreen from "@/lib/hooks/useOnScreen";
 import {ArrowPathIcon} from "@heroicons/react/20/solid";
+import {useInView} from "react-intersection-observer";
+import Embed from "react-tiny-oembed";
+import {PropsWithoutRef} from "react";
 
-const Oembed = ({url, ...props}) => {
-  const elemRef = useRef();
-  const elemRefValue = useOnScreen(elemRef);
-  const [isElemRef, setIsElemRef] = useState(false);
+interface Props extends PropsWithoutRef<any> {
+  url: string
+}
 
-  useEffect(() => {
-    if (!isElemRef) setIsElemRef(elemRefValue);
-  }, [elemRefValue, isElemRef])
-
+const Oembed = ({url, ...props}: Props) => {
+  const {ref, inView} = useInView()
   return (
     // @ts-ignore
-    <div ref={elemRef} {...props}>
-      {isElemRef && <Embed url={url} LoadingFallbackElement={<Loading/>}/>}
+    <div ref={ref} {...props}>
+      {inView && <Embed url={url} LoadingFallbackElement={<Loading/>}/>}
     </div>
   )
 }

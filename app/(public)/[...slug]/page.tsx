@@ -4,7 +4,7 @@ import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {DrupalNode} from "next-drupal";
-import {Metadata} from "next";
+import {GetStaticPathsResult, Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
 
 export const revalidate = 60;
@@ -57,10 +57,23 @@ const NodePage = async (context) => {
 export default NodePage;
 
 export const generateStaticParams = async (context) => {
-  try {
-    const paths = await getPathsFromContext('node--stanford_page', {})
-    return paths.slice(0, 25).map(path => typeof path !== "string" ? path?.params : path);
-  } catch (e) {
+  let paths: GetStaticPathsResult["paths"] = []
+
+  const contentPaths = await Promise.all([
+    getPathsFromContext('node--stanford_page', {}),
+    getPathsFromContext('node--stanford_person', {}),
+    getPathsFromContext('node--stanford_event', {}),
+    getPathsFromContext('node--stanford_news', {}),
+    getPathsFromContext('node--sul_library', {})
+  ]);
+  contentPaths.map(contentTypePaths => {
+    paths = [...paths, ...contentTypePaths];
+  });
+
+  // @ts-ignore
+  if (process.env.LOCAL_STATIC_BUILD_PAGES >= 1) {
+    // @ts-ignore
+    paths = paths.slice(0, process.env.LOCAL_STATIC_BUILD_PAGES)
   }
-  return [];
+  return paths.map(path => typeof path !== "string" ? path?.params : path);
 }

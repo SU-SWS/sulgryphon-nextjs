@@ -113,18 +113,7 @@ interface MenuItemProps {
 }
 
 
-const MenuItem = forwardRef(({
-                               id,
-                               title,
-                               url,
-                               items,
-                               expanded,
-                               onClick,
-                               tabIndex = 0,
-                               activeTrail = [],
-                               menuLevel = 0,
-                             }: MenuItemProps, ref) => {
-
+const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex = 0, activeTrail = [], menuLevel = 0,}: MenuItemProps, ref) => {
 
   if (menuLevel >= 2) {
     return null;
@@ -201,10 +190,18 @@ const MenuItem = forwardRef(({
   }
 
   return (
-    <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
+    <OutsideClickHandler
+      onClickOutside={() => setSubmenuOpen(false)}
+      onFocusOutside={() => setSubmenuOpen(false)}
+      component="li"
+      className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap"
+    >
       <Conditional showWhen={url.length > 1}>
         <Link
-          onClick={() => {syncDrupalPreviewRoutes(url); onClick()}}
+          onClick={() => {
+            syncDrupalPreviewRoutes(url);
+            onClick()
+          }}
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
@@ -268,7 +265,7 @@ const MenuItem = forwardRef(({
           }
         </ul>
       </Conditional>
-    </li>
+    </OutsideClickHandler>
   )
 })
 MenuItem.displayName = "Menu Item";

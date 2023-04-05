@@ -41,12 +41,33 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
           <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+
       {paragraph.type === 'paragraph--stanford_lists' &&
-          <StanfordLists paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordLists
+          headline={paragraph.su_list_headline}
+          description={paragraph.su_list_description}
+          link={paragraph.su_list_button}
+          view={paragraph.su_list_view}
+          styles={paragraph.behavior_settings}
+          siblingCount={siblingCount}
+          {...props}
+        />
+      }
+
       {paragraph.type === 'paragraph--stanford_entity' &&
-          <StanfordEntity paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
-      {paragraph.type === 'paragraph--stanford_spacer' &&
-          <StanfordSpacer/>}
+        <StanfordEntity
+          headline={paragraph.su_entity_headline}
+          description={paragraph.su_entity_description}
+          link={paragraph.su_entity_button}
+          entities={paragraph.su_entity_item ?? []}
+          styles={paragraph.behavior_settings?.sul_teaser_styles}
+          siblingCount={siblingCount}
+          {...props}
+        />
+      }
+
+      {paragraph.type === 'paragraph--stanford_spacer' && <StanfordSpacer/>}
+
       {paragraph.type === 'paragraph--collection' &&
           <SulCollection
             cards={paragraph.sul_collection_card}
@@ -55,6 +76,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
             {...props}
           />
       }
+
       {paragraph.type === 'paragraph--sul_feat_collection' &&
         <SulFeaturedCollection
           headline={paragraph.sul_collection__headline}
@@ -65,8 +87,10 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           {...props}
         />
       }
+
       {paragraph.type === 'paragraph--sul_contact_card' &&
         <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+
       {paragraph.type === 'paragraph--sul_button' &&
         <SulButton
           headline={paragraph.sul_button_headline}

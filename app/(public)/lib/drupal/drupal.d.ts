@@ -215,7 +215,6 @@ interface EntityTeaserParagraph extends DrupalParagraph {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_teaser_styles?: {
       orientation: string
-      background: string
       background_sprinkles: string
     }
   }
