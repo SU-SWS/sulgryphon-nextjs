@@ -1,9 +1,11 @@
+import "./styles/globals.css"
+
 import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
 import Editori11y from "./editori11y";
-
-import "./styles/globals.css"
+import Script from "next/script";
+import GoogleAnalytics from "@/components/utils/google-analytics";
 
 export const metadata = {
   title: process.env.NEXT_PUBLIC_SITE_NAME,
@@ -23,6 +25,13 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
   return (
     <html lang="en">
     <Editori11y/>
+    {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID &&
+      <>
+        <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js"/>
+        <GoogleAnalytics/>
+      </>
+    }
+
     <body>
 
     <div className="su-grid su-grid-rows-1 su-min-h-screen">
