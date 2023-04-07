@@ -1,7 +1,7 @@
 "use client";
 
 import {MagnifyingGlassIcon} from "@heroicons/react/20/solid";
-import {useId, useRef} from "react";
+import {Suspense, useId, useRef} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 
 interface keyable {
@@ -13,7 +13,15 @@ interface FormProps extends keyable {
   inputProps?: keyable
 }
 
-const SearchForm = ({action = '/search', inputProps = {}, ...props}: FormProps) => {
+const SearchForm = ({...props}: FormProps) => {
+  return (
+    <Suspense fallback={<></>}>
+      <SearchFormComponent {...props}/>
+    </Suspense>
+  )
+}
+
+const SearchFormComponent = ({action = '/search', inputProps = {}, ...props}: FormProps) => {
   const params = useSearchParams();
   const inputId = useId();
 

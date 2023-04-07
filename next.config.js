@@ -2,6 +2,7 @@ module.exports = {
   poweredByHeader: false,
   experimental: {
     appDir: true,
+    optimizeCss: true
   },
   images: {
     domains: [process.env.NEXT_IMAGE_DOMAIN]

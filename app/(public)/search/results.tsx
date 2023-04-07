@@ -8,15 +8,17 @@ import {getNodeMetadata} from "../[...slug]/metadata";
 import Link from "next/link";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useDataFetch from "@/lib/hooks/useDataFetch";
+import {Suspense} from "react";
 
 const SearchResults = () => {
   return (
     <CachedClientFetch>
-      <SearchResultsList/>
+      <Suspense fallback={<></>}>
+        <SearchResultsList/>
+      </Suspense>
     </CachedClientFetch>
   )
 }
-
 
 const SearchResultsList = () => {
   const params = useSearchParams();
