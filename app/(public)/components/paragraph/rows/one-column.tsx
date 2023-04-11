@@ -19,7 +19,7 @@ const OneColumn = ({items, config = {}, fullWidth = false}: LayoutProps) => {
   const paddingClass = fullWidth ? "su-px-40 xl:su-px-0" : "";
 
   return (
-    <div className="su-grid su-grid-col su-gap-2xl">
+    <div data-rows="one-column" className="su-grid su-grid-col su-gap-2xl">
       {items.map(item =>
         <Paragraph
           key={item.id}
