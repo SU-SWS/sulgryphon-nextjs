@@ -15,6 +15,7 @@ import {ErrorBoundary} from "react-error-boundary";
 import FallbackMainMenu from "@/components/menu/fallback-main-menu";
 
 const MainMenu = ({menuItems}) => {
+  console.log(menuItems);
   return (
     <ErrorBoundary fallback={<FallbackMainMenu menuItems={menuItems}/>}>
       <Menu menuItems={menuItems}/>
@@ -205,9 +206,9 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
       onClickOutside={() => setSubmenuOpen(false)}
       onFocusOutside={() => setSubmenuOpen(false)}
       component="li"
-      className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap"
+      className="su-p-0 su-m-0 su-relative lg:su-flex"
     >
-      <Conditional showWhen={url.length > 1}>
+      <Conditional showWhen={url.length >= 1}>
         <Link
           onClick={() => {
             syncDrupalPreviewRoutes(url);
