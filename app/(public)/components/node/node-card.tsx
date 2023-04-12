@@ -1,18 +1,16 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import {ErrorBoundary} from "react-error-boundary";
 import {PropsWithRef} from "react";
-
-const StanfordCourseCard = dynamic(() => import("./stanford-course/card"));
-const StanfordEventCard = dynamic(() => import("./stanford-event/card"));
-const StanfordEventSeriesCard = dynamic(() => import("./stanford-event-series/card"));
-const StanfordNewsCard = dynamic(() => import("./stanford-news/card"));
-const StanfordPageCard = dynamic(() => import("./stanford-page/card"));
-const StanfordPersonCard = dynamic(() => import("./stanford-person/card"));
-const StanfordPublicationCard = dynamic(() => import("./stanford-publication/card"));
-const SulLibraryCard = dynamic(() => import("./sul-library/card"));
-const SulStudyPlaceCard = dynamic(() => import("./sul-study-place/card"));
+import StanfordCourseCard from "@/components/node/stanford-course/card";
+import StanfordEventCard from "@/components/node/stanford-event/card";
+import StanfordEventSeriesCard from "@/components/node/stanford-event-series/card";
+import StanfordNewsCard from "@/components/node/stanford-news/card";
+import StanfordPageCard from "@/components/node/stanford-page/card";
+import StanfordPersonCard from "@/components/node/stanford-person/card";
+import StanfordPublicationCard from "@/components/node/stanford-publication/card";
+import SulLibraryCard from "@/components/node/sul-library/card";
+import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 
 interface NodeProps extends PropsWithRef<any>{
   node: any

@@ -1,17 +1,15 @@
 "use client";
 
-import dynamic from 'next/dynamic'
 import {ErrorBoundary} from "react-error-boundary";
-
-const StanfordCourseListItem = dynamic(() => import("./stanford-course/list-item"));
-const StanfordEventListItem = dynamic(() => import("./stanford-event/list-item"));
-const StanfordEventSeriesListItem = dynamic(() => import("./stanford-event-series/list-item"));
-const StanfordNewsListItem = dynamic(() => import("./stanford-news/list-item"));
-const StanfordPageListItem = dynamic(() => import("./stanford-page/list-item"));
-const StanfordPersonListItem = dynamic(() => import("./stanford-person/list-item"));
-const StanfordPublicationListItem = dynamic(() => import("./stanford-publication/list-item"));
-const SulLibraryListItem = dynamic(() => import("./sul-library/list-item"));
-const StudyPlaceListItem = dynamic(() => import("./sul-study-place/list-item"));
+import StanfordCourseListItem from "@/components/node/stanford-course/list-item";
+import StanfordEventListItem from "@/components/node/stanford-event/list-item";
+import StanfordEventSeriesListItem from "@/components/node/stanford-event-series/list-item";
+import StanfordNewsListItem from "@/components/node/stanford-news/list-item";
+import StanfordPageListItem from "@/components/node/stanford-page/list-item";
+import StanfordPersonListItem from "@/components/node/stanford-person/list-item";
+import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item";
+import SulLibraryListItem from "@/components/node/sul-library/list-item";
+import SulStudyPlaceListItem from "@/components/node/sul-study-place/list-item";
 
 interface NodeProps {
   node: any
@@ -30,7 +28,7 @@ const NodeListDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_person" && <StanfordPersonListItem node={node} {...props}/>}
       {node.type === "node--stanford_publication" && <StanfordPublicationListItem node={node} {...props}/>}
       {node.type === "node--sul_library" && <SulLibraryListItem node={node} {...props}/>}
-      {node.type === "node--sul_study_place" && <StudyPlaceListItem node={node} {...props}/>}
+      {node.type === "node--sul_study_place" && <SulStudyPlaceListItem node={node} {...props}/>}
     </ErrorBoundary>
   )
 }

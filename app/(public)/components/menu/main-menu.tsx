@@ -15,7 +15,6 @@ import {ErrorBoundary} from "react-error-boundary";
 import FallbackMainMenu from "@/components/menu/fallback-main-menu";
 
 const MainMenu = ({menuItems}) => {
-  console.log(menuItems);
   return (
     <ErrorBoundary fallback={<FallbackMainMenu menuItems={menuItems}/>}>
       <Menu menuItems={menuItems}/>
