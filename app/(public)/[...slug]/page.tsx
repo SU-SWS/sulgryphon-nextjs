@@ -6,6 +6,7 @@ import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {DrupalNode} from "next-drupal";
 import {GetStaticPathsResult, Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 export const revalidate = 60;
 
@@ -56,23 +57,35 @@ const NodePage = async (context) => {
 export default NodePage;
 
 export const generateStaticParams = async (context) => {
-  let paths: GetStaticPathsResult["paths"] = []
 
-  const contentPaths = await Promise.all([
-    getPathsFromContext('node--stanford_page', {}),
-    getPathsFromContext('node--stanford_person', {}),
-    getPathsFromContext('node--stanford_event', {}),
-    getPathsFromContext('node--stanford_news', {}),
-    getPathsFromContext('node--sul_library', {})
-  ]);
-  contentPaths.map(contentTypePaths => {
-    paths = [...paths, ...contentTypePaths];
-  });
+  const getPathsForType = async (type) => {
+    let pagePaths, paths: GetStaticPathsResult["paths"] = [];
+    let page = 0;
+    let fetchMore = true;
+    const params = new DrupalJsonApiParams();
+
+    while (fetchMore) {
+      params.addPageLimit(50);
+      params.addPageOffset(page * 50);
+      pagePaths = await getPathsFromContext(`node--${type}`, {}, {params: params.getQueryObject()});
+      paths = [...paths, ...pagePaths];
+      fetchMore = pagePaths.length > 0;
+      page++;
+    }
+    return paths;
+  }
+
+  const pagePaths = await getPathsForType('stanford_page');
+  const personPaths = await getPathsForType('stanford_person');
+  const eventPaths = await getPathsForType('stanford_event');
+  const newsPaths = await getPathsForType('stanford_news');
+  const libraryPaths = await getPathsForType('sul_library');
+  let paths = [...pagePaths, ...personPaths, ...eventPaths, ...newsPaths, ...libraryPaths];
 
   // @ts-ignore
   if (process.env.LOCAL_STATIC_BUILD_PAGES >= 1) {
     // @ts-ignore
-    paths = paths.slice(0, process.env.LOCAL_STATIC_BUILD_PAGES)
+    // paths = paths.slice(0, process.env.LOCAL_STATIC_BUILD_PAGES)
   }
   return paths.map(path => typeof path !== "string" ? path?.params : path);
 }
