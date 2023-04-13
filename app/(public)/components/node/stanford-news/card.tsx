@@ -4,6 +4,8 @@ import Image from "next/image";
 
 const StanfordNewsCard = ({node, ...props}: { node: News }) => {
   const imageUrl = node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_1x || node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1x
+  const placeholder = node.su_news_banner?.field_media_image?.uri.base64 || node.su_news_featured_media?.field_media_image?.uri.base64;
+
   return (
     <article {...props}>
       {imageUrl &&
@@ -13,6 +15,8 @@ const StanfordNewsCard = ({node, ...props}: { node: News }) => {
                 src={imageUrl}
                 alt=""
                 fill={true}
+                placeholder={placeholder ? 'blur' : 'empty'}
+                blurDataURL={placeholder}
             />
           </div>
       }

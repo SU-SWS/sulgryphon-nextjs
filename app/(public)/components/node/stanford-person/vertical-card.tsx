@@ -5,25 +5,34 @@ import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
 
-const VerticalPersonCard = ({node, currentWidth = 0, ...props}: {node: Person, currentWidth: number}) => {
+const VerticalPersonCard = ({node, currentWidth = 0, ...props}: { node: Person, currentWidth: number }) => {
+
+  const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
+  const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const imageHeight = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height;
+  const imageWidth = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width;
+  const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
+
   return (
     <article
       className="su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t-5 su-border-b su-border-solid su-border-black-10 su-border-t-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-70" {...props}>
-      {node?.su_person_photo?.field_media_image &&
-          <div
-              className={currentWidth < 300 ? "su-relative su-flex su-justify-center su-pb-70" : "su-relative su-flex su-justify-center su-pb-80"}>
-            <div className="su-absolute su-top-[-11rem]">
-              <div
-                  className={currentWidth < 300 ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden"}>
-                <Image
-                    src={node.su_person_photo.field_media_image.image_style_uri.medium_square}
-                    alt={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
-                    height={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height}
-                    width={node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width}
-                />
-              </div>
+      {imageUrl &&
+        <div
+          className={currentWidth < 300 ? "su-relative su-flex su-justify-center su-pb-70" : "su-relative su-flex su-justify-center su-pb-80"}>
+          <div className="su-absolute su-top-[-11rem]">
+            <div
+              className={currentWidth < 300 ? "su-rounded-full su-w-[130px] su-h-[130px] su-overflow-hidden" : "su-rounded-full su-w-[155px] su-h-[155px] su-overflow-hidden"}>
+              <Image
+                src={imageUrl}
+                alt={imageAlt}
+                height={imageHeight}
+                width={imageWidth}
+                placeholder={placeholder ? 'blur' : 'empty'}
+                blurDataURL={placeholder}
+              />
             </div>
           </div>
+        </div>
       }
       <div>
         <Link href={node.path.alias}

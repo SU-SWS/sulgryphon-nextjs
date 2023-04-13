@@ -17,18 +17,22 @@ const StanfordCard = ({paragraph, siblingCount = 0, ...props}: CardProps) => {
   const isHorizontalAndSingle = isHorizontal && siblingCount == 0;
 
   const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
-  const imageUrl = paragraph?.su_card_media?.field_media_image?.uri?.url;
+  const imageUrl = paragraph?.su_card_media?.field_media_image?.image_style_uri.breakpoint_2xl_2x;
+  const imageAlt = paragraph?.su_card_media?.field_media_image?.resourceIdObjMeta.alt ?? '';
+  const placeholder = paragraph?.su_card_media?.field_media_image?.uri.base64;
 
   return (
-    <div className={"su-mx-auto su-w-full " + (isHorizontalOrSingle  ? "su-max-w-[980px]": "")}>
+    <div className={"su-mx-auto su-w-full " + (isHorizontalOrSingle ? "su-max-w-[980px]" : "")}>
       {isHorizontalAndSingle &&
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
           image={imageUrl && <Image
             className="su-object-cover su-object-center"
-            src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
-            alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
+            src={imageUrl}
+            alt={imageAlt}
             fill={true}
+            placeholder={placeholder ? 'blur' : 'empty'}
+            blurDataURL={placeholder}
           />}
           header={paragraph.su_card_header}
           superHeader={paragraph.su_card_super_header}
@@ -45,9 +49,11 @@ const StanfordCard = ({paragraph, siblingCount = 0, ...props}: CardProps) => {
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
           image={imageUrl && <Image
             className="su-object-cover su-object-center"
-            src={paragraph?.su_card_media?.field_media_image.image_style_uri.breakpoint_2xl_2x}
-            alt={paragraph?.su_card_media?.field_media_image.resourceIdObjMeta.alt}
+            src={imageUrl}
+            alt={imageAlt}
             fill={true}
+            placeholder={placeholder ? 'blur' : 'empty'}
+            blurDataURL={placeholder}
           />}
           header={paragraph.su_card_header}
           superHeader={paragraph.su_card_super_header}

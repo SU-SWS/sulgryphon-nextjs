@@ -52,6 +52,8 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
   }
 
   const imageUrl = library?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x || library?.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const placeholder = library?.su_library__contact_img?.field_media_image?.uri.base64;
+
   return (
     <div {...props}>
 

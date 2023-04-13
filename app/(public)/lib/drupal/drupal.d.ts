@@ -289,9 +289,17 @@ interface ButtonParagraph extends DrupalParagraph {
   sul_button_headline?: string
 }
 
+interface DrupalImageFile extends DrupalFile {
+  uri: {
+    value: string
+    url: string
+    base64: string
+  }
+}
+
 // Media Types.
 interface DrupalImageMedia extends DrupalMedia {
-  field_media_image: DrupalFile
+  field_media_image: DrupalImageFile
 }
 
 interface DrupalVideoMedia extends DrupalMedia {

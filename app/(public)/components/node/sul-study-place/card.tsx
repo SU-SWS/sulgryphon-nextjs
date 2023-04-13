@@ -1,27 +1,30 @@
 import {StudyPlace} from "@/lib/drupal/drupal";
 import Link from "next/link";
 import Image from "next/image";
-import {MapPinIcon } from "@heroicons/react/24/outline";
+import {MapPinIcon} from "@heroicons/react/24/outline";
 import Conditional from "@/components/utils/conditional";
 import LibCal from "./libcal";
 import StudyPlaceHours from "./study-place-today-hours";
 import StudyPlaceModal from "./study-place-modal";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
-
-  const contactImageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
+  const imageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageAlt = node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const placeholder = node.sul_study__branch.su_library__contact_img?.field_media_image?.uri.base64;
 
   return (
     <>
       <div className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-col"}>
-        {contactImageUrl &&
+        {imageUrl &&
           <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
             <Image
               className="su-object-cover su-object-center su-static"
-              src={contactImageUrl}
-              alt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+              src={imageUrl}
+              alt={imageAlt}
               fill={true}
+              placeholder={placeholder ? 'blur' : 'empty'}
+              blurDataURL={placeholder}
             />
           </div>
         }
@@ -41,9 +44,10 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
               <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
                 <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
-                <Link href={node.sul_study__branch?.path.alias} className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red">
+                <Link href={node.sul_study__branch?.path.alias}
+                      className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red">
                   <div>{node.title}</div>
-                </Link>	
+                </Link>
               </div>
 
               {(node.sul_study__capacity || features) &&

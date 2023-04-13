@@ -41,7 +41,7 @@ const GlobalMessage = async () => {
   const chosenOption = options[configPage.su_global_msg_type];
 
   return (
-    <div className={"su-relative su-z-30 " + chosenOption.bgColor + " " + chosenOption.textColor}>
+    <div className={"su-relative su-z-30 lg:su-z-0 " + chosenOption.bgColor + " " + chosenOption.textColor}>
 
       <div className="su-cc su-flex su-gap-2xl su-py-20">
         <div className="su-flex-shrink-0 su-flex su-items-center su-justify-center">

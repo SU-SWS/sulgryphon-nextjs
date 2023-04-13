@@ -12,7 +12,9 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch";
 const NodeReferenceCard = ({paragraph}: { paragraph: ContactCardParagraph }) => {
   const {width, ref} = useResizeDetector();
 
-  const contactImageUrl = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageUrl = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageAlt = paragraph.sul_contact_branch?.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const placeholder = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.uri.base64;
 
   const address = [
     paragraph.sul_contact__branch?.su_library__address?.address_line1,
@@ -26,19 +28,21 @@ const NodeReferenceCard = ({paragraph}: { paragraph: ContactCardParagraph }) => 
     <div ref={ref}
          className={"su-flex su-w-full su-basefont-23 su-leading-display su-shadow-md su-border-0 su-rounded " + ((width && width < 768) && " su-flex-col")}>
 
-      {contactImageUrl &&
-          <div className={"su-overflow-hidden su-aspect-[16/9] su-relative " + ((width && width > 767) && " su-w-1/2")}>
-            <Image
-                className="su-object-cover su-object-center su-static"
-                src={contactImageUrl}
-                alt={paragraph.sul_contact_branch?.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
-                fill={true}
-            />
-          </div>
+      {imageUrl &&
+        <div className={"su-overflow-hidden su-aspect-[16/9] su-relative " + ((width && width > 767) && " su-w-1/2")}>
+          <Image
+            className="su-object-cover su-object-center su-static"
+            src={imageUrl}
+            alt={imageAlt}
+            fill={true}
+            placeholder={placeholder ? 'blur' : 'empty'}
+            blurDataURL={placeholder}
+          />
+        </div>
       }
 
       <div
-        className={"card-body su-items-start su-rs-px-2 su-rs-py-4 su-bg-black-true " + ((contactImageUrl && (width && width > 767)) ? " su-w-1/2" : " su-w-full")}>
+        className={"card-body su-items-start su-rs-px-2 su-rs-py-4 su-bg-black-true " + ((imageUrl && (width && width > 767)) ? " su-w-1/2" : " su-w-full")}>
         <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
 
           {paragraph.sul_contact__branch?.path ? (

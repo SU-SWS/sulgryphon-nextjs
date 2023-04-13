@@ -36,6 +36,8 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
                 width={`711`}
                 height={`400`}
                 alt={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
+                placeholder={image.su_gallery_image.uri.base64 ? 'blur' : 'empty'}
+                blurDataURL={image.su_gallery_image.uri.base64}
               />
 
             </Link>

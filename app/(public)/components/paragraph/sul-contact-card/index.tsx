@@ -7,12 +7,9 @@ interface ContactCardProps {
   siblingCount?: number
 }
 
-const SulContactCard = ({paragraph, siblingCount = 0}: ContactCardProps) => {
-  if (paragraph.sul_contact__branch) {
-    return <NodeReferenceCard paragraph={paragraph}/>
-  }
-
-  return <ManualFieldsCard paragraph={paragraph}/>
+const SulContactCard = ({paragraph, siblingCount = 0, ...props}: ContactCardProps) => {
+  const Component = paragraph.sul_contact__branch ? NodeReferenceCard : ManualFieldsCard;
+  return <div {...props}><Component paragraph={paragraph}/></div>
 }
 
 export default SulContactCard;

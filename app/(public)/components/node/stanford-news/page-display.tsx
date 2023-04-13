@@ -24,6 +24,13 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
   if (node.su_news_source?.url && node.su_news_source?.url?.length > 0) {
     redirect(node.su_news_source?.url);
   }
+
+  const imageUrl = node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  const imageAlt = node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const imageWidth = node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.width ?? 0;
+  const imageHeight = node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.height ?? 0;
+  const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64;
+
   return (
     <article {...props} className="su-mt-50">
       <div className="su-cc">
@@ -95,14 +102,16 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
         </div>
       </div>
 
-      {node?.su_news_banner?.field_media_image &&
+      {imageUrl &&
           <figure className="su-mb-50">
             <Image
                 className="su-mx-auto"
-                src={node.su_news_banner.field_media_image.image_style_uri.breakpoint_2xl_2x}
-                alt={node.su_news_banner.field_media_image.resourceIdObjMeta.alt}
-                height={node.su_news_banner.field_media_image.resourceIdObjMeta.height}
-                width={node.su_news_banner.field_media_image.resourceIdObjMeta.width}
+                src={imageUrl}
+                alt={imageAlt}
+                height={imageHeight}
+                width={imageWidth}
+                placeholder={placeholder ? 'blur' : 'empty'}
+                blurDataURL={placeholder}
             />
 
             {node.su_news_banner_media_caption &&

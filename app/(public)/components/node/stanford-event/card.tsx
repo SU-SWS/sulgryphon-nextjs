@@ -91,7 +91,9 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
 
-  let imageUrl = node.sul_event__image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x;
+  const imageUrl = node.sul_event__image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x;
+  const placeholder = node.sul_event__image?.field_media_image?.uri.base64;
+
 
   return (
     <article {...props}>
@@ -102,6 +104,8 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
             src={imageUrl}
             alt=""
             fill={true}
+            placeholder={placeholder ? 'blur' : 'empty'}
+            blurDataURL={placeholder}
           />
         </div>
       }

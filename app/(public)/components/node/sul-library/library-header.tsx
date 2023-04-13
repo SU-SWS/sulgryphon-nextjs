@@ -9,7 +9,12 @@ import LibraryHeaderHours from "./library-hours";
 
 const LibraryHeader = ({node}: { node: Library }) => {
   const bannerImageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  const bannerImageAlt = node.su_library__banner?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const bannerPlaceholder = node.su_library__banner?.field_media_image?.uri.base64;
+
   const contactImageUrl = node.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x ?? bannerImageUrl;
+  const contactImageAlt = node.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? bannerImageAlt;
+  const contactPlaceholder = node.su_library__contact_img?.field_media_image?.uri.base64 ?? bannerPlaceholder;
 
   return (
     <div className="su-mb-100 su-relative">
@@ -19,8 +24,10 @@ const LibraryHeader = ({node}: { node: Library }) => {
             <Image
               className="su-object-cover su-object-center"
               src={bannerImageUrl}
-              alt={node.su_library__banner?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+              alt={bannerImageAlt}
               fill={true}
+              placeholder={bannerPlaceholder ? 'blur' : 'empty'}
+              blurDataURL={bannerPlaceholder}
             />
           }
         </div>
@@ -41,10 +48,12 @@ const LibraryHeader = ({node}: { node: Library }) => {
               image={contactImageUrl && <Image
                 className="su-object-cover su-object-center"
                 src={contactImageUrl}
-                alt={node.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
+                alt={contactImageAlt}
                 fill={true}
+                placeholder={contactPlaceholder ? 'blur' : 'empty'}
+                blurDataURL={contactPlaceholder}
               />
-            }
+              }
               footer={
                 <>
                   <div className="su-leading-tight su-text-black md:su-rs-px-2 su-rs-pb-1 su-mt-[-2rem]">
