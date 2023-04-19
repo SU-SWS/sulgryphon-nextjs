@@ -14,14 +14,15 @@ const NodeReferenceCardHours = ({branchId}) => {
   return (
     <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-0 su-type-1">
       <ClockIcon width={19} className="su-mr-12 su-mt-01em su-flex-shrink-0"/>
-      <div className="su-text-white" aria-live="polite">
-        <div className="sm:su-flex">
-          {isOpen ? 'Open ' : 'Closed '}
-          /
-          <div className="sm:su-ml-5">
-            {hoursDisplay}
-          </div>
-        </div>
+      <div className="su-text-white">
+        {isOpen ? 'Open' : 'Closed'}
+        <span className="su-mx-5">/</span>
+        {hoursDisplay}
+        <span className="su-mx-5">/</span>
+        <a className="su-text-white su-font-normal hocus:su-text-illuminating-dark hocus:su-no-underline"
+           href={`https://library-hours.stanford.edu/libraries/${branchId}`}>
+          See all hours
+        </a>
       </div>
     </div>
   )

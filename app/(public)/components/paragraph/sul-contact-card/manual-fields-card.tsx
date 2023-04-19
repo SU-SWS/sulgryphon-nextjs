@@ -41,20 +41,17 @@ const ManualFieldsCard = ({paragraph}: { paragraph: ContactCardParagraph }) => {
 
           <div className="su-leading-tight md:su-rs-pr-2 su-text-white">
 
-            <Conditional showWhen={paragraph.sul_contact__hours}>
+            <Conditional showWhen={paragraph.sul_contact__hours || paragraph.sul_contact__link?.url}>
               <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-0 su-type-1">
                 <ClockIcon width={19} className="su-mr-12 su-mt-01em su-flex-shrink-0"/>
-                <div className="sm:su-flex">
+                <div className="su-text-white su-rs-mb-neg2 sm:su-mb-0">
+                  {paragraph.sul_contact__hours}
 
-                  <Conditional showWhen={paragraph.sul_contact__hours}>
-                    <div className="su-text-white su-rs-mb-neg2 sm:su-mb-0">
-                      {paragraph.sul_contact__hours}
-                    </div>
-                  </Conditional>
+                  {(paragraph.sul_contact__hours && paragraph.sul_contact__link?.url) && <span className="su-mx-5">/</span>}
 
                   {paragraph.sul_contact__link?.url &&
                     <Link
-                      className={"su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal" + (paragraph.sul_contact__hours && " sm:su-ml-15")}
+                      className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal"
                       href={paragraph.sul_contact__link?.url}>
                       {paragraph.sul_contact__link?.title}
                     </Link>

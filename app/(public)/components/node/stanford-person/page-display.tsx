@@ -21,21 +21,18 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
   const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
-  const imageHeight = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height;
-  const imageWidth = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width;
   const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
 
   return (
     <article {...props}>
       <div className="sm:su-flex su-no-wrap su-rs-mb-5 su-mt-50">
         {imageUrl &&
-          <div className="su-rs-mr-4 su-rs-mb-1 sm:su-mb-[0rem] ">
-            <div className="su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
+          <div className="su-rs-mr-4 su-rs-mb-1 sm:su-mb-[0rem]">
+            <div className="su-relative su-rounded-full su-w-[220px] su-h-[220px] su-overflow-hidden">
               <Image
                 src={imageUrl}
                 alt={imageAlt}
-                height={imageHeight}
-                width={imageWidth}
+                fill={true}
                 placeholder={placeholder ? 'blur' : 'empty'}
                 blurDataURL={placeholder}
               />
@@ -43,15 +40,21 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
           </div>
         }
 
-        <div>
-          <Conditional showWhen={node.su_person_short_title}>
-            <div className="su-type-0 su-leading">{node.su_person_short_title}</div>
-          </Conditional>
-          <Conditional showWhen={node.su_person_full_title}>
-            <div className="su-type-0 su-leading">{node.su_person_full_title}</div>
-          </Conditional>
-          <Conditional showWhen={node.su_person_pronouns}>
-            <div className="su-type-0 su-leading">Pronouns: {node.su_person_pronouns}</div>
+        <div className="su-flex su-flex-col su-justify-between">
+          <div>
+            <Conditional showWhen={node.su_person_short_title}>
+              <div className="su-type-0 su-leading">{node.su_person_short_title}</div>
+            </Conditional>
+            <Conditional showWhen={node.su_person_full_title}>
+              <div className="su-type-0 su-leading">{node.su_person_full_title}</div>
+            </Conditional>
+            <Conditional showWhen={node.su_person_pronouns}>
+              <div className="su-type-0 su-leading">Pronouns: {node.su_person_pronouns}</div>
+            </Conditional>
+          </div>
+
+          <Conditional showWhen={node.sul_person__libcal_id}>
+            <LibCal libcalId={node.sul_person__libcal_id}/>
           </Conditional>
         </div>
       </div>
@@ -62,6 +65,10 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
             className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7 md:su-w-10/12 ">{formatHtml(node.body.processed)}</div>}
 
           <ParagraphRows items={node.su_person_components}/>
+
+          <Conditional showWhen={node.lib_guides.length > 0}>
+            <LibGuides guides={node.lib_guides} className="su-mb-50"/>
+          </Conditional>
 
           {(node.su_person_education && node.su_person_education.length > 0) &&
             <div className="su-rs-mb-7">
@@ -176,14 +183,6 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
               </div>
             </div>
           }
-
-          <Conditional showWhen={node.sul_person__libcal_id}>
-            <LibCal libcalId={node.sul_person__libcal_id}/>
-          </Conditional>
-
-          <Conditional showWhen={node.lib_guides.length > 0}>
-            <LibGuides guides={node.lib_guides}/>
-          </Conditional>
 
           {node?.su_person_profile_link &&
             <DrupalLinkButton className="su-rs-mb-4" href={node.su_person_profile_link.url}>

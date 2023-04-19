@@ -2,17 +2,22 @@
 
 import Conditional from "@/components/utils/conditional";
 import Link from "next/link";
-import {useEffect, useId, useRef, useState} from "react";
+import {PropsWithoutRef, useEffect, useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {LibGuide} from "@/lib/drupal/drupal";
 import {ErrorBoundary} from "react-error-boundary";
 
-const LibGuides = ({guides, headingLevel = 2}: { guides: LibGuide[], headingLevel?: number }) => {
+interface Props extends PropsWithoutRef<any>{
+  guides: LibGuide[]
+  headingLevel?: number
+}
+
+const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
 
   return (
-    <div>
+    <div {...props}>
       <ErrorBoundary
         fallback={<></>}
         onError={e => console.error(e.message)}
@@ -74,7 +79,7 @@ const LibGuideSection = ({heading, guides}) => {
 
       <Conditional showWhen={moreGuides.length > 0}>
         <button
-          className="su-button su-mx-auto su-block"
+          className="su-mt-20 su-button su-mx-auto su-block"
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}

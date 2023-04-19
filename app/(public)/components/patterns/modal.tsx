@@ -3,7 +3,6 @@
 import React, {MutableRefObject, ReactNode, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import FocusTrap from "focus-trap-react";
-import Conditional from "@/components/utils/conditional";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 
 interface ModalProps {
@@ -33,45 +32,48 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
     isOpen ? lockScroll() : unlockScroll();
   }, [isOpen]);
 
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div ref={animationParent}>
-      <Conditional showWhen={isOpen}>
-        <FocusTrap
-          active={isOpen}
-          focusTrapOptions={{
-            initialFocus: () => initialFocus?.current ?? false,
-            // @ts-ignore
-            fallbackFocus: closeButton.current,
-            returnFocusOnDeactivate: true
-          }}
+      <FocusTrap
+        active={isOpen}
+        focusTrapOptions={{
+          initialFocus: () => initialFocus?.current ?? false,
+          // @ts-ignore
+          fallbackFocus: closeButton.current,
+          returnFocusOnDeactivate: true
+        }}
+      >
+        <div
+          className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[80%] su-flex"}
+          aria-label={ariaLabel}
+          aria-hidden={!isOpen}
+          aria-modal={isOpen}
+          role="dialog"
         >
-          <div
-            className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[80%] su-flex"}
-            aria-label={ariaLabel}
-            aria-hidden={!isOpen}
-            aria-modal={isOpen}
-            role="dialog"
-          >
-            <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
-              <div ref={modalBodyRef} className="su-w-full su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]">
-                {children}
-              </div>
+          <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
+            <div ref={modalBodyRef}
+                 className="su-w-full su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]">
+              {children}
+            </div>
 
-              <div className={""}>
-                <button
-                  type="button"
-                  ref={closeButton}
-                  onClick={onClose}
-                  className={"su-absolute su-right-50 su-top-50 su-text-black md:su-text-white su-flex"}
-                >
-                  Close<span className="su-sr-only"> Overlay</span><XMarkIcon className="su-ml-10 su-mt-[-3px] " width={25} aria-hidden/>
-                </button>
-              </div>
+            <div>
+              <button
+                type="button"
+                ref={closeButton}
+                onClick={onClose}
+                className={"su-absolute su-right-50 su-top-50 su-text-black md:su-text-white su-flex"}
+              >
+                Close<span className="su-sr-only"> Overlay</span><XMarkIcon className="su-ml-10 su-mt-[-3px] "
+                                                                            width={25} aria-hidden/>
+              </button>
             </div>
           </div>
-        </FocusTrap>
-      </Conditional>
+        </div>
+      </FocusTrap>
     </div>
   );
 };
