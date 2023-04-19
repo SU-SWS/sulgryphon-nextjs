@@ -45,7 +45,7 @@ const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMedia
       }
 
       {paragraph.su_media_caption_caption &&
-        <figcaption className="su-text-right su-float-right su-text-19 su-italic su-leading">
+        <figcaption className="su-text-right su-float-right su-text-19 su-leading">
           {formatHtml(paragraph.su_media_caption_caption?.processed)}
         </figcaption>
       }
