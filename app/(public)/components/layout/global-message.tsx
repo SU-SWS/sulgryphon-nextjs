@@ -28,15 +28,36 @@ const GlobalMessage = async () => {
   }
 
   const options = {
-    plain: {bgColor: "su-bg-foggy-light", textColor: "su-text-black-true", icon: <BellIcon width={30}/>},
-    success: {bgColor: "su-bg-digital-green", textColor: "su-text-white", icon: <CheckCircleIcon width={30}/>},
-    info: {bgColor: "su-bg-digital-blue-dark", textColor: "su-text-white", icon: <InformationCircleIcon width={30}/>},
+    plain: {
+      bgColor: "su-bg-foggy-light",
+      textColor: "su-text-black-true",
+      linkClasses: "su-transition su-text-black-true hocus:su-text-black hocus:su-bg-sky",
+      icon: <BellIcon width={30}/>
+    },
+    success: {
+      bgColor: "su-bg-digital-green",
+      textColor: "su-text-white",
+      linkClasses: "su-transition su-text-white hocus:su-text-black hocus:su-bg-white",
+      icon: <CheckCircleIcon width={30}/>
+    },
+    info: {
+      bgColor: "su-bg-digital-blue-dark",
+      textColor: "su-text-white",
+      linkClasses: "su-transition su-text-white hocus:su-text-black hocus:su-bg-white",
+      icon: <InformationCircleIcon width={30}/>
+    },
     warning: {
       bgColor: "su-bg-illuminating-dark",
       textColor: "su-text-black-true",
+      linkClasses: "su-transition su-text-black-true hocus:su-text-black hocus:su-bg-sky",
       icon: <ExclamationCircleIcon width={30}/>
     },
-    error: {bgColor: "su-bg-digital-red", textColor: "su-text-white", icon: <ExclamationTriangleIcon width={30}/>},
+    error: {
+      bgColor: "su-bg-digital-red",
+      textColor: "su-text-white",
+      linkClasses: "su-transition su-text-white hocus:su-text-black hocus:su-bg-white",
+      icon: <ExclamationTriangleIcon width={30}/>
+    },
   }
   const chosenOption = options[configPage.su_global_msg_type];
 
@@ -56,12 +77,12 @@ const GlobalMessage = async () => {
 
           {configPage.su_global_msg_message?.processed &&
             <div className={chosenOption.textColor}>
-              {formatHtml(configPage.su_global_msg_message?.processed?.replace(/<a /, '<a class="su-text-white" '))}
+              {formatHtml(configPage.su_global_msg_message?.processed?.replace(/<a /, `<a class="${chosenOption.linkClasses}" `))}
             </div>
           }
 
           {configPage.su_global_msg_link?.url &&
-            <DrupalActionLink href={configPage.su_global_msg_link?.url} className={chosenOption.textColor}>
+            <DrupalActionLink href={configPage.su_global_msg_link?.url} className={chosenOption.linkClasses}>
               {configPage.su_global_msg_link?.title}
             </DrupalActionLink>
           }
