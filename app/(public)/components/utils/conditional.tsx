@@ -1,8 +1,8 @@
-import {ReactNodeLike} from "prop-types";
+import {ReactNode} from "react";
 
 interface ConditionalProps {
   showWhen: boolean | any
-  children: ReactNodeLike
+  children: ReactNode
 }
 
 const Conditional = ({showWhen, children}: ConditionalProps) => {

@@ -7,12 +7,14 @@ import LinkedInIcon from "../patterns/icons/LinkedInIcon";
 import TwitterIcon from "../patterns/icons/TwitterIcon";
 import InstagramIcon from "../patterns/icons/InstagramIcon";
 import YoutubeIcon from "../patterns/icons/YoutubeIcon";
+import {ReactNode} from "react";
 
 const LibraryFooter = () => {
   return (
     <div className="su-bg-black-true su-text-white su-pb-30">
       <div className="su-bg-footer-sprinkles su-bg-repeat">
-        <svg viewBox="0 0 1500 100" aria-hidden={true} className="su-bg-gradient-to-t su-from-black-true su-to-transparent">
+        <svg viewBox="0 0 1500 100" aria-hidden={true}
+             className="su-bg-gradient-to-t su-from-black-true su-to-transparent">
           <path d="M1500,0 L1500,100 1200,100 1200,0" className="su-fill-black-true"></path>
           <path d="M0,0 Q500,10 700,45 Q1200,130 1500,0" stroke="#fff" className="su-fill-white"></path>
         </svg>
@@ -21,7 +23,8 @@ const LibraryFooter = () => {
         <div className="su-mx-auto"><Lockup whiteText/></div>
       </div>
 
-      <div className="su-cc su-grid md:su-grid-cols-2 lg:su-grid-cols-4 su-w-full su-gap-2xl su-text-center md:su-text-left">
+      <div
+        className="su-cc su-grid md:su-grid-cols-2 lg:su-grid-cols-4 su-w-full su-gap-2xl su-text-center md:su-text-left">
         <div>
           <address className="su-mb-30">
             557 Escondido Mall<br/>
@@ -90,7 +93,7 @@ const LibraryFooter = () => {
   )
 }
 
-const FooterLink = ({href, children}) => {
+const FooterLink = ({href, children}: { href: string, children: ReactNode }) => {
   return (
     <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white" href={href}>
       {children}

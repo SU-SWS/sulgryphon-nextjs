@@ -7,9 +7,9 @@ import {getMenu} from "@/lib/drupal/get-menu";
 import {getResourceFromContext} from "@/lib/drupal/get-resource";
 import {notFound} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
-import {ReactNodeLike} from "prop-types";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import LibraryHeader from "@/components/node/sul-library/library-header";
+import {ReactNode} from "react";
 
 const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   const path = await translatePathFromContext(context);
@@ -23,7 +23,7 @@ const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   return [node, fullWidth];
 }
 
-const Layout = async ({children, ...context}: { children: ReactNodeLike }) => {
+const Layout = async ({children, ...context}: { children: ReactNode }) => {
   let tree: DrupalMenuLinkContent[] = [];
   try {
     ({tree} = await getMenu('main'));
@@ -45,7 +45,7 @@ const Layout = async ({children, ...context}: { children: ReactNodeLike }) => {
 
       <Conditional showWhen={node.type != 'node--sul_library'}>
         <InternalHeaderBanner>
-          <h1 className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
+          <h1 role="region" className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
         </InternalHeaderBanner>
       </Conditional>
 

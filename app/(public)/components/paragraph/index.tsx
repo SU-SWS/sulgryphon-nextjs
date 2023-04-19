@@ -13,8 +13,9 @@ import SulFeaturedCollection from "@/components/paragraph/sul-featured-collectio
 import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
 import {PropsWithoutRef} from "react";
+import SulLibguides from "@/components/paragraph/sul-libguides";
 
-interface ParagraphProps extends PropsWithoutRef<any>{
+interface ParagraphProps extends PropsWithoutRef<any> {
   paragraph: any;
   siblingCount?: number;
 }
@@ -22,6 +23,7 @@ interface ParagraphProps extends PropsWithoutRef<any>{
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
+
   return (
     <>
       <Conditional showWhen={paragraph.status != undefined && !paragraph.status}>
@@ -34,15 +36,15 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       </Conditional>
 
       {paragraph.type === 'paragraph--stanford_card' &&
-          <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_banner' &&
-          <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_gallery' &&
-          <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_media_caption' &&
-          <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-          <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
 
       {paragraph.type === 'paragraph--stanford_lists' &&
         <StanfordLists
@@ -71,12 +73,12 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--stanford_spacer' && <StanfordSpacer/>}
 
       {paragraph.type === 'paragraph--collection' &&
-          <SulCollection
-            cards={paragraph.sul_collection_card}
-            heading={paragraph.sul_collection_heading}
-            siblingCount={siblingCount}
-            {...props}
-          />
+        <SulCollection
+          cards={paragraph.sul_collection_card}
+          heading={paragraph.sul_collection_heading}
+          siblingCount={siblingCount}
+          {...props}
+        />
       }
 
       {paragraph.type === 'paragraph--sul_feat_collection' &&
@@ -99,6 +101,15 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           link={paragraph.sul_button_link}
           siblingCount={siblingCount}
           styles={paragraph.behavior_settings?.sul_button_styles}
+          {...props}
+        />
+      }
+
+      {paragraph.type === 'paragraph--sul_libguide' &&
+        <SulLibguides
+          headline={paragraph.sul_libguide__headline}
+          description={paragraph.sul_libguide__desc?.processed}
+          libguideId={paragraph.sul_libguide_id}
           {...props}
         />
       }

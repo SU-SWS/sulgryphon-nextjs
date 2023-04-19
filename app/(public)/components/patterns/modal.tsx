@@ -1,14 +1,13 @@
 "use client";
 
-import React, {MutableRefObject, useEffect, useRef} from 'react';
+import React, {MutableRefObject, ReactNode, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import FocusTrap from "focus-trap-react";
 import Conditional from "@/components/utils/conditional";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
-import {ReactNodeLike} from "prop-types";
 
 interface ModalProps {
-  children: ReactNodeLike
+  children: ReactNode
   isOpen: boolean
   onClose: () => void
   ariaLabel: string

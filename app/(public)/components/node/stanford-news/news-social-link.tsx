@@ -1,10 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {PropsWithoutRef, ReactNode, useEffect, useState} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 
-const NewsSocialLink = ({prefix, suffix = '', children, ...props}) => {
+interface Props extends PropsWithoutRef<any> {
+  prefix: string
+  suffix?: string
+  children?: ReactNode
+}
+
+const NewsSocialLink = ({prefix, suffix = '', children, ...props}: Props) => {
   const [currentUrl, setCurrentUrl] = useState('#')
 
   useEffect(() => {

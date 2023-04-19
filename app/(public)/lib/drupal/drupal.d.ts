@@ -289,6 +289,12 @@ interface ButtonParagraph extends DrupalParagraph {
   sul_button_headline?: string
 }
 
+interface LibGuideParagraph extends DrupalParagraph {
+  sul_libguide__headline: string
+  sul_libguide__desc?: DrupalWysiwyg
+  sul_libguide_id: number
+}
+
 interface DrupalImageFile extends DrupalFile {
   uri: {
     value: string

@@ -1,10 +1,9 @@
-import React, {Component} from "react";
-import {ReactNodeLike} from "prop-types";
+import React, {Component, ReactNode} from "react";
 
 interface OutsideClickHandlerProps {
   onClickOutside: Function,
   onFocusOutside?: Function,
-  children: ReactNodeLike
+  children: ReactNode
   className?: string,
   component?: string
   render?: Function

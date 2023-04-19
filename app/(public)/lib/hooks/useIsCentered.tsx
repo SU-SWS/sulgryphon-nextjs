@@ -1,8 +1,8 @@
-import {MutableRefObject, useEffect, useState} from "react";
+import {MutableRefObject, useLayoutEffect, useState} from "react";
 
 const useIsCentered = (ref: MutableRefObject<any>) => {
   const [isCentered, setIsCentered] = useState(false)
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       if (ref?.current) {
         const boundingBox = ref.current.getBoundingClientRect();

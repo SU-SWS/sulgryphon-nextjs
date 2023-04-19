@@ -1,17 +1,16 @@
 import "server-only";
 import axios from "axios";
 
-interface Guide {
+export interface Guide {
   id: string
   title: string
   url: string
   type: string
 }
 
-const fetchLibGuides = async (id) => {
-  if (!id) {
-    return [];
-  }
+const fetchLibGuides = async ({accountId, subjectId}: {accountId?: number, subjectId?: number}) => {
+  if (!accountId && !subjectId) return [];
+
   const oauthConfig = {
     client_id: process.env.LIBGUIDE_CLIENT_ID,
     client_secret: process.env.LIBGUIDE_CLIENT_SECRET,
@@ -25,7 +24,17 @@ const fetchLibGuides = async (id) => {
     const guidesConfig = {
       headers: {'Authorization': 'Bearer ' + token},
     }
-    const data = await axios.get(`https://lgapi-us.libapps.com/1.2/guides?account_ids=${id}`, guidesConfig)
+
+    const params = new URLSearchParams();
+
+    if (subjectId) {
+      params.set('subject_ids', subjectId.toString());
+    }
+    if (accountId) {
+      params.set('account_ids', accountId.toString());
+    }
+
+    const data = await axios.get(`https://lgapi-us.libapps.com/1.2/guides?${params.toString()}`, guidesConfig)
       .then(response => response.data);
 
     const guides: Guide[] = [];
@@ -40,6 +49,7 @@ const fetchLibGuides = async (id) => {
 
     return guides
   } catch (e) {
+    console.log(e);
   }
   return [];
 }

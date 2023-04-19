@@ -63,12 +63,12 @@ export default class ParagraphPreview extends Component<PreviewProps, PreviewSta
     window.addEventListener('message', this.setParagraphData);
     window.addEventListener('resize', this.emitComponentHeight)
 
-    setTimeout(this.checkData, 1000);
+    setTimeout(this.checkData, 500);
   }
 
   componentDidUpdate() {
     this.emitComponentHeight();
-    setTimeout(this.emitComponentHeight, 1000);
+    setTimeout(this.emitComponentHeight, 500);
   }
 
   render() {

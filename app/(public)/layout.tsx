@@ -6,6 +6,7 @@ import Header from "@/components/layout/header";
 import Editori11y from "./editori11y";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/utils/google-analytics";
+import {ReactNode} from "react";
 
 export const metadata = {
   title: process.env.NEXT_PUBLIC_SITE_NAME,
@@ -20,7 +21,7 @@ export const metadata = {
   },
 }
 
-const RootLayout = ({children}: { children: React.ReactNode }) => {
+const RootLayout = ({children}: { children: ReactNode }) => {
 
   return (
     <html lang="en">

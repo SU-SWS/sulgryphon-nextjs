@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import {BannerParagraph} from "@/lib/drupal/drupal";
 import Banner from "../patterns/banner";
-import {ReactNodeLike} from "prop-types";
 
 interface BannerProps {
   paragraph: BannerParagraph

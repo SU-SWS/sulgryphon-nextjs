@@ -7,7 +7,7 @@ import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {LibGuide} from "@/lib/drupal/drupal";
 import {ErrorBoundary} from "react-error-boundary";
 
-const LibGuides = ({guides}: { guides: LibGuide[] }) => {
+const LibGuides = ({guides, headingLevel = 2}: { guides: LibGuide[], headingLevel?: number }) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
 
@@ -18,6 +18,8 @@ const LibGuides = ({guides}: { guides: LibGuide[] }) => {
         onError={e => console.error(e.message)}
       >
         <Conditional showWhen={courseGuides.length > 0}>
+          {headingLevel === 2 && <h2>Course Guides</h2>}
+          {headingLevel === 3 && <h3>Course Guides</h3>}
           <LibGuideSection heading="Course Guides" guides={courseGuides}/>
         </Conditional>
       </ErrorBoundary>
@@ -27,6 +29,8 @@ const LibGuides = ({guides}: { guides: LibGuide[] }) => {
         onError={e => console.error(e.message)}
       >
         <Conditional showWhen={topicGuides.length > 0}>
+          {headingLevel === 2 && <h2>Topic Guides</h2>}
+          {headingLevel === 3 && <h3>Topic Guides</h3>}
           <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
         </Conditional>
       </ErrorBoundary>
@@ -52,8 +56,7 @@ const LibGuideSection = ({heading, guides}) => {
 
   return (
     <>
-      <h2>{heading}</h2>
-      <ul ref={parent} id={containerId} className="su-list-unstyled">
+      <ul ref={parent} id={containerId} className="su-list-unstyled su-relative">
         {firstGuides.map(guide =>
           <li key={guide.id}><Link href={guide.url}>{guide.title}</Link></li>
         )}

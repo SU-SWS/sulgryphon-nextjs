@@ -1,7 +1,7 @@
 import useIsCentered from "@/lib/hooks/useIsCentered";
-import {ReactElement} from "react";
+import {ReactNode} from "react";
 
-const OnlyIfCentered = ({elem, children}): null | ReactElement => {
+const OnlyIfCentered = ({elem, children}): null | ReactNode => {
   const isCentered = useIsCentered(elem);
   if (!isCentered) return null;
   return <>{children}</>
