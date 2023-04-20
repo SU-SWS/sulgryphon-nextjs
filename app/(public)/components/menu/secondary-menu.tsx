@@ -78,7 +78,7 @@ const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[
         </Conditional>
 
         <Conditional showWhen={isDesktop || menuOpen || !javascriptEnabled}>
-          <OutsideClickHandler onClickOutside={closeMobileMenu} onFocusOutside={closeMobileMenu} component="div">
+          <OutsideClickHandler onClickOutside={closeMobileMenu} onFocusOutside={closeMobileMenu}>
             <ul
               className={(javascriptEnabled ? "su-absolute" : "") + " lg:su-relative su-z-40 lg:su-z-0 su-top-0 su-left-0 su-w-full su-bg-white su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway"}>
               {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}

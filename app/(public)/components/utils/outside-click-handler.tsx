@@ -36,7 +36,7 @@ export default class OutsideClickHandler extends Component<OutsideClickHandlerPr
   }
 
   renderComponent() {
-    return React.createElement(this.props.component || "span", this.getProps(), this.props.children);
+    return React.createElement(this.props.component || "div", this.getProps(), this.props.children);
   }
 
   getProps() {
@@ -59,6 +59,7 @@ export default class OutsideClickHandler extends Component<OutsideClickHandlerPr
     document.removeEventListener("focusin", this.documentFocus);
     document.removeEventListener("touchstart", this.documentClick);
   }
+
 
   documentClick = (event) => {
     if (!this.clickCaptured && this.props.onClickOutside) {

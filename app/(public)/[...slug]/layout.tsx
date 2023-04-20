@@ -38,14 +38,14 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
   }
 
   return (
-    <div>
+    <div role="region" >
       <Conditional showWhen={node.type === 'node--sul_library'}>
         <LibraryHeader node={node as Library}/>
       </Conditional>
 
       <Conditional showWhen={node.type != 'node--sul_library'}>
         <InternalHeaderBanner>
-          <h1 role="region" className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
+          <h1 className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
         </InternalHeaderBanner>
       </Conditional>
 

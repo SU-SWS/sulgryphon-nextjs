@@ -53,60 +53,62 @@ const Menu = ({menuItems}) => {
   }
 
   return (
-    <div className="lg:su-cc">
-      <OutsideClickHandler onClickOutside={handleClickFocusOutside} onFocusOutside={handleClickFocusOutside}>
-        <button
-          className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
-          onClick={openCloseMenu}
-          aria-haspopup="true"
-          aria-expanded={menuOpen ? "true" : "false"}
-        >
-          <MobileOpenMenuButtonIcon open={menuOpen} addCloseAnimation={addCloseAnimation}/>
-          {menuOpen ? "Close" : "Menu"}
-        </button>
+    <OutsideClickHandler
+      onClickOutside={handleClickFocusOutside}
+      onFocusOutside={handleClickFocusOutside}
+      className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0"
+    >
+      <button
+        className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
+        onClick={openCloseMenu}
+        aria-haspopup="true"
+        aria-expanded={menuOpen ? "true" : "false"}
+      >
+        <MobileOpenMenuButtonIcon open={menuOpen} addCloseAnimation={addCloseAnimation}/>
+        {menuOpen ? "Close" : "Menu"}
+      </button>
 
-        <div className="su-relative">
-          <div
-            aria-hidden={!isDesktop && !menuOpen}
-            className={"su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
-            <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
-                        inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
-            <nav>
-              <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
-                {menuItems.map(item =>
-                  <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
-                )}
+      <div className="su-relative">
+        <div
+          aria-hidden={!isDesktop && !menuOpen}
+          className={"su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
+          <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
+                      inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
+          <nav>
+            <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
+              {menuItems.map(item =>
+                <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
+              )}
 
-                <li className="su-hidden lg:su-flex su-items-center su-ml-20">
-                  <SearchModal/>
-                </li>
-              </ul>
-            </nav>
+              <li className="su-hidden lg:su-flex su-items-center su-ml-20">
+                <SearchModal/>
+              </li>
+            </ul>
+          </nav>
 
 
-            <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
-              <span className="su-mr-20">Quick Links:</span>
-              <Link
-                onClick={handleClickFocusOutside}
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
-                href="/">My Account</Link>
-              <Link
-                onClick={handleClickFocusOutside}
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
-                href="/">Search Results</Link>
-              <Link
-                onClick={handleClickFocusOutside}
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
-                href="/">Accessibility</Link>
-              <Link
-                onClick={handleClickFocusOutside}
-                className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
-                href="/">Contact Us</Link>
-            </div>
+          <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
+            <span className="su-mr-20">Quick Links:</span>
+            <Link
+              onClick={handleClickFocusOutside}
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+              href="/">My Account</Link>
+            <Link
+              onClick={handleClickFocusOutside}
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+              href="/">Search Results</Link>
+            <Link
+              onClick={handleClickFocusOutside}
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+              href="/">Accessibility</Link>
+            <Link
+              onClick={handleClickFocusOutside}
+              className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
+              href="/">Contact Us</Link>
           </div>
         </div>
-      </OutsideClickHandler>
-    </div>
+      </div>
+    </OutsideClickHandler>
   )
 }
 
@@ -232,18 +234,18 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}
         >
-          <div
+          <span
             className={"su-flex su-items-center su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
             {title}
-          </div>
+          </span>
 
-          <div
+          <span
             className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-10 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
             <ChevronDownIcon
               className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
               height={40}/>
             <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
-          </div>
+          </span>
         </button>
       </Conditional>
 
@@ -283,14 +285,14 @@ MenuItem.displayName = "Menu Item";
 
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
   return (
-    <div className="su-w-[30px] su-mx-auto">
-      <div
-        className={"su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-a" : (addCloseAnimation ? " su-animate-menu-x-morph-r-a" : ""))}/>
-      <div
-        className={"su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-b" : (addCloseAnimation ? " su-animate-menu-x-morph-r-b" : ""))}/>
-      <div
-        className={"su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-c" : (addCloseAnimation ? " su-animate-menu-x-morph-r-c" : ""))}/>
-    </div>
+    <span className="su-block su-w-[30px] su-mx-auto">
+      <span
+        className={"su-block su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-a" : (addCloseAnimation ? " su-animate-menu-x-morph-r-a" : ""))}/>
+      <span
+        className={"su-block su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-b" : (addCloseAnimation ? " su-animate-menu-x-morph-r-b" : ""))}/>
+      <span
+        className={"su-block su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-c" : (addCloseAnimation ? " su-animate-menu-x-morph-r-c" : ""))}/>
+    </span>
   )
 }
 
