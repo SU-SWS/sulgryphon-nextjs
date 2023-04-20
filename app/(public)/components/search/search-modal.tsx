@@ -27,7 +27,11 @@ const SearchModal = () => {
           <SearchForm action="https://library.stanford.edu/all" inputProps={{ref}}/>
 
           <p className="su-text-white su-text-center su-p-20">
-            Search gives results from this site, the catalog, articles+, guides, online exhibits, and Yewno.
+            Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
+            , <Link href="https://searchworks.stanford.edu/articles" className="su-text-white hocus:su-text-white hocus:su-no-underline">articles+</Link>
+            , <Link href="https://guides.library.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">guides</Link>
+            , <Link href="https://exhibits.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">online exhibits</Link>
+            , and <Link href="https://earthworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">EarthWorks</Link>.
           </p>
         </div>
       </Modal>

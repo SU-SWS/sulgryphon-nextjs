@@ -12,7 +12,7 @@ import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import {Library} from "@/lib/drupal/drupal";
 
 interface HoursProps extends PropsWithoutRef<any> {
-  libraries: {id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia}[]
+  libraries: { id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia }[]
 }
 
 const TodayHours = ({libraries, ...props}: HoursProps) => {
@@ -36,20 +36,11 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
   const formId = useId();
   const [selectedLibrary, setSelectedLibrary] = useState(libraries.at(0)?.id);
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
-  const libraryHours = useTodayLibraryHours(library?.su_library__hours);
 
-  let hoursDisplay: string | boolean = '';
-  let isOpen: boolean = false;
-
-  let libraryOptions: option[] = [];
+  const libraryOptions: option[] = [];
   Object.keys(libraries).map(i => {
     libraryOptions.push({value: libraries[i].id, label: libraries[i].title})
   })
-
-  if (libraryHours) {
-    const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = libraryHours
-    hoursDisplay = !closedAllDay && (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
-  }
 
   const imageUrl = library?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x || library?.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const placeholder = library?.su_library__contact_img?.field_media_image?.uri.base64;
@@ -64,6 +55,8 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
           src={imageUrl}
           alt=""
           fill={true}
+          placeholder={placeholder ? 'blur' : 'empty'}
+          blurDataURL={placeholder}
         />}
         footer={
           <div className="su-relative su-pb-100 md:su-rs-pb-6">
@@ -79,13 +72,7 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
                 defaultValue={libraryOptions.find(option => option.value === selectedLibrary)}
                 onChange={(item: option) => setSelectedLibrary(item.value)}
               />
-
-              <div className="su-text-black  su-flex su-gap-sm su-justify-between" aria-live="polite">
-                <div><ClockIcon className="su-inline" width={15}/> {isOpen ? 'Open' : 'Closed'}</div>
-                <div>
-                  {hoursDisplay}
-                </div>
-              </div>
+              <TodayLibraryHours branchId={library?.su_library__hours}/>
             </div>
           </div>
         }
@@ -93,4 +80,29 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
     </div>
   )
 }
+
+const TodayLibraryHours = ({branchId, ...props}: { branchId?: string }) => {
+  const libraryHours = useTodayLibraryHours(branchId);
+
+  if (!libraryHours) {
+    return (
+      <div className="su-text-black su-flex" aria-live="polite">
+        <ClockIcon width={15} className="su-mr-5"/>
+        <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+      </div>
+    );
+  }
+  const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = libraryHours;
+  const hoursDisplay = !closedAllDay && (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
+
+  return (
+    <div className="su-text-black su-flex su-justify-between" aria-live="polite">
+      <div className="su-flex"><ClockIcon width={15} className="su-mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
+      <div>
+        {hoursDisplay}
+      </div>
+    </div>
+  )
+}
+
 export default TodayHours

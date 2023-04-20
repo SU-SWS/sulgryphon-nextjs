@@ -55,7 +55,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
   const {isLoading, data, refetch} = useDataFetch(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`, [], {enabled: false})
 
   useEffect(() => {
-    if (inView && viewId && displayId) refetch()
+    // if (inView && viewId && displayId) refetch()
   }, [inView, viewId, displayId])
 
   const itemsToDisplay = isLoading ? [] : data;
