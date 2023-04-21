@@ -52,11 +52,13 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
   const hideEmpty = styles?.list_paragraph?.hide_empty;
   const emptyMessage = styles?.list_paragraph?.empty_message;
 
-  const {isLoading, data, refetch} = useDataFetch(`/api/views/${viewId}/${displayId}/${args}:${numToDisplay}`, [], {enabled: false})
+  const apiUrl = args || numToDisplay ? `/api/views/${viewId}/${displayId}/${args}:${numToDisplay}` : `/api/views/${viewId}/${displayId}`;
+
+  const {isLoading, data, isSuccess, refetch} = useDataFetch(apiUrl, [], {enabled: false})
 
   useEffect(() => {
-    // if (inView && viewId && displayId) refetch()
-  }, [inView, viewId, displayId])
+    if (inView && viewId && displayId && !isSuccess) refetch()
+  }, [inView, viewId, displayId, isSuccess])
 
   const itemsToDisplay = isLoading ? [] : data;
 

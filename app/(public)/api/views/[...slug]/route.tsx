@@ -6,7 +6,7 @@ import fetchComponents from "@/lib/fetch-components";
 
 export const GET = async (request: NextRequest, {params}) => {
   const [viewId, displayId, options] = params.slug
-  let [args, itemsToDisplay] = options.split(":")
+  let [args, itemsToDisplay] = options ? options.split(":") : ['', null];
   const drupalParams = new DrupalJsonApiParams();
 
   args += '/0/0/0/0/0/0';
