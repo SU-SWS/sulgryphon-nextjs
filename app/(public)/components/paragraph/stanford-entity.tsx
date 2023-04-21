@@ -13,9 +13,9 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useDataFetch from "@/lib/hooks/useDataFetch";
 import {DrupalNode} from "next-drupal";
 
-interface EntityProps extends PropsWithoutRef<any>{
+interface EntityProps extends PropsWithoutRef<any> {
   headline?: string
-  description?: DrupalWysiwyg
+  description?: string
   link?: DrupalLink
   entities: DrupalNode[]
   styles?: {
@@ -38,7 +38,7 @@ const StanfordEntity = (props: EntityProps) => {
   )
 }
 
-const StanfordEntityComponent = ({headline,description, link, entities = [], styles, siblingCount = 0, ...props}: EntityProps) => {
+const StanfordEntityComponent = ({headline, description, link, entities = [], styles, siblingCount = 0, ...props}: EntityProps) => {
   const {ref, inView} = useInView();
   const centeredRef = useRef(null);
 
@@ -63,8 +63,8 @@ const StanfordEntityComponent = ({headline,description, link, entities = [], sty
         </Conditional>
 
         {headline && <h2 className="su-text-center su-type-5">{headline}</h2>}
-        {description?.processed &&
-          <div className="su-mb-40">{formatHtml(description.processed)}</div>}
+        {description &&
+          <div className="su-mb-40">{formatHtml(description)}</div>}
 
         {entities &&
           <div className={"su-my-40 su-grid su-gap-2xl " + (siblingCount > 0 ? "" : gridCols)}>

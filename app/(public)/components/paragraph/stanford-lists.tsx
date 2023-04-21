@@ -17,7 +17,7 @@ import {PropsWithoutRef, useEffect} from "react";
 
 interface ListProps extends PropsWithoutRef<any> {
   headline?: string
-  description?: DrupalWysiwyg
+  description?: string
   link?: DrupalLinkProps
   view?: DrupalViewField
   styles?: {
@@ -104,9 +104,9 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
         }
       </div>
 
-      {description?.processed &&
+      {description &&
         <div className="su-mb-40 su-max-w-[980px] su-px-40 lg:su-px-0 su-mx-auto">
-          {formatHtml(description.processed)}
+          {formatHtml(description)}
         </div>
       }
 

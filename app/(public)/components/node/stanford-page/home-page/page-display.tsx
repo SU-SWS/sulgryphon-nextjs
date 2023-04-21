@@ -8,7 +8,7 @@ const HomePageNode = async ({node}: {node: BasicPage}) => {
   node.su_page_components = await fetchComponents(node.su_page_components ?? []) as DrupalParagraph[];
 
   return (
-    <div>
+    <div id="main-content">
       {/* @ts-expect-error Async Server Component */}
       <HomePageBanner/>
       <ParagraphRows items={node.su_page_components} fullWidth/>

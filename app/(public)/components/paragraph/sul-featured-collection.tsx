@@ -49,7 +49,14 @@ const SulFeaturedCollection = ({headline, link, cards, styles, siblingCount = 1,
           <ul className={"su-list-unstyled su-grid su-gap-xl " + (siblingCount > 0 ? '' : 'md:su-grid-cols-3')}>
             {cards.map(card =>
               <li key={card.id}>
-                <StanfordCard paragraph={card}/>
+                <StanfordCard
+                  header={card.su_card_header}
+                  superHeader={card.su_card_super_header}
+                  body={card.su_card_body?.processed}
+                  link={card.su_card_link}
+                  image={card?.su_card_media?.field_media_image}
+                  videoUrl={card?.su_card_media?.field_media_oembed_video}
+                />
               </li>
             )}
 

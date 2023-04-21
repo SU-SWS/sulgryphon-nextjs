@@ -1,15 +1,15 @@
 import formatHtml from "@/lib/format-html";
-import {WysiwygParagraph} from "@/lib/drupal/drupal";
+import {PropsWithoutRef} from "react";
 
-interface StanfordWysiwygProps {
-  paragraph: WysiwygParagraph
+interface Props extends PropsWithoutRef<any> {
+  text?: string
   siblingCount?: number
 }
 
-const StanfordWysiwyg = ({paragraph, siblingCount, ...props}: StanfordWysiwygProps) => {
+const StanfordWysiwyg = ({text, siblingCount, ...props}: Props) => {
   return (
     <div {...props}>
-      {formatHtml(paragraph?.su_wysiwyg_text?.processed)}
+      {text && <>{formatHtml(text)}</>}
     </div>
   )
 }

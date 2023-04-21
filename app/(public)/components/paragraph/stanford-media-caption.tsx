@@ -1,21 +1,24 @@
 import Image from "next/image";
 
-import {MediaCaptionParagraph} from "@/lib/drupal/drupal";
+import {DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import Oembed from "../patterns/oembed";
 import Link from "next/link";
+import {PropsWithoutRef} from "react";
 
-interface StanfordMediaCaptionProps {
-  paragraph: MediaCaptionParagraph
+interface Props extends PropsWithoutRef<any>{
+  image?: DrupalImageMedia
+  videoUrl?: string
+  caption?: string
+  link?: DrupalLink
   siblingCount?: number
 }
 
-const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMediaCaptionProps) => {
+const StanfordMediaCaption = ({caption, image, videoUrl, link, siblingCount, ...props}: Props) => {
 
-  const videoUrl = paragraph.su_media_caption_media?.field_media_oembed_video;
-  const imageUrl = paragraph.su_media_caption_media?.field_media_image?.image_style_uri.breakpoint_2xl_2x;
-  const imageAlt = paragraph.su_media_caption_media?.field_media_image?.resourceIdObjMeta.alt ?? '';
-  const placeholder = paragraph.su_media_caption_media?.field_media_image?.uri.base64;
+  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
+  const placeholder = image?.uri.base64;
 
   return (
     <figure {...props}>
@@ -38,15 +41,15 @@ const StanfordMediaCaption = ({paragraph, siblingCount, ...props}: StanfordMedia
         </div>
       }
 
-      {paragraph.su_media_caption_link &&
-        <Link href={paragraph.su_media_caption_link.url} className="su-block su-mx-auto">
-          {paragraph.su_media_caption_link.title}
+      {link &&
+        <Link href={link.url} className="su-block su-mx-auto">
+          {link.title}
         </Link>
       }
 
-      {paragraph.su_media_caption_caption &&
+      {caption &&
         <figcaption className="su-text-right su-float-right su-text-19 su-leading">
-          {formatHtml(paragraph.su_media_caption_caption?.processed)}
+          {formatHtml(caption)}
         </figcaption>
       }
     </figure>

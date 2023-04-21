@@ -1,25 +1,33 @@
 import Image from "next/image";
 
-import {CardParagraph} from "@/lib/drupal/drupal";
+import {DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
 import Card from "@/components/patterns/card";
 import HorizontalCard from "@/components/patterns/horizontal-card";
 import Oembed from "@/components/patterns/oembed";
+import {PropsWithoutRef} from "react";
 
-interface CardProps {
-  paragraph: CardParagraph
+interface Props extends PropsWithoutRef<any> {
+  header?: string
+  superHeader?: string
+  body?: string
+  link?: DrupalLink
+  linkStyle?: string
+  sprinklePosition?: string
+  image?: DrupalImageMedia
+  videoUrl?: string
+  orientation?: string
   siblingCount?: number
   className?: string
 }
 
-const StanfordCard = ({paragraph, siblingCount = 0, ...props}: CardProps) => {
-  const isHorizontal = paragraph?.behavior_settings?.sul_card_styles?.orientation === 'horizontal';
+const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, siblingCount = 0, ...props}: Props) => {
+  const isHorizontal = orientation === 'horizontal';
   const isHorizontalOrSingle = isHorizontal || siblingCount == 0;
   const isHorizontalAndSingle = isHorizontal && siblingCount == 0;
 
-  const videoUrl = paragraph?.su_card_media?.field_media_oembed_video;
-  const imageUrl = paragraph?.su_card_media?.field_media_image?.image_style_uri.breakpoint_2xl_2x;
-  const imageAlt = paragraph?.su_card_media?.field_media_image?.resourceIdObjMeta.alt ?? '';
-  const placeholder = paragraph?.su_card_media?.field_media_image?.uri.base64;
+  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
+  const placeholder = image?.uri.base64;
 
   return (
     <div className={"su-mx-auto su-w-full " + (isHorizontalOrSingle ? "su-max-w-[980px]" : "")}>
@@ -34,12 +42,12 @@ const StanfordCard = ({paragraph, siblingCount = 0, ...props}: CardProps) => {
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
           />}
-          header={paragraph.su_card_header}
-          superHeader={paragraph.su_card_super_header}
-          body={paragraph?.su_card_body?.processed}
-          link={paragraph?.su_card_link}
-          linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
-          backgroundSprinkles={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
+          header={header}
+          superHeader={superHeader}
+          body={body}
+          link={link}
+          linkStyle={linkStyle}
+          backgroundSprinkles={sprinklePosition}
           {...props}
         />
       }
@@ -55,11 +63,11 @@ const StanfordCard = ({paragraph, siblingCount = 0, ...props}: CardProps) => {
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
           />}
-          header={paragraph.su_card_header}
-          superHeader={paragraph.su_card_super_header}
-          body={paragraph?.su_card_body?.processed}
-          link={paragraph?.su_card_link}
-          linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
+          header={header}
+          superHeader={superHeader}
+          body={body}
+          link={link}
+          linkStyle={linkStyle}
           {...props}
         />
       }

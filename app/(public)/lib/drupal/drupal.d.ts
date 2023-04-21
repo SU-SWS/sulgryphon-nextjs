@@ -166,6 +166,7 @@ interface BannerParagraph extends DrupalParagraph {
   su_banner_sup_header?: string
 }
 
+
 interface CardParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
@@ -318,7 +319,7 @@ interface DrupalFileMedia extends DrupalMedia {
 
 interface DrupalGalleryImageMedia extends DrupalMedia {
   su_gallery_caption?: string
-  su_gallery_image: DrupalFile
+  su_gallery_image: DrupalImageFile
 }
 
 interface DrupalEmbeddableMedia extends DrupalMedia {

@@ -1,5 +1,5 @@
 const AboveHeaderBorder = () => {
-  return <div className="su-w-[87px] su-h-[3px] su-bg-black su-mb-10"></div>
+  return <span className="su-block su-w-[87px] su-h-[3px] su-bg-black su-mb-10"></span>
 }
 
 export default AboveHeaderBorder;

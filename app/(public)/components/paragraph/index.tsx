@@ -23,7 +23,9 @@ interface ParagraphProps extends PropsWithoutRef<any> {
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
-
+if(paragraph.type === 'paragraph--collection'){
+  console.log(paragraph);
+}
   return (
     <>
       <Conditional showWhen={paragraph.status != undefined && !paragraph.status}>
@@ -36,20 +38,54 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       </Conditional>
 
       {paragraph.type === 'paragraph--stanford_card' &&
-        <StanfordCard paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordCard
+          header={paragraph.su_card_header}
+          superHeader={paragraph.su_card_super_header}
+          body={paragraph.su_card_body?.processed}
+          link={paragraph.su_card_link}
+          linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
+          sprinklePosition={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
+          image={paragraph?.su_card_media?.field_media_image}
+          videoUrl={paragraph?.su_card_media?.field_media_oembed_video}
+          orientation={paragraph.behavior_settings?.sul_card_styles?.orientation}
+          siblingCount={siblingCount}
+          {...props}
+        />}
+
       {paragraph.type === 'paragraph--stanford_banner' &&
-        <StanfordBanner paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordBanner
+          header={paragraph.su_banner_header}
+          superHeader={paragraph.su_banner_sup_header}
+          body={paragraph.su_banner_body?.processed}
+          link={paragraph.su_banner_button}
+          image={paragraph?.su_banner_image?.field_media_image}
+          overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
+          siblingCount={siblingCount}
+          {...props}
+        />
+      }
+
       {paragraph.type === 'paragraph--stanford_gallery' &&
         <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+
       {paragraph.type === 'paragraph--stanford_media_caption' &&
-        <StanfordMediaCaption paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordMediaCaption
+          caption={paragraph.su_media_caption_caption?.processed}
+          link={paragraph.su_media_caption_link}
+          image={paragraph.su_media_caption_media?.field_media_image}
+          videoUrl={paragraph.su_media_caption_media?.field_media_oembed_video}
+          siblingCount={siblingCount}
+          {...props}
+        />
+      }
+
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-        <StanfordWysiwyg paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordWysiwyg text={paragraph.su_wysiwyg_text?.processed} siblingCount={siblingCount} {...props}/>}
 
       {paragraph.type === 'paragraph--stanford_lists' &&
         <StanfordLists
           headline={paragraph.su_list_headline}
-          description={paragraph.su_list_description}
+          description={paragraph.su_list_description?.processed}
           link={paragraph.su_list_button}
           view={paragraph.su_list_view}
           styles={paragraph.behavior_settings}
@@ -61,7 +97,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--stanford_entity' &&
         <StanfordEntity
           headline={paragraph.su_entity_headline}
-          description={paragraph.su_entity_description}
+          description={paragraph.su_entity_description?.processed}
           link={paragraph.su_entity_button}
           entities={paragraph.su_entity_item ?? []}
           styles={paragraph.behavior_settings?.sul_teaser_styles}

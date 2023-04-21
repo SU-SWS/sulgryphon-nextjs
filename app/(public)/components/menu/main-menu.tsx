@@ -56,7 +56,7 @@ const Menu = ({menuItems}) => {
     <OutsideClickHandler
       onClickOutside={handleClickFocusOutside}
       onFocusOutside={handleClickFocusOutside}
-      className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0"
+      className="su-max-w-1500 su-mx-auto lg:su-px-40 2xl:su-px-0"
     >
       <button
         className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
@@ -71,7 +71,7 @@ const Menu = ({menuItems}) => {
       <div className="su-relative">
         <div
           aria-hidden={!isDesktop && !menuOpen}
-          className={"su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
+          className={"su-h-[calc(100vh-100px)] lg:su-h-auto su-overflow-y-scroll lg:su-overflow-visible su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
           <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
                       inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
           <nav>
@@ -218,6 +218,8 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          role="menuitem"
+          aria-disabled={tabIndex === -1}
         >
           <div
             className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
@@ -229,8 +231,10 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
       <Conditional showWhen={url.length == 0}>
         <button
           tabIndex={tabIndex}
-          className={"su-flex su-block su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"su-flex su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
+          role="menuitem"
+          aria-disabled={tabIndex === -1}
           aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}
         >
@@ -265,7 +269,8 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           aria-hidden={!submenuOpen}
           data-attribute-menu-level={menuLevel}
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
-          role="menu">
+          role="menu"
+        >
           {belowItems.map((item, i) =>
             <MenuItem
               key={item.id}
