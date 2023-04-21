@@ -1,5 +1,6 @@
-import {ReactNodeLike} from "prop-types";
+"use client";
 
+import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import Conditional from "@/components/utils/conditional";
 import {DrupalLink} from "@/components/patterns/link";
@@ -9,6 +10,8 @@ import {
   BottomLeftSprinkles,
   BottomRightSprinkles
 } from "@/components/patterns/card-sprinkles";
+import {useRef} from "react";
+import FullScreenBackground from "@/components/patterns/full-screen-background";
 
 interface CardProps {
   video?: ReactNodeLike
@@ -27,30 +30,29 @@ interface CardProps {
 }
 
 const HorizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+  const ref = useRef(null);
+
   return (
-    <div {...props}>
-      <div className="card su-block su-w-full su-relative su-basefont-23 su-leading-display su-bg-black-true su-text-white su-border su-border-solid su-border-black-10 su-shadow-md su-flex su-mt-[9rem] md:su-px-80 md:su-pb-80 md:su-pt-120 su-p-40 su-flex-wrap">
+    <div {...props} ref={ref}>
 
+      <FullScreenBackground compareRef={ref} className="su-relative su-w-full su-h-full su-bg-black-true">
         {(backgroundSprinkles == 'top_right') && <TopRightSprinkles/>}
-
         {(backgroundSprinkles == 'top_left') && <TopLeftSprinkles/>}
+        {(backgroundSprinkles == 'bottom_right') && <BottomRightSprinkles/>}
+        {(backgroundSprinkles == 'bottom_left') && <BottomLeftSprinkles/>}
+      </FullScreenBackground>
 
-        <div className={"su-w-full md:su-w-1/2 md:su-mt-0 sm:su-mt-[-14rem] su-mt-[-9rem] su-z-10"}>
-          <Conditional showWhen={image}>
-            <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
-              {image}
-            </div>
-          </Conditional>
-
-          <Conditional showWhen={video}>
+      <div className="su-max-w-1500 su-mx-auto su-relative su-basefont-23 su-leading-display su-text-white su-flex su-mt-[9rem] md:su-px-80 md:su-pb-80 md:su-pt-120 su-p-40 su-flex-wrap">
+        <div className={"su-w-full md:su-w-1/2 md:su-mt-0 sm:su-mt-[-14rem] su-mt-[-9rem]"}>
+          <Conditional showWhen={image || video}>
             <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
+              {image}
               {video}
             </div>
           </Conditional>
         </div>
 
-        <div
-          className="card-body su-items-start md:su-rs-px-2 su-rs-pt-2 su-rs-pb-4 su-w-full md:su-w-1/2 su-pb-32 su-pb-64 su-z-10">
+        <div className="card-body su-items-start md:su-rs-px-2 su-rs-pt-2 su-rs-pb-4 su-w-full md:su-w-1/2 su-pb-32 su-pb-64 su-z-10">
           <Conditional showWhen={superHeader}>
             <span className="su-type-0 su-mb-0 su-leading-display su-font-bold su-underline">{superHeader}</span>
           </Conditional>
@@ -74,9 +76,6 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
           }
 
         </div>
-
-        {(backgroundSprinkles == 'bottom_right') && <BottomRightSprinkles/>}
-        {(backgroundSprinkles == 'bottom_left') && <BottomLeftSprinkles/>}
       </div>
     </div>
   )

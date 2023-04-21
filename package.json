@@ -33,6 +33,7 @@
     "react-tiny-oembed": "^1.1.0",
     "server-only": "^0.0.1",
     "sharp": "^0.32.0",
+    "use-debounce": "^9.0.4",
     "xml2js": "^0.5.0"
   },
   "devDependencies": {

@@ -14,10 +14,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const Page = async () => {
   const node: BasicPage = await getResourceByPath('/');
   return (
-    <div>
+    <main id="main-content">
       {/* @ts-expect-error Async Server Component */}
       <HomePageNode node={node}/>
-    </div>
+    </main>
   )
 }
 

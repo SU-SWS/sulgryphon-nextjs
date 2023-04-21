@@ -75,7 +75,7 @@ const Menu = ({menuItems}) => {
           <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
                       inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
           <nav>
-            <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
+            <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end" role="menu">
               {menuItems.map(item =>
                 <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
               )}

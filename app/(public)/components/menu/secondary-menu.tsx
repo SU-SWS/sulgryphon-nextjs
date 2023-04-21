@@ -55,16 +55,15 @@ const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[
 
   return (
     <>
-      <Conditional showWhen={(menuOpen && !isDesktop)}>
-        <div className="su-backdrop-blur-sm su-fixed su-z-10 su-top-0 su-left-0 su-w-full su-h-screen">
-        </div>
+      <Conditional showWhen={(menuOpen)}>
+        <div className="lg:su-hidden su-backdrop-blur-sm su-fixed su-z-10 su-top-0 su-left-0 su-w-full su-h-screen"/>
       </Conditional>
 
       <aside className="lg:su-w-4/12 su-relative">
-        <Conditional showWhen={!isDesktop && javascriptEnabled}>
+        <Conditional showWhen={javascriptEnabled}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="su-block su-w-5/6 lg:su-w-2/3 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
+            className="lg:su-hidden su-w-5/6 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
             aria-haspopup="true"
             aria-expanded={menuOpen ? "true" : "false"}
           >

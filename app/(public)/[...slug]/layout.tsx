@@ -38,7 +38,7 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
   }
 
   return (
-    <div role="region" >
+    <main id="main-content">
       <Conditional showWhen={node.type === 'node--sul_library'}>
         <LibraryHeader node={node as Library}/>
       </Conditional>
@@ -59,20 +59,20 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
       </Conditional>
 
       <Conditional showWhen={fullWidth}>
-        <main id="main-content">
+        <div>
           {children}
-        </main>
+        </div>
       </Conditional>
 
       <Conditional showWhen={!fullWidth}>
         <div className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 2xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
           <SecondaryMenu menuItems={tree}/>
-          <main id="main-content" className="su-flex-1">
+          <div className="su-flex-1">
             {children}
-          </main>
+          </div>
         </div>
       </Conditional>
-    </div>
+    </main>
   )
 }
 

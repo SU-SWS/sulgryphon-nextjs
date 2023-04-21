@@ -17,7 +17,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
   const contactPlaceholder = node.su_library__contact_img?.field_media_image?.uri.base64 ?? bannerPlaceholder;
 
   return (
-    <div role="banner" className="su-mb-100 su-relative">
+    <header className="su-mb-100 su-relative">
       <div className="su-absolute su-h-full su-w-full">
         <div className="su-hidden md:su-block su-w-full su-h-full su-overflow-hidden su-relative">
           {bannerImageUrl &&
@@ -109,7 +109,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
       <div className="su-relative">
         <Wave/>
       </div>
-    </div>
+    </header>
 
   )
 }

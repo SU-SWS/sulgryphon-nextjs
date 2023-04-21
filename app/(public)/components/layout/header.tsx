@@ -15,7 +15,7 @@ const Header = async () => {
 
   return (
     <>
-      <header>
+      <div role="region" aria-label="Site Messages">
         <div className="su-relative su-z-40 lg:su-z-10 su-cc su-identity-bar su-pt-5 su-pb-1 su-bg-cardinal-red">
           <a className="su-logo su-text-white hocus:su-text-white su-text-20 su-leading-none"
              href="https://www.stanford.edu">
@@ -25,7 +25,7 @@ const Header = async () => {
 
         {/* @ts-expect-error Async Server Component */}
         <GlobalMessage/>
-      </header>
+      </div>
 
       <header className="su-sticky lg:su-relative su-top-0 su-shadow-lg su-bg-white su-z-20">
         <div className="su-pt-20 su-bg-white su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">

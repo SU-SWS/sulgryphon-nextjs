@@ -1,12 +1,12 @@
 export const TopRightSprinkles = () => {
   return (
-    <div className="su-w-2/3 su-h-2/3 su-absolute su-top-[-52px] su-right-0 su-bg-no-repeat su-bg-card-top-right-sprinkles su-bg-right"/>
+    <div className="su-absolute su-w-full su-h-full su-top-[-27px] su-right-0 su-bg-no-repeat su-bg-card-top-right-sprinkles su-bg-right-top"/>
   )
 }
 
 export const TopLeftSprinkles = () => {
   return (
-    <div className="su-w-2/3 su-h-2/3 su-absolute su-top-[-26px] su-left-0 su-bg-no-repeat su-bg-card-top-left-sprinkles"/>
+    <div className="su-absolute su-w-full su-h-full su-top-[-27px] su-right-0 su-bg-no-repeat su-bg-card-top-left-sprinkles su-bg-left-top"/>
   )
 }
 

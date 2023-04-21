@@ -9,6 +9,8 @@ import StudyPlaceModal from "./study-place-modal";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
   const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
+
+
   const imageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const imageAlt = node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = node.sul_study__branch.su_library__contact_img?.field_media_image?.uri.base64;
@@ -55,8 +57,9 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                   {node.sul_study__capacity &&
                     <li className="su-type-1 su-leading-display">{node.sul_study__capacity.name}</li>
                   }
+
                   {features && features.slice(0, 4).map(feature =>
-                    <li key={`feature-${feature.id}`} className="su-type-1 su-leading-display">
+                    <li key={`feature-${node.id}-${feature.id}`} data-foo={`feature-${node.id}-${feature.id}`}  className="su-type-1 su-leading-display">
                       {feature.name}
                     </li>
                   )}

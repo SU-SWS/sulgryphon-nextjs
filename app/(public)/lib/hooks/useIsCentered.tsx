@@ -1,21 +1,23 @@
 import {MutableRefObject, useLayoutEffect, useState} from "react";
+import {useDebouncedCallback} from "use-debounce";
 
 const useIsCentered = (ref: MutableRefObject<any>) => {
   const [isCentered, setIsCentered] = useState(false)
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      if (ref?.current) {
-        const boundingBox = ref.current.getBoundingClientRect();
-        setIsCentered(Math.abs((window.innerWidth - boundingBox.width) / 2 - boundingBox.x) <= 10);
-      }
+
+  const resizeHandler = useDebouncedCallback(() => {
+    if (ref?.current) {
+      const boundingBox = ref.current.getBoundingClientRect();
+      setIsCentered(Math.abs((window.innerWidth - boundingBox.width) / 2 - boundingBox.x) <= 10);
     }
+  }, 200)
 
-    // Tiny timeout to allow it to render the ref.
-    if (ref?.current) setTimeout(handleResize, 100)
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+  useLayoutEffect(() => {
+    resizeHandler();
+    window.addEventListener('resize', resizeHandler);
+    return () => window.removeEventListener('resize', resizeHandler);
   }, [ref])
+
   return isCentered;
 }
 

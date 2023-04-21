@@ -18,7 +18,7 @@ const HomePageBanner = async () => {
   const trimmedLibraries = libraries.map(library => ({id: library.id, title: library.title, su_library__hours: library.su_library__hours, su_library__contact_img: library.su_library__contact_img}))
 
   return (
-    <div className="su-bg-black-true su-mb-100 su-relative">
+    <header className="su-bg-black-true su-mb-100 su-relative">
       <div className="su-cc su-relative su-z-10 su-top-50 md:su-top-100 md:su-mx-40 md:su-min-h-[300px]">
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
           <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
@@ -49,7 +49,7 @@ const HomePageBanner = async () => {
       <div className="su-relative">
         <Wave/>
       </div>
-    </div>
+    </header>
   )
 }
 

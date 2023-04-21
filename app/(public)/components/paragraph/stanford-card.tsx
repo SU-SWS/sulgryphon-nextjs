@@ -22,7 +22,6 @@ interface Props extends PropsWithoutRef<any> {
 
 const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, siblingCount = 0, ...props}: Props) => {
   const isHorizontal = orientation === 'horizontal';
-  const isHorizontalOrSingle = isHorizontal || siblingCount == 0;
   const isHorizontalAndSingle = isHorizontal && siblingCount == 0;
 
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
@@ -30,7 +29,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
   const placeholder = image?.uri.base64;
 
   return (
-    <div className={"su-mx-auto su-w-full " + (isHorizontalOrSingle ? "su-max-w-[980px]" : "")}>
+    <div className={"su-mx-auto su-w-full " + (isHorizontalAndSingle ? "" : "su-max-w-[980px]")}>
       {isHorizontalAndSingle &&
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
