@@ -30,7 +30,7 @@ const StanfordCourseListItem = ({node, ...props}: { node: Course }) => {
           )}
         </div>
       </Conditional>
-      { node.body && <>{formatHtml(node.body.processed)}</>}
+      { node.body && <>{formatHtml(node.body)}</>}
     </article>
   )
 }

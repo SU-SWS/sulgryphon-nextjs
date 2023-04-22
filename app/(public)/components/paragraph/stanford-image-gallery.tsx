@@ -21,7 +21,7 @@ const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordI
   return (
     <div {...props}>
       {paragraph.su_gallery_headline && <h2 className="su-text-center su-type-5">{paragraph.su_gallery_headline}</h2>}
-      {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description.processed)}</div>}
+      {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description)}</div>}
 
       <div className={`su-mb-40 su-grid su-gap-xl ` + (siblingCount >= 1 ? '' : 'md:su-grid-cols-2 lg:su-grid-cols-3')}>
         {paragraph.su_gallery_images.map(image =>

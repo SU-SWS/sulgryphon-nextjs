@@ -36,10 +36,10 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
     <div {...props} ref={ref}>
 
       <FullScreenBackground compareRef={ref} className="su-relative su-w-full su-h-full su-bg-black-true">
-        {(backgroundSprinkles == 'top_right') && <TopRightSprinkles/>}
-        {(backgroundSprinkles == 'top_left') && <TopLeftSprinkles/>}
-        {(backgroundSprinkles == 'bottom_right') && <BottomRightSprinkles/>}
-        {(backgroundSprinkles == 'bottom_left') && <BottomLeftSprinkles/>}
+        {backgroundSprinkles === 'top_right' && <TopRightSprinkles/>}
+        {backgroundSprinkles === 'top_left' && <TopLeftSprinkles/>}
+        {backgroundSprinkles === 'bottom_right' && <BottomRightSprinkles/>}
+        {backgroundSprinkles === 'bottom_left' && <BottomLeftSprinkles/>}
       </FullScreenBackground>
 
       <div className="su-max-w-1500 su-mx-auto su-relative su-basefont-23 su-leading-display su-text-white su-flex su-mt-[9rem] md:su-px-80 md:su-pb-80 md:su-pt-120 su-p-40 su-flex-wrap">

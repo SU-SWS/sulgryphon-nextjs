@@ -61,8 +61,8 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
       <div className="md:su-grid su-grid-cols-6 su-gap-[40px]">
         <div className="su-col-span-4">
-          {node.body?.processed && <div
-            className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7 md:su-w-10/12 ">{formatHtml(node.body.processed)}</div>}
+          {node.body && <div
+            className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7 md:su-w-10/12 ">{formatHtml(node.body)}</div>}
 
           <ParagraphRows items={node.su_person_components}/>
 
@@ -87,7 +87,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
               <div className="md:su-grid su-grid-cols-2">
                 {node.su_person_research.map((interest, index) =>
                   <div key={`research-${index}`} className="su-rs-mb-1">
-                    {formatHtml(interest.processed)}
+                    {formatHtml(interest)}
                   </div>
                 )}
               </div>
@@ -155,8 +155,8 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                 {node.su_person_location_name}
               </Conditional>
 
-              {node.su_person_location_address?.processed && <div className="children:su-mb-0">
-                {formatHtml(node.su_person_location_address.processed)}
+              {node.su_person_location_address && <div className="children:su-mb-0">
+                {formatHtml(node.su_person_location_address)}
               </div>}
 
               {node?.su_person_map_url?.url &&

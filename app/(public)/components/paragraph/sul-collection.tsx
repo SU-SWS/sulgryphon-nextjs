@@ -57,7 +57,7 @@ const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionP
               <StanfordCard
                 header={card.sul_card.su_card_header}
                 superHeader={card.sul_card.su_card_super_header}
-                body={card.sul_card.su_card_body?.processed}
+                body={card.sul_card.su_card_body}
                 link={card.sul_card.su_card_link}
                 image={card.sul_card.su_card_media?.field_media_image}
                 videoUrl={card.sul_card.su_card_media?.field_media_oembed_video}

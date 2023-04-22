@@ -39,7 +39,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
         <StanfordCard
           header={paragraph.su_card_header}
           superHeader={paragraph.su_card_super_header}
-          body={paragraph.su_card_body?.processed}
+          body={paragraph.su_card_body}
           link={paragraph.su_card_link}
           linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
           sprinklePosition={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
@@ -54,7 +54,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
         <StanfordBanner
           header={paragraph.su_banner_header}
           superHeader={paragraph.su_banner_sup_header}
-          body={paragraph.su_banner_body?.processed}
+          body={paragraph.su_banner_body}
           link={paragraph.su_banner_button}
           image={paragraph?.su_banner_image?.field_media_image}
           overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
@@ -68,7 +68,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
 
       {paragraph.type === 'paragraph--stanford_media_caption' &&
         <StanfordMediaCaption
-          caption={paragraph.su_media_caption_caption?.processed}
+          caption={paragraph.su_media_caption_caption}
           link={paragraph.su_media_caption_link}
           image={paragraph.su_media_caption_media?.field_media_image}
           videoUrl={paragraph.su_media_caption_media?.field_media_oembed_video}
@@ -78,12 +78,12 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       }
 
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-        <StanfordWysiwyg text={paragraph.su_wysiwyg_text?.processed} siblingCount={siblingCount} {...props}/>}
+        <StanfordWysiwyg text={paragraph.su_wysiwyg_text} siblingCount={siblingCount} {...props}/>}
 
       {paragraph.type === 'paragraph--stanford_lists' &&
         <StanfordLists
           headline={paragraph.su_list_headline}
-          description={paragraph.su_list_description?.processed}
+          description={paragraph.su_list_description}
           link={paragraph.su_list_button}
           view={paragraph.su_list_view}
           styles={paragraph.behavior_settings}
@@ -95,7 +95,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--stanford_entity' &&
         <StanfordEntity
           headline={paragraph.su_entity_headline}
-          description={paragraph.su_entity_description?.processed}
+          description={paragraph.su_entity_description}
           link={paragraph.su_entity_button}
           entities={paragraph.su_entity_item ?? []}
           styles={paragraph.behavior_settings?.sul_teaser_styles}
@@ -142,7 +142,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
       {paragraph.type === 'paragraph--sul_libguide' &&
         <SulLibguides
           headline={paragraph.sul_libguide__headline}
-          description={paragraph.sul_libguide__desc?.processed}
+          description={paragraph.sul_libguide__desc}
           libguideId={paragraph.sul_libguide_id}
           {...props}
         />

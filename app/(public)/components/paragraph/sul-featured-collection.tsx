@@ -52,7 +52,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, siblingCount = 1,
                 <StanfordCard
                   header={card.su_card_header}
                   superHeader={card.su_card_super_header}
-                  body={card.su_card_body?.processed}
+                  body={card.su_card_body}
                   link={card.su_card_link}
                   image={card?.su_card_media?.field_media_image}
                   videoUrl={card?.su_card_media?.field_media_oembed_video}

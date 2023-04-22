@@ -6,10 +6,16 @@ import Conditional from "@/components/utils/conditional";
 import LibCal from "./libcal";
 import StudyPlaceHours from "./study-place-today-hours";
 import StudyPlaceModal from "./study-place-modal";
+import {DrupalTaxonomyTerm} from "next-drupal";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
-  const features = node.sul_study__features?.filter(feature => feature.name?.length > 0) ?? [];
 
+  // Filter out empty terms and deduplicate terms by their ID.
+  const features: DrupalTaxonomyTerm[] = node.sul_study__features?.filter((term: DrupalTaxonomyTerm, index, self) =>
+      term.name?.length > 0 && index === self.findIndex((t: DrupalTaxonomyTerm) => (
+        t.id === term.id
+      ))
+  ) ?? [];
 
   const imageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const imageAlt = node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
@@ -59,7 +65,8 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                   }
 
                   {features && features.slice(0, 4).map(feature =>
-                    <li key={`feature-${node.id}-${feature.id}`} data-foo={`feature-${node.id}-${feature.id}`}  className="su-type-1 su-leading-display">
+                    <li key={`feature-${node.id}-${feature.id}`} data-foo={`feature-${node.id}-${feature.id}`}
+                        className="su-type-1 su-leading-display">
                       {feature.name}
                     </li>
                   )}

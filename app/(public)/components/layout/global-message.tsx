@@ -75,9 +75,9 @@ const GlobalMessage = async () => {
             <h2 className="su-text-m3">{configPage.su_global_msg_header}</h2>
           </Conditional>
 
-          {configPage.su_global_msg_message?.processed &&
+          {configPage.su_global_msg_message &&
             <div className={chosenOption.textColor}>
-              {formatHtml(configPage.su_global_msg_message?.processed?.replace(/<a /, `<a class="${chosenOption.linkClasses}" `))}
+              {formatHtml(configPage.su_global_msg_message?.replace(/<a /, `<a class="${chosenOption.linkClasses}" `))}
             </div>
           }
 

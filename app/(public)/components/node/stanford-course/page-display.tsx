@@ -12,7 +12,7 @@ const StanfordCourse = ({node, ...props}: { node: Course }) => {
         {node.su_course_academic_year}
       </Conditional>
       <Conditional showWhen={node.body}>
-        <>{formatHtml(node.body?.processed)}</>
+        <>{formatHtml(node.body)}</>
       </Conditional>
       <Conditional showWhen={node.su_course_code}>
         {node.su_course_code}

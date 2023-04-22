@@ -13,7 +13,7 @@ interface BasicPage extends DrupalNode {
 }
 
 interface Course extends DrupalNode {
-  body?: DrupalWysiwyg
+  body?: string
   su_course_academic_year?: string
   su_course_code?: string
   su_course_id?: number
@@ -27,8 +27,8 @@ interface Course extends DrupalNode {
 }
 
 interface Event extends DrupalNode {
-  body?: DrupalWysiwyg
-  su_event_alt_loc?: DrupalWysiwyg
+  body?: string
+  su_event_alt_loc?: string
   su_event_audience?: DrupalTaxonomyTerm[]
   su_event_components?: DrupalParagraph[]
   su_event_cta?: DrupalLink
@@ -75,9 +75,9 @@ interface News extends DrupalNode {
 }
 
 interface Person extends DrupalNode {
-  body?: DrupalWysiwyg
+  body?: string
   su_person_academic_appt?: string
-  su_person_address?: DrupalWysiwyg
+  su_person_address?: string
   su_person_admin_appts?: string
   su_person_affiliations?: DrupalLink[]
   su_person_components?: DrupalParagraph[]
@@ -88,16 +88,16 @@ interface Person extends DrupalNode {
   su_person_full_title?: string
   su_person_last_name?: string
   su_person_links?: DrupalLink[]
-  su_person_location_address?: DrupalWysiwyg
+  su_person_location_address?: string
   su_person_location_name?: string
   su_person_mail_code?: string
   su_person_map_url?: DrupalLink
   su_person_mobile_phone?: string
   su_person_photo?: DrupalImageMedia
   su_person_profile_link?: DrupalLink
-  su_person_research?: DrupalWysiwyg[]
+  su_person_research?: string[]
   su_person_research_interests?: string
-  su_person_scholarly_interests?: DrupalWysiwyg
+  su_person_scholarly_interests?: string
   su_person_short_title?: string
   su_person_telephone?: string
   su_person_type_group?: DrupalTaxonomyTerm[]
@@ -133,7 +133,7 @@ interface Library extends DrupalNode {
   su_library__map_link?: DrupalLink
   su_library__paragraphs?: DrupalParagraph[]
   su_library__phone?: number
-  sul_library__a11y?: DrupalWysiwyg
+  sul_library__a11y?: string
   layout_selection?: DrupalLayoutSelection
 }
 
@@ -159,7 +159,7 @@ interface BannerParagraph extends DrupalParagraph {
       overlay_position?: string
     }
   }
-  su_banner_body?: DrupalWysiwyg
+  su_banner_body?: string
   su_banner_button?: DrupalLink
   su_banner_header?: string
   su_banner_image?: DrupalMedia
@@ -176,7 +176,7 @@ interface CardParagraph extends DrupalParagraph {
       background_sprinkles?: string
     }
   }
-  su_card_body?: DrupalWysiwyg
+  su_card_body?: string
   su_card_header?: string
   su_card_link?: DrupalLink
   su_card_link_display?: string
@@ -189,7 +189,7 @@ interface ImageGalleryParagraph extends DrupalParagraph {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
   su_gallery_button?: DrupalLink
-  su_gallery_description?: DrupalWysiwyg
+  su_gallery_description?: string
   su_gallery_headline?: string
   su_gallery_images: DrupalGalleryImageMedia[]
 }
@@ -206,7 +206,7 @@ interface ListParagraph extends DrupalParagraph {
     }
   }
   su_list_button?: DrupalLink
-  su_list_description?: DrupalWysiwyg
+  su_list_description?: string
   su_list_headline?: string
   su_list_view: DrupalViewField
 }
@@ -220,7 +220,7 @@ interface EntityTeaserParagraph extends DrupalParagraph {
     }
   }
   su_entity_button?: DrupalLink
-  su_entity_description?: DrupalWysiwyg
+  su_entity_description?: string
   su_entity_headline?: string
   su_entity_item?: DrupalNode[]
 }
@@ -229,7 +229,7 @@ interface MediaCaptionParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
-  su_media_caption_caption?: DrupalWysiwyg
+  su_media_caption_caption?: string
   su_media_caption_link?: DrupalLink
   su_media_caption_media?: DrupalMedia
 }
@@ -238,7 +238,7 @@ interface WysiwygParagraph extends DrupalParagraph {
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
-  su_wysiwyg_text?: DrupalWysiwyg
+  su_wysiwyg_text?: string
 }
 
 interface CollectionParagraph extends DrupalParagraph {
@@ -292,7 +292,7 @@ interface ButtonParagraph extends DrupalParagraph {
 
 interface LibGuideParagraph extends DrupalParagraph {
   sul_libguide__headline: string
-  sul_libguide__desc?: DrupalWysiwyg
+  sul_libguide__desc?: string
   sul_libguide_id: number
 }
 
@@ -334,7 +334,7 @@ interface GlobalMessageType extends JsonApiResource {
   su_global_msg_link?: DrupalLink
   su_global_msg_header?: string
   su_global_msg_label?: string
-  su_global_msg_message?: DrupalWysiwyg
+  su_global_msg_message?: string
 }
 
 // Field Structures.
