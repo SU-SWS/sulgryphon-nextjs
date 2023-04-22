@@ -23,7 +23,6 @@ const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionP
     }
   }, [displayedCard])
 
-  console.log(cards);
   return (
     <section aria-labelledby={`${elementId}-heading`} {...props}>
       <Conditional showWhen={heading}>
