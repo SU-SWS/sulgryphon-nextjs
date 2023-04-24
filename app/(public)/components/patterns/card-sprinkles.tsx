@@ -1,23 +1,61 @@
-export const TopRightSprinkles = () => {
+const TopRightSprinkles = () => {
   return (
-    <div className="su-absolute su-w-full su-h-full su-top-[-27px] su-right-0 su-bg-no-repeat su-bg-card-top-right-sprinkles su-bg-right-top"/>
+    <div className="su-absolute su-w-[325px] lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-top-0 su-right-0">
+      <div className="su-relative su-w-full su-h-full su-top-[-12px] lg:su-top-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover"/>
+      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
+        <div className="su-w-full su-h-full su-bg-gradient-to-t su-from-black-true su-to-transparent su-absolute"/>
+        <div className="su-w-full su-h-full su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute"/>
+      </div>
+    </div>
   )
 }
 
-export const TopLeftSprinkles = () => {
+const TopLeftSprinkles = () => {
   return (
-    <div className="su-absolute su-w-full su-h-full su-top-[-27px] su-right-0 su-bg-no-repeat su-bg-card-top-left-sprinkles su-bg-left-top"/>
+    <div className="su-absolute su-w-[325px] lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-top-0 su-left-0">
+      <div className="su-relative su-w-full su-h-full su-top-[-12px] lg:su-top-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover su-scale-x-[-1]"/>
+      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
+        <div className="su-w-full su-h-full su-bg-gradient-to-t su-from-black-true su-to-transparent su-absolute"/>
+        <div className="su-w-full su-h-full su-bg-gradient-to-l su-from-black-true su-to-transparent su-absolute"/>
+      </div>
+    </div>
   )
 }
 
-export const BottomLeftSprinkles = () => {
+const BottomLeftSprinkles = () => {
   return (
-    <div className="md:su-w-[563px] sm:su-w-[335px] su-w-[235px] su-h-[333px] su-absolute su-bottom-0 su-left-0 su-bg-no-repeat su-bg-card-bottom-left-sprinkles su-bg-contain su-bg-bottom"/>
+    <div className="su-absolute su-w-[325px] lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-bottom-0 su-left-0">
+      <div className="su-relative su-w-full su-h-full su-bottom-[-12px] lg:su-bottom-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover su-scale-x-[-1] su-scale-y-[-1]"/>
+      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
+        <div className="su-w-full su-h-full su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute"/>
+        <div className="su-w-full su-h-full su-bg-gradient-to-l su-from-black-true su-to-transparent su-absolute"/>
+      </div>
+    </div>
   )
 }
 
-export const BottomRightSprinkles = () => {
+const BottomRightSprinkles = () => {
   return (
-    <div className="md:su-w-[563px] sm:su-w-[335px] su-w-[235px] su-h-[333px] su-absolute su-bottom-0 su-right-0 su-bg-no-repeat su-bg-card-bottom-right-sprinkles su-bg-contain su-bg-bottom"/>
+    <div className="su-absolute su-w-[325px] lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-bottom-0 su-right-0">
+      <div className="su-relative su-w-full su-h-full su-bottom-[-12px] lg:su-bottom-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover su-scale-y-[-1]"/>
+      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
+        <div className="su-w-full su-h-full su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute"/>
+        <div className="su-w-full su-h-full su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute"/>
+      </div>
+    </div>
   )
 }
+
+
+const CardSprinkles = ({position}) => {
+  return (
+    <>
+      {position === 'top_right' && <TopRightSprinkles/>}
+      {position === 'top_left' && <TopLeftSprinkles/>}
+      {position === 'bottom_right' && <BottomRightSprinkles/>}
+      {position === 'bottom_left' && <BottomLeftSprinkles/>}
+    </>
+  )
+}
+
+export default CardSprinkles;
