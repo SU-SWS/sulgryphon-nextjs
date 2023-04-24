@@ -75,7 +75,7 @@ const Menu = ({menuItems}) => {
           <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
                       inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
           <nav>
-            <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end" role="menu">
+            <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
               {menuItems.map(item =>
                 <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
               )}
@@ -218,7 +218,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
-          role="menuitem"
           aria-disabled={tabIndex === -1}
         >
           <div
@@ -233,7 +232,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           tabIndex={tabIndex}
           className={"su-flex su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
-          role="menuitem"
           aria-disabled={tabIndex === -1}
           aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}
@@ -269,7 +267,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           aria-hidden={!submenuOpen}
           data-attribute-menu-level={menuLevel}
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
-          role="menu"
         >
           {belowItems.map((item, i) =>
             <MenuItem

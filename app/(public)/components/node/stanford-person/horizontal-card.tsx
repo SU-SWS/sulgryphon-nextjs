@@ -4,8 +4,14 @@ import Conditional from "../../utils/conditional";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
+import {PropsWithoutRef} from "react";
 
-const HorizontalPersonCard = ({node, ...props}: { node: Person }) => {
+interface Props extends PropsWithoutRef<any> {
+  node: Person
+  currentWidth?: number
+}
+
+const HorizontalPersonCard = ({node, currentWidth, ...props}: Props) => {
   const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const imageHeight = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height;

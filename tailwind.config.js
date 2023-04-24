@@ -90,10 +90,8 @@ module.exports = {
       }
     },
   },
-  variants: {
-    extend: {},
-  },
   plugins: [
+    require('@tailwindcss/container-queries'),
     require(`${dir}/base/base.js`)(),
     require(`${dir}/components/simple/sul-button.js`)(),
   ]

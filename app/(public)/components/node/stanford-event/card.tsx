@@ -3,6 +3,7 @@ import Link from "next/link";
 import {Event} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";
+import {PropsWithoutRef} from "react";
 
 const getTimeString = (start: Date, end: Date): string => {
   const startHour = parseInt(start.toLocaleTimeString("en-US", {
@@ -82,7 +83,12 @@ const getTimeString = (start: Date, end: Date): string => {
   })
 }
 
-const StanfordEventCard = ({node, ...props}: { node: Event }) => {
+interface Props extends PropsWithoutRef<any>{
+  node: Event
+}
+
+const StanfordEventCard = ({node, ...props}: Props) => {
+
   const start = new Date(node.su_event_date_time?.value);
   const end = new Date(node.su_event_date_time?.end_value);
   const startMonth = start.toLocaleDateString("en-US", {month: "short", timeZone: 'America/Los_Angeles'})
@@ -94,11 +100,13 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
   const imageUrl = node.sul_event__image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x;
   const placeholder = node.sul_event__image?.field_media_image?.uri.base64;
 
-
   return (
-    <article {...props}>
+    <article {...props} className="su-@container">
       {imageUrl &&
-        <div className="su-overflow-hidden su-aspect-[4/3] su-relative su-mb-40" aria-hidden="true">
+        <div
+          className={"su-overflow-hidden su-aspect-[4/3] su-relative @2xl:su-mb-40"}
+          aria-hidden="true"
+        >
           <Image
             className="su-object-cover su-object-center"
             src={imageUrl}
@@ -110,7 +118,7 @@ const StanfordEventCard = ({node, ...props}: { node: Event }) => {
         </div>
       }
 
-      <div className="su-flex su-gap-xl">
+      <div className={"su-flex su-gap-xl su-flex-col @2xl:su-flex-row"}>
         <div>
           <div
             className="su-bg-black-true su-text-white su-pt-20 su-px-30 su-text-center su-uppercase">{startMonth}</div>
