@@ -23,7 +23,7 @@ interface ParagraphProps extends PropsWithoutRef<any> {
 const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
-if(paragraph.type === 'paragraph--stanford_card') console.log(paragraph.behavior_settings);
+
   return (
     <>
       <Conditional showWhen={paragraph.status != undefined && !paragraph.status}>

@@ -56,7 +56,7 @@ const Menu = ({menuItems}) => {
     <OutsideClickHandler
       onClickOutside={handleClickFocusOutside}
       onFocusOutside={handleClickFocusOutside}
-      className="su-max-w-1500 su-mx-auto lg:su-px-40 2xl:su-px-0"
+      className="su-max-w-1500 su-mx-auto lg:su-px-40 3xl:su-px-0"
     >
       <button
         className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"

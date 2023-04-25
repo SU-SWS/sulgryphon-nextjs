@@ -80,7 +80,7 @@ const StudyPlaceFilteringList = ({items}) => {
   }
 
   return (
-    <div className="md:su-rs-p-1  su-px-40 lg:su-px-0 su-max-w-1500 su-mx-auto">
+    <div className="md:su-rs-p-1 su-px-40 3xl:su-px-0 su-max-w-1500 su-mx-auto">
       <form>
         <div className="su-grid su-grid-cols-1 lg:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
           <div>

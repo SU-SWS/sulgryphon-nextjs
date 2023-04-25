@@ -45,13 +45,13 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
 
       <Conditional showWhen={node.type != 'node--sul_library'}>
         <InternalHeaderBanner>
-          <h1 className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
+          <h1 className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
         </InternalHeaderBanner>
       </Conditional>
 
       <Conditional showWhen={node.status != undefined && !node.status}>
         <div className="su-bg-illuminating-light su-py-30 su-mb-20">
-          <div className="su-max-w-1500 su-mx-auto su-px-40 su-text-m2 su-flex su-gap-lg">
+          <div className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-text-m2 su-flex su-gap-lg">
             <ExclamationCircleIcon width={40}/>
             Unpublished Page
           </div>
@@ -65,7 +65,7 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
       </Conditional>
 
       <Conditional showWhen={!fullWidth}>
-        <div className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
+        <div className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
           <SecondaryMenu menuItems={tree}/>
           <div className="su-flex-1">
             {children}

@@ -24,7 +24,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, siblingCount = 1,
 
   return (
     <section {...props}>
-      <div ref={ref} className="su-max-w-1500 su-mx-auto su-px-40 2xl:su-px-0">
+      <div ref={ref} className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0">
         {(headline || link?.url) &&
           <>
             <AboveHeaderBorder/>
