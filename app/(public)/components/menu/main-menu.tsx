@@ -218,7 +218,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
-          aria-disabled={tabIndex === -1}
         >
           <div
             className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
@@ -232,7 +231,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           tabIndex={tabIndex}
           className={"su-flex su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
-          aria-disabled={tabIndex === -1}
           aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}
         >
