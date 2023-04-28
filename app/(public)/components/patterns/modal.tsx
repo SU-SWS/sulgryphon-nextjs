@@ -55,8 +55,10 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
           role="dialog"
         >
           <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
-            <div ref={modalBodyRef}
-                 className="su-w-full su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]">
+            <div
+              ref={modalBodyRef}
+              className="su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]"
+            >
               {children}
             </div>
 
@@ -67,8 +69,8 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
                 onClick={onClose}
                 className={"su-absolute su-right-50 su-top-50 su-text-black md:su-text-white su-flex"}
               >
-                Close<span className="su-sr-only"> Overlay</span><XMarkIcon className="su-ml-10 su-mt-[-3px] "
-                                                                            width={25} aria-hidden/>
+                Close<span className="su-sr-only"> Overlay</span>
+                <XMarkIcon className="su-ml-10 su-mt-[-3px]" width={25}/>
               </button>
             </div>
           </div>

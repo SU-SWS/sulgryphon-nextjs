@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {forwardRef, MutableRefObject, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {forwardRef, MutableRefObject, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
@@ -10,9 +10,9 @@ import {DrupalMenuLinkContent} from "next-drupal";
 import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
-import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 import {ErrorBoundary} from "react-error-boundary";
 import FallbackMainMenu from "@/components/menu/fallback-main-menu";
+import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 
 const MainMenu = ({menuItems}) => {
   return (
@@ -26,6 +26,7 @@ const MainMenu = ({menuItems}) => {
 const Menu = ({menuItems}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [addCloseAnimation, setAddCloseAnimation] = useState(false)
+  const browserUrl = useNavigationEvent();
   const activeTrail = useActiveTrail(menuItems);
   const isDesktop = useIsDesktop();
 
@@ -47,10 +48,12 @@ const Menu = ({menuItems}) => {
     setAddCloseAnimation(true);
   }
   // When clicking or focusing outside the main menu, close the main menu and all submenus.
-  const handleClickFocusOutside = (e) => {
+  const handleClickFocusOutside = () => {
     submenuRefs.map(ref => ref?.current?.closeSubmenus())
     setMenuOpen(false)
   }
+
+  useEffect(() => setMenuOpen(false), [browserUrl]);
 
   return (
     <OutsideClickHandler
@@ -127,15 +130,15 @@ interface MenuItemProps {
 
 
 const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex = 0, activeTrail = [], menuLevel = 0,}: MenuItemProps, ref) => {
-
   if (menuLevel >= 2) {
     return null;
   }
+  const browserUrl = useNavigationEvent();
   const [submenuOpen, setSubmenuOpen] = useState(false)
   const active = activeTrail.includes(id);
 
   // Helper for tailwind JIT to add the classes.
-  const titleSpacing = [
+  const titleSpacing: string[] = [
     'lg:su-ml-[0px]',
     'lg:su-ml-[30px]',
     'lg:su-ml-[60px]',
@@ -160,6 +163,8 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
       setSubmenuOpen(false)
     }
   }))
+
+  useEffect(() => setSubmenuOpen(false), [browserUrl])
 
   // Add classes to the link item based on various conditions.
   const getLinkBorderClasses = () => {
@@ -211,10 +216,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
     >
       <Conditional showWhen={url.length >= 1}>
         <Link
-          onClick={() => {
-            syncDrupalPreviewRoutes(url);
-            onClick()
-          }}
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
@@ -266,7 +267,7 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
           data-attribute-menu-level={menuLevel}
           className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
         >
-          {belowItems.map((item, i) =>
+          {belowItems.map(item =>
             <MenuItem
               key={item.id}
               activeTrail={activeTrail}

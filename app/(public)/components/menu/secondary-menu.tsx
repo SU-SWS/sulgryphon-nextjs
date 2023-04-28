@@ -10,6 +10,7 @@ import Conditional from "@/components/utils/conditional";
 import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {ErrorBoundary} from "react-error-boundary";
 import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
+import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 
 const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   return (
@@ -23,6 +24,7 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
 }
 
 const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+  const browserUrl = useNavigationEvent();
   const [javascriptEnabled, setJavascriptEnabled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false)
   const activeTrail = useActiveTrail(menuItems);
@@ -52,6 +54,7 @@ const SecondaryMenuComponent = ({menuItems}: { menuItems: DrupalMenuLinkContent[
   }
   const currentPageTitle = useMemo(() => getCurrentPageTitle(menuItems, activeTrail), [activeTrail, menuItems]);
   useEffect(() =>  setJavascriptEnabled(true), []);
+  useEffect(() => setMenuOpen(false), [browserUrl]);
 
   return (
     <>

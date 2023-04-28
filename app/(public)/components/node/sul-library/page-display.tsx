@@ -1,5 +1,3 @@
-import "server-only";
-
 import {Library} from "@/lib/drupal/drupal";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import fetchComponents from "@/lib/fetch-components";
@@ -13,10 +11,11 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
   const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width'
 
   return (
-    <article className="su-mb-50" {...props}>
+    <article className="su-mb-50 su-@container" {...props}>
 
       {(node.sul_library__a11y || node.su_library__hours) &&
-        <div className="su-max-w-1500 su-mx-auto su-mb-50 su-flex su-gap-2xl">
+        <div
+          className={"su-max-w-1500 su-mx-auto su-mb-50 su-flex su-flex-col @6xl:su-flex-row su-gap-2xl" + (fullWidth ? " su-px-40 3xl:su-px-0" : "")}>
           {node.sul_library__a11y &&
             <div className="su-order-last lg:su-order-first su-flex-1">
               <h2 className="su-text-m3">Accessibility</h2>
