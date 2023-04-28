@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {forwardRef, MutableRefObject, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {forwardRef, MutableRefObject, Suspense, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
@@ -10,15 +10,14 @@ import {DrupalMenuLinkContent} from "next-drupal";
 import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
-import {ErrorBoundary} from "react-error-boundary";
 import FallbackMainMenu from "@/components/menu/fallback-main-menu";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 
 const MainMenu = ({menuItems}) => {
   return (
-    <ErrorBoundary fallback={<FallbackMainMenu menuItems={menuItems}/>}>
+    <Suspense fallback={<FallbackMainMenu menuItems={menuItems}/>}>
       <Menu menuItems={menuItems}/>
-    </ErrorBoundary>
+    </Suspense>
   )
 }
 

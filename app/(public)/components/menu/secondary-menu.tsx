@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import {Suspense, useEffect, useMemo, useState} from "react";
 import {DrupalMenuLinkContent} from "next-drupal";
 import Link from "next/link";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
@@ -8,18 +8,15 @@ import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import Conditional from "@/components/utils/conditional";
 import OutsideClickHandler from "@/components/utils/outside-click-handler";
-import {ErrorBoundary} from "react-error-boundary";
 import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
+import FallbackMainMenu from "@/components/menu/fallback-main-menu";
 
 const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   return (
-    <ErrorBoundary
-      fallback={<></>}
-      onError={e => console.error(e.message)}
-    >
+    <Suspense fallback={<FallbackMainMenu menuItems={menuItems}/>}>
       <SecondaryMenuComponent menuItems={menuItems}/>
-    </ErrorBoundary>
+    </Suspense>
   )
 }
 
