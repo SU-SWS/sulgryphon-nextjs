@@ -1,10 +1,14 @@
 import Link from "next/link";
 
-const LibCal = ({libcalId}) => {
+const LibCal = ({libcalId}: { libcalId?: number }) => {
   return (
-    <Link href={`/calendar/${libcalId}`}>
-      Schedule an appointment
-    </Link>
+    <>
+      {libcalId &&
+        <Link href={`/calendar/${libcalId}`}>
+          Schedule an appointment
+        </Link>
+      }
+    </>
   )
 }
 export default LibCal;

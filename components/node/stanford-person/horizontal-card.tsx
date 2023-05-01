@@ -51,9 +51,7 @@ const HorizontalPersonCard = ({node, currentWidth, ...props}: Props) => {
           </Link>
         </Conditional>
 
-        <Conditional showWhen={node.sul_person__libcal_id}>
-          <LibCal libcalId={node.sul_person__libcal_id}/>
-        </Conditional>
+        <LibCal libcalId={node.sul_person__libcal_id}/>
       </div>
     </article>
   )

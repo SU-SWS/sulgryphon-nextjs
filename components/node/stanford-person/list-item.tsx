@@ -43,9 +43,7 @@ const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
       </Link>
       <div className="su-type-0 su-leading-snug">{node.su_person_short_title}</div>
 
-      <Conditional showWhen={node.sul_person__libcal_id}>
-        <LibCal libcalId={node.sul_person__libcal_id}/>
-      </Conditional>
+      <LibCal libcalId={node.sul_person__libcal_id}/>
     </article>
   )
 }
