@@ -9,7 +9,7 @@ import {notFound} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {ReactNode} from "react";
+import {ReactNode, Suspense} from "react";
 
 const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   const path = await translatePathFromContext(context);
@@ -70,7 +70,10 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
       <Conditional showWhen={!fullWidth}>
         <div
           className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
-          <SecondaryMenu menuItems={tree}/>
+
+          <Suspense fallback={<></>}>
+            <SecondaryMenu menuItems={tree}/>
+          </Suspense>
 
           <div className="su-flex-1">
             {children}
