@@ -31,7 +31,7 @@ export const metadata = {
   }
 }
 
-const RootLayout = ({children, modal}: { children: ReactNode, modal: ReactNode }) => {
+const RootLayout = ({children, modal}: { children: ReactNode, modal?: ReactNode }) => {
 
   return (
     <html lang="en">
