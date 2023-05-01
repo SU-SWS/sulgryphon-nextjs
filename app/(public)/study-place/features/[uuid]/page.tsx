@@ -1,6 +1,15 @@
 import {getResource} from "@/lib/drupal/get-resource";
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features";
 import {DrupalTaxonomyTerm} from "next-drupal";
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
+
+export const metadata = {
+  title: 'Study Place Features',
+  robots: {
+    index: false
+  }
+}
+
 
 const Page = async ({params: {uuid}}, ...context) => {
   const node = await getResource('node--sul_study_place', uuid);
@@ -12,7 +21,11 @@ const Page = async ({params: {uuid}}, ...context) => {
   ) ?? [];
 
   return (
-    <div>
+    <main id="main-content">
+      <InternalHeaderBanner>
+        <h1 className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title} Features</h1>
+      </InternalHeaderBanner>
+      <div className="su-max-w-1500 su-px-40 3xl:su-px-0 su-mx-auto">
       <StudyPlaceFeatures
         branchHours={node.sul_study__branch?.su_library__hours}
         branchTitle={node.sul_study__branch.title}
@@ -24,7 +37,8 @@ const Page = async ({params: {uuid}}, ...context) => {
         libCal={node.sul_study__libcal_id}
         type={node.sul_study__type.name}
       />
-    </div>
+      </div>
+    </main>
   )
 }
 

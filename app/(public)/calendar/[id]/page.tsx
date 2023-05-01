@@ -1,7 +1,10 @@
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 
 export const metadata = {
-  title: 'Make an Appointment'
+  title: 'Make an Appointment',
+  robots: {
+    index: false
+  }
 }
 
 const Calendar = ({params: {id}}) => {
