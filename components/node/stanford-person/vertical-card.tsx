@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Conditional from "../../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";

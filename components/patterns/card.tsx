@@ -1,7 +1,7 @@
 import {ReactNodeLike} from "prop-types";
 
 import formatHtml from "@/lib/format-html";
-import Conditional from "../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import {DrupalLinkButton, DrupalLinkSecondaryButton, DrupalActionLink, DrupalLink} from "@/components/patterns/link";
 
 interface CardProps {
