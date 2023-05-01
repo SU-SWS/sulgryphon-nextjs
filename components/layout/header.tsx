@@ -4,8 +4,6 @@ import MainMenu from "@/components/menu/main-menu";
 import GlobalMessage from "@/components/layout/global-message";
 import {DrupalMenuLinkContent} from "next-drupal";
 import {getMenu} from "@/lib/drupal/get-menu";
-import FallbackMainMenu from "@/components/menu/fallback-main-menu";
-import {Suspense} from "react";
 
 const Header = async () => {
 
@@ -40,9 +38,7 @@ const Header = async () => {
             <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
           </div>
         </div>
-        <Suspense fallback={<FallbackMainMenu menuItems={tree}/>}>
           <MainMenu menuItems={tree}/>
-        </Suspense>
       </header>
     </>
   )
