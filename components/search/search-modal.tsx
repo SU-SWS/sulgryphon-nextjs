@@ -12,7 +12,6 @@ const SearchModal = () => {
 
   const toggleModal = (e) => {
     e.preventDefault();
-    console.log('search');
     setModalOpen(!modalOpen);
   }
 
