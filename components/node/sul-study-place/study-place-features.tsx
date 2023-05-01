@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {MapPinIcon} from "@heroicons/react/24/outline";
 import StudyPlaceHours from "./study-place-today-hours";
-import Conditional from "../../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid";
 
 interface ModalProps extends PropsWithoutRef<any> {

@@ -1,4 +1,4 @@
-import Conditional from "../../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import Link from "next/link";
 import {Course} from "@/lib/drupal/drupal";
 

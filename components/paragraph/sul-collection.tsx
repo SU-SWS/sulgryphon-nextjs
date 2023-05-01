@@ -2,9 +2,9 @@
 
 import {CollectionCardParagraph} from "@/lib/drupal/drupal";
 import {PropsWithoutRef, useEffect, useId, useState} from "react";
-import Conditional from "../utils/conditional";
-import AboveHeaderBorder from "../patterns/above-header-border";
-import StanfordCard from "./stanford-card";
+import Conditional from "@/components/utils/conditional";
+import AboveHeaderBorder from "@/components/patterns/above-header-border";
+import StanfordCard from "@/components/paragraph/stanford-card";
 
 interface CollectionProps extends PropsWithoutRef<any> {
   cards: CollectionCardParagraph[]

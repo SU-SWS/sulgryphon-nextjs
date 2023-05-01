@@ -1,6 +1,6 @@
 import {Publication} from "@/lib/drupal/drupal";
-import Card from "../../patterns/card";
-import Conditional from "../../utils/conditional";
+import Card from "@/components/patterns/card";
+import Conditional from "@/components/utils/conditional";
 import Link from "next/link";
 
 const StanfordPublicationCard = ({node, ...props}: { node: Publication }) => {

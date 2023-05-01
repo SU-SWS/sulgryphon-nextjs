@@ -16,7 +16,7 @@ const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   if (!path || !path.jsonapi) {
     notFound();
   }
-  const node: DrupalNode = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
   const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
@@ -71,7 +71,7 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
         <div
           className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
 
-          <Suspense>
+          <Suspense fallback={<></>}>
             <SecondaryMenu menuItems={tree}/>
           </Suspense>
 
