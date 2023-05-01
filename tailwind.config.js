@@ -13,12 +13,10 @@ for (i = 1; i <= 4; i++) {
 const path = require('path');
 
 // Path to custom Tailwind plugins for SUL
-const dir = path.resolve(__dirname, 'styles/tailwind/plugins');
+const dir = path.resolve(__dirname, 'app/components/styles/tailwind/plugins');
 
 module.exports = {
   content: [
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./lib/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}"
   ],
   presets: [
