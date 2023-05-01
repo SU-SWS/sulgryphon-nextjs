@@ -54,9 +54,9 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
         aria-haspopup="true"
         aria-expanded={menuOpen ? "true" : "false"}
       >
-        <div aria-hidden={true} className="su-p-20 su-flex-grow su-font-semibold su-relative su-text-left">
+        <span aria-hidden={true} className="su-block su-p-20 su-flex-grow su-font-semibold su-relative su-text-left">
           {currentPageTitle}
-        </div>
+        </span>
         <ChevronDownIcon width={40} className="su-mr-20"/>
 
         <span className="su-sr-only">{menuOpen ? 'Close' : 'Open'} Side Navigation</span>
