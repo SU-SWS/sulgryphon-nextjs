@@ -56,8 +56,19 @@ const NodePage = async (context) => {
 export default NodePage;
 
 export const generateStaticParams = async (context) => {
-  const pathTypes = ['node--stanford_page', 'node--stanford_person', 'node--stanford_event', 'node--stanford_news', 'node--sul_library'];
-  let paths: GetStaticPathsResult["paths"] = await getPathsFromContext(pathTypes, {});
+  let paths: GetStaticPathsResult["paths"] = []
+
+  const contentPaths = await Promise.all([
+    getPathsFromContext('node--stanford_page', {}),
+    getPathsFromContext('node--stanford_person', {}),
+    getPathsFromContext('node--stanford_event', {}),
+    getPathsFromContext('node--stanford_news', {}),
+    getPathsFromContext('node--sul_library', {})
+  ]);
+  contentPaths.map(contentTypePaths => {
+    paths = [...paths, ...contentTypePaths];
+  });
+
   // @ts-ignore
   if (process.env.LOCAL_STATIC_BUILD_PAGES >= 1) {
     // @ts-ignore
