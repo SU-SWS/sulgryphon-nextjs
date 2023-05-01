@@ -74,6 +74,5 @@ export const generateStaticParams = async (context) => {
     // @ts-ignore
     paths = paths.slice(0, process.env.LOCAL_STATIC_BUILD_PAGES)
   }
-  paths.push({params: {slug: 'demo-basic-page-functionality/demo-text-area-paragraph'.split('/')}});
   return paths.map(path => typeof path !== "string" ? path?.params : path);
 }
