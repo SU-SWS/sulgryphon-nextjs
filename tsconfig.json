@@ -20,10 +20,10 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": [
-        "app/(public)/components/*"
+        "components/*"
       ],
       "@/lib/*": [
-        "app/(public)/lib/*"
+        "lib/*"
       ]
     },
     "incremental": true,

@@ -1,13 +1,12 @@
-import "./styles/globals.css"
+import "../../styles/globals.css"
 
 import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
-import Editori11y from "./editori11y";
-import Script from "next/script";
-import GoogleAnalytics from "@/components/utils/google-analytics";
 import {ReactNode} from "react";
 import {Icon} from "next/dist/lib/metadata/types/metadata-types";
+import Script from "next/script";
+import GoogleAnalytics from "@/components/utils/google-analytics";
 
 const appleIcons: Icon[] = [60, 72, 76, 114, 120, 144, 152, 180].map(size => ({
   url: `https://www-media.stanford.edu/assets/favicon/apple-touch-icon-${size}x${size}.png`,
@@ -36,38 +35,32 @@ export const metadata = {
   }
 }
 
-const RootLayout = ({children}: { children: ReactNode }) => {
+const Layout = ({children}: { children: ReactNode }) => {
 
   return (
-    <html lang="en">
-    <Editori11y/>
-    {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID &&
-      <>
-        <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js"/>
-        <GoogleAnalytics/>
-      </>
-    }
+    <>
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID &&
+        <>
+          <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js"/>
+          <GoogleAnalytics/>
+        </>
+      }
+      <div className="su-grid su-grid-rows-1 su-min-h-screen">
+        <div>
+          {/* @ts-expect-error Async Server Component */}
+          <Header/>
 
-    <body>
-
-    <div className="su-grid su-grid-rows-1 su-min-h-screen">
-      <div>
-        <a className="su-skiplink" href="#main-content">Skip to main content</a>
-        {/* @ts-expect-error Async Server Component */}
-        <Header/>
-
-        <div className="su-mb-50">
-          {children}
+          <div className="su-mb-50">
+            {children}
+          </div>
         </div>
-      </div>
 
-      <footer className="su-row-start-2 su-row-end-3">
-        <LibraryFooter/>
-        <GlobalFooter/>
-      </footer>
-    </div>
-    </body>
-    </html>
+        <footer className="su-row-start-2 su-row-end-3">
+          <LibraryFooter/>
+          <GlobalFooter/>
+        </footer>
+      </div>
+    </>
   )
 }
-export default RootLayout;
+export default Layout;
