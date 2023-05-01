@@ -1,39 +1,10 @@
-import "../../styles/globals.css"
-
 import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
 import {ReactNode} from "react";
-import {Icon} from "next/dist/lib/metadata/types/metadata-types";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/utils/google-analytics";
 
-const appleIcons: Icon[] = [60, 72, 76, 114, 120, 144, 152, 180].map(size => ({
-  url: `https://www-media.stanford.edu/assets/favicon/apple-touch-icon-${size}x${size}.png`,
-  sizes: `${size}x${size}`,
-}));
-
-const icons: Icon[] = [16, 32, 96, 128, 192, 196].map(size => ({
-  url: size === 128 ? `https://www-media.stanford.edu/assets/favicon/favicon-${size}.png` : `https://www-media.stanford.edu/assets/favicon/favicon-${size}x${size}.png`,
-  sizes: `${size}x${size}`
-}));
-
-export const metadata = {
-  title: process.env.NEXT_PUBLIC_SITE_NAME,
-  openGraph: {
-    type: 'website',
-    locale: 'en_IE',
-    url: 'https://library.stanford.edu',
-    siteName: process.env.NEXT_PUBLIC_SITE_NAME,
-  },
-  twitter: {
-    card: 'summary_large_image',
-  },
-  icons: {
-    icon: [{url: '/favicon.ico'}, ...icons],
-    apple: appleIcons
-  }
-}
 
 const Layout = ({children}: { children: ReactNode }) => {
 
