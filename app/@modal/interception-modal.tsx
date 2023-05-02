@@ -1,8 +1,9 @@
 "use client";
 
-import {useCallback, useEffect, useRef} from "react";
+import React, {useCallback, useEffect, useRef} from "react";
 import {useRouter} from "next/navigation";
 import ReactFocusLock from "react-focus-lock";
+import {XMarkIcon} from "@heroicons/react/20/solid";
 
 const InterceptionModal = ({children}) => {
   const overlay = useRef(null);
@@ -50,10 +51,19 @@ const InterceptionModal = ({children}) => {
         <ReactFocusLock>
           <div
             ref={wrapper}
-            className="su-absolute su-top-1/2 su-left-1/2 su--translate-x-1/2 su--translate-y-1/2 su-w-full sm:su-w-10/12 md:su-w-8/12 lg:su-w-1/2 p-6"
+            className="su-absolute su-top-1/2 su-left-1/2 su--translate-x-1/2 su--translate-y-1/2 su-w-11/12 sm:su-w-10/12 md:su-w-8/12 lg:su-w-1/2 p-6"
           >
             {children}
           </div>
+
+          <button
+            type="button"
+            onClick={onDismiss}
+            className="su-fixed su-right-50 su-top-50 su-text-white su-flex hocus:su-underline"
+          >
+            Close<span className="su-sr-only"> Overlay</span>
+            <XMarkIcon className="su-ml-5" width={25}/>
+          </button>
         </ReactFocusLock>
       </dialog>
 

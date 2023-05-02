@@ -85,9 +85,9 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
 
   return (
     <div ref={ref} {...props}>
-      <div className="su-flex su-gap-2xl su-px-40 lg:su-px-0 su-max-w-[980px] su-mx-auto">
+      <div className="su-flex su-flex-col md:su-flex-row su-gap-xs md:su-gap-2xl su-mb-20 md:su-mb-0 su-max-w-[980px] su-mx-auto">
         {headline &&
-          <h2 className="su-text-left su-type-5 su-flex-grow">
+          <h2 className="su-text-left su-type-5 su-flex-grow su-mb-0">
             <AboveHeaderBorder/>
             {headline}
           </h2>
@@ -105,7 +105,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
       </div>
 
       {description &&
-        <div className="su-mb-40 su-max-w-[980px] su-px-40 lg:su-px-0 su-mx-auto">
+        <div className="su-mb-40 su-max-w-[980px] su-mx-auto">
           {formatHtml(description)}
         </div>
       }
