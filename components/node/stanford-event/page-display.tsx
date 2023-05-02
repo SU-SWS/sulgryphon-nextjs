@@ -6,6 +6,8 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {Event} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
 import {DrupalParagraph} from "next-drupal";
+import formatHtml from "@/lib/format-html";
+import Paragraph from "@/components/paragraph";
 
 const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   node.su_event_components = await fetchComponents(node.su_event_components ?? []) as DrupalParagraph[];
@@ -187,7 +189,19 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
               href={node.su_event_source.url}>{node.su_event_source.title ? node.su_event_source.title : 'View this event'}</Link>
       }
 
-      <ParagraphRows items={node.su_event_components}/>
+      {node.body &&
+        <div className="su-max-w-[980px] su-w-full su-mx-auto su-px-40 xl:su-px-0 su-mb-40">
+          {formatHtml(node.body)}
+        </div>
+      }
+
+      {node.su_event_components &&
+        <div className="su-mb-40">
+          {node.su_event_components.map(component =>
+            <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
+          )}
+        </div>
+      }
     </article>
   )
 }

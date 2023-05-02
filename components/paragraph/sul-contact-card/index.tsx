@@ -10,9 +10,10 @@ interface ContactCardProps {
 const SulContactCard = ({paragraph, fullWidth = true, ...props}: ContactCardProps) => {
   const Component = paragraph.sul_contact__branch ? NodeReferenceCard : ManualFieldsCard;
   return (
-    <div className={"su-relative su-w-full su-max-w-[980px] su-mx-auto" + (fullWidth? " su-px-40 3xl:su-px-0": "")} {...props}>
-    <Component paragraph={paragraph}/>
-  </div>
+    <div
+      className={"su-relative su-w-full su-max-w-[980px] su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0" : "")} {...props}>
+      <Component paragraph={paragraph}/>
+    </div>
   )
 }
 

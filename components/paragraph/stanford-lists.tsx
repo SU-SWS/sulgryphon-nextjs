@@ -112,23 +112,24 @@ const StanfordListsComponent = ({headline, description, link, view, styles, full
         </div>
       }
 
-      {isLoading && <Loading/>}
-      {!isLoading &&
-        <ErrorBoundary
-          fallback={<></>}
-          onError={e => console.error(e.message)}
-        >
+      <div aria-live="polite">
+        {isLoading && <Loading/>}
+        {!isLoading &&
+          <ErrorBoundary
+            fallback={<></>}
+            onError={e => console.error(e.message)}
+          >
+            <List
+              emptyMessage={emptyMessage}
+              itemsToDisplay={itemsToDisplay}
+              isList={isList}
+              viewId={viewId}
+              displayId={displayId}
+            />
 
-          <List
-            emptyMessage={emptyMessage}
-            itemsToDisplay={itemsToDisplay}
-            isList={isList}
-            viewId={viewId}
-            displayId={displayId}
-          />
-
-        </ErrorBoundary>
-      }
+          </ErrorBoundary>
+        }
+      </div>
     </div>
   )
 }

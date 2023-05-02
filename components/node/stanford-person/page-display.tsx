@@ -13,6 +13,7 @@ import LibGuides from "./libguide";
 import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
 import {DrupalParagraph} from "next-drupal";
+import Paragraph from "@/components/paragraph";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
   node.su_person_components = await fetchComponents(node.su_person_components ?? []) as DrupalParagraph[];
@@ -57,12 +58,18 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
         </div>
       </div>
 
-      <div className="md:su-grid su-grid-cols-6 su-gap-[40px]">
+      <div className="su-grid md:su-grid-cols-6 su-gap-2xl">
         <div className="su-col-span-4">
           {node.body && <div
             className="su-type-1 su-rs-mt-6 sm:su-rs-mt-0 su-rs-mb-7 md:su-w-10/12 ">{formatHtml(node.body)}</div>}
 
-          <ParagraphRows items={node.su_person_components}/>
+          {node.su_person_components &&
+            <div className="su-mb-40">
+              {node.su_person_components.map(component =>
+                <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
+              )}
+            </div>
+          }
 
           <Conditional showWhen={node.lib_guides.length > 0}>
             <LibGuides guides={node.lib_guides} className="su-mb-50"/>
@@ -70,7 +77,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
           {(node.su_person_education && node.su_person_education.length > 0) &&
             <div className="su-rs-mb-7">
-              <h2 className="su-type-0">Education</h2>
+              <h2 className="su-type-1">Education</h2>
               {node.su_person_education.map((education, index) =>
                 <div key={`person-education-${index}`} className="su-rs-mb-0">
                   {education}
@@ -81,7 +88,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
           {(node.su_person_research && node.su_person_research.length > 0) &&
             <div className="su-rs-mb-7">
-              <h2 className="su-type-0">Research</h2>
+              <h2 className="su-type-1">Research</h2>
               <div className="md:su-grid su-grid-cols-2">
                 {node.su_person_research.map((interest, index) =>
                   <div key={`research-${index}`} className="su-rs-mb-1">
@@ -98,7 +105,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
           {(node.su_person_affiliations && node.su_person_affiliations.length > 0) &&
             <div className="su-rs-mb-7">
-              <h2 className="su-type-0">Stanford Affiliations</h2>
+              <h2 className="su-type-1">Stanford Affiliations</h2>
               {node.su_person_affiliations.map((affiliation, index) =>
                 <DrupalLinkButton key={`person-affiliation-${index}`}
                                   href={affiliation.url}>{affiliation.title}</DrupalLinkButton>

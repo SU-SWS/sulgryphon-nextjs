@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/24/outline";
@@ -14,6 +15,14 @@ const ManualFieldsCard = ({paragraph}: Props) => {
   const imageUrl = paragraph.sul_contact__image?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const imageAlt = paragraph.sul_contact__image?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = paragraph.sul_contact__image?.field_media_image?.uri.base64;
+
+  const address = [
+    paragraph.sul_contact__address?.address_line1,
+    paragraph.sul_contact__address?.address_line2,
+    paragraph.sul_contact__address?.locality + " " + paragraph.sul_contact__address?.administrative_area,
+    paragraph.sul_contact__address?.postal_code
+  ];
+  const addressString = address.filter(x => !!x).join(', ');
 
   return (
     <div className="su-@container">
@@ -33,8 +42,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
           </div>
         </Conditional>
 
-        <div
-          className="card-body su-items-start su-rs-px-2 su-rs-py-4 su-bg-black-true su-flex-grow">
+        <div className="card-body su-rs-px-2 su-rs-py-4 su-bg-black-true su-flex-grow">
           <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
 
             <Conditional showWhen={paragraph.sul_contact__title}>
@@ -44,7 +52,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
             <div className="su-leading-tight md:su-rs-pr-2 su-text-white">
 
               <Conditional showWhen={paragraph.sul_contact__hours || paragraph.sul_contact__link?.url}>
-                <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-0 su-type-1">
+                <div className="su-relative su-flex su-flex-row su-rs-mb-0 su-type-1">
                   <ClockIcon width={19} className="su-mr-12 su-mt-01em su-flex-shrink-0"/>
                   <div className="su-text-white su-rs-mb-neg2 sm:su-mb-0">
                     {paragraph.sul_contact__hours}
@@ -83,18 +91,17 @@ const ManualFieldsCard = ({paragraph}: Props) => {
               </Conditional>
 
               <Conditional showWhen={paragraph.sul_contact__address}>
-                <div className="su-relative su-flex su-flex-row su-items-start su-type-1">
-                  <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
-                  {(paragraph.sul_contact__map_link) ? (
+                <div className="su-relative su-flex su-items-center su-type-1">
+                  <MapPinIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
+
+                  {paragraph.sul_contact__map_link &&
                     <Link href={paragraph.sul_contact__map_link.uri}
                           className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal">
-                      <div>{paragraph.sul_contact__address?.address_line1}, {paragraph.sul_contact__address?.address_line2}, {paragraph.sul_contact__address?.locality} {paragraph.sul_contact__address?.administrative_area}, {paragraph.sul_contact__address?.postal_code}</div>
+                      {addressString}
                     </Link>
-                  ) : (
-                    <div>
-                      {paragraph.sul_contact__address?.address_line1}, {paragraph.sul_contact__address?.address_line2}, {paragraph.sul_contact__address?.locality} {paragraph.sul_contact__address?.administrative_area}, {paragraph.sul_contact__address?.postal_code}
-                    </div>
-                  )}
+                  }
+
+                  {!paragraph.sul_contact__map_link && <>{addressString}</>}
                 </div>
               </Conditional>
 

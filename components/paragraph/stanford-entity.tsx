@@ -12,6 +12,7 @@ import {useInView} from "react-intersection-observer";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useDataFetch from "@/lib/hooks/useDataFetch";
 import {DrupalNode} from "next-drupal";
+import AboveHeaderBorder from "@/components/patterns/above-header-border";
 
 interface EntityProps extends PropsWithoutRef<any> {
   headline?: string
@@ -63,12 +64,17 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
             className={"su-absolute su-z-[-10] su-h-full su-top-0 su-bg-black-true " + (isCentered ? "su-w-screen su-left-[calc(-50vw+50%)]" : "su-w-full")}/>
         </Conditional>
 
-        {headline && <h2 className="su-text-center su-type-5">{headline}</h2>}
+        {headline &&
+          <h2 className="su-text-left su-type-5 su-mb-0">
+            <AboveHeaderBorder/>
+            {headline}
+          </h2>
+        }
         {description &&
           <div className="su-mb-40">{formatHtml(description)}</div>}
 
         {entities &&
-          <div className={"su-my-40 su-grid su-gap-2xl " + gridCols}>
+          <div className={"su-my-40 su-grid su-gap-2xl " + gridCols} aria-live="polite">
             {entities.map((item, i) =>
               <div key={item.id}
                    className={((i + 1 === entities.length || i + 1 % 3 === 0) ? "" : "su-relative before:su-content-[''] before:su-w-1 before:su-absolute before:su-top-0 before:su-h-full before:su-right-[-25px] lg:before:su-bg-black-30")}>

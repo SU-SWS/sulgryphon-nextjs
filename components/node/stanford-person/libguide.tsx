@@ -7,7 +7,7 @@ import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {LibGuide} from "@/lib/drupal/drupal";
 import {ErrorBoundary} from "react-error-boundary";
 
-interface Props extends PropsWithoutRef<any>{
+interface Props extends PropsWithoutRef<any> {
   guides: LibGuide[]
   headingLevel?: number
 }
@@ -23,9 +23,11 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
         onError={e => console.error(e.message)}
       >
         <Conditional showWhen={courseGuides.length > 0}>
-          {headingLevel === 2 && <h2>Course Guides</h2>}
-          {headingLevel === 3 && <h3>Course Guides</h3>}
-          <LibGuideSection heading="Course Guides" guides={courseGuides}/>
+          <div className="su-mb-40">
+            {headingLevel === 2 && <h2 className="su-type-1">Course Guides</h2>}
+            {headingLevel === 3 && <h3 className="su-type-1">Course Guides</h3>}
+            <LibGuideSection heading="Course Guides" guides={courseGuides}/>
+          </div>
         </Conditional>
       </ErrorBoundary>
 
@@ -34,9 +36,11 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
         onError={e => console.error(e.message)}
       >
         <Conditional showWhen={topicGuides.length > 0}>
-          {headingLevel === 2 && <h2>Topic Guides</h2>}
-          {headingLevel === 3 && <h3>Topic Guides</h3>}
-          <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
+          <div className="su-mb-40">
+            {headingLevel === 2 && <h2 className="su-type-1">Topic Guides</h2>}
+            {headingLevel === 3 && <h3 className="su-type-1">Topic Guides</h3>}
+            <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
+          </div>
         </Conditional>
       </ErrorBoundary>
     </div>
@@ -79,7 +83,7 @@ const LibGuideSection = ({heading, guides}) => {
 
       <Conditional showWhen={moreGuides.length > 0}>
         <button
-          className="su-mt-20 su-button su-mx-auto su-block"
+          className="su-mt-20 su-button su-block"
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}

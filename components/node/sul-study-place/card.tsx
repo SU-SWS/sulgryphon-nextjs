@@ -63,7 +63,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                 <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
                 <Link href={node.sul_study__branch?.path.alias}
                       className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red">
-                  <div>{node.title}</div>
+                  <div>{node.sul_study__branch.title}</div>
                 </Link>
               </div>
 
