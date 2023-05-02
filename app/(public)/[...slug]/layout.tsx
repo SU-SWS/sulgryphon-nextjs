@@ -9,7 +9,7 @@ import {notFound} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {ReactNode, Suspense} from "react";
+import {ReactNode} from "react";
 
 const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   const path = await translatePathFromContext(context);
