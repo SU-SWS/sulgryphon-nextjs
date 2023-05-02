@@ -1,12 +1,12 @@
 "use client";
 
-import Conditional from "@/components/utils/conditional";
+import Conditional from "../utils/conditional";
 import formatHtml from "@/lib/format-html";
 import NodeCardDisplay from "@/components/node/node-card";
-import {DrupalLinkButton} from "@/components/patterns/link";
+import {DrupalLinkButton} from "../patterns/link";
 import {PropsWithoutRef, useEffect, useRef} from "react";
 import {ErrorBoundary} from "react-error-boundary";
-import {DrupalLink} from "@/lib/drupal/drupal";
+import {DrupalLink, DrupalWysiwyg} from "@/lib/drupal/drupal";
 import useIsCentered from "@/lib/hooks/useIsCentered";
 import {useInView} from "react-intersection-observer";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";

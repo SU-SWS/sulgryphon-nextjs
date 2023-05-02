@@ -3,11 +3,12 @@
 import {ImageGalleryParagraph} from "@/lib/drupal/drupal";
 import Link from "next/link";
 import Image from "next/image";
-import Conditional from "@/components/utils/conditional";
-import {DrupalLinkButton} from "@/components/patterns/link";
-import Modal from "@/components/patterns/modal";
+import Conditional from "../utils/conditional";
+import {DrupalLinkButton} from "../patterns/link";
+import Modal from "../patterns/modal";
 import {useState} from "react";
 import formatHtml from "@/lib/format-html";
+
 
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph

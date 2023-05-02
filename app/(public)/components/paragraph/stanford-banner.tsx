@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import {DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
-import Banner from "@/components/patterns/banner";
+import {BannerParagraph, DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
+import Banner from "../patterns/banner";
 import {PropsWithoutRef} from "react";
 
 interface Props extends PropsWithoutRef<any> {

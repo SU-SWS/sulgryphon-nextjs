@@ -1,7 +1,7 @@
 "use client";
 
 import formatHtml from "@/lib/format-html";
-import {PropsWithoutRef} from "react";
+import {PropsWithoutRef, useEffect, useState} from "react";
 import {Guide} from "@/lib/libguides";
 import Libguide from "@/components/node/stanford-person/libguide";
 import {ErrorBoundary} from "react-error-boundary";
