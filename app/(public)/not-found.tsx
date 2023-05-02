@@ -2,7 +2,7 @@ import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 
 const NotFound = () => {
   return (
-    <main id="main-content">
+    <main id="main-content" className="su-mb-50">
       <InternalHeaderBanner>
         <h1 className="su-cc su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">Page Not Found</h1>
       </InternalHeaderBanner>

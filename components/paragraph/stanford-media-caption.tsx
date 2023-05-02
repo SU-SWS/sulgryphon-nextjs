@@ -6,22 +6,22 @@ import Oembed from "@/components/patterns/oembed";
 import Link from "next/link";
 import {PropsWithoutRef} from "react";
 
-interface Props extends PropsWithoutRef<any>{
+interface Props extends PropsWithoutRef<any> {
   image?: DrupalImageMedia
   videoUrl?: string
   caption?: string
   link?: DrupalLink
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
-const StanfordMediaCaption = ({caption, image, videoUrl, link, siblingCount, ...props}: Props) => {
+const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true, ...props}: Props) => {
 
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
 
   return (
-    <figure {...props}>
+    <figure className={"su-relative su-w-full su-max-w-[980px] su-mx-auto" + (fullWidth ? " su-px-40 xl:su-px-0": "")} {...props}>
       {imageUrl &&
         <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
           <Image

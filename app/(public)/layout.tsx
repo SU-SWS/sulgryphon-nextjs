@@ -20,10 +20,7 @@ const Layout = ({children}: { children: ReactNode }) => {
         <div>
           {/* @ts-expect-error Async Server Component */}
           <Header/>
-
-          <div className="su-mb-50">
-            {children}
-          </div>
+          {children}
         </div>
 
         <footer className="su-row-start-2 su-row-end-3">

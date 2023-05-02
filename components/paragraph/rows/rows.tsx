@@ -8,7 +8,7 @@ interface RowProps {
   fullWidth?: boolean
 }
 
-export const ParagraphRows = ({items, fullWidth = false, ...props}: RowProps) => {
+export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => {
   const layouts = {};
 
   items.map(item => {
@@ -38,12 +38,15 @@ export const ParagraphRows = ({items, fullWidth = false, ...props}: RowProps) =>
   )
 }
 
-const Row = ({layoutSettings, items, fullWidth = false}) => {
+const Row = ({layoutSettings, items, fullWidth = true}) => {
   return (
     <>
-      {layoutSettings.layout === 'sul_helper_1_column' && <OneColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
-      {layoutSettings.layout === 'sul_helper_2_column' && <TwoColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
-      {layoutSettings.layout === 'sul_helper_3_column' && <ThreeColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
+      {layoutSettings.layout === 'sul_helper_1_column' &&
+        <OneColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
+      {layoutSettings.layout === 'sul_helper_2_column' &&
+        <TwoColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
+      {layoutSettings.layout === 'sul_helper_3_column' &&
+        <ThreeColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
     </>
   )
 }

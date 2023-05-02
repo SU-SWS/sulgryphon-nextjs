@@ -22,7 +22,7 @@ interface EntityProps extends PropsWithoutRef<any> {
     orientation?: string
     background
   }
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
 const StanfordEntity = (props: EntityProps) => {
@@ -38,7 +38,7 @@ const StanfordEntity = (props: EntityProps) => {
   )
 }
 
-const StanfordEntityComponent = ({headline, description, link, entities = [], styles, siblingCount = 0, ...props}: EntityProps) => {
+const StanfordEntityComponent = ({headline, description, link, entities = [], styles, fullWidth = true, ...props}: EntityProps) => {
   const {ref, inView} = useInView();
   const centeredRef = useRef(null);
 
@@ -46,8 +46,8 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 
   const gridColClasses = {
     1: 'su-grid-cols-1',
-    2: 'lg:su-grid-cols-2',
-    3: 'lg:su-grid-cols-3',
+    2: '@3xl:su-grid-cols-2',
+    3: '@5xl:su-grid-cols-3',
   }
 
   const gridCols = entities.length >= 3 ? gridColClasses[3] : gridColClasses[entities.length];
@@ -55,7 +55,8 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 
   return (
     // @ts-ignore
-    <div ref={ref} {...props}>
+    <div className={"su-@container su-relative su-w-full su-max-w-1500 su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0" : "")}
+         ref={ref} {...props}>
       <div ref={centeredRef} className={wrapperClasses}>
         <Conditional showWhen={styles?.background === 'black'}>
           <div
@@ -67,7 +68,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
           <div className="su-mb-40">{formatHtml(description)}</div>}
 
         {entities &&
-          <div className={"su-my-40 su-grid su-gap-2xl " + (siblingCount > 0 ? "" : gridCols)}>
+          <div className={"su-my-40 su-grid su-gap-2xl " + gridCols}>
             {entities.map((item, i) =>
               <div key={item.id}
                    className={((i + 1 === entities.length || i + 1 % 3 === 0) ? "" : "su-relative before:su-content-[''] before:su-w-1 before:su-absolute before:su-top-0 before:su-h-full before:su-right-[-25px] lg:before:su-bg-black-30")}>

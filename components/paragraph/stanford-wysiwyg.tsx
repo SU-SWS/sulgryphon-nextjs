@@ -3,12 +3,12 @@ import {PropsWithoutRef} from "react";
 
 interface Props extends PropsWithoutRef<any> {
   text?: string
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
-const StanfordWysiwyg = ({text, siblingCount, ...props}: Props) => {
+const StanfordWysiwyg = ({text, fullWidth = true, ...props}: Props) => {
   return (
-    <div {...props}>
+    <div className={"su-relative su-max-w-[980px] su-mx-auto" + (fullWidth ? " su-px-40 lg:su-px-0": "")} {...props}>
       {text && <>{formatHtml(text)}</>}
     </div>
   )

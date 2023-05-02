@@ -21,52 +21,51 @@ interface CardProps {
 
 const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
   return (
-    <div {...props}>
-      <div className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">
+    <div
+      className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">
 
-        <Conditional showWhen={image}>
-          <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
-            {image}
-          </div>
-        </Conditional>
+      <Conditional showWhen={image}>
+        <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+          {image}
+        </div>
+      </Conditional>
 
-        <Conditional showWhen={video}>
-          <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-            {video}
-          </div>
-        </Conditional>
+      <Conditional showWhen={video}>
+        <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
+          {video}
+        </div>
+      </Conditional>
 
-        <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
-          <Conditional showWhen={superHeader}>
+      <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
+        <Conditional showWhen={superHeader}>
             <span className="su-type-0 su-mb-0 su-leading-display su-font-bold">
               {superHeader}
             </span>
-          </Conditional>
+        </Conditional>
 
-          <Conditional showWhen={header}>
-            <h3 className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
-              {header}
-            </h3>
-          </Conditional>
+        <Conditional showWhen={header}>
+          <h3 className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
+            {header}
+          </h3>
+        </Conditional>
 
-          <Conditional showWhen={body}>
-            <div>
-              {formatHtml(body)}
-            </div>
-          </Conditional>
+        <Conditional showWhen={body}>
+          <div>
+            {formatHtml(body)}
+          </div>
+        </Conditional>
 
-          <Conditional showWhen={footer}>
-            <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">
-              {footer}
-            </div>
-          </Conditional>
+        <Conditional showWhen={footer}>
+          <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">
+            {footer}
+          </div>
+        </Conditional>
 
-          <DrupalLink
-            url={link?.url}
-            title={link?.title}
-            style={linkStyle}
-          />
-        </div>
+        <DrupalLink
+          url={link?.url}
+          title={link?.title}
+          style={linkStyle}
+        />
       </div>
     </div>
   )

@@ -22,23 +22,37 @@ interface CardProps {
   linkStyle?: string
   className?: string
   backgroundSprinkles?: string
+  fullWidth?: boolean
 }
 
-const HorizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
   const ref = useRef(null);
 
   return (
-    <div {...props} ref={ref}>
+    <div className="su-relative" {...props} ref={ref}>
 
-      <FullScreenBackground compareRef={ref} className="su-relative su-w-full su-h-full su-bg-black-true">
-        <CardSprinkles position={backgroundSprinkles}/>
-      </FullScreenBackground>
+      {fullWidth &&
+        <div
+          className={"su-w-screen su-ml-[calc(-50vw+50%)] su-absolute su-z-[-10]  su-h-full su-top-0 su-left-0"}>
+          <div className="su-relative su-w-full su-h-full su-bg-black-true" {...props}>
+            <CardSprinkles position={backgroundSprinkles}/>
+          </div>
+        </div>
+      }
 
-      <div className="su-@container su-max-w-1500 su-mx-auto su-relative su-basefont-23 su-leading-display su-text-white su-mt-[9rem] su-p-40 lg:su-px-80 lg:su-pb-80 lg:su-pt-120 ">
+      {!fullWidth &&
+        <FullScreenBackground compareRef={ref} className="su-relative su-w-full su-h-full su-bg-black-true">
+          <CardSprinkles position={backgroundSprinkles}/>
+        </FullScreenBackground>
+      }
+
+      <div
+        className="su-@container su-max-w-1500 su-mx-auto su-relative su-basefont-23 su-leading-display su-text-white su-mt-[9rem] su-p-40 lg:su-px-80">
 
         <div className="su-flex su-flex-col @6xl:su-flex-row su-gap-2xl">
           <Conditional showWhen={image || video}>
-            <div className="su-w-full @6xl:su-w-1/2 su-flex-shrink-0 su-overflow-hidden su-aspect-[16/9] su-relative su-mt-[-85px] @6xl:su-mt-0">
+            <div
+              className="su-w-full @6xl:su-w-1/2 su-flex-shrink-0 su-overflow-hidden su-aspect-[16/9] su-relative su-mt-[-85px] @6xl:su-mt-0">
               {image}
               {video}
             </div>

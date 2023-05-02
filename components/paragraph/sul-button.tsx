@@ -14,14 +14,15 @@ interface Props extends PropsWithoutRef<any> {
   }
 }
 
-const SulButton = ({headline, link, styles, siblingCount = 0, ...props}: Props) => {
+const SulButton = ({headline, link, styles, fullWidth = true, ...props}: Props) => {
   const isGray = styles?.background == 'gray';
   const ref = useRef(null);
   const isCentered = useIsCentered(ref)
+
   return (
-    <div ref={ref} {...props}>
+    <div className={"su-relative" + ((!fullWidth || !isCentered) ? " su-w-full " : " su-full-screen ") } ref={ref} {...props}>
       <div
-        className={((siblingCount > 0 || !isCentered) ? "su-px-50 su-w-full " : "su-full-screen ") + " su-py-50 " + (isGray ? "su-bg-black-10" : "su-bg-black-true")}>
+        className={"su-py-50 " + (isGray ? "su-bg-black-10" : "su-bg-black-true")}>
         <div className="su-cc">
           <Conditional showWhen={headline}>
             <h2 className={"su-text-center su-text-m3 " + (!isGray ? 'su-text-white' : '')}>

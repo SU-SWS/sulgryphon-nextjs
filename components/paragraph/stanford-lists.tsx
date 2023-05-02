@@ -1,6 +1,6 @@
 "use client";
 
-import {DrupalViewField, DrupalLink as DrupalLinkProps, DrupalWysiwyg} from "@/lib/drupal/drupal";
+import {DrupalViewField, DrupalLink as DrupalLinkProps} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/patterns/link";
 import {DrupalNode} from "next-drupal";
@@ -24,7 +24,7 @@ interface ListProps extends PropsWithoutRef<any> {
     list_paragraph: { hide_empty?: boolean, empty_message?: string }
     sul_list_styles: { link_display_style?: string }
   }
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
 const StanfordLists = (props: ListProps) => {
@@ -41,7 +41,7 @@ const StanfordLists = (props: ListProps) => {
 }
 
 
-const StanfordListsComponent = ({headline, description, link, view, styles, siblingCount = 1, ...props}: ListProps) => {
+const StanfordListsComponent = ({headline, description, link, view, styles, fullWidth = true, ...props}: ListProps) => {
   const {ref, inView} = useInView()
 
   const viewId = view?.resourceIdObjMeta.drupal_internal__target_id
@@ -68,7 +68,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
     3: 'su-grid-cols-3',
   };
 
-  const gridClass = siblingCount >= 1 ? gridClasses[1] : (itemsToDisplay?.length > 3 ? gridClasses[3] : gridClasses[itemsToDisplay?.length]);
+  const gridClass = !fullWidth ? gridClasses[1] : (itemsToDisplay?.length > 3 ? gridClasses[3] : gridClasses[itemsToDisplay?.length]);
 
   const displayNotGrid = () => {
     if (view?.resourceIdObjMeta?.display_id !== 'grid_list_all') {
@@ -84,8 +84,10 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
   }
 
   return (
-    <div ref={ref} {...props}>
-      <div className="su-flex su-flex-col md:su-flex-row su-gap-xs md:su-gap-2xl su-mb-20 md:su-mb-0 su-max-w-[980px] su-mx-auto">
+    <div className={"su-@container su-relative su-w-full su-max-w-1500 su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0": "")} ref={ref} {...props}>
+      <div
+        className="su-flex su-flex-col md:su-flex-row su-gap-xs md:su-gap-2xl su-mb-20 md:su-mb-0 ">
+
         {headline &&
           <h2 className="su-text-left su-type-5 su-flex-grow su-mb-0">
             <AboveHeaderBorder/>
@@ -105,7 +107,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
       </div>
 
       {description &&
-        <div className="su-mb-40 su-max-w-[980px] su-mx-auto">
+        <div className="su-mb-40 su-max-w-[980px]">
           {formatHtml(description)}
         </div>
       }
@@ -120,7 +122,6 @@ const StanfordListsComponent = ({headline, description, link, view, styles, sibl
           <List
             emptyMessage={emptyMessage}
             itemsToDisplay={itemsToDisplay}
-            gridClass={gridClass}
             isList={isList}
             viewId={viewId}
             displayId={displayId}
@@ -154,7 +155,7 @@ interface ListItemProps {
   emptyMessage?: string
 }
 
-const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessage}) => {
+const List = ({itemsToDisplay, isList, viewId, displayId, emptyMessage}) => {
 
   if (itemsToDisplay.length === 0 && emptyMessage) {
     return <div>{emptyMessage}</div>
@@ -165,9 +166,9 @@ const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessag
   }
 
   return (
-    <div className={`su-mt-50 ${isList ? '' : 'lg:su-grid'} su-gap-[50px] su-m-10 ${gridClass}  su-px-40 lg:su-px-0 su-max-w-[980px] su-mx-auto`}>
+    <ul className="su-list-unstyled su-grid @3xl:su-grid-cols-2 @7xl:su-grid-cols-3 su-gap-2xl">
       {itemsToDisplay.map(item => (
-        <div
+        <li
           className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
           key={item.id}>
 
@@ -181,9 +182,9 @@ const List = ({itemsToDisplay, gridClass, isList, viewId, displayId, emptyMessag
               displayId={displayId}
             />
           </ErrorBoundary>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

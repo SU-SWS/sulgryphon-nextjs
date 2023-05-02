@@ -16,6 +16,7 @@ const options: HTMLReactParserOptions = {
     if (domNode instanceof Element) {
       const nodeProps = attributesToProps(domNode.attribs);
       nodeProps.className = fixClasses(nodeProps.className ?? '');
+      let NodeName: string = domNode.name
 
       switch (domNode.name) {
         case "a":
@@ -71,11 +72,12 @@ const options: HTMLReactParserOptions = {
 
         case 'figure':
           nodeProps.className += ' su-table su-mb-20';
+          delete nodeProps.role;
           return (
             <figure {...nodeProps}>{domToReact(domNode.children, options)}</figure>
           )
         case 'figcaption':
-          nodeProps.className += ' su-table-caption su-text-center su-italic su-leading su-text-19';
+          nodeProps.className += ' su-table-caption su-text-center su-leading su-text-19';
           return <figcaption {...nodeProps}
                              style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
         case 'iframe':
@@ -86,6 +88,10 @@ const options: HTMLReactParserOptions = {
           nodeProps.className += ' su-pl-40 su-relative before:su-block before:su-absolute before:su-left-0 before:su-top-0 before:su-content-[\'\'] before:su-h-full before:su-w-5 before:su-bg-black-20';
           return <blockquote {...nodeProps}>{domToReact(domNode.children, options)}</blockquote>
 
+        case 'table':
+          nodeProps.className += ' su-mb-20 ';
+          return <NodeName {...nodeProps}>{domToReact(domNode.children, options)}</NodeName>
+
         case 'p':
           nodeProps.className += ' su-max-w-[100ch]';
         case 'h1':
@@ -94,14 +100,12 @@ const options: HTMLReactParserOptions = {
         case 'h4':
         case 'span':
         case 'div':
-        case 'table':
         case 'tr':
         case 'th':
         case 'td':
         case 'ul':
         case 'ol':
         case 'li':
-          let NodeName = domNode.name
           return <NodeName {...nodeProps}>{domToReact(domNode.children, options)}</NodeName>
       }
     }
@@ -111,8 +115,8 @@ const options: HTMLReactParserOptions = {
 const fixClasses = (classes) => {
   classes = ` ${classes} `;
   classes = classes.replace(' align-center ', ' su-center ')
-    .replace(' align-left ', ' su-block su-float-left su-mr-20 ')
-    .replace(' align-right ', ' su-block su-float-right su-ml-20 ')
+    .replace(' align-left ', ' su-block su-float-left su-mr-20 su-mb-20 ')
+    .replace(' align-right ', ' su-block su-float-right su-ml-20 su-mb-20 ')
     .replace(' text-align-center ', ' su-text-center ')
     .replace(' text-align-right ', ' su-text-right ')
     .replace(' su-intro-text ', ' su-text-m2 ')
@@ -124,6 +128,7 @@ const fixClasses = (classes) => {
     .replace(' su-callout-text ', ' su-font-bold ')
     .replace(' visually-hidden ', ' su-sr-only ')
     .replace(/ plain-text | caption /g, ' ')
+    .replace(' media-entity-wrapper ', ' su-block su-mb-20 ')
     .replace(/tablesaw.*? /g, ' ')
     .replace(/ +/g, ' ')
     .trim();
@@ -167,10 +172,10 @@ const cleanMediaMarkup = (node: Element) => {
     }
 
     return (
-      <span className={fixClasses(classes)}>
+      <>
         <Conditional showWhen={width && height}>
           <Image
-            className="su-block"
+            className={fixClasses(classes)}
             src={src}
             alt={alt}
             height={parseInt(height)}
@@ -179,7 +184,7 @@ const cleanMediaMarkup = (node: Element) => {
         </Conditional>
 
         <Conditional showWhen={!width || !height}>
-          <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+          <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
             <Image
               className="su-object-cover su-object-center"
               src={src}
@@ -188,7 +193,7 @@ const cleanMediaMarkup = (node: Element) => {
             />
           </div>
         </Conditional>
-      </span>
+      </>
     )
   }
 

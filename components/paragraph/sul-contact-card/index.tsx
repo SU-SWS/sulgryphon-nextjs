@@ -4,12 +4,16 @@ import ManualFieldsCard from "@/components/paragraph/sul-contact-card/manual-fie
 
 interface ContactCardProps {
   paragraph: ContactCardParagraph
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
-const SulContactCard = ({paragraph, siblingCount = 0, ...props}: ContactCardProps) => {
+const SulContactCard = ({paragraph, fullWidth = true, ...props}: ContactCardProps) => {
   const Component = paragraph.sul_contact__branch ? NodeReferenceCard : ManualFieldsCard;
-  return <div {...props}><Component paragraph={paragraph}/></div>
+  return (
+    <div className={"su-relative su-w-full su-max-w-[980px] su-mx-auto" + (fullWidth? " su-px-40 3xl:su-px-0": "")} {...props}>
+    <Component paragraph={paragraph}/>
+  </div>
+  )
 }
 
 export default SulContactCard;

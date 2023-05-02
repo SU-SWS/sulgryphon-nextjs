@@ -24,11 +24,11 @@ const SulLibguides = ({...props}: Props) => {
   )
 }
 
-const Component = ({headline, description, libguideId, ...props}: Props) => {
+const Component = ({headline, description, libguideId, fullWidth, ...props}: Props) => {
   const {data: libguides} = useDataFetch(`/api/libguides/subjects/${libguideId}`);
 
   return (
-    <div {...props}>
+    <div className={"su-relative su-max-w-[980px] su-w-full su-mx-auto"+(fullWidth ? " su-px-40 xl:su-px-0": "")} {...props}>
       {headline && <h2>{headline}</h2>}
       {description && <div>{formatHtml(description)}</div>}
 

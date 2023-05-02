@@ -16,20 +16,20 @@ interface Props extends PropsWithoutRef<any> {
   image?: DrupalImageMedia
   videoUrl?: string
   orientation?: string
-  siblingCount?: number
+  fullWidth?: boolean
   className?: string
 }
 
-const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, siblingCount = 0, ...props}: Props) => {
+const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
   const isHorizontal = orientation === 'horizontal';
-  const isHorizontalAndSingle = isHorizontal && siblingCount == 0;
+  const isHorizontalAndSingle = isHorizontal && singleRow;
 
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
 
   return (
-    <div className={"su-mx-auto su-w-full " + (isHorizontalAndSingle ? "" : "su-max-w-[980px]")}>
+    <div className={"su-relative" + ((!isHorizontal && fullWidth) ? " su-max-w-[980px] su-w-full su-mx-auto su-px-40 xl:su-px-0": "")} {...props}>
       {isHorizontalAndSingle &&
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
@@ -47,7 +47,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
           link={link}
           linkStyle={linkStyle}
           backgroundSprinkles={sprinklePosition}
-          {...props}
+          fullWidth={singleRow && fullWidth}
         />
       }
 
@@ -67,7 +67,6 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
           body={body}
           link={link}
           linkStyle={linkStyle}
-          {...props}
         />
       }
     </div>

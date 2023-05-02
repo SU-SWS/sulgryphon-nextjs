@@ -11,11 +11,11 @@ interface Props extends PropsWithoutRef<any> {
   image?: DrupalImageMedia
   link?: DrupalLink
   overlayPosition?: string
-  siblingCount?: number
+  fullWidth?: boolean
   className?: string
 }
 
-const StanfordBanner = ({header, superHeader, body, image, link, overlayPosition, siblingCount, ...props}: Props) => {
+const StanfordBanner = ({header, superHeader, body, image, link, overlayPosition, ...props}: Props) => {
 
   const imageUrl = image?.image_style_uri?.breakpoint_2xl_2x;
   const placeholder = image?.uri.base64;

@@ -11,18 +11,18 @@ import formatHtml from "@/lib/format-html";
 
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
-const StanfordImageGallery = ({paragraph, siblingCount = 0, ...props}: StanfordImageGalleryProps) => {
+const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordImageGalleryProps) => {
   const [modalOpen, setModalOpen] = useState('');
 
   return (
-    <div {...props}>
+    <div className={"su-relative su-w-full su-max-w-1500 su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0": "")} {...props}>
       {paragraph.su_gallery_headline && <h2 className="su-text-center su-type-5">{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description)}</div>}
 
-      <div className={`su-mb-40 su-grid su-gap-xl ` + (siblingCount >= 1 ? '' : 'md:su-grid-cols-2 lg:su-grid-cols-3')}>
+      <div className={`su-mb-40 su-grid su-gap-xl ` + (!fullWidth ? '' : 'md:su-grid-cols-2 lg:su-grid-cols-3')}>
         {paragraph.su_gallery_images.map(image =>
           <figure key={image.id} className="su-overflow-hidden su-aspect-[16/9] su-relative">
             <Link href={image.su_gallery_image.image_style_uri.responsive_large} className="su-block su-absolute"

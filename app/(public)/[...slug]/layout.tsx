@@ -38,7 +38,7 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
   }
 
   return (
-    <main id="main-content">
+    <main id="main-content" className="su-mb-50">
       <Conditional showWhen={node.type === 'node--sul_library'}>
         <LibraryHeader node={node as Library}/>
       </Conditional>

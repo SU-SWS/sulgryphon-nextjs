@@ -17,10 +17,11 @@ import SulLibguides from "@/components/paragraph/sul-libguides";
 
 interface ParagraphProps extends PropsWithoutRef<any> {
   paragraph: any;
-  siblingCount?: number;
+  fullWidth?: boolean;
+  singleRow?: boolean;
 }
 
-const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
+const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
 
@@ -46,7 +47,7 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           image={paragraph?.su_card_media?.field_media_image}
           videoUrl={paragraph?.su_card_media?.field_media_oembed_video}
           orientation={paragraph.behavior_settings?.sul_card_styles?.orientation}
-          siblingCount={siblingCount}
+          singleRow={singleRow}
           {...props}
         />}
 
@@ -58,13 +59,12 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           link={paragraph.su_banner_button}
           image={paragraph?.su_banner_image?.field_media_image}
           overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
-          siblingCount={siblingCount}
           {...props}
         />
       }
 
       {paragraph.type === 'paragraph--stanford_gallery' &&
-        <StanfordImageGallery paragraph={paragraph} siblingCount={siblingCount} {...props}/>}
+        <StanfordImageGallery paragraph={paragraph} {...props}/>}
 
       {paragraph.type === 'paragraph--stanford_media_caption' &&
         <StanfordMediaCaption
@@ -72,13 +72,12 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           link={paragraph.su_media_caption_link}
           image={paragraph.su_media_caption_media?.field_media_image}
           videoUrl={paragraph.su_media_caption_media?.field_media_oembed_video}
-          siblingCount={siblingCount}
           {...props}
         />
       }
 
       {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-        <StanfordWysiwyg text={paragraph.su_wysiwyg_text} siblingCount={siblingCount} {...props}/>}
+        <StanfordWysiwyg text={paragraph.su_wysiwyg_text} {...props}/>}
 
       {paragraph.type === 'paragraph--stanford_lists' &&
         <StanfordLists
@@ -87,7 +86,6 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           link={paragraph.su_list_button}
           view={paragraph.su_list_view}
           styles={paragraph.behavior_settings}
-          siblingCount={siblingCount}
           {...props}
         />
       }
@@ -99,7 +97,6 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           link={paragraph.su_entity_button}
           entities={paragraph.su_entity_item ?? []}
           styles={paragraph.behavior_settings?.sul_teaser_styles}
-          siblingCount={siblingCount}
           {...props}
         />
       }
@@ -110,7 +107,6 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
         <SulCollection
           cards={paragraph.sul_collection_card}
           heading={paragraph.sul_collection_heading}
-          siblingCount={siblingCount}
           {...props}
         />
       }
@@ -121,19 +117,17 @@ const Paragraph = ({paragraph, siblingCount, ...props}: ParagraphProps) => {
           link={paragraph.sul_collection__link}
           cards={paragraph.sul_collection__cards}
           styles={paragraph.behavior_settings?.sul_feat_collections_styles}
-          siblingCount={siblingCount}
           {...props}
         />
       }
 
       {paragraph.type === 'paragraph--sul_contact_card' &&
-        <SulContactCard paragraph={paragraph} siblingCount={siblingCount}  {...props}/>}
+        <SulContactCard paragraph={paragraph} {...props}/>}
 
       {paragraph.type === 'paragraph--sul_button' &&
         <SulButton
           headline={paragraph.sul_button_headline}
           link={paragraph.sul_button_link}
-          siblingCount={siblingCount}
           styles={paragraph.behavior_settings?.sul_button_styles}
           {...props}
         />

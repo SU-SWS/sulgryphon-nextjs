@@ -4,15 +4,17 @@ import {CollectionCardParagraph} from "@/lib/drupal/drupal";
 import {PropsWithoutRef, useEffect, useId, useState} from "react";
 import Conditional from "@/components/utils/conditional";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
-import StanfordCard from "@/components/paragraph/stanford-card";
+import Card from "@/components/patterns/card";
+import Oembed from "@/components/patterns/oembed";
+import Image from "next/image";
 
 interface CollectionProps extends PropsWithoutRef<any> {
   cards: CollectionCardParagraph[]
   heading?: string
-  siblingCount?: number
+  fullWidth?: boolean
 }
 
-const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionProps) => {
+const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionProps) => {
   const elementId = useId()
   const [displayedCard, setDisplayedCard] = useState(cards[0].id)
 
@@ -24,14 +26,14 @@ const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionP
   }, [displayedCard])
 
   return (
-    <section aria-labelledby={`${elementId}-heading`} {...props}>
+    <section className={"su-relative su-w-full su-max-w-1500 su-mx-auto su-@container" + (fullWidth ? " su-px-40 3xl:su-px-0": "")} aria-labelledby={`${elementId}-heading`} {...props}>
       <Conditional showWhen={heading}>
         <AboveHeaderBorder/>
         <h2 id={`${elementId}-heading`} className="su-type-5">{heading}</h2>
       </Conditional>
 
-      <div className={"su-gap-lg " + (siblingCount > 0 ? '' : 'lg:su-flex')}>
-        <ul className={"su-list-unstyled " + (siblingCount > 0 ? '' : 'lg:su-w-1/3')}>
+      <div className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row">
+        <ul className="su-list-unstyled @5xl:su-w-1/3">
           {cards.map(card =>
             <li key={'button-' + card.id}>
               <button
@@ -45,7 +47,7 @@ const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionP
           )}
         </ul>
 
-        <ul className={"su-list-unstyled " + (siblingCount > 0 ? '' : 'lg:su-w-2/3')}>
+        <ul className="su-list-unstyled @5xl:su-w-2/3">
           {cards.map(card =>
             <li
               key={'card-' + card.id}
@@ -53,7 +55,8 @@ const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionP
               className={displayedCard === card.id ? 'su-block' : 'su-hidden'}
               tabIndex={-1}
             >
-              <StanfordCard
+
+              <CollectionCard
                 header={card.sul_card.su_card_header}
                 superHeader={card.sul_card.su_card_super_header}
                 body={card.sul_card.su_card_body}
@@ -66,6 +69,30 @@ const SulCollection = ({cards, heading, siblingCount = 0, ...props}: CollectionP
         </ul>
       </div>
     </section>
+  )
+}
+
+const CollectionCard = ({header, superHeader, body, link, image, videoUrl}) => {
+  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
+  const placeholder = image?.uri.base64;
+
+  return (
+    <Card
+      video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+      image={imageUrl && <Image
+        className="su-object-cover su-object-center"
+        src={imageUrl}
+        alt={imageAlt}
+        fill={true}
+        placeholder={placeholder ? 'blur' : 'empty'}
+        blurDataURL={placeholder}
+      />}
+      header={header}
+      superHeader={superHeader}
+      body={body}
+      link={link}
+    />
   )
 }
 export default SulCollection;
