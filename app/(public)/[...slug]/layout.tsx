@@ -9,7 +9,7 @@ import {notFound} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {ReactNode} from "react";
+import {ReactNode, Suspense} from "react";
 
 const getNode = async (context): Promise<[DrupalNode, boolean]> => {
   const path = await translatePathFromContext(context);
@@ -17,7 +17,7 @@ const getNode = async (context): Promise<[DrupalNode, boolean]> => {
     notFound();
   }
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
-  const fullWidth = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
+  const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
   return [node, fullWidth];
@@ -45,7 +45,10 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
 
       <Conditional showWhen={node.type != 'node--sul_library'}>
         <InternalHeaderBanner>
-          <h1 className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title}</h1>
+          <h1
+            className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">
+            {node.title}
+          </h1>
         </InternalHeaderBanner>
       </Conditional>
 
@@ -65,8 +68,13 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
       </Conditional>
 
       <Conditional showWhen={!fullWidth}>
-        <div className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
-          <SecondaryMenu menuItems={tree}/>
+        <div
+          className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
+
+          <Suspense fallback={<></>}>
+            <SecondaryMenu menuItems={tree}/>
+          </Suspense>
+
           <div className="su-flex-1">
             {children}
           </div>

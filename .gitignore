@@ -37,3 +37,5 @@ lerna-debug.log*
 .vercel
 
 /certificates/*
+# Local Netlify folder
+.netlify
