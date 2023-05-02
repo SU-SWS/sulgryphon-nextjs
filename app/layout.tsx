@@ -1,4 +1,4 @@
-import "./components/styles/globals.css";
+import "./(public)/components/styles/globals.css";
 
 import Editori11y from "@/components/editori11y";
 import {ReactNode} from "react";
