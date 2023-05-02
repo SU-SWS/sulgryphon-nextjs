@@ -1,9 +1,9 @@
-import "./components/styles/globals.css"
+import "./styles/globals.css"
 
 import LibraryFooter from "@/components/layout/library-footer";
 import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
-import Editori11y from "@/components/editori11y";
+import Editori11y from "./editori11y";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/utils/google-analytics";
 import {ReactNode} from "react";

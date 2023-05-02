@@ -1,11 +1,10 @@
-import "../(public)/components/styles/globals.css";
+import "../(public)/styles/globals.css"
 
-import {ReactNode} from "react";
-
-const RootLayout = ({children}: { children: ReactNode }) => {
+const RootLayout = async ({children}: { children: React.ReactNode }) => {
 
   return (
-    <html lang="en">
+    <html>
+    <head/>
     <body>
     {children}
     </body>

@@ -15,9 +15,9 @@ interface FormProps extends keyable {
 
 const SearchForm = ({...props}: FormProps) => {
   return (
-
+    <Suspense fallback={<></>}>
       <SearchFormComponent {...props}/>
-
+    </Suspense>
   )
 }
 

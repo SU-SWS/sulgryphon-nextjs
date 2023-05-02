@@ -2,8 +2,8 @@
 
 import React, {MutableRefObject, ReactNode, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
+import FocusTrap from "focus-trap-react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
-import ReactFocusLock from "react-focus-lock";
 
 interface ModalProps {
   children: ReactNode
@@ -14,7 +14,6 @@ interface ModalProps {
 }
 
 const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: ModalProps) => {
-
   const closeButton = useRef(null);
   const modalBodyRef = useRef(null);
   const [animationParent] = useAutoAnimate()
@@ -39,7 +38,15 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
 
   return (
     <div ref={animationParent}>
-      <ReactFocusLock>
+      <FocusTrap
+        active={isOpen}
+        focusTrapOptions={{
+          initialFocus: () => initialFocus?.current ?? false,
+          // @ts-ignore
+          fallbackFocus: closeButton.current,
+          returnFocusOnDeactivate: true
+        }}
+      >
         <div
           className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[80%] su-flex"}
           aria-label={ariaLabel}
@@ -68,7 +75,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
             </div>
           </div>
         </div>
-      </ReactFocusLock>
+      </FocusTrap>
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import {ArrowRightIcon} from "@heroicons/react/20/solid";
-import Lockup from "@/components/patterns/lockup";
-import {DrupalLinkButton} from "@/components/patterns/link";
-import FacebookIcon from "@/components/patterns/icons/FacebookIcon";
-import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon";
-import TwitterIcon from "@/components/patterns/icons/TwitterIcon";
-import InstagramIcon from "@/components/patterns/icons/InstagramIcon";
-import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon";
+import Lockup from "../patterns/lockup";
+import {DrupalLinkButton} from "../patterns/link";
+import FacebookIcon from "../patterns/icons/FacebookIcon";
+import LinkedInIcon from "../patterns/icons/LinkedInIcon";
+import TwitterIcon from "../patterns/icons/TwitterIcon";
+import InstagramIcon from "../patterns/icons/InstagramIcon";
+import YoutubeIcon from "../patterns/icons/YoutubeIcon";
 import {ReactNode} from "react";
 
 const LibraryFooter = () => {

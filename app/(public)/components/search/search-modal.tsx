@@ -21,7 +21,6 @@ const SearchModal = () => {
         <MagnifyingGlassIcon className="su-h-40 su-text-white su-bg-cardinal-red su-rounded-full su-p-5"/>
         <span className="su-sr-only">Search</span>
       </Link>
-
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} ariaLabel="Search Form" initialFocus={ref}>
         <div className="su-max-w-500 su-mx-auto">
           <h2 className="su-text-white su-text-center">What can we help you find?</h2>

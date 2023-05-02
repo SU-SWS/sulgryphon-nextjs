@@ -4,8 +4,6 @@ import MainMenu from "@/components/menu/main-menu";
 import GlobalMessage from "@/components/layout/global-message";
 import {DrupalMenuLinkContent} from "next-drupal";
 import {getMenu} from "@/lib/drupal/get-menu";
-import FallbackMainMenu from "@/components/menu/fallback-main-menu";
-import {Suspense} from "react";
 
 const Header = async () => {
 
@@ -30,8 +28,7 @@ const Header = async () => {
       </div>
 
       <header className="su-sticky lg:su-relative su-top-0 su-shadow-lg su-bg-white su-z-20">
-        <div
-          className="su-pt-20 su-bg-white su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
+        <div className="su-pt-20 su-bg-white su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
           <Lockup className="su-pb-20"/>
 
           <div className="su-hidden lg:su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
@@ -40,9 +37,7 @@ const Header = async () => {
             <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
           </div>
         </div>
-
-          <MainMenu menuItems={tree}/>
-
+        <MainMenu menuItems={tree}/>
       </header>
     </>
   )
