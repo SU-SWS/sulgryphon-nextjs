@@ -1,14 +1,37 @@
-import Link from "next/link";
+"use client";
 
-const LibCal = ({libcalId}: { libcalId?: number }) => {
+import {useRef, useState} from "react";
+import Modal from "../../patterns/modal";
+import {ErrorBoundary} from "react-error-boundary";
+
+const LibCal = ({libcalId}) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const iframeRef = useRef(null);
   return (
-    <>
-      {libcalId &&
-        <Link href={`/calendar/${libcalId}`}>
+    <ErrorBoundary
+      fallback={<></>}
+      onError={e => console.error(e.message)}
+    >
+      <div>
+        <button className="su-button" onClick={() => setModalOpen(true)}>
           Schedule an appointment
-        </Link>
-      }
-    </>
+        </button>
+
+        <Modal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          ariaLabel="Foo Bar"
+          initialFocus={iframeRef}
+        >
+          <iframe
+            ref={iframeRef}
+            src={`https://appointments.library.stanford.edu/widget/appointments?u=${libcalId}&lid=0&gid=0&iid=5247&t=Make%20an%20appointment`}
+            title="Schedule an appointment"
+            className="su-w-full su-h-full"
+          />
+        </Modal>
+      </div>
+    </ErrorBoundary>
   )
 }
 export default LibCal;

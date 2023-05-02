@@ -53,7 +53,9 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
             </Conditional>
           </div>
 
-          <LibCal libcalId={node.sul_person__libcal_id}/>
+          <Conditional showWhen={node.sul_person__libcal_id}>
+            <LibCal libcalId={node.sul_person__libcal_id}/>
+          </Conditional>
         </div>
       </div>
 

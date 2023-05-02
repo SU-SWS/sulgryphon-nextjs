@@ -15,14 +15,7 @@ const HomePageBanner = async () => {
   const libraries: Library[] = await getResourceCollection('node--sul_library', {params: params.getQueryObject()});
 
   // Trim all the fat.
-  const trimmedLibraries = libraries.map(library => (
-    {
-      id: library.id,
-      title: library.title,
-      su_library__hours: library.su_library__hours,
-      su_library__contact_img: library.su_library__contact_img
-    }
-  ))
+  const trimmedLibraries = libraries.map(library => ({id: library.id, title: library.title, su_library__hours: library.su_library__hours, su_library__contact_img: library.su_library__contact_img}))
 
   return (
     <header className="su-bg-black-true su-mb-100 su-relative">

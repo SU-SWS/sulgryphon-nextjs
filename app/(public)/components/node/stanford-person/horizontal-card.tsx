@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Conditional from "@/components/utils/conditional";
+import Conditional from "../../utils/conditional";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
@@ -51,7 +51,9 @@ const HorizontalPersonCard = ({node, currentWidth, ...props}: Props) => {
           </Link>
         </Conditional>
 
-        <LibCal libcalId={node.sul_person__libcal_id}/>
+        <Conditional showWhen={node.sul_person__libcal_id}>
+          <LibCal libcalId={node.sul_person__libcal_id}/>
+        </Conditional>
       </div>
     </article>
   )
