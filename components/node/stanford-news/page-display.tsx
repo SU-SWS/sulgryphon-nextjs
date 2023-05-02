@@ -138,7 +138,7 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
 
 
       <div className="su-mb-50">
-        {node.su_news_components.map(component => <Paragraph key={component.id} paragraph={component}/>)}
+        {node.su_news_components.map(component => <Paragraph key={component.id} paragraph={component} fullWidth={false}/>)}
       </div>
     </article>
   )

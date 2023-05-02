@@ -3,9 +3,17 @@ import {getPathsFromContext} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
-import {DrupalNode} from "next-drupal";
+import {DrupalMenuLinkContent, DrupalNode} from "next-drupal";
 import {GetStaticPathsResult, Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
+import Conditional from "@/components/utils/conditional";
+import LibraryHeader from "@/components/node/sul-library/library-header";
+import {Library} from "@/lib/drupal/drupal";
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
+import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
+import {Suspense} from "react";
+import SecondaryMenu from "@/components/menu/secondary-menu";
+import {getMenu} from "@/lib/drupal/get-menu";
 
 export const revalidate = 60;
 
@@ -24,12 +32,16 @@ const fetchNodeData = async (context) => {
       throw `redirect:${destination.to}`;
     }
   }
-  return getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+  const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
+    (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
+
+  return {node, fullWidth}
 }
 
 export const generateMetadata = async (context): Promise<Metadata> => {
   try {
-    const node: DrupalNode = await fetchNodeData(context);
+    const {node} = await fetchNodeData(context);
     return getNodeMetadata(node);
   } catch (e) {
     // Probably a 404 or redirect page.
@@ -38,9 +50,15 @@ export const generateMetadata = async (context): Promise<Metadata> => {
 }
 
 const NodePage = async (context) => {
-  let node: DrupalNode;
+  let tree: DrupalMenuLinkContent[] = [];
   try {
-    node = await fetchNodeData(context);
+    ({tree} = await getMenu('main'));
+  } catch (e) {
+  }
+
+  let nodeData;
+  try {
+    nodeData = await fetchNodeData(context);
   } catch (e) {
     if (e.indexOf('redirect:') === 0) {
       const [, redirectTo] = e.split(':');
@@ -48,8 +66,52 @@ const NodePage = async (context) => {
     }
     notFound();
   }
+  const {node, fullWidth} = nodeData;
+
   return (
-    <NodePageDisplay node={node}/>
+    <main id="main-content" className="su-mb-50">
+      <Conditional showWhen={node.type === 'node--sul_library'}>
+        <LibraryHeader node={node as Library}/>
+      </Conditional>
+
+      <Conditional showWhen={node.type != 'node--sul_library'}>
+        <InternalHeaderBanner>
+          <h1
+            className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">
+            {node.title}
+          </h1>
+        </InternalHeaderBanner>
+      </Conditional>
+
+      <Conditional showWhen={node.status != undefined && !node.status}>
+        <div className="su-bg-illuminating-light su-py-30 su-mb-20">
+          <div className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-text-m2 su-flex su-gap-lg">
+            <ExclamationCircleIcon width={40}/>
+            Unpublished Page
+          </div>
+        </div>
+      </Conditional>
+
+      <Conditional showWhen={fullWidth}>
+        <div>
+          <NodePageDisplay node={node}/>
+        </div>
+      </Conditional>
+
+      <Conditional showWhen={!fullWidth}>
+        <div
+          className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
+
+          <Suspense fallback={<></>}>
+            <SecondaryMenu menuItems={tree}/>
+          </Suspense>
+
+          <div className="su-flex-1">
+            <NodePageDisplay node={node}/>
+          </div>
+        </div>
+      </Conditional>
+    </main>
   )
 }
 

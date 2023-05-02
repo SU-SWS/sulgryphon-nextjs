@@ -47,8 +47,8 @@ const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true,
         </>
       }
 
-      <div className="su-relative">
-        <ul className={"su-list-unstyled su-grid su-gap-xl " + (!fullWidth ? '' : 'md:su-grid-cols-3')}>
+      <div className="su-@container su-relative">
+        <ul className="su-list-unstyled su-grid su-gap-xl @7xl:su-grid-cols-3">
           {cards.map(card =>
             <li key={card.id}>
               <CollectionCard
@@ -74,6 +74,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true,
             </div>
           </div>
         }
+
         {!fullWidth &&
           <OnlyIfCentered elem={ref}>
             <div

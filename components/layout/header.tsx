@@ -31,7 +31,7 @@ const Header = async () => {
 
       <header className="su-sticky lg:su-relative su-top-0 su-shadow-lg su-bg-white su-z-20">
         <div
-          className="su-pt-20 su-bg-white su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
+          className="su-pt-20 su-bg-white su-max-w-1500 su-w-full su-mx-auto su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
           <Lockup className="su-pb-20"/>
 
           <div className="su-hidden lg:su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">

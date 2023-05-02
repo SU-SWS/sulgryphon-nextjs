@@ -21,7 +21,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
   const placeholder = image?.uri.base64;
 
   return (
-    <figure className={"su-relative su-w-full su-max-w-[980px] su-mx-auto" + (fullWidth ? " su-px-40 xl:su-px-0": "")} {...props}>
+    <figure className={"su-relative su-max-w-[980px] su-w-full su-mx-auto" + (fullWidth ? " su-px-40 xl:su-px-0": "")} {...props}>
       {imageUrl &&
         <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
           <Image
@@ -42,7 +42,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
       }
 
       {link &&
-        <Link href={link.url} className="su-block su-mx-auto">
+        <Link href={link.url} className="su-block su-text-right">
           {link.title}
         </Link>
       }

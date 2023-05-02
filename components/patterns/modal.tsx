@@ -1,6 +1,6 @@
 "use client";
 
-import React, {MutableRefObject, ReactNode, useCallback, useEffect, useRef} from 'react';
+import React, {ReactNode, useCallback, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import ReactFocusLock from "react-focus-lock";
@@ -10,10 +10,9 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   ariaLabel: string
-  initialFocus?: MutableRefObject<any> | null
 }
 
-const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: ModalProps) => {
+const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
 
   const closeButton = useRef(null);
   const modalBodyRef = useRef(null);

@@ -9,7 +9,7 @@ interface LayoutProps {
   }
 }
 
-const TwoColumn = ({config, items}: LayoutProps) => {
+const TwoColumn = ({config, fullWidth, items}: LayoutProps) => {
 
   const leftItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'left');
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');
@@ -22,12 +22,12 @@ const TwoColumn = ({config, items}: LayoutProps) => {
   }
 
   return (
-    <div data-rows="two-column" className={`su-max-w-1500 su-w-full su-mx-auto su-grid su-gap-2xl su-px-40 3xl:su-px-0 ${gridClass}`}>
+    <div data-rows="two-column" className={`su-max-w-1500 su-w-full su-mx-auto su-grid su-gap-2xl ${gridClass}`}>
       <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
-        {leftItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
+        {leftItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
       <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
-        {rightItems.map(item => <Paragraph key={item.id} paragraph={item}/>)}
+        {rightItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
     </div>
   )

@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
-import {useRef, useState} from "react";
+import {useState} from "react";
 import Modal from "@/components/patterns/modal";
 import SearchForm from "@/components/search/search-form";
 
 const SearchModal = () => {
   const [modalOpen, setModalOpen] = useState(false)
-  const ref = useRef(null);
 
   const toggleModal = (e) => {
     e.preventDefault();
@@ -22,10 +21,10 @@ const SearchModal = () => {
         <span className="su-sr-only">Search</span>
       </Link>
 
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} ariaLabel="Search Form" initialFocus={ref}>
-        <div className="su-max-w-500 su-mx-auto">
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} ariaLabel="Search Form">
+        <div className="su-max-w-500 su-w-full su-mx-auto">
           <h2 className="su-text-white su-text-center">What can we help you find?</h2>
-          <SearchForm action="https://library.stanford.edu/all" inputProps={{ref}}/>
+          <SearchForm action="https://library.stanford.edu/all"/>
 
           <p className="su-text-white su-text-center su-p-20">
             Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>

@@ -84,12 +84,12 @@ const StanfordListsComponent = ({headline, description, link, view, styles, full
   }
 
   return (
-    <div className={"su-@container su-relative su-w-full su-max-w-1500 su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0": "")} ref={ref} {...props}>
+    <div className={"su-@container su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0": "")} ref={ref} {...props}>
       <div
         className="su-flex su-flex-col md:su-flex-row su-gap-xs md:su-gap-2xl su-mb-20 md:su-mb-0 ">
 
         {headline &&
-          <h2 className="su-text-left su-type-5 su-flex-grow su-mb-0">
+          <h2 className="su-text-left su-type-5 su-flex-grow su-mb-40">
             <AboveHeaderBorder/>
             {headline}
           </h2>
@@ -107,7 +107,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, full
       </div>
 
       {description &&
-        <div className="su-mb-40 su-max-w-[980px]">
+        <div className="su-mb-40 su-max-w-[980px] su-w-full">
           {formatHtml(description)}
         </div>
       }
