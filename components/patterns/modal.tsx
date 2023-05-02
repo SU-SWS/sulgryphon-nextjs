@@ -1,6 +1,6 @@
 "use client";
 
-import React, {MutableRefObject, ReactNode, useEffect, useRef} from 'react';
+import React, {MutableRefObject, ReactNode, useCallback, useEffect, useRef} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import ReactFocusLock from "react-focus-lock";
@@ -19,6 +19,13 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
   const modalBodyRef = useRef(null);
   const [animationParent] = useAutoAnimate()
 
+  const onKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose]
+  );
+
   const lockScroll = () => {
     document.getElementsByTagName('body')[0].style.height = '100vh';
     document.getElementsByTagName('body')[0].style.overflow = 'hidden';
@@ -31,6 +38,11 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
 
   useEffect(() => {
     isOpen ? lockScroll() : unlockScroll();
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    }
   }, [isOpen]);
 
   if (!isOpen) {
@@ -41,7 +53,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, initialFocus = null}: Moda
     <div ref={animationParent}>
       <ReactFocusLock>
         <div
-          className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[80%] su-flex"}
+          className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"}
           aria-label={ariaLabel}
           aria-hidden={!isOpen}
           aria-modal={isOpen}
