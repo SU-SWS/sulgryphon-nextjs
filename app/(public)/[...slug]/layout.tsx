@@ -71,9 +71,9 @@ const Layout = async ({children, ...context}: { children: ReactNode }) => {
         <div
           className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
 
-          <Suspense fallback={<></>}>
+
             <SecondaryMenu menuItems={tree}/>
-          </Suspense>
+
 
           <div className="su-flex-1">
             {children}

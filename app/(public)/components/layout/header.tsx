@@ -40,9 +40,9 @@ const Header = async () => {
             <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
           </div>
         </div>
-        <Suspense fallback={<FallbackMainMenu menuItems={tree}/>}>
+
           <MainMenu menuItems={tree}/>
-        </Suspense>
+
       </header>
     </>
   )
