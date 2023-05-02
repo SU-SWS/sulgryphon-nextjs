@@ -21,7 +21,7 @@ interface ParagraphProps extends PropsWithoutRef<any> {
   singleRow?: boolean;
 }
 
-const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: ParagraphProps) => {
+const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
 
