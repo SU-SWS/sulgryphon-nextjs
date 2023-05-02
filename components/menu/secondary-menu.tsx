@@ -11,6 +11,18 @@ import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 
+const getCurrentPageTitle = (activeTrail, items, trail) => {
+  const currentItem = items.find(item => item.id === trail.at(0));
+  if(currentItem === undefined) return null;
+  if (currentItem.id === activeTrail.at(-1)) {
+    return currentItem.title;
+  }
+
+  if (currentItem.items?.length > 0 && trail.length > 1) {
+    return getCurrentPageTitle(activeTrail, currentItem.items, trail.slice(1));
+  }
+}
+
 const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const browserUrl = useNavigationEvent();
   const [menuOpen, setMenuOpen] = useState(false)
@@ -21,6 +33,9 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const topMenuItem = activeTrail.length > 0 ? menuItems.find(item => item.id === activeTrail[0]) : false;
   const subTree = useMemo(() => topMenuItem && topMenuItem.items ? topMenuItem.items : [], [activeTrail, topMenuItem]);
 
+  const currentPageTitle = useMemo(() => getCurrentPageTitle(activeTrail, menuItems, activeTrail), [activeTrail, menuItems]);
+  useEffect(() => setMenuOpen(false), [browserUrl]);
+
   if (typeof subTree === 'undefined' || (subTree.length <= 1 && typeof subTree[0]?.items == 'undefined')) {
     return null;
   }
@@ -28,19 +43,6 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const closeMobileMenu = () => {
     setMenuOpen(false)
   }
-
-  const getCurrentPageTitle = (items, trail) => {
-    const currentItem = items.find(item => item.id === trail.at(0));
-    if (currentItem.id === activeTrail.at(-1)) {
-      return currentItem.title;
-    }
-
-    if (currentItem.items?.length > 0 && trail.length > 1) {
-      return getCurrentPageTitle(currentItem.items, trail.slice(1));
-    }
-  }
-  const currentPageTitle = useMemo(() => getCurrentPageTitle(menuItems, activeTrail), [activeTrail, menuItems]);
-  useEffect(() => setMenuOpen(false), [browserUrl]);
 
   return (
     <aside className="lg:su-w-4/12 su-relative">
