@@ -15,7 +15,7 @@ const StanfordNewsListItem = ({node, ...props}: { node: News }) => {
       </div>
       <div className={"su-grid su-gap-2xl " + (imageUrl ? "su-grid-cols-3-1" : "")}>
         <div>
-          <Link className="su-text-digital-red su-no-underline hover:su-underline" href={node.path.alias}>
+          <Link scroll className="su-text-digital-red su-no-underline hover:su-underline" href={node.path.alias}>
             <h2 className="su-type-2">{node.title}</h2>
           </Link>
           {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}

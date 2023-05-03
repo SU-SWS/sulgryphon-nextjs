@@ -131,7 +131,7 @@ const StanfordEventCard = ({node, ...props}: Props) => {
           }
 
           <h2 className="su-text-m2">
-            <Link href={node.path.alias}
+            <Link scroll href={node.path.alias}
                   className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
               {node.title}
             </Link>
@@ -150,7 +150,7 @@ const StanfordEventCard = ({node, ...props}: Props) => {
           {node.su_event_map_link?.url &&
             <div className="su-flex su-mb-20">
               <MapPinIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
-              <Link href={node.su_event_map_link?.url}>
+              <Link scroll href={node.su_event_map_link?.url}>
                 {node.su_event_map_link?.title}
               </Link>
             </div>

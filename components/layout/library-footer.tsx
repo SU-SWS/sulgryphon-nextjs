@@ -32,10 +32,10 @@ const LibraryFooter = () => {
           </address>
 
           <ul className="su-list-unstyled">
-            <li><Link className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
+            <li><Link scroll className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
                       href="#">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
             </li>
-            <li><Link className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
+            <li><Link scroll className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
                       href="#">Contact us<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link></li>
           </ul>
         </div>
@@ -95,7 +95,7 @@ const LibraryFooter = () => {
 
 const FooterLink = ({href, children}: { href: string, children: ReactNode }) => {
   return (
-    <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white" href={href}>
+    <Link scroll className="su-font-normal su--text-m1 su-text-white hover:su-text-white" href={href}>
       {children}
     </Link>
   )

@@ -67,7 +67,7 @@ const options: HTMLReactParserOptions = {
             )
           }
           return (
-            <Link href={nodeProps.href} {...nodeProps}>
+            <Link scroll href={nodeProps.href} {...nodeProps}>
               {domToReact(domNode.children, options)}
             </Link>
           )

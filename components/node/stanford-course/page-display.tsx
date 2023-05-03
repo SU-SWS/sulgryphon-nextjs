@@ -21,7 +21,7 @@ const StanfordCourse = ({node, ...props}: { node: Course }) => {
         {node.su_course_id}
       </Conditional>
       {node.su_course_link?.url &&
-          <Link href={node.su_course_link.url}>{node.su_course_link?.title}</Link>
+          <Link scroll href={node.su_course_link.url}>{node.su_course_link?.title}</Link>
       }
       {/* <Conditional showWhen={node.su_course_link}>
           <DrupalLink href={node.su_course_link.url}>{node.su_course_link.title}</DrupalLink>

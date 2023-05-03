@@ -67,14 +67,14 @@ const LibGuideSection = ({heading, guides}) => {
     <>
       <ul ref={parent} id={containerId} className="su-list-unstyled su-relative">
         {firstGuides.map(guide =>
-          <li key={guide.id}><Link href={guide.url}>{guide.title}</Link></li>
+          <li key={guide.id}><Link scroll href={guide.url}>{guide.title}</Link></li>
         )}
 
         <Conditional showWhen={moreGuides.length > 0}>
           <Conditional showWhen={!showMore}>
             {moreGuides.map((guide, i) =>
               <li key={guide.id}>
-                <Link href={guide.url} ref={i === 0 ? moreGuideRef : null}>{guide.title}</Link>
+                <Link scroll href={guide.url} ref={i === 0 ? moreGuideRef : null}>{guide.title}</Link>
               </li>
             )}
           </Conditional>

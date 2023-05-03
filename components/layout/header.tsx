@@ -49,7 +49,7 @@ const Header = async () => {
 }
 
 const HeaderLink = ({href, text}) => {
-  return <Link className="su-text-black su-text-18 su-font-normal" href={href}>{text}</Link>
+  return <Link scroll className="su-text-black su-text-18 su-font-normal" href={href}>{text}</Link>
 }
 
 export default Header;

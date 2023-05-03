@@ -137,7 +137,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                   </Conditional>
                   <Conditional showWhen={node.su_person_email}>
                     <li>
-                      <Link href={`mailto:${node.su_person_email}`}>
+                      <Link scroll href={`mailto:${node.su_person_email}`}>
                         {node.su_person_email}
                         <EnvelopeIcon width={20} className="su-inline-block su-ml-4"/>
                       </Link>
@@ -166,7 +166,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
               {node?.su_person_map_url?.url &&
                 <div>
-                  Map URL: <Link href={node.su_person_map_url.url}>{node.su_person_map_url.url}</Link>
+                  Map URL: <Link scroll href={node.su_person_map_url.url}>{node.su_person_map_url.url}</Link>
                 </div>
               }
             </Conditional>
@@ -181,7 +181,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
               <div>
                 {node.su_person_links.map((link, index) =>
                   <div key={`person-link-${index}`}>
-                    <Link href={link.uri}
+                    <Link scroll href={link.uri}
                           className={'su-leading su-no-underline su-text-blue-600 hocus:su-text-black'}>* {link.title}</Link>
                   </div>
                 )}

@@ -133,7 +133,7 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
                   }
 
                   {node.su_event_map_link &&
-                      <Link href={node.su_event_map_link.url} className="su-block su-ml-36">
+                      <Link scroll href={node.su_event_map_link.url} className="su-block su-ml-36">
                         {node.su_event_map_link.title}
                       </Link>
                   }
@@ -149,12 +149,12 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
                     <h3 className="su-text-16 md:su-text-18">Contact</h3>
                   </div>
                   {node.su_event_telephone &&
-                      <Link href={`tel:${node.su_event_telephone}`} className="su-block su-mb-4 su-ml-36">
+                      <Link scroll href={`tel:${node.su_event_telephone}`} className="su-block su-mb-4 su-ml-36">
                         {node.su_event_telephone}
                       </Link>
                   }
                   {node.su_event_email &&
-                      <Link href={`mailto:${node.su_event_email}`} className="su-block su-ml-36 su-break-words">
+                      <Link scroll href={`mailto:${node.su_event_email}`} className="su-block su-ml-36 su-break-words">
                         {node.su_event_email}
                       </Link>
                   }
