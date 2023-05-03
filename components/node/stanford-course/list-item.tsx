@@ -19,7 +19,7 @@ const StanfordCourseListItem = ({node, ...props}: { node: Course }) => {
           </span>
         </Conditional>
       </span>
-      <Link href={node.path.alias} className="su-text-digital-red hocus:su-text-digital-red su-no-underline hocus:su-underline">
+      <Link scroll href={node.path.alias} className="su-text-digital-red hocus:su-text-digital-red su-no-underline hocus:su-underline">
         <h2 className="su-type-2">{node.title}</h2>
       </Link>
       <Conditional showWhen={node.su_course_instructors}>

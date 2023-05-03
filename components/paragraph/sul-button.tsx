@@ -30,7 +30,7 @@ const SulButton = ({headline, link, styles, fullWidth = true, ...props}: Props) 
             </h2>
           </Conditional>
 
-          <Link href={link.url} className="su-button su-block su-mx-auto su-text-center su-w-fit">
+          <Link scroll href={link.url} className="su-button su-block su-mx-auto su-text-center su-w-fit">
             {link.title}
           </Link>
         </div>

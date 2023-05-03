@@ -11,7 +11,7 @@ interface LockupProps extends ComponentProps<any> {
 const Lockup = ({whiteText, ...props}: LockupProps) => {
   return (
     <div {...props}>
-      <Link href="/" className="su-no-underline">
+      <Link scroll href="/" className="su-no-underline">
         <div className="su-flex su-items-center su-basefont-19">
           <Logo/>
 
