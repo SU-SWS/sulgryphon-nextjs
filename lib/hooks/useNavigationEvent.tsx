@@ -12,7 +12,9 @@ const useNavigationEvent = () => {
     setUrl(pathname ? pathname : null);
   }, [pathname]);
 
-  useEffect(() => syncDrupalPreviewRoutes(url), [url])
+  useEffect(() => {
+    if(!(url?.startsWith('/calendar/') || url?.startsWith('/study-place/'))) syncDrupalPreviewRoutes(url)
+  }, [url])
   return url;
 }
 

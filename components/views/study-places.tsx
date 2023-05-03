@@ -80,61 +80,58 @@ const StudyPlaceFilteringList = ({items}) => {
   }
 
   return (
-    <div className="md:su-rs-p-1 su-px-40 3xl:su-px-0 su-max-w-1500 su-w-full su-mx-auto">
-      <form>
-        <div className="su-grid su-grid-cols-1 lg:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
-          <div>
-            <Select
-              instanceId={`${inputId}-type`}
-              ref={typeRef}
-              aria-label="Type of place"
-              placeholder="Type"
-              options={typeOfStudies}
-              name="type"
-              isMulti
-              isSearchable={false}
-              isDisabled={capacityOptions.length == 0}
-            />
-          </div>
-          <div>
-            <Select
-              instanceId={`${inputId}-branch`}
-              ref={libraryRef}
-              aria-label="Library Branch Location"
-              placeholder="Library"
-              options={libraryOptions}
-              name="library"
-              isMulti
-              isSearchable={false}
-              isDisabled={capacityOptions.length == 0}
-            />
-          </div>
-          <div>
-            <Select
-              instanceId={`${inputId}-capacity`}
-              ref={capacityRef}
-              aria-label="Library Branch Capacity"
-              placeholder="Capacity"
-              options={capacityOptions}
-              name="capacity"
-              isMulti
-              isSearchable={false}
-              isDisabled={capacityOptions.length == 0}
-            />
-          </div>
-          <div>
-            <Select
-              instanceId={`${inputId}-features`}
-              ref={featureRef}
-              aria-label="Equipment/Features"
-              placeholder="Equipment"
-              options={featureOptions}
-              name="features"
-              isMulti
-              isSearchable={false}
-              isDisabled={capacityOptions.length == 0}
-            />
-          </div>
+    <>
+      <form className="su-@container">
+        <div className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
+
+          <Select
+            instanceId={`${inputId}-type`}
+            ref={typeRef}
+            aria-label="Type of place"
+            placeholder="Type"
+            options={typeOfStudies}
+            name="type"
+            isMulti
+            isSearchable={false}
+            isDisabled={capacityOptions.length == 0}
+          />
+
+          <Select
+            instanceId={`${inputId}-branch`}
+            ref={libraryRef}
+            aria-label="Library Branch Location"
+            placeholder="Library"
+            options={libraryOptions}
+            name="library"
+            isMulti
+            isSearchable={false}
+            isDisabled={capacityOptions.length == 0}
+          />
+
+          <Select
+            instanceId={`${inputId}-capacity`}
+            ref={capacityRef}
+            aria-label="Library Branch Capacity"
+            placeholder="Capacity"
+            options={capacityOptions}
+            name="capacity"
+            isMulti
+            isSearchable={false}
+            isDisabled={capacityOptions.length == 0}
+          />
+
+          <Select
+            instanceId={`${inputId}-features`}
+            ref={featureRef}
+            aria-label="Equipment/Features"
+            placeholder="Equipment"
+            options={featureOptions}
+            name="features"
+            isMulti
+            isSearchable={false}
+            isDisabled={capacityOptions.length == 0}
+          />
+
         </div>
 
         <button className="su-button su-mr-20" onClick={handleSubmit}>
@@ -169,7 +166,7 @@ const StudyPlaceFilteringList = ({items}) => {
           <p>No items match the search.</p>
         </Conditional>
       </Conditional>
-    </div>
+    </>
   )
 }
 

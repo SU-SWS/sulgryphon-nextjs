@@ -58,6 +58,14 @@ const options: HTMLReactParserOptions = {
           }
 
           nodeProps.className += ' su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red';
+
+          if (nodeProps.href.startsWith('#')) {
+            return (
+              <a {...nodeProps}>
+                {domToReact(domNode.children, options)}
+              </a>
+            )
+          }
           return (
             <Link href={nodeProps.href} {...nodeProps}>
               {domToReact(domNode.children, options)}

@@ -1,4 +1,4 @@
-import InterceptionModal from "../../../interception-modal";
+import InterceptionModal from "@/components/patterns/modals/interception-modal";
 import {getResource} from "@/lib/drupal/get-resource";
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features";
 import {DrupalTaxonomyTerm} from "next-drupal";

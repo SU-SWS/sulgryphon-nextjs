@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
 import {useState} from "react";
-import Modal from "@/components/patterns/modal";
+import Modal from "@/components/patterns/modals/modal";
 import SearchForm from "@/components/search/search-form";
 
 const SearchModal = () => {

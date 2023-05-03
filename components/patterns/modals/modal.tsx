@@ -1,6 +1,6 @@
 "use client";
 
-import React, {ReactNode, useCallback, useEffect, useRef} from 'react';
+import {ReactNode, useCallback, useEffect} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import ReactFocusLock from "react-focus-lock";
@@ -14,8 +14,6 @@ interface ModalProps {
 
 const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
 
-  const closeButton = useRef(null);
-  const modalBodyRef = useRef(null);
   const [animationParent] = useAutoAnimate()
 
   const onKeyDown = useCallback(
@@ -50,7 +48,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
 
   return (
     <div ref={animationParent}>
-      <ReactFocusLock>
+      <ReactFocusLock returnFocus>
         <div
           className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"}
           aria-label={ariaLabel}
@@ -60,7 +58,6 @@ const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
         >
           <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
             <div
-              ref={modalBodyRef}
               className="su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]"
             >
               {children}
@@ -69,7 +66,6 @@ const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
             <div>
               <button
                 type="button"
-                ref={closeButton}
                 onClick={onClose}
                 className={"su-absolute su-right-50 su-top-50 su-text-black md:su-text-white su-flex"}
               >
