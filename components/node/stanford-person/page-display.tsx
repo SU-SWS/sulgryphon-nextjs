@@ -43,12 +43,11 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
 
         <div className="su-flex su-flex-col su-justify-between">
           <div>
-            <Conditional showWhen={node.su_person_short_title}>
-              <div className="su-type-0 su-leading">{node.su_person_short_title}</div>
-            </Conditional>
-            <Conditional showWhen={node.su_person_full_title}>
-              <div className="su-type-0 su-leading">{node.su_person_full_title}</div>
-            </Conditional>
+
+            {(node.su_person_full_title || node.su_person_short_title) &&
+              <div className="su-type-0 su-leading">{node.su_person_full_title || node.su_person_short_title}</div>
+            }
+
             <Conditional showWhen={node.su_person_pronouns}>
               <div className="su-type-0 su-leading">Pronouns: {node.su_person_pronouns}</div>
             </Conditional>
