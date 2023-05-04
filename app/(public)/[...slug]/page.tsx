@@ -35,7 +35,7 @@ const fetchNodeData = async (context) => {
     const [destination] = path.redirect;
 
     if (destination.to != currentPath) {
-      throw new RedirectError(`redirect:${destination.to}`);
+      throw new RedirectError(destination.to);
     }
   }
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
@@ -67,8 +67,7 @@ const NodePage = async (context) => {
     nodeData = await fetchNodeData(context);
   } catch (e) {
     if (e instanceof RedirectError) {
-      const [, redirectTo] = e.message.split(':');
-      redirect(redirectTo);
+      redirect(e.message);
     }
     notFound();
   }
