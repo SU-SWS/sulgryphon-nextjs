@@ -17,10 +17,16 @@ import {getMenu} from "@/lib/drupal/get-menu";
 
 export const revalidate = 60;
 
+class RedirectError extends Error {
+  constructor(public message: string) {
+    super(message);
+  }
+}
+
 const fetchNodeData = async (context) => {
   const path = await translatePathFromContext(context);
   if (!path || !path.jsonapi) {
-    throw 'Unable to translate path';
+    throw new Error('Unable to translate path');
   }
 
   // Check for redirect.
@@ -29,7 +35,7 @@ const fetchNodeData = async (context) => {
     const [destination] = path.redirect;
 
     if (destination.to != currentPath) {
-      throw `redirect:${destination.to}`;
+      throw new RedirectError(`redirect:${destination.to}`);
     }
   }
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
@@ -60,8 +66,8 @@ const NodePage = async (context) => {
   try {
     nodeData = await fetchNodeData(context);
   } catch (e) {
-    if (e.indexOf('redirect:') === 0) {
-      const [, redirectTo] = e.split(':');
+    if (e instanceof RedirectError) {
+      const [, redirectTo] = e.message.split(':');
       redirect(redirectTo);
     }
     notFound();
