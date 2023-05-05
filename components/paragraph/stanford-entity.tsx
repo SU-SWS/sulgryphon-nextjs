@@ -42,8 +42,8 @@ const StanfordEntity = (props: EntityProps) => {
 const StanfordEntityComponent = ({headline, description, link, entities = [], styles, fullWidth = true, ...props}: EntityProps) => {
   const {ref, inView} = useInView();
   const centeredRef = useRef(null);
-
   const isCentered = useIsCentered(centeredRef);
+  entities = entities.filter(entity => entity.type !== 'unknown')
 
   const gridColClasses = {
     1: 'su-grid-cols-1',
@@ -53,6 +53,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 
   const gridCols = entities.length >= 3 ? gridColClasses[3] : gridColClasses[entities.length];
   const wrapperClasses = styles?.background === 'black' ? 'su-text-white su-py-40' : '';
+
 
   return (
     // @ts-ignore
@@ -95,14 +96,15 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 }
 
 const TeaserItem = ({node, loadData}) => {
-  const {data, refetch} = useDataFetch(`/api/entity/${node.type}/${node.id}`, [], {enabled: false, placeholderData: node})
+
+  const {data, isRefetchError, isSuccess, refetch} = useDataFetch(`/api/entity/${node.type}/${node.id}`, [], {enabled: false})
 
   useEffect(() => {
-    if (loadData) refetch();
+    if (loadData && !isRefetchError && !isSuccess) refetch();
   }, [loadData])
 
   return (
-    <NodeCardDisplay node={data}/>
+    <NodeCardDisplay node={data ?? node}/>
   )
 }
 

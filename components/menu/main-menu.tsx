@@ -12,6 +12,8 @@ import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 
+const maxMenuDepth = 1;
+
 const MainMenu = ({menuItems}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [addCloseAnimation, setAddCloseAnimation] = useState(false)
@@ -21,12 +23,14 @@ const MainMenu = ({menuItems}) => {
 
   const submenuRefs: MutableRefObject<any>[] = useMemo(() => [], []);
 
-  const addItemRefs = (items) => {
+  const addItemRefs = (items, depth = 0) => {
+    if (depth > maxMenuDepth) return;
+
     items.map(item => {
       if (item.items?.length > 0) {
         item.ref = useRef();
         submenuRefs.push(item.ref);
-        addItemRefs(item.items)
+        addItemRefs(item.items, depth + 1)
       }
     })
   }
@@ -119,9 +123,10 @@ interface MenuItemProps {
 
 
 const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex = 0, activeTrail = [], menuLevel = 0,}: MenuItemProps, ref) => {
-  if (menuLevel >= 2) {
+  if (menuLevel > maxMenuDepth) {
     return null;
   }
+
   const browserUrl = useNavigationEvent();
   const [submenuOpen, setSubmenuOpen] = useState(false)
   const active = activeTrail.includes(id);
@@ -140,6 +145,7 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
     'su-ml-[120px]'
   ];
   const belowItems = (items && items?.length > 0) ? items : [];
+
 
   // Expand/Collapse menu button click handler.
   const openCloseSubmenu = () => {
@@ -216,7 +222,7 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
         </Link>
       </Conditional>
 
-      <Conditional showWhen={url.length == 0}>
+      <Conditional showWhen={url.length === 0}>
         <button
           tabIndex={tabIndex}
           className={"su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}

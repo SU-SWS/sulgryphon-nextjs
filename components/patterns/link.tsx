@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {ReactNodeLike} from "prop-types";
+import {PropsWithChildren} from "react";
 
 export const DrupalLinkButton = ({href, children, buttonProps = null, ...props}) => {
   if (href.startsWith('#')) {
@@ -96,11 +97,15 @@ export const DrupalActionLink = ({href, children, buttonProps = null, ...props})
   )
 }
 
-interface keyable {
-  [key: string]: any
+interface DrupalLinkProps extends PropsWithChildren<any>{
+  url?: string
+  title?: string
+  style?: string
 }
 
-export const DrupalLink = ({url, title, style, children, props}: { url?: string, title?: string, style?: string, children?: ReactNodeLike, props?: keyable }) => {
+
+
+export const DrupalLink = ({url, title, style, children, ...props}:DrupalLinkProps) => {
   if (!url) {
     return null;
   }

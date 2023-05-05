@@ -77,7 +77,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
             </Conditional>
 
             {link?.url &&
-              <DrupalLink url={link.url} style={linkStyle}>
+              <DrupalLink url={link.url} style={linkStyle} className="su-text-white hocus:su-text-white hocus:su-underline">
                 {link.title}
               </DrupalLink>
             }
