@@ -184,8 +184,8 @@ const cleanMediaMarkup = (node: Element) => {
         <Conditional showWhen={width && height}>
           <Image
             className={fixClasses(classes)}
-            src={src}
-            alt={alt}
+            src={src.trim()}
+            alt={alt ? alt.trim(): ""}
             height={parseInt(height)}
             width={parseInt(width)}
           />
@@ -195,8 +195,8 @@ const cleanMediaMarkup = (node: Element) => {
           <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
             <Image
               className="su-object-cover su-object-center"
-              src={src}
-              alt={alt}
+              src={src.trim()}
+              alt={alt ? alt.trim(): ""}
               fill={true}
             />
           </div>

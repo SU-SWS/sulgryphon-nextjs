@@ -32,7 +32,3 @@ export const middleware = (request: NextRequest) => {
 
   return response;
 }
-
-export const config = {
-  matcher: '/:path*'
-}
