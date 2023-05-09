@@ -27,7 +27,7 @@ const StanfordNewsCard = ({node, ...props}: { node: News }) => {
       </div>
       }
       <h2 className="su-text-m2">
-        <Link scroll href={node.path.alias} className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
+        <Link href={node.path?.alias ?? "#"} className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
           {node.title}
         </Link>
       </h2>

@@ -21,7 +21,7 @@ const StanfordCourseCard = ({node, ...props}: { node: Course }) => {
           </Conditional>
         </span>
       </div>
-      <Link scroll href={node.path.alias}
+      <Link href={node.path?.alias ?? "#"}
             className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
         <h2 className="su-type-2">{node.title}</h2>
       </Link>

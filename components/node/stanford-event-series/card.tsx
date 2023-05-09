@@ -8,7 +8,7 @@ const StanfordEventSeriesCard = ({node, ...props}: { node: EventSeries }) => {
     <article {...props}>
       <Card
         header={
-          <Link scroll className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red" href={node.path.alias}>
+          <Link className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red" href={node.path?.alias ?? "#"}>
             {node.title}
           </Link>
         }

@@ -69,7 +69,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
                         className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
                         <EnvelopeIcon width={19}
                                       className="md:su-absolute md:su-left-[-38px] md:su-top-02em su-mt-01em md:su-mt-0 su-mr-12"/>
-                        <Link scroll className="su-no-underline hocus:su-underline"
+                        <Link className="su-no-underline hocus:su-underline"
                               href={`mailto:${node.su_library__email}`}>
                           {node.su_library__email}
                         </Link>
@@ -81,7 +81,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
                         <MapPinIcon width={19}
                                     className="md:su-absolute md:su-left-[-38px] md:su-top-01em su-mt-01em md:su-mt-0 su-mr-12"/>
                         {node.su_library__map_link ? (
-                          <Link scroll href={node.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
+                          <Link href={node.su_library__map_link.uri} className="su-no-underline hocus:su-underline">
                             <div>{node.su_library__address.address_line1}</div>
                             <div>{node.su_library__address.address_line2}</div>
                             <div>{node.su_library__address.locality}, {node.su_library__address.administrative_area} {node.su_library__address.postal_code}</div>

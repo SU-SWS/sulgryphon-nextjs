@@ -39,7 +39,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
         }
 
         <Conditional showWhen={libCal}>
-          <Link scroll href={`/calendar/${libCal}`} className="su-block su-relative su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-py-20">
+          <Link href={`/calendar/${libCal}`} className="su-block su-relative su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-py-20">
             <div className="su-flex su-justify-end su-items-center su-gap-xs">
               <div className="su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
               <CalendarDaysIcon width={24}/>
@@ -61,7 +61,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
             <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
               <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
-              <Link scroll href={branchUrl}
+              <Link href={branchUrl}
                     className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red">
                 <div>{branchTitle}</div>
               </Link>

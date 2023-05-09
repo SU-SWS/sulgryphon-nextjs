@@ -37,7 +37,7 @@ const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
 
         </div>
       }
-      <Link scroll href={node.path.alias}
+      <Link href={node.path?.alias ?? "#"}
             className="su-no-underline su-text-digital-red hocus:su-underline hocus:su-text-black">
         <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
       </Link>

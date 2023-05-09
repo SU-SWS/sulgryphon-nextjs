@@ -50,7 +50,7 @@ const SearchResultItem = ({node}: { node: DrupalNode }) => {
   const metadata = getNodeMetadata(node)
   return (
     <>
-      <Link scroll href={node.path.alias}>
+      <Link href={node.path.alias}>
         <h2 className="su-text-m3">
           {node.title}
         </h2>

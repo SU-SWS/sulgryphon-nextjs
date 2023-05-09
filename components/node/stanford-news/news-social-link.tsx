@@ -22,7 +22,7 @@ const NewsSocialLink = ({prefix, suffix = '', children, ...props}: Props) => {
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
-      <Link scroll href={`${prefix}${currentUrl}${suffix}`} {...props}>
+      <Link href={`${prefix}${currentUrl}${suffix}`} {...props}>
         {children}
       </Link>
     </ErrorBoundary>

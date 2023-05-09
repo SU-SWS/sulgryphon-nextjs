@@ -7,7 +7,7 @@ const ScrollUp = () => {
   const isInitialMount = useRef(true);
   const browserUrl = useNavigationEvent();
   useEffect(() => {
-    // No need to scroll on initial mount.
+    // No need to on initial mount.
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;

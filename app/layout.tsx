@@ -28,8 +28,7 @@ export const metadata = {
   icons: {
     icon: [{url: '/favicon.ico'}, ...icons],
     apple: appleIcons
-  },
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+  }
 }
 
 const RootLayout = ({children, modal}: { children: ReactNode, modal: ReactNode }) => {

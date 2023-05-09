@@ -95,7 +95,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
                   <MapPinIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
 
                   {paragraph.sul_contact__map_link &&
-                    <Link scroll href={paragraph.sul_contact__map_link.uri}
+                    <Link href={paragraph.sul_contact__map_link.uri}
                           className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal">
                       {addressString}
                     </Link>

@@ -25,7 +25,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
       <div className={`su-mb-40 su-grid su-gap-xl ` + (!fullWidth ? '' : 'md:su-grid-cols-2 lg:su-grid-cols-3')}>
         {paragraph.su_gallery_images.map(image =>
           <figure key={image.id} className="su-overflow-hidden su-aspect-[16/9] su-relative">
-            <Link scroll href={image.su_gallery_image.image_style_uri.responsive_large} className="su-block su-absolute"
+            <Link href={image.su_gallery_image.image_style_uri.responsive_large} className="su-block su-absolute"
                   onClick={(e) => {
                     e.preventDefault();
                     setModalOpen(image.id)

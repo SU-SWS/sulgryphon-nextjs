@@ -24,7 +24,7 @@ const StanfordPageCard = ({node, ...props}: { node: BasicPage }) => {
       <h2 className="su-text-m2 su-mb-20">
         <Link
           className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red"
-          href={node.path.alias}>
+          href={node.path?.alias ?? "#"}>
           {node.title}
         </Link>
       </h2>

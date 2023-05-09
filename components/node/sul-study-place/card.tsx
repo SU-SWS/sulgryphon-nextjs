@@ -37,7 +37,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
         }
 
         <Conditional showWhen={node.sul_study__libcal_id}>
-          <Link scroll href={`/calendar/${node.sul_study__libcal_id}`}
+          <Link href={`/calendar/${node.sul_study__libcal_id}`}
                 className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1">
             <div className="su-flex su-justify-end su-items-center su-gap-xs">
               <div className="su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
@@ -61,7 +61,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
               <div className="su-relative su-flex su-flex-row su-items-start su-type-1 su-rs-mb-2">
                 <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
-                <Link scroll href={node.sul_study__branch?.path.alias}
+                <Link href={node.sul_study__branch?.path.alias}
                       className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red">
                   <div>{node.sul_study__branch.title}</div>
                 </Link>
@@ -83,7 +83,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
               }
 
               {(features && features.length > 4) &&
-                <Link scroll href={`/study-place/features/${node.id}`} className="su-relative su-pr-30 su-type-1 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold">
+                <Link href={`/study-place/features/${node.id}`} className="su-relative su-pr-30 su-type-1 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold">
                   Show all features
                   <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
                 </Link>

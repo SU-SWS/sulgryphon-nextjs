@@ -46,7 +46,7 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
           <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
 
             {paragraph.sul_contact__branch?.path ? (
-              <Link scroll href={paragraph.sul_contact__branch?.path?.alias}
+              <Link href={paragraph.sul_contact__branch?.path?.alias}
                     className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light">
                 <h2 className="su-type-3 su-rs-mb-1">{paragraph.sul_contact__branch?.title}</h2>
               </Link>
@@ -83,7 +83,7 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
                   <MapPinIcon width={19} className="su-mt-01em md:su-mt-0 su-mr-12 su-flex-shrink-0"/>
 
                   {(paragraph.sul_contact__branch?.su_library__map_link) ? (
-                    <Link scroll href={paragraph.sul_contact__branch?.su_library__map_link.uri}
+                    <Link href={paragraph.sul_contact__branch?.su_library__map_link.uri}
                           className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal">
                       <div>{addressString}</div>
                     </Link>

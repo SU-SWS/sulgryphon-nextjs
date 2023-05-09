@@ -4,7 +4,7 @@ import {DrupalPublicationCitation, Publication} from "@/lib/drupal/drupal";
 const StanfordPublicationListItem = ({node, ...props}: {node:Publication}) => {
   return (
     <article {...props}>
-      <Link scroll href={node.path.alias}>
+      <Link href={node.path?.alias ?? "#"}>
         <h2 className="su-text-cardinal-red">{node.title}</h2>
       </Link>
       {node.su_publication_citation && <Citation citation={node.su_publication_citation}/>}

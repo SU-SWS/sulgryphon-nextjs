@@ -35,7 +35,7 @@ const VerticalPersonCard = ({node, currentWidth = 0, ...props}: { node: Person, 
         </div>
       }
       <div>
-        <Link scroll href={node.path.alias}
+        <Link href={node.path?.alias ?? "#"}
               className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
           <h2
             className={currentWidth < 300 ? "su-type-0 su-rs-mb-neg2 su-font-serif" : "su-type-2 su-rs-mb-neg2 su-font-serif"}>{node.title}</h2>
@@ -45,7 +45,7 @@ const VerticalPersonCard = ({node, currentWidth = 0, ...props}: { node: Person, 
             className={currentWidth < 300 ? "su-text-18 su-rs-mb-neg2" : "su-type-0 su-rs-mb-neg2"}>{node.su_person_full_title}</div>
         </Conditional>
         <Conditional showWhen={node.su_person_email}>
-          <Link scroll href={`mailto:${node.su_person_email}`}
+          <Link href={`mailto:${node.su_person_email}`}
                 className={currentWidth < 300 ? " su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue su-text-18" : " su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue"}>
             <div className="su-flex su-items-center su-truncate">
               <EnvelopeIcon width={currentWidth < 300 ? 14 : 20} className="su-flex-shrink-0 su-mr-3"/>

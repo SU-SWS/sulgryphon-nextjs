@@ -42,7 +42,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
       }
 
       {link &&
-        <Link scroll href={link.url} className="su-block su-text-right">
+        <Link href={link.url} className="su-block su-text-right">
           {link.title}
         </Link>
       }
