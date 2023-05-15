@@ -11,15 +11,18 @@ interface RowProps {
 export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => {
   const layouts = {};
 
+  // Set the layouts first.
   items.map(item => {
     if (item?.behavior_settings?.layout_paragraphs?.layout) {
       layouts[item.id] = item;
       layouts[item.id].children = [];
-      return;
     }
+  })
 
+  // Add the components to each of the layouts.
+  items.map(item => {
     const parentUUID = item?.behavior_settings?.layout_paragraphs?.parent_uuid;
-    if (parentUUID) {
+    if (parentUUID && layouts[parentUUID]) {
       layouts[parentUUID].children.push(item);
     }
   })
