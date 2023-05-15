@@ -42,7 +42,7 @@ const StanfordLists = (props: ListProps) => {
 
 
 const StanfordListsComponent = ({headline, description, link, view, styles, fullWidth = true, ...props}: ListProps) => {
-  const {ref, inView} = useInView()
+  const {ref, inView} = useInView({triggerOnce: true})
 
   const viewId = view?.resourceIdObjMeta.drupal_internal__target_id
   const displayId = view?.resourceIdObjMeta.display_id;

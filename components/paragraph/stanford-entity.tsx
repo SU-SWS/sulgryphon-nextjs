@@ -40,7 +40,7 @@ const StanfordEntity = (props: EntityProps) => {
 }
 
 const StanfordEntityComponent = ({headline, description, link, entities = [], styles, fullWidth = true, ...props}: EntityProps) => {
-  const {ref, inView} = useInView();
+  const {ref, inView} = useInView({triggerOnce: true});
   const centeredRef = useRef(null);
   const isCentered = useIsCentered(centeredRef);
   entities = entities.filter(entity => entity.type !== 'unknown')
