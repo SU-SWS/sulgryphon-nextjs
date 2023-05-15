@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {forwardRef, MutableRefObject, useEffect, useImperativeHandle, useMemo, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
@@ -21,28 +21,12 @@ const MainMenu = ({menuItems}) => {
   const activeTrail = useActiveTrail(menuItems);
   const isDesktop = useIsDesktop();
 
-  const submenuRefs: MutableRefObject<any>[] = useMemo(() => [], []);
-
-  const addItemRefs = (items, depth = 0) => {
-    if (depth > maxMenuDepth) return;
-
-    items.map(item => {
-      if (item.items?.length > 0) {
-        item.ref = useRef();
-        submenuRefs.push(item.ref);
-        addItemRefs(item.items, depth + 1)
-      }
-    })
-  }
-  addItemRefs(menuItems);
-
   const openCloseMenu = () => {
     setMenuOpen(!menuOpen);
     setAddCloseAnimation(true);
   }
   // When clicking or focusing outside the main menu, close the main menu and all submenus.
   const handleClickFocusOutside = () => {
-    submenuRefs.map(ref => ref?.current?.closeSubmenus())
     setMenuOpen(false)
   }
 
@@ -122,7 +106,7 @@ interface MenuItemProps {
 }
 
 
-const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex = 0, activeTrail = [], menuLevel = 0,}: MenuItemProps, ref) => {
+const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
   if (menuLevel > maxMenuDepth) {
     return null;
   }
@@ -151,13 +135,6 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
   const openCloseSubmenu = () => {
     setSubmenuOpen(!submenuOpen);
   }
-
-  // Forward ref function to close submenu from the parent.
-  useImperativeHandle(ref, () => ({
-    closeSubmenus() {
-      setSubmenuOpen(false)
-    }
-  }))
 
   useEffect(() => setSubmenuOpen(false), [browserUrl])
 
@@ -276,8 +253,8 @@ const MenuItem = forwardRef(({id, title, url, items, expanded, onClick, tabIndex
       </Conditional>
     </OutsideClickHandler>
   )
-})
-MenuItem.displayName = "Menu Item";
+}
+
 
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
   return (
