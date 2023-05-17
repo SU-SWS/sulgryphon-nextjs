@@ -82,7 +82,7 @@ const NodePage = async (context) => {
       <Conditional showWhen={node.type != 'node--sul_library'}>
         <InternalHeaderBanner>
           <h1
-            className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">
+            className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
