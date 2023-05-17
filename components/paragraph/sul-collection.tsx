@@ -26,7 +26,7 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
   }, [displayedCard])
 
   return (
-    <section className={"su-relative su-max-w-1500 su-w-full su-mx-auto su-@container" + (fullWidth ? " su-px-50 3xl:su-px-0": "")} aria-labelledby={`${elementId}-heading`} {...props}>
+    <section className="su-relative su-cc su-@container" aria-labelledby={`${elementId}-heading`} {...props}>
       <Conditional showWhen={heading}>
         <AboveHeaderBorder/>
         <h2 id={`${elementId}-heading`} className="su-type-5">{heading}</h2>

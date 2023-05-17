@@ -57,7 +57,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 
   return (
     // @ts-ignore
-    <div className={"su-@container su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-50 3xl:su-px-0" : "")}
+    <div className="su-@container su-relative su-cc"
          ref={ref} {...props}>
       <div ref={centeredRef} className={wrapperClasses}>
         <Conditional showWhen={styles?.background === 'black'}>
@@ -79,7 +79,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
           <div className={"su-mb-40 su-grid su-gap-2xl " + gridCols} aria-live="polite">
             {entities.map((item, i) =>
               <div key={item.id}
-                   className={((i + 1 === entities.length || i + 1 % 3 === 0) ? "su-max-w-[980px] su-mx-auto" : "su-relative before:su-content-[''] before:su-w-1 before:su-absolute before:su-top-0 before:su-h-full before:su-right-[-25px] lg:before:su-bg-black-30")}>
+                   className={((i + 1 === entities.length || i + 1 % 3 === 0) ? " su-w-full su-max-w-[980px] su-mx-auto" : "su-relative before:su-content-[''] before:su-w-1 before:su-absolute before:su-top-0 before:su-h-full before:su-right-[-25px] lg:before:su-bg-black-30")}>
                 <TeaserItem node={item} key={item.id} loadData={inView}/>
               </div>
             )}

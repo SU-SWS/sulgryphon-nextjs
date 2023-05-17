@@ -36,7 +36,7 @@ module.exports = {
         '15xl': '150rem',
       },
       screens: {
-        '3xl': "1550px"
+        '3xl': "1600px"
       },
       scale: {
         '-100': '-1'
@@ -104,5 +104,6 @@ module.exports = {
     require('@tailwindcss/container-queries'),
     require(`${dir}/base/base.js`)(),
     require(`${dir}/components/simple/sul-button.js`)(),
+    require(`${dir}/centered-container.tsx`)(),
   ]
 }
