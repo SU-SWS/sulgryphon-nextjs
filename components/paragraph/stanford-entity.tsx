@@ -57,7 +57,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 
   return (
     // @ts-ignore
-    <div className={"su-@container su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0" : "")}
+    <div className={"su-@container su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-50 3xl:su-px-0" : "")}
          ref={ref} {...props}>
       <div ref={centeredRef} className={wrapperClasses}>
         <Conditional showWhen={styles?.background === 'black'}>

@@ -13,7 +13,7 @@ const ThreeColumn = ({items,fullWidth, config = {}}: LayoutProps) => {
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');
   return (
     <div data-rows="three-column"
-         className={"su-max-w-1500 su-w-full su-mx-auto su-grid lg:su-grid-cols-3 su-gap-2xl su-px-40 3xl:su-px-0" + (fullWidth ? " su-px-40 3xl:su-px-0": "")}>
+         className={"su-max-w-1500 su-w-full su-mx-auto su-grid lg:su-grid-cols-3 su-gap-2xl su-px-50 3xl:su-px-0" + (fullWidth ? " su-px-50 3xl:su-px-0": "")}>
       <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>

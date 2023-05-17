@@ -192,7 +192,7 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
       }
 
       {node.body &&
-        <div className="su-max-w-[980px] su-w-full su-mx-auto su-px-40 xl:su-px-0 su-mb-40">
+        <div className="su-max-w-[980px] su-w-full su-mx-auto su-px-50 xl:su-px-0 su-mb-40">
           {formatHtml(node.body)}
         </div>
       }

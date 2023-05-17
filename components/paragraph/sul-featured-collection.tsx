@@ -25,7 +25,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true,
   const ref = useRef(null);
 
   return (
-    <section className={"su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-40 xl:su-px-0" : "")}
+    <section className={"su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-50 xl:su-px-0" : "")}
              ref={ref} {...props}>
       {(headline || link?.url) &&
         <>

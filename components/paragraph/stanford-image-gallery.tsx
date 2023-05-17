@@ -18,7 +18,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
   const [modalOpen, setModalOpen] = useState('');
 
   return (
-    <div className={"su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-40 3xl:su-px-0": "")} {...props}>
+    <div className={"su-relative su-max-w-1500 su-w-full su-mx-auto" + (fullWidth ? " su-px-50 3xl:su-px-0": "")} {...props}>
       {paragraph.su_gallery_headline && <h2 className="su-text-center su-type-5">{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description)}</div>}
 

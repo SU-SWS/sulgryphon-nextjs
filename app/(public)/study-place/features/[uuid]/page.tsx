@@ -22,9 +22,9 @@ const Page = async ({params: {uuid}}, ...context) => {
   return (
     <main id="main-content">
       <InternalHeaderBanner>
-        <h1 className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title} Features</h1>
+        <h1 className="su-max-w-1500 su-mx-auto su-px-50 3xl:su-px-0 su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">{node.title} Features</h1>
       </InternalHeaderBanner>
-      <div className="su-max-w-1500 su-px-40 3xl:su-px-0 su-mx-auto">
+      <div className="su-max-w-1500 su-px-50 3xl:su-px-0 su-mx-auto">
       <StudyPlaceFeatures
         branchHours={node.sul_study__branch?.su_library__hours}
         branchTitle={node.sul_study__branch.title}
