@@ -94,9 +94,6 @@ const getMetadataForPersonPage = (node: Person) => {
 const getMetadataForEventPage = (node: Event) => {
   return {
     description: getPlainText(node.body ?? '').split(' ').slice(0, 20).join(' '),
-    openGraph: {
-      type: "event"
-    }
   }
 }
 const getMetadataForNewsPage = (node: News) => {
