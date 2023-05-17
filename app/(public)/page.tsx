@@ -7,7 +7,7 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import fetchComponents from "@/lib/fetch-components";
 import {DrupalParagraph} from "next-drupal";
 
-export const revalidate = 60;
+export const revalidate = 1800;
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const node: BasicPage = await getResourceByPath('/');

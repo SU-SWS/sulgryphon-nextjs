@@ -15,7 +15,7 @@ import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
 
-export const revalidate = 60;
+export const revalidate = 1800;
 
 class RedirectError extends Error {
   constructor(public message: string) {
