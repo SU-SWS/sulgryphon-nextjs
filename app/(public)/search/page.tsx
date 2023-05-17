@@ -3,11 +3,11 @@ import SearchResults from "./results";
 
 const Page = () => {
   return (
-    <div>
+    <div className="2xl:su-w-2/3">
       <SearchForm
         action="/search"
         /* @ts-ignore */
-        className="su-w-1/2 su-mx-auto su-mb-50"
+        className="su-mb-50"
         inputProps={{className: "su-input su-border su-border-cool-grey su-w-full su-rounded su-p-10"}}
       />
       <SearchResults/>

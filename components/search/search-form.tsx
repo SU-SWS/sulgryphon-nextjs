@@ -47,12 +47,16 @@ const SearchFormComponent = ({action = '/search', inputProps = {}, ...props}: Fo
 
   return (
     <div {...props}>
-      <form action={action} className="su-relative" onSubmit={formSubmit}>
-        <label htmlFor={inputProps.id} className="su-sr-only">Text search</label>
-        <input {...inputProps}/>
-        <button className="su-bg-cardinal-red su-rounded-full su-p-5 su-absolute su-top-5 su-right-10">
-          <MagnifyingGlassIcon height={20} className="su-text-white"/>
-          <span className="su-sr-only">Submit search</span>
+      <form action={action} className="su-relative su-flex su-items-end su-gap-xl" onSubmit={formSubmit}>
+        <div className="su-flex-grow">
+          <label htmlFor={inputProps.id}>Keyword Search</label>
+          <input {...inputProps}/>
+        </div>
+        <button
+          type="submit"
+          className="su-rounded-full su-p-15 su-bg-digital-red hover:su-bg-black su-transition su-text-white"
+        >
+          Search
         </button>
       </form>
     </div>

@@ -1,11 +1,11 @@
-import {DrupalNode} from "next-drupal";
-import {BasicPage, Event, News, Person} from "@/lib/drupal/drupal";
+import {DrupalNode, DrupalParagraph} from "next-drupal";
+import {BasicPage, Event, Library, News, Person} from "@/lib/drupal/drupal";
 
 interface keyable {
   [key: string]: any
 }
 
-export const getNodeMetadata = (node: DrupalNode):keyable => {
+export const getNodeMetadata = (node: DrupalNode): keyable => {
   let metadata: keyable = {};
   switch (node.type) {
     case 'node--stanford_page':
@@ -15,23 +15,56 @@ export const getNodeMetadata = (node: DrupalNode):keyable => {
     case 'node--stanford_person':
       metadata = getMetadataForPersonPage(node as Person);
       break;
-    case 'node--stanford-event':
+    case 'node--stanford_event':
       metadata = getMetadataForEventPage(node as Event);
       break;
 
     case 'node--stanford_news':
       metadata = getMetadataForNewsPage(node as News);
+      break;
+
+    case 'node--sul_library':
+      metadata = getMetadataForBranchPage(node as Library);
+      break;
   }
 
   return {
     ...metadata,
-    title: node.title + " | " + process.env.NEXT_PUBLIC_SITE_NAME
+    title: node.title + " | " + process.env.NEXT_PUBLIC_SITE_NAME,
+    other: {
+      changed: node.changed,
+      path: node.path?.alias,
+    }
   };
 }
 
-const getMetadataForBasicPage = (node: BasicPage) => {
+const getMetadataForBranchPage = (node: Library) => {
+  const firstHtml = getFirstTextFromParagraphs(node.su_library__paragraphs ?? []);
+  const image = node.su_library__contact_img?.field_media_image || node.su_library__banner?.field_media_image;
+
   return {
-    description: node.su_page_description,
+    description: firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : '',
+    openGraph: {
+      type: 'website',
+      title: node.title,
+      description: firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : '',
+      images: [
+        {
+          url: image?.image_style_uri?.card_956x478,
+          width: 956,
+          height: 478,
+          alt: image?.resourceIdObjMeta?.alt ?? "",
+        }
+      ]
+    }
+  }
+}
+
+const getMetadataForBasicPage = (node: BasicPage) => {
+  const firstHtml = getFirstTextFromParagraphs(node.su_page_components ?? []);
+
+  return {
+    description: node.su_page_description ?? (firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : ''),
     openGraph: {
       type: 'website',
       title: node.title,
@@ -49,6 +82,7 @@ const getMetadataForBasicPage = (node: BasicPage) => {
 }
 const getMetadataForPersonPage = (node: Person) => {
   return {
+    description: node.su_person_full_title,
     openGraph: {
       type: "profile",
       firstName: node.su_person_first_name,
@@ -59,6 +93,7 @@ const getMetadataForPersonPage = (node: Person) => {
 
 const getMetadataForEventPage = (node: Event) => {
   return {
+    description: getPlainText(node.body ?? '').split(' ').slice(0, 20).join(' '),
     openGraph: {
       type: "event"
     }
@@ -79,4 +114,12 @@ const getMetadataForNewsPage = (node: News) => {
       tag: node.su_news_topics?.map(term => term.name) ?? [],
     }
   }
+}
+
+const getPlainText = (html: string) => {
+  return html.replace(/(<([^>]+)>)/ig, '').replace(/ +/g, ' ');
+}
+
+const getFirstTextFromParagraphs = (paragraphs: DrupalParagraph[]) => {
+  return paragraphs.find(p => p.type === 'paragraph--stanford_wysiwyg')?.su_wysiwyg_text
 }
