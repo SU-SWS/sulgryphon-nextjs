@@ -105,7 +105,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!fullWidth}>
         <div
-          className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-2xl">
+          className="su-max-w-1500 su-mx-auto su-px-40 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[6rem]">
 
           <Suspense fallback={<></>}>
             <SecondaryMenu menuItems={tree}/>

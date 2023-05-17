@@ -45,7 +45,7 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   }
 
   return (
-    <aside className="lg:su-w-4/12 su-relative">
+    <aside className="lg:su-w-1/4 su-relative">
       <Conditional showWhen={(menuOpen)}>
         <div className="lg:su-hidden su-backdrop-blur-sm su-fixed su-z-10 su-top-0 su-left-0 su-w-full su-h-screen"/>
       </Conditional>
