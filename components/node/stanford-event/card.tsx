@@ -83,7 +83,7 @@ const getTimeString = (start: Date, end: Date): string => {
   })
 }
 
-interface Props extends PropsWithoutRef<any>{
+interface Props extends PropsWithoutRef<any> {
   node: Event
 }
 
@@ -93,6 +93,9 @@ const StanfordEventCard = ({node, ...props}: Props) => {
   const end = new Date(node.su_event_date_time?.end_value);
   const startMonth = start.toLocaleDateString("en-US", {month: "short", timeZone: 'America/Los_Angeles'})
   const startDay = parseInt(start.toLocaleDateString("en-US", {day: "numeric", timeZone: 'America/Los_Angeles'}))
+
+  const endMonth = end.toLocaleDateString("en-US", {month: "short", timeZone: 'America/Los_Angeles'})
+  const endDay = parseInt(end.toLocaleDateString("en-US", {day: "numeric", timeZone: 'America/Los_Angeles'}))
 
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
@@ -104,7 +107,7 @@ const StanfordEventCard = ({node, ...props}: Props) => {
     <article {...props} className="su-@container">
       {imageUrl &&
         <div
-          className={"su-overflow-hidden su-aspect-[4/3] su-relative @2xl:su-mb-40"}
+          className={"su-overflow-hidden su-aspect-[4/3] su-relative"}
           aria-hidden="true"
         >
           <Image
@@ -118,37 +121,61 @@ const StanfordEventCard = ({node, ...props}: Props) => {
         </div>
       }
 
-      <div className={"su-flex su-gap-xl su-flex-col @2xl:su-flex-row"}>
-        <div>
-          <div
-            className="su-bg-black-true su-text-white su-pt-20 su-px-30 su-text-center su-uppercase">{startMonth}</div>
-          <div className="su-bg-black-true su-text-white su-pb-20 su-px-30 su-text-center su-text-m4">{startDay}</div>
+      <div className="su-flex su-items-start su-gap-xl su-flex-col">
+        <div className="su-flex su-w-full su-flex-row su-items-center su-bg-black-true su-text-white su-text-center su-uppercase" aria-hidden>
+          <div className="su-flex su-flex-col su-items-center su-mx-auto">
+            <div
+              className="su-pt-20 su-px-30 su-font-semibold">
+              {startMonth}
+            </div>
+            <div className="su-pb-20 su-px-30 su-text-m4">
+              {startDay}
+            </div>
+          </div>
+
+
+          {(startMonth !== endMonth || startDay !== endDay) &&
+            <>
+              <div className="su-font-bold">&mdash;</div>
+              <div className="su-mx-auto">
+                <div
+                  className="su-pt-20 su-px-30 su-font-semibold">
+                  {endMonth}
+                </div>
+                <div className="su-pb-20 su-px-30 su-text-m4">
+                  {endDay}
+                </div>
+              </div>
+            </>
+          }
         </div>
 
-        <div>
-          {node.su_event_type?.[0]?.name &&
-            <div className="su-inline su-mr-5 su-font-semibold su-mb-10">{node.su_event_type?.[0].name}</div>
-          }
-
-          <h2 className="su-text-m2">
+        <div className="su-flex su-flex-col su-gap-lg">
+          <h2 className="su-text-m2 su-order-2">
             <Link href={node.path?.alias ?? "#"}
                   className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
               {node.title}
             </Link>
           </h2>
 
-          <div className="su-flex su-mb-20">
+          {node.su_event_type?.[0]?.name &&
+            <div className="su-order-1 su-inline su-mr-5 su-font-semibold su-mb-10">{node.su_event_type?.[0].name}</div>
+          }
+
+
+
+          <div className="su-flex su-order-3">
             <CalendarDaysIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
             {start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})}
           </div>
 
-          <div className="su-flex su-mb-20">
+          <div className="su-flex su-order-4">
             <ClockIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
             <div>{dateTimeString}</div>
           </div>
 
           {node.su_event_map_link?.url &&
-            <div className="su-flex su-mb-20">
+            <div className="su-flex su-order-5">
               <MapPinIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
               <Link href={node.su_event_map_link?.url}>
                 {node.su_event_map_link?.title}
