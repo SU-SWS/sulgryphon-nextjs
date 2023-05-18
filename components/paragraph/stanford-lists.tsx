@@ -107,7 +107,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, full
       </div>
 
       {description &&
-        <div className="su-mb-40 su-max-w-[980px] su-w-full">
+        <div className="su-mb-40 lg:su-max-w-[980px] su-w-full">
           {formatHtml(description)}
         </div>
       }
