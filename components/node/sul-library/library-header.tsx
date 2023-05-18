@@ -36,7 +36,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
         className="su-absolute su-block su-w-full su-h-full su-top-0 su-bg-gradient-to-tl su-to-black-true su-from-transparent"
         aria-hidden="true">
       </div>
-      <div className="su-cc su-px-100 su-relative su-z-10 su-top-50 md:su-top-100 md:su-min-h-[300px]">
+      <div className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-z-10 su-top-50 md:su-top-100 md:su-min-h-[300px]">
         <div className="md:su-flex su-justify-between">
           <div className="su-flex su-items-center su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
             <h1 className="su-type-4">{node.title}</h1>
