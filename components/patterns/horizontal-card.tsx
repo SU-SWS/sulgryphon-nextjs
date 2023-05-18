@@ -3,10 +3,10 @@
 import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import Conditional from "@/components/utils/conditional";
-import {DrupalLink} from "@/components/patterns/link";
 import CardSprinkles from "@/components/patterns/card-sprinkles";
 import {useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
+import Link from "next/link";
 
 interface CardProps {
   video?: ReactNodeLike
@@ -77,9 +77,9 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
             </Conditional>
 
             {link?.url &&
-              <DrupalLink url={link.url} style={linkStyle} className="su-text-white hocus:su-text-white hocus:su-underline">
+              <Link href={link.url} className="su-border-2 su-border-digital-red su-rounded-full su-cta-button su-font-semibold su-leading-display su-block su-w-fit su-no-underline hocus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-text-white hocus:su-bg-black-true hocus:su-text-white su-rs-mt-neg1 su-bg-digital-red">
                 {link.title}
-              </DrupalLink>
+              </Link>
             }
 
           </div>

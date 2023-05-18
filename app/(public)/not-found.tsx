@@ -4,10 +4,12 @@ const NotFound = () => {
   return (
     <main id="main-content" className="su-mb-50">
       <InternalHeaderBanner>
-        <h1 className="su-cc su-pt-[110px] su-pb-50 lg:su-pb-20 su-relative su-text-white">Page Not Found</h1>
+        <h1 className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          Page Not Found
+        </h1>
       </InternalHeaderBanner>
 
-      <div className="su-cc max-w-1500 su-mb-50">
+      <div className="su-cc su-mb-50">
         Unable to find the content you are looking for. Please try somewhere else.
       </div>
     </main>

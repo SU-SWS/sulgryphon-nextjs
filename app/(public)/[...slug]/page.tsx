@@ -100,8 +100,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
         <InternalHeaderBanner>
-          <h1
-            className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          <h1 className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
@@ -109,7 +108,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={node.status != undefined && !node.status}>
         <div className="su-bg-illuminating-light su-py-30 su-mb-20">
-          <div className="su-max-w-1500 su-mx-auto su-px-50 3xl:su-px-0 su-text-m2 su-flex su-gap-lg">
+          <div className="su-cc su-text-m2 su-flex su-gap-lg">
             <ExclamationCircleIcon width={40}/>
             Unpublished Page
           </div>
@@ -124,7 +123,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!fullWidth}>
         <div
-          className="su-max-w-1500 su-mx-auto su-px-50 3xl:su-px-0 su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[6rem]">
+          className="su-cc su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[6rem]">
 
           <Suspense fallback={<></>}>
             <SecondaryMenu menuItems={tree}/>
