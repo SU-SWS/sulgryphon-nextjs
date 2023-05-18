@@ -81,7 +81,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={node.type === 'node--stanford_news'}>
         <InternalHeaderBanner>
-          <div className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          <div className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
             <h1
               className="su-text-white su-order-2">
               {node.title}
@@ -100,7 +100,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
         <InternalHeaderBanner>
-          <h1 className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          <h1 className="su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
