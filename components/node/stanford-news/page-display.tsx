@@ -25,11 +25,11 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
     redirect(node.su_news_source?.url);
   }
 
-  const imageUrl = node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
-  const imageAlt = node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.alt ?? '';
-  const imageWidth = node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.width ?? 0;
-  const imageHeight = node.su_news_featured_media?.field_media_image?.resourceIdObjMeta?.height ?? 0;
-  const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64;
+  const imageUrl = node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  const imageAlt = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const imageWidth = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.width ?? 0;
+  const imageHeight = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.height ?? 0;
+  const placeholder = node.su_news_banner?.field_media_image?.uri.base64;
 
   return (
     <article {...props} className="su-mt-50">

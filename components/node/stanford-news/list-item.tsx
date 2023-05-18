@@ -4,8 +4,8 @@ import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
 
 const StanfordNewsListItem = ({node, ...props}: { node: News }) => {
-  const imageUrl = node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1xl;
-  const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64;
+  const imageUrl = node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1x || node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_1x
+  const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64 || node.su_news_banner?.field_media_image?.uri.base64;
 
   const topics = node.su_news_topics?.filter(topic => topic.name?.length > 0) ?? [];
   return (

@@ -101,6 +101,7 @@ const getMetadataForNewsPage = (node: News) => {
   if (node.su_news_publishing_date) {
     publishTime = new Date(node.su_news_publishing_date).toISOString()
   }
+  const image = node.su_news_featured_media?.field_media_image || node.su_news_banner?.field_media_image;
 
   return {
     description: node.su_news_dek,
@@ -109,6 +110,14 @@ const getMetadataForNewsPage = (node: News) => {
       description: node.su_news_dek,
       publishedTime: publishTime ?? null,
       tag: node.su_news_topics?.map(term => term.name) ?? [],
+      images: [
+        {
+          url: image?.image_style_uri?.card_956x478,
+          width: 956,
+          height: 478,
+          alt: image?.resourceIdObjMeta?.alt ?? "",
+        }
+      ]
     }
   }
 }
