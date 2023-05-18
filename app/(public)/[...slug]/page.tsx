@@ -79,7 +79,26 @@ const NodePage = async (context) => {
         <LibraryHeader node={node as Library}/>
       </Conditional>
 
-      <Conditional showWhen={node.type != 'node--sul_library'}>
+      <Conditional showWhen={node.type === 'node--stanford_news'}>
+        <InternalHeaderBanner>
+          <div className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
+            <h1
+              className="su-text-white su-order-2">
+              {node.title}
+            </h1>
+
+            {(node.su_news_topics && node.su_news_topics.length > 0) &&
+              <div className="su-mb-20 su-order-1">
+                {node.su_news_topics.slice(0, 1).map((topic, index) =>
+                  <span key={topic.id} className="su-text-illuminating-dark su-font-semibold">{topic.name}</span>
+                )}
+              </div>
+            }
+          </div>
+        </InternalHeaderBanner>
+      </Conditional>
+
+      <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
         <InternalHeaderBanner>
           <h1
             className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">

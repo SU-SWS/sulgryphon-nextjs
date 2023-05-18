@@ -27,26 +27,15 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
 
   const imageUrl = node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
   const imageAlt = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.alt ?? '';
-  const imageWidth = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.width ?? 0;
-  const imageHeight = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.height ?? 0;
   const placeholder = node.su_news_banner?.field_media_image?.uri.base64;
 
   return (
-    <article {...props} className="su-mt-50">
-      <div className="su-cc">
+    <article {...props} className=" su-cc su-mt-50">
+      <div className="su-cc 2xl:su-w-2/3 su-mb-100">
 
-        {(node.su_news_topics && node.su_news_topics.length > 0) &&
-            <div className="su-mb-20">
-              {node.su_news_topics.map((topic, index) =>
-                <span key={topic.id}
-                      className="su-text-digital-red su-font-semibold">{(index ? ', ' : '') + topic.name}</span>
-              )}
-            </div>
-        }
-
-        {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
-        <div className="md:su-flex su-rs-mb-7">
-          <div className="su-flex md:su-order-last su-rs-mb-2">
+        {node.su_news_dek && <div className="">{node.su_news_dek}</div>}
+        <div className="md:su-flex">
+          <div className="su-flex md:su-order-last">
             <Conditional showWhen={!node.su_news_hide_social}>
               <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
                 <li className="su-mr-1em">
@@ -101,44 +90,46 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
           </div>
         </div>
       </div>
+      <hr className="su-w-1/2 su-mx-auto su-mb-100 su-text-black-40"/>
 
       {imageUrl &&
-          <figure className="su-mb-50">
-            <Image
-                className="su-mx-auto"
-                src={imageUrl}
-                alt={imageAlt}
-                height={imageHeight}
-                width={imageWidth}
-                placeholder={placeholder ? 'blur' : 'empty'}
-                blurDataURL={placeholder}
-            />
+        <figure className="su-relative su-mb-100 lg:su-w-10/12 su-mx-auto su-aspect-[16/9]">
+          <Image
+            className="su-object-cover"
+            src={imageUrl}
+            alt={imageAlt}
+            fill
+            placeholder={placeholder ? 'blur' : 'empty'}
+            blurDataURL={placeholder}
+          />
 
-            {node.su_news_banner_media_caption &&
-                <figcaption className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">
-                  {node.su_news_banner_media_caption}
-                </figcaption>
-            }
+          {node.su_news_banner_media_caption &&
+            <figcaption className="su-text-center su-caption">
+              {node.su_news_banner_media_caption}
+            </figcaption>
+          }
 
-          </figure>
+        </figure>
       }
 
       {node?.su_news_banner?.field_media_oembed_video &&
-          <figure className="su-mb-50">
-            <Oembed
-                url={node.su_news_banner.field_media_oembed_video}
-            />
-            {node.su_news_banner_media_caption &&
-                <figcaption className="su-text-center su-rs-mb-5 su-rs-px-0 su-caption">
-                  {node.su_news_banner_media_caption}
-                </figcaption>
-            }
-          </figure>
+        <figure className="su-relative su-mb-100 su-w-10/12 su-mx-auto su-aspect-[16/9]">
+          <Oembed
+            url={node.su_news_banner.field_media_oembed_video}
+          />
+          {node.su_news_banner_media_caption &&
+            <figcaption className="su-text-center su-caption">
+              {node.su_news_banner_media_caption}
+            </figcaption>
+          }
+        </figure>
       }
 
 
-      <div className="su-mb-50">
-        {node.su_news_components.map(component => <Paragraph key={component.id} paragraph={component} fullWidth={false}/>)}
+      <div className="su-cc 2xl:su-w-2/3">
+        {node.su_news_components.map(component =>
+          <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
+        )}
       </div>
     </article>
   )
