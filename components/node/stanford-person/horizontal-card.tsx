@@ -9,14 +9,11 @@ import EmailLink from "@/components/patterns/email-link";
 
 interface Props extends PropsWithoutRef<any> {
   node: Person
-  currentWidth?: number
 }
 
-const HorizontalPersonCard = ({node, currentWidth, ...props}: Props) => {
+const HorizontalPersonCard = ({node, ...props}: Props) => {
   const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
-  const imageHeight = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height;
-  const imageWidth = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width;
   const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
   if (!node.path?.alias) console.error('Missing path alias for person card component: ' + node.id)
 
@@ -24,14 +21,14 @@ const HorizontalPersonCard = ({node, currentWidth, ...props}: Props) => {
     <article
       className="su-flex su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t su-border-b-5 su-border-solid su-border-black-10  su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-0" {...props}>
       {imageUrl &&
-        <div className="su-flex su-justify-center su-mr-50">
-          <div className="su-relative su-aspect-[1/1] su-rounded-full su-w-[155px] su-h-auto su-overflow-hidden">
+        <div className="su-flex su-items-center su-mr-50">
+          <div className="su-relative su-aspect-[1/1] su-w-[155px]">
             <Image
               src={imageUrl}
               alt={imageAlt}
               placeholder={placeholder ? 'blur' : 'empty'}
               blurDataURL={placeholder}
-              className="su-object-contain"
+              className="su-object-contain su-rounded-full"
               fill
             />
           </div>

@@ -6,7 +6,7 @@ import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
 import EmailLink from "@/components/patterns/email-link";
 
-const VerticalPersonCard = ({node, currentWidth = 0, ...props}: { node: Person, currentWidth: number }) => {
+const VerticalPersonCard = ({node, ...props}: { node: Person}) => {
 
   const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';

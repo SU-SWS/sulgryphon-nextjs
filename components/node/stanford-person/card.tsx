@@ -15,8 +15,8 @@ const StanfordPersonCard = ({node, ...props}: { node: Person }) => {
       fallback={<></>}
       onError={e => console.error(e.message)}
     >
-      <div ref={ref} {...props}>
-        <Card node={node} currentWidth={width ?? 0} {...props}/>
+      <div ref={ref}>
+        <Card node={node} {...props}/>
       </div>
     </ErrorBoundary>
   )

@@ -76,10 +76,9 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
         }
 
         {entities &&
-          <div className={"su-mb-40 su-grid su-gap-2xl " + gridCols} aria-live="polite">
+          <div className={"su-mb-40 su-flex su-flex-wrap su-gap-2xl " + gridCols} aria-live="polite">
             {entities.map((item, i) =>
-              <div key={item.id}
-                   className={((i + 1 === entities.length || i + 1 % 3 === 0) ? " su-w-full lg:su-max-w-[980px] su-mx-auto" : "su-relative")}>
+              <div key={item.id} className="su-min-w-[250px] su-flex-1">
                 <TeaserItem node={item} key={item.id} loadData={inView}/>
               </div>
             )}
