@@ -10,7 +10,7 @@ const Layout = ({children}: { children: ReactNode }) => {
           Search
         </h1>
       </InternalHeaderBanner>
-      <div className="su-cc">{children}</div>
+      <div className="su-centered">{children}</div>
     </div>
   )
 }

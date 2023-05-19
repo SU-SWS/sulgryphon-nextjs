@@ -30,8 +30,8 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
   const placeholder = node.su_news_banner?.field_media_image?.uri.base64;
 
   return (
-    <article {...props} className=" su-cc su-mt-50">
-      <div className="su-cc 2xl:su-w-2/3 su-mb-100">
+    <article {...props} className=" su-centered su-mt-50">
+      <div className="su-centered 2xl:su-w-2/3 su-mb-100">
 
         {node.su_news_dek && <div className="">{node.su_news_dek}</div>}
         <div className="md:su-flex">
@@ -126,7 +126,7 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
       }
 
 
-      <div className="su-cc 2xl:su-w-2/3">
+      <div className="su-centered 2xl:su-w-2/3">
         {node.su_news_components.map(component =>
           <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
         )}

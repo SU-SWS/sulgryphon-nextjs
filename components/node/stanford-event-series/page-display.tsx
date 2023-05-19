@@ -25,7 +25,7 @@ const StanfordEventSeries = async ({node, ...props}: { node: EventSeries }) => {
       <ParagraphRows items={node.su_event_series_components}/>
 
       <Conditional showWhen={node.su_event_series_event}>
-        <div className={"md:su-cc su-rs-my-6 su-grid su-gap-xl"}>
+        <div className={"md:su-centered su-rs-my-6 su-grid su-gap-xl"}>
           {node.su_event_series_event.map(item =>
             <div key={item.id}
                  className={"su-pb-50 su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none su-border-b"}>

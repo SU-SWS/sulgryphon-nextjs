@@ -27,7 +27,7 @@ const Page = async ({params: {uuid}}, ...context) => {
           {node.title} Features
         </h1>
       </InternalHeaderBanner>
-      <div className="su-cc">
+      <div className="su-centered">
       <StudyPlaceFeatures
         branchHours={node.sul_study__branch?.su_library__hours}
         branchTitle={node.sul_study__branch.title}

@@ -150,7 +150,7 @@ const StanfordEventCard = ({node, ...props}: Props) => {
           }
         </div>
 
-        <div className="su-flex su-flex-col su-gap-lg">
+        <div className="su-flex su-flex-col su-gap-[1.2rem]">
           <h2 className="su-text-m2 su-order-2">
             <Link href={node.path?.alias ?? "#"}
                   className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
@@ -159,7 +159,7 @@ const StanfordEventCard = ({node, ...props}: Props) => {
           </h2>
 
           {node.su_event_type?.[0]?.name &&
-            <div className="su-order-1 su-inline su-mr-5 su-font-semibold su-mb-10">{node.su_event_type?.[0].name}</div>
+            <div className="su-order-1 su-inline su-mr-5 su-font-semibold">{node.su_event_type?.[0].name}</div>
           }
 
 

@@ -8,6 +8,8 @@ import {DrupalParagraph} from "next-drupal";
 import formatHtml from "@/lib/format-html";
 import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
+import EmailLink from "@/components/patterns/email-link";
+import TelephoneLink from "@/components/patterns/telephone-link";
 
 const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   if (node.su_event_source?.url) redirect(node.su_event_source.url)
@@ -151,14 +153,13 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
                     <h3 className="su-text-16 md:su-text-18">Contact</h3>
                   </div>
                   {node.su_event_telephone &&
-                      <Link href={`tel:${node.su_event_telephone}`} className="su-block su-mb-4 su-ml-36">
-                        {node.su_event_telephone}
-                      </Link>
+                    <TelephoneLink
+                      tel={node.su_event_telephone}
+                      className="su-block su-mb-4 su-ml-36"
+                    />
                   }
                   {node.su_event_email &&
-                      <Link href={`mailto:${node.su_event_email}`} className="su-block su-ml-36 su-break-words">
-                        {node.su_event_email}
-                      </Link>
+                    <EmailLink email={node.su_event_email} className="su-block su-ml-36 su-break-words"/>
                   }
                 </div>
             }

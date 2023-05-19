@@ -3,7 +3,7 @@ import SearchModal from "@/components/search/search-modal";
 
 const FallbackMainMenu = ({menuItems}) => {
   return (
-    <nav className="su-cc">
+    <nav className="su-centered">
       <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
         {menuItems.map(item =>
           <MenuItem key={item.id} {...item}/>

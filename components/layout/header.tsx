@@ -20,7 +20,7 @@ const Header = async () => {
       <div role="region" aria-label="Site Messages">
         <div className="su-relative su-z-40 lg:su-z-10 su-identity-bar su-pt-5 su-pb-1 su-bg-cardinal-red">
 
-          <div className="su-cc">
+          <div className="su-centered">
             <a className=" su-logo su-text-white hocus:su-text-white su-text-20 su-leading-none"
                href="https://www.stanford.edu">
               Stanford University

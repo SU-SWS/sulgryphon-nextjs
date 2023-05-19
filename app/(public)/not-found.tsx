@@ -9,7 +9,7 @@ const NotFound = () => {
         </h1>
       </InternalHeaderBanner>
 
-      <div className="su-cc su-mb-50">
+      <div className="su-centered su-mb-50">
         Unable to find the content you are looking for. Please try somewhere else.
       </div>
     </main>

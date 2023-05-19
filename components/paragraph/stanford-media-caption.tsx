@@ -21,7 +21,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
   const placeholder = image?.uri.base64;
 
   return (
-    <figure className="su-relative su-cc" {...props}>
+    <figure className="su-relative su-centered" {...props}>
       {imageUrl &&
         <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
           <Image

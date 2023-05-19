@@ -2,46 +2,36 @@
  * Centered container.
  */
 module.exports = function () {
-  return function ({addComponents, theme}) {
-    // Find and set the padding based on the screen margins
-    const screens = theme('screens');
+  return function ({addUtilities}) {
+    const maxWdiths = {};
 
-    const gutterWidth = parseInt(theme(`decanter.screenMargins.xs`))
-    const maxWdiths = {
-      maxWidth: 'calc(100vw - ' + (gutterWidth * 2) + 'px)',
-    };
+    const gutterSizes = [
+      {screen: 'lg', gutterSize: 80},
+      {screen:'xl', gutterSize: 100}
+    ]
 
-    // Create padding for each screen size which equals to the screen margin setting.
-    const keys = Object.keys(screens);
-    keys.forEach((key) => {
-      if (theme(`decanter.screenMargins.${key}`)) {
-        const gutterWidth = parseInt(theme(`decanter.screenMargins.${key}`));
+    gutterSizes.map((screenGutter) => {
+      maxWdiths
 
-        maxWdiths[`@screen ${key}`] = {
-          maxWidth: 'calc(100vw - ' + (gutterWidth * 2) + 'px)',
-          paddingLeft: 0,
-          paddingRight: 0
-        };
-      }
-    });
+      maxWdiths['@screen ' + screenGutter.screen] = {
+        maxWidth: 'calc(100vw - ' + (screenGutter.gutterSize * 2) + 'px)',
+      };
+    })
 
     const components = {
       // Center an element horizontally.
-      '.centered-container, .cc': {
+      '.centered': {
         width: '100%',
-        paddingLeft: 0,
-        paddingRight: 0,
         marginLeft: 'auto',
         marginRight: 'auto',
+        maxWidth: 'calc(100vw - 100px)',
         ...maxWdiths,
         '@media only screen and (min-width: 1700px)': {
-          paddingLeft: 0,
-          paddingRight: 0,
           maxWidth: '1500px'
         },
       },
     };
 
-    addComponents(components);
+    addUtilities(components);
   };
 };

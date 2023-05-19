@@ -1,7 +1,7 @@
 const GlobalFooter = () => {
   return (
     <div className="su-global-footer su-basefont-20 su-rs-py-1 su-text-white su-bg-cardinal-red ">
-      <div className="su-cc su-flex su-flex-col lg:su-flex-row" title="Common Stanford resources">
+      <div className="su-centered su-flex su-flex-col lg:su-flex-row" title="Common Stanford resources">
         <div className="su-text-center su-mt-5 su-mb-9">
           <a className="su-logo su-text-white hocus:su-text-white su-type-3"
              href="https://www.stanford.edu"> Stanford <br/> University </a>

@@ -26,7 +26,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true,
 
   return (
     <section
-      className="su-relative su-cc"
+      className="su-relative su-centered"
       ref={ref}
       {...props}
     >

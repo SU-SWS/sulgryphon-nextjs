@@ -108,7 +108,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={node.status != undefined && !node.status}>
         <div className="su-bg-illuminating-light su-py-30 su-mb-20">
-          <div className="su-cc su-text-m2 su-flex su-gap-lg">
+          <div className="su-centered su-text-m2 su-flex su-gap-lg">
             <ExclamationCircleIcon width={40}/>
             Unpublished Page
           </div>
@@ -123,7 +123,7 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!fullWidth}>
         <div
-          className="su-cc su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[6rem]">
+          className="su-centered su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[8rem]">
 
           <Suspense fallback={<></>}>
             <SecondaryMenu menuItems={tree}/>

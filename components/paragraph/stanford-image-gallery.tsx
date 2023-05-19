@@ -18,7 +18,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
   const [modalOpen, setModalOpen] = useState('');
 
   return (
-    <div className="su-relative su-cc" {...props}>
+    <div className="su-relative su-centered" {...props}>
       {paragraph.su_gallery_headline && <h2 className="su-text-center su-type-5">{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description)}</div>}
 

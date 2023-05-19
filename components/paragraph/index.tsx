@@ -29,7 +29,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
     <>
       <Conditional showWhen={paragraph.status != undefined && !paragraph.status}>
         <div className="su-bg-illuminating-light su-py-30 su-mb-20">
-          <div className="su-cc su-text-m2 su-flex su-gap-lg">
+          <div className="su-centered su-text-m2 su-flex su-gap-lg">
             <ExclamationCircleIcon width={40}/>
             Unpublished Content
           </div>

@@ -84,7 +84,7 @@ const StanfordListsComponent = ({headline, description, link, view, styles, full
   }
 
   return (
-    <div className="su-@container su-relative su-cc" ref={ref} {...props}>
+    <div className="su-@container su-relative su-centered" ref={ref} {...props}>
       <div
         className="su-flex su-flex-col md:su-flex-row su-gap-xs md:su-gap-2xl su-mb-20 md:su-mb-0 ">
 

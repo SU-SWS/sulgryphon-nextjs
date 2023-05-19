@@ -19,12 +19,12 @@ const LibraryFooter = () => {
           <path d="M0,0 Q500,10 700,45 Q1200,130 1500,0" stroke="#fff" className="su-fill-white"></path>
         </svg>
       </div>
-      <div className="su-cc su-mb-50 su-mx-auto">
+      <div className="su-centered su-mb-50 su-mx-auto">
         <div className="su-mx-auto"><Lockup whiteText/></div>
       </div>
 
       <div
-        className="su-cc su-grid md:su-grid-cols-2 lg:su-grid-cols-4 su-w-full su-gap-2xl su-text-center md:su-text-left">
+        className="su-centered su-grid md:su-grid-cols-2 lg:su-grid-cols-4 su-w-full su-gap-2xl su-text-center md:su-text-left">
         <div>
           <address className="su-mb-30">
             557 Escondido Mall<br/>

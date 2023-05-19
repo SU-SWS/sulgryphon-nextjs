@@ -11,7 +11,7 @@ const SulContactCard = ({paragraph, fullWidth = true, ...props}: ContactCardProp
   const Component = paragraph.sul_contact__branch ? NodeReferenceCard : ManualFieldsCard;
   return (
     <div
-      className="su-relative su-cc" {...props}>
+      className="su-relative su-centered" {...props}>
       <Component paragraph={paragraph}/>
     </div>
   )

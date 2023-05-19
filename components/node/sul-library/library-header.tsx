@@ -6,6 +6,7 @@ import {MapPinIcon} from "@heroicons/react/24/outline";
 import Wave from "@/components/patterns/wave";
 import Image from "next/image";
 import LibraryHeaderHours from "./library-hours";
+import EmailLink from "@/components/patterns/email-link";
 
 const LibraryHeader = ({node}: { node: Library }) => {
   const bannerImageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
@@ -69,10 +70,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
                         className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
                         <EnvelopeIcon width={19}
                                       className="md:su-absolute md:su-left-[-38px] md:su-top-02em su-mt-01em md:su-mt-0 su-mr-12"/>
-                        <Link className="su-no-underline hocus:su-underline"
-                              href={`mailto:${node.su_library__email}`}>
-                          {node.su_library__email}
-                        </Link>
+                        <EmailLink email={node.su_library__email} className="su-no-underline hocus:su-underline"/>
                       </div>
                     }
                     {node.su_library__address &&

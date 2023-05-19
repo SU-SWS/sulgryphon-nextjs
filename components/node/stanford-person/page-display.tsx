@@ -14,6 +14,7 @@ import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
 import {DrupalParagraph} from "next-drupal";
 import Paragraph from "@/components/paragraph";
+import EmailLink from "@/components/patterns/email-link";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
   node.su_person_components = await fetchComponents(node.su_person_components ?? []) as DrupalParagraph[];
@@ -136,10 +137,10 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                   </Conditional>
                   <Conditional showWhen={node.su_person_email}>
                     <li>
-                      <Link href={`mailto:${node.su_person_email}`}>
-                        {node.su_person_email}
-                        <EnvelopeIcon width={20} className="su-inline-block su-ml-4"/>
-                      </Link>
+                      <EmailLink
+                        email={node.su_person_email}
+                      />
+                      <EnvelopeIcon width={20} className="su-inline-block su-ml-4 su-text-digital-blue"/>
                     </li>
                   </Conditional>
                 </ul>
