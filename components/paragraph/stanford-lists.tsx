@@ -62,14 +62,6 @@ const StanfordListsComponent = ({headline, description, link, view, styles, full
 
   const itemsToDisplay = isLoading ? [] : data;
 
-  const gridClasses = {
-    1: 'su-grid-cols-1',
-    2: 'su-grid-cols-2',
-    3: 'su-grid-cols-3',
-  };
-
-  const gridClass = !fullWidth ? gridClasses[1] : (itemsToDisplay?.length > 3 ? gridClasses[3] : gridClasses[itemsToDisplay?.length]);
-
   const displayNotGrid = () => {
     if (view?.resourceIdObjMeta?.display_id !== 'grid_list_all') {
       return view?.resourceIdObjMeta?.display_id;
@@ -167,10 +159,10 @@ const List = ({itemsToDisplay, isList, viewId, displayId, emptyMessage}) => {
   }
 
   return (
-    <ul className="su-list-unstyled su-grid @3xl:su-grid-cols-2 @7xl:su-grid-cols-3 su-gap-2xl">
+    <ul className="su-list-unstyled su-flex su-flex-wrap su-gap-2xl su-justify-around">
       {itemsToDisplay.map(item => (
         <li
-          className={'su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
+          className={'su-flex-1 su-min-w-[250px] su-max-w-[500px] su-mb-50 last:su-pb-0 su-border-[#c6c6c6] last:su-border-none ' + (isList ? 'su-border-b su-pb-50' : '')}
           key={item.id}>
 
           <ErrorBoundary

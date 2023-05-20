@@ -104,7 +104,7 @@ const StanfordEventCard = ({node, ...props}: Props) => {
   const placeholder = node.sul_event__image?.field_media_image?.uri.base64;
 
   return (
-    <article {...props} className="su-@container">
+    <article {...props} className="su-@container su-mx-auto">
       {imageUrl &&
         <div
           className={"su-overflow-hidden su-aspect-[4/3] su-relative"}

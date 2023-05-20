@@ -45,15 +45,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
   const isCentered = useIsCentered(centeredRef);
   entities = entities.filter(entity => entity.type !== 'unknown')
 
-  const gridColClasses = {
-    1: 'su-grid-cols-1',
-    2: '@3xl:su-grid-cols-2',
-    3: '@5xl:su-grid-cols-3',
-  }
-
-  const gridCols = entities.length >= 3 ? gridColClasses[3] : gridColClasses[entities.length];
   const wrapperClasses = styles?.background === 'black' ? 'su-text-white su-py-40' : '';
-
 
   return (
     // @ts-ignore
@@ -76,7 +68,7 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
         }
 
         {entities &&
-          <div className={"su-mb-40 su-flex su-flex-wrap su-gap-2xl " + gridCols} aria-live="polite">
+          <div className="su-mb-40 su-flex su-flex-wrap su-gap-2xl su-justify-around" aria-live="polite">
             {entities.map((item, i) =>
               <div key={item.id} className="su-min-w-[250px] su-flex-1">
                 <TeaserItem node={item} key={item.id} loadData={inView}/>
