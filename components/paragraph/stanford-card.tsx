@@ -29,7 +29,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
   const placeholder = image?.uri.base64;
 
   return (
-    <div className={"su-relative" + (!isHorizontal ? " su-centered lg:su-max-w-[980px] su-w-full su-mx-auto": "") + ((!isHorizontal && fullWidth) ? " su-px-50 xl:su-px-0": "")} {...props}>
+    <div className={"su-relative" + (!isHorizontal ? " su-centered lg:su-max-w-[980px] su-w-full su-mx-auto": "")} {...props}>
       {isHorizontalAndSingle &&
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}

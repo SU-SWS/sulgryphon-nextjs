@@ -11,8 +11,6 @@ module.exports = function () {
     ]
 
     gutterSizes.map((screenGutter) => {
-      maxWdiths
-
       maxWdiths['@screen ' + screenGutter.screen] = {
         maxWidth: 'calc(100vw - ' + (screenGutter.gutterSize * 2) + 'px)',
       };

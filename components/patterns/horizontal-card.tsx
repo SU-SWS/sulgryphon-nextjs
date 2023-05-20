@@ -33,7 +33,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
 
       {fullWidth &&
         <div
-          className={"su-w-screen su-ml-[calc(-50vw+50%)] su-absolute su-z-[-10]  su-h-full su-top-0 su-left-0"}>
+          className={"su-w-screen su-ml-[calc(-50vw+50%)] su-absolute su-z-[-10] su-h-full su-top-0 su-left-0"}>
           <div className="su-relative su-w-full su-h-full su-bg-black-true" {...props}>
             <CardSprinkles position={backgroundSprinkles}/>
           </div>
@@ -47,7 +47,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
       }
 
       <div
-        className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[9rem] su-p-40 lg:su-px-80">
+        className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[9rem] su-py-40 lg:su-px-80">
 
         <div className="su-flex su-flex-col @6xl:su-flex-row su-gap-2xl">
           <Conditional showWhen={image || video}>

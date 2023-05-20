@@ -15,7 +15,7 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
 
       {(node.sul_library__a11y || node.su_library__hours) &&
         <div
-          className={"su-max-w-1500 su-w-full su-mx-auto su-mb-50 su-flex su-flex-col @6xl:su-flex-row su-gap-2xl" + (fullWidth ? " su-px-50 3xl:su-px-0" : "")}>
+          className="su-centered su-mb-50 su-flex su-flex-col @6xl:su-flex-row su-gap-2xl">
           {node.sul_library__a11y &&
             <div className="su-order-last lg:su-order-first su-flex-1">
               <h2 className="su-text-m3">Accessibility</h2>
