@@ -1,5 +1,3 @@
-import "server-only";
-
 import {cache} from "./get-cache"
 
 interface AccessToken {

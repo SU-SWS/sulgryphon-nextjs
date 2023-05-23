@@ -80,6 +80,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
         <StanfordWysiwyg text={paragraph.su_wysiwyg_text} {...props}/>}
 
       {paragraph.type === 'paragraph--stanford_lists' &&
+        /* @ts-expect-error Async Server Component */
         <StanfordLists
           headline={paragraph.su_list_headline}
           description={paragraph.su_list_description}
@@ -91,6 +92,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
       }
 
       {paragraph.type === 'paragraph--stanford_entity' &&
+        /* @ts-expect-error Async Server Component */
         <StanfordEntity
           headline={paragraph.su_entity_headline}
           description={paragraph.su_entity_description}

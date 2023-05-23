@@ -1,6 +1,4 @@
 // @ts-nocheck
-import "server-only";
-
 import {stringify} from "qs"
 import {GetStaticPropsContext} from "next";
 import {AccessToken, Locale} from "next-drupal/src/types";

@@ -1,6 +1,4 @@
 // @ts-nocheck
-import "server-only";
-
 import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal";
 import {GetStaticPropsContext} from "next";
 import {buildHeaders, buildUrl} from "@/lib/drupal/utils";

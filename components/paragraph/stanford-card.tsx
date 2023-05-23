@@ -22,7 +22,6 @@ interface Props extends PropsWithoutRef<any> {
 
 const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
   const isHorizontal = orientation === 'horizontal';
-  const isHorizontalAndSingle = isHorizontal && singleRow;
 
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
@@ -30,7 +29,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
 
   return (
     <div className={"su-relative" + (!isHorizontal ? " su-centered lg:su-max-w-[980px] su-w-full su-mx-auto": "")} {...props}>
-      {isHorizontalAndSingle &&
+      {isHorizontal &&
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
           image={imageUrl && <Image
@@ -51,7 +50,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
         />
       }
 
-      {!isHorizontalAndSingle &&
+      {!isHorizontal &&
         <Card
           video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
           image={imageUrl && <Image

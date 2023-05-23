@@ -2,7 +2,7 @@
  * Centered container.
  */
 module.exports = function () {
-  return function ({addUtilities}) {
+  return function ({addComponents}) {
     const maxWdiths = {};
 
     const gutterSizes = [
@@ -30,6 +30,6 @@ module.exports = function () {
       },
     };
 
-    addUtilities(components);
+    addComponents(components);
   };
 };

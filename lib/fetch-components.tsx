@@ -1,9 +1,7 @@
-import "server-only";
-
 import {getResource} from "@/lib/drupal/get-resource";
 import {JsonApiResource} from "next-drupal";
 
-const fetchComponents = async (components: JsonApiResource[]): Promise<JsonApiResource[]> => {
+async function fetchComponents<T>(components: JsonApiResource[]) {
   const requests: PromiseLike<any>[] = [];
   components.map(component => requests.push(getResource(component.type, component.id)));
   // @ts-ignore

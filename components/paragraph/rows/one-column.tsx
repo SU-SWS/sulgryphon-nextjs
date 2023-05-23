@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const OneColumn = ({items, config = {}, fullWidth = true}: LayoutProps) => {
   return (
-    <div data-rows="one-column" className="su-relative su-grid su-grid-col su-gap-2xl">
+    <div data-rows="one-column" className="su-relative su-grid su-grid-col su-gap-[90px]">
       {items.map(item =>
         <Paragraph
           key={item.id}

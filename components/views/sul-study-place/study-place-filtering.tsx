@@ -2,18 +2,19 @@
 
 import {useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
+import {StudyPlace} from "../../../lib/drupal/drupal";
 import Select from "react-select";
+import Conditional from "../../utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
-import Conditional from "@/components/utils/conditional";
-import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
-import {StudyPlace} from "@/lib/drupal/drupal";
+import SulStudyPlaceCard from "../../node/sul-study-place/card";
 
 interface SelectOption {
   value: string
   label: string
 }
 
-const StudyPlaceFilteringList = ({items}) => {
+const StudyPlacesFiltering = ({items}) => {
+
   const typeRef = useRef(null);
   const libraryRef = useRef(null);
   const featureRef = useRef(null);
@@ -169,5 +170,4 @@ const StudyPlaceFilteringList = ({items}) => {
     </>
   )
 }
-
-export default StudyPlaceFilteringList;
+export default StudyPlacesFiltering;

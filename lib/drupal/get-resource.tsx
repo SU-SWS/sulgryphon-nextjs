@@ -1,6 +1,4 @@
 // @ts-nocheck
-import "server-only";
-
 import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal/src/types";
 import {stringify} from "qs"
 

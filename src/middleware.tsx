@@ -3,14 +3,6 @@ import {NextRequest, NextResponse} from "next/server";
 export const middleware = (request: NextRequest) => {
   const response = NextResponse.next()
 
-  // if (process.env.NEXT_PUBLIC_DOMAIN && process.env.NEXT_PUBLIC_DOMAIN !== request.nextUrl.host) {
-    // const pathName = request.nextUrl.pathname;
-    // const search = request.nextUrl.search;
-    // const protocol = request.nextUrl.protocol;
-    // return NextResponse.redirect(`${protocol}//${process.env.NEXT_PUBLIC_DOMAIN}${pathName}${search}`);
-  // }
-
-
   if (request.nextUrl.pathname.startsWith('/api/preview')) {
     const midnight = new Date();
     midnight.setHours(23);

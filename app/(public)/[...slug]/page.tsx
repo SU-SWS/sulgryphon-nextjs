@@ -14,6 +14,7 @@ import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
+import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 
 export const revalidate = 1800;
 
@@ -141,23 +142,36 @@ const NodePage = async (context) => {
 export default NodePage;
 
 export const generateStaticParams = async (context) => {
-  let paths: GetStaticPathsResult["paths"] = []
 
-  const contentPaths = await Promise.all([
-    getPathsFromContext('node--stanford_page', {}),
-    getPathsFromContext('node--stanford_person', {}),
-    getPathsFromContext('node--stanford_event', {}),
-    getPathsFromContext('node--stanford_news', {}),
-    getPathsFromContext('node--sul_library', {})
-  ]);
-  contentPaths.map(contentTypePaths => {
-    paths = [...paths, ...contentTypePaths];
-  });
+  const params = new DrupalJsonApiParams();
+  params.addPageLimit(50);
 
-  // @ts-ignore
-  if (process.env.LOCAL_STATIC_BUILD_PAGES >= 1) {
-    // @ts-ignore
-    paths = paths.slice(0, process.env.LOCAL_STATIC_BUILD_PAGES)
+  let paths: GetStaticPathsResult["paths"] = await getPathsFromContext([
+    'node--stanford_page',
+    'node--stanford_event',
+    'node--stanford_news',
+    'node--stanford_person',
+    'node--sul_library'
+  ], {}, {params: params.getQueryObject()});
+
+  let fetchMore = process.env.BUILD_COMPLETE === 'true';
+  let fetchedData: GetStaticPathsResult["paths"] = []
+  let page = 1;
+  while (fetchMore) {
+    console.log('Fetching page ' + page);
+    params.addPageOffset(page * 50);
+
+    fetchedData = await getPathsFromContext([
+      'node--stanford_page',
+      'node--stanford_event',
+      'node--stanford_news',
+      'node--stanford_person',
+      'node--sul_library'
+    ], {}, {params: params.getQueryObject()})
+    paths = [...paths, ...fetchedData];
+    fetchMore = fetchedData.length > 0;
+    page++;
   }
-  return paths.map(path => typeof path !== "string" ? path?.params : path);
+
+  return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (process.env.BUILD_COMPLETE ? -1 : 5));
 }

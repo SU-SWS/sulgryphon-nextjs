@@ -6,7 +6,6 @@ import StanfordPage from "@/components/node/stanford-page/page-display";
 import StanfordPerson from "@/components/node/stanford-person/page-display";
 import StanfordPublication from "@/components/node/stanford-publication/page-display";
 import SulLibrary from "@/components/node/sul-library/page-display";
-import StudyPlaces from "@/components/views/study-places";
 
 interface NodeProps {
   node: any
@@ -30,8 +29,6 @@ export const NodePageDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_publication" && <StanfordPublication node={node} {...props}/>}
       {/* @ts-expect-error Async Server Component */}
       {node.type === "node--sul_library" && <SulLibrary node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
-      {node.type === "node--sul_study_place" && <StudyPlaces node={node} {...props}/>}
     </>
   )
 }

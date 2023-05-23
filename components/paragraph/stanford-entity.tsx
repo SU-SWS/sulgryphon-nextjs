@@ -1,62 +1,34 @@
-"use client";
-
-import Conditional from "@/components/utils/conditional";
 import formatHtml from "@/lib/format-html";
 import NodeCardDisplay from "@/components/node/node-card";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {PropsWithoutRef, useEffect, useRef} from "react";
-import {ErrorBoundary} from "react-error-boundary";
+import {PropsWithoutRef} from "react";
 import {DrupalLink} from "@/lib/drupal/drupal";
-import useIsCentered from "@/lib/hooks/useIsCentered";
-import {useInView} from "react-intersection-observer";
-import CachedClientFetch from "@/components/utils/cached-client-fetch";
-import useDataFetch from "@/lib/hooks/useDataFetch";
 import {DrupalNode} from "next-drupal";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
+import fetchComponents from "@/lib/fetch-components";
 
 interface EntityProps extends PropsWithoutRef<any> {
   headline?: string
   description?: string
   link?: DrupalLink
   entities: DrupalNode[]
+  fullWidth?: boolean
   styles?: {
     orientation?: string
     background
   }
-  fullWidth?: boolean
 }
 
-const StanfordEntity = (props: EntityProps) => {
-  return (
-    <ErrorBoundary
-      fallback={<></>}
-      onError={e => console.error(e.message)}
-    >
-      <CachedClientFetch>
-        <StanfordEntityComponent {...props}/>
-      </CachedClientFetch>
-    </ErrorBoundary>
-  )
-}
-
-const StanfordEntityComponent = ({headline, description, link, entities = [], styles, fullWidth = true, ...props}: EntityProps) => {
-  const {ref, inView} = useInView({triggerOnce: true});
-  const centeredRef = useRef(null);
-  const isCentered = useIsCentered(centeredRef);
-  entities = entities.filter(entity => entity.type !== 'unknown')
+const StanfordEntity = async ({headline, description, link, styles, entities = [], fullWidth = true, ...props}: EntityProps) => {
+  const items = await fetchComponents<DrupalNode[]>(entities ?? []);
+  const entityItems = items.filter(item => item)
 
   const wrapperClasses = styles?.background === 'black' ? 'su-text-white su-py-40' : '';
 
   return (
     // @ts-ignore
-    <div className="su-@container su-relative su-centered"
-         ref={ref} {...props}>
-      <div ref={centeredRef} className={wrapperClasses}>
-        <Conditional showWhen={styles?.background === 'black'}>
-          <div
-            className={"su-absolute su-z-[-10] su-h-full su-top-0 su-bg-black-true " + (isCentered ? "su-w-screen su-left-[calc(-50vw+50%)]" : "su-w-full")}/>
-        </Conditional>
-
+    <div className="su-@container su-relative su-centered" {...props}>
+      <div className={wrapperClasses}>
         {headline &&
           <h2 className="su-text-left su-type-5 su-mb-40">
             <AboveHeaderBorder/>
@@ -69,9 +41,9 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
 
         {entities &&
           <div className="su-mb-40 su-flex su-flex-wrap su-gap-2xl su-justify-around" aria-live="polite">
-            {entities.map((item, i) =>
-              <div key={item.id} className="su-min-w-[250px] su-flex-1">
-                <TeaserItem node={item} key={item.id} loadData={inView}/>
+            {entityItems.map((item, i) =>
+              <div key={item.id} className="su-min-w-[250px] @6xl:su-min-w-[400px] su-flex-1">
+                <NodeCardDisplay node={item}/>
               </div>
             )}
           </div>
@@ -85,19 +57,6 @@ const StanfordEntityComponent = ({headline, description, link, entities = [], st
     </div>
   )
 
-}
-
-const TeaserItem = ({node, loadData}) => {
-
-  const {data, isRefetchError, isSuccess, refetch} = useDataFetch(`/api/entity/${node.type}/${node.id}`, [], {enabled: false})
-
-  useEffect(() => {
-    if (loadData && !isRefetchError && !isSuccess) refetch();
-  }, [loadData])
-
-  return (
-    <NodeCardDisplay node={data ?? node}/>
-  )
 }
 
 
