@@ -1,6 +1,3 @@
-"use client";
-
-import {ErrorBoundary} from "react-error-boundary";
 import StanfordCourseListItem from "@/components/node/stanford-course/list-item";
 import StanfordEventListItem from "@/components/node/stanford-event/list-item";
 import StanfordEventSeriesListItem from "@/components/node/stanford-event-series/list-item";
@@ -16,10 +13,7 @@ interface NodeProps {
 }
 const NodeListDisplay = ({node, ...props}: NodeProps) => {
   return (
-    <ErrorBoundary
-      fallback={<div>We are sorry. An error occurred while trying to display this content.</div>}
-      onError={e => console.error(e.message)}
-    >
+    <>
       {node.type === "node--stanford_course" && <StanfordCourseListItem node={node} {...props}/>}
       {node.type === "node--stanford_event" && <StanfordEventListItem node={node} {...props}/>}
       {node.type === "node--stanford_event_series" && <StanfordEventSeriesListItem node={node} {...props}/>}
@@ -29,7 +23,7 @@ const NodeListDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_publication" && <StanfordPublicationListItem node={node} {...props}/>}
       {node.type === "node--sul_library" && <SulLibraryListItem node={node} {...props}/>}
       {node.type === "node--sul_study_place" && <SulStudyPlaceListItem node={node} {...props}/>}
-    </ErrorBoundary>
+    </>
   )
 }
 

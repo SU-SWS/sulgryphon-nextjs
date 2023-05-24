@@ -1,6 +1,5 @@
 "use client"
 
-import {deserialize} from "@/lib/drupal/deserialize";
 import useDataFetch from "@/lib/hooks/useDataFetch";
 
 export interface DayHours {
@@ -24,44 +23,12 @@ export interface LocationHours {
   ]
 }
 
-export interface LibraryHoursType {
-  [key: string]: LocationHours
-}
-
 const useLibraryHours = (branchId: string | null = null) => {
-  const {isLoading, error, data} = useDataFetch('https://library-hours.stanford.edu/libraries.json');
+  const {isLoading, error, data: locations} = useDataFetch('/api/library-hours');
 
   if (isLoading) return [];
   if (error) return []
 
-
-  const deserializedData = deserialize(data);
-  if (!deserializedData) {
-    return [];
-  }
-
-  const locations = {};
-  deserializedData.map(place => {
-    locations[place.id.toLowerCase()] = {
-      name: place.name,
-      type: place.type,
-      primaryHours: place.hours,
-      additionalLocations: []
-    }
-
-    place.locations.map(additionalPlace => {
-      const location = data.included.find(a => a.id == additionalPlace.id);
-
-      if (location.attributes.primary) {
-        return;
-      }
-      locations[place.id.toLowerCase()].additionalLocations.push({
-        id: additionalPlace.id.toLowerCase(),
-        name: additionalPlace.name,
-        hours: location.attributes.hours
-      })
-    })
-  });
   return branchId ? locations[branchId] : locations;
 }
 export default useLibraryHours;

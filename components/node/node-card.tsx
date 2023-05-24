@@ -1,6 +1,3 @@
-"use client";
-
-import {ErrorBoundary} from "react-error-boundary";
 import {PropsWithRef} from "react";
 import StanfordCourseCard from "@/components/node/stanford-course/card";
 import StanfordEventCard from "@/components/node/stanford-event/card";
@@ -12,16 +9,13 @@ import StanfordPublicationCard from "@/components/node/stanford-publication/card
 import SulLibraryCard from "@/components/node/sul-library/card";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 
-interface NodeProps extends PropsWithRef<any>{
+interface NodeProps extends PropsWithRef<any> {
   node: any
 }
 
 const NodeCardDisplay = ({node, ...props}: NodeProps) => {
   return (
-    <ErrorBoundary
-      fallback={<div>We are sorry. An error occurred while trying to display this content.</div>}
-      onError={e => console.error(e.message)}
-    >
+    <>
       {node.type === "node--stanford_course" && <StanfordCourseCard node={node} {...props}/>}
       {node.type === "node--stanford_event" && <StanfordEventCard node={node} {...props}/>}
       {node.type === "node--stanford_event_series" && <StanfordEventSeriesCard node={node} {...props}/>}
@@ -31,7 +25,7 @@ const NodeCardDisplay = ({node, ...props}: NodeProps) => {
       {node.type === "node--stanford_publication" && <StanfordPublicationCard node={node} {...props}/>}
       {node.type === "node--sul_library" && <SulLibraryCard node={node} {...props}/>}
       {node.type === "node--sul_study_place" && <SulStudyPlaceCard node={node} {...props}/>}
-    </ErrorBoundary>
+    </>
   )
 }
 

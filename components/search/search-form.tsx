@@ -1,6 +1,5 @@
 "use client";
 
-import {MagnifyingGlassIcon} from "@heroicons/react/20/solid";
 import {Suspense, useId, useRef} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 

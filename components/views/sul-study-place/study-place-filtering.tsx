@@ -2,11 +2,11 @@
 
 import {useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
-import {StudyPlace} from "../../../lib/drupal/drupal";
+import {StudyPlace} from "@/lib/drupal/drupal";
 import Select from "react-select";
 import Conditional from "../../utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
-import SulStudyPlaceCard from "../../node/sul-study-place/card";
+import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 
 interface SelectOption {
   value: string

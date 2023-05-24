@@ -1,20 +1,14 @@
 "use client";
 
 import {ClockIcon} from "@heroicons/react/24/outline";
-import {ErrorBoundary} from "react-error-boundary";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 
 const StudyPlaceHours = ({hoursId}: { hoursId: string }) => {
   return (
-    <ErrorBoundary
-      fallback={<></>}
-      onError={e => console.error(e.message)}
-    >
-      <CachedClientFetch>
-        <StudyPlaceHoursComponent hoursId={hoursId}/>
-      </CachedClientFetch>
-    </ErrorBoundary>
+    <CachedClientFetch>
+      <StudyPlaceHoursComponent hoursId={hoursId}/>
+    </CachedClientFetch>
   )
 }
 

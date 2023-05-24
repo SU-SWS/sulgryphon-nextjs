@@ -107,15 +107,6 @@ const NodePage = async (context) => {
         </InternalHeaderBanner>
       </Conditional>
 
-      <Conditional showWhen={node.status != undefined && !node.status}>
-        <div className="su-bg-illuminating-light su-py-30 su-mb-20">
-          <div className="su-centered su-text-m2 su-flex su-gap-lg">
-            <ExclamationCircleIcon width={40}/>
-            Unpublished Page
-          </div>
-        </div>
-      </Conditional>
-
       <Conditional showWhen={fullWidth}>
         <div>
           <NodePageDisplay node={node}/>

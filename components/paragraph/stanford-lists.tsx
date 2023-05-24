@@ -23,16 +23,20 @@ const ListParagraph = async ({headline, description, link, view, styles, fullWid
   let args: string = view?.resourceIdObjMeta?.arguments ?? '';
   const itemsToDisplay: number = view?.resourceIdObjMeta?.items_to_display ?? -1;
 
-  {/* @ts-expect-error Async Server Component */}
-  const viewDisplay = <View
-    viewId={viewId}
-    displayId={displayId}
-    itemsToDisplay={itemsToDisplay}
-    args={args}
-    emptyMessage={styles?.list_paragraph?.empty_message}
-  />
+  let viewDisplay;
 
-  if (styles?.list_paragraph?.hide_empty && viewDisplay.type() === null) {
+  if (viewId && displayId) {
+    /* @ts-expect-error Async Server Component */
+    viewDisplay = <View
+      viewId={viewId}
+      displayId={displayId}
+      itemsToDisplay={itemsToDisplay}
+      args={args}
+      emptyMessage={styles?.list_paragraph?.empty_message}
+    />
+  }
+
+  if (styles?.list_paragraph?.hide_empty && (!viewDisplay || viewDisplay.type() === null)) {
     return null;
   }
 

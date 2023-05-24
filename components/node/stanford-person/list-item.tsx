@@ -1,5 +1,3 @@
-"use client";
-
 import {Person} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import Link from "next/link";
