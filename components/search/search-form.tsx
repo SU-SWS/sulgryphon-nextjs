@@ -53,7 +53,7 @@ const SearchFormComponent = ({action = '/search', inputProps = {}, ...props}: Fo
         </div>
         <button
           type="submit"
-          className="su-rounded-full su-p-15 su-bg-digital-red hover:su-bg-black su-transition su-text-white"
+          className="su-rounded-full su-p-15 su-bg-digital-red hover:su-bg-cardinal-red-dark su-transition su-text-white hocus:su-underline"
         >
           Search
         </button>

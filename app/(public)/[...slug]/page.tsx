@@ -10,7 +10,6 @@ import Conditional from "@/components/utils/conditional";
 import LibraryHeader from "@/components/node/sul-library/library-header";
 import {Library} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
-import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
