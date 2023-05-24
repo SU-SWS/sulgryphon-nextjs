@@ -3,7 +3,9 @@ import {deserialize} from "@/lib/drupal/deserialize";
 import {NextResponse} from "next/server";
 
 export const GET = async () => {
-  const data = await fetch('https://library-hours.stanford.edu/libraries.json')
+  const revalidateIn = (60 - new Date().getMinutes()) * 60
+  console.log(revalidateIn);
+  const data = await fetch('https://library-hours.stanford.edu/libraries.json', {next: {revalidate: revalidateIn}})
     .then(res => res.json())
     .catch(e => {
       console.error(e);

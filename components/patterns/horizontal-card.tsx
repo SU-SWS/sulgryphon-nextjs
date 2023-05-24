@@ -46,8 +46,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
         </FullScreenBackground>
       }
 
-      <div
-        className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[9rem] su-py-40 lg:su-px-80">
+      <div className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[27px] @6xl:su-mt-0 su-pt-[5.8rem] su-pb-[7.2rem] lg:su-px-80">
 
         <div className="su-flex su-flex-col @6xl:su-flex-row su-gap-2xl">
           <Conditional showWhen={image || video}>
