@@ -31,21 +31,23 @@ const LibraryAdditionalHoursComponent = ({hoursId}) => {
   }
 
   return (
-    <div className="su-flex-1">
-      <h2 className="su-text-m3">Additional Hours</h2>
-      {additionalLocations.map(location =>
-        <div key={location.id} className="su-grid su-grid-cols-1-1 su-mb-30">
-          <div id={id + `-${location.id}`}>{location.name}</div>
-          <Select
-            className="su-text-black-true"
-            instanceId={`${location.id}-additional-hours`}
-            aria-labelledby={id + `-${location.id}`}
-            options={getLibrarySelectOptions(location.hours)}
-            defaultValue={getLibrarySelectOptions(location.hours).find(option => option.value === today)}
-            isSearchable={false}
-          />
-        </div>
-      )}
+    <div className="su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center">
+      <div className="">
+        <h2 className="su-text-m3">Additional Hours</h2>
+        {additionalLocations.map(location =>
+          <div key={location.id} className="su-grid @3xl:su-grid-cols-1-1 su-mb-30 last:su-mb-0">
+            <div id={id + `-${location.id}`}>{location.name}</div>
+            <Select
+              className="su-text-black-true"
+              instanceId={`${location.id}-additional-hours`}
+              aria-labelledby={id + `-${location.id}`}
+              options={getLibrarySelectOptions(location.hours)}
+              defaultValue={getLibrarySelectOptions(location.hours).find(option => option.value === today)}
+              isSearchable={false}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 }
