@@ -53,7 +53,7 @@ const SearchResultItem = ({item}: { item: Metadata }) => {
     year: 'numeric'
   }) : null;
 
-  const title = item.title.replace(' | ' + process.env.NEXT_PUBLIC_SITE_NAME, '');
+  const title = (item.title as string)?.replace(' | ' + process.env.NEXT_PUBLIC_SITE_NAME, '');
   return (
     <>
       <Link href={item.other?.path as string ?? '#'} className="su-no-underline hocus:su-underline">
