@@ -31,8 +31,8 @@ const LibraryAdditionalHoursComponent = ({hoursId}) => {
   }
 
   return (
-    <div className="su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
-      <div className="">
+    <div className="su-relative su-z-[1] su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
+      <div className="su-w-full">
         <h2 className="su-text-m3">Additional Hours</h2>
         {additionalLocations.map(location =>
           <div key={location.id} className="su-grid @3xl:su-grid-cols-1-1 su-mb-30 last:su-mb-0">
