@@ -38,7 +38,7 @@ const LibraryAdditionalHoursComponent = ({hoursId}) => {
           <div key={location.id} className="su-grid @3xl:su-grid-cols-1-1 su-mb-30 last:su-mb-0">
             <div id={id + `-${location.id}`} className="su-flex su-items-center">{location.name}</div>
             <SelectList
-              className="su-flex su-items-center"
+              className="su-flex su-items-center "
               aria-labelledby={id + `-${location.id}`}
               options={getLibrarySelectOptions(location.hours)}
               defaultValue={getLibrarySelectOptions(location.hours).find(option => option.value === today)}

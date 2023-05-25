@@ -11,43 +11,88 @@ const SelectList = ({selectRef = null, ...props}: Props) => {
 
   const isStyling = false;
   return (
-    <Select
-      ref={selectRef}
-      unstyled
-      menuShouldScrollIntoView
-      hideSelectedOptions={false}
-      closeMenuOnSelect={!isMulti}
-      styles={{
-
-      }}
-      classNames={{
-        option: (state) => "su-p-10 su-transition " + (state.isDisabled ? "su-text-black-50": (state.isFocused ? 'su-bg-cardinal-red-dark su-text-white su-underline' : (state.isSelected ? ' su-bg-black-10' : ''))),
-        clearIndicator: (state) => (state.isFocused ? "su-underline" : "hocus:su-underline"),
-        container: (state) => "su-text-black",
-        control: (state) => "su-shadow-md su-border su-border-black-10 su-p-10 " + (state.isFocused ? ' su-border-digital-red su-border-2' : ''),
-        dropdownIndicator: (state) => "",
-        group: (state) => "",
-        groupHeading: (state) => "",
-        indicatorsContainer: (state) => "",
-        indicatorSeparator: (state) => "",
-        input: (state) => "",
-        loadingIndicator: (state) => "",
-        loadingMessage: (state) => "",
-        menu: (state) => "su-shadow-md su-border su-border-black-10 su-bg-white",
-        menuList: (state) => "",
-        menuPortal: (state) => "",
-        multiValue: (state) => "",
-        multiValueLabel: (state) => "",
-        multiValueRemove: (state) => "su-hidden",
-        noOptionsMessage: (state) => "",
-        placeholder: (state) => "su-text-black-70",
-        singleValue: (state) => "",
-        valueContainer: (state) => "",
-      }}
-      defaultMenuIsOpen={isStyling}
-      instanceId={`${formId}-hours`}
-      {...props}
-    />
+    <div className="su-relative su-w-full su-z-[10]">
+      <Select
+        ref={selectRef}
+        menuShouldScrollIntoView
+        hideSelectedOptions={false}
+        closeMenuOnSelect={!isMulti}
+        isClearable={false}
+        instanceId={formId}
+        styles={{
+          clearIndicator: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          container: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          dropdownIndicator: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          group: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          groupHeading: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          indicatorSeparator: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          indicatorsContainer: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          input: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          loadingIndicator: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          loadingMessage: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          menu: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          menuList: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          menuPortal: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          multiValue: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          multiValueLabel: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          multiValueRemove: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          noOptionsMessage: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          option: (baseStyles, state) => ({
+            ...baseStyles,
+            // backgroundColor:  state.isSelected ? "" : (state.isDisabled ? "#C0C0BF" : (state.isFocused ? "#E50808": "")),
+            // color: state.isSelected ? "" : (state.isDisabled ? "#FFFFF" : (state.isFocused ? "#000000": "#000000"))
+          }),
+          placeholder: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          singleValue: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+          valueContainer: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+        }}
+        defaultMenuIsOpen={isStyling}
+        {...props}
+      />
+    </div>
   )
 }
 

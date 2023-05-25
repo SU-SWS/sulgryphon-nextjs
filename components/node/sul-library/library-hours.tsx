@@ -1,6 +1,5 @@
 "use client";
 
-import {useId} from "react";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
@@ -24,7 +23,6 @@ const LibraryHeaderHoursComponent = ({hoursId}: {  hoursId: string }) => {
   if (!hoursId) {
     return null;
   }
-  const inputId = useId();
   const hours = useTodayLibraryHours(hoursId);
 
   if (!hours) {

@@ -54,15 +54,12 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className="lg:su-hidden su-w-5/6 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
-        aria-haspopup="true"
         aria-expanded={menuOpen ? "true" : "false"}
       >
-        <span aria-hidden={true} className="su-block su-p-20 su-flex-grow su-font-semibold su-relative su-text-left">
+        <span className="su-block su-p-20 su-flex-grow su-font-semibold su-relative su-text-left">
           {currentPageTitle}
         </span>
         <ChevronDownIcon width={40} className="su-mr-20"/>
-
-        <span className="su-sr-only">{menuOpen ? 'Close' : 'Open'} Side Navigation</span>
       </button>
 
 
@@ -123,12 +120,11 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
             <button
               className="su-mr-20 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-15 after:su-z-5 hover:after:su-bg-cardinal-red"
               onClick={subnavOpenClose}
-              aria-haspopup="true"
               aria-expanded={submenuOpen ? "true" : "false"}
             >
               <ChevronDownIcon width={40} className={"su-transition-all" + (submenuOpen ? " su-scale-y-[-1]" : "")}/>
               <span
-                className="su-sr-only">{(submenuOpen ? "Collapse" : "Expand") + " \"" + title.trim() + "\" submenu"}</span>
+                className="su-sr-only">{title.trim() + " submenu"}</span>
             </button>
           </div>
         </Conditional>

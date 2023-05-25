@@ -136,12 +136,11 @@ const StudyPlacesFiltering = ({items}) => {
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
-        <p>Showing {itemsToDisplay.length} of {items.length}</p>
+        <p aria-live="polite">Showing {itemsToDisplay.length} of {items.length}</p>
         <Conditional showWhen={itemsToDisplay.length > 0}>
           <ul
             ref={parent}
             className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl su-rs-pt-1"
-            aria-live="polite"
           >
             {itemsToDisplay.map(item =>
               <li key={item.id} className="su-rs-mb-3 md:su-mb-0">

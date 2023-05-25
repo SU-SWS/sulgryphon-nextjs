@@ -41,7 +41,6 @@ const MainMenu = ({menuItems}) => {
       <button
         className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
         onClick={openCloseMenu}
-        aria-haspopup="true"
         aria-expanded={menuOpen ? "true" : "false"}
       >
         <MobileOpenMenuButtonIcon open={menuOpen} addCloseAnimation={addCloseAnimation}/>
@@ -223,7 +222,6 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
           tabIndex={tabIndex}
           className={"su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
-          aria-haspopup="true"
           aria-expanded={submenuOpen ? "true" : "false"}
         >
           <span
@@ -248,7 +246,6 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
             menuLevel={menuLevel}
             onButtonClick={openCloseSubmenu}
             title={title}
-            aria-haspopup="true"
             aria-expanded={submenuOpen ? "true" : "false"}
             tabIndex={tabIndex}
           />
@@ -297,7 +294,7 @@ const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => 
       <ChevronDownIcon
         className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (isOpen ? " su-scale-y-[-1]" : "")}
         height={40}/>
-      <span className="su-sr-only">{(isOpen ? "Collapse" : "Expand") + " \"" + title.trim() + "\" submenu"}</span>
+      <span className="su-sr-only">{title.trim() + " submenu"}</span>
     </button>
   )
 }

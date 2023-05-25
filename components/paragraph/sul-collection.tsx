@@ -33,7 +33,7 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
       </Conditional>
 
       <div className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row">
-        <div className="su-list-unstyled @5xl:su-w-1/3" role="tablist" aria-labelledby={`${elementId}-heading`}>
+        <div className="@5xl:su-w-1/3" role="tablist" aria-labelledby={`${elementId}-heading`}>
           {cards.map(card =>
             <button
               type="button"
