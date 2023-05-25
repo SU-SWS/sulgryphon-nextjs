@@ -37,11 +37,13 @@ const Header = async () => {
           className="su-pt-20 su-bg-white su-max-w-1500 su-w-full su-mx-auto su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
           <Lockup className="su-pb-20"/>
 
-          <div className="su-hidden lg:su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
-            <HeaderLink href="https://mylibrary.stanford.edu/" text="Accessibility"/>
-            <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account"/>
-            <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
-          </div>
+          <nav className="su-hidden lg:su-block">
+            <ul className="su-list-unstyled su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
+              <HeaderLink href="https://mylibrary.stanford.edu/" text="Accessibility"/>
+              <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account"/>
+              <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
+            </ul>
+          </nav>
         </div>
         <Suspense fallback={<FallbackMainMenu menuItems={tree}/>}>
           <MainMenu menuItems={tree}/>
@@ -52,7 +54,7 @@ const Header = async () => {
 }
 
 const HeaderLink = ({href, text}) => {
-  return <Link className="su-text-black su-text-18 su-font-normal" href={href}>{text}</Link>
+  return <li><Link className="su-text-black su-text-18 su-font-normal" href={href}>{text}</Link></li>
 }
 
 export default Header;

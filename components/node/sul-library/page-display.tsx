@@ -17,7 +17,7 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
         <div
           className="su-centered su-mb-50 su-flex su-flex-col @6xl:su-flex-row su-gap-[90px]">
           {node.sul_library__a11y &&
-            <div className="su-order-last @6xl:su-order-first su-flex-1">
+            <div className="su-order-last @6xl:su-order-first su-flex-1 su-basis-1/2">
               <div className="su-shadow-md su-py-20 su-px-30 su-w-fit su-mx-auto su-border su-border-black-10">
                 <h2 className="su-text-m3">Accessibility</h2>
                 {formatHtml(node.sul_library__a11y)}

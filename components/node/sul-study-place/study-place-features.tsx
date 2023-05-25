@@ -17,9 +17,10 @@ interface ModalProps extends PropsWithoutRef<any> {
   libCal?: string
   imagePlaceholder?: string
   type: string
+  headingId?: string
 }
 
-const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, contactImageAlt, contactImageUrl, features, libCal, type, imagePlaceholder}: ModalProps) => {
+const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, contactImageAlt, contactImageUrl, features, libCal, type, imagePlaceholder, headingId}: ModalProps) => {
 
   return (
     <div
@@ -52,7 +53,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
       <div className="card-body su-items-start su-rs-px-3 su-rs-pb-3 su-rs-pt-7 md:su-rs-pt-3 su-w-full">
         <div className="su-leading-display su-text-18 su-pt-0 su-font-normal ">
-          <h2 className="su-type-3 su-rs-mb-1">{type}</h2>
+          <h2 id={headingId} className="su-type-3 su-rs-mb-1">{type}</h2>
           <div className="su-leading-tight">
 
             {branchHours &&

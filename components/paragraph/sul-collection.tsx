@@ -33,27 +33,32 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
       </Conditional>
 
       <div className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row">
-        <ul className="su-list-unstyled @5xl:su-w-1/3">
+        <div className="su-list-unstyled @5xl:su-w-1/3" role="tablist" aria-labelledby={`${elementId}-heading`}>
           {cards.map(card =>
-            <li key={'button-' + card.id}>
-              <button
-                id={elementId + 'button-' + card.id}
-                className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left " + (displayedCard === card.id ? 'su-bg-black-20 su-text-archway-light' : '')}
-                onClick={() => setDisplayedCard(card.id)}
-              >
-                {card.sul_card_info}
-              </button>
-            </li>
+            <button
+              type="button"
+              key={'button-' + card.id}
+              id={elementId + 'button-' + card.id}
+              className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left hocus:su-underline " + (displayedCard === card.id ? 'su-bg-black-20 su-text-archway-light' : '')}
+              onClick={() => setDisplayedCard(card.id)}
+              aria-selected={displayedCard === card.id}
+              role="tab"
+              aria-controls={elementId + 'card-' + card.id}
+            >
+              {card.sul_card_info}
+            </button>
           )}
-        </ul>
+        </div>
 
-        <ul className="su-list-unstyled @5xl:su-w-2/3">
+        <div className="@5xl:su-w-2/3">
           {cards.map(card =>
-            <li
+            <div
               key={'card-' + card.id}
               id={elementId + 'card-' + card.id}
               className={displayedCard === card.id ? 'su-block' : 'su-hidden'}
               tabIndex={-1}
+              role="tabpanel"
+              aria-labelledby={`${elementId}-card-${card.id}-header`}
             >
 
               <CollectionCard
@@ -63,22 +68,24 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
                 link={card.sul_card.su_card_link}
                 image={card.sul_card.su_card_media?.field_media_image}
                 videoUrl={card.sul_card.su_card_media?.field_media_oembed_video}
+                headerId={`${elementId}-card-${card.id}-header`}
               />
-            </li>
+            </div>
           )}
-        </ul>
+        </div>
       </div>
     </section>
   )
 }
 
-const CollectionCard = ({header, superHeader, body, link, image, videoUrl}) => {
+const CollectionCard = ({header, superHeader, body, link, image, videoUrl, headerId}) => {
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
 
   return (
     <Card
+      headerId={headerId}
       video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
       image={imageUrl && <Image
         className="su-object-cover su-object-center"

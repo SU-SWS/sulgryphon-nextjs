@@ -1,11 +1,11 @@
 "use client";
 
 import {useId} from "react";
-import Select from "react-select";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
+import SelectList from "@/components/patterns/select-list";
 
 const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
   return (
@@ -40,9 +40,8 @@ const LibraryHeaderHoursComponent = ({hoursId}: {  hoursId: string }) => {
         <ClockIcon width={19} className="su-inline su-mr-10"/>
         {isOpen ? 'Open' : 'Closed'}
       </div>
-      <Select
-        className="su-text-black-true"
-        instanceId={`${inputId}-hours`}
+      <SelectList
+        className="su-mb-10"
         aria-label="Day of the week hours"
         options={selectOptions}
         defaultValue={defaultValue}

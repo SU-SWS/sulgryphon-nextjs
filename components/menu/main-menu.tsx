@@ -67,25 +67,43 @@ const MainMenu = ({menuItems}) => {
           </nav>
 
 
-          <div className="su-text-white su-p-40 su-mt-40 su-text-center lg:su-hidden">
-            <span className="su-mr-20">Quick Links:</span>
-            <Link
-              onClick={handleClickFocusOutside}
-              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
-              href="/">My Account</Link>
-            <Link
-              onClick={handleClickFocusOutside}
-              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
-              href="/">Search Results</Link>
-            <Link
-              onClick={handleClickFocusOutside}
-              className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
-              href="/">Accessibility</Link>
-            <Link
-              onClick={handleClickFocusOutside}
-              className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
-              href="/">Contact Us</Link>
-          </div>
+          <nav className="su-text-white su-p-40 su-mt-40 su-text-center su-flex su-gap-10 su-items-center su-justify-center lg:su-hidden">
+            <div className="su-mr-20">Quick Links:</div>
+            <ul className="su-list-unstyled su-flex su-flex-wrap su-items-center su-gap-10">
+              <li className="su-m-0">
+                <Link
+                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+                  href="/"
+                >
+                  My Account
+                </Link>
+              </li>
+              <li className="su-m-0">
+                <Link
+                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+                  href="/"
+                >
+                  Search Results
+                </Link>
+              </li>
+              <li className="su-m-0">
+                <Link
+                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+                  href="/"
+                >
+                  Accessibility
+                </Link>
+              </li>
+              <li className="su-m-0">
+                <Link
+                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
+                  href="/"
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </OutsideClickHandler>
@@ -191,6 +209,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
           className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          aria-current={(activeTrail.at(-1) === id) ? "page" : undefined}
         >
           <div
             className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>

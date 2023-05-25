@@ -5,11 +5,11 @@ import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import {PropsWithoutRef, useId, useState} from "react";
 import {DrupalImageMedia} from "@/lib/drupal/drupal";
-import Select from "react-select";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import {Library} from "@/lib/drupal/drupal";
+import SelectList from "@/components/patterns/select-list";
 
 interface HoursProps extends PropsWithoutRef<any> {
   libraries: { id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia }[]
@@ -64,13 +64,13 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
               <h3 id={formId} className="su-text-black su-leading-tight su-font-bold su-type-2 su-mb-03em">
                 Today&apos;s Hours
               </h3>
-              <Select
-                className="su-text-black-true su-mb-10"
-                instanceId={`${formId}-hours`}
+              <SelectList
+                className="su-mb-10"
                 aria-labelledby={formId}
                 options={libraryOptions}
                 defaultValue={libraryOptions.find(option => option.value === selectedLibrary)}
                 onChange={(item: option) => setSelectedLibrary(item.value)}
+                isSearchable={false}
               />
               <TodayLibraryHours branchId={library?.su_library__hours}/>
             </div>

@@ -46,6 +46,7 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
 
   return (
     <aside className="lg:su-w-1/3 2xl:su-w-1/4 su-relative">
+      <a className="su-skiplink" href="#main-content">Skip to main content</a>
       <Conditional showWhen={(menuOpen)}>
         <div className="lg:su-hidden su-backdrop-blur-sm su-fixed su-z-10 su-top-0 su-left-0 su-w-full su-h-screen"/>
       </Conditional>
@@ -110,8 +111,9 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
         className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light su-text-archway-light" : "")}>
         <Link
           href={url}
-          className={"su-flex-grow su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline"}
+          className={"su-flex-grow su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline "}
           onClick={() => syncDrupalPreviewRoutes(url)}
+          aria-current={isActive ? "page" : undefined}
         >
           {title}
         </Link>

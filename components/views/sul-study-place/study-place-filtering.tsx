@@ -3,10 +3,11 @@
 import {useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {StudyPlace} from "@/lib/drupal/drupal";
-import Select from "react-select";
 import Conditional from "../../utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
+import SelectList from "@/components/patterns/select-list";
+import {SelectInstance} from "react-select";
 
 interface SelectOption {
   value: string
@@ -15,11 +16,10 @@ interface SelectOption {
 
 const StudyPlacesFiltering = ({items}) => {
 
-  const typeRef = useRef(null);
-  const libraryRef = useRef(null);
-  const featureRef = useRef(null);
-  const capacityRef = useRef(null);
-  const inputId = useId();
+  const typeRef = useRef<SelectInstance>(null);
+  const libraryRef = useRef<SelectInstance>(null);
+  const featureRef = useRef<SelectInstance>(null);
+  const capacityRef = useRef<SelectInstance>(null);
 
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
@@ -48,14 +48,10 @@ const StudyPlacesFiltering = ({items}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // @ts-ignore
-    const selectedTypes = typeRef.current.getValue().map(option => option.value);
-    // @ts-ignore
-    const selectedLibraries = libraryRef.current.getValue().map(option => option.value);
-    // @ts-ignore
-    const selectedCapacity = capacityRef.current.getValue().map(option => option.value);
-    // @ts-ignore
-    const selectedFeatures = featureRef.current.getValue().map(option => option.value);
+    const selectedTypes = typeRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
+    const selectedLibraries = libraryRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
+    const selectedCapacity = capacityRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
+    const selectedFeatures = featureRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
 
     const filteredItems = items.filter((item: StudyPlace) =>
       (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
@@ -69,25 +65,20 @@ const StudyPlacesFiltering = ({items}) => {
 
   const handleReset = (e) => {
     e.preventDefault();
-    // @ts-ignore
-    typeRef.current.clearValue();
-    // @ts-ignore
-    libraryRef.current.clearValue();
-    // @ts-ignore
-    capacityRef.current.clearValue();
-    // @ts-ignore
-    featureRef.current.clearValue();
+    typeRef.current?.clearValue();
+    libraryRef.current?.clearValue();
+    capacityRef.current?.clearValue();
+    featureRef.current?.clearValue();
     setItemsToDisplay(items)
   }
 
   return (
     <>
-      <form className="su-@container">
-        <div className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-10">
+      <form className="su-@container su-relative su-z-[1]">
+        <div className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30">
 
-          <Select
-            instanceId={`${inputId}-type`}
-            ref={typeRef}
+          <SelectList
+            selectRef={typeRef}
             aria-label="Type of place"
             placeholder="Type"
             options={typeOfStudies}
@@ -97,9 +88,8 @@ const StudyPlacesFiltering = ({items}) => {
             isDisabled={capacityOptions.length == 0}
           />
 
-          <Select
-            instanceId={`${inputId}-branch`}
-            ref={libraryRef}
+          <SelectList
+            selectRef={libraryRef}
             aria-label="Library Branch Location"
             placeholder="Library"
             options={libraryOptions}
@@ -109,9 +99,8 @@ const StudyPlacesFiltering = ({items}) => {
             isDisabled={capacityOptions.length == 0}
           />
 
-          <Select
-            instanceId={`${inputId}-capacity`}
-            ref={capacityRef}
+          <SelectList
+            selectRef={capacityRef}
             aria-label="Library Branch Capacity"
             placeholder="Capacity"
             options={capacityOptions}
@@ -121,9 +110,8 @@ const StudyPlacesFiltering = ({items}) => {
             isDisabled={capacityOptions.length == 0}
           />
 
-          <Select
-            instanceId={`${inputId}-features`}
-            ref={featureRef}
+          <SelectList
+            selectRef={featureRef}
             aria-label="Equipment/Features"
             placeholder="Equipment"
             options={featureOptions}

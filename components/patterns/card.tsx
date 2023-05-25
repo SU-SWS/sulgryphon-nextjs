@@ -17,9 +17,10 @@ interface CardProps {
   }
   linkStyle?: string
   className?: string
+  headerId?: string
 }
 
-const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
+const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, headerId, ...props}: CardProps) => {
   return (
     <div
       className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">
@@ -44,7 +45,7 @@ const Card = ({video, image, superHeader, header, footer, body, link, linkStyle,
         </Conditional>
 
         <Conditional showWhen={header}>
-          <h3 className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
+          <h3 id={headerId} className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
             {header}
           </h3>
         </Conditional>

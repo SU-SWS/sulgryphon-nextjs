@@ -1,11 +1,11 @@
 "use client";
 
-import {useCallback, useEffect, useRef} from "react";
+import {PropsWithChildren, useCallback, useEffect, useRef} from "react";
 import {useRouter} from "next/navigation";
 import ReactFocusLock from "react-focus-lock";
 import {XMarkIcon} from "@heroicons/react/20/solid";
 
-const InterceptionModal = ({children}) => {
+const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
   const overlay = useRef(null);
   const wrapper = useRef(null);
   const router = useRouter();
@@ -48,6 +48,7 @@ const InterceptionModal = ({children}) => {
         className="su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"
         onClick={onClick}
         open
+        {...props}
       >
         <ReactFocusLock returnFocus>
           <div
