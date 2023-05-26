@@ -39,7 +39,7 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
               type="button"
               key={'button-' + card.id}
               id={elementId + 'button-' + card.id}
-              className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left hocus:su-underline " + (displayedCard === card.id ? 'su-bg-black-20 su-text-archway-light' : '')}
+              className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left " + (displayedCard === card.id ? 'su-bg-black-20 su-text-archway-light su-underline hocus:su-no-underline' : 'hocus:su-underline')}
               onClick={() => setDisplayedCard(card.id)}
               aria-selected={displayedCard === card.id}
               role="tab"

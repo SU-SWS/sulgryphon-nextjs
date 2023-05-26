@@ -16,8 +16,8 @@ const SearchModal = () => {
 
   return (
     <>
-      <Link href="https://library.stanford.edu/all" className="su-block" onClick={toggleModal}>
-        <MagnifyingGlassIcon className="su-h-40 su-text-white su-bg-cardinal-red su-rounded-full su-p-5"/>
+      <Link href="https://library.stanford.edu/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal}>
+        <MagnifyingGlassIcon width={30} className="su-mt-[-1px] su-text-white su-p-4 su-border-b su-border-transparent group-hocus:su-border-white"/>
         <span className="su-sr-only">Search</span>
       </Link>
 

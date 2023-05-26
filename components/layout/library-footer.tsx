@@ -65,7 +65,7 @@ const LibraryFooter = () => {
             <DrupalLinkButton href="#">Donate</DrupalLinkButton>
           </div>
 
-          <div className="su-flex su-mt-50 su-gap-lg su-justify-around">
+          <div className="su-flex su-flex-wrap md:su-flex-nowrap su-mt-50 su-gap-lg su-justify-around">
             <FooterLink href="#">
               <FacebookIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
               <span className="su-sr-only">Facebook</span>
@@ -95,7 +95,7 @@ const LibraryFooter = () => {
 
 const FooterLink = ({href, children}: { href: string, children: ReactNode }) => {
   return (
-    <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white" href={href}>
+    <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white hocus:su-no-underline" href={href}>
       {children}
     </Link>
   )

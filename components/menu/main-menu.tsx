@@ -53,7 +53,7 @@ const MainMenu = ({menuItems}) => {
           className={"su-h-[calc(100vh-100px)] lg:su-h-auto su-overflow-y-scroll lg:su-overflow-visible su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
           <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="https://library.stanford.edu/all"
                       inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
-          <nav>
+          <nav aria-label="Main Menu">
             <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
               {menuItems.map(item =>
                 <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>

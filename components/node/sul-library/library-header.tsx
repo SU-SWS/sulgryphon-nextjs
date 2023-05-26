@@ -43,7 +43,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
             <h1 className="su-type-4">{node.title}</h1>
           </div>
 
-          <div className="su-relative su-z-100 su-min-w-[300px] xl:su-min-w-[400px]">
+          <div className="su-relative su-z-100 md:su-min-w-[300px] xl:su-min-w-[400px]">
             <Card
               className="su-border-0 su-rounded"
               image={contactImageUrl && <Image

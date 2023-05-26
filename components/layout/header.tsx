@@ -32,12 +32,12 @@ const Header = async () => {
         <GlobalMessage/>
       </div>
 
-      <header className="su-sticky lg:su-relative su-top-0 su-shadow-lg su-bg-white su-z-20">
+      <header className="su-relative su-top-0 su-shadow-lg su-bg-white su-z-20">
         <div
-          className="su-pt-20 su-bg-white su-max-w-1500 su-w-full su-mx-auto su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
+          className="su-pt-20 su-bg-white su-max-w-1500 su-w-full su-mx-auto su-px-30 md:su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
           <Lockup className="su-pb-20"/>
 
-          <nav className="su-hidden lg:su-block">
+          <nav className="su-hidden lg:su-block" aria-label="User links">
             <ul className="su-list-unstyled su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
               <HeaderLink href="https://mylibrary.stanford.edu/" text="Accessibility"/>
               <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account"/>

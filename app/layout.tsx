@@ -37,7 +37,7 @@ const RootLayout = ({children, modal}: { children: ReactNode, modal: ReactNode }
     <html lang="en">
     <Editori11y/>
     <body>
-    <nav>
+    <nav aria-label="Skip link">
       <a className="su-skiplink" href="#main-content">Skip to main content</a>
     </nav>
     {children}

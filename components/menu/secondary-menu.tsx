@@ -64,7 +64,7 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
 
 
       <OutsideClickHandler onClickOutside={closeMobileMenu} onFocusOutside={closeMobileMenu}>
-        <nav className={(isDesktop || menuOpen ? "su-block" : "su-hidden")}>
+        <nav className={(isDesktop || menuOpen ? "su-block" : "su-hidden")} aria-label="Secondary Navigation">
           <ul
             className="su-absolute lg:su-relative su-z-40 lg:su-z-0 su-top-0 su-left-0 su-w-full su-bg-white su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
             {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
@@ -108,7 +108,7 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
         className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light su-text-archway-light" : "")}>
         <Link
           href={url}
-          className={"su-flex-grow su-p-10 su-text-black su-block su-no-underline su-relative hover:su-underline "}
+          className={"su-flex-grow su-p-10 su-text-black su-block su-relative " + (isActive ? "su-underline hover:su-no-underline": "su-no-underline hover:su-underline")}
           onClick={() => syncDrupalPreviewRoutes(url)}
           aria-current={isActive ? "page" : undefined}
         >
