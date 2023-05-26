@@ -57,7 +57,7 @@ const Card = ({video, image, superHeader, header, footer, body, link, linkStyle,
         </Conditional>
 
         <Conditional showWhen={footer}>
-          <div className="su-leading-display su-text-18 su-rs-pt-0 su-text-digital-red su-font-normal">
+          <div className="su-leading-display su-text-18 su-rs-pt-0 su-font-normal">
             {footer}
           </div>
         </Conditional>

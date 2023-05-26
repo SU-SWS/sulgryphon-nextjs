@@ -19,13 +19,15 @@ const SelectList = ({selectRef = null, ...props}: Props) => {
       isClearable={false}
       instanceId={formId}
       name={formId}
+      components={{
+        IndicatorSeparator: () => null,
+      }}
       styles={{
         clearIndicator: (baseStyles, state) => ({
           ...baseStyles,
         }),
         container: (baseStyles, state) => ({
           ...baseStyles,
-          color: "#000"
         }),
         control: (baseStyles, state) => ({
           ...baseStyles,
@@ -78,8 +80,9 @@ const SelectList = ({selectRef = null, ...props}: Props) => {
         }),
         option: (baseStyles, state) => ({
           ...baseStyles,
-          // backgroundColor:  state.isSelected ? "" : (state.isDisabled ? "#C0C0BF" : (state.isFocused ? "#E50808": "")),
-          // color: state.isSelected ? "" : (state.isDisabled ? "#FFFFF" : (state.isFocused ? "#000000": "#000000"))
+          backgroundColor:  state.isSelected ? "#5D4B3C" : (state.isDisabled ? "#EAEAEA" : (state.isFocused ? "#5D4B3C": "#FFFFFF")),
+          color: state.isSelected ? "#FFFFFF" : (state.isDisabled ? "#000000" : (state.isFocused ? "#FFFFFF": "#000000")),
+          textDecoration: state.isFocused ? "underline" : "none",
         }),
         placeholder: (baseStyles, state) => ({
           ...baseStyles,
