@@ -25,6 +25,7 @@ const SelectList = ({selectRef = null, ...props}: Props) => {
         }),
         container: (baseStyles, state) => ({
           ...baseStyles,
+          color: "#000"
         }),
         control: (baseStyles, state) => ({
           ...baseStyles,
