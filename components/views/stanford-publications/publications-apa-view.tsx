@@ -24,13 +24,13 @@ const PublicationsApaView = async ({view, args, itemsToDisplay, emptyMessage}: P
     return null;
   }
   return (
-    <div className="flex flex-wrap justify-between gap-20">
+    <ul className="su-list-unstyled su-flex su-flex-wrap su-justify-between su-gap-2xl">
       {items.map(item =>
-        <div key={item.id} className="flex-1 min-w-[250px]">
+        <li key={item.id} className="flex-1 min-w-[250px]">
           <StanfordPublicationListItem node={item} key={item.id}/>
-        </div>
+        </li>
       )}
-    </div>
+    </ul>
   )
 }
 export default PublicationsApaView;

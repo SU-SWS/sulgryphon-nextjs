@@ -25,16 +25,16 @@ const NewsListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) =
   }
 
   return (
-    <div>
+    <ul className="su-list-unstyled su-gap-2xl">
       {items.map(item =>
-        <div
+        <li
           key={item.id}
           className="su-border-b su-border-black-20 last:su-border-0 su-pb-10 last:su-pb-0 su-pt-10 first:su-pt-0"
         >
           <StanfordNewsListItem node={item}/>
-        </div>
+        </li>
       )}
-    </div>
+    </ul>
   )
 }
 export default NewsListView;

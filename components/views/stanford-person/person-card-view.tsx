@@ -1,6 +1,6 @@
 import {getViewItems} from "@/components/views/view";
 import {Person} from "@/lib/drupal/drupal";
-import StanfordPersonCard from "@/components/node/stanford-person/card";
+import CardList from "@/components/views/card-list";
 
 interface Props {
   view: string
@@ -24,13 +24,7 @@ const PersonCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props)
     return null;
   }
   return (
-    <div className="su-@container su-flex su-flex-wrap su-justify-around su-gap-2xl">
-      {items.map(item =>
-        <div key={item.id} className="su-min-w-[250px] @6xl:su-min-w-[400px] su-flex-1 su-max-w-[500px]">
-          <StanfordPersonCard node={item} key={item.id}/>
-        </div>
-      )}
-    </div>
+    <CardList items={items}/>
   )
 }
 export default PersonCardView;

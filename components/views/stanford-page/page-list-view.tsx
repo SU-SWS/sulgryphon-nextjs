@@ -1,6 +1,7 @@
 import StanfordPageListItem from "@/components/node/stanford-page/list-item";
 import {getViewItems} from "@/components/views/view";
 import {BasicPage} from "@/lib/drupal/drupal";
+import PageCardView from "@/components/views/stanford-page/page-card-view";
 
 interface Props {
   view: string
@@ -10,6 +11,9 @@ interface Props {
 }
 
 const PageListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+  /* @ts-expect-error Async Server Component */
+  return <PageCardView view={view} args={args} itemsToDisplay={itemsToDisplay} emptyMessage={emptyMessage}/>
+
   args = args ? args + '/0/0/0' : '0/0/0/0';
 
   const items = await getViewItems<BasicPage>(view, itemsToDisplay, args.split('/'));
@@ -25,16 +29,16 @@ const PageListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) =
   }
 
   return (
-    <div>
+    <ul className="su-list-unstyled su-gap-2xl">
       {items.map(item =>
-        <div
+        <li
           key={item.id}
           className="su-border-b su-border-black-20 last:su-border-0 su-pb-10 last:su-pb-0 su-pt-10 first:su-pt-0"
         >
           <StanfordPageListItem node={item}/>
-        </div>
+        </li>
       )}
-    </div>
+    </ul>
   )
 }
 export default PageListView;

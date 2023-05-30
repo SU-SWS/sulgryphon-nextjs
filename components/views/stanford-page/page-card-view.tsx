@@ -1,6 +1,6 @@
 import {getViewItems} from "@/components/views/view";
-import StanfordPageCard from "@/components/node/stanford-page/card";
 import {BasicPage} from "@/lib/drupal/drupal";
+import CardList from "@/components/views/card-list";
 
 interface Props {
   view: string
@@ -25,13 +25,7 @@ const PageCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props) =
   }
 
   return (
-    <div className="su-@container su-flex su-flex-wrap su-justify-around su-gap-2xl">
-      {items.map(item =>
-        <div key={item.id} className="su-min-w-[250px] @6xl:su-min-w-[400px] su-flex-1 su-su-max-w-[500px]">
-          <StanfordPageCard node={item} key={item.id}/>
-        </div>
-      )}
-    </div>
+    <CardList items={items}/>
   )
 }
 export default PageCardView;
