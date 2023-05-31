@@ -12,7 +12,7 @@ import SulCollection from "@/components/paragraph/sul-collection";
 import SulFeaturedCollection from "@/components/paragraph/sul-featured-collection";
 import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
-import {PropsWithoutRef} from "react";
+import {PropsWithoutRef, useId} from "react";
 import SulLibguides from "@/components/paragraph/sul-libguides";
 
 interface ParagraphProps extends PropsWithoutRef<any> {
@@ -24,6 +24,7 @@ interface ParagraphProps extends PropsWithoutRef<any> {
 const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
+  props.headerId = useId();
 
   return (
     <>

@@ -18,7 +18,12 @@ interface CardProps {
   headerId?: string
 }
 
-const Card = ({video, image, superHeader, header, footer, body, link, linkStyle, headerId, ...props}: CardProps) => {
+const Card = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
+
+  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === header) {
+    link.options.attributes['aria-labelledby'] = headerId;
+    delete link?.options?.attributes?.['aria-label'];
+  }
   return (
     <div
       className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">

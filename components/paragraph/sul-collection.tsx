@@ -58,7 +58,7 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
               className={displayedCard === card.id ? 'su-block' : 'su-hidden'}
               tabIndex={-1}
               role="tabpanel"
-              aria-labelledby={`${elementId}-card-${card.id}-header`}
+              aria-labelledby={elementId + 'button-' + card.id}
             >
 
               <CollectionCard

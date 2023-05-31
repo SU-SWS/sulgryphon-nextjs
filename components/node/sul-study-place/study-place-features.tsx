@@ -38,17 +38,6 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
             />
           </div>
         }
-
-        <Conditional showWhen={libCal}>
-          <Link href={`/calendar/${libCal}`} className="su-block su-relative su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-py-20">
-            <div className="su-flex su-justify-end su-items-center su-gap-xs">
-              <div className="su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
-              <CalendarDaysIcon width={24}/>
-                Reserve Space
-              <ChevronRightIcon width={24}/>
-            </div>
-          </Link>
-        </Conditional>
       </div>
 
       <div className="card-body su-items-start su-rs-px-3 su-rs-pb-3 su-rs-pt-7 md:su-rs-pt-3 su-w-full">

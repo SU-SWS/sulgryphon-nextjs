@@ -4,7 +4,7 @@ import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import Conditional from "@/components/utils/conditional";
 import CardSprinkles from "@/components/patterns/card-sprinkles";
-import {useRef} from "react";
+import {useId, useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
 import Link from "next/link";
 import {DrupalLinkType} from "@/lib/drupal/drupal";
@@ -21,9 +21,10 @@ interface CardProps {
   className?: string
   backgroundSprinkles?: string
   fullWidth?: boolean
+  headerId?: string
 }
 
-const HorizontalCard = ({video, image, superHeader, header, footer, body, link, linkStyle, fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
   const ref = useRef(null);
 
   return (
@@ -61,7 +62,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
             </Conditional>
 
             <Conditional showWhen={header}>
-              <h3 className="su-text-m5">{header}</h3>
+              <h3 id={headerId} className="su-text-m5">{header}</h3>
             </Conditional>
 
             <Conditional showWhen={body}>
@@ -77,7 +78,7 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
               <Link
                 href={link.url}
                 className="su-border-2 su-border-digital-red su-rounded-full su-cta-button su-font-semibold su-leading-display su-block su-w-fit su-no-underline hocus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-text-white hocus:su-bg-black-true hocus:su-text-white su-rs-mt-neg1 su-bg-digital-red"
-                aria-label={link.options?.attributes?.['aria-label']}
+                {...link.options?.attributes}
               >
                 {link.title}
               </Link>

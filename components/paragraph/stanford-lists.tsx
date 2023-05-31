@@ -14,10 +14,16 @@ interface ListProps extends PropsWithoutRef<any> {
     sul_list_styles: { link_display_style?: string }
   }
   fullWidth?: boolean
+  headerId?: string
 }
 
 
-const ListParagraph = async ({headline, description, link, view, styles, fullWidth = true}: ListProps) => {
+const ListParagraph = async ({headerId, headline, description, link, view, styles, fullWidth}: ListProps) => {
+  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
+    link.options.attributes['aria-labelledby'] = headerId;
+    delete link?.options?.attributes?.['aria-label'];
+  }
+
   const viewId: string | undefined = view?.resourceIdObjMeta?.drupal_internal__target_id;
   const displayId: string | undefined = view?.resourceIdObjMeta?.display_id;
   let args: string = view?.resourceIdObjMeta?.arguments ?? '';
@@ -44,7 +50,7 @@ const ListParagraph = async ({headline, description, link, view, styles, fullWid
     <div className="su-centered su-flex su-flex-col su-gap-xl">
       <div className="su-flex su-justify-between su-items-center su-mb-40">
         {headline &&
-          <h2 className="su-m-0">{headline}</h2>
+          <h2 id={headerId} className="su-m-0">{headline}</h2>
         }
 
         {link &&

@@ -13,24 +13,30 @@ interface EntityProps extends PropsWithoutRef<any> {
   link?: DrupalLinkType
   entities: DrupalNode[]
   fullWidth?: boolean
+  headerId?: string
   styles?: {
     orientation?: string
     background
   }
 }
 
-const StanfordEntity = async ({headline, description, link, styles, entities = [], fullWidth = true, ...props}: EntityProps) => {
+const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], fullWidth = true, ...props}: EntityProps) => {
   const items = await fetchComponents<DrupalNode[]>(entities ?? []);
   const entityItems = items.filter(item => item)
 
   const wrapperClasses = styles?.background === 'black' ? 'su-text-white su-py-40' : '';
+
+  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
+    link.options.attributes['aria-labelledby'] = headerId;
+    delete link?.options?.attributes?.['aria-label'];
+  }
 
   return (
     // @ts-ignore
     <div className="su-@container su-relative su-centered" {...props}>
       <div className={wrapperClasses}>
         {headline &&
-          <h2 className="su-text-left su-type-5 su-mb-40">
+          <h2 id={headerId} className="su-text-left su-type-5 su-mb-40">
             <AboveHeaderBorder/>
             {headline}
           </h2>

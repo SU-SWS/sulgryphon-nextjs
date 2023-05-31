@@ -19,11 +19,16 @@ interface Props extends PropsWithoutRef<any> {
     link_display_style?: string
   }
   fullWidth?: boolean
+  headerId?: string
 }
 
-const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true, ...props}: Props) => {
+const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWidth = true, ...props}: Props) => {
   const ref = useRef(null);
 
+  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
+    link.options.attributes['aria-labelledby'] = headerId;
+    delete link?.options?.attributes?.['aria-label'];
+  }
   return (
     <section
       className="su-relative su-centered"
@@ -36,7 +41,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true,
           <header className="md:su-flex su-gap-2xl su-mb-80">
 
             <Conditional showWhen={headline}>
-              <h2 className="su-mb-0 su-type-5 su-flex-grow">{headline}</h2>
+              <h2 id={headerId} className="su-mb-0 su-type-5 su-flex-grow">{headline}</h2>
             </Conditional>
 
             <div>

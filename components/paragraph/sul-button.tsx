@@ -12,12 +12,18 @@ interface Props extends PropsWithoutRef<any> {
   styles?: {
     background?: string
   }
+  headerId?: string
 }
 
-const SulButton = ({headline, link, styles, fullWidth = true, ...props}: Props) => {
+const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props}: Props) => {
   const isGray = styles?.background == 'gray';
   const ref = useRef(null);
   const isCentered = useIsCentered(ref)
+
+  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
+    link.options.attributes['aria-labelledby'] = headerId;
+    delete link?.options?.attributes?.['aria-label'];
+  }
 
   return (
     <div className={"su-relative" + ((!fullWidth || !isCentered) ? " su-w-full " : " su-full-screen ") } ref={ref} {...props}>
@@ -25,7 +31,7 @@ const SulButton = ({headline, link, styles, fullWidth = true, ...props}: Props) 
         className={"su-py-50 " + (isGray ? "su-bg-black-10" : "su-bg-black-true")}>
         <div className="su-centered">
           <Conditional showWhen={headline}>
-            <h2 className={"su-text-center su-text-m3 " + (!isGray ? 'su-text-white' : '')}>
+            <h2 id={headerId} className={"su-text-center su-text-m3 " + (!isGray ? 'su-text-white' : '')}>
               {headline}
             </h2>
           </Conditional>

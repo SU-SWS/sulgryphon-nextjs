@@ -18,14 +18,22 @@ interface Props extends PropsWithoutRef<any> {
   orientation?: string
   fullWidth?: boolean
   className?: string
+  headerId?: string
 }
 
-const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
+const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
   const isHorizontal = orientation === 'horizontal';
 
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
+
+
+
+  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === header) {
+    link.options.attributes['aria-labelledby'] = headerId;
+    delete link?.options?.attributes?.['aria-label'];
+  }
 
   return (
     <div className={"su-relative" + (!isHorizontal ? " su-centered lg:su-max-w-[980px] su-w-full su-mx-auto": "")} {...props}>
@@ -47,6 +55,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
           linkStyle={linkStyle}
           backgroundSprinkles={sprinklePosition}
           fullWidth={singleRow && fullWidth}
+          headerId={headerId}
         />
       }
 
@@ -66,6 +75,7 @@ const StanfordCard = ({header, superHeader, body, link, image, videoUrl, linkSty
           body={body}
           link={link}
           linkStyle={linkStyle}
+          headerId={headerId}
         />
       }
     </div>
