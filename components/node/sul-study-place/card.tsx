@@ -37,8 +37,11 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
         }
 
         <Conditional showWhen={node.sul_study__libcal_id}>
-          <Link href={`/calendar/${node.sul_study__libcal_id}`}
-                className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1">
+          <Link
+            href={`/calendar/${node.sul_study__libcal_id}`}
+            className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1"
+            aria-haspopup={true}
+          >
             <div className="su-flex su-justify-end su-items-center su-gap-xs">
               <div className="su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
               <CalendarDaysIcon className="su-inline-block su-flex-shrink-0 su-w-[24px]"/>
@@ -83,7 +86,11 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
               }
 
               {(features && features.length > 4) &&
-                <Link href={`/study-place/features/${node.id}`} className="su-relative su-pr-30 su-type-1 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold">
+                <Link
+                  href={`/study-place/features/${node.id}`}
+                  className="su-relative su-pr-30 su-type-1 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold"
+                  aria-haspopup={true}
+                >
                   Show all <span className="su-sr-only">{node.sul_study__branch.title} </span>features
                   <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
                 </Link>

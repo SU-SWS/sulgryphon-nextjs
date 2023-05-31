@@ -48,7 +48,7 @@ const SearchFormComponent = ({action = '/search', inputProps = {}, ...props}: Fo
     <div {...props}>
       <form action={action} className="su-relative su-flex su-items-end su-gap-xl" onSubmit={formSubmit}>
         <div className="su-flex-grow">
-          <label htmlFor={inputProps.id}>Keyword Search</label>
+          <label className="su-text-white su-mb-2" htmlFor={inputProps.id}>Keyword Search</label>
           <input {...inputProps}/>
         </div>
         <button

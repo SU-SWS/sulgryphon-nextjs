@@ -4,7 +4,7 @@ const LibCal = ({libcalId}: { libcalId?: number }) => {
   return (
     <>
       {libcalId &&
-        <Link href={`/calendar/${libcalId}`} className="su-button">
+        <Link href={`/calendar/${libcalId}`} className="su-button" aria-haspopup={true}>
           Schedule an appointment
         </Link>
       }

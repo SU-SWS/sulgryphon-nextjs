@@ -39,7 +39,7 @@ const MainMenu = ({menuItems}) => {
       className="su-max-w-1500 su-w-full su-mx-auto lg:su-px-40 3xl:su-px-0"
     >
       <button
-        className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-no-underline"
+        className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-border-b-2 su-border-transparent hocus:su-border-black-true"
         onClick={openCloseMenu}
         aria-expanded={menuOpen ? "true" : "false"}
       >
@@ -72,7 +72,7 @@ const MainMenu = ({menuItems}) => {
             <ul className="su-list-unstyled su-flex su-flex-wrap su-items-center su-gap-10">
               <li className="su-m-0">
                 <Link
-                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
                   href="/"
                 >
                   My Account
@@ -80,7 +80,7 @@ const MainMenu = ({menuItems}) => {
               </li>
               <li className="su-m-0">
                 <Link
-                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
                   href="/"
                 >
                   Search Results
@@ -88,7 +88,7 @@ const MainMenu = ({menuItems}) => {
               </li>
               <li className="su-m-0">
                 <Link
-                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline su-mr-20"
+                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
                   href="/"
                 >
                   Accessibility
@@ -96,7 +96,7 @@ const MainMenu = ({menuItems}) => {
               </li>
               <li className="su-m-0">
                 <Link
-                  className="su-text-white hover:su-text-white su-no-underline hover:su-underline"
+                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
                   href="/"
                 >
                   Contact Us

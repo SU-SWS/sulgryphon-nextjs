@@ -53,6 +53,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
               isOpen={modalOpen === image.id}
               onClose={() => setModalOpen('')}
               ariaLabel={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
+              labelledBy={image.su_gallery_image.id}
             >
               <figure className="su-relative su-h-full su-w-full su-table">
                 <div className="su-table-row su-relative su-h-full">
@@ -65,7 +66,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
                 </div>
 
                 <Conditional showWhen={image.su_gallery_caption}>
-                  <figcaption className="su-text-right su-table-caption su-caption-bottom su-w-full su-bg-white su-leading su-text-19 su-p-10 su-mt-10">
+                  <figcaption id={image.su_gallery_image.id} className="su-text-right su-table-caption su-caption-bottom su-w-full su-bg-white su-leading su-text-19 su-p-10 su-mt-10">
                     {image.su_gallery_caption}
                   </figcaption>
                 </Conditional>

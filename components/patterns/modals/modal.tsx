@@ -10,9 +10,10 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   ariaLabel: string
+  labelledBy: string
 }
 
-const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
+const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) => {
 
   const [animationParent] = useAutoAnimate()
 
@@ -47,7 +48,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel}: ModalProps) => {
   }
 
   return (
-    <dialog className="su-w-full su-h-full" open ref={animationParent}>
+    <dialog className="su-w-full su-h-full" open ref={animationParent} aria-labelledby={labelledBy}>
       <ReactFocusLock returnFocus>
         <div
           className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"}
