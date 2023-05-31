@@ -7,6 +7,7 @@ import CardSprinkles from "@/components/patterns/card-sprinkles";
 import {useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
 import Link from "next/link";
+import {DrupalLinkType} from "@/lib/drupal/drupal";
 
 interface CardProps {
   video?: ReactNodeLike
@@ -15,10 +16,7 @@ interface CardProps {
   header?: any
   footer?: ReactNodeLike
   body?: string
-  link?: {
-    url: string
-    title: string
-  }
+  link?: DrupalLinkType
   linkStyle?: string
   className?: string
   backgroundSprinkles?: string
@@ -76,7 +74,11 @@ const HorizontalCard = ({video, image, superHeader, header, footer, body, link, 
             </Conditional>
 
             {link?.url &&
-              <Link href={link.url} className="su-border-2 su-border-digital-red su-rounded-full su-cta-button su-font-semibold su-leading-display su-block su-w-fit su-no-underline hocus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-text-white hocus:su-bg-black-true hocus:su-text-white su-rs-mt-neg1 su-bg-digital-red">
+              <Link
+                href={link.url}
+                className="su-border-2 su-border-digital-red su-rounded-full su-cta-button su-font-semibold su-leading-display su-block su-w-fit su-no-underline hocus:su-underline su-group su-transition-colors su-px-26 su-pt-10 su-pb-11 su-text-16 md:su-text-20 su-text-white hocus:su-bg-black-true hocus:su-text-white su-rs-mt-neg1 su-bg-digital-red"
+                aria-label={link.options?.attributes?.['aria-label']}
+              >
                 {link.title}
               </Link>
             }

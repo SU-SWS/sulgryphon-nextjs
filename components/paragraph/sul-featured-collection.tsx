@@ -4,7 +4,7 @@ import Conditional from "@/components/utils/conditional";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import Wave from "@/components/patterns/wave";
 import {DrupalLink} from "@/components/patterns/link";
-import {CardParagraph, DrupalLink as DrupalLinkProps} from "@/lib/drupal/drupal"
+import {CardParagraph, DrupalLinkType} from "@/lib/drupal/drupal"
 import {PropsWithoutRef, useRef} from "react";
 import OnlyIfCentered from "@/components/utils/only-if-centered";
 import Card from "@/components/patterns/card";
@@ -13,7 +13,7 @@ import Image from "next/image";
 
 interface Props extends PropsWithoutRef<any> {
   headline?: string
-  link?: DrupalLinkProps
+  link?: DrupalLinkType
   cards: CardParagraph[]
   styles?: {
     link_display_style?: string
@@ -44,6 +44,7 @@ const SulFeaturedCollection = ({headline, link, cards, styles, fullWidth = true,
                 url={link?.url}
                 title={link?.title}
                 style={styles?.link_display_style}
+                {...link?.options?.attributes}
               />
             </div>
           </header>

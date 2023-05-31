@@ -1,6 +1,6 @@
 "use client";
 
-import {DrupalLink} from "@/lib/drupal/drupal";
+import {DrupalLinkType} from "@/lib/drupal/drupal";
 import Link from "next/link";
 import Conditional from "@/components/utils/conditional";
 import useIsCentered from "@/lib/hooks/useIsCentered";
@@ -8,7 +8,7 @@ import {PropsWithoutRef, useRef} from "react";
 
 interface Props extends PropsWithoutRef<any> {
   headline?: string
-  link: DrupalLink
+  link: DrupalLinkType
   styles?: {
     background?: string
   }
@@ -30,7 +30,7 @@ const SulButton = ({headline, link, styles, fullWidth = true, ...props}: Props) 
             </h2>
           </Conditional>
 
-          <Link href={link.url} className="su-button su-block su-mx-auto su-text-center su-w-fit">
+          <Link href={link.url} className="su-button su-block su-mx-auto su-text-center su-w-fit" {...link.options?.attributes}>
             {link.title}
           </Link>
         </div>

@@ -1,13 +1,13 @@
 import View from "@/components/views/view";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {DrupalLink, DrupalViewField} from "@/lib/drupal/drupal";
+import {DrupalLinkType, DrupalViewField} from "@/lib/drupal/drupal";
 import {PropsWithoutRef} from "react";
 
 interface ListProps extends PropsWithoutRef<any> {
   headline?: string
   description?: string
-  link?: DrupalLink
+  link?: DrupalLinkType
   view?: DrupalViewField
   styles?: {
     list_paragraph: { hide_empty?: boolean, empty_message?: string }
@@ -48,7 +48,7 @@ const ListParagraph = async ({headline, description, link, view, styles, fullWid
         }
 
         {link &&
-          <DrupalLinkButton href={link.url}>
+          <DrupalLinkButton href={link.url} {...link.options?.attributes}>
             {link.title}
           </DrupalLinkButton>
         }

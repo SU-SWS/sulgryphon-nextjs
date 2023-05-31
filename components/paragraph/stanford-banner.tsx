@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
+import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import Banner from "@/components/patterns/banner";
 import {PropsWithoutRef} from "react";
 
@@ -9,7 +9,7 @@ interface Props extends PropsWithoutRef<any> {
   superHeader?: string
   body?: string
   image?: DrupalImageMedia
-  link?: DrupalLink
+  link?: DrupalLinkType
   overlayPosition?: string
   fullWidth?: boolean
   className?: string

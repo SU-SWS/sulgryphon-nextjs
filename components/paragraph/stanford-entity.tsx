@@ -2,7 +2,7 @@ import formatHtml from "@/lib/format-html";
 import NodeCardDisplay from "@/components/node/node-card";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {PropsWithoutRef} from "react";
-import {DrupalLink} from "@/lib/drupal/drupal";
+import {DrupalLinkType} from "@/lib/drupal/drupal";
 import {DrupalNode} from "next-drupal";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import fetchComponents from "@/lib/fetch-components";
@@ -10,7 +10,7 @@ import fetchComponents from "@/lib/fetch-components";
 interface EntityProps extends PropsWithoutRef<any> {
   headline?: string
   description?: string
-  link?: DrupalLink
+  link?: DrupalLinkType
   entities: DrupalNode[]
   fullWidth?: boolean
   styles?: {
@@ -49,7 +49,7 @@ const StanfordEntity = async ({headline, description, link, styles, entities = [
           </div>
         }
         {link?.url &&
-          <DrupalLinkButton href={link?.url} className="su-block su-mx-auto">
+          <DrupalLinkButton href={link?.url} className="su-block su-mx-auto" {...link.options?.attributes}>
             {link.title}
           </DrupalLinkButton>
         }

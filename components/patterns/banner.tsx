@@ -1,16 +1,14 @@
 import {ReactNodeLike} from "prop-types";
 import Conditional from "@/components/utils/conditional";
 import Card from "@/components/patterns/card";
+import {DrupalLinkType} from "@/lib/drupal/drupal";
 
 interface BannerProps {
   image?: ReactNodeLike;
   superHeader?: string
   header?: string
   body?: string
-  link?: {
-    url: string
-    title: string
-  }
+  link?: DrupalLinkType
   overlayPosition?: string
   className?: string
   fullWidth?: boolean

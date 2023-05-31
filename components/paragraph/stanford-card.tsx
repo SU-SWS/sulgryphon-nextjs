@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
+import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import Card from "@/components/patterns/card";
 import HorizontalCard from "@/components/patterns/horizontal-card";
 import Oembed from "@/components/patterns/oembed";
@@ -10,7 +10,7 @@ interface Props extends PropsWithoutRef<any> {
   header?: string
   superHeader?: string
   body?: string
-  link?: DrupalLink
+  link?: DrupalLinkType
   linkStyle?: string
   sprinklePosition?: string
   image?: DrupalImageMedia

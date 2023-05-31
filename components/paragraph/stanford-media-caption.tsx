@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {DrupalImageMedia, DrupalLink} from "@/lib/drupal/drupal";
+import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import Oembed from "@/components/patterns/oembed";
 import Link from "next/link";
@@ -10,7 +10,7 @@ interface Props extends PropsWithoutRef<any> {
   image?: DrupalImageMedia
   videoUrl?: string
   caption?: string
-  link?: DrupalLink
+  link?: DrupalLinkType
   fullWidth?: boolean
 }
 
@@ -42,7 +42,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
       }
 
       {link &&
-        <Link href={link.url} className="su-block su-text-right">
+        <Link href={link.url} className="su-block su-text-right" {...link.options?.attributes}>
           {link.title}
         </Link>
       }

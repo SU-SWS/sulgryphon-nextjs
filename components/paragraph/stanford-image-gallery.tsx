@@ -77,7 +77,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
       </div>
 
       {paragraph.su_gallery_button &&
-        <DrupalLinkButton href={paragraph.su_gallery_button.url} className="su-block su-mx-auto">
+        <DrupalLinkButton href={paragraph.su_gallery_button.url} className="su-block su-mx-auto" {...paragraph.su_gallery_button.options?.attributes}>
           {paragraph.su_gallery_button.title}
         </DrupalLinkButton>
       }
