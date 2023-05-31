@@ -2916,6 +2916,11 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-obfuscate-email@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-obfuscate-email/-/react-obfuscate-email-1.1.2.tgz#851f9647887065ef3c213d33db26abdfb1d245cf"
+  integrity sha512-P/c35IClgLtdwkzrD4bnDlfI5SAJKiINd+jJVW9ccfQ1k7l5mB69qplZfvZ4DPvRjdtYU3YeUvOLIdECzHiR6g==
+
 react-obfuscate@^3.6.9:
   version "3.6.9"
   resolved "https://registry.yarnpkg.com/react-obfuscate/-/react-obfuscate-3.6.9.tgz#ca87f731db575e52288680e08de266fddafdcb3e"

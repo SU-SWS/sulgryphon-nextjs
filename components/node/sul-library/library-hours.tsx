@@ -40,7 +40,7 @@ const LibraryHeaderHoursComponent = ({hoursId}: {  hoursId: string }) => {
       </div>
       <SelectList
         className="su-mb-10"
-        aria-label="Day of the week hours"
+        aria-label="Day of the week"
         options={selectOptions}
         defaultValue={defaultValue}
         isSearchable={false}

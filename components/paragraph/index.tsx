@@ -24,7 +24,7 @@ interface ParagraphProps extends PropsWithoutRef<any> {
 const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
-  props.headerId = useId();
+  const headerId = useId();
 
   return (
     <>
@@ -49,6 +49,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           videoUrl={paragraph?.su_card_media?.field_media_oembed_video}
           orientation={paragraph.behavior_settings?.sul_card_styles?.orientation}
           singleRow={singleRow}
+          headerId={headerId}
           {...props}
         />}
 
@@ -60,6 +61,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           link={paragraph.su_banner_button}
           image={paragraph?.su_banner_image?.field_media_image}
           overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
+          headerId={headerId}
           {...props}
         />
       }
@@ -88,6 +90,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           link={paragraph.su_list_button}
           view={paragraph.su_list_view}
           styles={paragraph.behavior_settings}
+          headerId={headerId}
           {...props}
         />
       }
@@ -100,6 +103,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           link={paragraph.su_entity_button}
           entities={paragraph.su_entity_item ?? []}
           styles={paragraph.behavior_settings?.sul_teaser_styles}
+          headerId={headerId}
           {...props}
         />
       }
@@ -120,6 +124,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           link={paragraph.sul_collection__link}
           cards={paragraph.sul_collection__cards}
           styles={paragraph.behavior_settings?.sul_feat_collections_styles}
+          headerId={headerId}
           {...props}
         />
       }
@@ -132,6 +137,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           headline={paragraph.sul_button_headline}
           link={paragraph.sul_button_link}
           styles={paragraph.behavior_settings?.sul_button_styles}
+          headerId={headerId}
           {...props}
         />
       }

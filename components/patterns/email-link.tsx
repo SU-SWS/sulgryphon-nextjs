@@ -1,12 +1,14 @@
 "use client";
-import Obfuscate from 'react-obfuscate';
+import { Email } from "react-obfuscate-email";
 
 const EmailLink = ({email, ...props}) => {
   return (
-    <Obfuscate
+    <Email
       email={email}
       {...props}
-    />
+    >
+      {email}
+    </Email>
   )
 }
 export default EmailLink;

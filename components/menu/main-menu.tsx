@@ -66,7 +66,8 @@ const MainMenu = ({menuItems}) => {
           </nav>
 
 
-          <nav className="su-text-white su-p-40 su-mt-40 su-text-center su-flex su-gap-10 su-items-center su-justify-center lg:su-hidden">
+          <nav
+            className="su-text-white su-p-40 su-mt-40 su-text-center su-flex su-gap-10 su-items-center su-justify-center lg:su-hidden">
             <div className="su-mr-20">Quick Links:</div>
             <ul className="su-list-unstyled su-flex su-flex-wrap su-items-center su-gap-10">
               <li className="su-m-0">
@@ -207,7 +208,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
         <Link
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
-          className={"su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"su-flex su-text-white hocus:su-text-white lg:su-text-black-true su-items-center su-no-underline hocus:su-underline su-w-full su-p-20" + (menuLevel > 0 ? " lg:hocus:su-text-archway lg:hocus:su-bg-black-10 " : " lg:hocus:su-text-archway ") + getLinkBorderClasses()}
           aria-current={(activeTrail.at(-1) === id) ? "page" : undefined}
         >
           <div
@@ -220,7 +221,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
       <Conditional showWhen={url.length === 0}>
         <button
           tabIndex={tabIndex}
-          className={"su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"su-group su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hocus:su-text-white lg:hocus:su-text-archway hocus:su-bg-black lg:hocus:su-bg-transparent su-no-underline hocus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
@@ -232,7 +233,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
           <span
             className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-10 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
             <ChevronDownIcon
-              className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
+              className={"lg:group-hocus:su-text-archway su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
               height={40}/>
             <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
           </span>
@@ -288,12 +289,15 @@ const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
   return (
     <button
-      className={"su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-25 after:su-z-5 " + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
+      className={"su-group su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-25 after:su-z-5 " + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
       onClick={onButtonClick}
       {...props}>
-      <ChevronDownIcon
-        className={"su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (isOpen ? " su-scale-y-[-1]" : "")}
-        height={40}/>
+      <span className="transition su-block su-border-b-2 su-border-transparent group-hocus:su-border-white lg:group-hocus:su-border-archway su-w-fit su-mx-auto">
+        <ChevronDownIcon
+          className={" su-transition-all su-text-white lg:su-text-black-true lg:group-hocus:su-text-archway su-mx-auto" + (isOpen ? " su-scale-y-[-1]" : "")}
+          height={40}
+        />
+      </span>
       <span className="su-sr-only">{title.trim() + " submenu"}</span>
     </button>
   )

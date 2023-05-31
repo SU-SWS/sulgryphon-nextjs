@@ -13,7 +13,7 @@ import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 
 const getCurrentPageTitle = (activeTrail, items, trail) => {
   const currentItem = items.find(item => item.id === trail.at(0));
-  if(currentItem === undefined) return null;
+  if (currentItem === undefined) return null;
   if (currentItem.id === activeTrail.at(-1)) {
     return currentItem.title;
   }
@@ -105,10 +105,10 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
   return (
     <li className={`su-m-0`}>
       <div
-        className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light su-text-archway-light" : "")}>
+        className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light" : "")}>
         <Link
           href={url}
-          className={"su-flex-grow su-p-10 su-text-black su-block su-relative " + (isActive ? "su-underline hover:su-no-underline": "su-no-underline hover:su-underline")}
+          className={"su-flex-grow su-p-10 su-block su-relative su-no-underline hover:su-underline " + (isActive ? "su-text-archway hocus:su-text-archway" : "su-text-black-90 hocus:su-text-archway")}
           onClick={() => syncDrupalPreviewRoutes(url)}
           aria-current={isActive ? "page" : undefined}
         >
@@ -118,11 +118,13 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
         <Conditional showWhen={items?.length > 0}>
           <div className="su-relative su-flex su-items-center">
             <button
-              className="su-mr-20 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-15 after:su-z-5 hover:after:su-bg-cardinal-red"
+              className="su-group su-mr-20"
               onClick={subnavOpenClose}
               aria-expanded={submenuOpen ? "true" : "false"}
             >
-              <ChevronDownIcon width={40} className={"su-transition-all" + (submenuOpen ? " su-scale-y-[-1]" : "")}/>
+              <span className="su-block su-border-b-2 su-border-transparent group-hocus:su-border-archway su-w-fit su-mx-auto">
+                <ChevronDownIcon width={40} className={"su-transition-all group-hocus:su-text-archway" + (submenuOpen ? " su-scale-y-[-1]" : "")}/>
+              </span>
               <span
                 className="su-sr-only">{title.trim() + " submenu"}</span>
             </button>

@@ -12,9 +12,10 @@ interface BannerProps {
   overlayPosition?: string
   className?: string
   fullWidth?: boolean
+  headerId?: string
 }
 
-const Banner = ({image, header, superHeader, body, link, overlayPosition, fullWidth = true, ...props}: BannerProps) => {
+const Banner = ({headerId, image, header, superHeader, body, link, overlayPosition, fullWidth = true, ...props}: BannerProps) => {
 
   const hasCardText = header || superHeader || body || link;
 
@@ -35,6 +36,7 @@ const Banner = ({image, header, superHeader, body, link, overlayPosition, fullWi
               superHeader={superHeader}
               body={body}
               link={link}
+              headerId={headerId}
             />
           </div>
         </div>
