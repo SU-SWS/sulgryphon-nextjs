@@ -2,12 +2,12 @@ import Select from "react-select";
 import {MutableRefObject, PropsWithoutRef, useId} from "react";
 
 interface Props extends PropsWithoutRef<any> {
-  selectRef: MutableRefObject<any> | null
+  selectRef?: MutableRefObject<any> | undefined
 }
 
 const ValueContainer = ({children, hasValue, isMulti, ...props}) => {
   const label = props.selectProps['placeholder'] ?? props.selectProps['aria-label'];
-  console.log(props.selectProps['aria-label'], props.selectProps);
+
   return (
     <div className="su-flex-1">
       {(label && hasValue) &&
@@ -21,7 +21,7 @@ const ValueContainer = ({children, hasValue, isMulti, ...props}) => {
   )
 }
 
-const SelectList = ({selectRef = null, ...props}: Props) => {
+const SelectList = ({selectRef, ...props}: Props) => {
   const formId = useId();
   const isMulti = props.isMulti ?? false
   props.placeholder = props.placeholder ?? null;

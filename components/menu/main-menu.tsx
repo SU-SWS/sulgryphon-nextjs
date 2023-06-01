@@ -221,7 +221,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
       <Conditional showWhen={url.length === 0}>
         <button
           tabIndex={tabIndex}
-          className={"su-group su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hocus:su-text-white lg:hocus:su-text-archway hocus:su-bg-black lg:hocus:su-bg-transparent su-no-underline hocus:su-underline su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"su-group su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hocus:su-text-white lg:hocus:su-text-archway hocus:su-bg-black lg:hocus:su-bg-transparent su-w-full su-p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
@@ -232,10 +232,12 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
 
           <span
             className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-10 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
-            <ChevronDownIcon
-              className={"lg:group-hocus:su-text-archway su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
-              height={40}/>
-            <span className="su-sr-only">{"Expand \"" + title.trim() + "\" submenu"}</span>
+            <span className="su-border-b-2 su-border-transparent group-hocus:su-border-white lg:group-hocus:su-border-archway su-w-fit su-mx-auto">
+              <ChevronDownIcon
+                className={"lg:group-hocus:su-text-archway su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
+                height={40}
+              />
+            </span>
           </span>
         </button>
       </Conditional>

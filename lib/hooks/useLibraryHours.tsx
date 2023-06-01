@@ -23,12 +23,12 @@ export interface LocationHours {
   ]
 }
 
-const useLibraryHours = (branchId: string | null = null) => {
-  const {isLoading, error, data: locations} = useDataFetch('/api/library-hours');
+const useLibraryHours = (branchId: string | null = null): LocationHours[] | LocationHours => {
+  const {isLoading, error, data} = useDataFetch('/api/library-hours');
 
   if (isLoading) return [];
   if (error) return []
 
-  return branchId ? locations[branchId] : locations;
+  return branchId ? data[branchId] : data;
 }
 export default useLibraryHours;

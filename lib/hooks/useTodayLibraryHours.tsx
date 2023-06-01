@@ -1,4 +1,4 @@
-import useLibraryHours, {DayHours} from "@/lib/hooks/useLibraryHours";
+import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours";
 import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
 
 interface HoursProps {
@@ -18,7 +18,7 @@ interface HoursProps {
 }
 
 const useTodayLibraryHours = (branchId): HoursProps | null => {
-  const libraryHours = useLibraryHours(branchId)
+  const libraryHours = useLibraryHours(branchId) as LocationHours;
   if (!libraryHours || !libraryHours?.primaryHours) {
     return null;
   }

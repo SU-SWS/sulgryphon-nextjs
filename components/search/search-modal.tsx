@@ -17,12 +17,12 @@ const SearchModal = () => {
 
   return (
     <>
-      <Link href="https://library.stanford.edu/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup={true}>
+      <Link href="https://library.stanford.edu/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog">
         <MagnifyingGlassIcon width={30} className="su-mt-[-1px] su-text-white su-p-4 su-border-b su-border-transparent group-hocus:su-border-white"/>
         <span className="su-sr-only">Search</span>
       </Link>
 
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} ariaLabel="Search Form" labelledBy={headerId}>
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} labelledBy={headerId}>
         <div className="su-max-w-500 su-w-full su-mx-auto">
           <h2 id={headerId} className="su-text-white su-text-center">What can we help you find?</h2>
           <SearchForm action="https://library.stanford.edu/all"/>

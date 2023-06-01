@@ -9,8 +9,8 @@ interface ModalProps {
   children: ReactNode
   isOpen: boolean
   onClose: () => void
-  ariaLabel: string
-  labelledBy: string
+  ariaLabel?: string
+  labelledBy?: string
 }
 
 const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) => {

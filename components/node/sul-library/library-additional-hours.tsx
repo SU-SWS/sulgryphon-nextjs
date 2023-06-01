@@ -6,6 +6,9 @@ import {useId} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import SelectList from "@/components/patterns/select-list";
+import Link from "next/link";
+import {ClockIcon} from "@heroicons/react/24/outline";
+import {ChevronRightIcon} from "@heroicons/react/20/solid";
 
 const LibraryAdditionalHours = ({hoursId}) => {
   return (
@@ -31,19 +34,25 @@ const LibraryAdditionalHoursComponent = ({hoursId}) => {
   }
 
   return (
-    <div className="su-relative su-z-[1] su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
+    <div
+      className="su-relative su-z-[1] su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
       <div className="su-w-full">
-        <h2 className="su-text-m3">Additional Hours</h2>
+        <div className="su-flex su-justify-between su-items-end su-gap-2xl su-mb-40">
+          <h2 className="su-text-m3 su-m-0 su-p-0">Additional Hours</h2>
+          <Link href={`https://library-hours.stanford.edu/libraries/${hoursId}`}
+                className="su-no-underline hocus:su-underline">
+            See detailed hours
+            <ChevronRightIcon width={20} className="su-inline"/>
+          </Link>
+        </div>
         {additionalLocations.map(location =>
-          <div key={location.id} className="su-grid @3xl:su-grid-cols-1-1 su-mb-30 last:su-mb-0">
+          <div key={location.id} className="su-grid @xl:su-grid-cols-1-1 su-mb-30 last:su-mb-0">
             <div id={`${id}-${location.id}`} className="su-flex su-items-center">{location.name}</div>
-            <SelectList
-              className="su-flex su-items-center "
-              aria-labelledby={`${id}-${location.id}`}
-              options={getLibrarySelectOptions(location.hours)}
-              defaultValue={getLibrarySelectOptions(location.hours).find(option => option.value === today)}
-              isSearchable={false}
-            />
+
+            <div className="su-flex su-gap-xs">
+              <ClockIcon width={20}/>
+              <div>{getLibrarySelectOptions(location.hours).find(option => option.value === today).label}</div>
+            </div>
           </div>
         )}
       </div>
