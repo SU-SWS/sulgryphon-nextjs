@@ -8,11 +8,12 @@ interface Props {
   args: string
   itemsToDisplay: number
   emptyMessage: string
+  hasHeading: boolean
 }
 
-const PageListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+const PageListView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
   /* @ts-expect-error Async Server Component */
-  return <PageCardView view={view} args={args} itemsToDisplay={itemsToDisplay} emptyMessage={emptyMessage}/>
+  return <PageCardView view={view} args={args} itemsToDisplay={itemsToDisplay} emptyMessage={emptyMessage} hasHeading={hasHeading}/>
 
   args = args ? args + '/0/0/0' : '0/0/0/0';
 
@@ -35,7 +36,7 @@ const PageListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) =
           key={item.id}
           className="su-border-b su-border-black-20 last:su-border-0 su-pb-10 last:su-pb-0 su-pt-10 first:su-pt-0"
         >
-          <StanfordPageListItem node={item}/>
+          <StanfordPageListItem node={item} h3Heading={hasHeading}/>
         </li>
       )}
     </ul>

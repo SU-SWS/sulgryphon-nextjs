@@ -7,9 +7,10 @@ interface Props {
   args: string
   itemsToDisplay: number
   emptyMessage: string
+  hasHeading: boolean
 }
 
-const NewsListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+const NewsListView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
   args = args ? args + '/0/0/0' : '0/0/0/0';
 
   const items = await getViewItems<News>(view, itemsToDisplay, args.split('/'));
@@ -31,7 +32,7 @@ const NewsListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) =
           key={item.id}
           className="su-border-b su-border-black-20 last:su-border-0 su-pb-10 last:su-pb-0 su-pt-10 first:su-pt-0"
         >
-          <StanfordNewsListItem node={item}/>
+          <StanfordNewsListItem node={item} h3Heading={hasHeading}/>
         </li>
       )}
     </ul>

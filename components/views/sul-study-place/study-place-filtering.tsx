@@ -73,8 +73,8 @@ const StudyPlacesFiltering = ({items}) => {
   }
 
   return (
-    <>
-      <form className="su-@container su-relative su-z-[1]">
+    <div className="su-@container">
+      <form className="su-relative su-z-[1]">
         <div className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30">
 
           <SelectList
@@ -140,10 +140,10 @@ const StudyPlacesFiltering = ({items}) => {
         <Conditional showWhen={itemsToDisplay.length > 0}>
           <ul
             ref={parent}
-            className="su-list-unstyled md:su-grid su-grid-cols-3 su-gap-2xl su-rs-pt-1"
+            className="su-list-unstyled su-grid @3xl:su-grid-cols-2 @7xl:su-grid-cols-3 su-gap-xl"
           >
             {itemsToDisplay.map(item =>
-              <li key={item.id} className="su-rs-mb-3 md:su-mb-0">
+              <li key={item.id} className="">
                 <SulStudyPlaceCard node={item}/>
               </li>
             )}
@@ -154,7 +154,7 @@ const StudyPlacesFiltering = ({items}) => {
           <p>No items match the search.</p>
         </Conditional>
       </Conditional>
-    </>
+    </div>
   )
 }
 export default StudyPlacesFiltering;

@@ -9,9 +9,11 @@ import EmailLink from "@/components/patterns/email-link";
 
 interface Props extends PropsWithoutRef<any> {
   node: Person
+  h3Heading?: boolean
 }
 
-const HorizontalPersonCard = ({node, ...props}: Props) => {
+const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) => {
+  const HeadingElement = h3Heading ? 'h3' : 'h2';
   const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
@@ -38,7 +40,7 @@ const HorizontalPersonCard = ({node, ...props}: Props) => {
         <div className="su-flex su-flex-col su-gap-[1rem]">
           <Link href={node.path?.alias ?? "#"}
                 className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
-            <h2 className="su-type-2">{node.title}</h2>
+            <HeadingElement className="su-type-2">{node.title}</HeadingElement>
           </Link>
 
           <Conditional showWhen={node.su_person_full_title}>

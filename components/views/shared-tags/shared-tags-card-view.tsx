@@ -7,9 +7,10 @@ interface Props {
   args: string
   itemsToDisplay: number
   emptyMessage: string
+  hasHeading: boolean
 }
 
-const SharedTagsCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+const SharedTagsCardView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
   args = args ? args : '';
 
   const items = await getViewItems<DrupalNode>(view, itemsToDisplay, args.split('/'));
@@ -26,7 +27,7 @@ const SharedTagsCardView = async ({view, args, itemsToDisplay, emptyMessage}: Pr
   }
 
   return (
-    <CardList items={items}/>
+    <CardList items={items} h3Heading={hasHeading}/>
   )
 }
 export default SharedTagsCardView;

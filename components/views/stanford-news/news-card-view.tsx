@@ -7,9 +7,10 @@ interface Props {
   args: string
   itemsToDisplay: number
   emptyMessage: string
+  hasHeading: boolean
 }
 
-const NewsCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+const NewsCardView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
   args = args ? args + '/0/0/0' : '0/0/0/0';
 
   const items = await getViewItems<News>(view, itemsToDisplay, args.split('/'));
@@ -25,7 +26,7 @@ const NewsCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props) =
   }
 
   return (
-    <CardList items={items}/>
+    <CardList items={items} h3Heading={hasHeading}/>
   )
 }
 export default NewsCardView;

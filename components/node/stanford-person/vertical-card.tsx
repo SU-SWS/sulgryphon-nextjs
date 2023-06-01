@@ -5,9 +5,15 @@ import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
 import EmailLink from "@/components/patterns/email-link";
+import {PropsWithoutRef} from "react";
 
-const VerticalPersonCard = ({node, ...props}: { node: Person}) => {
+interface Props {
+  node: Person
+  h3Heading?: boolean
+}
 
+const VerticalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) => {
+  const HeadingElement = h3Heading ? 'h3' : 'h2';
   const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const imageHeight = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height;
@@ -42,7 +48,7 @@ const VerticalPersonCard = ({node, ...props}: { node: Person}) => {
             href={node.path?.alias ?? "#"}
             className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red"
           >
-            <h2 className="su-type-0 @lg:su-type-2 su-font-serif">{node.title}</h2>
+            <HeadingElement className="su-type-0 @lg:su-type-2 su-font-serif">{node.title}</HeadingElement>
           </Link>
           <div className="su-flex su-flex-col su-gap-[1.2rem]">
             <Conditional showWhen={node.su_person_full_title}>

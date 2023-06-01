@@ -31,6 +31,13 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
     delete link?.options?.attributes?.['aria-label'];
   }
 
+  const gridClasses = [
+    '',
+    '@4xl:su-grid-cols-1-1',
+    '@4xl:su-grid-cols-1-1 @7xl:su-grid-cols-1-1-1',
+  ]
+  const gridClass = entityItems.length >= 3 ? gridClasses[2] : gridClasses[(entityItems.length % 3) - 1]
+
   return (
     // @ts-ignore
     <div className="su-@container su-relative su-centered" {...props}>
@@ -46,10 +53,10 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
         }
 
         {entities &&
-          <div className="su-mb-40 su-flex su-flex-wrap su-gap-2xl su-justify-around" aria-live="polite">
+          <div className={`su-mb-40 su-grid su-gap-[90px] ${gridClass}`} aria-live="polite">
             {entityItems.map((item, i) =>
-              <div key={item.id} className="su-min-w-[250px] @6xl:su-min-w-[400px] su-flex-1">
-                <NodeCardDisplay node={item}/>
+              <div key={item.id} className="su-centered su-max-w-[500px]">
+                <NodeCardDisplay node={item} h3Heading={!!headline}/>
               </div>
             )}
           </div>

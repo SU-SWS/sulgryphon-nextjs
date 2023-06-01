@@ -7,9 +7,10 @@ interface Props {
   args: string
   itemsToDisplay: number
   emptyMessage: string
+  hasHeading: boolean
 }
 
-const EventsCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+const EventsCardView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
 
   args = args ? args + '/0/0/0' : '0/0/0/0';
 
@@ -26,7 +27,7 @@ const EventsCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props)
   }
 
   return (
-    <CardList items={items}/>
+    <CardList items={items} h3Heading={hasHeading}/>
   )
 }
 export default EventsCardView;

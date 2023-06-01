@@ -1,14 +1,24 @@
 import NodeCard from "@/components/node/node-card";
 
-const CardList = ({items}) => {
+const CardList = ({items, h3Heading}) => {
+
+  const gridClasses = [
+    '',
+    '@4xl:su-grid-cols-1-1',
+    '@4xl:su-grid-cols-1-1 @7xl:su-grid-cols-1-1-1',
+  ]
+  const gridClass = items.length >= 3 ? gridClasses[2] : gridClasses[(items.length % 3) - 1]
+
   return (
-    <ul className="su-list-unstyled su-@container su-flex su-flex-wrap su-justify-around su-gap-2xl">
-      {items.map(item =>
-        <li key={item.id} className="su-min-w-[250px] @6xl:su-min-w-[400px] su-flex-1 su-max-w-[500px]">
-          <NodeCard node={item} key={item.id}/>
-        </li>
-      )}
-    </ul>
+    <div className="su-@container">
+      <ul className={`su-list-unstyled su-grid su-gap-[90px] ${gridClass}`}>
+        {items.filter(item => item.id).map(item =>
+          <li key={item.id} className="su-w-full su-max-w-[500px] su-mx-auto">
+            <NodeCard node={item} key={item.id} h3Heading={h3Heading}/>
+          </li>
+        )}
+      </ul>
+    </div>
   )
 }
 export default CardList;

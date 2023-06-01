@@ -45,12 +45,12 @@ const HorizontalCard = ({headerId, video, image, superHeader, header, footer, bo
         </FullScreenBackground>
       }
 
-      <div className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[27px] @6xl:su-mt-0 su-pt-[5.8rem] su-pb-[7.2rem] lg:su-px-80">
+      <div className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[77px] @6xl:su-mt-0 su-pt-[5.8rem] su-pb-[7.2rem] lg:su-px-80">
 
-        <div className="su-flex su-flex-col @6xl:su-flex-row su-gap-2xl">
+        <div className="su-grid @6xl:su-grid-cols-2 su-gap-2xl su-items-center">
           <Conditional showWhen={image || video}>
             <div
-              className="su-w-full @6xl:su-w-1/2 su-flex-shrink-0 su-overflow-hidden su-aspect-[16/9] su-relative su-mt-[-85px] @6xl:su-mt-0">
+              className="su-w-full su-overflow-hidden su-aspect-[16/9] su-relative su-mt-[-135px] @6xl:su-mt-0">
               {image}
               {video}
             </div>

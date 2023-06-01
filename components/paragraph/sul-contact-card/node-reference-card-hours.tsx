@@ -13,7 +13,10 @@ const NodeReferenceCardHours = ({branchId}) => {
 
   return (
     <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-0 su-type-1">
-      <ClockIcon width={19} className="su-mr-12 su-mt-01em su-flex-shrink-0"/>
+      <ClockIcon
+        width={19}
+        className="su-mr-12 su-mt-01em su-flex-shrink-0"
+      />
       <div className="su-text-white">
         {isOpen ? 'Open' : 'Closed'}
         <span className="su-mx-5">/</span>

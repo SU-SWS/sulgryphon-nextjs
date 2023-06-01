@@ -85,10 +85,11 @@ const getTimeString = (start: Date, end: Date): string => {
 
 interface Props extends PropsWithoutRef<any> {
   node: Event
+  h3Heading?: boolean
 }
 
-const StanfordEventCard = ({node, ...props}: Props) => {
-
+const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) => {
+  const HeadingElement = h3Heading ? 'h3' : 'h2';
   const start = new Date(node.su_event_date_time?.value);
   const end = new Date(node.su_event_date_time?.end_value);
   const startMonth = start.toLocaleDateString("en-US", {month: "short", timeZone: 'America/Los_Angeles'})
@@ -122,7 +123,10 @@ const StanfordEventCard = ({node, ...props}: Props) => {
       }
 
       <div className="su-flex su-items-start su-gap-xl su-flex-col">
-        <div className="su-flex su-w-full su-flex-row su-items-center su-bg-black-true su-text-white su-text-center su-uppercase" aria-hidden>
+        <div
+          className="su-flex su-w-full su-flex-row su-items-center su-bg-black-true su-text-white su-text-center su-uppercase"
+          aria-hidden
+        >
           <div className="su-flex su-flex-col su-items-center su-mx-auto">
             <div
               className="su-pt-20 su-px-30 su-font-semibold">
@@ -151,17 +155,16 @@ const StanfordEventCard = ({node, ...props}: Props) => {
         </div>
 
         <div className="su-flex su-flex-col su-gap-[1.2rem]">
-          <h2 className="su-text-m2 su-order-2">
+          <HeadingElement className="su-text-m2 su-order-2">
             <Link href={node.path?.alias ?? "#"}
                   className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
               {node.title}
             </Link>
-          </h2>
+          </HeadingElement>
 
           {node.su_event_type?.[0]?.name &&
             <div className="su-order-1 su-inline su-mr-5 su-font-semibold">{node.su_event_type?.[0].name}</div>
           }
-
 
 
           <div className="su-flex su-order-3">

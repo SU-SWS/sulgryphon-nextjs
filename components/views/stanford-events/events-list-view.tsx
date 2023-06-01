@@ -8,11 +8,12 @@ interface Props {
   args: string
   itemsToDisplay: number
   emptyMessage: string
+  hasHeading: boolean
 }
 
-const EventsListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
+const EventsListView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
   /* @ts-expect-error Async Server Component */
-  return <EventsCardView view={view} args={args} itemsToDisplay={itemsToDisplay} emptyMessage={emptyMessage}/>
+  return <EventsCardView view={view} args={args} itemsToDisplay={itemsToDisplay} emptyMessage={emptyMessage} hasHeading={hasHeading}/>
 
   args = args ? args + '/0/0/0' : '0/0/0/0';
 
@@ -36,7 +37,7 @@ const EventsListView = async ({view, args, itemsToDisplay, emptyMessage}: Props)
           key={item.id}
           className="su-border-b su-border-black-20 su-last:border-0 su-pb-10 su-last:pb-0 su-pt-10 su-first:pt-0"
         >
-          <StanfordEventListItem node={item}/>
+          <StanfordEventListItem node={item} h3Heading={hasHeading}/>
         </li>
       )}
     </ul>

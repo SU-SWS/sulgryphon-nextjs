@@ -26,11 +26,11 @@ const HomePageBanner = async () => {
 
   return (
     <header className="su-bg-black-true su-mb-100 su-relative">
-      <div className="su-centered su-relative su-z-10 su-top-50 md:su-top-100 md:su-px-50 su-min-h-[350px] md:su-min-h-[300px]">
+      <div className="su-pb-20 su-centered su-relative su-z-10 su-top-50 md:su-top-100 md:su-px-50 su-min-h-[350px] md:su-min-h-[300px]">
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
           <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
             <h2>What can we help you find?</h2>
-            <SearchForm action="https://library.stanford.edu/all" className="su-mb-20"/>
+            <SearchForm action="https://library.stanford.edu/all" className="su-@container su-mb-20"/>
             <p>
               Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
               , <Link href="https://searchworks.stanford.edu/articles" className="su-text-white hocus:su-text-white hocus:su-no-underline">articles+</Link>

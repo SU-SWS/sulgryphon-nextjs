@@ -39,6 +39,7 @@ const ListParagraph = async ({headerId, headline, description, link, view, style
       itemsToDisplay={itemsToDisplay}
       args={args}
       emptyMessage={styles?.list_paragraph?.empty_message}
+      hasHeading={!!headline}
     />
   }
 

@@ -22,15 +22,17 @@ interface Props {
   args?: string
   itemsToDisplay?: number
   emptyMessage?: string
+  hasHeading: boolean
 }
 
-const View = async ({viewId, displayId, args, itemsToDisplay, emptyMessage}: Props) => {
+const View = async ({viewId, displayId, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
   const component = `${viewId}--${displayId}`;
   const viewProps = {
     view: component,
     args: args || '',
     itemsToDisplay: itemsToDisplay || -1,
     emptyMessage: emptyMessage || '',
+    hasHeading: hasHeading
   }
   switch (component) {
     case 'stanford_basic_pages--basic_page_type_list':

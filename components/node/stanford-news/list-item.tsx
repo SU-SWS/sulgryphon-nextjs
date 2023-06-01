@@ -2,8 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
+import {PropsWithoutRef} from "react";
 
-const StanfordNewsListItem = ({node, ...props}: { node: News }) => {
+interface Props {
+  node: News
+  h3Heading?: boolean
+}
+
+const StanfordNewsListItem = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) => {
+  const HeadingElement = h3Heading ? 'h3' : 'h2';
+
   const imageUrl = node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1x || node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_1x
   const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64 || node.su_news_banner?.field_media_image?.uri.base64;
 
@@ -16,7 +24,7 @@ const StanfordNewsListItem = ({node, ...props}: { node: News }) => {
       <div className={"su-grid su-gap-2xl " + (imageUrl ? "su-grid-cols-3-1" : "")}>
         <div>
           <Link className="su-text-digital-red su-no-underline hover:su-underline" href={node.path?.alias ?? "#"}>
-            <h2 className="su-type-2">{node.title}</h2>
+            <HeadingElement className="su-type-2">{node.title}</HeadingElement>
           </Link>
           {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
         </div>

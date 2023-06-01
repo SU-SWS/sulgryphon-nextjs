@@ -3,12 +3,14 @@ import Card from "@/components/patterns/card";
 import Conditional from "@/components/utils/conditional";
 import {EventSeries} from "@/lib/drupal/drupal";
 
-const StanfordEventSeriesCard = ({node, ...props}: { node: EventSeries }) => {
+const StanfordEventSeriesCard = ({node, h3Heading, ...props}: { node: EventSeries, h3Heading?: boolean }) => {
   return (
     <article {...props}>
       <Card
         header={
-          <Link className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red" href={node.path?.alias ?? "#"}>
+          <Link
+            className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red"
+            href={node.path?.alias ?? "#"}>
             {node.title}
           </Link>
         }
