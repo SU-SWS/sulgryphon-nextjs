@@ -81,7 +81,8 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={node.type === 'node--stanford_news'}>
         <InternalHeaderBanner>
-          <div className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          <div
+            className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
             <h1
               className="su-text-white su-order-2">
               {node.title}
@@ -100,7 +101,8 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
         <InternalHeaderBanner>
-          <h1 className="su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          <h1
+            className="su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
@@ -135,33 +137,37 @@ export const generateStaticParams = async (context) => {
 
   const params = new DrupalJsonApiParams();
   params.addPageLimit(50);
+  let paths: GetStaticPathsResult["paths"] = [];
 
-  let paths: GetStaticPathsResult["paths"] = await getPathsFromContext([
-    'node--stanford_page',
-    'node--stanford_event',
-    'node--stanford_news',
-    'node--stanford_person',
-    'node--sul_library'
-  ], {}, {params: params.getQueryObject()});
-
-  let fetchMore = process.env.BUILD_COMPLETE === 'true';
-  let fetchedData: GetStaticPathsResult["paths"] = []
-  let page = 1;
-  while (fetchMore) {
-    console.log('Fetching page ' + page);
-    params.addPageOffset(page * 50);
-
-    fetchedData = await getPathsFromContext([
+  try {
+    paths = await getPathsFromContext([
       'node--stanford_page',
       'node--stanford_event',
       'node--stanford_news',
       'node--stanford_person',
       'node--sul_library'
-    ], {}, {params: params.getQueryObject()})
-    paths = [...paths, ...fetchedData];
-    fetchMore = fetchedData.length > 0;
-    page++;
-  }
+    ], {}, {params: params.getQueryObject()});
 
+    let fetchMore = process.env.BUILD_COMPLETE === 'true';
+    let fetchedData: GetStaticPathsResult["paths"] = []
+    let page = 1;
+    while (fetchMore) {
+      console.log('Fetching page ' + page);
+      params.addPageOffset(page * 50);
+
+      fetchedData = await getPathsFromContext([
+        'node--stanford_page',
+        'node--stanford_event',
+        'node--stanford_news',
+        'node--stanford_person',
+        'node--sul_library'
+      ], {}, {params: params.getQueryObject()})
+      paths = [...paths, ...fetchedData];
+      fetchMore = fetchedData.length > 0;
+      page++;
+    }
+  } catch (e) {
+
+  }
   return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (process.env.BUILD_COMPLETE ? -1 : 5));
 }

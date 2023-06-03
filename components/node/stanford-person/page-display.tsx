@@ -42,7 +42,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
           </div>
         }
 
-        <div className="su-flex su-flex-col su-justify-between">
+        <div className="su-flex su-flex-col su-justify-center su-gap-2xl">
           <div>
 
             {(node.su_person_full_title || node.su_person_short_title) &&
