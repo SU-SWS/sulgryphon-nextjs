@@ -75,11 +75,11 @@ const StudyPlacesFiltering = ({items}) => {
   return (
     <div className="su-@container">
       <form className="su-relative su-z-[1]">
-        <div className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30">
+        <fieldset className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30" aria-label="Filter study places">
 
           <SelectList
             selectRef={typeRef}
-            aria-label="Type of place"
+            aria-label="Type"
             placeholder="Type"
             options={typeOfStudies}
             name="type"
@@ -90,7 +90,7 @@ const StudyPlacesFiltering = ({items}) => {
 
           <SelectList
             selectRef={libraryRef}
-            aria-label="Library Branch Location"
+            aria-label="Library"
             placeholder="Library"
             options={libraryOptions}
             name="library"
@@ -101,7 +101,7 @@ const StudyPlacesFiltering = ({items}) => {
 
           <SelectList
             selectRef={capacityRef}
-            aria-label="Library Branch Capacity"
+            aria-label="Capacity"
             placeholder="Capacity"
             options={capacityOptions}
             name="capacity"
@@ -121,7 +121,7 @@ const StudyPlacesFiltering = ({items}) => {
             isDisabled={capacityOptions.length == 0}
           />
 
-        </div>
+        </fieldset>
 
         <button className="su-button su-mr-20" onClick={handleSubmit}>
           Filter
