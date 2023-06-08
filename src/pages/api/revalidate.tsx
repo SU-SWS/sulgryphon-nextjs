@@ -3,7 +3,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check for secret to confirm this is a valid request
   if (req.query.secret !== process.env.DRUPAL_REVALIDATE_SECRET) {
-    return res.status(401).json({ message: 'Invalid token' + req.query.secret + " doesnt match " + process.env.DRUPAL_REVALIDATE_SECRET })
+    return res.status(401).json({ message: 'Invalid token' })
   }
 
   try {
