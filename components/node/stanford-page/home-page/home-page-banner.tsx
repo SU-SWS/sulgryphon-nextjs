@@ -11,6 +11,7 @@ const HomePageBanner = async () => {
 
   params.addFilter('su_library__hours', null, 'IS NOT NULL')
     .addInclude(['su_library__contact_img.field_media_image'])
+    .addSort('title', 'ASC');
 
   const libraries: Library[] = await getResourceCollection('node--sul_library', {params: params.getQueryObject()});
 
