@@ -92,6 +92,7 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
   const [submenuOpen, setSubmenuOpen] = useState(activeTrail.indexOf(id) >= 0);
 
   const depthClasses = [
+    'su-pl-0',
     'su-pl-30',
     'su-pl-60',
     'su-pl-90',
@@ -105,10 +106,10 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
   return (
     <li className={`su-m-0`}>
       <div
-        className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-foggy-light" : "")}>
+        className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-archway" : "")}>
         <Link
           href={url}
-          className={"su-flex-grow su-p-10 su-block su-relative su-no-underline hover:su-underline " + (isActive ? "su-text-archway hocus:su-text-archway" : "su-text-black-90 hocus:su-text-archway")}
+          className={"su-flex-grow su-p-10 su-block su-relative su-no-underline hover:su-underline " + (isActive ? "su-text-white hocus:su-text-white" : "su-text-black-90 hocus:su-text-archway")}
           onClick={() => syncDrupalPreviewRoutes(url)}
           aria-current={isActive ? "page" : undefined}
         >
@@ -122,8 +123,8 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
               onClick={subnavOpenClose}
               aria-expanded={submenuOpen ? "true" : "false"}
             >
-              <span className="su-block su-border-b-2 su-border-transparent group-hocus:su-border-archway su-w-fit su-mx-auto">
-                <ChevronDownIcon width={40} className={"su-transition-all group-hocus:su-text-archway" + (submenuOpen ? " su-scale-y-[-1]" : "")}/>
+              <span className={"su-block su-border-b-2 su-border-transparent su-w-fit su-mx-auto " + (isActive ? "group-hocus:su-border-white": "group-hocus:su-border-archway")}>
+                <ChevronDownIcon width={40} className={"su-transition-all " + (submenuOpen ? " su-scale-y-[-1]" : "") + (isActive ? " su-text-white group-hocus:su-text-white": " group-hocus:su-text-archway")}/>
               </span>
               <span
                 className="su-sr-only">{title.trim() + " submenu"}</span>
