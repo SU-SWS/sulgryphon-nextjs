@@ -4,6 +4,7 @@ import formatHtml from "@/lib/format-html";
 import Conditional from "@/components/utils/conditional";
 import {DrupalLink} from "@/components/patterns/link";
 import {DrupalLinkType} from "@/lib/drupal/drupal";
+import {ElementType} from "react";
 
 interface CardProps {
   video?: ReactNodeLike
@@ -16,10 +17,11 @@ interface CardProps {
   linkStyle?: string
   className?: string
   headerId?: string
+  headingLevel?: string
 }
 
-const Card = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, ...props}: CardProps) => {
-
+const Card = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h3', ...props}: CardProps) => {
+  const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
   if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === header) {
     link.options.attributes['aria-labelledby'] = headerId;
     delete link?.options?.attributes?.['aria-label'];
@@ -48,9 +50,9 @@ const Card = ({headerId, video, image, superHeader, header, footer, body, link, 
         </Conditional>
 
         <Conditional showWhen={header}>
-          <h3 id={headerId} className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
+          <Heading id={headerId} className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
             {header}
-          </h3>
+          </Heading>
         </Conditional>
 
         <Conditional showWhen={body}>

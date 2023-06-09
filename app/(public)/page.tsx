@@ -20,7 +20,6 @@ const Page = async () => {
 
   return (
     <main id="main-content" className="su-mb-50">
-      {/* @ts-expect-error Async Server Component */}
       <HomePageBanner/>
       <ParagraphRows items={node.su_page_components} fullWidth/>
     </main>

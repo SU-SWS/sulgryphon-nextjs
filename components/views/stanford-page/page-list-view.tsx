@@ -12,7 +12,6 @@ interface Props {
 }
 
 const PageListView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
-  /* @ts-expect-error Async Server Component */
   return <PageCardView view={view} args={args} itemsToDisplay={itemsToDisplay} emptyMessage={emptyMessage} hasHeading={hasHeading}/>
 
   args = args ? args + '/0/0/0' : '0/0/0/0';

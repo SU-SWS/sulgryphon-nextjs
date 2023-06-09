@@ -33,62 +33,64 @@ const LibraryFooter = () => {
 
           <ul className="su-list-unstyled">
             <li><Link className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
-                      href="#">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
+                      href="/library-hours-and-locations">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
             </li>
             <li><Link className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
-                      href="#">Contact us<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link></li>
+                      href="/contact-us">Contact us<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link></li>
           </ul>
         </div>
         <div>
           <h2 className="su-text-m0 su-mb-20">Who we are</h2>
           <ul className="su-list-unstyled">
-            <li><FooterLink href="#">About Us</FooterLink></li>
-            <li><FooterLink href="#">Department directory</FooterLink></li>
-            <li><FooterLink href="#">Staff directory</FooterLink></li>
-            <li><FooterLink href="#">Staff publications and research</FooterLink></li>
-            <li><FooterLink href="#">Student job openings</FooterLink></li>
-            <li><FooterLink href="#">Careers</FooterLink></li>
+            <li><FooterLink href="/about-us">About Us</FooterLink></li>
+            <li><FooterLink href="/department-directory">Department directory</FooterLink></li>
+            <li><FooterLink href="https://searchworks.stanford.edu/catalog?f%5Bcollection%5D%5B%5D=hn730ks3626">Staff publications and research</FooterLink></li>
+            <li><FooterLink href="https://stanford.joinhandshake.com/login">Student job openings</FooterLink></li>
+            <li><FooterLink href="https://careersearch.stanford.edu/jobs/search/10103793">Careers</FooterLink></li>
           </ul>
         </div>
         <div>
           <h2 className="su-text-m1 su-mb-20">Administration</h2>
           <ul className="su-list-unstyled">
-            <li><FooterLink href="#">Library Policies</FooterLink></li>
-            <li><FooterLink href="#">Copyright notice</FooterLink></li>
-            <li><FooterLink href="#">System status</FooterLink></li>
-            <li><FooterLink href="#">Staff login</FooterLink></li>
+            <li><FooterLink href="/general-policies">General Policies</FooterLink></li>
+            <li><FooterLink href="copyright-notice">Copyright notice</FooterLink></li>
+            <li><FooterLink href="https://library-status.stanford.edu/">System status</FooterLink></li>
           </ul>
         </div>
         <div>
           <h2 className="su-text-m1 su-mb-20">Support Stanford Libraries</h2>
           <div className="su-inline-block md:su-block">
-            <DrupalLinkButton href="#">Donate</DrupalLinkButton>
-          </div>
-
-          <div className="su-flex su-flex-wrap md:su-flex-nowrap su-mt-50 su-gap-lg su-justify-around">
-            <FooterLink href="#">
-              <FacebookIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
-              <span className="su-sr-only">Facebook</span>
-            </FooterLink>
-            <FooterLink href="#">
-              <LinkedInIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
-              <span className="su-sr-only">LinkedIn</span>
-            </FooterLink>
-            <FooterLink href="#">
-              <TwitterIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
-              <span className="su-sr-only">Twitter</span>
-            </FooterLink>
-            <FooterLink href="#">
-              <InstagramIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/>
-              <span className="su-sr-only">Instagram</span>
-            </FooterLink>
-            <FooterLink href="#">
-              <YoutubeIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/>
-              <span className="su-sr-only">Youtube</span>
-            </FooterLink>
+            <DrupalLinkButton href="/support-stanford-libraries">Donate</DrupalLinkButton>
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+const SocialLinks = () => {
+  return (
+    <div className="su-flex su-flex-wrap md:su-flex-nowrap su-mt-50 su-gap-lg su-justify-around">
+      <FooterLink href="#">
+        <FacebookIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
+        <span className="su-sr-only">Facebook</span>
+      </FooterLink>
+      <FooterLink href="#">
+        <LinkedInIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
+        <span className="su-sr-only">LinkedIn</span>
+      </FooterLink>
+      <FooterLink href="#">
+        <TwitterIcon className="su-transition-all su-text-white hocus:su-text-cool-grey"/>
+        <span className="su-sr-only">Twitter</span>
+      </FooterLink>
+      <FooterLink href="#">
+        <InstagramIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/>
+        <span className="su-sr-only">Instagram</span>
+      </FooterLink>
+      <FooterLink href="#">
+        <YoutubeIcon className="su-transition-all su-text-white hocus:su-text-cool-grey" height={30}/>
+        <span className="su-sr-only">Youtube</span>
+      </FooterLink>
     </div>
   )
 }

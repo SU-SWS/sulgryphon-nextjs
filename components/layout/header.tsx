@@ -28,7 +28,6 @@ const Header = async () => {
           </div>
         </div>
 
-        {/* @ts-expect-error Async Server Component */}
         <GlobalMessage/>
       </div>
 
@@ -38,10 +37,10 @@ const Header = async () => {
           <Lockup className="su-pb-20"/>
 
           <nav className="su-hidden lg:su-block" aria-label="User links">
-            <ul className="su-list-unstyled su-grid su-grid-cols-3 su-gap-[40px] xl:su-gap-[55px]">
-              <HeaderLink href="https://mylibrary.stanford.edu/" text="Accessibility"/>
+            <ul className="su-list-unstyled su-flex su-gap-[40px] xl:su-gap-[55px]">
+              <HeaderLink href="/library-accessibility" text="Library Accessibility"/>
               <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account"/>
-              <HeaderLink href="https://mylibrary.stanford.edu/" text="Contact Us"/>
+              <HeaderLink href="/contact-us" text="Contact Us"/>
             </ul>
           </nav>
         </div>

@@ -32,7 +32,6 @@ const ListParagraph = async ({headerId, headline, description, link, view, style
   let viewDisplay;
 
   if (viewId && displayId) {
-    /* @ts-expect-error Async Server Component */
     viewDisplay = <View
       viewId={viewId}
       displayId={displayId}

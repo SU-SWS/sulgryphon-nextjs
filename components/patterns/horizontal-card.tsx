@@ -4,7 +4,7 @@ import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import Conditional from "@/components/utils/conditional";
 import CardSprinkles from "@/components/patterns/card-sprinkles";
-import {useId, useRef} from "react";
+import {ElementType, useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
 import Link from "next/link";
 import {DrupalLinkType} from "@/lib/drupal/drupal";
@@ -22,11 +22,12 @@ interface CardProps {
   backgroundSprinkles?: string
   fullWidth?: boolean
   headerId?: string
+  headingLevel?: string
 }
 
-const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h3', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
   const ref = useRef(null);
-
+  const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
   return (
     <div className="su-relative" {...props} ref={ref}>
 
@@ -45,7 +46,8 @@ const HorizontalCard = ({headerId, video, image, superHeader, header, footer, bo
         </FullScreenBackground>
       }
 
-      <div className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[77px] @6xl:su-mt-0 su-pt-[5.8rem] su-pb-[7.2rem] lg:su-px-80">
+      <div
+        className="su-@container su-centered su-relative su-basefont-23 su-leading-display su-text-white su-mt-[77px] @6xl:su-mt-0 su-pt-[5.8rem] su-pb-[7.2rem] lg:su-px-80">
 
         <div className="su-grid @6xl:su-grid-cols-2 su-gap-2xl su-items-center">
           <Conditional showWhen={image || video}>
@@ -62,7 +64,7 @@ const HorizontalCard = ({headerId, video, image, superHeader, header, footer, bo
             </Conditional>
 
             <Conditional showWhen={header}>
-              <h3 id={headerId} className="su-text-m5">{header}</h3>
+              <Heading id={headerId} className="su-text-m5">{header}</Heading>
             </Conditional>
 
             <Conditional showWhen={body}>

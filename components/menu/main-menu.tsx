@@ -73,7 +73,7 @@ const MainMenu = ({menuItems}) => {
               <li className="su-m-0">
                 <Link
                   className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
-                  href="/"
+                  href="https://mylibrary.stanford.edu/"
                 >
                   My Account
                 </Link>
@@ -81,7 +81,7 @@ const MainMenu = ({menuItems}) => {
               <li className="su-m-0">
                 <Link
                   className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
-                  href="/"
+                  href="https://library.stanford.edu/all"
                 >
                   Search Results
                 </Link>
@@ -89,7 +89,7 @@ const MainMenu = ({menuItems}) => {
               <li className="su-m-0">
                 <Link
                   className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
-                  href="/"
+                  href="/library-accessibility"
                 >
                   Accessibility
                 </Link>
@@ -97,7 +97,7 @@ const MainMenu = ({menuItems}) => {
               <li className="su-m-0">
                 <Link
                   className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
-                  href="/"
+                  href="/contact-us"
                 >
                   Contact Us
                 </Link>

@@ -17,7 +17,6 @@ const Layout = ({children}: { children: ReactNode }) => {
       }
       <div className="su-grid su-grid-rows-1 su-min-h-screen">
         <div>
-          {/* @ts-expect-error Async Server Component */}
           <Header/>
           {children}
         </div>

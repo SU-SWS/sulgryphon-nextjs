@@ -15,19 +15,12 @@ export const NodePageDisplay = ({node, ...props}: NodeProps) => {
   return (
     <>
       {node.type === "node--stanford_course" && <StanfordCourse node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--stanford_event" && <StanfordEvent node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--stanford_event_series" && <StanfordEventSeries node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--stanford_news" && <StanfordNews node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--stanford_page" && <StanfordPage node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--stanford_person" && <StanfordPerson node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--stanford_publication" && <StanfordPublication node={node} {...props}/>}
-      {/* @ts-expect-error Async Server Component */}
       {node.type === "node--sul_library" && <SulLibrary node={node} {...props}/>}
     </>
   )
