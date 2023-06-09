@@ -26,6 +26,7 @@ const fetchLibGuides = async ({accountId, subjectId}: {accountId?: number, subje
     }
 
     const params = new URLSearchParams();
+    params.set('status', "1");
 
     if (subjectId) {
       params.set('subject_ids', subjectId.toString());
@@ -38,7 +39,7 @@ const fetchLibGuides = async ({accountId, subjectId}: {accountId?: number, subje
       .then(response => response.data);
 
     const guides: Guide[] = [];
-    data.map(guide => {
+    data.filter(guide => guide.status === 1).map(guide => {
       guides.push({
         id: guide.id,
         title: guide.name,
