@@ -12,7 +12,11 @@ interface Props {
 
 const StudyPlacesFilteredCards = async ({view}: Props) => {
   const items = await getViewItems<StudyPlace>(view);
-  return <StudyPlaceFiltering items={items}/>
+  const validItems = items.filter(item => {
+    if (!item.sul_study__branch.title) console.error('Orphaned place of study: ' + item.title + ' | ' + item.id);
+    return !!item.sul_study__branch.title;
+  })
+  return <StudyPlaceFiltering items={validItems}/>
 }
 
 export default StudyPlacesFilteredCards;
