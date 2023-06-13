@@ -25,12 +25,9 @@ class RedirectError extends Error {
 
 const fetchNodeData = async (context) => {
   const path = await translatePathFromContext(context);
-  if (!path || !path.jsonapi) {
-    throw new Error('Unable to translate path');
-  }
 
   // Check for redirect.
-  if (path.redirect?.[0].to) {
+  if (path?.redirect?.[0].to) {
     const currentPath = '/' + (typeof context.params.slug === 'object' ? context.params.slug.join('/') : context.params.slug);
     const [destination] = path.redirect;
 
@@ -38,6 +35,11 @@ const fetchNodeData = async (context) => {
       throw new RedirectError(destination.to);
     }
   }
+
+  if (!path || !path.jsonapi) {
+    throw new Error('Unable to translate path');
+  }
+
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
   const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');

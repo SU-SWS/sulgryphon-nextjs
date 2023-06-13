@@ -46,7 +46,7 @@ const LibraryFooter = () => {
             <li><FooterLink href="/department-directory">Department directory</FooterLink></li>
             <li><FooterLink href="https://searchworks.stanford.edu/catalog?f%5Bcollection%5D%5B%5D=hn730ks3626">Staff publications and research</FooterLink></li>
             <li><FooterLink href="https://stanford.joinhandshake.com/login">Student job openings</FooterLink></li>
-            <li><FooterLink href="https://careersearch.stanford.edu/jobs/search/10103793">Careers</FooterLink></li>
+            <li><FooterLink href="/career-search">Careers</FooterLink></li>
           </ul>
         </div>
         <div>
