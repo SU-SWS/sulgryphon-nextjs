@@ -13,13 +13,13 @@ const ThreeColumn = ({items, config = {}}: LayoutProps) => {
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');
   return (
     <div data-rows="three-column" className="su-centered su-grid lg:su-grid-cols-3 su-gap-[90px]">
-      <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
+      <div className="su-relative su-min-w-0 su-flex su-flex-col su-gap-2xll">
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
-      <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
+      <div className="su-relative su-min-w-0 su-flex su-flex-col su-gap-2xl">
         {mainItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
-      <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
+      <div className="su-relative su-min-w-0 su-flex su-flex-col su-gap-2xl">
         {rightItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
     </div>

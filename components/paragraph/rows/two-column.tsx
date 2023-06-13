@@ -23,10 +23,10 @@ const TwoColumn = ({config, items}: LayoutProps) => {
 
   return (
     <div data-rows="two-column" className={`su-centered su-grid su-gap-[90px] ${gridClass}`}>
-      <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
+      <div className="su-relative su-min-w-0 su-flex su-flex-col su-gap-2xl">
         {leftItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
-      <div className="su-relative su-min-w-0 su-grid su-grid-rows-1 su-gap-2xl">
+      <div className="su-relative su-min-w-0 su-flex su-flex-col su-gap-2xl">
         {rightItems.map(item => <Paragraph key={item.id} paragraph={item} fullWidth={false}/>)}
       </div>
     </div>
