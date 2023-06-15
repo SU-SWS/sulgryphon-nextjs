@@ -33,7 +33,7 @@ const LibraryFooter = () => {
 
           <ul className="su-list-unstyled">
             <li><Link className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
-                      href="/library-hours-and-locations">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
+                      href="/all-locations-and-hours">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
             </li>
             <li><Link className="su-text-m0 su-text-white hover:su-text-white su-no-underline hover:su-underline"
                       href="/contact-us">Contact us<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link></li>
