@@ -24,10 +24,10 @@ const StudyPlacesFiltering = ({items}) => {
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
 
-  const typeOfStudies: SelectOption[] = [];
-  const featureOptions: SelectOption[] = [];
-  const capacityOptions: SelectOption[] = [];
-  const libraryOptions: SelectOption[] = [];
+  let typeOfStudies: SelectOption[] = [];
+  let featureOptions: SelectOption[] = [];
+  let capacityOptions: SelectOption[] = [];
+  let libraryOptions: SelectOption[] = [];
 
   items.map(item => {
     item.sul_study__features?.map(term => {
@@ -45,6 +45,11 @@ const StudyPlacesFiltering = ({items}) => {
       libraryOptions.push({value: item.sul_study__branch.id, label: item.sul_study__branch.title})
     }
   });
+
+  typeOfStudies = typeOfStudies.sort((a, b) => a.label.localeCompare(b.label));
+  featureOptions = featureOptions.sort((a, b) => a.label.localeCompare(b.label));
+  capacityOptions = capacityOptions.sort((a, b) => a.label.localeCompare(b.label));
+  libraryOptions = libraryOptions.sort((a, b) => a.label.localeCompare(b.label));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,7 +80,9 @@ const StudyPlacesFiltering = ({items}) => {
   return (
     <div className="su-@container">
       <form className="su-relative su-z-[1]">
-        <fieldset className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30" aria-label="Filter study places">
+        <fieldset
+          className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30"
+          aria-label="Filter study places">
 
           <SelectList
             selectRef={typeRef}
@@ -112,8 +119,8 @@ const StudyPlacesFiltering = ({items}) => {
 
           <SelectList
             selectRef={featureRef}
-            aria-label="Equipment/Features"
-            placeholder="Equipment"
+            aria-label="Features"
+            placeholder="Features"
             options={featureOptions}
             name="features"
             isMulti

@@ -25,7 +25,7 @@ interface CardProps {
   headingLevel?: string
 }
 
-const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h3', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h2', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
   const ref = useRef(null);
   const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
   return (
