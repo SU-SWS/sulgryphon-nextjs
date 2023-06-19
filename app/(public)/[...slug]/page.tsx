@@ -40,6 +40,10 @@ const fetchNodeData = async (context) => {
     throw new Error('Unable to translate path');
   }
 
+  if (context?.params?.slug?.[0] === 'node' && path?.entity?.path) {
+    throw new RedirectError(path.entity.path);
+  }
+
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
   const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
