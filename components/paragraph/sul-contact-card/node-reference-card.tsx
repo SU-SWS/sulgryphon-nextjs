@@ -71,7 +71,7 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
               <Conditional showWhen={paragraph.sul_contact__branch?.su_library__email}>
                 <div className="su-relative su-flex su-flex-row su-items-center su-rs-mb-0 su-type-1">
                   <EnvelopeIcon width={19} className="su-mt-02em su-mr-12 su-flex-shrink-0"/>
-                  <EmailLink email={paragraph.sul_contact__branch?.su_library__email} className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal"/>
+                  <EmailLink email={paragraph.sul_contact__branch?.su_library__email} className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal su-break-words"/>
                 </div>
               </Conditional>
 

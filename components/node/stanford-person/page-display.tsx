@@ -138,6 +138,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                   <Conditional showWhen={node.su_person_email}>
                     <li>
                       <EmailLink
+                        className="su-break-words"
                         email={node.su_person_email}
                       />
                       <EnvelopeIcon width={20} className="su-inline-block su-ml-4 su-text-digital-blue"/>

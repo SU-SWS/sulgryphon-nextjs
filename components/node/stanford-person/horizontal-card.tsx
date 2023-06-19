@@ -53,7 +53,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props
 
               <EmailLink
                 email={node.su_person_email}
-                className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue"
+                className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue su-break-words"
               />
             </div>
           </Conditional>

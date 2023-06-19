@@ -84,7 +84,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
                   <EnvelopeIcon width={19} className="su-mt-02em su-mr-12 su-flex-shrink-0"/>
                   <EmailLink
                     email={paragraph.sul_contact__email}
-                    className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal"
+                    className="su-underline su-text-white hocus:su-text-illuminating-dark hocus:su-no-underline active:su-text-digital-red-light su-font-normal su-break-words"
                   />
                 </div>
               </Conditional>

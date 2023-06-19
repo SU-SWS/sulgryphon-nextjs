@@ -70,7 +70,7 @@ const LibraryHeader = ({node}: { node: Library }) => {
                         className="su-relative su-flex su-flex-row su-items-start su-mt-20 md:su-mt-18 su-mb-4 su-type-1">
                         <EnvelopeIcon width={19}
                                       className="md:su-absolute md:su-left-[-38px] md:su-top-02em su-mt-01em md:su-mt-0 su-mr-12"/>
-                        <EmailLink email={node.su_library__email} className="su-no-underline hocus:su-underline"/>
+                        <EmailLink email={node.su_library__email} className="su-no-underline hocus:su-underline su-break-words"/>
                       </div>
                     }
                     {node.su_library__address &&

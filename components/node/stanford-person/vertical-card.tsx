@@ -58,12 +58,12 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
             <Conditional showWhen={node.su_person_email}>
 
 
-              <div className="su-flex su-items-center su-truncate">
+              <div className="su-flex su-items-center">
                 <EnvelopeIcon width={20} className="su-flex-shrink-0 su-mr-3 su-text-digital-blue"/>
 
                 <EmailLink
                   email={node.su_person_email}
-                  className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue su-text-18 @lg:su-text-18"
+                  className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue su-text-18 @lg:su-text-18 su-break-words"
                 />
               </div>
 
