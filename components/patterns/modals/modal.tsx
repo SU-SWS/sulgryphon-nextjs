@@ -52,10 +52,6 @@ const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) =
       <ReactFocusLock returnFocus>
         <div
           className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"}
-          aria-label={ariaLabel}
-          aria-hidden={!isOpen}
-          aria-modal={isOpen}
-          role="dialog"
         >
           <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
             <div

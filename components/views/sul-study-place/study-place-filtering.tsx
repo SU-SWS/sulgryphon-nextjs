@@ -83,7 +83,7 @@ const StudyPlacesFiltering = ({items}) => {
         <fieldset
           className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30"
           aria-label="Filter study places">
-
+          <legend className="su-font-bold su-mb-10">Filter places to study.</legend>
           <SelectList
             selectRef={typeRef}
             aria-label="Type"
@@ -143,7 +143,13 @@ const StudyPlacesFiltering = ({items}) => {
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
-        <p aria-live="polite">Showing {itemsToDisplay.length} of {items.length}</p>
+        <p aria-live="polite">
+          Showing {itemsToDisplay.length} of {items.length}
+          <br/>
+          <Conditional showWhen={itemsToDisplay.length == 0}>
+            <>No items match the search.</>
+          </Conditional>
+        </p>
         <Conditional showWhen={itemsToDisplay.length > 0}>
           <ul
             ref={parent}
@@ -157,9 +163,7 @@ const StudyPlacesFiltering = ({items}) => {
           </ul>
         </Conditional>
 
-        <Conditional showWhen={itemsToDisplay.length == 0}>
-          <p>No items match the search.</p>
-        </Conditional>
+
       </Conditional>
     </div>
   )

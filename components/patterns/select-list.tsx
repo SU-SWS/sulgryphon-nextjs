@@ -9,7 +9,7 @@ const ValueContainer = ({children, hasValue, isMulti, ...props}) => {
   const label = props.selectProps['placeholder'] ?? props.selectProps['aria-label'];
 
   return (
-    <div className="su-flex-1">
+    <div className="su-flex-1 su-overflow-hidden">
       {(label && hasValue) &&
         <div className="su-p-4 su-pl-10 su-w-full su-text-black su-text-[18px]">{label}</div>
       }

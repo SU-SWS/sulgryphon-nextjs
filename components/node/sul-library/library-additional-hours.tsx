@@ -35,9 +35,9 @@ const LibraryAdditionalHoursComponent = ({hoursId}) => {
 
   return (
     <div
-      className="su-relative su-z-[1] su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
+      className="su-@container su-relative su-z-[1] su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
       <div className="su-w-full">
-        <div className="su-flex su-justify-between su-items-end su-gap-2xl su-mb-40">
+        <div className="su-flex su-flex-col @md:su-flex-row su-justify-between @md:su-items-end su-gap-2xl su-mb-40">
           <h2 className="su-text-m3 su-m-0 su-p-0">Additional Hours</h2>
           <Link href={`https://library-hours.stanford.edu/libraries/${hoursId}`}
                 className="su-no-underline hocus:su-underline">

@@ -34,6 +34,7 @@
     "react-obfuscate-email": "^1.1.2",
     "react-resize-detector": "^9.1.0",
     "react-select": "^5.7.0",
+    "react-tabs": "^6.0.1",
     "react-tiny-oembed": "^1.1.0",
     "server-only": "^0.0.1",
     "sharp": "^0.32.0",

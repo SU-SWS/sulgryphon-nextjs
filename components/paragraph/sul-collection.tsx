@@ -1,5 +1,6 @@
 "use client";
 
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {CollectionCardParagraph} from "@/lib/drupal/drupal";
 import {PropsWithoutRef, useEffect, useId, useState} from "react";
 import Conditional from "@/components/utils/conditional";
@@ -32,34 +33,21 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
         <h2 id={`${elementId}-heading`} className="su-type-5">{heading}</h2>
       </Conditional>
 
-      <div className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row">
-        <div className="@5xl:su-w-1/3" role="tablist" aria-labelledby={`${elementId}-heading`}>
+      <Tabs className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row" selectedTabClassName={'su-bg-archway su-text-white'}>
+        <TabList className="@5xl:su-w-1/3 su-list-unstyled" aria-labelledby={`${elementId}-heading`} aria-orientation="vertical">
           {cards.map(card =>
-            <button
-              type="button"
+            <Tab
               key={'button-' + card.id}
-              id={elementId + 'button-' + card.id}
-              className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left " + (displayedCard === card.id ? 'su-bg-archway su-text-white su-underline hocus:su-no-underline' : 'hocus:su-underline')}
-              onClick={() => setDisplayedCard(card.id)}
-              aria-selected={displayedCard === card.id}
-              role="tab"
-              aria-controls={elementId + 'card-' + card.id}
+              className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left hocus:su-underline"}
             >
               {card.sul_card_info}
-            </button>
+            </Tab>
           )}
-        </div>
+        </TabList>
 
         <div className="@5xl:su-w-2/3">
           {cards.map(card =>
-            <div
-              key={'card-' + card.id}
-              id={elementId + 'card-' + card.id}
-              className={displayedCard === card.id ? 'su-block' : 'su-hidden'}
-              tabIndex={-1}
-              role="tabpanel"
-              aria-labelledby={elementId + 'button-' + card.id}
-            >
+            <TabPanel key={'card-' + card.id}>
 
               <CollectionCard
                 header={card.sul_card.su_card_header}
@@ -70,10 +58,10 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
                 videoUrl={card.sul_card.su_card_media?.field_media_oembed_video}
                 headerId={`${elementId}-card-${card.id}-header`}
               />
-            </div>
+            </TabPanel>
           )}
         </div>
-      </div>
+      </Tabs>
     </section>
   )
 }
