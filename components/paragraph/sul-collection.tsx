@@ -2,7 +2,7 @@
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {CollectionCardParagraph} from "@/lib/drupal/drupal";
-import {PropsWithoutRef, useEffect, useId, useState} from "react";
+import {PropsWithoutRef, useId} from "react";
 import Conditional from "@/components/utils/conditional";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import Card from "@/components/patterns/card";
@@ -17,14 +17,6 @@ interface CollectionProps extends PropsWithoutRef<any> {
 
 const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionProps) => {
   const elementId = useId()
-  const [displayedCard, setDisplayedCard] = useState(cards[0].id)
-
-  useEffect(() => {
-    // Avoid settings the focus when rendering the component.
-    if (document?.activeElement && document.activeElement.id === elementId + 'button-' + displayedCard) {
-      document.getElementById(elementId + 'card-' + displayedCard)?.focus();
-    }
-  }, [displayedCard])
 
   return (
     <section className="su-relative su-centered su-@container" aria-labelledby={`${elementId}-heading`} {...props}>
@@ -33,12 +25,12 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
         <h2 id={`${elementId}-heading`} className="su-type-5">{heading}</h2>
       </Conditional>
 
-      <Tabs className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row" selectedTabClassName={'su-bg-archway su-text-white'}>
+      <Tabs className="su-w-full su-flex su-flex-col su-gap-lg @5xl:su-flex-row" selectedTabClassName="su-bg-archway su-text-white">
         <TabList className="@5xl:su-w-1/3 su-list-unstyled" aria-labelledby={`${elementId}-heading`} aria-orientation="vertical">
           {cards.map(card =>
             <Tab
               key={'button-' + card.id}
-              className={"su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left hocus:su-underline"}
+              className="su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left hocus:su-underline su-cursor-pointer"
             >
               {card.sul_card_info}
             </Tab>
@@ -48,7 +40,6 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
         <div className="@5xl:su-w-2/3">
           {cards.map(card =>
             <TabPanel key={'card-' + card.id}>
-
               <CollectionCard
                 header={card.sul_card.su_card_header}
                 superHeader={card.sul_card.su_card_super_header}
