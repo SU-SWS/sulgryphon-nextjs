@@ -112,7 +112,7 @@ const SelectList = ({selectRef, ...props}: Props) => {
         }),
         placeholder: (baseStyles, state) => ({
           ...baseStyles,
-          color: '#2E2D29',
+          color: '#2e2d29',
         }),
         singleValue: (baseStyles, state) => ({
           ...baseStyles,

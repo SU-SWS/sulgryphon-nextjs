@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
-import Oembed from "@/components/patterns/oembed";
+import Oembed from "@/components/patterns/elements/oembed";
 import Link from "next/link";
 import {PropsWithoutRef} from "react";
 

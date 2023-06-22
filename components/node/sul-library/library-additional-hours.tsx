@@ -5,7 +5,7 @@ import {getLibrarySelectOptions} from "@/components/node/sul-library/library-sel
 import {useId} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
-import SelectList from "@/components/patterns/select-list";
+import SelectList from "@/components/patterns/elements/select-list";
 import Link from "next/link";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";

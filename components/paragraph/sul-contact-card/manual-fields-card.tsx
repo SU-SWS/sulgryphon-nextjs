@@ -4,7 +4,7 @@ import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/2
 import Conditional from "@/components/utils/conditional";
 import {ContactCardParagraph} from "@/lib/drupal/drupal";
 import {PropsWithoutRef} from "react";
-import EmailLink from "@/components/patterns/email-link";
+import EmailLink from "@/components/patterns/elements/email-link";
 
 interface Props extends PropsWithoutRef<any> {
   paragraph: ContactCardParagraph

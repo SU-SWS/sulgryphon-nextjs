@@ -3,7 +3,7 @@ import Image from "next/image";
 import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import Card from "@/components/patterns/card";
 import HorizontalCard from "@/components/patterns/horizontal-card";
-import Oembed from "@/components/patterns/oembed";
+import Oembed from "@/components/patterns/elements/oembed";
 import {PropsWithoutRef} from "react";
 
 interface Props extends PropsWithoutRef<any> {

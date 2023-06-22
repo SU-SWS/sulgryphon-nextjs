@@ -8,7 +8,7 @@ import {
   DrupalLinkButton,
   DrupalLinkSecondaryButton
 } from "@/components/patterns/link";
-import Oembed from "@/components/patterns/oembed";
+import Oembed from "@/components/patterns/elements/oembed";
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {

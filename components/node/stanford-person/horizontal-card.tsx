@@ -5,7 +5,7 @@ import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
 import {PropsWithoutRef} from "react";
-import EmailLink from "@/components/patterns/email-link";
+import EmailLink from "@/components/patterns/elements/email-link";
 
 interface Props extends PropsWithoutRef<any> {
   node: Person

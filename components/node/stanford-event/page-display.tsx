@@ -8,8 +8,8 @@ import {DrupalParagraph} from "next-drupal";
 import formatHtml from "@/lib/format-html";
 import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
-import EmailLink from "@/components/patterns/email-link";
-import TelephoneLink from "@/components/patterns/telephone-link";
+import EmailLink from "@/components/patterns/elements/email-link";
+import TelephoneLink from "@/components/patterns/elements/telephone-link";
 
 const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   if (node.su_event_source?.url) redirect(node.su_event_source.url)

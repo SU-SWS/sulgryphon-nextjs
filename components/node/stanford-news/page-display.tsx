@@ -1,5 +1,5 @@
 import "server-only";
-import Oembed from "@/components/patterns/oembed";
+import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 

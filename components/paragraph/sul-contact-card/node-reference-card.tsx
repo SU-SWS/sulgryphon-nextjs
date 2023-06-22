@@ -6,7 +6,7 @@ import {ContactCardParagraph} from "@/lib/drupal/drupal";
 import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node-reference-card-hours";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import {PropsWithoutRef} from "react";
-import EmailLink from "@/components/patterns/email-link";
+import EmailLink from "@/components/patterns/elements/email-link";
 
 interface Props extends PropsWithoutRef<any> {
   paragraph: ContactCardParagraph

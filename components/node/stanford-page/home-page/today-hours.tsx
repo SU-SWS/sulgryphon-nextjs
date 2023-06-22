@@ -9,7 +9,7 @@ import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import {Library} from "@/lib/drupal/drupal";
-import SelectList from "@/components/patterns/select-list";
+import SelectList from "@/components/patterns/elements/select-list";
 
 interface HoursProps extends PropsWithoutRef<any> {
   libraries: { id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia }[]

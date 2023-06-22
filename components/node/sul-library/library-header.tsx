@@ -6,7 +6,7 @@ import {MapPinIcon} from "@heroicons/react/24/outline";
 import Wave from "@/components/patterns/wave";
 import Image from "next/image";
 import LibraryHeaderHours from "./library-hours";
-import EmailLink from "@/components/patterns/email-link";
+import EmailLink from "@/components/patterns/elements/email-link";
 
 const LibraryHeader = ({node}: { node: Library }) => {
   const bannerImageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;

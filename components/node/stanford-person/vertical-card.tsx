@@ -4,7 +4,7 @@ import Conditional from "@/components/utils/conditional";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
-import EmailLink from "@/components/patterns/email-link";
+import EmailLink from "@/components/patterns/elements/email-link";
 import {PropsWithoutRef} from "react";
 
 interface Props {

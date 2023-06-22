@@ -14,7 +14,7 @@ import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
 import {DrupalParagraph} from "next-drupal";
 import Paragraph from "@/components/paragraph";
-import EmailLink from "@/components/patterns/email-link";
+import EmailLink from "@/components/patterns/elements/email-link";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
   node.su_person_components = await fetchComponents(node.su_person_components ?? []) as DrupalParagraph[];

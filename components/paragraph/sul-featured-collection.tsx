@@ -8,7 +8,7 @@ import {CardParagraph, DrupalLinkType} from "@/lib/drupal/drupal"
 import {PropsWithoutRef, useRef} from "react";
 import OnlyIfCentered from "@/components/utils/only-if-centered";
 import Card from "@/components/patterns/card";
-import Oembed from "@/components/patterns/oembed";
+import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
 
 interface Props extends PropsWithoutRef<any> {
