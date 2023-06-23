@@ -42,10 +42,13 @@ function CustomOption(props: OptionProps) {
   const {children, value, disabled = false} = props;
   const {getRootProps, highlighted, selected} = useOption({value, disabled, label: children});
 
+  const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline": "")
+  const highlightedStyles = "su-bg-black-10 su-text-black su-underline"
+
   return (
     <li
       {...getRootProps()}
-      className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? "su-bg-archway su-text-white hover:su-bg-archway-dark hover:su-text-white" : (highlighted ? "su-bg-black-10 hocus:su-text-black" : "hocus:su-bg-black-10 hocus:su-text-black"))}
+      className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? selectedStyles : (highlighted ?  highlightedStyles : "hocus:su-bg-black-10 hocus:su-text-black"))}
     >
       {children}
     </li>
