@@ -14,18 +14,15 @@ interface Props {
   value?: SelectValue<string, boolean>
 }
 
-const SelectList = (props: Props) => {
-  return <CustomSelect {...props} />;
-}
-
 interface OptionProps {
   children?: ReactNode;
   value: string;
   disabled?: boolean;
 }
 
-const renderSelectedValue = (value: string | string[] | null, options: SelectOptionDefinition<string>[]) => {
-  if (typeof value === 'object' && value != null) {
+const renderSelectedValue = (value: SelectValue<string, boolean>, options: SelectOptionDefinition<string>[]) => {
+
+  if (Array.isArray(value)) {
     return value.map(item =>
       <span
         key={item}
@@ -55,7 +52,7 @@ function CustomOption(props: OptionProps) {
   );
 }
 
-function CustomSelect({options, label, multiple,ariaLabelledby, ...props}: Props) {
+const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props) => {
   const labelId = useId();
   const labeledBy = ariaLabelledby ?? labelId;
   const listboxRef = useRef<HTMLUListElement>(null);
