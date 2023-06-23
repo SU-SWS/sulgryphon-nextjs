@@ -1,6 +1,6 @@
 import useSelect, {SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
 import useOption from '@mui/base/useOption';
-import {FocusEvent, KeyboardEvent, MouseEvent, ReactNode, useEffect, useRef, useState} from "react";
+import {FocusEvent, KeyboardEvent, MouseEvent, ReactNode, useEffect, useId, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
 interface Props {
@@ -42,20 +42,22 @@ function CustomOption(props: OptionProps) {
   const {children, value, disabled = false} = props;
   const {getRootProps, highlighted, selected} = useOption({value, disabled, label: children});
 
-  const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline": "")
+  const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline" : "")
   const highlightedStyles = "su-bg-black-10 su-text-black su-underline"
 
   return (
     <li
       {...getRootProps()}
-      className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? selectedStyles : (highlighted ?  highlightedStyles : "hocus:su-bg-black-10 hocus:su-text-black"))}
+      className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? selectedStyles : (highlighted ? highlightedStyles : "hocus:su-bg-black-10 hocus:su-text-black"))}
     >
       {children}
     </li>
   );
 }
 
-function CustomSelect({options, label, multiple, ...props}: Props) {
+function CustomSelect({options, label, multiple,ariaLabelledby, ...props}: Props) {
+  const labelId = useId();
+  const labeledBy = ariaLabelledby ?? labelId;
   const listboxRef = useRef<HTMLUListElement>(null);
   const [listboxVisible, setListboxVisible] = useState(false);
 
@@ -80,12 +82,12 @@ function CustomSelect({options, label, multiple, ...props}: Props) {
       <button
         {...getButtonProps()}
         className="su-w-full su-border su-border-black-40 su-rounded su-text-left su-p-5"
-        aria-labelledby={props.ariaLabelledby}
+        aria-labelledby={labeledBy}
       >
         <div className="su-flex su-justify-between su-flex-wrap">
           {label &&
             <div className={"su-relative " + (optionChosen ? "su-text-m0 su-top-[-15px] su-w-full" : "su-text-m1")}>
-              <div className="su-bg-white su-w-fit su-px-5">
+              <div id={labelId} className="su-bg-white su-w-fit su-px-5">
                 {label}
               </div>
             </div>
@@ -103,10 +105,10 @@ function CustomSelect({options, label, multiple, ...props}: Props) {
       <div
         className={"su-absolute su-z-100 su-w-full su-top-full su-left-0 su-max-h-[300px] su-overflow-y-scroll su-shadow-lg su-bg-white " + (listboxVisible ? '' : 'su-hidden')}>
         <ul
+          className={"su-list-unstyled " + (listboxVisible ? '' : 'su-hidden')}
           {...getListboxProps()}
           aria-hidden={!listboxVisible}
-          aria-labelledby={props["aria-labelledby"]}
-          className="su-list-unstyled"
+          aria-labelledby={labeledBy}
         >
           <SelectProvider value={contextValue}>
             {options.map((option) => {
