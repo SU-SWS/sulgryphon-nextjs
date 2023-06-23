@@ -103,7 +103,7 @@ function CustomSelect({options, label, multiple,ariaLabelledby, ...props}: Props
       </button>
 
       <div
-        className={"su-absolute su-z-100 su-w-full su-top-full su-left-0 su-max-h-[300px] su-overflow-y-scroll su-shadow-lg su-bg-white " + (listboxVisible ? '' : 'su-hidden')}>
+        className={"su-absolute su-z-[10] su-w-full su-top-full su-left-0 su-max-h-[300px] su-pb-5 su-overflow-y-scroll su-shadow-lg su-border su-border-black-20 su-bg-white " + (listboxVisible ? '' : 'su-hidden')}>
         <ul
           className={"su-list-unstyled " + (listboxVisible ? '' : 'su-hidden')}
           {...getListboxProps()}
