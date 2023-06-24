@@ -22,7 +22,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
   return (
     <>
-      <div className={"su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-col"}>
+      <div className="su-@container su-flex su-w-full su-leading-display su-shadow-md su-border-0 su-rounded su-flex-col">
         {imageUrl &&
           <div className={"su-overflow-hidden su-aspect-[4/3] su-relative "}>
             <Image
@@ -39,11 +39,11 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
         <Conditional showWhen={node.sul_study__libcal_id}>
           <Link
             href={`/calendar/${node.sul_study__libcal_id}`}
-            className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1"
+            className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1 su-no-underline hocus:su-underline"
             aria-haspopup="dialog"
           >
             <div className="su-flex su-justify-end su-items-center su-gap-xs">
-              <div className="su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
+              <div className="su-w-0 @md:su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
               <CalendarDaysIcon className="su-inline-block su-flex-shrink-0 su-w-[24px]"/>
               <div className="su-relative su-pr-30 su-font-bold su-no-underline">
                 Reserve Space <span className="su-sr-only">at {node.sul_study__branch.title}</span>
@@ -88,11 +88,11 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
               {(features && features.length > 4) &&
                 <Link
                   href={`/study-place/features/${node.id}`}
-                  className="su-relative su-pr-30 su-type-1 su-text-digital-blue hocus:su-text-brick su-no-underline su-rs-mt-neg1 su-pt-10 su-font-semibold"
+                  className="su-type-1 su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 hover:su-no-underline focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red"
                   aria-haspopup="dialog"
                 >
-                  Show all <span className="su-sr-only">{node.sul_study__branch.title} </span>features
-                  <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full su-pt-10"/>
+                  Show all&nbsp;<span className="su-sr-only">{node.sul_study__branch.title}&nbsp;</span>features
+                  <ChevronRightIcon height={30} className="su-inline su-top-0 su-right-0 su-h-full"/>
                 </Link>
               }
 
