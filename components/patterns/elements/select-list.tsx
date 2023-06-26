@@ -40,7 +40,21 @@ function CustomOption(props: OptionProps) {
 
   useEffect(() => {
     if (highlighted && id && rootRef?.current?.parentElement) {
-      rootRef.current.parentElement.scrollTop = document.getElementById(id)?.offsetTop;
+      const item = document.getElementById(id);
+      if (item) {
+        const itemTop = item?.offsetTop;
+        const itemHeight = item?.offsetHeight;
+        const parentScrollTop = rootRef.current.parentElement.scrollTop
+        const parentHeight = rootRef.current.parentElement.offsetHeight;
+
+        if (itemTop < parentScrollTop) {
+          rootRef.current.parentElement.scrollTop = itemTop;
+        }
+
+        if ((itemTop + itemHeight) > parentScrollTop + parentHeight) {
+          rootRef.current.parentElement.scrollTop = itemTop - parentHeight + itemHeight;
+        }
+      }
     }
   }, [rootRef, id, highlighted])
 
@@ -70,15 +84,15 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   });
 
   useEffect(() => {
-    if (listboxVisible) {
-      listboxRef.current?.focus();
-      const parentContainer = listboxRef.current?.parentElement?.getBoundingClientRect();
-
-      if (parentContainer && (parentContainer.bottom > window.innerHeight || parentContainer.top < 0)) {
-        listboxRef.current?.parentElement?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-      }
-    }
+    if (listboxVisible) listboxRef.current?.focus();
   }, [listboxVisible]);
+
+  useEffect(() => {
+    const parentContainer = listboxRef.current?.parentElement?.getBoundingClientRect();
+    if (parentContainer && (parentContainer.bottom > window.innerHeight || parentContainer.top < 0)) {
+      listboxRef.current?.parentElement?.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    }
+  }, [listboxVisible, value])
 
   const optionChosen = (multiple && value) ? value.length > 0 : !!value;
 
