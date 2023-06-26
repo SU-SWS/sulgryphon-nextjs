@@ -1,6 +1,16 @@
 import useSelect, {SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
 import useOption from '@mui/base/useOption';
-import {FocusEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, useEffect, useId, useRef, useState} from "react";
+import {
+  FocusEvent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  RefObject,
+  useEffect,
+  useId,
+  useRef,
+  useState
+} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
 interface Props {
@@ -15,7 +25,7 @@ interface Props {
 }
 
 interface OptionProps {
-  rootRef: Ref
+  rootRef: RefObject<HTMLUListElement>
   children?: ReactNode;
   value: string;
   disabled?: boolean;
