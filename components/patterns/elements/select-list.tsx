@@ -34,7 +34,14 @@ interface OptionProps {
 const renderSelectedValue = (value: SelectValue<string, boolean>, options: SelectOptionDefinition<string>[]) => {
 
   if (Array.isArray(value)) {
-    return value.map(item => renderSelectedValue(item, options));
+    return value.map(item =>
+      <span
+        key={item}
+        className="su-block su-bg-archway su-text-white su-rounded su-p-5 su-mb-2 su-whitespace-nowrap su-overflow-hidden su-text-ellipsis su-max-w-full"
+      >
+        {renderSelectedValue(item, options)}
+      </span>
+    );
   }
   const selectedOption = options.find((option) => option.value === value);
   return selectedOption ? selectedOption.label : null;
