@@ -1,6 +1,6 @@
 import useSelect, {SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
 import useOption from '@mui/base/useOption';
-import {FocusEvent, KeyboardEvent, MouseEvent, ReactNode, useEffect, useId, useRef, useState} from "react";
+import {FocusEvent, KeyboardEvent, MouseEvent, ReactNode, Ref, useEffect, useId, useRef, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 }
 
 interface OptionProps {
+  rootRef: Ref
   children?: ReactNode;
   value: string;
   disabled?: boolean;
@@ -23,28 +24,30 @@ interface OptionProps {
 const renderSelectedValue = (value: SelectValue<string, boolean>, options: SelectOptionDefinition<string>[]) => {
 
   if (Array.isArray(value)) {
-    return value.map(item =>
-      <span
-        key={item}
-        className="su-block su-bg-archway su-text-white su-rounded su-p-5 su-mb-2 su-whitespace-nowrap su-overflow-hidden su-text-ellipsis su-max-w-full"
-      >
-        {renderSelectedValue(item, options)}
-      </span>);
+    return value.map(item => renderSelectedValue(item, options));
   }
   const selectedOption = options.find((option) => option.value === value);
   return selectedOption ? selectedOption.label : null;
 }
 
 function CustomOption(props: OptionProps) {
-  const {children, value, disabled = false} = props;
-  const {getRootProps, highlighted, selected} = useOption({value, disabled, label: children});
 
+  const {children, value, rootRef, disabled = false} = props;
+  const {getRootProps, highlighted, selected} = useOption({rootRef: rootRef, value, disabled, label: children});
+  const {id, ...otherProps} = getRootProps();
   const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline" : "")
   const highlightedStyles = "su-bg-black-10 su-text-black su-underline"
 
+  useEffect(() => {
+    if (highlighted && id && rootRef?.current?.parentElement) {
+      rootRef.current.parentElement.scrollTop = document.getElementById(id)?.offsetTop;
+    }
+  }, [rootRef, id, highlighted])
+
   return (
     <li
-      {...getRootProps()}
+      {...otherProps}
+      id={id}
       className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? selectedStyles : (highlighted ? highlightedStyles : "hocus:su-bg-black-10 hocus:su-text-black"))}
     >
       {children}
@@ -69,6 +72,11 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   useEffect(() => {
     if (listboxVisible) {
       listboxRef.current?.focus();
+      const parentContainer = listboxRef.current?.parentElement?.getBoundingClientRect();
+
+      if (parentContainer && (parentContainer.bottom > window.innerHeight || parentContainer.top < 0)) {
+        listboxRef.current?.parentElement?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+      }
     }
   }, [listboxVisible]);
 
@@ -102,15 +110,15 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
       <div
         className={"su-absolute su-z-[10] su-w-full su-top-full su-left-0 su-max-h-[300px] su-pb-5 su-overflow-y-scroll su-shadow-lg su-border su-border-black-20 su-bg-white " + (listboxVisible ? '' : 'su-hidden')}>
         <ul
-          className={"su-list-unstyled " + (listboxVisible ? '' : 'su-hidden')}
           {...getListboxProps()}
+          className={"su-list-unstyled " + (listboxVisible ? '' : 'su-hidden')}
           aria-hidden={!listboxVisible}
           aria-labelledby={labeledBy}
         >
           <SelectProvider value={contextValue}>
             {options.map((option) => {
               return (
-                <CustomOption key={option.value} value={option.value}>
+                <CustomOption key={option.value} value={option.value} rootRef={listboxRef}>
                   {option.label}
                 </CustomOption>
               );
