@@ -64,14 +64,14 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
               <h3 id={formId} className="su-text-black su-leading-tight su-font-bold su-type-2 su-mb-03em">
                 Today&apos;s Hours
               </h3>
+              <div className="su-mb-10">
               <SelectList
-                className="su-mb-10"
-                aria-labelledby={formId}
+                ariaLabelledby={formId}
                 options={libraryOptions}
-                defaultValue={libraryOptions.find(option => option.value === selectedLibrary)}
-                onChange={(item: option) => setSelectedLibrary(item.value)}
-                isSearchable={false}
+                defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
+                onChange={(e, value) => setSelectedLibrary(value as string)}
               />
+              </div>
               <TodayLibraryHours branchId={library?.su_library__hours}/>
             </div>
           </div>

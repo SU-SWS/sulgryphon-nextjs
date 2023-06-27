@@ -1,131 +1,165 @@
-import Select from "react-select";
-import {MutableRefObject, PropsWithoutRef, useId} from "react";
+import useSelect, {SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
+import useOption from '@mui/base/useOption';
+import {
+  FocusEvent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  RefObject,
+  useEffect,
+  useId,
+  useRef,
+  useState
+} from "react";
+import {ChevronDownIcon} from "@heroicons/react/20/solid";
 
-interface Props extends PropsWithoutRef<any> {
-  selectRef?: MutableRefObject<any> | undefined
+interface Props {
+  options: SelectOptionDefinition<string>[];
+  label?: string
+  ariaLabelledby?: string
+  defaultValue?: any
+  onChange?: (event: MouseEvent | KeyboardEvent | FocusEvent, value: SelectValue<string, boolean>) => void | null
+  multiple?: boolean
+  disabled?: boolean
+  value?: SelectValue<string, boolean>
 }
 
-const ValueContainer = ({children, hasValue, isMulti, ...props}) => {
-  const label = props.selectProps['placeholder'] ?? props.selectProps['aria-label'];
+interface OptionProps {
+  rootRef: RefObject<HTMLUListElement>
+  children?: ReactNode;
+  value: string;
+  disabled?: boolean;
+}
+
+const renderSelectedValue = (value: SelectValue<string, boolean>, options: SelectOptionDefinition<string>[]) => {
+
+  if (Array.isArray(value)) {
+    return value.map(item =>
+      <span
+        key={item}
+        className="su-block su-bg-archway su-text-white su-rounded su-p-5 su-mb-2 su-whitespace-nowrap su-overflow-hidden su-text-ellipsis su-max-w-full"
+      >
+        {renderSelectedValue(item, options)}
+      </span>
+    );
+  }
+  const selectedOption = options.find((option) => option.value === value);
+  return selectedOption ? selectedOption.label : null;
+}
+
+function CustomOption(props: OptionProps) {
+
+  const {children, value, rootRef, disabled = false} = props;
+  const {getRootProps, highlighted, selected} = useOption({rootRef: rootRef, value, disabled, label: children});
+  const {id, ...otherProps} = getRootProps();
+  const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline" : "")
+  const highlightedStyles = "su-bg-black-10 su-text-black su-underline"
+
+  useEffect(() => {
+    if (highlighted && id && rootRef?.current?.parentElement) {
+      const item = document.getElementById(id);
+      if (item) {
+        const itemTop = item?.offsetTop;
+        const itemHeight = item?.offsetHeight;
+        const parentScrollTop = rootRef.current.parentElement.scrollTop
+        const parentHeight = rootRef.current.parentElement.offsetHeight;
+
+        if (itemTop < parentScrollTop) {
+          rootRef.current.parentElement.scrollTop = itemTop;
+        }
+
+        if ((itemTop + itemHeight) > parentScrollTop + parentHeight) {
+          rootRef.current.parentElement.scrollTop = itemTop - parentHeight + itemHeight;
+        }
+      }
+    }
+  }, [rootRef, id, highlighted])
 
   return (
-    <div className="su-flex-1 su-overflow-hidden">
-      {(label && hasValue) &&
-        <div className="su-p-4 su-pl-10 su-w-full su-text-black su-text-[18px]">{label}</div>
-      }
+    <li
+      {...otherProps}
+      id={id}
+      className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? selectedStyles : (highlighted ? highlightedStyles : "hocus:su-bg-black-10 hocus:su-text-black"))}
+    >
+      {children}
+    </li>
+  );
+}
+
+const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props) => {
+  const labelId = useId();
+  const labeledBy = ariaLabelledby ?? labelId;
+  const listboxRef = useRef<HTMLUListElement>(null);
+  const [listboxVisible, setListboxVisible] = useState(false);
+
+  const {getButtonProps, getListboxProps, contextValue, value} = useSelect<string, boolean>({
+    listboxRef,
+    onOpenChange: setListboxVisible,
+    open: listboxVisible,
+    multiple,
+    ...props
+  });
+
+  useEffect(() => {
+    if (listboxVisible) listboxRef.current?.focus();
+  }, [listboxVisible]);
+
+  useEffect(() => {
+    const parentContainer = listboxRef.current?.parentElement?.getBoundingClientRect();
+    if (parentContainer && (parentContainer.bottom > window.innerHeight || parentContainer.top < 0)) {
+      listboxRef.current?.parentElement?.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    }
+  }, [listboxVisible, value])
+
+  const optionChosen = (multiple && value) ? value.length > 0 : !!value;
+
+  return (
+    <div className="su-relative su-h-fit">
+      <button
+        {...getButtonProps()}
+        className="su-w-full su-border su-border-black-40 su-rounded su-text-left su-p-5"
+        aria-labelledby={labeledBy}
+      >
+        <div className="su-flex su-justify-between su-flex-wrap">
+          {label &&
+            <div className={"su-relative " + (optionChosen ? "su-text-m0 su-top-[-15px] su-w-full" : "su-text-m1")}>
+              <div id={labelId} className="su-bg-white su-w-fit su-px-5">
+                {label}
+              </div>
+            </div>
+          }
+          {optionChosen &&
+            <div className="su-overflow-hidden su-max-w-[calc(100%-30px)]">
+              {renderSelectedValue(value, options)}
+            </div>
+          }
+
+          <ChevronDownIcon width={20} className="su-flex-shrink-0"/>
+        </div>
+      </button>
+
       <div
-        className={(isMulti ? "su-flex su-flex-wrap " : "su-grid su-grid-cols-1 ") + "su-items-center su-relative su-overflow-hidden su-px-[8px] su-py-[2px]"}>
-        {children}
+        className={"su-absolute su-z-[10] su-w-full su-top-full su-left-0 su-max-h-[300px] su-pb-5 su-overflow-y-scroll su-shadow-lg su-border su-border-black-20 su-bg-white " + (listboxVisible ? '' : 'su-hidden')}>
+        <ul
+          {...getListboxProps()}
+          className={"su-list-unstyled " + (listboxVisible ? '' : 'su-hidden')}
+          aria-hidden={!listboxVisible}
+          aria-labelledby={labeledBy}
+        >
+          <SelectProvider value={contextValue}>
+            {options.map((option) => {
+              return (
+                <CustomOption key={option.value} value={option.value} rootRef={listboxRef}>
+                  {option.label}
+                </CustomOption>
+              );
+            })}
+          </SelectProvider>
+        </ul>
       </div>
     </div>
-  )
+  );
 }
 
-const SelectList = ({selectRef, ...props}: Props) => {
-  const formId = useId();
-  const isMulti = props.isMulti ?? false
-  props.placeholder = props.placeholder ?? null;
-
-  const isStyling = false;
-  return (
-    <Select
-      ref={selectRef}
-      menuShouldScrollIntoView
-      hideSelectedOptions={false}
-      closeMenuOnSelect={!isMulti}
-      isClearable={false}
-      instanceId={formId}
-      name={formId}
-      components={{
-        IndicatorSeparator: () => null,
-        MultiValueRemove: () => null,
-        ValueContainer,
-      }}
-      styles={{
-        clearIndicator: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        container: (baseStyles, state) => ({
-          ...baseStyles,
-          height: 'fit-content',
-        }),
-        control: (baseStyles, state) => ({
-          ...baseStyles,
-          width: "100%",
-        }),
-        dropdownIndicator: (baseStyles, state) => ({
-          ...baseStyles,
-          color: '#5d4b3c',
-        }),
-        group: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        groupHeading: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        indicatorSeparator: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        indicatorsContainer: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        input: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        loadingIndicator: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        loadingMessage: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        menu: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        menuList: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        menuPortal: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        multiValue: (baseStyles, state) => ({
-          ...baseStyles,
-          background: '#5d4b3c',
-          borderRadius: '5px',
-          padding: '5px',
-        }),
-        multiValueLabel: (baseStyles, state) => ({
-          ...baseStyles,
-          color: '#fff',
-        }),
-        multiValueRemove: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        noOptionsMessage: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-        option: (baseStyles, state) => ({
-          ...baseStyles,
-          backgroundColor: state.isSelected ? "#5d4b3c" : (state.isDisabled ? "#eaeaea" : (state.isFocused ? "#f0f0f0" : "#fff")),
-          color: state.isSelected ? "#fff" : (state.isDisabled ? "#000" : (state.isFocused ? "#5d4b3c" : "#000")),
-          textDecoration: state.isFocused ? "underline" : "none",
-          fontWeight: state.isFocused ? "600" : "normal",
-        }),
-        placeholder: (baseStyles, state) => ({
-          ...baseStyles,
-          color: '#2e2d29',
-        }),
-        singleValue: (baseStyles, state) => ({
-          ...baseStyles,
-
-        }),
-        valueContainer: (baseStyles, state) => ({
-          ...baseStyles,
-        }),
-      }}
-      defaultMenuIsOpen={isStyling}
-      {...props}
-    />
-  )
-}
 
 export default SelectList;

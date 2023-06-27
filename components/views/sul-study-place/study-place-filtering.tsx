@@ -1,13 +1,13 @@
 "use client";
 
-import {useId, useRef, useState} from "react";
+import {useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {StudyPlace} from "@/lib/drupal/drupal";
 import Conditional from "../../utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 import SelectList from "@/components/patterns/elements/select-list";
-import {SelectInstance} from "react-select";
+import {SelectValue} from "@mui/base/useSelect";
 
 interface SelectOption {
   value: string
@@ -15,11 +15,10 @@ interface SelectOption {
 }
 
 const StudyPlacesFiltering = ({items}) => {
-
-  const typeRef = useRef<SelectInstance>(null);
-  const libraryRef = useRef<SelectInstance>(null);
-  const featureRef = useRef<SelectInstance>(null);
-  const capacityRef = useRef<SelectInstance>(null);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedLibraries, setSelectedLibraries] = useState<string[]>([]);
+  const [selectedCapacity, setSelectedCapacity] = useState<string[]>([]);
+  const [selectedFeatures, setSelectedFeatured] = useState<string[]>([]);
 
   const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
@@ -53,84 +52,70 @@ const StudyPlacesFiltering = ({items}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const selectedTypes = typeRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
-    const selectedLibraries = libraryRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
-    const selectedCapacity = capacityRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
-    const selectedFeatures = featureRef.current?.getValue().map((option: SelectOption) => option.value) ?? [];
-
     const filteredItems = items.filter((item: StudyPlace) =>
       (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
       (!selectedTypes.length || selectedTypes.indexOf(item.sul_study__type.id) != -1) &&
       (!selectedCapacity.length || selectedCapacity.indexOf(item.sul_study__capacity?.id) != -1) &&
       (!selectedFeatures.length || (item.sul_study__features && item.sul_study__features.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0))
     );
-
     setItemsToDisplay(filteredItems)
   }
 
   const handleReset = (e) => {
     e.preventDefault();
-    typeRef.current?.clearValue();
-    libraryRef.current?.clearValue();
-    capacityRef.current?.clearValue();
-    featureRef.current?.clearValue();
+    setSelectedTypes([]);
+    setSelectedLibraries([]);
+    setSelectedCapacity([]);
+    setSelectedFeatured([]);
     setItemsToDisplay(items)
   }
 
   return (
     <div className="su-@container">
-      <form className="su-relative su-z-[1]">
+      <form className="su-relative su-z-[1]" onSubmit={handleSubmit}>
         <fieldset
           className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30"
           aria-label="Filter study places">
           <legend className="su-font-bold su-mb-10">Filter places to study.</legend>
           <SelectList
-            selectRef={typeRef}
-            aria-label="Type"
-            placeholder="Type"
+            label="Type"
             options={typeOfStudies}
-            name="type"
-            isMulti
-            isSearchable={false}
-            isDisabled={capacityOptions.length == 0}
+            multiple
+            disabled={typeOfStudies.length == 0}
+            value={selectedTypes}
+            onChange={(event, value: SelectValue<string, true>) => setSelectedTypes(value)}
           />
 
           <SelectList
-            selectRef={libraryRef}
-            aria-label="Library"
-            placeholder="Library"
+            label="Library"
             options={libraryOptions}
-            name="library"
-            isMulti
-            isSearchable={false}
-            isDisabled={capacityOptions.length == 0}
+            multiple
+            disabled={libraryOptions.length == 0}
+            value={selectedLibraries}
+            onChange={(event, value: SelectValue<string, true>) => setSelectedLibraries(value)}
           />
 
           <SelectList
-            selectRef={capacityRef}
-            aria-label="Capacity"
-            placeholder="Capacity"
+            label="Capacity"
             options={capacityOptions}
-            name="capacity"
-            isMulti
-            isSearchable={false}
-            isDisabled={capacityOptions.length == 0}
+            multiple
+            disabled={capacityOptions.length == 0}
+            value={selectedCapacity}
+            onChange={(event, value: SelectValue<string, true>) => setSelectedCapacity(value)}
           />
 
           <SelectList
-            selectRef={featureRef}
-            aria-label="Features"
-            placeholder="Features"
+            label="Features"
             options={featureOptions}
-            name="features"
-            isMulti
-            isSearchable={false}
-            isDisabled={capacityOptions.length == 0}
+            multiple
+            disabled={featureOptions.length == 0}
+            value={selectedFeatures}
+            onChange={(event, value: SelectValue<string, true>) => setSelectedFeatured(value)}
           />
 
         </fieldset>
 
-        <button className="su-button su-mr-20" onClick={handleSubmit}>
+        <button type="submit" className="su-button su-mr-20">
           Filter
         </button>
         <button className="su-button" onClick={handleReset}>
