@@ -30,6 +30,7 @@ export const getNodeMetadata = (node: DrupalNode): keyable => {
 
   return {
     ...metadata,
+    metadataBase: new URL('https://library.stanford.edu'),
     title: node.title + " | " + process.env.NEXT_PUBLIC_SITE_NAME,
     other: {
       changed: node.changed,

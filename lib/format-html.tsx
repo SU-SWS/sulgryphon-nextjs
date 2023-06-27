@@ -1,4 +1,3 @@
-import Link from "next/link";
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
 import Conditional from "@/components/utils/conditional";
 import Image from "next/image";
@@ -9,6 +8,8 @@ import {
   DrupalLinkSecondaryButton
 } from "@/components/patterns/link";
 import Oembed from "@/components/patterns/elements/oembed";
+import {twMerge} from "tailwind-merge";
+import {ElementType} from "react";
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
@@ -16,14 +17,15 @@ const options: HTMLReactParserOptions = {
     if (domNode instanceof Element) {
       const nodeProps = attributesToProps(domNode.attribs);
       nodeProps.className = fixClasses(nodeProps.className ?? '');
-      let NodeName: string = domNode.name
+      let NodeName: ElementType = domNode.name as ElementType
 
       switch (domNode.name) {
         case "a":
-          // Error handle for <a> tags without an href.
+          // Error handle for <a> tags without a href.
           if (!nodeProps.href) {
             nodeProps.href = '#';
           }
+          nodeProps.href = nodeProps.href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? '', '');
 
           if (nodeProps.className.indexOf('su-button--big') > -1) {
             return (
@@ -57,19 +59,11 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          nodeProps.className += ' hocus:su-underline su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red';
-
-          if (nodeProps.href.startsWith('#')) {
-            return (
-              <a {...nodeProps}>
-                {domToReact(domNode.children, options)}
-              </a>
-            )
-          }
+          nodeProps.className = twMerge('hocus:su-underline su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red', nodeProps.className);
           return (
-            <Link scroll href={nodeProps.href} {...nodeProps}>
+            <a {...nodeProps}>
               {domToReact(domNode.children, options)}
-            </Link>
+            </a>
           )
         case 'article':
           return cleanMediaMarkup(domNode);
@@ -185,7 +179,7 @@ const cleanMediaMarkup = (node: Element) => {
           <Image
             className={fixClasses(classes)}
             src={src.trim()}
-            alt={alt ? alt.trim(): ""}
+            alt={alt ? alt.trim() : ""}
             height={parseInt(height)}
             width={parseInt(width)}
           />
@@ -196,7 +190,7 @@ const cleanMediaMarkup = (node: Element) => {
             <Image
               className="su-object-cover su-object-center"
               src={src.trim()}
-              alt={alt ? alt.trim(): ""}
+              alt={alt ? alt.trim() : ""}
               fill={true}
             />
           </div>
