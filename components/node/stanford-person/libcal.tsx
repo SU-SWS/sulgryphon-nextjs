@@ -5,7 +5,7 @@ const LibCal = ({libcalId, srText}: { libcalId?: number, srText: string }) => {
     <>
       {libcalId &&
         <Link href={`/calendar/${libcalId}`} className="su-button su-w-fit" aria-haspopup="dialog">
-          Schedule an appointment<span>&nbsp;for {srText}</span>
+          Schedule an appointment<span className="su-sr-only">&nbsp;for {srText}</span>
         </Link>
       }
     </>
