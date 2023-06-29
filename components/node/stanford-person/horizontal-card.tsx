@@ -59,7 +59,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props
           </Conditional>
         </div>
 
-        <LibCal libcalId={node.sul_person__libcal_id}/>
+        <LibCal libcalId={node.sul_person__libcal_id} srText={node.title}/>
       </div>
     </article>
   )

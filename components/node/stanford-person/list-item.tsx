@@ -33,7 +33,7 @@ const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
       </div>
       {node.sul_person__libcal_id &&
         <div>
-          <LibCal libcalId={node.sul_person__libcal_id}/>
+          <LibCal libcalId={node.sul_person__libcal_id} srText={node.title}/>
         </div>
       }
     </article>

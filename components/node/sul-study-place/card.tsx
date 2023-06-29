@@ -37,10 +37,9 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
         }
 
         <Conditional showWhen={node.sul_study__libcal_id}>
-          <Link
-            href={`/calendar/${node.sul_study__libcal_id}`}
+          <a
+            href={`https://appointments.library.stanford.edu/spaces?lid=/${node.sul_study__libcal_id}`}
             className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1 su-no-underline hocus:su-underline"
-            aria-haspopup="dialog"
           >
             <div className="su-flex su-justify-end su-items-center su-gap-xs">
               <div className="su-w-0 @md:su-w-[87px] su-h-[3px] su-bg-illuminating-dark"></div>
@@ -50,7 +49,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
                 <ChevronRightIcon className="su-inline su-absolute su-top-0 su-right-0 su-h-full"/>
               </div>
             </div>
-          </Link>
+          </a>
         </Conditional>
 
         <div className={"card-body su-items-start su-rs-px-2 su-rs-py-3 "}>
