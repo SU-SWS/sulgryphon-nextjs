@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {DrupalPublicationCitation, Publication} from "@/lib/drupal/drupal";
 
 const StanfordPublicationListItem = ({node, ...props}: {node:Publication}) => {

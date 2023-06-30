@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 
 const LibCal = ({libcalId, srText}: { libcalId?: number, srText: string }) => {
   return (

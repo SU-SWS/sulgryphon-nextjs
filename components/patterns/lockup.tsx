@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {ComponentProps} from "react";
 
 import Logo from "@/components/patterns/logo";

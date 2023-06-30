@@ -1,5 +1,5 @@
 import {StudyPlace} from "@/lib/drupal/drupal";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
 import {MapPinIcon} from "@heroicons/react/24/outline";
 import Conditional from "@/components/utils/conditional";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import Card from "@/components/patterns/card";
 import Conditional from "@/components/utils/conditional";
 import {EventSeries} from "@/lib/drupal/drupal";

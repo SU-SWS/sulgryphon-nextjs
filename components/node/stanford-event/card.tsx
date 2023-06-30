@@ -1,5 +1,5 @@
 import {CalendarDaysIcon} from "@heroicons/react/20/solid";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {Event} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";

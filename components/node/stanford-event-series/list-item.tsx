@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {EventSeries} from "@/lib/drupal/drupal";
 
 const StanfordEventSeriesListItem = ({node, ...props}: { node: EventSeries }) => {

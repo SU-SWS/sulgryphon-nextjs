@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {BasicPage} from "@/lib/drupal/drupal";
 import {PropsWithoutRef} from "react";
 

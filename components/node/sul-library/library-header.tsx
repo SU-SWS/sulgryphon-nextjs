@@ -1,7 +1,7 @@
 import {Library} from "@/lib/drupal/drupal";
 import Card from "@/components/patterns/card";
 import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/20/solid";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {MapPinIcon} from "@heroicons/react/24/outline";
 import Wave from "@/components/patterns/wave";
 import Image from "next/image";

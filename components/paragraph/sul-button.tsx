@@ -1,7 +1,7 @@
 "use client";
 
 import {DrupalLinkType} from "@/lib/drupal/drupal";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import Conditional from "@/components/utils/conditional";
 import useIsCentered from "@/lib/hooks/useIsCentered";
 import {PropsWithoutRef, useRef} from "react";

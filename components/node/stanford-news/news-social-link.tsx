@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {PropsWithoutRef, ReactNode, useEffect, useState} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 

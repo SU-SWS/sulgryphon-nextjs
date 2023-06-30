@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {News} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
 import {PropsWithoutRef} from "react";

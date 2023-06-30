@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {ArrowRightIcon} from "@heroicons/react/20/solid";
 import Lockup from "@/components/patterns/lockup";
 import {DrupalLinkButton} from "@/components/patterns/link";

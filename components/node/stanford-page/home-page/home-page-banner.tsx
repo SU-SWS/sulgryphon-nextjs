@@ -3,7 +3,7 @@ import SearchForm from "@/components/search/search-form";
 import TodayHours from "./today-hours";
 import {getResourceCollection} from "@/lib/drupal/get-resource";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {Library} from "@/lib/drupal/drupal";
 
 const HomePageBanner = async () => {

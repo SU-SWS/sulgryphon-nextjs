@@ -1,6 +1,6 @@
 import {Person} from "@/lib/drupal/drupal";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import LibCal from "./libcal";
 
 const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {

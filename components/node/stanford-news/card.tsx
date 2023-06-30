@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {News} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import {PropsWithoutRef} from "react";

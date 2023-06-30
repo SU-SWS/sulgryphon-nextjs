@@ -1,7 +1,7 @@
 "use client";
 
 import Conditional from "@/components/utils/conditional";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {PropsWithoutRef, useEffect, useId, useRef, useState} from "react";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import {LibGuide} from "@/lib/drupal/drupal";

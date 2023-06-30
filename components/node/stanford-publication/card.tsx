@@ -1,7 +1,7 @@
 import {Publication} from "@/lib/drupal/drupal";
 import Card from "@/components/patterns/card";
 import Conditional from "@/components/utils/conditional";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 
 const StanfordPublicationCard = ({node, ...props}: { node: Publication }) => {
   const topics = node.su_publication_topics?.filter(topic => topic.name?.length > 0) ?? [];

@@ -7,7 +7,7 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {EnvelopeIcon, LinkIcon, MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import LibCal from "./libcal";
 import LibGuides from "./libguide";
 import fetchLibGuides from "@/lib/libguides";

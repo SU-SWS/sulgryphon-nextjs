@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
 import {useId, useState} from "react";
 import Modal from "@/components/patterns/modals/modal";

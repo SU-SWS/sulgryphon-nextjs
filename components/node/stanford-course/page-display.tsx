@@ -2,7 +2,7 @@ import "server-only";
 import Conditional from "@/components/utils/conditional";
 import formatHtml from "@/lib/format-html";
 import {Course} from "@/lib/drupal/drupal";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 
 const StanfordCourse = ({node, ...props}: { node: Course }) => {
 

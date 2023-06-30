@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import SearchModal from "@/components/search/search-modal";
 
 const FallbackMainMenu = ({menuItems}) => {

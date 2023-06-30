@@ -1,5 +1,5 @@
 import Conditional from "@/components/utils/conditional";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import formatHtml from "@/lib/format-html";
 import {Course} from "@/lib/drupal/drupal";
 

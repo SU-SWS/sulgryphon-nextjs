@@ -6,7 +6,7 @@ import Conditional from "@/components/utils/conditional";
 import CardSprinkles from "@/components/patterns/card-sprinkles";
 import {ElementType, useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {DrupalLinkType} from "@/lib/drupal/drupal";
 
 interface CardProps {

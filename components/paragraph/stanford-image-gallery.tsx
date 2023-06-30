@@ -1,7 +1,7 @@
 "use client"
 
 import {ImageGalleryParagraph} from "@/lib/drupal/drupal";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
 import Conditional from "@/components/utils/conditional";
 import {DrupalLinkButton} from "@/components/patterns/link";

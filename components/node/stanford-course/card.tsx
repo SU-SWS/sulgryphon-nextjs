@@ -1,5 +1,5 @@
 import Conditional from "@/components/utils/conditional";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {Course} from "@/lib/drupal/drupal";
 import {PropsWithoutRef} from "react";
 

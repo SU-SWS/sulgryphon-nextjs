@@ -3,7 +3,7 @@ import Image from "next/image";
 import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import Oembed from "@/components/patterns/elements/oembed";
-import Link from "next/link";
+import Link from "@/components/patterns/elements/drupal-link";
 import {PropsWithoutRef} from "react";
 
 interface Props extends PropsWithoutRef<any> {
