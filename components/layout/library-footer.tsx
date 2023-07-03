@@ -97,7 +97,7 @@ const SocialLinks = () => {
 
 const FooterLink = ({href, children}: { href: string, children: ReactNode }) => {
   return (
-    <Link className="su-font-normal su--text-m1 su-text-white hover:su-text-white hocus:su-no-underline" href={href}>
+    <Link className="su-font-normal su--text-m1 su-text-white hocus:su-text-white hocus:su-no-underline" href={href}>
       {children}
     </Link>
   )
