@@ -38,7 +38,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
         <Conditional showWhen={node.sul_study__libcal_id}>
           <a
-            href={`https://appointments.library.stanford.edu/spaces?lid=/${node.sul_study__libcal_id}`}
+            href={`https://appointments.library.stanford.edu/space/${node.sul_study__libcal_id}`}
             className="su-bg-black-true su-text-white hocus:su-text-illuminating-dark su-w-full su-rs-p-neg1 su-no-underline hocus:su-underline"
           >
             <div className="su-flex su-justify-end su-items-center su-gap-xs">
