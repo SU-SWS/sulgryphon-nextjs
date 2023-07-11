@@ -106,7 +106,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
         />
       }
 
-      {paragraph.type === 'paragraph--stanford_spacer' && <StanfordSpacer/>}
+      {paragraph.type === 'paragraph--stanford_spacer' && <StanfordSpacer size={paragraph.su_spacer_size}/>}
 
       {paragraph.type === 'paragraph--collection' &&
         <SulCollection
