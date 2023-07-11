@@ -16,6 +16,7 @@ const path = require('path');
 const dir = path.resolve(__dirname, 'styles/tailwind/plugins');
 
 module.exports = {
+  prefix: "su-",
   content: [
     "./components/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
