@@ -31,7 +31,7 @@ const HomePageBanner = async () => {
         <div className="xl:su-mx-20 md:su-flex su-justify-between">
           <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
             <h2>What can we help you find?</h2>
-            <SearchForm action="https://library.stanford.edu/all" className="su-@container su-mb-20"/>
+            <SearchForm action="https://discover.stanford.edu/all" className="su-@container su-mb-20"/>
             <p>
               Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
               , <Link href="https://searchworks.stanford.edu/articles" className="su-text-white hocus:su-text-white hocus:su-no-underline">articles+</Link>
