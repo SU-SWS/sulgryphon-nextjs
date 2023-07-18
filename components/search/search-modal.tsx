@@ -17,7 +17,7 @@ const SearchModal = () => {
 
   return (
     <>
-      <Link href="https://discover.stanford.edu/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog">
+      <Link href="/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog">
         <MagnifyingGlassIcon width={30} className="su-mt-[-1px] su-text-white su-p-4 su-border-b su-border-transparent group-hocus:su-border-white"/>
         <span className="su-sr-only">Search</span>
       </Link>
@@ -25,7 +25,7 @@ const SearchModal = () => {
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} labelledBy={headerId}>
         <div className="su-max-w-500 su-w-full su-mx-auto">
           <h2 id={headerId} className="su-text-white su-text-center">What can we help you find?</h2>
-          <SearchForm action="https://discover.stanford.edu/all"/>
+          <SearchForm action="/all"/>
 
           <p className="su-text-white su-text-center su-p-20">
             Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
