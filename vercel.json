@@ -3,6 +3,10 @@
     {
       "source": "/all",
       "destination": "https://discover.stanford.edu/all"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "https://discover.stanford.edu/assets/:path*"
     }
   ]
 }
