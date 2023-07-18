@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/all",
+      "destination": "https://discover.stanford.edu/all"
+    }
+  ]
+}

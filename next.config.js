@@ -34,11 +34,6 @@ module.exports = {
         permanent: true
       },
       {
-        source: '/all',
-        destination: 'https://discover.stanford.edu/all',
-        permanent: true,
-      },
-      {
         source: '/search/website',
         destination: '/search',
         permanent: true,
