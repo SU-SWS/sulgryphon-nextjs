@@ -5,6 +5,10 @@
       "destination": "https://discover.stanford.edu/all"
     },
     {
+      "source": "/all/:path*",
+      "destination": "https://discover.stanford.edu/all/:path*"
+    },
+    {
       "source": "/assets/:path*",
       "destination": "https://discover.stanford.edu/assets/:path*"
     }
