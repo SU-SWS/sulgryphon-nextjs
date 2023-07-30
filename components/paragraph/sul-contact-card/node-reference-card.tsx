@@ -58,7 +58,10 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
             <div className="su-leading-tight md:su-rs-pr-2 su-text-white">
 
               <CachedClientFetch>
-                <NodeReferenceCardHours branchId={paragraph.sul_contact__branch?.su_library__hours}/>
+                <NodeReferenceCardHours
+                  branchId={paragraph.sul_contact__branch?.su_library__hours}
+                  branchName={paragraph.sul_contact__branch?.title}
+                />
               </CachedClientFetch>
 
               <Conditional showWhen={paragraph.sul_contact__branch?.su_library__phone}>

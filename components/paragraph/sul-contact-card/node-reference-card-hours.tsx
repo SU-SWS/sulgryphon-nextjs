@@ -3,7 +3,7 @@
 import {ClockIcon} from "@heroicons/react/24/outline";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 
-const NodeReferenceCardHours = ({branchId}) => {
+const NodeReferenceCardHours = ({branchId, branchName}) => {
   const hours = useTodayLibraryHours(branchId);
   if (!hours) {
     return null;
@@ -18,13 +18,13 @@ const NodeReferenceCardHours = ({branchId}) => {
         className="su-mr-12 su-mt-01em su-flex-shrink-0"
       />
       <div className="su-text-white">
-        {isOpen ? 'Open' : 'Closed'}
-        <span className="su-mx-5">/</span>
+        {isOpen && <>Open<span className="su-mx-5">&nbsp;/&nbsp;</span></>}
+
         {hoursDisplay}
-        <span className="su-mx-5">/</span>
+        <span className="su-mx-5">&nbsp;/&nbsp;</span>
         <a className="su-text-white su-font-normal hocus:su-text-illuminating-dark hocus:su-no-underline"
            href={`https://library-hours.stanford.edu/libraries/${branchId}`}>
-          See all hours
+          See all hours<span className="su-sr-only">&nbsp;for{branchName}</span>
         </a>
       </div>
     </div>
