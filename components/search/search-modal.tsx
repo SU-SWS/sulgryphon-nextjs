@@ -17,7 +17,7 @@ const SearchModal = () => {
 
   return (
     <>
-      <Link href="/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog">
+      <Link href="/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog" prefetch={false}>
         <MagnifyingGlassIcon width={30} className="su-mt-[-1px] su-text-white su-p-4 su-border-b su-border-transparent group-hocus:su-border-white"/>
         <span className="su-sr-only">Search</span>
       </Link>

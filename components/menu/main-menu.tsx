@@ -82,6 +82,7 @@ const MainMenu = ({menuItems}) => {
                 <Link
                   className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
                   href="/all"
+                  prefetch={false}
                 >
                   Search Results
                 </Link>
