@@ -26,5 +26,7 @@ export const middleware = (request: NextRequest) => {
 }
 
 export const config = {
-  matcher: '/api/:path*',
+  matcher: [
+    '/api/preview',
+  ],
 }
