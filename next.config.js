@@ -42,6 +42,11 @@ module.exports = {
         source: '/sfx:path*',
         destination: 'https://sfx-01stanford.hosted.exlibrisgroup.com/01stanford:path*',
         permanent: true,
+      },
+      {
+        source: '/sfx/:path*',
+        destination: 'https://sfx-01stanford.hosted.exlibrisgroup.com/01stanford/:path*',
+        permanent: true,
       }
     ]
   }
