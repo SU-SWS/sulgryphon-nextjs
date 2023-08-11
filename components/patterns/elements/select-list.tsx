@@ -1,5 +1,5 @@
 import {useSelect, SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
-import { useOption } from '@mui/base/useOption';
+import {useOption} from '@mui/base/useOption';
 import {
   FocusEvent,
   KeyboardEvent,
@@ -12,6 +12,8 @@ import {
   useState
 } from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
+import {useOnClickOutside} from "next/dist/client/components/react-dev-overlay/internal/hooks/use-on-click-outside";
+import OutsideClickHandler from "@/components/utils/outside-click-handler";
 
 interface Props {
   options: SelectOptionDefinition<string>[];
@@ -113,8 +115,15 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
 
   const optionChosen = (multiple && value) ? value.length > 0 : !!value;
 
+  const onClickOutside = () => {
+    setListboxVisible(false)
+  }
   return (
-    <div className="su-relative su-h-fit">
+    <OutsideClickHandler
+      onClickOutside={onClickOutside}
+      onFocusOutside={onClickOutside}
+      className="su-relative su-h-fit"
+    >
       <button
         {...getButtonProps()}
         className="su-w-full su-border su-border-black-40 su-rounded su-text-left su-p-5"
@@ -157,7 +166,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
           </SelectProvider>
         </ul>
       </div>
-    </div>
+    </OutsideClickHandler>
   );
 }
 
