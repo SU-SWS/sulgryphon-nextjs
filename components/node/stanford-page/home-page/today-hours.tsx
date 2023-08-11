@@ -65,12 +65,12 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
                 Today&apos;s Hours
               </h3>
               <div className="su-mb-10">
-              <SelectList
-                ariaLabelledby={formId}
-                options={libraryOptions}
-                defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
-                onChange={(e, value) => setSelectedLibrary(value as string)}
-              />
+                <SelectList
+                  ariaLabelledby={formId}
+                  options={libraryOptions}
+                  defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
+                  onChange={(e, value) => setSelectedLibrary(value as string)}
+                />
               </div>
               <TodayLibraryHours branchId={library?.su_library__hours}/>
             </div>
@@ -86,7 +86,7 @@ const TodayLibraryHours = ({branchId, ...props}: { branchId?: string }) => {
 
   if (!libraryHours) {
     return (
-      <div className="su-text-black su-flex" aria-live="polite">
+      <div className="su-text-black su-flex">
         <ClockIcon width={15} className="su-mr-5"/>
         <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
       </div>
@@ -96,12 +96,16 @@ const TodayLibraryHours = ({branchId, ...props}: { branchId?: string }) => {
   const hoursDisplay = !closedAllDay && (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
 
   return (
-    <div className="su-text-black su-flex su-justify-between" aria-live="polite">
-      <div className="su-flex"><ClockIcon width={15} className="su-mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
-      <div>
-        {hoursDisplay}
+    <>
+      <div className="su-text-black su-flex su-justify-between su-mb-4" aria-live="polite">
+        <div className="su-flex"><ClockIcon width={15} className="su-mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
+        <div>
+          {hoursDisplay}
+        </div>
+
       </div>
-    </div>
+      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+    </>
   )
 }
 
