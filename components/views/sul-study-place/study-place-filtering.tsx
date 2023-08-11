@@ -76,7 +76,7 @@ const StudyPlacesFiltering = ({items}) => {
         <fieldset
           className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30"
           aria-label="Filter study places">
-          <legend className="su-font-bold su-mb-10">Filter places to study.</legend>
+          <legend className="su-font-bold su-mb-10 su-whitespace-nowrap">Filter places to study.</legend>
           <SelectList
             label="Type"
             options={typeOfStudies}
