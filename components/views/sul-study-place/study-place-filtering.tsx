@@ -1,13 +1,13 @@
 "use client";
 
-import {useState} from "react";
-import {useAutoAnimate} from "@formkit/auto-animate/react";
+import {RefObject, useEffect, useRef, useState} from "react";
 import {StudyPlace} from "@/lib/drupal/drupal";
 import Conditional from "../../utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 import SelectList from "@/components/patterns/elements/select-list";
 import {SelectValue} from "@mui/base/useSelect";
+import autoAnimate from "@formkit/auto-animate";
 
 interface SelectOption {
   value: string
@@ -19,8 +19,8 @@ const StudyPlacesFiltering = ({items}) => {
   const [selectedLibraries, setSelectedLibraries] = useState<string[]>([]);
   const [selectedCapacity, setSelectedCapacity] = useState<string[]>([]);
   const [selectedFeatures, setSelectedFeatured] = useState<string[]>([]);
+  const parent: RefObject<HTMLUListElement> = useRef(null);
 
-  const [parent] = useAutoAnimate({duration: 300});
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
 
   let typeOfStudies: SelectOption[] = [];
@@ -69,6 +69,10 @@ const StudyPlacesFiltering = ({items}) => {
     setSelectedFeatured([]);
     setItemsToDisplay(items)
   }
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current, {duration: 300});
+  }, [parent])
 
   return (
     <div className="su-@container">
