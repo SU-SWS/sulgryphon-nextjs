@@ -2,11 +2,11 @@ import Link from "next/link";
 
 const DrupalLink = ({href, children, ...props}) => {
   href = href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL, '');
-  const Element = href.startsWith('/') ? Link : 'a';
+  const prefetch = href.startsWith('/') || href.startsWith('https://library.stanford.edu');
   return (
-    <Element href={href} {...props}>
+    <Link href={href} prefetch={prefetch} rel={prefetch ? undefined : "nofollow"} {...props}>
       {children}
-    </Element>
+    </Link>
   )
 }
 export default DrupalLink as typeof Link;

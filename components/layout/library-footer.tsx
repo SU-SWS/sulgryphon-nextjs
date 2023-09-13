@@ -43,6 +43,7 @@ const LibraryFooter = () => {
           <h2 className="su-text-m0 su-mb-20">Who we are</h2>
           <ul className="su-list-unstyled">
             <li><FooterLink href="/about-us">About Us</FooterLink></li>
+            <li><FooterLink href="/staff-directory">Staff Directory</FooterLink></li>
             <li><FooterLink href="/department-directory">Department directory</FooterLink></li>
             <li><FooterLink href="https://searchworks.stanford.edu/catalog?f%5Bcollection%5D%5B%5D=hn730ks3626">Staff publications and research</FooterLink></li>
             <li><FooterLink href="https://stanford.joinhandshake.com/login">Student job openings</FooterLink></li>
