@@ -1,7 +1,6 @@
 module.exports = {
   poweredByHeader: false,
   experimental: {
-    appDir: true,
     optimizeCss: true
   },
   images: {
