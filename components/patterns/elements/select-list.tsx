@@ -1,3 +1,5 @@
+"use client";
+
 import {useSelect, SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
 import {useOption} from '@mui/base/useOption';
 import {
@@ -12,7 +14,6 @@ import {
   useState
 } from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import {useOnClickOutside} from "next/dist/client/components/react-dev-overlay/internal/hooks/use-on-click-outside";
 import OutsideClickHandler from "@/components/utils/outside-click-handler";
 
 interface Props {
@@ -34,7 +35,8 @@ interface OptionProps {
 }
 
 const renderSelectedValue = (value: SelectValue<string, boolean>, options: SelectOptionDefinition<string>[]) => {
-
+  // @mui/utils@5.14.14
+  // @mui/types@7.2.6
   if (Array.isArray(value)) {
     return value.map(item =>
       <span
@@ -50,7 +52,6 @@ const renderSelectedValue = (value: SelectValue<string, boolean>, options: Selec
 }
 
 function CustomOption(props: OptionProps) {
-
   const {children, value, rootRef, disabled = false} = props;
   const {getRootProps, highlighted, selected} = useOption({rootRef: rootRef, value, disabled, label: children});
   const {id, ...otherProps} = getRootProps();
