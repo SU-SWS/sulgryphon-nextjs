@@ -4,7 +4,11 @@ module.exports = {
     optimizeCss: true
   },
   images: {
-    domains: [process.env.NEXT_IMAGE_DOMAIN]
+    remotePatterns: [
+      {
+        hostname: process.env.NEXT_IMAGE_DOMAIN,
+      },
+    ],
   },
   typescript: {
     ignoreBuildErrors: true
