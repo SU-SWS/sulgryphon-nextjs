@@ -9,6 +9,17 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: true
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/_next/image',
+          destination: '/_next/image?url=:url',
+          has: [{type: 'query', key: 'url', value: '(?<url>.*[jpg|png|jpeg|gif]\?itok=\\w+).*'}]
+        }
+      ]
+    };
+  },
   async headers() {
     if (process.env.NEXT_PUBLIC_NOBOTS === 'true') {
       return [
