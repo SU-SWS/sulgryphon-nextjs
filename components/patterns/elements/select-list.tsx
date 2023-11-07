@@ -10,11 +10,13 @@ import {
   RefObject,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState
 } from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import OutsideClickHandler from "@/components/utils/outside-click-handler";
+import {useIsClient} from "usehooks-ts";
 
 interface Props {
   options: SelectOptionDefinition<string>[];
@@ -54,7 +56,7 @@ const renderSelectedValue = (value: SelectValue<string, boolean>, options: Selec
 function CustomOption(props: OptionProps) {
   const {children, value, rootRef, disabled = false} = props;
   const {getRootProps, highlighted, selected} = useOption({rootRef: rootRef, value, disabled, label: children});
-  const {id, ...otherProps} = getRootProps();
+  const {id, ...otherProps}: { id: string } = getRootProps();
   const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline" : "")
   const highlightedStyles = "su-bg-black-10 su-text-black su-underline"
 
@@ -94,6 +96,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   const labeledBy = ariaLabelledby ?? labelId;
   const listboxRef = useRef<HTMLUListElement>(null);
   const [listboxVisible, setListboxVisible] = useState(false);
+  const isClient = useIsClient();
 
   const {getButtonProps, getListboxProps, contextValue, value} = useSelect<string, boolean>({
     listboxRef,
@@ -107,7 +110,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
     if (listboxVisible) listboxRef.current?.focus();
   }, [listboxVisible]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const parentContainer = listboxRef.current?.parentElement?.getBoundingClientRect();
     if (parentContainer && (parentContainer.bottom > window.innerHeight || parentContainer.top < 0)) {
       listboxRef.current?.parentElement?.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
@@ -119,6 +122,9 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   const onClickOutside = () => {
     setListboxVisible(false)
   }
+
+  if (!isClient) return null;
+
   return (
     <OutsideClickHandler
       onClickOutside={onClickOutside}
