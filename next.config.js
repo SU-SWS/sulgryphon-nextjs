@@ -4,10 +4,31 @@ module.exports = {
     optimizeCss: true
   },
   images: {
-    domains: [process.env.NEXT_IMAGE_DOMAIN]
+    remotePatterns: [
+      {
+        hostname: process.env.NEXT_IMAGE_DOMAIN,
+      },
+    ],
   },
   typescript: {
     ignoreBuildErrors: true
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/_next/image',
+          destination: '/_next/image?url=/no-image.png',
+          has: [{type: 'query', key: 'url', value: (`htt[p|ps]://${process.env.NEXT_IMAGE_DOMAIN}.*`)}],
+          missing: [{type: 'query', key: 'url', value: '(.*itok=([\\w|-]+))'}]
+        },
+        {
+          source: '/_next/image',
+          destination: '/_next/image?url=:url',
+          has: [{type: 'query', key: 'url', value: '(?<url>.*[jpg|png|jpeg|gif]\?itok=([\\w|-]+)).*'}]
+        },
+      ]
+    };
   },
   async headers() {
     if (process.env.NEXT_PUBLIC_NOBOTS === 'true') {
