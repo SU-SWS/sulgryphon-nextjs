@@ -38,6 +38,7 @@ export async function buildHeaders({accessToken, headers = {"Content-Type": "app
   headers?: HeadersInit
   draftMode?: boolean
 } = {}): Promise<Headers> {
+
   if (process.env.REQUEST_HEADERS) {
     headers = {...headers, ...JSON.parse(process.env.REQUEST_HEADERS)};
   }

@@ -16,6 +16,7 @@ import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
+import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
 export const revalidate = 1800;
 
@@ -85,9 +86,7 @@ const NodePage = async (context) => {
   return (
     <main id="main-content" className="su-mb-50">
       {!node.status &&
-        <div className="su-bg-illuminating su-py-10 su-text-3xl su-font-bold">
-          <div className="su-centered-container su-flex su-gap-10"><ExclamationCircleIcon width={20}/>Unpublished</div>
-        </div>
+        <UnpublishedBanner/>
       }
       <Conditional showWhen={node.type === 'node--sul_library'}>
         <LibraryHeader node={node as Library}/>
