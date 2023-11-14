@@ -15,10 +15,9 @@ import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
-import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
-export const revalidate = 1800;
+export const revalidate = 86400;
 
 class RedirectError extends Error {
   constructor(public message: string) {
@@ -49,8 +48,8 @@ const fetchNodeData = async (context) => {
   }
 
   const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context,{draftMode})
-  const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
-    (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
+  const fullWidth: boolean = (node?.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
+    (node?.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
   return {node, fullWidth}
 }
@@ -58,6 +57,8 @@ const fetchNodeData = async (context) => {
 export const generateMetadata = async (context): Promise<Metadata> => {
   try {
     const {node} = await fetchNodeData(context);
+    if (!node) return {};
+
     return getNodeMetadata(node);
   } catch (e) {
     // Probably a 404 or redirect page.
