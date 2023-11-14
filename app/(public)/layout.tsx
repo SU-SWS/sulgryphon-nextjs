@@ -4,12 +4,13 @@ import Header from "@/components/layout/header";
 import {ReactNode} from "react";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/utils/google-analytics";
+import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 
 const Layout = ({children}: { children: ReactNode }) => {
-
+  const draftMode = isDraftMode()
   return (
     <>
-      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID &&
+      {(!draftMode && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) &&
         <>
           <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js"/>
           <GoogleAnalytics/>

@@ -14,6 +14,8 @@ import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+import {isDraftMode} from "@/lib/drupal/is-draft-mode";
+import {ExclamationCircleIcon} from "@heroicons/react/20/solid";
 
 export const revalidate = 1800;
 
@@ -24,7 +26,8 @@ class RedirectError extends Error {
 }
 
 const fetchNodeData = async (context) => {
-  const path = await translatePathFromContext(context);
+  const draftMode = isDraftMode();
+  const path = await translatePathFromContext(context, {draftMode});
 
   // Check for redirect.
   if (path?.redirect?.[0].to) {
@@ -44,7 +47,7 @@ const fetchNodeData = async (context) => {
     throw new RedirectError(path.entity.path);
   }
 
-  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
+  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context,{draftMode})
   const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
@@ -81,6 +84,11 @@ const NodePage = async (context) => {
 
   return (
     <main id="main-content" className="su-mb-50">
+      {!node.status &&
+        <div className="su-bg-illuminating su-py-10 su-text-3xl su-font-bold">
+          <div className="su-centered-container su-flex su-gap-10"><ExclamationCircleIcon width={20}/>Unpublished</div>
+        </div>
+      }
       <Conditional showWhen={node.type === 'node--sul_library'}>
         <LibraryHeader node={node as Library}/>
       </Conditional>

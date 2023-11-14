@@ -8,6 +8,7 @@ import TwitterIcon from "@/components/patterns/icons/TwitterIcon";
 import InstagramIcon from "@/components/patterns/icons/InstagramIcon";
 import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon";
 import {ReactNode} from "react";
+import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 
 const LibraryFooter = () => {
   return (
@@ -36,7 +37,16 @@ const LibraryFooter = () => {
                       href="/all-locations-and-hours">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
             </li>
             <li><Link className="su-text-m0 su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
-                      href="/contact-us">Contact us<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link></li>
+                      href="/contact-us">Contact us<ArrowRightIcon className="su-inline-block su-ml-10"
+                                                                   width={15}/></Link></li>
+            {isDraftMode() &&
+              <li>
+                <Link className="su-text-m0 su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
+                      href="/api/draft/disable" prefetch={false}>
+                  Disable Draft Mode
+                </Link>
+              </li>
+            }
           </ul>
         </div>
         <div>
