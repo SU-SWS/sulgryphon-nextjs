@@ -143,16 +143,27 @@ const fixClasses = (classes) => {
 }
 
 const cleanMediaMarkup = (node: Element) => {
+
+  const findIframeInMedia = (item: Element) => {
+    const iframe = item.children.find(child => child instanceof Element && child.name === 'iframe')
+    if (iframe) return iframe;
+    for (let i = 0; i <= item.children.length; i++) {
+      const childIframe = findIframeInMedia(item.children[i])
+      if (childIframe) return childIframe;
+    }
+  }
+
   const wrapperDiv = node.children.find(child => child instanceof Element && child.name === 'div')
   const picture = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'picture')
   let image = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'img')
 
   // Special handling of video media type.
   if (node.attribs.class.indexOf('media--type-video') >= 0) {
-    const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
-    // @ts-ignore
-    let {src: iframeSrc} = iframe instanceof Element && iframe.attribs;
+    // const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
+    const iframe = findIframeInMedia(node);
 
+    // @ts-ignore
+    let {"data-src": iframeSrc} = iframe && iframe.attribs;
     iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');
     return (
       <div className="su-clear-both su-overflow-hidden su-aspect-[16/9] su-relative">
