@@ -3,6 +3,7 @@ import "../styles/globals.css"
 import Editori11y from "@/components/editori11y";
 import {ReactNode} from "react";
 import {Icon} from "next/dist/lib/metadata/types/metadata-types";
+import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 
 const appleIcons: Icon[] = [60, 72, 76, 114, 120, 144, 152, 180].map(size => ({
   url: `https://www-media.stanford.edu/assets/favicon/apple-touch-icon-${size}x${size}.png`,
@@ -32,10 +33,10 @@ export const metadata = {
 }
 
 const RootLayout = ({children, modal}: { children: ReactNode, modal: ReactNode }) => {
-
+  const draftMode = isDraftMode();
   return (
     <html lang="en">
-    <Editori11y/>
+    {draftMode && <Editori11y/>}
     <body>
     <nav aria-label="Skip link">
       <a className="su-skiplink" href="#main-content">Skip to main content</a>

@@ -1,4 +1,3 @@
-import {GetStaticPropsContext} from "next";
 import {AccessToken, DrupalTranslatedPath} from "next-drupal";
 import {buildHeaders, buildUrl, getPathFromContext} from "./utils";
 
@@ -6,8 +5,13 @@ export async function translatePath(
   path: string,
   options?: {
     accessToken?: AccessToken
+    draftMode?: boolean
   }
 ): Promise<DrupalTranslatedPath | null> {
+  options = {
+    draftMode: false,
+    ...options
+  }
   const url = buildUrl("/router/translate-path", {
     path,
   })
@@ -26,21 +30,21 @@ export async function translatePath(
 }
 
 export async function translatePathFromContext(
-  context: GetStaticPropsContext,
+  context: {  },
   options?: {
     accessToken?: AccessToken
     prefix?: string
+    draftMode?: boolean
   }
 ): Promise<DrupalTranslatedPath | null> {
   options = {
     prefix: "",
+    draftMode: false,
     ...options,
   }
   const path = getPathFromContext(context, options.prefix)
 
-  const response = await translatePath(path, {
-    accessToken: options.accessToken,
-  })
+  const response = await translatePath(path, options)
 
   return response
 }

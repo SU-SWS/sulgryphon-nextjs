@@ -14,8 +14,10 @@ import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+import {isDraftMode} from "@/lib/drupal/is-draft-mode";
+import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
-export const revalidate = 1800;
+export const revalidate = 86400;
 
 class RedirectError extends Error {
   constructor(public message: string) {
@@ -24,7 +26,8 @@ class RedirectError extends Error {
 }
 
 const fetchNodeData = async (context) => {
-  const path = await translatePathFromContext(context);
+  const draftMode = isDraftMode();
+  const path = await translatePathFromContext(context, {draftMode});
 
   // Check for redirect.
   if (path?.redirect?.[0].to) {
@@ -44,9 +47,9 @@ const fetchNodeData = async (context) => {
     throw new RedirectError(path.entity.path);
   }
 
-  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context)
-  const fullWidth: boolean = (node.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
-    (node.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
+  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context,{draftMode})
+  const fullWidth: boolean = (node?.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
+    (node?.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
   return {node, fullWidth}
 }
@@ -54,6 +57,8 @@ const fetchNodeData = async (context) => {
 export const generateMetadata = async (context): Promise<Metadata> => {
   try {
     const {node} = await fetchNodeData(context);
+    if (!node) return {};
+
     return getNodeMetadata(node);
   } catch (e) {
     // Probably a 404 or redirect page.
@@ -81,6 +86,9 @@ const NodePage = async (context) => {
 
   return (
     <main id="main-content" className="su-mb-50">
+      {!node.status &&
+        <UnpublishedBanner/>
+      }
       <Conditional showWhen={node.type === 'node--sul_library'}>
         <LibraryHeader node={node as Library}/>
       </Conditional>

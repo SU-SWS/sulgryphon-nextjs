@@ -1,9 +1,9 @@
 import {getResource} from "@/lib/drupal/get-resource";
 import {JsonApiResource} from "next-drupal";
 
-async function fetchComponents<T>(components: JsonApiResource[]) {
+async function fetchComponents<T>(components: JsonApiResource[], options = {}) {
   const requests: PromiseLike<any>[] = [];
-  components.map(component => requests.push(getResource(component.type, component.id)));
+  components.map(component => requests.push(getResource(component.type, component.id, options)));
   // @ts-ignore
   return Promise.all(requests.map((p, i) => p.catch((e) => {
     if (process.env.DEBUG) {
