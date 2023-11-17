@@ -92,14 +92,28 @@ export async function getResourceByPath<T extends JsonApiResource>(
 
   const url = buildUrl("/subrequests", {_format: "json"})
 
-  const response = await fetch(url.toString(), {
+  let response= await fetch(url.toString(), {
     method: "POST",
     headers: await buildHeaders(options),
     redirect: "follow",
     body: JSON.stringify(payload),
   })
+
   if (!response.ok) {
-    throw new Error(response.statusText)
+
+    if (options.draftMode) {
+      console.error('Unable to fetch resource while in draft mode. Try without draft mode.')
+      delete options.draftMode;
+      response = await fetch(url.toString(), {
+        method: "POST",
+        headers: await buildHeaders(options),
+        redirect: "follow",
+        body: JSON.stringify(payload),
+      })
+      if (!response.ok) throw new Error(response.statusText)
+    } else {
+      throw new Error(response.statusText)
+    }
   }
   const json = await response.json()
 

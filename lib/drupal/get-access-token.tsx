@@ -28,6 +28,7 @@ export async function getAccessToken(draftMode: boolean = false): Promise<Access
     `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
     {
       method: "POST",
+      cache: 'no-store',
       headers: {
         Authorization: `Basic ${basic}`,
         "Content-Type": "application/x-www-form-urlencoded",
@@ -37,7 +38,7 @@ export async function getAccessToken(draftMode: boolean = false): Promise<Access
   )
 
   if (!response.ok) {
-    console.log('unable to fetch oauth token: '+await response.text());
+    console.log('unable to fetch oauth token: ' + await response.text());
     cache.set(CACHE_KEY, null, 30)
     return null;
   }
