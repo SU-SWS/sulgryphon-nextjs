@@ -10,8 +10,15 @@ import {DrupalParagraph} from "next-drupal";
 export const revalidate = 1800;
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const node: BasicPage = await getResourceByPath('/');
-  return getNodeMetadata(node);
+  try {
+    const node: BasicPage = await getResourceByPath('/');
+    return getNodeMetadata(node);
+  }
+  catch (e) {
+    console.error(e);
+    return {};
+  }
+
 }
 
 const Page = async () => {
