@@ -15,6 +15,10 @@ const fetchLibGuides = async ({accountId, subjectId}: { accountId?: number, subj
 
   try {
     const token = await getAccessToken();
+    if (!token) {
+      return [];
+    }
+
     const guidesConfig = {
       headers: {'Authorization': 'Bearer ' + token},
     }
@@ -30,8 +34,8 @@ const fetchLibGuides = async ({accountId, subjectId}: { accountId?: number, subj
     }
 
     const response = await fetch(`https://lgapi-us.libapps.com/1.2/guides?${params.toString()}`, guidesConfig);
-    if(!response.ok){
-      console.error('Libguide error: '+await response.text());
+    if (!response.ok) {
+      console.error('Libguide error: ' + await response.text());
       return [];
     }
     const guideData = await response.json()
@@ -73,7 +77,7 @@ const getAccessToken = async () => {
 
   const response = await fetch(`https://lgapi-us.libapps.com/1.2/oauth/token`, {
     method: 'POST',
-    cache: 'no-store',
+    next: {revalidate: 1},
     headers: {
       Authorization: `Basic ${basic}`,
       "Content-Type": "application/x-www-form-urlencoded",
@@ -81,7 +85,7 @@ const getAccessToken = async () => {
     body: `grant_type=client_credentials`,
   });
   if (!response.ok) {
-
+    return null;
   }
   const token: AccessToken = await response.json();
 

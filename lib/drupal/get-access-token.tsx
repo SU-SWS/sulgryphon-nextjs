@@ -28,7 +28,7 @@ export async function getAccessToken(draftMode: boolean = false): Promise<Access
     `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
     {
       method: "POST",
-      cache: 'no-store',
+      next: {revalidate: 1},
       headers: {
         Authorization: `Basic ${basic}`,
         "Content-Type": "application/x-www-form-urlencoded",
