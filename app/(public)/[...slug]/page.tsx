@@ -17,7 +17,9 @@ import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
-export const revalidate = 86400;
+// Opt out of caching for all data requests in the route segment
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 class RedirectError extends Error {
   constructor(public message: string) {
