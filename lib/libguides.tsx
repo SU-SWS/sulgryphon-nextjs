@@ -29,8 +29,12 @@ const fetchLibGuides = async ({accountId, subjectId}: { accountId?: number, subj
       params.set('account_ids', accountId.toString());
     }
 
-    const guideData = await fetch(`https://lgapi-us.libapps.com/1.2/guides?${params.toString()}`, guidesConfig)
-      .then(response => response.json())
+    const response = await fetch(`https://lgapi-us.libapps.com/1.2/guides?${params.toString()}`, guidesConfig);
+    if(!response.ok){
+      console.error('Libguide error: '+await response.text());
+      return [];
+    }
+    const guideData = await response.json()
 
     const guides: Guide[] = [];
     guideData.filter(guide => guide.status === 1)
