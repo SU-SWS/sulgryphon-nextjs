@@ -14,8 +14,7 @@ const LibraryFooter = () => {
   return (
     <div className="su-bg-black-true su-text-white su-pb-30">
       <div className="su-bg-footer-sprinkles su-bg-repeat">
-        <svg viewBox="0 0 1500 100" aria-hidden={true}
-             className="su-bg-gradient-to-t su-from-black-true su-to-transparent">
+        <svg viewBox="0 0 1500 100" aria-hidden={true} className="su-bg-gradient-to-t su-from-black-true su-to-transparent">
           <path d="M1500,0 L1500,100 1200,100 1200,0" className="su-fill-black-true"></path>
           <path d="M0,0 Q500,10 700,45 Q1200,130 1500,0" stroke="#fff" className="su-fill-white"></path>
         </svg>
@@ -37,8 +36,7 @@ const LibraryFooter = () => {
                       href="/all-locations-and-hours">All locations and hours<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link>
             </li>
             <li><Link className="su-text-m0 su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
-                      href="/contact-us">Contact us<ArrowRightIcon className="su-inline-block su-ml-10"
-                                                                   width={15}/></Link></li>
+                      href="/contact-us">Contact us<ArrowRightIcon className="su-inline-block su-ml-10" width={15}/></Link></li>
             {isDraftMode() &&
               <li>
                 <Link className="su-text-m0 su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
@@ -63,7 +61,7 @@ const LibraryFooter = () => {
           <h2 className="su-text-m1 su-mb-20">Administration</h2>
           <ul className="su-list-unstyled">
             <li><FooterLink href="/general-policies">General Policies</FooterLink></li>
-            <li><FooterLink href="copyright-notice">Copyright notice</FooterLink></li>
+            <li><FooterLink href="/copyright-notice">Copyright notice</FooterLink></li>
             <li><FooterLink href="https://library-status.stanford.edu/">System status</FooterLink></li>
           </ul>
         </div>
