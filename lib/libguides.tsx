@@ -1,5 +1,6 @@
 import "server-only";
 import {cache} from "@/lib/drupal/get-cache";
+import axios from "axios";
 
 const CACHE_KEY = 'LIBGUIDE_TOKEN';
 
@@ -71,23 +72,11 @@ const getAccessToken = async () => {
     return cached.access_token
   }
 
-  const basic = Buffer.from(
-    `${process.env.LIBGUIDE_CLIENT_ID}:${process.env.LIBGUIDE_CLIENT_SECRET}`
-  ).toString("base64")
-
-  const response = await fetch(`https://lgapi-us.libapps.com/1.2/oauth/token`, {
-    method: 'POST',
-    next: {revalidate: 1},
-    headers: {
-      Authorization: `Basic ${basic}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: `grant_type=client_credentials`,
-  });
-  if (!response.ok) {
-    return null;
-  }
-  const token: AccessToken = await response.json();
+  const token: AccessToken = await axios.post(`https://lgapi-us.libapps.com/1.2/oauth/token`, {
+    client_id: process.env.LIBGUIDE_CLIENT_ID,
+    client_secret: process.env.LIBGUIDE_CLIENT_SECRET,
+    grant_type: 'client_credentials',
+  }).then(response => response.data)
 
   cache.set(CACHE_KEY, token, token.expires_in)
   return token.access_token
