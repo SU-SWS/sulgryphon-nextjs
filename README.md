@@ -5,7 +5,7 @@
 * Git
 * NVM
 * Yarn
-* A privelledged account on https://library.sites-pro.stanford.edu
+* A privileged account on https://library.sites-pro.stanford.edu
 
 ## Installation
 
