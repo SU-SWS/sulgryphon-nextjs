@@ -19,7 +19,7 @@ import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = 'force-static';
-// Cache dynamic page render indefinitely. 
+// Cache static page render indefinitely. Let on-demand revalidation do it's thing.
 export const revalidate = false;
 
 class RedirectError extends Error {
