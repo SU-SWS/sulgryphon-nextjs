@@ -17,6 +17,7 @@ const fetchLibGuides = async ({accountId, subjectId}: {
     }
 
     const guidesConfig = {
+      next: {revalidate: 1},
       headers: {'Authorization': 'Bearer ' + token},
     }
 

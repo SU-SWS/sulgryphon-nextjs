@@ -12,6 +12,28 @@ module.exports = {
         hostname: drupalUrl.hostname,
       },
     ],
+    deviceSizes: [
+      // 640,
+      750,
+      // 828,
+      // 1080,
+      1200,
+      // 1920,
+      // 2048,
+      3840
+    ],
+    imageSizes: [
+      // 16,
+      // 32,
+      // 48,
+      // 64,
+      // 96,
+      128,
+      // 256,
+      384
+    ],
+    loader: 'custom',
+    loaderFile: './components/patterns/elements/image-loader.tsx',
   },
   typescript: {
     ignoreBuildErrors: process.env.CI !== 'true',
@@ -55,22 +77,5 @@ module.exports = {
         permanent: true,
       }
     ]
-  },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/_next/image',
-          destination: '/_next/image?url=/no-image.png',
-          has: [{type: 'query', key: 'url', value: (`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}.*`)}],
-          missing: [{type: 'query', key: 'url', value: '(.*itok=([\\w|-]+))'}]
-        },
-        {
-          source: '/_next/image',
-          destination: '/_next/image?url=:url',
-          has: [{type: 'query', key: 'url', value: '(?<url>.*[jpg|png|jpeg|gif]\?itok=([\\w|-]+)).*'}]
-        },
-      ]
-    };
-  },
+  }
 }
