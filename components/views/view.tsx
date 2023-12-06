@@ -25,7 +25,7 @@ interface Props {
   hasHeading: boolean
 }
 
-const View = async ({viewId, displayId, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
+const View = async ({viewId, displayId, args, itemsToDisplay, emptyMessage, hasHeading}: Props = {}) => {
   const component = `${viewId}--${displayId}`;
   const viewProps = {
     view: component,

@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useId, useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {DrupalParagraph} from "next-drupal";
 import {deserialize} from "@/lib/drupal/deserialize";
 import dynamic from "next/dynamic";
@@ -12,8 +12,7 @@ const Paragraph = dynamic(() =>
 });
 
 const ParagraphPreview = ({}) => {
-  const heightEmitted = useRef(false);
-  const elementId = useId()
+  const previewRef = useRef<HTMLDivElement>(null);
   const [paragraph, setParagraph] = useState<DrupalParagraph | null>(null);
   const [iframeId, setIframeId] = useState<string | null>(null);
 
@@ -28,16 +27,15 @@ const ParagraphPreview = ({}) => {
 
   const emitComponentHeight = () => {
 
-    if ((document.getElementById(elementId)?.clientHeight ?? 0) < 100) {
+    if ((previewRef.current?.clientHeight || 0) < 100) {
       setTimeout(emitComponentHeight, 300);
       return;
     }
 
-    heightEmitted.current = true;
     if (iframeId && paragraph) {
       const message = JSON.stringify({
         id: iframeId,
-        height: document.getElementById(elementId)?.clientHeight
+        height: previewRef.current?.clientHeight
       })
       window.parent.postMessage(message, '*');
     }
@@ -54,17 +52,18 @@ const ParagraphPreview = ({}) => {
   }, [])
 
   useEffect(() => {
-    if (iframeId && paragraph) {
-      return;
-    }
+    if (iframeId && paragraph) return;
+
     window.parent.postMessage(JSON.stringify({message: 'refresh'}), '*');
   }, [iframeId, paragraph])
 
   useLayoutEffect(() => emitComponentHeight(), [emitComponentHeight, paragraph]);
 
   return (
-    <div id={elementId} className="su-p-30">
-      <Paragraph paragraph={paragraph ?? {}}/>
+    <div ref={previewRef} className="su-p-30">
+      {paragraph &&
+        <Paragraph paragraph={paragraph}/>
+      }
     </div>
   )
 }

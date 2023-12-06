@@ -21,9 +21,9 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props
 
   return (
     <article
-      className="su-flex su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t su-border-b-5 su-border-solid su-border-black-10  su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-0" {...props}>
+      className="su-flex su-flex-col @3xl:su-flex-row su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t su-border-b-5 su-border-solid su-border-black-10  su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-0" {...props}>
       {imageUrl &&
-        <div className="su-flex su-items-center su-mr-50">
+        <div className="su-flex su-items-center su-mx-auto su-mb-50 @3xl:su-ml-0 @3xl:su-mb-0 @3xl:su-mr-50">
           <div className="su-relative su-aspect-[1/1] su-w-[155px]">
             <Image
               src={imageUrl}
