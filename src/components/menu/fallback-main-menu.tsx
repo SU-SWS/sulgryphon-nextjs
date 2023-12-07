@@ -3,13 +3,13 @@ import SearchModal from "@/components/search/search-modal";
 
 const FallbackMainMenu = ({menuItems}) => {
   return (
-    <nav className="su-centered">
-      <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
+    <nav className="centered">
+      <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
         {menuItems.map(item =>
           <MenuItem key={item.id} {...item}/>
         )}
 
-        <li className="su-hidden lg:su-flex su-items-center su-ml-20">
+        <li className="hidden lg:flex items-center ml-20">
           <SearchModal/>
         </li>
       </ul>
@@ -21,12 +21,12 @@ const MenuItem = ({url, title}) => {
   const linkUrl = url.length >= 1 ? url : '#';
 
   return (
-    <li className="su-p-0 su-m-0 su-relative lg:su-flex lg:su-flex-wrap">
+    <li className="p-0 m-0 relative lg:flex lg:flex-wrap">
       <Link
         href={linkUrl}
-        className="su-flex su-items-center su-text-white lg:su-text-black-true hover:su-text-white focus:su-text-white lg:focus:su-text-black-true hover:su-bg-black focus:su-bg-black lg:focus:su-bg-transparent lg:hover:su-text-black-true lg:hover:su-bg-transparent su-no-underline hover:su-underline lg:focus:su-underline su-w-full su-p-20"
+        className="flex items-center text-white lg:text-black-true hover:text-white focus:text-white lg:focus:text-black-true hover:bg-black focus:bg-black lg:focus:bg-transparent lg:hover:text-black-true lg:hover:bg-transparent no-underline hover:underline lg:focus:underline w-full p-20"
       >
-        <div className="su-pl-30 lg:su-pl-0">
+        <div className="pl-30 lg:pl-0">
           {title}
         </div>
       </Link>

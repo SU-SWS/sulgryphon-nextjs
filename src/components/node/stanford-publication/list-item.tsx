@@ -5,7 +5,7 @@ const StanfordPublicationListItem = ({node, ...props}: {node:Publication}) => {
   return (
     <article {...props}>
       <Link href={node.path?.alias ?? "#"}>
-        <h2 className="su-text-cardinal-red">{node.title}</h2>
+        <h2 className="text-cardinal-red">{node.title}</h2>
       </Link>
       {node.su_publication_citation && <Citation citation={node.su_publication_citation}/>}
     </article>

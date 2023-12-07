@@ -28,29 +28,29 @@ const Card = ({headerId, video, image, superHeader, header, footer, body, link, 
   }
   return (
     <div
-      className="card su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md">
+      className="card block w-full basefont-23 leading-display bg-white text-black border border-solid border-black-10 shadow-md">
 
       <Conditional showWhen={image}>
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+        <div className="overflow-hidden aspect-[16/9] relative" aria-hidden="true">
           {image}
         </div>
       </Conditional>
 
       <Conditional showWhen={video}>
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
+        <div className="overflow-hidden aspect-[16/9] relative">
           {video}
         </div>
       </Conditional>
 
-      <div className="card-body su-items-start su-rs-px-2 su-rs-pt-2 su-rs-pb-4">
+      <div className="card-body items-start rs-px-2 rs-pt-2 rs-pb-4">
         <Conditional showWhen={superHeader}>
-            <span className="su-type-0 su-mb-0 su-leading-display su-font-bold">
+            <span className="type-0 mb-0 leading-display font-bold">
               {superHeader}
             </span>
         </Conditional>
 
         <Conditional showWhen={header}>
-          <Heading id={headerId} className="su-leading-tight su-font-bold su-type-2 su-mb-03em">
+          <Heading id={headerId} className="leading-tight font-bold type-2 mb-03em">
             {header}
           </Heading>
         </Conditional>
@@ -62,7 +62,7 @@ const Card = ({headerId, video, image, superHeader, header, footer, body, link, 
         </Conditional>
 
         <Conditional showWhen={footer}>
-          <div className="su-leading-display su-text-18 su-rs-pt-0 su-font-normal">
+          <div className="leading-display text-18 rs-pt-0 font-normal">
             {footer}
           </div>
         </Conditional>

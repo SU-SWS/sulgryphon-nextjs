@@ -29,50 +29,50 @@ const GlobalMessage = async () => {
 
   const options = {
     plain: {
-      bgColor: "su-bg-foggy-light",
-      textColor: "su-text-black-true",
-      linkClasses: "su-transition su-text-black-true hocus:su-text-black hocus:su-bg-sky",
+      bgColor: "bg-foggy-light",
+      textColor: "text-black-true",
+      linkClasses: "transition text-black-true hocus:text-black hocus:bg-sky",
       icon: <BellIcon width={30}/>
     },
     success: {
-      bgColor: "su-bg-digital-green",
-      textColor: "su-text-white",
-      linkClasses: "su-transition su-text-white hocus:su-text-black hocus:su-bg-white",
+      bgColor: "bg-digital-green",
+      textColor: "text-white",
+      linkClasses: "transition text-white hocus:text-black hocus:bg-white",
       icon: <CheckCircleIcon width={30}/>
     },
     info: {
-      bgColor: "su-bg-digital-blue-dark",
-      textColor: "su-text-white",
-      linkClasses: "su-transition su-text-white hocus:su-text-black hocus:su-bg-white",
+      bgColor: "bg-digital-blue-dark",
+      textColor: "text-white",
+      linkClasses: "transition text-white hocus:text-black hocus:bg-white",
       icon: <InformationCircleIcon width={30}/>
     },
     warning: {
-      bgColor: "su-bg-illuminating-dark",
-      textColor: "su-text-black-true",
-      linkClasses: "su-transition su-text-black-true hocus:su-text-black hocus:su-bg-sky",
+      bgColor: "bg-illuminating-dark",
+      textColor: "text-black-true",
+      linkClasses: "transition text-black-true hocus:text-black hocus:bg-sky",
       icon: <ExclamationCircleIcon width={30}/>
     },
     error: {
-      bgColor: "su-bg-digital-red",
-      textColor: "su-text-white",
-      linkClasses: "su-transition su-text-white hocus:su-text-black hocus:su-bg-white",
+      bgColor: "bg-digital-red",
+      textColor: "text-white",
+      linkClasses: "transition text-white hocus:text-black hocus:bg-white",
       icon: <ExclamationTriangleIcon width={30}/>
     },
   }
   const chosenOption = options[configPage.su_global_msg_type];
 
   return (
-    <div className={"su-relative su-z-30 lg:su-z-0 " + chosenOption.bgColor + " " + chosenOption.textColor}>
+    <div className={"relative z-30 lg:z-0 " + chosenOption.bgColor + " " + chosenOption.textColor}>
 
-      <div className="su-centered su-flex su-gap-2xl su-py-20">
-        <div className="su-flex-shrink-0 su-flex su-items-center su-justify-center">
+      <div className="centered flex gap-2xl py-20">
+        <div className="flex-shrink-0 flex items-center justify-center">
           {chosenOption.icon}
           {configPage.su_global_msg_label}
         </div>
 
         <div>
           <Conditional showWhen={configPage.su_global_msg_header}>
-            <h2 className="su-text-m3">{configPage.su_global_msg_header}</h2>
+            <h2 className="text-m3">{configPage.su_global_msg_header}</h2>
           </Conditional>
 
           {configPage.su_global_msg_message &&

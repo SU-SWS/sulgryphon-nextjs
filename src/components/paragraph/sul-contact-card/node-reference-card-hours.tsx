@@ -12,19 +12,19 @@ const NodeReferenceCardHours = ({branchId, branchName}) => {
   const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
 
   return (
-    <div className="su-relative su-flex su-flex-row su-items-start su-rs-mb-0 su-type-1">
+    <div className="relative flex flex-row items-start rs-mb-0 type-1">
       <ClockIcon
         width={19}
-        className="su-mr-12 su-mt-01em su-flex-shrink-0"
+        className="mr-12 mt-01em flex-shrink-0"
       />
-      <div className="su-text-white">
-        {isOpen && <>Open<span className="su-mx-5">&nbsp;/&nbsp;</span></>}
+      <div className="text-white">
+        {isOpen && <>Open<span className="mx-5">&nbsp;/&nbsp;</span></>}
 
         {hoursDisplay}
-        <span className="su-mx-5">&nbsp;/&nbsp;</span>
-        <a className="su-text-white su-font-normal hocus:su-text-illuminating-dark hocus:su-no-underline"
+        <span className="mx-5">&nbsp;/&nbsp;</span>
+        <a className="text-white font-normal hocus:text-illuminating-dark hocus:no-underline"
            href={`https://library-hours.stanford.edu/libraries/${branchId}`}>
-          See all hours<span className="su-sr-only">&nbsp;for{branchName}</span>
+          See all hours<span className="sr-only">&nbsp;for{branchName}</span>
         </a>
       </div>
     </div>

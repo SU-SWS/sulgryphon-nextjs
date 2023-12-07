@@ -11,17 +11,17 @@ interface LockupProps extends ComponentProps<any> {
 const Lockup = ({whiteText, ...props}: LockupProps) => {
   return (
     <div {...props}>
-      <Link href="/" className="su-no-underline">
-        <div className="su-flex su-items-center su-basefont-19">
+      <Link href="/" className="no-underline">
+        <div className="flex items-center basefont-19">
           <Logo/>
 
-          <div className="su-flex su-flex-col lg:su-flex-row su-items-baseline su-ml-10">
-            <div className="lg:su-border-r-3 su-border-black su-pr-10 su-mr-10 su-mb-5">
-              <span className="su-sr-only">Stanford</span>
-              <StanfordWordMark className={whiteText ? " su-text-white" : "su-text-cardinal-red-dark"} height={35} aria-hidden/>
+          <div className="flex flex-col lg:flex-row items-baseline ml-10">
+            <div className="lg:border-r-3 border-black pr-10 mr-10 mb-5">
+              <span className="sr-only">Stanford</span>
+              <StanfordWordMark className={whiteText ? " text-white" : "text-cardinal-red-dark"} height={35} aria-hidden/>
             </div>
 
-            <div className={"su-text-m2 su-semibold lg:su-font-regular su-text-black su-uppercase" + (whiteText ? " su-text-white" : "")}>
+            <div className={"text-m2 semibold lg:font-regular text-black uppercase" + (whiteText ? " text-white" : "")}>
               {process.env.NEXT_PUBLIC_SITE_NAME}
             </div>
           </div>

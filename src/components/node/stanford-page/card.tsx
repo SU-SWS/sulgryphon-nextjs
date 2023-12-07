@@ -15,9 +15,9 @@ const StanfordPageCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) =
   return (
     <article {...props}>
       {imageUrl &&
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-30" aria-hidden="true">
+        <div className="overflow-hidden aspect-[16/9] relative mb-30" aria-hidden="true">
           <Image
-            className="su-object-cover su-object-center"
+            className="object-cover object-center"
             src={imageUrl}
             alt=""
             fill={true}
@@ -28,9 +28,9 @@ const StanfordPageCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) =
       }
 
 
-      <HeadingElement className="su-text-m2 su-mb-20">
+      <HeadingElement className="text-m2 mb-20">
         <Link
-          className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red"
+          className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red"
           href={node.path?.alias ?? "#"}>
           {node.title}
         </Link>

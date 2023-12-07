@@ -49,9 +49,9 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
     <div {...props}>
 
       <Card
-        className="su-border-0 su-rounded"
+        className="border-0 rounded"
         image={imageUrl && <Image
-          className="su-object-cover su-object-center"
+          className="object-cover object-center"
           src={imageUrl}
           alt=""
           fill={true}
@@ -59,12 +59,12 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
           blurDataURL={placeholder}
         />}
         footer={
-          <div className="su-relative su-pb-100 md:su-rs-pb-6">
-            <div className="su-absolute su-w-full">
-              <h3 id={formId} className="su-text-black su-leading-tight su-font-bold su-type-2 su-mb-03em">
+          <div className="relative pb-100 md:rs-pb-6">
+            <div className="absolute w-full">
+              <h3 id={formId} className="text-black leading-tight font-bold type-2 mb-03em">
                 Today&apos;s Hours
               </h3>
-              <div className="su-mb-10">
+              <div className="mb-10">
                 <SelectList
                   ariaLabelledby={formId}
                   options={libraryOptions}
@@ -86,8 +86,8 @@ const TodayLibraryHours = ({branchId, ...props}: { branchId?: string }) => {
 
   if (!libraryHours) {
     return (
-      <div className="su-text-black su-flex">
-        <ClockIcon width={15} className="su-mr-5"/>
+      <div className="text-black flex">
+        <ClockIcon width={15} className="mr-5"/>
         <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
       </div>
     );
@@ -97,8 +97,8 @@ const TodayLibraryHours = ({branchId, ...props}: { branchId?: string }) => {
 
   return (
     <>
-      <div className="su-text-black su-flex su-justify-between su-mb-4" aria-live="polite">
-        <div className="su-flex"><ClockIcon width={15} className="su-mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
+      <div className="text-black flex justify-between mb-4" aria-live="polite">
+        <div className="flex"><ClockIcon width={15} className="mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
         <div>
           {hoursDisplay}
         </div>

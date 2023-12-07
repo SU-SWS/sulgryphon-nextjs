@@ -36,12 +36,12 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
   }
 
   return (
-    <div className={"su-relative" + (!isHorizontal ? " su-centered lg:su-max-w-[980px] su-w-full su-mx-auto": "")} {...props}>
+    <div className={"relative" + (!isHorizontal ? " centered lg:max-w-[980px] w-full mx-auto": "")} {...props}>
       {isHorizontal &&
         <HorizontalCard
-          video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+          video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
           image={imageUrl && <Image
-            className="su-object-cover su-object-center"
+            className="object-cover object-center"
             src={imageUrl}
             alt={imageAlt}
             fill={true}
@@ -61,9 +61,9 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
 
       {!isHorizontal &&
         <Card
-          video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+          video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
           image={imageUrl && <Image
-            className="su-object-cover su-object-center"
+            className="object-cover object-center"
             src={imageUrl}
             alt={imageAlt}
             fill={true}

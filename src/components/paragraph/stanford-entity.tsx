@@ -24,7 +24,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
   const items = await fetchComponents<DrupalNode[]>(entities ?? []);
   const entityItems = items.filter(item => item)
 
-  const wrapperClasses = styles?.background === 'black' ? 'su-text-white su-py-40' : '';
+  const wrapperClasses = styles?.background === 'black' ? 'text-white py-40' : '';
 
   if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
     link.options.attributes['aria-labelledby'] = headerId;
@@ -33,36 +33,36 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
 
   const gridClasses = [
     '',
-    '@7xl:su-grid-cols-1-1',
-    '@7xl:su-grid-cols-1-1 @15xl:su-grid-cols-1-1-1',
+    '@7xl:grid-cols-1-1',
+    '@7xl:grid-cols-1-1 @15xl:grid-cols-1-1-1',
   ]
   const gridClass = entityItems.length >= 3 ? gridClasses[2] : gridClasses[(entityItems.length % 3) - 1]
 
   return (
     // @ts-ignore
-    <div className="su-@container su-relative su-centered" {...props}>
+    <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {headline &&
-          <h2 id={headerId} className="su-text-left su-type-5 su-mb-40">
+          <h2 id={headerId} className="text-left type-5 mb-40">
             <AboveHeaderBorder/>
             {headline}
           </h2>
         }
         {description &&
-          <div className="su-mb-40">{formatHtml(description)}</div>
+          <div className="mb-40">{formatHtml(description)}</div>
         }
 
         {entities &&
-          <div className={`su-mb-40 su-grid su-gap-[90px] ${gridClass}`} aria-live="polite">
+          <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
             {entityItems.map((item, i) =>
-              <div key={item.id} className="su-mx-auto su-w-full">
+              <div key={item.id} className="mx-auto w-full">
                 <NodeCardDisplay node={item} h3Heading={!!headline}/>
               </div>
             )}
           </div>
         }
         {link?.url &&
-          <DrupalLinkButton href={link?.url} className="su-block su-mx-auto" {...link.options?.attributes}>
+          <DrupalLinkButton href={link?.url} className="block mx-auto" {...link.options?.attributes}>
             {link.title}
           </DrupalLinkButton>
         }

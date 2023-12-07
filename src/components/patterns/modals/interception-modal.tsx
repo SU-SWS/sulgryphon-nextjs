@@ -45,7 +45,7 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
   return (
       <dialog
         ref={overlay}
-        className="su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"
+        className="modal fixed w-screen h-full overscroll-contain overflow-y-scroll overflow-x-hidden top-0 left-0 items-center justify-center z-[10000] bg-black-true bg-opacity-[90%] flex"
         onClick={onClick}
         open
         {...props}
@@ -53,7 +53,7 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
         <ReactFocusLock returnFocus>
           <div
             ref={wrapper}
-            className="su-absolute su-top-1/2 su-left-1/2 su--translate-x-1/2 su--translate-y-1/2 su-w-11/12 sm:su-w-10/12 md:su-w-8/12 lg:su-w-1/2 p-6"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 sm:w-10/12 md:w-8/12 lg:w-1/2 p-6"
           >
             {children}
           </div>
@@ -61,10 +61,10 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
           <button
             type="button"
             onClick={onDismiss}
-            className="su-fixed su-right-50 su-top-50 su-text-white su-flex hocus:su-underline"
+            className="fixed right-50 top-50 text-white flex hocus:underline"
           >
-            Close<span className="su-sr-only"> Overlay</span>
-            <XMarkIcon className="su-ml-5" width={25}/>
+            Close<span className="sr-only"> Overlay</span>
+            <XMarkIcon className="ml-5" width={25}/>
           </button>
         </ReactFocusLock>
       </dialog>

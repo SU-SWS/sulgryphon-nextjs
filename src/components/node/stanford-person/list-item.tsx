@@ -10,26 +10,26 @@ const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
 
   return (
     <article
-      className="su-@container su-flex su-flex-col su-gap-lg su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black" {...props}>
+      className="@container flex flex-col gap-lg w-full basefont-23 leading-display bg-white text-black" {...props}>
       {imageUrl &&
         <div
-          className="su-relative su-rounded-full su-overflow-hidden su-aspect-[1/1] su-w-[130px] @lg:su-w-[215px] su-mx-auto">
+          className="relative rounded-full overflow-hidden aspect-[1/1] w-[130px] @lg:w-[215px] mx-auto">
           <Image
             src={imageUrl}
             alt={imageAlt}
             fill
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
-            className="su-object-cover"
+            className="object-cover"
           />
         </div>
       }
       <div>
         <Link href={node.path?.alias ?? "#"}
-              className="su-no-underline su-text-digital-red hocus:su-underline hocus:su-text-black">
-          <h2 className="su-type-1 su-font-semibold su-mb-[0.2em]">{node.title}</h2>
+              className="no-underline text-digital-red hocus:underline hocus:text-black">
+          <h2 className="type-1 font-semibold mb-[0.2em]">{node.title}</h2>
         </Link>
-        <div className="su-type-0 su-leading-snug">{node.su_person_short_title}</div>
+        <div className="type-0 leading-snug">{node.su_person_short_title}</div>
       </div>
       {node.sul_person__libcal_id &&
         <div>

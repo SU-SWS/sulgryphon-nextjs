@@ -68,41 +68,41 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   }
 
   return (
-    <article {...props} className="su-mt-50">
-      {inPast && <div className="su-text-black-70 su-uppercase">Past Event</div>}
+    <article {...props} className="mt-50">
+      {inPast && <div className="text-black-70 uppercase">Past Event</div>}
 
       {(node.su_event_type && node.su_event_type.length > 0) && node.su_event_type.map(term =>
-        <div key={term.id} className="su-text-digital-red su-text-16 md:su-text-18 2xl:su-text-19">
+        <div key={term.id} className="text-digital-red text-16 md:text-18 2xl:text-19">
           {term.name}
         </div>
       )}
 
-      {node.su_event_subheadline && <h2 className="su-type-3 su-rs-mb-1">{node.su_event_subheadline}</h2>}
-      {node.su_event_dek && <div className="su-rs-mb-4 su-text-16 md:su-text-21">{node.su_event_dek}</div>}
+      {node.su_event_subheadline && <h2 className="type-3 rs-mb-1">{node.su_event_subheadline}</h2>}
+      {node.su_event_dek && <div className="rs-mb-4 text-16 md:text-21">{node.su_event_dek}</div>}
 
       {node.su_event_sponsor &&
-          <div className="su-rs-pb-3">
+          <div className="rs-pb-3">
             {node.su_event_sponsor.map((sponsor, index) =>
-              <div key={`event-sponsor-${index}`} className="su-type-1">
+              <div key={`event-sponsor-${index}`} className="type-1">
                 {sponsor}
               </div>
             )}
           </div>
       }
 
-      <div className="su-w-[80%] su-mx-auto su-shadow-sm su-border su-border-[#c6c6c6] su-p-[40px] su-mb-[50px]">
-        <h2 className="su-type-1">Event Details:</h2>
-        <div className="md:su-grid su-grid-cols-2 su-grid-gap su-gap-lg">
+      <div className="w-[80%] mx-auto shadow-sm border border-[#c6c6c6] p-[40px] mb-[50px]">
+        <h2 className="type-1">Event Details:</h2>
+        <div className="md:grid grid-cols-2 grid-gap gap-lg">
           <div>
             <div>
-              <div className="su-flex su-flex-row su-items-start su-mt-20">
-                <CalendarIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                <time dateTime={node.su_event_date_time.value} className="su-text-16 md:su-text-18">
+              <div className="flex flex-row items-start mt-20">
+                <CalendarIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                <time dateTime={node.su_event_date_time.value} className="text-16 md:text-18">
                   {dateTimeString}
                 </time>
               </div>
               {inPast &&
-                  <div className="su-text-14 md:su-text-16 su-pt-4 su-text-black-70 su-ml-[31px]">
+                  <div className="text-14 md:text-16 pt-4 text-black-70 ml-[31px]">
                     This event has passed.
                   </div>}
             </div>
@@ -110,34 +110,34 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
             {(node.su_event_location || node.su_event_alt_loc) &&
                 <div>
                   {node.su_event_location &&
-                      <div className="su-flex su-flex-col">
-                        <div className="su-flex su-flex-row su-items-start su-mt-40 su-mb-4">
-                          <MapIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                          <h3 className="su-text-16 md:su-text-18">Location</h3>
+                      <div className="flex flex-col">
+                        <div className="flex flex-row items-start mt-40 mb-4">
+                          <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                          <h3 className="text-16 md:text-18">Location</h3>
                         </div>
-                        <div className="su-ml-36">
-                          <div className="su-text-16 md:su-text-18">{node.su_event_location.organization}</div>
-                          <div className="su-text-16 md:su-text-18">{node.su_event_location.address_line1}</div>
-                          <div className="su-text-16 md:su-text-18">{node.su_event_location.address_line2}</div>
+                        <div className="ml-36">
+                          <div className="text-16 md:text-18">{node.su_event_location.organization}</div>
+                          <div className="text-16 md:text-18">{node.su_event_location.address_line1}</div>
+                          <div className="text-16 md:text-18">{node.su_event_location.address_line2}</div>
                           <div
-                              className="su-text-16 md:su-text-18">{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
+                              className="text-16 md:text-18">{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
                         </div>
                       </div>
                   }
                   {node.su_event_alt_loc &&
                       <div>
-                        <div className="su-flex su-flex-row su-items-start su-mt-40 su-mb-4">
-                          <MapIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                          <h3 className="su-text-16 md:su-text-18">Location</h3>
+                        <div className="flex flex-row items-start mt-40 mb-4">
+                          <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                          <h3 className="text-16 md:text-18">Location</h3>
                         </div>
-                        <div className="su-ml-36 su-leading-snug">
+                        <div className="ml-36 leading-snug">
                           <>{node.su_event_alt_loc}</>
                         </div>
                       </div>
                   }
 
                   {node.su_event_map_link &&
-                      <Link href={node.su_event_map_link.url} className="su-block su-ml-36">
+                      <Link href={node.su_event_map_link.url} className="block ml-36">
                         {node.su_event_map_link.title}
                       </Link>
                   }
@@ -148,30 +148,30 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
           <div>
             {(node.su_event_telephone || node.su_event_email) &&
                 <div>
-                  <div className="su-flex su-flex-row su-items-start su-mt-40 md:su-mt-20 su-mb-4">
-                    <PhoneIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                    <h3 className="su-text-16 md:su-text-18">Contact</h3>
+                  <div className="flex flex-row items-start mt-40 md:mt-20 mb-4">
+                    <PhoneIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                    <h3 className="text-16 md:text-18">Contact</h3>
                   </div>
                   {node.su_event_telephone &&
                     <TelephoneLink
                       tel={node.su_event_telephone}
-                      className="su-block su-mb-4 su-ml-36"
+                      className="block mb-4 ml-36"
                     />
                   }
                   {node.su_event_email &&
-                    <EmailLink email={node.su_event_email} className="su-block su-ml-36 su-break-words"/>
+                    <EmailLink email={node.su_event_email} className="block ml-36 break-words"/>
                   }
                 </div>
             }
 
             {(node.su_event_audience && node.su_event_audience?.length > 0) &&
                 <div>
-                  <div className="su-flex su-flex-row su-items-start su-mt-40 su-mb-4">
-                    <UserGroupIcon className="su-inline-block su-flex-shrink-0 su-mr-06em su-w-[24px]"/>
-                    <h3 className="su-text-16 md:su-text-18">This event is open to:</h3>
+                  <div className="flex flex-row items-start mt-40 mb-4">
+                    <UserGroupIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                    <h3 className="text-16 md:text-18">This event is open to:</h3>
                   </div>
                   {node.su_event_audience.map(audience =>
-                    <div className="su-text-16 md:su-text-18 su-ml-36" key={audience.id}>{audience.name}</div>
+                    <div className="text-16 md:text-18 ml-36" key={audience.id}>{audience.name}</div>
                   )}
                 </div>
             }
@@ -179,8 +179,8 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
         </div>
 
         {node.su_event_cta &&
-            <div className="su-rs-pt-4 su-rs-pb-6">
-              <DrupalLinkButton href={node.su_event_cta.url} className="su-block su-mx-auto">
+            <div className="rs-pt-4 rs-pb-6">
+              <DrupalLinkButton href={node.su_event_cta.url} className="block mx-auto">
                 {node.su_event_cta.title}
               </DrupalLinkButton>
             </div>
@@ -193,13 +193,13 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
       }
 
       {node.body &&
-        <div className="su-centered lg:su-max-w-[980px] su-mb-40">
+        <div className="centered lg:max-w-[980px] mb-40">
           {formatHtml(node.body)}
         </div>
       }
 
       {node.su_event_components &&
-        <div className="su-mb-40">
+        <div className="mb-40">
           {node.su_event_components.map(component =>
             <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
           )}

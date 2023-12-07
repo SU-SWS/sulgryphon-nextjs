@@ -17,22 +17,22 @@ const SearchModal = () => {
 
   return (
     <>
-      <Link href="/all" className="su-aspect-1 su-group su-block su-rounded-full su-p-5 su-bg-digital-red hocus:su-bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog" prefetch={false}>
-        <MagnifyingGlassIcon width={30} className="su-mt-[-1px] su-text-white su-p-4 su-border-b su-border-transparent group-hocus:su-border-white"/>
-        <span className="su-sr-only">Search</span>
+      <Link href="/all" className="aspect-1 group block rounded-full p-5 bg-digital-red hocus:bg-digital-red-dark" onClick={toggleModal} aria-haspopup="dialog" prefetch={false}>
+        <MagnifyingGlassIcon width={30} className="mt-[-1px] text-white p-4 border-b border-transparent group-hocus:border-white"/>
+        <span className="sr-only">Search</span>
       </Link>
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} labelledBy={headerId}>
-        <div className="su-max-w-500 su-w-full su-mx-auto">
-          <h2 id={headerId} className="su-text-white su-text-center">What can we help you find?</h2>
+        <div className="max-w-500 w-full mx-auto">
+          <h2 id={headerId} className="text-white text-center">What can we help you find?</h2>
           <SearchForm action="/all"/>
 
-          <p className="su-text-white su-text-center su-p-20">
-            Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
-            , <Link href="https://searchworks.stanford.edu/articles" className="su-text-white hocus:su-text-white hocus:su-no-underline">articles+</Link>
-            , <Link href="https://guides.library.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">guides</Link>
-            , <Link href="https://exhibits.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">online exhibits</Link>
-            , and <Link href="https://earthworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">EarthWorks</Link>.
+          <p className="text-white text-center p-20">
+            Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">catalog</Link>
+            , <Link href="https://searchworks.stanford.edu/articles" className="text-white hocus:text-white hocus:no-underline">articles+</Link>
+            , <Link href="https://guides.library.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">guides</Link>
+            , <Link href="https://exhibits.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">online exhibits</Link>
+            , and <Link href="https://earthworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">EarthWorks</Link>.
           </p>
         </div>
       </Modal>

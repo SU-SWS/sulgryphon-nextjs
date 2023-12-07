@@ -17,9 +17,7 @@ import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
-// Opt out of caching for all data requests in the route segment
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 86400;
 
 class RedirectError extends Error {
   constructor(public message: string) {
@@ -87,7 +85,7 @@ const NodePage = async (context) => {
   const {node, fullWidth} = nodeData;
 
   return (
-    <main id="main-content" className="su-mb-50">
+    <main id="main-content" className="mb-50">
       {!node.status &&
         <UnpublishedBanner/>
       }
@@ -98,16 +96,16 @@ const NodePage = async (context) => {
       <Conditional showWhen={node.type === 'node--stanford_news'}>
         <InternalHeaderBanner>
           <div
-            className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
+            className="flex flex-col w-full max-w-[calc(100vw-10rem)] md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto mt-80 md:mt-100 mb-50 p-0">
             <h1
-              className="su-text-white su-order-2">
+              className="text-white order-2">
               {node.title}
             </h1>
 
             {(node.su_news_topics && node.su_news_topics.length > 0) &&
-              <div className="su-mb-20 su-order-1">
+              <div className="mb-20 order-1">
                 {node.su_news_topics.slice(0, 1).map((topic, index) =>
-                  <span key={topic.id} className="su-text-illuminating-dark su-font-semibold">{topic.name}</span>
+                  <span key={topic.id} className="text-illuminating-dark font-semibold">{topic.name}</span>
                 )}
               </div>
             }
@@ -118,7 +116,7 @@ const NodePage = async (context) => {
       <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
         <InternalHeaderBanner>
           <h1
-            className="su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+            className="w-full max-w-[calc(100vw-10rem)] md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto relative text-white mt-80 md:mt-100 mb-50 p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
@@ -132,13 +130,13 @@ const NodePage = async (context) => {
 
       <Conditional showWhen={!fullWidth}>
         <div
-          className="su-centered su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[8rem]">
+          className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
 
           <Suspense fallback={<></>}>
             <SecondaryMenu menuItems={tree}/>
           </Suspense>
 
-          <div className="su-flex-1">
+          <div className="flex-1">
             <NodePageDisplay node={node}/>
           </div>
         </div>

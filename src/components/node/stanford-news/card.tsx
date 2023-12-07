@@ -13,11 +13,11 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) =
   const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64 || node.su_news_banner?.field_media_image?.uri.base64;
   const HeadingElement = h3Heading ? 'h3' : 'h2';
   return (
-    <article {...props} className="su-flex su-flex-col">
+    <article {...props} className="flex flex-col">
       {imageUrl &&
-        <div className="su-overflow-hidden su-aspect-[4/3] su-relative su-mb-40" aria-hidden="true">
+        <div className="overflow-hidden aspect-[4/3] relative mb-40" aria-hidden="true">
           <Image
-            className="su-object-cover su-object-center"
+            className="object-cover object-center"
             src={imageUrl}
             alt=""
             fill={true}
@@ -27,15 +27,15 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) =
         </div>
       }
 
-      <HeadingElement className="su-text-m2 su-order-last">
+      <HeadingElement className="text-m2 order-last">
         <Link href={node.path?.alias ?? "#"}
-              className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
+              className="text-black-true hover:text-brick-dark underline hover:no-underline">
           {node.title}
         </Link>
       </HeadingElement>
 
       {node.su_news_topics?.[0]?.name &&
-        <div className="su-font-semibold su-mb-20">
+        <div className="font-semibold mb-20">
           {node.su_news_topics[0].name}
         </div>
       }

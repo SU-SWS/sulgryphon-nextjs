@@ -26,35 +26,35 @@ const HomePageBanner = async () => {
   ))
 
   return (
-    <header className="su-bg-black-true su-mb-100 su-relative">
-      <div className="su-pb-20 su-centered su-relative su-z-10 su-top-50 md:su-top-100 md:su-px-50 su-min-h-[350px] md:su-min-h-[300px]">
-        <div className="xl:su-mx-20 md:su-flex su-justify-between">
-          <div className="su-text-white su-mb-40 md:su-w-1/3 lg:su-w-1/2">
+    <header className="bg-black-true mb-100 relative">
+      <div className="pb-20 centered relative z-10 top-50 md:top-100 md:px-50 min-h-[350px] md:min-h-[300px]">
+        <div className="xl:mx-20 md:flex justify-between">
+          <div className="text-white mb-40 md:w-1/3 lg:w-1/2">
             <h2>What can we help you find?</h2>
-            <SearchForm action="/all" className="su-@container su-mb-20"/>
+            <SearchForm action="/all" className="@container mb-20"/>
             <p>
-              Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">catalog</Link>
-              , <Link href="https://searchworks.stanford.edu/articles" className="su-text-white hocus:su-text-white hocus:su-no-underline">articles+</Link>
-              , <Link href="https://guides.library.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">guides</Link>
-              , <Link href="https://exhibits.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">online exhibits</Link>
-              , and <Link href="https://earthworks.stanford.edu/" className="su-text-white hocus:su-text-white hocus:su-no-underline">EarthWorks</Link>.
+              Search gives results from this site, <Link href="https://searchworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">catalog</Link>
+              , <Link href="https://searchworks.stanford.edu/articles" className="text-white hocus:text-white hocus:no-underline">articles+</Link>
+              , <Link href="https://guides.library.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">guides</Link>
+              , <Link href="https://exhibits.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">online exhibits</Link>
+              , and <Link href="https://earthworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">EarthWorks</Link>.
             </p>
           </div>
 
-          <TodayHours libraries={trimmedLibraries} className="su-relative su-z-100 md:su-min-w-[300px] xl:su-min-w-[400px]"/>
+          <TodayHours libraries={trimmedLibraries} className="relative z-100 md:min-w-[300px] xl:min-w-[400px]"/>
         </div>
       </div>
 
       <div
-        className="su-bg-right-bottom lg:su-bg-home-banner-sprinkles su-absolute su-h-2/3 su-w-3/4 su-bottom-0 su-right-0">
-        <div className="su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
-          <div className="su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute su-w-full su-h-full">
+        className="bg-right-bottom lg:bg-home-banner-sprinkles absolute h-2/3 w-3/4 bottom-0 right-0">
+        <div className="bg-gradient-to-b from-black-true to-transparent absolute w-full h-full">
+          <div className="bg-gradient-to-r from-black-true to-transparent absolute w-full h-full">
             {/*Empty elements. They are absolute positioned to provide visual affects only.*/}
           </div>
         </div>
       </div>
 
-      <div className="su-relative">
+      <div className="relative">
         <Wave/>
       </div>
     </header>

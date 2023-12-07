@@ -31,17 +31,17 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   }
   return (
     <section
-      className="su-relative su-centered"
+      className="relative centered"
       ref={ref}
       {...props}
     >
       {(headline || link?.url) &&
         <>
           <AboveHeaderBorder/>
-          <header className="md:su-flex su-gap-2xl su-mb-80">
+          <header className="md:flex gap-2xl mb-80">
 
             <Conditional showWhen={headline}>
-              <h2 id={headerId} className="su-mb-0 su-type-5 su-flex-grow">{headline}</h2>
+              <h2 id={headerId} className="mb-0 type-5 flex-grow">{headline}</h2>
             </Conditional>
 
             <div>
@@ -56,8 +56,8 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         </>
       }
 
-      <div className="su-@container su-relative">
-        <ul className="su-list-unstyled su-grid su-gap-xl @7xl:su-grid-cols-3">
+      <div className="@container relative">
+        <ul className="list-unstyled grid gap-xl @7xl:grid-cols-3">
           {cards.map(card =>
             <li key={card.id}>
               <CollectionCard
@@ -75,11 +75,11 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
 
         {fullWidth &&
           <div
-            className="su-absolute su-z-[-10] su-w-screen su-h-[calc(100%-260px)] su-top-[130px] su-left-0 su-ml-[calc(-50vw+50%)] su-bg-black-10">
-            <div className="su-relative su-w-full su-h-full su-flex su-flex-col">
-              <Wave className="su-rotate-180 su-transform su--scale-x-100"/>
-              <div className="su-flex-grow"/>
-              <Wave className="su-transform su--scale-x-100"/>
+            className="absolute z-[-10] w-screen h-[calc(100%-260px)] top-[130px] left-0 ml-[calc(-50vw+50%)] bg-black-10">
+            <div className="relative w-full h-full flex flex-col">
+              <Wave className="rotate-180 transform -scale-x-100"/>
+              <div className="flex-grow"/>
+              <Wave className="transform -scale-x-100"/>
             </div>
           </div>
         }
@@ -87,11 +87,11 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         {!fullWidth &&
           <OnlyIfCentered elem={ref}>
             <div
-              className="su-absolute su-z-[-10] su-w-screen su-h-[calc(100%-260px)] su-top-[130px] su-left-0 su-ml-[calc(-50vw+50%)] su-bg-black-10">
-              <div className="su-relative su-w-full su-h-full su-flex su-flex-col">
-                <Wave className="su-rotate-180 su-transform su--scale-x-100"/>
-                <div className="su-flex-grow"/>
-                <Wave className="su-transform su--scale-x-100"/>
+              className="absolute z-[-10] w-screen h-[calc(100%-260px)] top-[130px] left-0 ml-[calc(-50vw+50%)] bg-black-10">
+              <div className="relative w-full h-full flex flex-col">
+                <Wave className="rotate-180 transform -scale-x-100"/>
+                <div className="flex-grow"/>
+                <Wave className="transform -scale-x-100"/>
               </div>
             </div>
           </OnlyIfCentered>
@@ -108,9 +108,9 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl}) => {
 
   return (
     <Card
-      video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+      video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
       image={imageUrl && <Image
-        className="su-object-cover su-object-center"
+        className="object-cover object-center"
         src={imageUrl}
         alt={imageAlt}
         fill={true}

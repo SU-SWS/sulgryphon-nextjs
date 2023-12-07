@@ -21,8 +21,8 @@ const StudyPlaceHoursComponent = ({hoursId}: { hoursId: string }) => {
   const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
 
   return (
-    <div className="su-flex su-text-black-true su-mb-20 su-type-1">
-      <ClockIcon width={19} className="su-mr-12 su-flex-shrink-0"/>
+    <div className="flex text-black-true mb-20 type-1">
+      <ClockIcon width={19} className="mr-12 flex-shrink-0"/>
       <div aria-live="polite">
         {hoursDisplay}
       </div>

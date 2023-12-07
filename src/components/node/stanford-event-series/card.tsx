@@ -9,14 +9,14 @@ const StanfordEventSeriesCard = ({node, h3Heading, ...props}: { node: EventSerie
       <Card
         header={
           <Link
-            className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red"
+            className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red"
             href={node.path?.alias ?? "#"}>
             {node.title}
           </Link>
         }
         footer={
           <Conditional showWhen={node.su_event_series_subheadline}>
-              <span className="su-text-black">
+              <span className="text-black">
                 {node.su_event_series_subheadline}
               </span>
           </Conditional>

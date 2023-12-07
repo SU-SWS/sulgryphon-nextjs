@@ -18,20 +18,20 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: PropsWithoutRef<Props
   const topics = node.su_news_topics?.filter(topic => topic.name?.length > 0) ?? [];
   return (
     <article {...props}>
-      <div className="su-text-18 su-mb-14">
+      <div className="text-18 mb-14">
         {node.su_news_publishing_date && <>{formatDate(node.su_news_publishing_date + ' 12:00:00')}</>}
       </div>
-      <div className={"su-grid su-gap-2xl " + (imageUrl ? "su-grid-cols-3-1" : "")}>
+      <div className={"grid gap-2xl " + (imageUrl ? "grid-cols-3-1" : "")}>
         <div>
-          <Link className="su-text-digital-red su-no-underline hover:su-underline" href={node.path?.alias ?? "#"}>
-            <HeadingElement className="su-type-2">{node.title}</HeadingElement>
+          <Link className="text-digital-red no-underline hover:underline" href={node.path?.alias ?? "#"}>
+            <HeadingElement className="type-2">{node.title}</HeadingElement>
           </Link>
-          {node.su_news_dek && <div className="su-rs-mb-1">{node.su_news_dek}</div>}
+          {node.su_news_dek && <div className="rs-mb-1">{node.su_news_dek}</div>}
         </div>
         {imageUrl &&
-          <div className="su-overflow-hidden su-aspect-[16/9] su-relative" aria-hidden="true">
+          <div className="overflow-hidden aspect-[16/9] relative" aria-hidden="true">
             <Image
-              className="su-object-cover su-object-center"
+              className="object-cover object-center"
               src={imageUrl}
               alt=""
               fill={true}
@@ -42,7 +42,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: PropsWithoutRef<Props
         }
       </div>
       {topics.map((cardTopic, index) =>
-        <span key={cardTopic.id} className="su-mt-10 su-text-digital-red su-font-semibold su-text-19">
+        <span key={cardTopic.id} className="mt-10 text-digital-red font-semibold text-19">
           {(index ? ', ' : '') + cardTopic.name}
         </span>
       )}

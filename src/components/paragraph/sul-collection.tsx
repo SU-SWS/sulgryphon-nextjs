@@ -20,20 +20,20 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
   const elementId = useId()
 
   return (
-    <section className="su-relative su-centered su-@container" aria-labelledby={`${elementId}-heading`} {...props}>
+    <section className="relative centered @container" aria-labelledby={`${elementId}-heading`} {...props}>
       <Conditional showWhen={heading}>
         <AboveHeaderBorder/>
-        <h2 id={`${elementId}-heading`} className="su-type-5">{heading}</h2>
+        <h2 id={`${elementId}-heading`} className="type-5">{heading}</h2>
       </Conditional>
 
 
       <Tabs
-        className="su-flex su-gap-lg"
+        className="flex gap-lg"
         aria-labelledby={`${elementId}-heading`}
         orientation="vertical"
-        tabListClass="@5xl:su-w-1/3"
-        tabClass="su-py-20 su-pl-10 su-mb-2 su-w-full su-text-left hocus:su-underline su-cursor-pointer aria-selected:su-bg-archway aria-selected:su-text-white"
-        tabPanelClass="@5xl:su-w-2/3"
+        tabListClass="@5xl:w-1/3"
+        tabClass="py-20 pl-10 mb-2 w-full text-left hocus:underline cursor-pointer aria-selected:bg-archway aria-selected:text-white"
+        tabPanelClass="@5xl:w-2/3"
       >
         {cards.map(card =>
           <Item
@@ -64,9 +64,9 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl, heade
   return (
     <Card
       headerId={headerId}
-      video={videoUrl && <Oembed url={videoUrl} className="su-h-full"/>}
+      video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
       image={imageUrl && <Image
-        className="su-object-cover su-object-center"
+        className="object-cover object-center"
         src={imageUrl}
         alt={imageAlt}
         fill={true}

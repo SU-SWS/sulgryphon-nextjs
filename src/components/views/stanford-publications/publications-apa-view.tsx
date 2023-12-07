@@ -24,7 +24,7 @@ const PublicationsApaView = async ({view, args, itemsToDisplay, emptyMessage}: P
     return null;
   }
   return (
-    <ul className="su-list-unstyled su-flex su-flex-wrap su-justify-between su-gap-2xl">
+    <ul className="list-unstyled flex flex-wrap justify-between gap-2xl">
       {items.map(item =>
         <li key={item.id} className="flex-1 min-w-[250px]">
           <StanfordPublicationListItem node={item} key={item.id}/>

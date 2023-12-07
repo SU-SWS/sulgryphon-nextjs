@@ -8,7 +8,7 @@ interface Props extends PropsWithoutRef<any> {
 
 const StanfordWysiwyg = ({text, fullWidth = true, ...props}: Props) => {
   return (
-    <div className="su-relative su-centered lg:su-max-w-[980px]" {...props}>
+    <div className="relative centered lg:max-w-[980px]" {...props}>
       {text && <>{formatHtml(text)}</>}
     </div>
   )

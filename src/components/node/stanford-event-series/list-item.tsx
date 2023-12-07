@@ -6,7 +6,7 @@ const StanfordEventSeriesListItem = ({node, ...props}: { node: EventSeries }) =>
   return (
     <article {...props}>
       <Link href={node.path?.alias ?? "#"}>
-        <h2 className="su-text-cardinal-red">{node.title}</h2>
+        <h2 className="text-cardinal-red">{node.title}</h2>
       </Link>
     </article>
   )

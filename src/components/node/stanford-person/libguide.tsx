@@ -23,9 +23,9 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
         onError={e => console.error(e.message)}
       >
         <Conditional showWhen={courseGuides.length > 0}>
-          <div className="su-mb-40">
-            {headingLevel === 2 && <h2 className="su-type-1">Course Guides</h2>}
-            {headingLevel === 3 && <h3 className="su-type-1">Course Guides</h3>}
+          <div className="mb-40">
+            {headingLevel === 2 && <h2 className="type-1">Course Guides</h2>}
+            {headingLevel === 3 && <h3 className="type-1">Course Guides</h3>}
             <LibGuideSection heading="Course Guides" guides={courseGuides}/>
           </div>
         </Conditional>
@@ -36,9 +36,9 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
         onError={e => console.error(e.message)}
       >
         <Conditional showWhen={topicGuides.length > 0}>
-          <div className="su-mb-40">
-            {headingLevel === 2 && <h2 className="su-type-1">Topic Guides</h2>}
-            {headingLevel === 3 && <h3 className="su-type-1">Topic Guides</h3>}
+          <div className="mb-40">
+            {headingLevel === 2 && <h2 className="type-1">Topic Guides</h2>}
+            {headingLevel === 3 && <h3 className="type-1">Topic Guides</h3>}
             <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
           </div>
         </Conditional>
@@ -65,7 +65,7 @@ const LibGuideSection = ({heading, guides}) => {
 
   return (
     <>
-      <ul ref={parent} id={containerId} className="su-list-unstyled su-relative">
+      <ul ref={parent} id={containerId} className="list-unstyled relative">
         {firstGuides.map(guide =>
           <li key={guide.id}><Link href={guide.url}>{guide.title}</Link></li>
         )}
@@ -83,13 +83,13 @@ const LibGuideSection = ({heading, guides}) => {
 
       <Conditional showWhen={moreGuides.length > 0}>
         <button
-          className="su-mt-20 su-button su-block"
+          className="mt-20 button block"
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}
           aria-controls={containerId}
         >
-          {showMore ? `Show ${moreGuides.length} More` : 'Show Less'} <span className="su-sr-only">{heading}</span>
+          {showMore ? `Show ${moreGuides.length} More` : 'Show Less'} <span className="sr-only">{heading}</span>
         </button>
       </Conditional>
     </>

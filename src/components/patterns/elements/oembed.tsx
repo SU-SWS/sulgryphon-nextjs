@@ -21,8 +21,8 @@ const Oembed = ({url, ...props}: Props) => {
 
 const Loading = () => {
   return (
-    <div className="su-h-full su-w-full su-flex su-items-baseline">
-      <ArrowPathIcon className="su-mx-auto su-animate-spin su-self-center" width={30} height={30}/>
+    <div className="h-full w-full flex items-baseline">
+      <ArrowPathIcon className="mx-auto animate-spin self-center" width={30} height={30}/>
     </div>
   )
 }

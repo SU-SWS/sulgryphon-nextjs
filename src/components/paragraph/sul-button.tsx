@@ -26,17 +26,17 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
   }
 
   return (
-    <div className={"su-relative" + ((!fullWidth || !isCentered) ? " su-w-full " : " su-full-screen ") } ref={ref} {...props}>
+    <div className={"relative" + ((!fullWidth || !isCentered) ? " w-full " : " full-screen ") } ref={ref} {...props}>
       <div
-        className={"su-py-50 " + (isGray ? "su-bg-black-10" : "su-bg-black-true")}>
-        <div className="su-centered">
+        className={"py-50 " + (isGray ? "bg-black-10" : "bg-black-true")}>
+        <div className="centered">
           <Conditional showWhen={headline}>
-            <h2 id={headerId} className={"su-text-center su-text-m3 " + (!isGray ? 'su-text-white' : '')}>
+            <h2 id={headerId} className={"text-center text-m3 " + (!isGray ? 'text-white' : '')}>
               {headline}
             </h2>
           </Conditional>
 
-          <Link href={link.url} className="su-button su-block su-mx-auto su-text-center su-w-fit" {...link.options?.attributes}>
+          <Link href={link.url} className="button block mx-auto text-center w-fit" {...link.options?.attributes}>
             {link.title}
           </Link>
         </div>

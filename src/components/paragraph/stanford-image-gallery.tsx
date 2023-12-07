@@ -18,14 +18,14 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
   const [modalOpen, setModalOpen] = useState('');
 
   return (
-    <div className="su-relative su-centered" {...props}>
-      {paragraph.su_gallery_headline && <h2 className="su-text-center su-type-5">{paragraph.su_gallery_headline}</h2>}
+    <div className="relative centered" {...props}>
+      {paragraph.su_gallery_headline && <h2 className="text-center type-5">{paragraph.su_gallery_headline}</h2>}
       {paragraph.su_gallery_description && <div>{formatHtml(paragraph.su_gallery_description)}</div>}
 
-      <div className="su-mb-40 su-grid lg:su-grid-cols-3 su-gap-xl">
+      <div className="mb-40 grid lg:grid-cols-3 gap-xl">
         {paragraph.su_gallery_images.map(image =>
-          <figure key={image.id} className="su-table su-h-fit">
-            <div className="su-aspect-[16/9] su-relative su-w-full">
+          <figure key={image.id} className="table h-fit">
+            <div className="aspect-[16/9] relative w-full">
               <Link href={image.su_gallery_image.image_style_uri.responsive_large} className=""
                     onClick={(e) => {
                       e.preventDefault();
@@ -37,13 +37,13 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
                   fill
                   placeholder={image.su_gallery_image.uri.base64 ? 'blur' : 'empty'}
                   blurDataURL={image.su_gallery_image.uri.base64}
-                  className="su-object-cover"
+                  className="object-cover"
                 />
               </Link>
             </div>
 
             {image.su_gallery_caption &&
-              <figcaption className="su-table-caption su-caption-bottom su-text-right su-italic su-leading su-text-19">
+              <figcaption className="table-caption caption-bottom text-right italic leading text-19">
                 {formatHtml(image.su_gallery_caption)}
               </figcaption>
             }
@@ -55,18 +55,18 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
               ariaLabel={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
               labelledBy={image.su_gallery_image.id}
             >
-              <figure className="su-relative su-h-full su-w-full su-table">
-                <div className="su-table-row su-relative su-h-full">
+              <figure className="relative h-full w-full table">
+                <div className="table-row relative h-full">
                   <Image
                     src={image.su_gallery_image.image_style_uri.breakpoint_2xl_2x}
                     alt={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
                     fill={true}
-                    className="su-object-contain"
+                    className="object-contain"
                   />
                 </div>
 
                 <Conditional showWhen={image.su_gallery_caption}>
-                  <figcaption id={image.su_gallery_image.id} className="su-text-right su-table-caption su-caption-bottom su-w-full su-bg-white su-leading su-text-19 su-p-10 su-mt-10">
+                  <figcaption id={image.su_gallery_image.id} className="text-right table-caption caption-bottom w-full bg-white leading text-19 p-10 mt-10">
                     {image.su_gallery_caption}
                   </figcaption>
                 </Conditional>
@@ -78,7 +78,7 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
       </div>
 
       {paragraph.su_gallery_button &&
-        <DrupalLinkButton href={paragraph.su_gallery_button.url} className="su-block su-mx-auto" {...paragraph.su_gallery_button.options?.attributes}>
+        <DrupalLinkButton href={paragraph.su_gallery_button.url} className="block mx-auto" {...paragraph.su_gallery_button.options?.attributes}>
           {paragraph.su_gallery_button.title}
         </DrupalLinkButton>
       }

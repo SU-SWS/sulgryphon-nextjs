@@ -30,55 +30,55 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
   const placeholder = node.su_news_banner?.field_media_image?.uri.base64;
 
   return (
-    <article {...props} className=" su-centered su-mt-50">
-      <div className="su-centered 2xl:su-w-2/3 su-mb-100">
+    <article {...props} className=" centered mt-50">
+      <div className="centered 2xl:w-2/3 mb-100">
 
         {node.su_news_dek && <div className="">{node.su_news_dek}</div>}
-        <div className="md:su-flex">
-          <div className="su-flex md:su-order-last">
+        <div className="md:flex">
+          <div className="flex md:order-last">
             <Conditional showWhen={!node.su_news_hide_social}>
-              <ul className="su-flex su-list-unstyled md:su-pl-[10px] su-mt-[-3px]">
-                <li className="su-mr-1em">
+              <ul className="flex list-unstyled md:pl-[10px] mt-[-3px]">
+                <li className="mr-1em">
 
                   <NewsSocialLink
-                    className="su-text-black hocus:su-text-digital-blue su-transition-colors"
+                    className="text-black hocus:text-digital-blue transition-colors"
                     prefix="http://www.facebook.com/sharer.php?u="
                     suffix="&display=popup"
                   >
-                    <span className="su-sr-only">Stanford Facebook</span>
+                    <span className="sr-only">Stanford Facebook</span>
                     <FacebookIcon/>
                   </NewsSocialLink>
                 </li>
-                <li className="su-mr-1em">
+                <li className="mr-1em">
                   <NewsSocialLink
-                    className="su-text-black hocus:su-text-digital-blue su-transition-colors"
+                    className="text-black hocus:text-digital-blue transition-colors"
                     prefix="https://twitter.com/intent/tweet?url="
                     suffix={`&text=${node.title}`}
                   >
-                    <span className="su-sr-only">Stanford Twitter</span>
+                    <span className="sr-only">Stanford Twitter</span>
                     <TwitterIcon/>
                   </NewsSocialLink>
                 </li>
-                <li className="su-mr-1em">
+                <li className="mr-1em">
                   <NewsSocialLink
-                    className="su-text-black hocus:su-text-digital-blue su-transition-colors"
+                    className="text-black hocus:text-digital-blue transition-colors"
                     prefix="https://www.linkedin.com/shareArticle?mini=true&url="
                     suffix={`&title=${node.title}`}
                   >
-                    <span className="su-sr-only">Stanford LinkedIn</span>
+                    <span className="sr-only">Stanford LinkedIn</span>
                     <LinkedInIcon/>
                   </NewsSocialLink>
                 </li>
-                <li className="su-mr-1em">
+                <li className="mr-1em">
                   <NewsSocialLink
-                    className="su-text-black hocus:su-text-digital-blue su-transition-colors"
+                    className="text-black hocus:text-digital-blue transition-colors"
                     prefix={`mailto:?subject=${node.title}&body=`}
                   >
-                    <span className="su-sr-only">Forward Email</span>
+                    <span className="sr-only">Forward Email</span>
                     <EnvelopeIcon width={28}/>
                   </NewsSocialLink>
                 </li>
-                <li className="su-mr-1em">
+                <li className="mr-1em">
                   <NewsPrintButton/>
                 </li>
               </ul>
@@ -90,12 +90,12 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
           </div>
         </div>
       </div>
-      <hr className="su-w-1/2 su-mx-auto su-mb-100 su-text-black-40"/>
+      <hr className="w-1/2 mx-auto mb-100 text-black-40"/>
 
       {imageUrl &&
-        <figure className="su-relative su-mb-100 lg:su-w-10/12 su-mx-auto su-aspect-[16/9]">
+        <figure className="relative mb-100 lg:w-10/12 mx-auto aspect-[16/9]">
           <Image
-            className="su-object-cover"
+            className="object-cover"
             src={imageUrl}
             alt={imageAlt}
             fill
@@ -104,7 +104,7 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
           />
 
           {node.su_news_banner_media_caption &&
-            <figcaption className="su-text-center su-caption">
+            <figcaption className="text-center caption">
               {node.su_news_banner_media_caption}
             </figcaption>
           }
@@ -113,12 +113,12 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
       }
 
       {node?.su_news_banner?.field_media_oembed_video &&
-        <figure className="su-relative su-mb-100 su-w-10/12 su-mx-auto su-aspect-[16/9]">
+        <figure className="relative mb-100 w-10/12 mx-auto aspect-[16/9]">
           <Oembed
             url={node.su_news_banner.field_media_oembed_video}
           />
           {node.su_news_banner_media_caption &&
-            <figcaption className="su-text-center su-caption">
+            <figcaption className="text-center caption">
               {node.su_news_banner_media_caption}
             </figcaption>
           }
@@ -126,7 +126,7 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
       }
 
 
-      <div className="su-centered 2xl:su-w-2/3">
+      <div className="centered 2xl:w-2/3">
         {node.su_news_components.map(component =>
           <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
         )}

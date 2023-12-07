@@ -35,21 +35,21 @@ const LibraryAdditionalHoursComponent = ({hoursId}) => {
 
   return (
     <div
-      className="su-@container su-relative su-z-[1] su-@container su-shadow-md su-border su-border-black-10 su-py-20 su-px-30 su-flex-1 su-flex su-items-center su-basis-1/2">
-      <div className="su-w-full">
-        <div className="su-flex su-flex-col @md:su-flex-row su-justify-between @md:su-items-end su-gap-2xl su-mb-40">
-          <h2 className="su-text-m3 su-m-0 su-p-0">Additional Hours</h2>
+      className="@container relative z-[1] @container shadow-md border border-black-10 py-20 px-30 flex-1 flex items-center basis-1/2">
+      <div className="w-full">
+        <div className="flex flex-col @md:flex-row justify-between @md:items-end gap-2xl mb-40">
+          <h2 className="text-m3 m-0 p-0">Additional Hours</h2>
           <Link href={`https://library-hours.stanford.edu/libraries/${hoursId}`}
-                className="su-no-underline hocus:su-underline">
+                className="no-underline hocus:underline">
             See detailed hours
-            <ChevronRightIcon width={20} className="su-inline"/>
+            <ChevronRightIcon width={20} className="inline"/>
           </Link>
         </div>
         {additionalLocations.map(location =>
-          <div key={location.id} className="su-grid @xl:su-grid-cols-1-1 su-mb-30 last:su-mb-0">
-            <div id={`${id}-${location.id}`} className="su-flex su-items-center">{location.name}</div>
+          <div key={location.id} className="grid @xl:grid-cols-1-1 mb-30 last:mb-0">
+            <div id={`${id}-${location.id}`} className="flex items-center">{location.name}</div>
 
-            <div className="su-flex su-gap-xs">
+            <div className="flex gap-xs">
               <ClockIcon width={20}/>
               <div>{getLibrarySelectOptions(location.hours).find(option => option.value === today).label}</div>
             </div>

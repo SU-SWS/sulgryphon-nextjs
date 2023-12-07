@@ -18,10 +18,10 @@ const Header = async () => {
   return (
     <>
       <div role="region" aria-label="Site Messages">
-        <div className="su-relative su-z-40 lg:su-z-10 su-identity-bar su-pt-5 su-pb-1 su-bg-cardinal-red">
+        <div className="relative z-40 lg:z-10 identity-bar pt-5 pb-1 bg-cardinal-red">
 
-          <div className="su-centered">
-            <a className=" su-logo su-text-white hocus:su-text-white su-text-20 su-leading-none"
+          <div className="centered">
+            <a className=" logo text-white hocus:text-white text-20 leading-none"
                href="https://www.stanford.edu">
               Stanford University
             </a>
@@ -31,13 +31,13 @@ const Header = async () => {
         <GlobalMessage/>
       </div>
 
-      <header className="su-relative su-top-0 su-shadow-lg su-bg-white su-z-20">
+      <header className="relative top-0 shadow-lg bg-white z-20">
         <div
-          className="su-pt-20 su-bg-white su-max-w-1500 su-w-full su-mx-auto su-px-30 md:su-px-40 3xl:su-px-0 lg:su-flex su-justify-between su-relative su-z-20 lg:su-z-10">
-          <Lockup className="su-pb-20"/>
+          className="pt-20 bg-white max-w-1500 w-full mx-auto px-30 md:px-40 3xl:px-0 lg:flex justify-between relative z-20 lg:z-10">
+          <Lockup className="pb-20"/>
 
-          <nav className="su-hidden lg:su-block" aria-label="User links">
-            <ul className="su-list-unstyled su-flex su-gap-[40px] xl:su-gap-[55px]">
+          <nav className="hidden lg:block" aria-label="User links">
+            <ul className="list-unstyled flex gap-[40px] xl:gap-[55px]">
               <HeaderLink href="/library-accessibility" text="Library Accessibility"/>
               <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account"/>
               <HeaderLink href="/contact-us" text="Contact Us"/>
@@ -53,7 +53,7 @@ const Header = async () => {
 }
 
 const HeaderLink = ({href, text}) => {
-  return <li><Link className="su-text-black su-text-18 su-font-normal" href={href}>{text}</Link></li>
+  return <li><Link className="text-black text-18 font-normal" href={href}>{text}</Link></li>
 }
 
 export default Header;

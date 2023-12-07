@@ -30,11 +30,11 @@ const EventsListView = async ({view, args, itemsToDisplay, emptyMessage, hasHead
   }
 
   return (
-    <ul className="su-list-unstyled su-gap-2xl">
+    <ul className="list-unstyled gap-2xl">
       {items.map(item =>
         <li
           key={item.id}
-          className="su-border-b su-border-black-20 su-last:border-0 su-pb-10 su-last:pb-0 su-pt-10 su-first:pt-0"
+          className="border-b border-black-20 last:border-0 pb-10 last:pb-0 pt-10 first:pt-0"
         >
           <StanfordEventListItem node={item} h3Heading={hasHeading}/>
         </li>

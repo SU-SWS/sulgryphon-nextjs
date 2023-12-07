@@ -11,15 +11,15 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
   const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width'
 
   return (
-    <article className="su-mb-50 su-@container" {...props}>
+    <article className="mb-50 @container" {...props}>
 
       {(node.sul_library__a11y || node.su_library__hours) &&
         <div
-          className="su-centered su-mb-50 su-flex su-flex-col @6xl:su-flex-row su-gap-[90px]">
+          className="centered mb-50 flex flex-col @6xl:flex-row gap-[90px]">
           {node.sul_library__a11y &&
-            <div className="su-order-last @6xl:su-order-first su-flex-1 su-basis-1/2">
-              <div className="su-shadow-md su-py-20 su-px-30 su-w-fit su-mx-auto su-border su-border-black-10">
-                <h2 className="su-text-m3">Accessibility</h2>
+            <div className="order-last @6xl:order-first flex-1 basis-1/2">
+              <div className="shadow-md py-20 px-30 w-fit mx-auto border border-black-10">
+                <h2 className="text-m3">Accessibility</h2>
                 {formatHtml(node.sul_library__a11y)}
               </div>
             </div>

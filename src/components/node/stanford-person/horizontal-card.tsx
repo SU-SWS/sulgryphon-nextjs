@@ -21,39 +21,39 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props
 
   return (
     <article
-      className="su-flex su-flex-col @3xl:su-flex-row su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border-x su-border-t su-border-b-5 su-border-solid su-border-black-10  su-border-b-digital-red su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3 su-mt-0" {...props}>
+      className="flex flex-col @3xl:flex-row w-full basefont-23 leading-display bg-white text-black border-x border-t border-b-5 border-solid border-black-10  border-b-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-0" {...props}>
       {imageUrl &&
-        <div className="su-flex su-items-center su-mx-auto su-mb-50 @3xl:su-ml-0 @3xl:su-mb-0 @3xl:su-mr-50">
-          <div className="su-relative su-aspect-[1/1] su-w-[155px]">
+        <div className="flex items-center mx-auto mb-50 @3xl:ml-0 @3xl:mb-0 @3xl:mr-50">
+          <div className="relative aspect-[1/1] w-[155px]">
             <Image
               src={imageUrl}
               alt={imageAlt}
               placeholder={placeholder ? 'blur' : 'empty'}
               blurDataURL={placeholder}
-              className="su-object-contain su-rounded-full"
+              className="object-contain rounded-full"
               fill
             />
           </div>
         </div>
       }
-      <div className="su-flex su-flex-col su-gap-[4.5rem]">
-        <div className="su-flex su-flex-col su-gap-[1rem]">
+      <div className="flex flex-col gap-[4.5rem]">
+        <div className="flex flex-col gap-[1rem]">
           <Link href={node.path?.alias ?? "#"}
-                className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red">
-            <HeadingElement className="su-type-2">{node.title}</HeadingElement>
+                className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red">
+            <HeadingElement className="type-2">{node.title}</HeadingElement>
           </Link>
 
           <Conditional showWhen={node.su_person_full_title}>
-            <div className="su-type-0">{node.su_person_full_title}</div>
+            <div className="type-0">{node.su_person_full_title}</div>
           </Conditional>
 
           <Conditional showWhen={node.su_person_email}>
             <div className="">
-              <EnvelopeIcon width={20} className="su-inline-block su-mr-6 su-text-digital-blue"/>
+              <EnvelopeIcon width={20} className="inline-block mr-6 text-digital-blue"/>
 
               <EmailLink
                 email={node.su_person_email}
-                className="su-transition-colors hover:su-text-brick-dark hover:su-bg-black-10 focus:su-bg-none focus:su-text-cardinal-red active:su-text-cardinal-red su-no-underline su-text-digital-blue su-break-words"
+                className="transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red no-underline text-digital-blue break-words"
               />
             </div>
           </Conditional>

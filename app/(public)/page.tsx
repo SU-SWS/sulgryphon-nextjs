@@ -19,7 +19,7 @@ const Page = async () => {
   node.su_page_components = await fetchComponents(node.su_page_components ?? []) as DrupalParagraph[];
 
   return (
-    <main id="main-content" className="su-mb-50">
+    <main id="main-content" className="mb-50">
       <HomePageBanner/>
       <ParagraphRows items={node.su_page_components} fullWidth/>
     </main>

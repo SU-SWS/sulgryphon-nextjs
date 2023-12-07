@@ -5,14 +5,14 @@
 @tailwind utilities;
 
 /* Styles for react-tiny-oembed containers */
-.su-aspect-\[16\/9\] .__embed_column {
+.aspect-\[16\/9\] .__embed_column {
   width: 100%;
   max-width: 100%;
   height: 100%;
   display: block;
 }
 
-.su-aspect-\[16\/9\] .__embed_column iframe {
+.aspect-\[16\/9\] .__embed_column iframe {
   width: 100%;
   height: 100%;
 }

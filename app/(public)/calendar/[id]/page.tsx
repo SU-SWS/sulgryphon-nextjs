@@ -12,7 +12,7 @@ const Calendar = ({params: {id}}) => {
     <main id="main-content">
       <InternalHeaderBanner>
         <h1
-          className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          className="w-full max-w-[calc(100vw-10rem)] md::max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto relative text-white mt-80 md:mt-100 mb-50 p-0">
           Make an Appointment
         </h1>
       </InternalHeaderBanner>
@@ -20,7 +20,7 @@ const Calendar = ({params: {id}}) => {
       <iframe
         src={`https://appointments.library.stanford.edu/widget/appointments?u=${id}&lid=0&gid=0&iid=5247&t=Make%20an%20appointment`}
         title="Schedule an appointment"
-        className="su-centered su-min-h-[400px] su-h-full su-px-50 3xl:su-px-0"
+        className="centered min-h-[400px] h-full px-50 3xl:px-0"
       />
     </main>
   )

@@ -1,10 +1,10 @@
 const TopRightSprinkles = () => {
   return (
-    <div className="su-max-h-full su-absolute su-w-[325px] su-max-w-full lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-top-0 su-right-0">
-      <div className="su-relative su-w-full su-h-full su-top-[-12px] lg:su-top-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover"/>
-      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
-        <div className="su-w-full su-h-full su-bg-gradient-to-t su-from-black-true su-to-transparent su-absolute"/>
-        <div className="su-w-full su-h-full su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute"/>
+    <div className="max-h-full absolute w-[325px] max-w-full lg:w-[650px] h-[175px] lg:h-[350px] top-0 right-0">
+      <div className="relative w-full h-full top-[-12px] lg:top-[-24px] bg-no-repeat bg-horizontal-card-sprinkles bg-right-top bg-cover"/>
+      <div className="absolute w-full h-full top-0 right-0">
+        <div className="w-full h-full bg-gradient-to-t from-black-true to-transparent absolute"/>
+        <div className="w-full h-full bg-gradient-to-r from-black-true to-transparent absolute"/>
       </div>
     </div>
   )
@@ -12,11 +12,11 @@ const TopRightSprinkles = () => {
 
 const TopLeftSprinkles = () => {
   return (
-    <div className="su-max-h-full su-absolute su-w-[325px] su-max-w-full lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-top-0 su-left-0">
-      <div className="su-relative su-w-full su-h-full su-top-[-12px] lg:su-top-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover su-scale-x-[-1]"/>
-      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
-        <div className="su-w-full su-h-full su-bg-gradient-to-t su-from-black-true su-to-transparent su-absolute"/>
-        <div className="su-w-full su-h-full su-bg-gradient-to-l su-from-black-true su-to-transparent su-absolute"/>
+    <div className="max-h-full absolute w-[325px] max-w-full lg:w-[650px] h-[175px] lg:h-[350px] top-0 left-0">
+      <div className="relative w-full h-full top-[-12px] lg:top-[-24px] bg-no-repeat bg-horizontal-card-sprinkles bg-right-top bg-cover scale-x-[-1]"/>
+      <div className="absolute w-full h-full top-0 right-0">
+        <div className="w-full h-full bg-gradient-to-t from-black-true to-transparent absolute"/>
+        <div className="w-full h-full bg-gradient-to-l from-black-true to-transparent absolute"/>
       </div>
     </div>
   )
@@ -24,11 +24,11 @@ const TopLeftSprinkles = () => {
 
 const BottomLeftSprinkles = () => {
   return (
-    <div className="su-max-h-full su-absolute su-w-[325px] su-max-w-full lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-bottom-0 su-left-0">
-      <div className="su-relative su-w-full su-h-full su-bottom-[-12px] lg:su-bottom-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover su-scale-x-[-1] su-scale-y-[-1]"/>
-      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
-        <div className="su-w-full su-h-full su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute"/>
-        <div className="su-w-full su-h-full su-bg-gradient-to-l su-from-black-true su-to-transparent su-absolute"/>
+    <div className="max-h-full absolute w-[325px] max-w-full lg:w-[650px] h-[175px] lg:h-[350px] bottom-0 left-0">
+      <div className="relative w-full h-full bottom-[-12px] lg:bottom-[-24px] bg-no-repeat bg-horizontal-card-sprinkles bg-right-top bg-cover scale-x-[-1] scale-y-[-1]"/>
+      <div className="absolute w-full h-full top-0 right-0">
+        <div className="w-full h-full bg-gradient-to-b from-black-true to-transparent absolute"/>
+        <div className="w-full h-full bg-gradient-to-l from-black-true to-transparent absolute"/>
       </div>
     </div>
   )
@@ -36,11 +36,11 @@ const BottomLeftSprinkles = () => {
 
 const BottomRightSprinkles = () => {
   return (
-    <div className="su-max-h-full su-absolute su-w-[325px] su-max-w-full lg:su-w-[650px] su-h-[175px] lg:su-h-[350px] su-bottom-0 su-right-0">
-      <div className="su-relative su-w-full su-h-full su-bottom-[-12px] lg:su-bottom-[-24px] su-bg-no-repeat su-bg-horizontal-card-sprinkles su-bg-right-top su-bg-cover su-scale-y-[-1]"/>
-      <div className="su-absolute su-w-full su-h-full su-top-0 su-right-0">
-        <div className="su-w-full su-h-full su-bg-gradient-to-b su-from-black-true su-to-transparent su-absolute"/>
-        <div className="su-w-full su-h-full su-bg-gradient-to-r su-from-black-true su-to-transparent su-absolute"/>
+    <div className="max-h-full absolute w-[325px] max-w-full lg:w-[650px] h-[175px] lg:h-[350px] bottom-0 right-0">
+      <div className="relative w-full h-full bottom-[-12px] lg:bottom-[-24px] bg-no-repeat bg-horizontal-card-sprinkles bg-right-top bg-cover scale-y-[-1]"/>
+      <div className="absolute w-full h-full top-0 right-0">
+        <div className="w-full h-full bg-gradient-to-b from-black-true to-transparent absolute"/>
+        <div className="w-full h-full bg-gradient-to-r from-black-true to-transparent absolute"/>
       </div>
     </div>
   )

@@ -105,14 +105,14 @@ const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) 
   const placeholder = node.sul_event__image?.field_media_image?.uri.base64;
 
   return (
-    <article {...props} className="su-@container su-mx-auto">
+    <article {...props} className="@container mx-auto">
       {imageUrl &&
         <div
-          className={"su-overflow-hidden su-aspect-[4/3] su-relative"}
+          className={"overflow-hidden aspect-[4/3] relative"}
           aria-hidden="true"
         >
           <Image
-            className="su-object-cover su-object-center"
+            className="object-cover object-center"
             src={imageUrl}
             alt=""
             fill={true}
@@ -122,17 +122,17 @@ const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) 
         </div>
       }
 
-      <div className="su-flex su-items-start su-gap-xl su-flex-col">
+      <div className="flex items-start gap-xl flex-col">
         <div
-          className="su-flex su-w-full su-flex-row su-items-center su-bg-black-true su-text-white su-text-center su-uppercase"
+          className="flex w-full flex-row items-center bg-black-true text-white text-center uppercase"
           aria-hidden
         >
-          <div className="su-flex su-flex-col su-items-center su-mx-auto">
+          <div className="flex flex-col items-center mx-auto">
             <div
-              className="su-pt-20 su-px-30 su-font-semibold">
+              className="pt-20 px-30 font-semibold">
               {startMonth}
             </div>
-            <div className="su-pb-20 su-px-30 su-text-m4">
+            <div className="pb-20 px-30 text-m4">
               {startDay}
             </div>
           </div>
@@ -140,13 +140,13 @@ const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) 
 
           {(startMonth !== endMonth || startDay !== endDay) &&
             <>
-              <div className="su-font-bold">&mdash;</div>
-              <div className="su-mx-auto">
+              <div className="font-bold">&mdash;</div>
+              <div className="mx-auto">
                 <div
-                  className="su-pt-20 su-px-30 su-font-semibold">
+                  className="pt-20 px-30 font-semibold">
                   {endMonth}
                 </div>
-                <div className="su-pb-20 su-px-30 su-text-m4">
+                <div className="pb-20 px-30 text-m4">
                   {endDay}
                 </div>
               </div>
@@ -154,32 +154,32 @@ const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) 
           }
         </div>
 
-        <div className="su-flex su-flex-col su-gap-[1.2rem]">
-          <HeadingElement className="su-text-m2 su-order-2">
+        <div className="flex flex-col gap-[1.2rem]">
+          <HeadingElement className="text-m2 order-2">
             <Link href={node.path?.alias ?? "#"}
-                  className="su-text-black-true hover:su-text-brick-dark su-underline hover:su-no-underline">
+                  className="text-black-true hover:text-brick-dark underline hover:no-underline">
               {node.title}
             </Link>
           </HeadingElement>
 
           {node.su_event_type?.[0]?.name &&
-            <div className="su-order-1 su-inline su-mr-5 su-font-semibold">{node.su_event_type?.[0].name}</div>
+            <div className="order-1 inline mr-5 font-semibold">{node.su_event_type?.[0].name}</div>
           }
 
 
-          <div className="su-flex su-order-3">
-            <CalendarDaysIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
+          <div className="flex order-3">
+            <CalendarDaysIcon width={20} className="mr-20 flex-shrink-0"/>
             {start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})}
           </div>
 
-          <div className="su-flex su-order-4">
-            <ClockIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
+          <div className="flex order-4">
+            <ClockIcon width={20} className="mr-20 flex-shrink-0"/>
             <div>{dateTimeString}</div>
           </div>
 
           {node.su_event_map_link?.url &&
-            <div className="su-flex su-order-5">
-              <MapPinIcon width={20} className="su-mr-20 su-flex-shrink-0"/>
+            <div className="flex order-5">
+              <MapPinIcon width={20} className="mr-20 flex-shrink-0"/>
               <Link href={node.su_event_map_link?.url}>
                 {node.su_event_map_link?.title}
               </Link>

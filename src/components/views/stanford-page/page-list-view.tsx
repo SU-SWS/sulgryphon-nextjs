@@ -29,11 +29,11 @@ const PageListView = async ({view, args, itemsToDisplay, emptyMessage, hasHeadin
   }
 
   return (
-    <ul className="su-list-unstyled su-gap-2xl">
+    <ul className="list-unstyled gap-2xl">
       {items.map(item =>
         <li
           key={item.id}
-          className="su-border-b su-border-black-20 last:su-border-0 su-pb-10 last:su-pb-0 su-pt-10 first:su-pt-0"
+          className="border-b border-black-20 last:border-0 pb-10 last:pb-0 pt-10 first:pt-0"
         >
           <StanfordPageListItem node={item} h3Heading={hasHeading}/>
         </li>

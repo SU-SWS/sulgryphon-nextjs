@@ -21,11 +21,11 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
   const placeholder = image?.uri.base64;
 
   return (
-    <figure className="su-relative su-centered" {...props}>
+    <figure className="relative centered" {...props}>
       {imageUrl &&
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative su-mb-10">
+        <div className="overflow-hidden aspect-[16/9] relative mb-10">
           <Image
-            className="su-object-cover su-object-center"
+            className="object-cover object-center"
             src={imageUrl}
             alt={imageAlt}
             fill={true}
@@ -36,19 +36,19 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true,
       }
 
       {videoUrl &&
-        <div className="su-overflow-hidden su-aspect-[16/9] su-relative">
-          <Oembed url={videoUrl} className="su-h-full"/>
+        <div className="overflow-hidden aspect-[16/9] relative">
+          <Oembed url={videoUrl} className="h-full"/>
         </div>
       }
 
       {link &&
-        <Link href={link.url} className="su-block su-text-right" {...link.options?.attributes}>
+        <Link href={link.url} className="block text-right" {...link.options?.attributes}>
           {link.title}
         </Link>
       }
 
       {caption &&
-        <figcaption className="su-text-right su-float-right su-text-19 su-leading">
+        <figcaption className="text-right float-right text-19 leading">
           {formatHtml(caption)}
         </figcaption>
       }

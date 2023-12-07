@@ -10,13 +10,13 @@ const StanfordPublicationCard = ({node, ...props}: { node: Publication }) => {
       <Card
         superHeader={
           <Conditional showWhen={node.su_publication_citation?.citation_type?.label}>
-            <div className="su-text-16 md:su-text-18 2xl:su-text-19 su-rs-mb-2">
+            <div className="text-16 md:text-18 2xl:text-19 rs-mb-2">
               {node.su_publication_citation?.citation_type?.label}
             </div>
           </Conditional>
         }
         header={
-          <Link className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red" href={node.path?.alias ?? "#"}>
+          <Link className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red" href={node.path?.alias ?? "#"}>
             {node.title}
           </Link>
         }

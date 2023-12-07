@@ -28,7 +28,7 @@ export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => 
   })
 
   return (
-    <div className="su-grid su-grid-column su-mb-[40px] su-gap-[90px]" {...props}>
+    <div className="grid grid-column mb-[40px] gap-[90px]" {...props}>
       {Object.keys(layouts).map(layoutId =>
         <Row
           key={layoutId}

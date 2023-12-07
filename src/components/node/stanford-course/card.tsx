@@ -12,9 +12,9 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
   const HeadingElement = h3Heading ? 'h3' : 'h2';
   return (
     <article
-      className="su-block su-w-full su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow-md su-rs-pt-2 su-rs-px-2 su-rs-pb-3" {...props}>
-      <div className="su-rs-pb-0">
-        <span className="su-font-bold su-leading-cozy">
+      className="block w-full basefont-23 leading-display bg-white text-black border border-solid border-black-10 shadow-md rs-pt-2 rs-px-2 rs-pb-3" {...props}>
+      <div className="rs-pb-0">
+        <span className="font-bold leading-cozy">
           <Conditional showWhen={node.su_course_subject?.name}>
             {node.su_course_subject?.name}{' '}
           </Conditional>
@@ -22,7 +22,7 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
             {node.su_course_code}
           </Conditional>
           <Conditional showWhen={node.su_course_academic_year}>
-            <span className="su-font-normal">
+            <span className="font-normal">
               {' | '}{node.su_course_academic_year}
             </span>
           </Conditional>
@@ -30,9 +30,9 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
       </div>
       <Link
         href={node.path?.alias ?? "#"}
-        className="su-underline hocus:su-no-underline active:su-no-underline su-text-black hocus:su-text-brick-dark active:su-text-digital-red"
+        className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red"
       >
-        <HeadingElement className="su-type-2">{node.title}</HeadingElement>
+        <HeadingElement className="type-2">{node.title}</HeadingElement>
       </Link>
     </article>
   )

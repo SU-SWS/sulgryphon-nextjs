@@ -26,11 +26,11 @@ const CourseListView = async ({view, args, itemsToDisplay, emptyMessage}: Props)
   }
 
   return (
-    <div className="su-mb-20">
+    <div className="mb-20">
       {items.map(item =>
         <div
           key={item.id}
-          className="su-border-b su-border-black-20 last:su-border-0 su-pb-10 su-last:pb-0 su-pt-10 first:su-pt-0"
+          className="border-b border-black-20 last:border-0 pb-10 last:pb-0 pt-10 first:pt-0"
         >
           <StanfordCourseListItem node={item}/>
         </div>

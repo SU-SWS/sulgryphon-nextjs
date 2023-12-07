@@ -37,38 +37,38 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
 
   return (
     <>
-      <div className="su-flex su-text-black-true su-mb-20 su-type-1">
-        <ClockIcon width={19} className="su-inline su-mr-10"/>
+      <div className="flex text-black-true mb-20 type-1">
+        <ClockIcon width={19} className="inline mr-10"/>
         {hoursDisplay}
       </div>
 
       <OutsideClickHandler
-        className="su-relative"
+        className="relative"
         onClickOutside={() => setExpandedHours(false)}
         onFocusOutside={() => setExpandedHours(false)}
       >
         <button
-          className="su-rounded su-group su-shadow-md su-border su-border-black-10 su-w-full su-px-15 su-py-5 su-mb-5"
+          className="rounded group shadow-md border border-black-10 w-full px-15 py-5 mb-5"
           aria-expanded={expandedHours}
           onClick={() => setExpandedHours(!expandedHours)}
           aria-controls={elementId}
         >
-          <div className="su-flex su-justify-between su-items-center su-text-21">
+          <div className="flex justify-between items-center text-21">
             See hours for this week
-            <span className="su-w-fit su-border-b-2 su-border-transparent group-hocus:su-border-archway">
+            <span className="w-fit border-b-2 border-transparent group-hocus:border-archway">
               <ChevronDownIcon
                 width={40}
-                className={(expandedHours ? "su-scale-y-[-1]" : "") + " group-hocus:su-text-archway"}
+                className={(expandedHours ? "scale-y-[-1]" : "") + " group-hocus:text-archway"}
               />
             </span>
           </div>
         </button>
         <ul
           id={elementId}
-          className={(expandedHours ? "su-block" : "su-hidden") + " su-list-unstyled su-absolute su-z-10 su-top-full su-left-0 su-shadow-md su-border su-border-black-10 su-bg-white su-w-full su-px-20 su-py-15"}
+          className={(expandedHours ? "block" : "hidden") + " list-unstyled absolute z-10 top-full left-0 shadow-md border border-black-10 bg-white w-full px-20 py-15"}
         >
           {selectOptions.map(day =>
-            <li key={day.value} className="su-flex su-items-center su-mb-10 su-text-21">
+            <li key={day.value} className="flex items-center mb-10 text-21">
               {day.label}
             </li>
           )}

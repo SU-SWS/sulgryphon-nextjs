@@ -23,7 +23,7 @@ const StanfordBanner = ({header, superHeader, body, image, link, overlayPosition
   return (
     <Banner
       image={imageUrl && <Image
-        className="su-object-cover su-object-center"
+        className="object-cover object-center"
         src={imageUrl}
         alt={image?.resourceIdObjMeta.alt}
         fill={true}

@@ -36,10 +36,10 @@ const MainMenu = ({menuItems}) => {
     <OutsideClickHandler
       onClickOutside={handleClickFocusOutside}
       onFocusOutside={handleClickFocusOutside}
-      className="su-max-w-1500 su-w-full su-mx-auto lg:su-px-40 3xl:su-px-0"
+      className="max-w-1500 w-full mx-auto lg:px-40 3xl:px-0"
     >
       <button
-        className="lg:su-hidden su-text-black-true su-absolute su-z-20 su-top-20 su-right-20 su-border-b-2 su-border-transparent hocus:su-border-black-true"
+        className="lg:hidden text-black-true absolute z-20 top-20 right-20 border-b-2 border-transparent hocus:border-black-true"
         onClick={openCloseMenu}
         aria-expanded={menuOpen ? "true" : "false"}
       >
@@ -47,19 +47,19 @@ const MainMenu = ({menuItems}) => {
         {menuOpen ? "Close" : "Menu"}
       </button>
 
-      <div className="su-relative">
+      <div className="relative">
         <div
           aria-hidden={!isDesktop && !menuOpen}
-          className={"su-h-[calc(100vh-100px)] lg:su-h-auto su-overflow-y-scroll lg:su-overflow-visible su-py-20 lg:su-py-0 lg:su-pb-0 su-border-t-4 lg:su-border-0 su-border-cardinal-red su-bg-black-true lg:su-bg-transparent su-absolute lg:su-relative su-w-full su-z-10 lg:su-block lg:su-animate-none su--translate-y-full lg:su-transform-none" + (menuOpen ? " su-animate-slide-down" : (addCloseAnimation ? " su-animate-slide-up" : ""))}>
-          <SearchForm className="su-px-20 su-pb-20 lg:su-hidden" action="/all"
-                      inputProps={{className: "su-p-10 su-w-full su-rounded-full lg:su-hidden"}}/>
+          className={"h-[calc(100vh-100px)] lg:h-auto overflow-y-scroll lg:overflow-visible py-20 lg:py-0 lg:pb-0 border-t-4 lg:border-0 border-cardinal-red bg-black-true lg:bg-transparent absolute lg:relative w-full z-10 lg:block lg:animate-none -translate-y-full lg:transform-none" + (menuOpen ? " animate-slide-down" : (addCloseAnimation ? " animate-slide-up" : ""))}>
+          <SearchForm className="px-20 pb-20 lg:hidden" action="/all"
+                      inputProps={{className: "p-10 w-full rounded-full lg:hidden"}}/>
           <nav aria-label="Main Menu">
-            <ul className="su-m-0 su-p-0 su-list-unstyled lg:su-flex lg:su-justify-end">
+            <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
               {menuItems.map(item =>
                 <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
               )}
 
-              <li className="su-hidden lg:su-flex su-items-center su-ml-20">
+              <li className="hidden lg:flex items-center ml-20">
                 <SearchModal/>
               </li>
             </ul>
@@ -67,37 +67,37 @@ const MainMenu = ({menuItems}) => {
 
 
           <nav
-            className="su-text-white su-p-40 su-mt-40 su-text-center su-flex su-gap-10 su-items-center su-justify-center lg:su-hidden">
-            <div className="su-mr-20">Quick Links:</div>
-            <ul className="su-list-unstyled su-flex su-flex-wrap su-items-center su-gap-10">
-              <li className="su-m-0">
+            className="text-white p-40 mt-40 text-center flex gap-10 items-center justify-center lg:hidden">
+            <div className="mr-20">Quick Links:</div>
+            <ul className="list-unstyled flex flex-wrap items-center gap-10">
+              <li className="m-0">
                 <Link
-                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
+                  className="text-white hocus:text-white no-underline hocus:underline mr-20"
                   href="https://mylibrary.stanford.edu/"
                 >
                   My Account
                 </Link>
               </li>
-              <li className="su-m-0">
+              <li className="m-0">
                 <Link
-                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
+                  className="text-white hocus:text-white no-underline hocus:underline mr-20"
                   href="/all"
                   prefetch={false}
                 >
                   Search Results
                 </Link>
               </li>
-              <li className="su-m-0">
+              <li className="m-0">
                 <Link
-                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline su-mr-20"
+                  className="text-white hocus:text-white no-underline hocus:underline mr-20"
                   href="/library-accessibility"
                 >
                   Accessibility
                 </Link>
               </li>
-              <li className="su-m-0">
+              <li className="m-0">
                 <Link
-                  className="su-text-white hocus:su-text-white su-no-underline hocus:su-underline"
+                  className="text-white hocus:text-white no-underline hocus:underline"
                   href="/contact-us"
                 >
                   Contact Us
@@ -136,16 +136,16 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
 
   // Helper for tailwind JIT to add the classes.
   const titleSpacing: string[] = [
-    'lg:su-ml-[0px]',
-    'lg:su-ml-[30px]',
-    'lg:su-ml-[60px]',
-    'lg:su-ml-[90px]',
-    'lg:su-ml-[120px]',
-    'su-ml-[0px]',
-    'su-ml-[30px]',
-    'su-ml-[60px]',
-    'su-ml-[90px]',
-    'su-ml-[120px]'
+    'lg:ml-[0px]',
+    'lg:ml-[30px]',
+    'lg:ml-[60px]',
+    'lg:ml-[90px]',
+    'lg:ml-[120px]',
+    'ml-[0px]',
+    'ml-[30px]',
+    'ml-[60px]',
+    'ml-[90px]',
+    'ml-[120px]'
   ];
   const belowItems = (items && items?.length > 0) ? items : [];
 
@@ -159,40 +159,40 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
 
   // Add classes to the link item based on various conditions.
   const getLinkBorderClasses = () => {
-    const classes = ['su-border-b', 'su-border-black'];
+    const classes = ['border-b', 'border-black'];
 
     // If there are children under the menu item.
     if (belowItems.length >= 1) {
-      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:su-w-[calc(100%-40px)]' : "") : ' lg:su-pr-0 lg:su-mr-[2px]');
+      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:w-[calc(100%-40px)]' : "") : ' lg:pr-0 lg:mr-[2px]');
     }
 
     // Special treatment for the top level items.
     if (menuLevel == 0) {
-      classes.push('lg:su-border-0')
+      classes.push('lg:border-0')
 
       if (active) {
-        classes.push('after:su-content-[""]')
-        classes.push('after:su-block')
-        classes.push('after:su-absolute')
-        classes.push('after:su-bottom-0')
-        classes.push('after:su-left-20')
-        classes.push('lg:after:su-bg-cardinal-red')
-        classes.push('after:su-h-[4px]')
-        classes.push(belowItems.length > 0 ? 'after:su-w-[calc(100%-60px)]' : 'after:su-w-[calc(100%-40px)]')
+        classes.push('after:content-[""]')
+        classes.push('after:block')
+        classes.push('after:absolute')
+        classes.push('after:bottom-0')
+        classes.push('after:left-20')
+        classes.push('lg:after:bg-cardinal-red')
+        classes.push('after:h-[4px]')
+        classes.push(belowItems.length > 0 ? 'after:w-[calc(100%-60px)]' : 'after:w-[calc(100%-40px)]')
       }
 
       if (belowItems.length > 0) {
-        classes.push('lg:su-pr-5')
+        classes.push('lg:pr-5')
       }
     }
 
     // Treatment to child items.
     if (menuLevel >= 1) {
-      classes.push('lg:su-border-b-fog-light')
+      classes.push('lg:border-b-fog-light')
 
       if (active) {
-        classes.push('lg:su-border-l-4');
-        classes.push('lg:su-border-l-cardinal-red');
+        classes.push('lg:border-l-4');
+        classes.push('lg:border-l-cardinal-red');
       }
     }
     return classes.join(' ')
@@ -203,17 +203,17 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
       onClickOutside={() => setSubmenuOpen(false)}
       onFocusOutside={() => setSubmenuOpen(false)}
       component="li"
-      className="su-p-0 su-m-0 su-relative lg:su-flex"
+      className="p-0 m-0 relative lg:flex"
     >
       <Conditional showWhen={url.length >= 1}>
         <Link
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
-          className={"su-flex su-text-white hocus:su-text-white lg:su-text-black-true su-items-center su-no-underline hocus:su-underline su-w-full su-p-20" + (menuLevel > 0 ? " lg:hocus:su-text-archway lg:hocus:su-bg-black-10 " : " lg:hocus:su-text-archway ") + getLinkBorderClasses()}
+          className={"flex text-white hocus:text-white lg:text-black-true items-center no-underline hocus:underline w-full p-20" + (menuLevel > 0 ? " lg:hocus:text-archway lg:hocus:bg-black-10 " : " lg:hocus:text-archway ") + getLinkBorderClasses()}
           aria-current={(activeTrail.at(-1) === id) ? "page" : undefined}
         >
           <div
-            className={"su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
+            className={"pl-30 lg:pl-0 ml-[" + (menuLevel * 30) + "px] lg:ml-[" + ((menuLevel - 1) * 30) + "px]"}>
             {title}
           </div>
         </Link>
@@ -222,20 +222,20 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
       <Conditional showWhen={url.length === 0}>
         <button
           tabIndex={tabIndex}
-          className={"su-group su-flex su-items-center su-font-semibold su-text-left su-text-white lg:su-text-black-true hocus:su-text-white lg:hocus:su-text-archway hocus:su-bg-black lg:hocus:su-bg-transparent su-w-full su-p-20 " + getLinkBorderClasses()}
+          className={"group flex items-center font-semibold text-left text-white lg:text-black-true hocus:text-white lg:hocus:text-archway hocus:bg-black lg:hocus:bg-transparent w-full p-20 " + getLinkBorderClasses()}
           onClick={openCloseSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
           <span
-            className={"su-flex su-items-center su-pl-30 lg:su-pl-0 su-ml-[" + (menuLevel * 30) + "px] lg:su-ml-[" + ((menuLevel - 1) * 30) + "px]"}>
+            className={"flex items-center pl-30 lg:pl-0 ml-[" + (menuLevel * 30) + "px] lg:ml-[" + ((menuLevel - 1) * 30) + "px]"}>
             {title}
           </span>
 
           <span
-            className={"su-flex su-items-center su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-10 su-top-0 su-right-0" + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}>
-            <span className="su-border-b-2 su-border-transparent group-hocus:su-border-white lg:group-hocus:su-border-archway su-w-fit su-mx-auto">
+            className={"flex items-center bg-black h-[68px] w-[70px] lg:h-auto absolute lg:relative z-10 top-0 right-0" + (menuLevel >= 1 ? ' lg:bg-fog-light' : ' lg:bg-transparent lg:w-[40px]')}>
+            <span className="border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
               <ChevronDownIcon
-                className={"lg:group-hocus:su-text-archway su-transition-all su-text-white lg:su-text-black-true su-mx-auto" + (submenuOpen ? " su-scale-y-[-1]" : "")}
+                className={"lg:group-hocus:text-archway transition-all text-white lg:text-black-true mx-auto" + (submenuOpen ? " scale-y-[-1]" : "")}
                 height={40}
               />
             </span>
@@ -257,7 +257,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
         <ul
           aria-hidden={!submenuOpen}
           data-attribute-menu-level={menuLevel}
-          className={"su-w-full su-m-0 su-p-0 su-list-unstyled lg:su-bg-white lg:su-top-full lg:su-w-[200%]" + (submenuOpen ? " su-block" : " su-hidden") + (menuLevel == 0 ? " lg:su-absolute xl:su-right-auto lg:su-shadow-lg" : "")}
+          className={"w-full m-0 p-0 list-unstyled lg:bg-white lg:top-full lg:w-[200%]" + (submenuOpen ? " block" : " hidden") + (menuLevel == 0 ? " lg:absolute xl:right-auto lg:shadow-lg" : "")}
         >
           {belowItems.map(item =>
             <MenuItem
@@ -278,13 +278,13 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
 
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
   return (
-    <span className="su-block su-w-[30px] su-mx-auto">
+    <span className="block w-[30px] mx-auto">
       <span
-        className={"su-block su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-a" : (addCloseAnimation ? " su-animate-menu-x-morph-r-a" : ""))}/>
+        className={"block w-full h-[5px] mb-[5px] bg-black rounded-full" + (open ? " animate-menu-x-morph-a" : (addCloseAnimation ? " animate-menu-x-morph-r-a" : ""))}/>
       <span
-        className={"su-block su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-b" : (addCloseAnimation ? " su-animate-menu-x-morph-r-b" : ""))}/>
+        className={"block w-full h-[5px] mb-[5px] bg-black rounded-full" + (open ? " animate-menu-x-morph-b" : (addCloseAnimation ? " animate-menu-x-morph-r-b" : ""))}/>
       <span
-        className={"su-block su-w-full su-h-[5px] su-mb-[5px] su-bg-black su-rounded-full" + (open ? " su-animate-menu-x-morph-c" : (addCloseAnimation ? " su-animate-menu-x-morph-r-c" : ""))}/>
+        className={"block w-full h-[5px] mb-[5px] bg-black rounded-full" + (open ? " animate-menu-x-morph-c" : (addCloseAnimation ? " animate-menu-x-morph-r-c" : ""))}/>
     </span>
   )
 }
@@ -292,16 +292,16 @@ const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
   return (
     <button
-      className={"su-group su-bg-black su-h-[68px] su-w-[70px] lg:su-h-auto su-absolute lg:su-relative su-z-20 su-top-0 su-right-0 hover:after:su-content-[''] after:su-block after:su-absolute after:su-h-1 after:su-w-[30px] after:su-left-5 after:su-bottom-25 after:su-z-5 " + (menuLevel >= 1 ? ' lg:su-bg-fog-light' : ' lg:su-bg-transparent lg:su-w-[40px]')}
+      className={"group bg-black h-[68px] w-[70px] lg:h-auto absolute lg:relative z-20 top-0 right-0 hover:after:content-[''] after:block after:absolute after:h-1 after:w-[30px] after:left-5 after:bottom-25 after:z-5 " + (menuLevel >= 1 ? ' lg:bg-fog-light' : ' lg:bg-transparent lg:w-[40px]')}
       onClick={onButtonClick}
       {...props}>
-      <span className="transition su-block su-border-b-2 su-border-transparent group-hocus:su-border-white lg:group-hocus:su-border-archway su-w-fit su-mx-auto">
+      <span className="transition block border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
         <ChevronDownIcon
-          className={" su-transition-all su-text-white lg:su-text-black-true lg:group-hocus:su-text-archway su-mx-auto" + (isOpen ? " su-scale-y-[-1]" : "")}
+          className={" transition-all text-white lg:text-black-true lg:group-hocus:text-archway mx-auto" + (isOpen ? " scale-y-[-1]" : "")}
           height={40}
         />
       </span>
-      <span className="su-sr-only">{title.trim() + " submenu"}</span>
+      <span className="sr-only">{title.trim() + " submenu"}</span>
     </button>
   )
 }

@@ -45,28 +45,28 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   }
 
   return (
-    <aside className="lg:su-w-1/3 2xl:su-w-1/4 su-relative">
-      <a className="su-skiplink" href="#main-content">Skip to main content</a>
+    <aside className="lg:w-1/3 2xl:w-1/4 relative">
+      <a className="skiplink" href="#main-content">Skip to main content</a>
       <Conditional showWhen={(menuOpen)}>
-        <div className="lg:su-hidden su-backdrop-blur-sm su-fixed su-z-10 su-top-0 su-left-0 su-w-full su-h-screen"/>
+        <div className="lg:hidden backdrop-blur-sm fixed z-10 top-0 left-0 w-full h-screen"/>
       </Conditional>
 
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="lg:su-hidden su-w-5/6 su-mx-auto su-flex su-items-center su-mb-20 su-border su-border-t-8 su-border-archway su-bg-foggy-light su-text-archway-light"
+        className="lg:hidden w-5/6 mx-auto flex items-center mb-20 border border-t-8 border-archway bg-foggy-light text-archway-light"
         aria-expanded={menuOpen ? "true" : "false"}
       >
-        <span className="su-block su-p-20 su-flex-grow su-font-semibold su-relative su-text-left">
+        <span className="block p-20 flex-grow font-semibold relative text-left">
           {currentPageTitle}
         </span>
-        <ChevronDownIcon width={40} className="su-mr-20"/>
+        <ChevronDownIcon width={40} className="mr-20"/>
       </button>
 
 
       <OutsideClickHandler onClickOutside={closeMobileMenu} onFocusOutside={closeMobileMenu}>
-        <nav className={(isDesktop || menuOpen ? "su-block" : "su-hidden")} aria-label="Secondary Navigation">
+        <nav className={(isDesktop || menuOpen ? "block" : "hidden")} aria-label="Secondary Navigation">
           <ul
-            className="su-absolute lg:su-relative su-z-40 lg:su-z-0 su-top-0 su-left-0 su-w-full su-bg-white su-list-unstyled su-py-20 su-mb-20 su-shadow-lg su-border su-border-t-8 su-border-archway">
+            className="absolute lg:relative z-40 lg:z-0 top-0 left-0 w-full bg-white list-unstyled py-20 mb-20 shadow-lg border border-t-8 border-archway">
             {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
           </ul>
         </nav>
@@ -92,11 +92,11 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
   const [submenuOpen, setSubmenuOpen] = useState(activeTrail.indexOf(id) >= 0);
 
   const depthClasses = [
-    'su-pl-0',
-    'su-pl-30',
-    'su-pl-60',
-    'su-pl-90',
-    'su-pl-120',
+    'pl-0',
+    'pl-30',
+    'pl-60',
+    'pl-90',
+    'pl-120',
   ]
 
   const subnavOpenClose = () => {
@@ -104,12 +104,12 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
   }
 
   return (
-    <li className={`su-m-0`}>
+    <li className={`m-0`}>
       <div
-        className={"su-flex " + depthClasses[menuLevel] + (isActive ? " su-bg-archway" : "")}>
+        className={"flex " + depthClasses[menuLevel] + (isActive ? " bg-archway" : "")}>
         <Link
           href={url}
-          className={"su-flex-grow su-p-10 su-block su-relative su-no-underline hover:su-underline " + (isActive ? "su-text-white hocus:su-text-white" : "su-text-black-90 hocus:su-text-archway")}
+          className={"flex-grow p-10 block relative no-underline hover:underline " + (isActive ? "text-white hocus:text-white" : "text-black-90 hocus:text-archway")}
           onClick={() => syncDrupalPreviewRoutes(url)}
           aria-current={isActive ? "page" : undefined}
         >
@@ -117,24 +117,24 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
         </Link>
 
         <Conditional showWhen={items?.length > 0}>
-          <div className="su-relative su-flex su-items-center">
+          <div className="relative flex items-center">
             <button
-              className="su-group su-mr-20"
+              className="group mr-20"
               onClick={subnavOpenClose}
               aria-expanded={submenuOpen ? "true" : "false"}
             >
-              <span className={"su-block su-border-b-2 su-border-transparent su-w-fit su-mx-auto " + (isActive ? "group-hocus:su-border-white": "group-hocus:su-border-archway")}>
-                <ChevronDownIcon width={40} className={"su-transition-all " + (submenuOpen ? " su-scale-y-[-1]" : "") + (isActive ? " su-text-white group-hocus:su-text-white": " group-hocus:su-text-archway")}/>
+              <span className={"block border-b-2 border-transparent w-fit mx-auto " + (isActive ? "group-hocus:border-white": "group-hocus:border-archway")}>
+                <ChevronDownIcon width={40} className={"transition-all " + (submenuOpen ? " scale-y-[-1]" : "") + (isActive ? " text-white group-hocus:text-white": " group-hocus:text-archway")}/>
               </span>
               <span
-                className="su-sr-only">{title.trim() + " submenu"}</span>
+                className="sr-only">{title.trim() + " submenu"}</span>
             </button>
           </div>
         </Conditional>
       </div>
 
       <Conditional showWhen={items?.length > 0}>
-        <ul className={"su-list-unstyled" + (submenuOpen ? " su-block" : " su-hidden")}>
+        <ul className={"list-unstyled" + (submenuOpen ? " block" : " hidden")}>
           {items.map(item =>
             <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>
           )}

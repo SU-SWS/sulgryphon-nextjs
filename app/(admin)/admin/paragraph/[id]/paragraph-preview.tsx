@@ -8,7 +8,7 @@ import {ArrowPathIcon} from "@heroicons/react/20/solid";
 
 const Paragraph = dynamic(() =>
   import('../../../../../src/components/paragraph/index'), {
-  loading: () => <ArrowPathIcon className="su-mx-auto su-animate-spin" width={30} height={30}/>
+  loading: () => <ArrowPathIcon className="mx-auto animate-spin" width={30} height={30}/>
 });
 
 const ParagraphPreview = ({}) => {
@@ -60,7 +60,7 @@ const ParagraphPreview = ({}) => {
   useLayoutEffect(() => emitComponentHeight(), [emitComponentHeight, paragraph]);
 
   return (
-    <div ref={previewRef} className="su-p-30">
+    <div ref={previewRef} className="p-30">
       {paragraph &&
         <Paragraph paragraph={paragraph}/>
       }

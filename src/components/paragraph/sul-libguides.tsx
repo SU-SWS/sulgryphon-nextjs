@@ -28,7 +28,7 @@ const Component = ({headline, description, libguideId, fullWidth, ...props}: Pro
   const {data: libguides} = useDataFetch(`/api/libguides/subjects/${libguideId}`);
 
   return (
-    <div className="su-relative su-centered lg:su-max-w-[980px]" {...props}>
+    <div className="relative centered lg:max-w-[980px]" {...props}>
       {headline && <h2>{headline}</h2>}
       {description && <div>{formatHtml(description)}</div>}
 

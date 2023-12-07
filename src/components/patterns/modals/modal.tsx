@@ -48,14 +48,14 @@ const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) =
   }
 
   return (
-    <dialog className="su-w-full su-h-full" open ref={animationParent} aria-labelledby={labelledBy}>
+    <dialog className="w-full h-full" open ref={animationParent} aria-labelledby={labelledBy}>
       <ReactFocusLock returnFocus>
         <div
-          className={"su-modal su-fixed su-w-screen su-h-full su-overscroll-contain su-overflow-y-scroll su-overflow-x-hidden su-top-0 su-left-0 su-items-center su-justify-center su-z-[10000] su-bg-black-true su-bg-opacity-[90%] su-flex"}
+          className={"modal fixed w-screen h-full overscroll-contain overflow-y-scroll overflow-x-hidden top-0 left-0 items-center justify-center z-[10000] bg-black-true bg-opacity-[90%] flex"}
         >
-          <div className={"su-absolute su-w-screen su-h-full su-basefont-19 su-pointer-events-auto"}>
+          <div className={"absolute w-screen h-full basefont-19 pointer-events-auto"}>
             <div
-              className="su-h-5/6 su-w-11/12 md:su-h-4/5 md:su-w-8/12 su-mx-auto su-mt-[5%]"
+              className="h-5/6 w-11/12 md:h-4/5 md:w-8/12 mx-auto mt-[5%]"
             >
               {children}
             </div>
@@ -64,10 +64,10 @@ const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) =
               <button
                 type="button"
                 onClick={onClose}
-                className={"su-absolute su-right-50 su-top-50 su-text-white su-flex"}
+                className={"absolute right-50 top-50 text-white flex"}
               >
-                Close<span className="su-sr-only"> Overlay</span>
-                <XMarkIcon className="su-ml-10 su-mt-[-3px]" width={25}/>
+                Close<span className="sr-only"> Overlay</span>
+                <XMarkIcon className="ml-10 mt-[-3px]" width={25}/>
               </button>
             </div>
           </div>

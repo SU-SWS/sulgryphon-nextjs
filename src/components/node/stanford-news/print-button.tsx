@@ -10,8 +10,8 @@ const NewsPrintButton = () => {
       onError={e => console.error(e.message)}
     >
       <button onClick={() => window.print()}
-              className="su-text-black hocus:su-text-digital-blue su-transition-colors">
-        <span className="su-sr-only">Print Article</span>
+              className="text-black hocus:text-digital-blue transition-colors">
+        <span className="sr-only">Print Article</span>
         <PrinterIcon width={28}/>
       </button>
     </ErrorBoundary>

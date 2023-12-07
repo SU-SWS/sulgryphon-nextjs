@@ -43,7 +43,7 @@ const renderSelectedValue = (value: SelectValue<string, boolean>, options: Selec
     return value.map(item =>
       <span
         key={item}
-        className="su-block su-bg-archway su-text-white su-rounded su-p-5 su-mb-2 su-whitespace-nowrap su-overflow-hidden su-text-ellipsis su-max-w-full"
+        className="block bg-archway text-white rounded p-5 mb-2 whitespace-nowrap overflow-hidden text-ellipsis max-w-full"
       >
         {renderSelectedValue(item, options)}
       </span>
@@ -57,8 +57,8 @@ function CustomOption(props: OptionProps) {
   const {children, value, rootRef, disabled = false} = props;
   const {getRootProps, highlighted, selected} = useOption({rootRef: rootRef, value, disabled, label: children});
   const {id, ...otherProps}: { id: string } = getRootProps();
-  const selectedStyles = "su-bg-archway su-text-white " + (highlighted ? "su-underline" : "")
-  const highlightedStyles = "su-bg-black-10 su-text-black su-underline"
+  const selectedStyles = "bg-archway text-white " + (highlighted ? "underline" : "")
+  const highlightedStyles = "bg-black-10 text-black underline"
 
   useEffect(() => {
     if (highlighted && id && rootRef?.current?.parentElement) {
@@ -84,7 +84,7 @@ function CustomOption(props: OptionProps) {
     <li
       {...otherProps}
       id={id}
-      className={"su-m-0 su-mb-2 su-py-2 su-px-10 su-cursor-pointer hocus:su-underline su-overflow-hidden " + (selected ? selectedStyles : (highlighted ? highlightedStyles : "hocus:su-bg-black-10 hocus:su-text-black"))}
+      className={"m-0 mb-2 py-2 px-10 cursor-pointer hocus:underline overflow-hidden " + (selected ? selectedStyles : (highlighted ? highlightedStyles : "hocus:bg-black-10 hocus:text-black"))}
     >
       {children}
     </li>
@@ -129,36 +129,36 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
     <OutsideClickHandler
       onClickOutside={onClickOutside}
       onFocusOutside={onClickOutside}
-      className="su-relative su-h-fit"
+      className="relative h-fit"
     >
       <button
         {...getButtonProps()}
-        className="su-w-full su-border su-border-black-40 su-rounded su-text-left su-p-5"
+        className="w-full border border-black-40 rounded text-left p-5"
         aria-labelledby={labeledBy}
       >
-        <div className="su-flex su-justify-between su-flex-wrap">
+        <div className="flex justify-between flex-wrap">
           {label &&
-            <div className={"su-relative " + (optionChosen ? "su-text-m0 su-top-[-15px] su-w-full" : "su-text-m1")}>
-              <div id={labelId} className="su-bg-white su-w-fit su-px-5">
+            <div className={"relative " + (optionChosen ? "text-m0 top-[-15px] w-full" : "text-m1")}>
+              <div id={labelId} className="bg-white w-fit px-5">
                 {label}
               </div>
             </div>
           }
           {optionChosen &&
-            <div className="su-overflow-hidden su-max-w-[calc(100%-30px)]">
+            <div className="overflow-hidden max-w-[calc(100%-30px)]">
               {renderSelectedValue(value, options)}
             </div>
           }
 
-          <ChevronDownIcon width={20} className="su-flex-shrink-0"/>
+          <ChevronDownIcon width={20} className="flex-shrink-0"/>
         </div>
       </button>
 
       <div
-        className={"su-absolute su-z-[10] su-w-full su-top-full su-left-0 su-max-h-[300px] su-pb-5 su-overflow-y-scroll su-shadow-lg su-border su-border-black-20 su-bg-white " + (listboxVisible ? '' : 'su-hidden')}>
+        className={"absolute z-[10] w-full top-full left-0 max-h-[300px] pb-5 overflow-y-scroll shadow-lg border border-black-20 bg-white " + (listboxVisible ? '' : 'hidden')}>
         <ul
           {...getListboxProps()}
-          className={"su-list-unstyled " + (listboxVisible ? '' : 'su-hidden')}
+          className={"list-unstyled " + (listboxVisible ? '' : 'hidden')}
           aria-hidden={!listboxVisible}
           aria-labelledby={labeledBy}
         >

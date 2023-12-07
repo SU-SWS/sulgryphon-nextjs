@@ -48,10 +48,10 @@ const ListParagraph = async ({headerId, headline, description, link, view, style
   }
 
   return (
-    <div className="su-centered su-flex su-flex-col su-gap-xl">
-      <div className="su-flex su-justify-between su-items-center su-mb-40">
+    <div className="centered flex flex-col gap-xl">
+      <div className="flex justify-between items-center mb-40">
         {headline &&
-          <h2 id={headerId} className="su-m-0">{headline}</h2>
+          <h2 id={headerId} className="m-0">{headline}</h2>
         }
 
         {link &&

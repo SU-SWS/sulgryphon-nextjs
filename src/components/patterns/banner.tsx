@@ -20,17 +20,17 @@ const Banner = ({headerId, image, header, superHeader, body, link, overlayPositi
   const hasCardText = header || superHeader || body || link;
 
   return (
-    <div className="hero su-basefont-23 su-relative su-h-full su-mx-auto su-w-full lg:su-max-h-500" {...props}>
+    <div className="hero basefont-23 relative h-full mx-auto w-full lg:max-h-500" {...props}>
       <div
-        className="su-w-full su-overflow-hidden su-relative su-max-h-500 su-min-h-[30rem] lg:su-min-h-[50rem] su-bg-[grey]">
+        className="w-full overflow-hidden relative max-h-500 min-h-[30rem] lg:min-h-[50rem] bg-[grey]">
         {image}
       </div>
 
       <Conditional showWhen={hasCardText}>
         <div
-          className={`su-mx-auto su-block lg:su-absolute lg:su-top-auto lg:su-bottom-36 ${overlayPosition === 'right' ? 'lg:su-right-36' : 'lg:su-left-36'}`}>
+          className={`mx-auto block lg:absolute lg:top-auto lg:bottom-36 ${overlayPosition === 'right' ? 'lg:right-36' : 'lg:left-36'}`}>
           <div
-            className="card su-basefont-23 su-leading-display su-bg-white su-text-black su-border su-border-solid su-border-black-10 su-shadow su-relative lg:su-max-w-[50%]">
+            className="card basefont-23 leading-display bg-white text-black border border-solid border-black-10 shadow relative lg:max-w-[50%]">
             <Card
               header={header}
               superHeader={superHeader}

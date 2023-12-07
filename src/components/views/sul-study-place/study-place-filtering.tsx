@@ -75,12 +75,12 @@ const StudyPlacesFiltering = ({items}) => {
   }, [parent])
 
   return (
-    <div className="su-@container">
-      <form className="su-relative su-z-[1]" onSubmit={handleSubmit}>
+    <div className="@container">
+      <form className="relative z-[1]" onSubmit={handleSubmit}>
         <fieldset
-          className="su-grid su-grid-cols-1 @xl:su-grid-cols-2 @7xl:su-grid-cols-4 su-gap-xs lg:su-gap-xl su-mb-30"
+          className="grid grid-cols-1 @xl:grid-cols-2 @7xl:grid-cols-4 gap-xs lg:gap-xl mb-30"
           aria-label="Filter study places">
-          <legend className="su-font-bold su-mb-10 su-whitespace-nowrap">Filter places to study.</legend>
+          <legend className="font-bold mb-10 whitespace-nowrap">Filter places to study.</legend>
           <SelectList
             label="Type"
             options={typeOfStudies}
@@ -119,16 +119,16 @@ const StudyPlacesFiltering = ({items}) => {
 
         </fieldset>
 
-        <button type="submit" className="su-button su-mr-20">
+        <button type="submit" className="button mr-20">
           Filter
         </button>
-        <button className="su-button" onClick={handleReset}>
+        <button className="button" onClick={handleReset}>
           Reset
         </button>
       </form>
 
       <Conditional showWhen={items.length == 0}>
-        <SignalIcon width={50} className="su-animate-ping su-mx-auto su-my-50"/>
+        <SignalIcon width={50} className="animate-ping mx-auto my-50"/>
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
@@ -142,7 +142,7 @@ const StudyPlacesFiltering = ({items}) => {
         <Conditional showWhen={itemsToDisplay.length > 0}>
           <ul
             ref={parent}
-            className="su-list-unstyled su-grid @3xl:su-grid-cols-2 @7xl:su-grid-cols-3 su-gap-xl"
+            className="list-unstyled grid @3xl:grid-cols-2 @7xl:grid-cols-3 gap-xl"
           >
             {itemsToDisplay.map(item =>
               <li key={item.id} className="">
