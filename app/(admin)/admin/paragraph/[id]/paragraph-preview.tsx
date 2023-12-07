@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import {ArrowPathIcon} from "@heroicons/react/20/solid";
 
 const Paragraph = dynamic(() =>
-  import('../../../../../components/paragraph/index'), {
+  import('../../../../../src/components/paragraph/index'), {
   loading: () => <ArrowPathIcon className="su-mx-auto su-animate-spin" width={30} height={30}/>
 });
 

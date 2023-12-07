@@ -1,4 +1,4 @@
-import {getResourceByPath} from "next-drupal/src/get-resource";
+import {getResourceByPath} from "@/lib/drupal/get-resource";
 import {BasicPage} from "@/lib/drupal/drupal";
 import {Metadata} from "next";
 import {getNodeMetadata} from "./[...slug]/metadata";

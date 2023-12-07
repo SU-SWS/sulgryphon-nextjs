@@ -2,7 +2,7 @@
 
 import {RefObject, useEffect, useRef, useState} from "react";
 import {StudyPlace} from "@/lib/drupal/drupal";
-import Conditional from "../../utils/conditional";
+import Conditional from "@/components/utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 import SelectList from "@/components/patterns/elements/select-list";
