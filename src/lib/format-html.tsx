@@ -10,6 +10,7 @@ import {
 import Oembed from "@/components/patterns/elements/oembed";
 import {twMerge} from "tailwind-merge";
 import {ElementType} from "react";
+import type {DOMNode} from "html-dom-parser";
 
 const options: HTMLReactParserOptions = {
   replace: (domNode) => {
@@ -22,7 +23,7 @@ const options: HTMLReactParserOptions = {
       switch (domNode.name) {
         case "a":
           // Error handle for <a> tags without a href.
-          if (!nodeProps.href) {
+          if (!nodeProps.href || nodeProps.href === true) {
             nodeProps.href = '#';
           }
           nodeProps.href = nodeProps.href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? '', '');
@@ -30,7 +31,7 @@ const options: HTMLReactParserOptions = {
           if (nodeProps.className.indexOf('button--big') > -1) {
             return (
               <DrupalLinkBigButton href={nodeProps.href} {...nodeProps}>
-                {domToReact(domNode.children, options)}
+                {domToReact(domNode.children as DOMNode[], options)}
               </DrupalLinkBigButton>
             )
           }
@@ -38,7 +39,7 @@ const options: HTMLReactParserOptions = {
           if (nodeProps.className.indexOf('button--secondary') > -1) {
             return (
               <DrupalLinkSecondaryButton href={nodeProps.href} {...nodeProps}>
-                {domToReact(domNode.children, options)}
+                {domToReact(domNode.children as DOMNode[], options)}
               </DrupalLinkSecondaryButton>
             )
           }
@@ -46,7 +47,7 @@ const options: HTMLReactParserOptions = {
           if (nodeProps.className.indexOf('button') > -1) {
             return (
               <DrupalLinkButton href={nodeProps.href} {...nodeProps}>
-                {domToReact(domNode.children, options)}
+                {domToReact(domNode.children as DOMNode[], options)}
               </DrupalLinkButton>
             )
           }
@@ -54,7 +55,7 @@ const options: HTMLReactParserOptions = {
           if (nodeProps.className.indexOf('link--action') > -1) {
             return (
               <DrupalActionLink href={nodeProps.href} {...nodeProps}>
-                {domToReact(domNode.children, options)}
+                {domToReact(domNode.children as DOMNode[], options)}
               </DrupalActionLink>
             )
           }
@@ -62,7 +63,7 @@ const options: HTMLReactParserOptions = {
           nodeProps.className = twMerge('hocus:underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red', nodeProps.className);
           return (
             <a {...nodeProps}>
-              {domToReact(domNode.children, options)}
+              {domToReact(domNode.children as DOMNode[], options)}
             </a>
           )
         case 'article':
@@ -70,29 +71,29 @@ const options: HTMLReactParserOptions = {
 
         case 'pre':
           nodeProps.className += ' whitespace-normal';
-          return <pre {...nodeProps}>{domToReact(domNode.children, options)}</pre>
+          return <pre {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</pre>
 
         case 'figure':
           nodeProps.className += ' table mb-20';
           delete nodeProps.role;
           return (
-            <figure {...nodeProps}>{domToReact(domNode.children, options)}</figure>
+            <figure {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</figure>
           )
         case 'figcaption':
           nodeProps.className += ' table-caption caption-bottom text-center leading text-19';
           return <figcaption {...nodeProps}
-                             style={{captionSide: 'bottom'}}>{domToReact(domNode.children, options)}</figcaption>
+                             style={{captionSide: 'bottom'}}>{domToReact(domNode.children as DOMNode[], options)}</figcaption>
         case 'iframe':
           nodeProps.className += ' w-full';
           return <iframe {...nodeProps}/>
 
         case 'blockquote':
           nodeProps.className += ' pl-40 relative before:block before:absolute before:left-0 before:top-0 before:content-[\'\'] before:h-full before:w-5 before:bg-black-20';
-          return <blockquote {...nodeProps}>{domToReact(domNode.children, options)}</blockquote>
+          return <blockquote {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</blockquote>
 
         case 'table':
           nodeProps.className += ' mb-20 ';
-          return <NodeName {...nodeProps}>{domToReact(domNode.children, options)}</NodeName>
+          return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
         case 'p':
           nodeProps.className += ' max-w-[100ch]';
@@ -108,13 +109,14 @@ const options: HTMLReactParserOptions = {
         case 'ul':
         case 'ol':
         case 'li':
-          return <NodeName {...nodeProps}>{domToReact(domNode.children, options)}</NodeName>
+          return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
       }
     }
   }
 }
 
-const fixClasses = (classes) => {
+const fixClasses = (classes: string | boolean): string => {
+  classes = !classes || classes === true ? '' : classes
   classes = ` ${classes} `;
   classes = classes.replace(' align-center ', ' center ')
     .replace(' align-left ', ' block float-left mr-20 mb-20 ')
@@ -144,11 +146,11 @@ const fixClasses = (classes) => {
 
 const cleanMediaMarkup = (node: Element) => {
 
-  const findIframeInMedia = (item: Element) => {
+  const findIframeInMedia = (item: Element): Element | undefined => {
     const iframe = item.children.find(child => child instanceof Element && child.name === 'iframe')
-    if (iframe) return iframe;
+    if (iframe) return iframe as Element;
     for (let i = 0; i <= item.children.length; i++) {
-      const childIframe = findIframeInMedia(item.children[i])
+      const childIframe = findIframeInMedia(item.children[i] as Element)
       if (childIframe) return childIframe;
     }
   }
@@ -162,7 +164,7 @@ const cleanMediaMarkup = (node: Element) => {
     // const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
     const iframe = findIframeInMedia(node);
 
-
+    // @ts-ignore Ignore this because it's a special attribute for lazy loading oembed videos.
     let {"data-src": iframeSrc} = iframe && iframe.attribs;
     iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');
     return (
@@ -210,8 +212,8 @@ const cleanMediaMarkup = (node: Element) => {
     )
   }
 
-  return <>{domToReact(node.children, options)}</>
+  return <>{domToReact(node.children as DOMNode[], options)}</>
 }
 
-const formatHtml = (html) => parse(html ?? '', options);
+const formatHtml = (html?: string) => parse(html ?? '', options);
 export default formatHtml;
