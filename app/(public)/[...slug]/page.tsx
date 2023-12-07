@@ -3,12 +3,11 @@ import {getPathsFromContext} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
-import {DrupalMenuLinkContent, DrupalNode} from "next-drupal";
+import {DrupalMenuLinkContent} from "next-drupal";
 import {GetStaticPathsResult, Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
-import Conditional from "@/components/utils/conditional";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {Library} from "@/lib/drupal/drupal";
+import {StanfordNode} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
@@ -16,6 +15,15 @@ import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
+
+type Params = {
+  slug: string | string[]
+}
+
+type PageProps = {
+  params: Params
+  searchParams?: Record<string, string | string[] | undefined>
+}
 
 export const revalidate = 86400;
 
@@ -25,13 +33,13 @@ class RedirectError extends Error {
   }
 }
 
-const fetchNodeData = async (context) => {
+const fetchNodeData = async (params: Params) => {
   const draftMode = isDraftMode();
-  const path = await translatePathFromContext(context, {draftMode});
+  const path = await translatePathFromContext({params}, {draftMode});
 
   // Check for redirect.
   if (path?.redirect?.[0].to) {
-    const currentPath = '/' + (typeof context.params.slug === 'object' ? context.params.slug.join('/') : context.params.slug);
+    const currentPath = '/' + (typeof params.slug === 'object' ? params.slug.join('/') : params.slug);
     const [destination] = path.redirect;
 
     if (destination.to != currentPath) {
@@ -43,20 +51,20 @@ const fetchNodeData = async (context) => {
     throw new Error('Unable to translate path');
   }
 
-  if (context?.params?.slug?.[0] === 'node' && path?.entity?.path) {
+  if (params?.slug?.[0] === 'node' && path?.entity?.path) {
     throw new RedirectError(path.entity.path);
   }
 
-  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context,{draftMode})
+  const node = await getResourceFromContext<StanfordNode>(path.jsonapi.resourceName, {params}, {draftMode})
   const fullWidth: boolean = (node?.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node?.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
   return {node, fullWidth}
 }
 
-export const generateMetadata = async (context): Promise<Metadata> => {
+export const generateMetadata = async ({params}: PageProps): Promise<Metadata> => {
   try {
-    const {node} = await fetchNodeData(context);
+    const {node} = await fetchNodeData(params);
     if (!node) return {};
 
     return getNodeMetadata(node);
@@ -66,7 +74,7 @@ export const generateMetadata = async (context): Promise<Metadata> => {
   return {};
 }
 
-const NodePage = async (context) => {
+const NodePage = async ({params}: PageProps) => {
   let tree: DrupalMenuLinkContent[] = [];
   try {
     ({tree} = await getMenu('main'));
@@ -75,7 +83,7 @@ const NodePage = async (context) => {
 
   let nodeData;
   try {
-    nodeData = await fetchNodeData(context);
+    nodeData = await fetchNodeData(params);
   } catch (e) {
     if (e instanceof RedirectError) {
       redirect(e.message);
@@ -83,17 +91,18 @@ const NodePage = async (context) => {
     notFound();
   }
   const {node, fullWidth} = nodeData;
+  if (!node) notFound();
 
   return (
     <main id="main-content" className="mb-50">
       {!node.status &&
         <UnpublishedBanner/>
       }
-      <Conditional showWhen={node.type === 'node--sul_library'}>
-        <LibraryHeader node={node as Library}/>
-      </Conditional>
+      {node.type === 'node--sul_library' &&
+        <LibraryHeader node={node}/>
+      }
 
-      <Conditional showWhen={node.type === 'node--stanford_news'}>
+      {node.type === 'node--stanford_news' &&
         <InternalHeaderBanner>
           <div
             className="flex flex-col w-full max-w-[calc(100vw-10rem)] md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto mt-80 md:mt-100 mb-50 p-0">
@@ -111,24 +120,24 @@ const NodePage = async (context) => {
             }
           </div>
         </InternalHeaderBanner>
-      </Conditional>
+      }
 
-      <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
+      {!(node.type === 'node--sul_library' || node.type === 'node--stanford_news') &&
         <InternalHeaderBanner>
           <h1
             className="w-full max-w-[calc(100vw-10rem)] md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto relative text-white mt-80 md:mt-100 mb-50 p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
-      </Conditional>
+      }
 
-      <Conditional showWhen={fullWidth}>
+      {fullWidth &&
         <div>
           <NodePageDisplay node={node}/>
         </div>
-      </Conditional>
+      }
 
-      <Conditional showWhen={!fullWidth}>
+      {!fullWidth &&
         <div
           className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
 
@@ -140,14 +149,14 @@ const NodePage = async (context) => {
             <NodePageDisplay node={node}/>
           </div>
         </div>
-      </Conditional>
+      }
     </main>
   )
 }
 
 export default NodePage;
 
-export const generateStaticParams = async (context) => {
+export const generateStaticParams = async () => {
 
   const params = new DrupalJsonApiParams();
   params.addPageLimit(50);

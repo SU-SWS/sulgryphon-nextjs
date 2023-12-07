@@ -17,7 +17,7 @@ interface Props extends PropsWithoutRef<any> {
 
 const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props}: Props) => {
   const isGray = styles?.background == 'gray';
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isCentered = useIsCentered(ref)
 
   if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {

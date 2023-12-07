@@ -1,6 +1,6 @@
 import "server-only";
 
-import {Person} from "@/lib/drupal/drupal";
+import {Person, StanfordParagraph} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
@@ -12,12 +12,11 @@ import LibCal from "./libcal";
 import LibGuides from "./libguide";
 import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
-import {DrupalParagraph} from "next-drupal";
 import Paragraph from "@/components/paragraph";
 import EmailLink from "@/components/patterns/elements/email-link";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
-  node.su_person_components = await fetchComponents(node.su_person_components ?? []) as DrupalParagraph[];
+  node.su_person_components = await fetchComponents<StanfordParagraph>(node.su_person_components ?? []);
   node.su_person_components = node.su_person_components.filter(item => item?.id?.length > 0);
   node.lib_guides = node.sul_person__libguide_id ? await fetchLibGuides({accountId: node.sul_person__libguide_id}) : [];
 
@@ -135,7 +134,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                   <Conditional showWhen={node.su_person_mail_code}>
                     <li>Mail Code: {node.su_person_mail_code}</li>
                   </Conditional>
-                  <Conditional showWhen={node.su_person_email}>
+                  {node.su_person_email &&
                     <li>
                       <EmailLink
                         className="break-words"
@@ -143,7 +142,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                       />
                       <EnvelopeIcon width={20} className="inline-block ml-4 text-digital-blue"/>
                     </li>
-                  </Conditional>
+                  }
                 </ul>
               </>
             }

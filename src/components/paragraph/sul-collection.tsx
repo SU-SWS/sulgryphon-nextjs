@@ -1,6 +1,6 @@
 "use client";
 
-import {CollectionCardParagraph} from "@/lib/drupal/drupal";
+import {CollectionCardParagraph, DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import {PropsWithoutRef, useId} from "react";
 import Conditional from "@/components/utils/conditional";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
@@ -56,7 +56,15 @@ const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionP
   )
 }
 
-const CollectionCard = ({header, superHeader, body, link, image, videoUrl, headerId}) => {
+const CollectionCard = ({header, superHeader, body, link, image, videoUrl, headerId}: {
+  header?: string
+  superHeader?: string
+  body?: string
+  link?: DrupalLinkType
+  image?: DrupalImageMedia,
+  videoUrl?: string
+  headerId?: string
+}) => {
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;

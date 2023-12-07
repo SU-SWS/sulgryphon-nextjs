@@ -1,4 +1,6 @@
-const TwitterIcon = (props) => (
+import {PropsWithoutRef} from "react";
+
+const TwitterIcon = (props: PropsWithoutRef<any>) => (
   <svg
     width={28}
     viewBox="0 0 512 512"

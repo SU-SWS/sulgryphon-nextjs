@@ -2,7 +2,7 @@
 
 import Link from "@/components/patterns/elements/drupal-link";
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid";
-import {useId, useState} from "react";
+import {MouseEvent, useId, useState} from "react";
 import Modal from "@/components/patterns/modals/modal";
 import SearchForm from "@/components/search/search-form";
 
@@ -10,7 +10,7 @@ const SearchModal = () => {
   const headerId = useId();
   const [modalOpen, setModalOpen] = useState(false)
 
-  const toggleModal = (e) => {
+  const toggleModal = (e: MouseEvent) => {
     e.preventDefault();
     setModalOpen(!modalOpen);
   }

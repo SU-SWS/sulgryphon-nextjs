@@ -24,8 +24,13 @@ interface Props {
   emptyMessage?: string
   hasHeading: boolean
 }
+const defaultProps = {
+  viewId: '',
+  displayId: '',
+  hasHeading: false
+}
 
-const View = async ({viewId, displayId, args, itemsToDisplay, emptyMessage, hasHeading}: Props = {}) => {
+const View = async ({viewId, displayId, args, itemsToDisplay, emptyMessage, hasHeading}: Props = defaultProps) => {
   const component = `${viewId}--${displayId}`;
   const viewProps = {
     view: component,
@@ -99,7 +104,7 @@ export async function getViewItems<T>(view: string, itemsToDisplay: number = -1,
     const viewData = await getView<DrupalNode[]>(view, {params: drupalParams.getQueryObject()});
     items = viewData.results ?? [];
   } catch (e) {
-    console.log(`Unable to fetch view ${view}: ${e.message}`)
+    console.log(`Unable to fetch view ${view}`)
   }
   return fetchComponents<T>(items);
 }

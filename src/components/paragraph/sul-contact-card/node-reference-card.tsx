@@ -56,13 +56,14 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
             )}
 
             <div className="leading-tight md:rs-pr-2 text-white">
-
-              <CachedClientFetch>
-                <NodeReferenceCardHours
-                  branchId={paragraph.sul_contact__branch?.su_library__hours}
-                  branchName={paragraph.sul_contact__branch?.title}
-                />
-              </CachedClientFetch>
+              {paragraph.sul_contact__branch?.su_library__hours &&
+                <CachedClientFetch>
+                  <NodeReferenceCardHours
+                    branchId={paragraph.sul_contact__branch?.su_library__hours}
+                    branchName={paragraph.sul_contact__branch?.title}
+                  />
+                </CachedClientFetch>
+              }
 
               <Conditional showWhen={paragraph.sul_contact__branch?.su_library__phone}>
                 <div className="relative flex flex-row items-center rs-mb-0 type-1">
@@ -71,12 +72,12 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
                 </div>
               </Conditional>
 
-              <Conditional showWhen={paragraph.sul_contact__branch?.su_library__email}>
+              {paragraph.sul_contact__branch?.su_library__email &&
                 <div className="relative flex flex-row items-center rs-mb-0 type-1">
                   <EnvelopeIcon width={19} className="mt-02em mr-12 flex-shrink-0"/>
                   <EmailLink email={paragraph.sul_contact__branch?.su_library__email} className="underline text-white hocus:text-illuminating-dark hocus:no-underline active:text-digital-red-light font-normal break-words"/>
                 </div>
-              </Conditional>
+              }
 
               <Conditional showWhen={paragraph.sul_contact__branch?.su_library__address}>
                 <div className="relative flex flex-row items-start type-1">

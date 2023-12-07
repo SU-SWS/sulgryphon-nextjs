@@ -18,7 +18,7 @@ const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) =
   const [animationParent] = useAutoAnimate()
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     },
     [onClose]

@@ -47,10 +47,10 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   )
 }
 
-const LibGuideSection = ({heading, guides}) => {
+const LibGuideSection = ({heading, guides}: {heading: string, guides: LibGuide[]}) => {
   const firstGuides = guides.slice(0, 5);
   const moreGuides = guides.slice(5)
-  const moreGuideRef = useRef(null);
+  const moreGuideRef = useRef<HTMLAnchorElement>(null);
   const buttonRef = useRef(null);
   const [showMore, setShowMore] = useState(true);
   const [parent] = useAutoAnimate();
@@ -58,8 +58,7 @@ const LibGuideSection = ({heading, guides}) => {
 
   useEffect(() => {
     if (!showMore) {
-      // @ts-ignore
-      moreGuideRef?.current?.focus()
+      moreGuideRef.current?.focus()
     }
   }, [showMore])
 
@@ -74,7 +73,7 @@ const LibGuideSection = ({heading, guides}) => {
           <Conditional showWhen={!showMore}>
             {moreGuides.map((guide, i) =>
               <li key={guide.id}>
-                <Link href={guide.url} ref={i === 0 ? moreGuideRef : null}>{guide.title}</Link>
+                <Link href={guide.url} ref={i === 0 ? moreGuideRef : undefined}>{guide.title}</Link>
               </li>
             )}
           </Conditional>

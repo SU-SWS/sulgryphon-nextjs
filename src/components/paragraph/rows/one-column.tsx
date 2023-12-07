@@ -1,19 +1,19 @@
 import Paragraph from "@/components/paragraph";
-import {DrupalParagraph} from "next-drupal";
+import {StanfordParagraph} from "@/lib/drupal/drupal";
 
 interface LayoutProps {
-  items: DrupalParagraph[],
+  items: StanfordParagraph[],
   fullWidth?: boolean
   config?: {}
 }
 
-const OneColumn = ({items, config = {}, fullWidth = true}: LayoutProps) => {
+const OneColumn = ({items, fullWidth = true}: LayoutProps) => {
   return (
     <div data-rows="one-column" className="relative flex flex-col gap-[90px]">
       {items.map(item =>
         <Paragraph
           key={item.id}
-          paragraph={item as DrupalParagraph}
+          paragraph={item}
           fullWidth={fullWidth}
           singleRow
         />

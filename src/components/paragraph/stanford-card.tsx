@@ -12,7 +12,7 @@ interface Props extends PropsWithoutRef<any> {
   body?: string
   link?: DrupalLinkType
   linkStyle?: string
-  sprinklePosition?: string
+  sprinklePosition: "top_right" | "top_left" | "bottom_right" | "bottom_left"
   image?: DrupalImageMedia
   videoUrl?: string
   orientation?: string

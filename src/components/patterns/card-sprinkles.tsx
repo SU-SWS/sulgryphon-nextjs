@@ -47,7 +47,7 @@ const BottomRightSprinkles = () => {
 }
 
 
-const CardSprinkles = ({position}) => {
+const CardSprinkles = ({position}: { position: 'top_right' | 'top_left' | 'bottom_right' | 'bottom_left' }) => {
   return (
     <>
       {position === 'top_right' && <TopRightSprinkles/>}

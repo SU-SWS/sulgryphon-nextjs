@@ -1,7 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
-import fetchLibGuides, {Guide} from "@/lib/libguides";
+import fetchLibGuides from "@/lib/libguides";
+import {LibGuide} from "@/lib/drupal/drupal";
 
-export const GET = async (request: NextRequest, {params: {id}}) => {
-  const guides: Guide[] = await fetchLibGuides({accountId: id})
+export const GET = async (request: NextRequest, {params: {id}}:{params: {id: number}}) => {
+  const guides: LibGuide[] = await fetchLibGuides({accountId: id})
   return NextResponse.json(guides);
 }

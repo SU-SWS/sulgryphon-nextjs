@@ -2,12 +2,11 @@ import "server-only";
 import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import NodeListDisplay from "@/components/node/node-list-display";
-import {EventSeries} from "@/lib/drupal/drupal";
+import {EventSeries, StanfordParagraph} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
-import {DrupalParagraph} from "next-drupal";
 
 const StanfordEventSeries = async ({node, ...props}: { node: EventSeries }) => {
-  node.su_event_series_components = await fetchComponents(node.su_event_series_components ?? []) as DrupalParagraph[];
+  node.su_event_series_components = await fetchComponents<StanfordParagraph>(node.su_event_series_components ?? []);
   node.su_event_series_components = node.su_event_series_components.filter(item => item?.id?.length > 0);
   return (
     <article {...props}>

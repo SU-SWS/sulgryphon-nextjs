@@ -1,6 +1,6 @@
 "use client";
 
-import {RefObject, useEffect, useRef, useState} from "react";
+import {FormEvent, MouseEvent, RefObject, useEffect, useRef, useState} from "react";
 import {StudyPlace} from "@/lib/drupal/drupal";
 import Conditional from "@/components/utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
@@ -14,7 +14,7 @@ interface SelectOption {
   label: string
 }
 
-const StudyPlacesFiltering = ({items}) => {
+const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedLibraries, setSelectedLibraries] = useState<string[]>([]);
   const [selectedCapacity, setSelectedCapacity] = useState<string[]>([]);
@@ -50,7 +50,7 @@ const StudyPlacesFiltering = ({items}) => {
   capacityOptions = capacityOptions.sort((a, b) => a.label.localeCompare(b.label));
   libraryOptions = libraryOptions.sort((a, b) => a.label.localeCompare(b.label));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const filteredItems = items.filter((item: StudyPlace) =>
       (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
@@ -61,7 +61,7 @@ const StudyPlacesFiltering = ({items}) => {
     setItemsToDisplay(filteredItems)
   }
 
-  const handleReset = (e) => {
+  const handleReset = (e: MouseEvent) => {
     e.preventDefault();
     setSelectedTypes([]);
     setSelectedLibraries([]);
@@ -87,7 +87,7 @@ const StudyPlacesFiltering = ({items}) => {
             multiple
             disabled={typeOfStudies.length == 0}
             value={selectedTypes}
-            onChange={(event, value: SelectValue<string, true>) => setSelectedTypes(value)}
+            onChange={(event, value: SelectValue<string, boolean>) => setSelectedTypes(value as string[])}
           />
 
           <SelectList
@@ -96,7 +96,7 @@ const StudyPlacesFiltering = ({items}) => {
             multiple
             disabled={libraryOptions.length == 0}
             value={selectedLibraries}
-            onChange={(event, value: SelectValue<string, true>) => setSelectedLibraries(value)}
+            onChange={(event, value: SelectValue<string, boolean>) => setSelectedLibraries(value as string[])}
           />
 
           <SelectList
@@ -105,7 +105,7 @@ const StudyPlacesFiltering = ({items}) => {
             multiple
             disabled={capacityOptions.length == 0}
             value={selectedCapacity}
-            onChange={(event, value: SelectValue<string, true>) => setSelectedCapacity(value)}
+            onChange={(event, value: SelectValue<string, boolean>) => setSelectedCapacity(value as string[])}
           />
 
           <SelectList
@@ -114,7 +114,7 @@ const StudyPlacesFiltering = ({items}) => {
             multiple
             disabled={featureOptions.length == 0}
             value={selectedFeatures}
-            onChange={(event, value: SelectValue<string, true>) => setSelectedFeatured(value)}
+            onChange={(event, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
           />
 
         </fieldset>

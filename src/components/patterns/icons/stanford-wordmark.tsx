@@ -1,4 +1,6 @@
-const StanfordWordMark = ({height = 91, width = 426, ...props}) => {
+import {PropsWithoutRef} from "react";
+
+const StanfordWordMark = ({height = 91, width = 426, ...props}: PropsWithoutRef<{ height?: number, width?: number, className?: string }>) => {
   if (height != 91 && width == 426) {
     width *= height / 91
   }

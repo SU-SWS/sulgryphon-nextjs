@@ -55,9 +55,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
               <div className="text-18 @lg:type-0">{node.su_person_full_title}</div>
             </Conditional>
 
-            <Conditional showWhen={node.su_person_email}>
-
-
+            {node.su_person_email &&
               <div className="flex items-center">
                 <EnvelopeIcon width={20} className="flex-shrink-0 mr-3 text-digital-blue"/>
 
@@ -66,8 +64,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
                   className="transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red no-underline text-digital-blue text-18 @lg:text-18 break-words"
                 />
               </div>
-
-            </Conditional>
+            }
           </div>
         </div>
 

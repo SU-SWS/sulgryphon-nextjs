@@ -30,7 +30,7 @@ export async function translatePath(
 }
 
 export async function translatePathFromContext(
-  context: {  },
+  context: {params: {slug: string | string[]}  },
   options?: {
     accessToken?: AccessToken
     prefix?: string

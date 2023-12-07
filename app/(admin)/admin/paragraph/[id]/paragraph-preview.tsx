@@ -16,7 +16,7 @@ const ParagraphPreview = ({}) => {
   const [paragraph, setParagraph] = useState<DrupalParagraph | null>(null);
   const [iframeId, setIframeId] = useState<string | null>(null);
 
-  const setParagraphData = ({data}) => {
+  const setParagraphData = ({data}: { data: string }) => {
     try {
       const jsonData = JSON.parse(data);
       setParagraph(deserialize(jsonData) as DrupalParagraph)

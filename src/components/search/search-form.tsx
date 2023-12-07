@@ -1,15 +1,11 @@
 "use client";
 
-import {Suspense, useId, useRef} from "react";
+import {FormEvent, Suspense, useId, useRef} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 
-interface keyable {
-  [key: string]: any
-}
-
-interface FormProps extends keyable {
+interface FormProps extends Record<string, any> {
   action: string,
-  inputProps?: keyable
+  inputProps?: Record<string, any>
 }
 
 const SearchForm = ({...props}: FormProps) => {
@@ -36,7 +32,7 @@ const SearchFormComponent = ({action = '/search', inputProps = {}, ...props}: Fo
 
   const router = useRouter()
 
-  const formSubmit = (e) => {
+  const formSubmit = (e: FormEvent) => {
     if (action === '/search') {
       e.preventDefault();
       const newSearch = inputProps.ref.current.value;

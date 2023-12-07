@@ -4,7 +4,7 @@ import Conditional from "@/components/utils/conditional";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import Wave from "@/components/patterns/wave";
 import {DrupalLink} from "@/components/patterns/link";
-import {CardParagraph, DrupalLinkType} from "@/lib/drupal/drupal"
+import {CardParagraph, DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal"
 import {PropsWithoutRef, useRef} from "react";
 import OnlyIfCentered from "@/components/utils/only-if-centered";
 import Card from "@/components/patterns/card";
@@ -101,7 +101,14 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   )
 }
 
-const CollectionCard = ({header, superHeader, body, link, image, videoUrl}) => {
+const CollectionCard = ({header, superHeader, body, link, image, videoUrl}:{
+  header?: string
+  superHeader?: string
+  body?: string
+  link?: DrupalLinkType
+  image?: DrupalImageMedia
+  videoUrl?: string
+}) => {
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;

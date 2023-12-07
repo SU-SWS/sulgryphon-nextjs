@@ -3,9 +3,9 @@
 import {useSelect, SelectOptionDefinition, SelectProvider, SelectValue} from '@mui/base/useSelect';
 import {useOption} from '@mui/base/useOption';
 import {
-  FocusEvent,
   KeyboardEvent,
   MouseEvent,
+  FocusEvent,
   ReactNode,
   RefObject,
   useEffect,
@@ -15,15 +15,15 @@ import {
   useState
 } from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {useIsClient} from "usehooks-ts";
+import useOutsideClick from "@/lib/hooks/useOutsideClick";
 
 interface Props {
   options: SelectOptionDefinition<string>[];
   label?: string
   ariaLabelledby?: string
   defaultValue?: any
-  onChange?: (event: MouseEvent | KeyboardEvent | FocusEvent, value: SelectValue<string, boolean>) => void | null
+  onChange?: (event: MouseEvent | KeyboardEvent | FocusEvent | null, value: SelectValue<string, boolean>) => void | null
   multiple?: boolean
   disabled?: boolean
   value?: SelectValue<string, boolean>
@@ -95,12 +95,13 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   const labelId = useId();
   const labeledBy = ariaLabelledby ?? labelId;
   const listboxRef = useRef<HTMLUListElement>(null);
-  const [listboxVisible, setListboxVisible] = useState(false);
+  const [listboxVisible, setListBoxVisible] = useState<boolean>(false);
+  const outsideClickProps = useOutsideClick(() => setListBoxVisible(false))
   const isClient = useIsClient();
 
   const {getButtonProps, getListboxProps, contextValue, value} = useSelect<string, boolean>({
     listboxRef,
-    onOpenChange: setListboxVisible,
+    onOpenChange: setListBoxVisible,
     open: listboxVisible,
     multiple,
     ...props
@@ -119,18 +120,11 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
 
   const optionChosen = (multiple && value) ? value.length > 0 : !!value;
 
-  const onClickOutside = () => {
-    setListboxVisible(false)
-  }
 
   if (!isClient) return null;
 
   return (
-    <OutsideClickHandler
-      onClickOutside={onClickOutside}
-      onFocusOutside={onClickOutside}
-      className="relative h-fit"
-    >
+    <div className="relative h-fit" {...outsideClickProps}>
       <button
         {...getButtonProps()}
         className="w-full border border-black-40 rounded text-left p-5"
@@ -173,7 +167,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
           </SelectProvider>
         </ul>
       </div>
-    </OutsideClickHandler>
+    </div>
   );
 }
 

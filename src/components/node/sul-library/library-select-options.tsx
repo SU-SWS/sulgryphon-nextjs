@@ -1,15 +1,27 @@
-export const getLibrarySelectOptions = (libraryHours) => {
+import {DayHours} from "@/lib/hooks/useLibraryHours";
+
+
+type ShortDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
+export type HoursSelectOption = {
+  opens?: string
+  closes?: string
+  day: number
+  value: ShortDay
+  isDisabled: boolean
+  label: string
+}
+export const getLibrarySelectOptions = (libraryHours: DayHours[]): HoursSelectOption[] => {
   const rightNow = new Date()
   const today = rightNow.toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
 
-  const hourOptions: any = [];
+  const hourOptions: HoursSelectOption[] = [];
 
   libraryHours.map(dayHours => {
     const day = new Date(dayHours.day + " 20:00:00")
     let label = day.toLocaleString('en-us', {weekday: 'short', timeZone: 'America/Los_Angeles'});
 
-    const open = new Date(dayHours.opens_at ?? '');
-    const closed = new Date(dayHours.closes_at ?? '');
+    const open = new Date(dayHours.opens_at || '');
+    const closed = new Date(dayHours.closes_at || '');
 
     const dayNumber = day.getDay();
     const dayOfWeek = label;
@@ -28,11 +40,12 @@ export const getLibrarySelectOptions = (libraryHours) => {
       });
       label += `${openTime} - ${closeTime}`
     }
+
     hourOptions.push({
       opens: dayHours.opens_at,
       closes: dayHours.closes_at,
       day: dayNumber,
-      value: dayOfWeek,
+      value: dayOfWeek as ShortDay,
       isDisabled: dayOfWeek != today,
       label
     })

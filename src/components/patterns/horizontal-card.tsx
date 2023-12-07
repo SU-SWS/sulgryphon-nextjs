@@ -19,7 +19,7 @@ interface CardProps {
   link?: DrupalLinkType
   linkStyle?: string
   className?: string
-  backgroundSprinkles?: string
+  backgroundSprinkles?: 'top_right' | 'top_left' | 'bottom_right' | 'bottom_left'
   fullWidth?: boolean
   headerId?: string
   headingLevel?: string

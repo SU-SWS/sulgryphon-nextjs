@@ -1,7 +1,8 @@
 "use client";
-import { Email } from "react-obfuscate-email";
+import {Email} from "react-obfuscate-email";
+import {HTMLProps} from "react";
 
-const EmailLink = ({email, ...props}) => {
+const EmailLink= ({email, ...props}:{ email: string } & HTMLProps<HTMLAnchorElement> ) => {
   return (
     <Email
       email={email}

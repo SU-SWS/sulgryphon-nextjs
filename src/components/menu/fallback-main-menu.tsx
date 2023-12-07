@@ -1,7 +1,8 @@
 import Link from "@/components/patterns/elements/drupal-link";
 import SearchModal from "@/components/search/search-modal";
+import {DrupalMenuLinkContent} from "next-drupal";
 
-const FallbackMainMenu = ({menuItems}) => {
+const FallbackMainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   return (
     <nav className="centered">
       <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
@@ -17,7 +18,7 @@ const FallbackMainMenu = ({menuItems}) => {
   )
 }
 
-const MenuItem = ({url, title}) => {
+const MenuItem = ({url, title}: { url: string, title: string }) => {
   const linkUrl = url.length >= 1 ? url : '#';
 
   return (

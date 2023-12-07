@@ -1,11 +1,7 @@
 import Wave from "@/components/patterns/wave";
-import {ReactNode} from "react";
+import {PropsWithChildren, ReactNode} from "react";
 
-interface InternalHeaderBannerProps {
-  children: ReactNode
-}
-
-const InternalHeaderBanner = ({children}: InternalHeaderBannerProps) => {
+const InternalHeaderBanner = ({children}: PropsWithChildren) => {
   return (
     <header className="bg-black-true mb-50 relative overflow-hidden">
       <div className="relative z-[1]">

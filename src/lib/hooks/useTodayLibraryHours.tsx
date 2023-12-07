@@ -1,23 +1,16 @@
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours";
-import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options";
+import {getLibrarySelectOptions, HoursSelectOption} from "@/components/node/sul-library/library-select-options";
 
 interface HoursProps {
   closedAllDay: boolean
   isOpen: boolean
-  openingTime: string
-  closingTime: string
+  openingTime?: string
+  closingTime?: string
   afterClose: boolean
-  selectOptions: [{
-    opens: string,
-    closes: string,
-    day: number,
-    value: string,
-    isDisabled: boolean,
-    label: string
-  }]
+  selectOptions: HoursSelectOption[]
 }
 
-const useTodayLibraryHours = (branchId): HoursProps | null => {
+const useTodayLibraryHours = (branchId: string): HoursProps | null => {
   const libraryHours = useLibraryHours(branchId) as LocationHours;
   if (!libraryHours || !libraryHours?.primaryHours) {
     return null;
@@ -43,17 +36,17 @@ const useTodayLibraryHours = (branchId): HoursProps | null => {
     hour: "numeric",
     minute: "numeric",
     timeZone: 'America/Los_Angeles'
-  }) ?? null;
+  });
 
   const openingTime = openTime?.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "numeric",
     timeZone: 'America/Los_Angeles'
-  }) ?? null;
+  });
 
   const selectOptions = getLibrarySelectOptions(libraryHours.primaryHours);
 
-  const afterClose = closeTime <= rightNow
+  const afterClose = (closeTime && closeTime <= rightNow) || false
   return {closedAllDay, isOpen, openingTime, closingTime, selectOptions, afterClose}
 }
 

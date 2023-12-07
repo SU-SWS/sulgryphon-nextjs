@@ -7,7 +7,7 @@ export const metadata = {
   }
 }
 
-const Calendar = ({params: {id}}) => {
+const Calendar = ({params: {id}}: {params: {id: number}}) => {
   return (
     <main id="main-content">
       <InternalHeaderBanner>

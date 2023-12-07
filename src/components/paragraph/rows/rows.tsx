@@ -2,20 +2,20 @@ import {DrupalParagraph} from "next-drupal";
 import OneColumn from "@/components/paragraph/rows/one-column";
 import TwoColumn from "@/components/paragraph/rows/two-column";
 import ThreeColumn from "@/components/paragraph/rows/three-column";
+import {LayoutParagraph, StanfordParagraph} from "@/lib/drupal/drupal";
 
 interface RowProps {
-  items: DrupalParagraph[]
+  items: StanfordParagraph[]
   fullWidth?: boolean
 }
 
 export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => {
-  const layouts = {};
+  const layouts: Record<string,  {layout: LayoutParagraph, children: StanfordParagraph[]}> = {};
 
   // Set the layouts first.
   items.map(item => {
-    if (item?.behavior_settings?.layout_paragraphs?.layout) {
-      layouts[item.id] = item;
-      layouts[item.id].children = [];
+    if (item.type === 'paragraph--layout' && item?.behavior_settings?.layout_paragraphs?.layout) {
+      layouts[item.id] = {layout: item, children: []}
     }
   })
 
@@ -32,7 +32,7 @@ export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => 
       {Object.keys(layouts).map(layoutId =>
         <Row
           key={layoutId}
-          layoutSettings={layouts[layoutId].behavior_settings.layout_paragraphs}
+          layoutSettings={layouts[layoutId].layout.behavior_settings.layout_paragraphs}
           items={layouts[layoutId].children}
           fullWidth={fullWidth}
         />
@@ -41,7 +41,11 @@ export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => 
   )
 }
 
-const Row = ({layoutSettings, items, fullWidth = true}) => {
+const Row = ({layoutSettings, items, fullWidth = true}: {
+  layoutSettings: { config: any, layout: 'sul_helper_1_column' | 'sul_helper_2_column' | 'sul_helper_3_column' },
+  items: StanfordParagraph[],
+  fullWidth: boolean
+}) => {
   return (
     <>
       {layoutSettings.layout === 'sul_helper_1_column' &&

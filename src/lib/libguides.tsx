@@ -1,15 +1,9 @@
 import "server-only";
 import {cache} from "@/lib/drupal/get-cache";
 import axios from "axios";
+import {LibGuide} from "@/lib/drupal/drupal";
 
 const CACHE_KEY = 'LIBGUIDE_TOKEN';
-
-export interface Guide {
-  id: string
-  title: string
-  url: string
-  type: string
-}
 
 const fetchLibGuides = async ({accountId, subjectId}: { accountId?: number, subjectId?: number }) => {
   if (!accountId && !subjectId) return [];
@@ -39,9 +33,15 @@ const fetchLibGuides = async ({accountId, subjectId}: { accountId?: number, subj
       console.error('Libguide error: ' + await response.text());
       return [];
     }
-    const guideData = await response.json()
+    const guideData: {
+      id: string,
+      name: string,
+      url: string,
+      type_label: string,
+      status: 1 | 0
+    }[] = await response.json()
 
-    const guides: Guide[] = [];
+    const guides: LibGuide[] = [];
     guideData.filter(guide => guide.status === 1)
       .map(guide => {
         guides.push({

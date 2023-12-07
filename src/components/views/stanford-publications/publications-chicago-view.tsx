@@ -1,6 +1,6 @@
 import {getViewItems} from "@/components/views/view";
 import {Publication} from "@/lib/drupal/drupal";
-import StanfordCourseListItem from "@/components/node/stanford-course/list-item";
+import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item";
 
 interface Props {
   view: string
@@ -30,7 +30,7 @@ const PublicationsChicagoView = async ({view, args, itemsToDisplay, emptyMessage
           key={item.id}
           className="border-b border-black-20 last:border-0 pb-10 last:pb-0 pt-10 first:pt-0"
         >
-          <StanfordCourseListItem node={item}/>
+          <StanfordPublicationListItem node={item}/>
         </div>
       )}
     </div>

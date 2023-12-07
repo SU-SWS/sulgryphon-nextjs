@@ -52,7 +52,7 @@ const Header = async () => {
   )
 }
 
-const HeaderLink = ({href, text}) => {
+const HeaderLink = ({href, text}:{href: string, text: string}) => {
   return <li><Link className="text-black text-18 font-normal" href={href}>{text}</Link></li>
 }
 

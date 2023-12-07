@@ -2,7 +2,7 @@ import formatHtml from "@/lib/format-html";
 import NodeCardDisplay from "@/components/node/node-card";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {PropsWithoutRef} from "react";
-import {DrupalLinkType} from "@/lib/drupal/drupal";
+import {DrupalLinkType, StanfordNode} from "@/lib/drupal/drupal";
 import {DrupalNode} from "next-drupal";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import fetchComponents from "@/lib/fetch-components";
@@ -16,12 +16,12 @@ interface EntityProps extends PropsWithoutRef<any> {
   headerId?: string
   styles?: {
     orientation?: string
-    background
+    background?: string
   }
 }
 
 const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], fullWidth = true, ...props}: EntityProps) => {
-  const items = await fetchComponents<DrupalNode[]>(entities ?? []);
+  const items = await fetchComponents<StanfordNode>(entities ?? []);
   const entityItems = items.filter(item => item)
 
   const wrapperClasses = styles?.background === 'black' ? 'text-white py-40' : '';
@@ -39,7 +39,6 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
   const gridClass = entityItems.length >= 3 ? gridClasses[2] : gridClasses[(entityItems.length % 3) - 1]
 
   return (
-    // @ts-ignore
     <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {headline &&

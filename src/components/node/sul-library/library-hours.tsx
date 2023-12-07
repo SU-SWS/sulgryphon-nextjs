@@ -6,7 +6,7 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import {useId, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import OutsideClickHandler from "@/components/utils/outside-click-handler";
+import useOutsideClick from "@/lib/hooks/useOutsideClick";
 
 const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
   return (
@@ -24,6 +24,7 @@ const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
 const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
   const elementId = useId();
   const [expandedHours, setExpandedHours] = useState(false);
+  const outsideClickProps = useOutsideClick(() => setExpandedHours(false))
   if (!hoursId) {
     return null;
   }
@@ -42,10 +43,9 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
         {hoursDisplay}
       </div>
 
-      <OutsideClickHandler
+      <div
         className="relative"
-        onClickOutside={() => setExpandedHours(false)}
-        onFocusOutside={() => setExpandedHours(false)}
+        {...outsideClickProps}
       >
         <button
           className="rounded group shadow-md border border-black-10 w-full px-15 py-5 mb-5"
@@ -73,7 +73,7 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
             </li>
           )}
         </ul>
-      </OutsideClickHandler>
+      </div>
     </>
   )
 }

@@ -7,18 +7,18 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import Conditional from "@/components/utils/conditional";
-import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
+import useOutsideClick from "@/lib/hooks/useOutsideClick";
 
-const getCurrentPageTitle = (activeTrail, items, trail) => {
+const getCurrentPageTitle = (activeTrail: string[], items: DrupalMenuLinkContent[], trail: string[]): string | undefined => {
   const currentItem = items.find(item => item.id === trail.at(0));
-  if (currentItem === undefined) return null;
+  if (!currentItem) return;
   if (currentItem.id === activeTrail.at(-1)) {
     return currentItem.title;
   }
 
-  if (currentItem.items?.length > 0 && trail.length > 1) {
+  if (currentItem.items && currentItem.items.length > 0 && trail.length > 1) {
     return getCurrentPageTitle(activeTrail, currentItem.items, trail.slice(1));
   }
 }
@@ -26,6 +26,7 @@ const getCurrentPageTitle = (activeTrail, items, trail) => {
 const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const browserUrl = useNavigationEvent();
   const [menuOpen, setMenuOpen] = useState(false)
+  const outsideClickProps = useOutsideClick(() => setMenuOpen(false))
   const activeTrail = useActiveTrail(menuItems);
   const isDesktop = useIsDesktop()
 
@@ -63,14 +64,14 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
       </button>
 
 
-      <OutsideClickHandler onClickOutside={closeMobileMenu} onFocusOutside={closeMobileMenu}>
+      <div {...outsideClickProps}>
         <nav className={(isDesktop || menuOpen ? "block" : "hidden")} aria-label="Secondary Navigation">
           <ul
             className="absolute lg:relative z-40 lg:z-0 top-0 left-0 w-full bg-white list-unstyled py-20 mb-20 shadow-lg border border-t-8 border-archway">
             {subTree.map(item => <SideMenuItem key={item.id} activeTrail={activeTrail} {...item}/>)}
           </ul>
         </nav>
-      </OutsideClickHandler>
+      </div>
     </aside>
   )
 }

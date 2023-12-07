@@ -3,7 +3,7 @@ import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {PropsWithChildren} from "react";
 import {twMerge} from "tailwind-merge";
 
-export const DrupalLinkButton = ({href, children, className = '', buttonProps = null, ...props}) => {
+export const DrupalLinkButton = ({href, children, className = '', ...props}: PropsWithChildren<{href: string, className?: string}>) => {
   return (
     <Link
       href={href}
@@ -15,7 +15,7 @@ export const DrupalLinkButton = ({href, children, className = '', buttonProps = 
   )
 }
 
-export const DrupalLinkSecondaryButton = ({href, children, className = '', buttonProps = null, ...props}) => {
+export const DrupalLinkSecondaryButton = ({href, children, className = '', ...props}: PropsWithChildren<{href: string, className?: string}>) => {
   return (
     <Link
       href={href}
@@ -27,7 +27,7 @@ export const DrupalLinkSecondaryButton = ({href, children, className = '', butto
   )
 }
 
-export const DrupalLinkBigButton = ({href, children, className = '', buttonProps = null, ...props}) => {
+export const DrupalLinkBigButton = ({href, children, className = '', ...props}: PropsWithChildren<{href: string, className?: string, }>) => {
   return (
     <Link
       href={href}
@@ -39,7 +39,7 @@ export const DrupalLinkBigButton = ({href, children, className = '', buttonProps
   )
 }
 
-export const DrupalActionLink = ({href, children, buttonProps = null, ...props}) => {
+export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{href: string, className?: string}>) => {
   return (
     <Link
       href={href}

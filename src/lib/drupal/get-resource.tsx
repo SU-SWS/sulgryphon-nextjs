@@ -1,5 +1,3 @@
-
-
 import {AccessToken, DrupalNode, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal";
 import {stringify} from "qs"
 import {buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContext} from "./utils";
@@ -11,7 +9,7 @@ export async function getResources<T>(items: { type: string, id: string }[], dra
   items.map(item => requests.push(getResource(item.type, item.id, {draftMode})));
 
   // @ts-ignore
-  return Promise.all(requests.map((p, i) => p.catch((e) => {
+  return Promise.all(requests.map((p, i): T => p.catch((e: unknown) => {
     console.error(`Failed Fetching (probably unpublished) component ${items[i].type}-${items[i].id}`, e);
     return null
   })));
@@ -19,7 +17,7 @@ export async function getResources<T>(items: { type: string, id: string }[], dra
 
 export async function getResourceFromContext<T extends JsonApiResource>(
   type: string,
-  context:{ },
+  context: { params: { slug: string | string[] } },
   options?: {
     prefix?: string
     deserialize?: boolean
@@ -92,7 +90,7 @@ export async function getResourceByPath<T extends JsonApiResource>(
 
   const url = buildUrl("/subrequests", {_format: "json"})
 
-  let response= await fetch(url.toString(), {
+  let response = await fetch(url.toString(), {
     method: "POST",
     headers: await buildHeaders(options),
     redirect: "follow",
@@ -137,7 +135,6 @@ export async function getResourceCollection<T = JsonApiResource[]>(
     accessToken?: AccessToken
     draftMode?: boolean
   } & JsonApiWithLocaleOptions,
-
 ): Promise<T> {
   options = {
     deserialize: true,
@@ -176,7 +173,6 @@ export async function getResource<T extends JsonApiResource>(
     deserialize?: boolean
     draftMode?: boolean
   } & JsonApiWithLocaleOptions,
-
 ): Promise<T> {
   options = {
     deserialize: true,

@@ -1,4 +1,6 @@
-const LinkedInIcon = (props) => (
+import {PropsWithoutRef} from "react";
+
+const LinkedInIcon = (props: PropsWithoutRef<any>) => (
   <svg
     width={24.5}
     viewBox="0 0 448 512"

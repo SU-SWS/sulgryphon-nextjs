@@ -15,7 +15,7 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
   }, [router]);
 
   const onClick = useCallback(
-    (e) => {
+    (e: MouseEvent) => {
       if (e.target === overlay.current || e.target === wrapper.current) {
         if (onDismiss) onDismiss();
       }
@@ -24,7 +24,7 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
   );
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === "Escape") onDismiss();
     },
     [onDismiss]

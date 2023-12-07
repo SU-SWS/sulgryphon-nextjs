@@ -1,4 +1,6 @@
-const InstagramIcon = (props) => {
+import {PropsWithoutRef} from "react";
+
+const InstagramIcon = (props: PropsWithoutRef<any>) => {
   return (
     <svg viewBox="0 0 24 24" {...props}>
       <title>Instagram icon</title>

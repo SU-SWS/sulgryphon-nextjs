@@ -24,23 +24,22 @@ const ListParagraph = async ({headerId, headline, description, link, view, style
     delete link?.options?.attributes?.['aria-label'];
   }
 
-  const viewId: string | undefined = view?.resourceIdObjMeta?.drupal_internal__target_id;
-  const displayId: string | undefined = view?.resourceIdObjMeta?.display_id;
-  let args: string = view?.resourceIdObjMeta?.arguments ?? '';
-  const itemsToDisplay: number = view?.resourceIdObjMeta?.items_to_display ?? -1;
+  const viewId = view?.resourceIdObjMeta?.drupal_internal__target_id;
+  const displayId = view?.resourceIdObjMeta?.display_id;
+  let args = view?.resourceIdObjMeta?.arguments ?? '';
+  const itemsToDisplay = view?.resourceIdObjMeta?.items_to_display ?? -1;
 
   let viewDisplay;
-  const viewProps = {
-    viewId,
-    displayId,
-    itemsToDisplay,
-    args,
-    emptyMessage: styles?.list_paragraph?.empty_message,
-    hasHeading: !!headline
-  }
 
   if (viewId && displayId) {
-    viewDisplay = <View {...viewProps}/>
+    viewDisplay = <View
+      viewId={viewId}
+      displayId={displayId}
+      itemsToDisplay={itemsToDisplay}
+      args={args}
+      emptyMessage={styles?.list_paragraph?.empty_message}
+      hasHeading={!!headline}
+    />
   }
 
   if (styles?.list_paragraph?.hide_empty && (!viewDisplay || viewDisplay.type() === null)) {

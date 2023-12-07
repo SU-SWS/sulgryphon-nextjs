@@ -1,7 +1,7 @@
 import InterceptionModal from "@/components/patterns/modals/interception-modal";
 import {useId} from "react";
 
-const Calendar = ({params: {id}}) => {
+const Calendar = ({params: {id}}: { params: { id: number } }) => {
   const headingId = useId();
   return (
     <InterceptionModal aria-labelledby={headingId}>

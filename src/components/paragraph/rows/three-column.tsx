@@ -1,8 +1,8 @@
 import Paragraph from "@/components/paragraph";
-import {DrupalParagraph} from "next-drupal";
+import {StanfordParagraph} from "@/lib/drupal/drupal";
 
 interface LayoutProps {
-  items: DrupalParagraph[],
+  items: StanfordParagraph[],
   fullWidth?: boolean
   config: {}
 }

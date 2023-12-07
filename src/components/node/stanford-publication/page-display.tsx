@@ -1,18 +1,17 @@
 import "server-only";
 
-import {Publication} from "@/lib/drupal/drupal";
+import {Publication, StanfordParagraph} from "@/lib/drupal/drupal";
 import Conditional from "@/components/utils/conditional";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import fetchComponents from "@/lib/fetch-components";
-import {DrupalParagraph} from "next-drupal";
 
 const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
-  node.su_publication_components = await fetchComponents(node.su_publication_components ?? []) as DrupalParagraph[];
+  node.su_publication_components = await fetchComponents<StanfordParagraph>(node.su_publication_components ?? []);
   node.su_publication_components = node.su_publication_components.filter(item => item?.id?.length > 0);
 
-  const getMonthName = monthNumber => {
+  const getMonthName = (monthNumber: number) => {
     const date = new Date();
     date.setMonth(monthNumber - 1);
 
@@ -72,11 +71,11 @@ const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
             <Conditional showWhen={node.su_publication_citation?.su_year}>
               <div className="rs-mb-2">
                 <h2 className="text-16 md:text-18 2xl:text-19 mb-01em">Publication Date</h2>
-                <Conditional showWhen={node.su_publication_citation?.su_month && node.su_publication_citation?.su_day}>
+                {(node.su_publication_citation?.su_month && node.su_publication_citation?.su_day) &&
                   <div className="text-16 md:text-18 2xl:text-19">
                     {getMonthName(node.su_publication_citation?.su_month)} {node.su_publication_citation?.su_day}, {node.su_publication_citation?.su_year}
                   </div>
-                </Conditional>
+                }
                 <Conditional showWhen={node.su_publication_citation?.su_month && !node.su_publication_citation?.su_day}>
                   {node.su_publication_citation?.su_month}, {node.su_publication_citation?.su_year}
                 </Conditional>

@@ -8,7 +8,7 @@
     "build": "next build",
     "preview": "next build && next start",
     "export": "next build && next export",
-    "lint": "next lint"
+    "lint": "next lint && tsc"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.0",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.1.1",
+    "@types/qs": "^6.9.10",
     "@types/react": "^18.0.21",
     "autoprefixer": "^10.4.4",
     "eslint": "^8.12.0",

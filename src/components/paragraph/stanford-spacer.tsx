@@ -1,4 +1,4 @@
-const StanfordSpacer = ({size}) => {
+const StanfordSpacer = ({size}: { size: 'spacer-reduced' | 'spacer-minimal' | string }) => {
   let height;
   switch (size) {
     case 'spacer-reduced':

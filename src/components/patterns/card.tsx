@@ -20,7 +20,7 @@ interface CardProps {
   headingLevel?: string
 }
 
-const Card = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h3', ...props}: CardProps) => {
+const Card = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h3'}: CardProps) => {
   const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
   if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === header) {
     link.options.attributes['aria-labelledby'] = headerId;

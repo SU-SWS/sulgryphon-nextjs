@@ -1,4 +1,6 @@
-const FacebookIcon = (props) => (
+import {PropsWithoutRef} from "react";
+
+const FacebookIcon = (props: PropsWithoutRef<any>) => (
   <svg
     width={17.5}
     viewBox="0 0 340 512"

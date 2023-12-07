@@ -1,18 +1,29 @@
 import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal";
-import {JsonApiResource} from "next-drupal/src/types";
+import {JsonApiResource} from "next-drupal";
+
+export type StanfordNode = BasicPage |
+  Course |
+  Event |
+  EventSeries |
+  News |
+  Person |
+  Library |
+  StudyPlace;
 
 // Node Types.
-export interface BasicPage extends DrupalNode {
+export type BasicPage = DrupalNode & {
+  type: 'node--stanford_page'
   su_basic_page_type?: DrupalTaxonomyTerm[]
-  su_page_banner?: DrupalParagraph
-  su_page_components?: DrupalParagraph[]
+  su_page_banner?: BannerParagraph
+  su_page_components?: StanfordParagraph[]
   su_page_description?: string
   su_page_image?: DrupalImageMedia
   su_shared_tabs?: DrupalTaxonomyTerm[]
   layout_selection?: DrupalLayoutSelection
 }
 
-export interface Course extends DrupalNode {
+export type Course = DrupalNode & {
+  type: 'node--stanford_course'
   body?: string
   su_course_academic_year?: string
   su_course_code?: string
@@ -26,11 +37,12 @@ export interface Course extends DrupalNode {
   su_shared_tags?: DrupalTaxonomyTerm[]
 }
 
-export interface Event extends DrupalNode {
+export type Event = DrupalNode & {
+  type: 'node--stanford_event'
   body?: string
   su_event_alt_loc?: string
   su_event_audience?: DrupalTaxonomyTerm[]
-  su_event_components?: DrupalParagraph[]
+  su_event_components?: StanfordParagraph[]
   su_event_cta?: DrupalLinkType
   su_event_date_time: DrupalSmartDate
   su_event_dek?: string
@@ -50,8 +62,9 @@ export interface Event extends DrupalNode {
   sul_event__image?: DrupalImageMedia
 }
 
-export interface EventSeries extends DrupalNode {
-  su_event_series_components: DrupalParagraph[]
+export type EventSeries = DrupalNode & {
+  type: 'node--stanford_event_series'
+  su_event_series_components: StanfordParagraph[]
   su_event_series_dek: string
   su_event_series_event: DrupalNode[]
   su_event_series_subheadline: string
@@ -60,11 +73,12 @@ export interface EventSeries extends DrupalNode {
   su_shared_tags: DrupalTaxonomyTerm[]
 }
 
-export interface News extends DrupalNode {
+export type News = DrupalNode & {
+  type: 'node--stanford_news'
   su_news_banner?: DrupalImageMedia | DrupalVideoMedia
   su_news_banner_media_caption?: string
   su_news_byline?: string
-  su_news_components?: DrupalParagraph[]
+  su_news_components?: StanfordParagraph[]
   su_news_dek?: string
   su_news_featured_media?: DrupalMedia
   su_news_publishing_date?: string
@@ -74,13 +88,14 @@ export interface News extends DrupalNode {
   su_news_hide_social?: boolean
 }
 
-export interface Person extends DrupalNode {
+export type Person = DrupalNode & {
+  type: 'node--stanford_person'
   body?: string
   su_person_academic_appt?: string
   su_person_address?: string
   su_person_admin_appts?: string
   su_person_affiliations?: DrupalLinkType[]
-  su_person_components?: DrupalParagraph[]
+  su_person_components?: StanfordParagraph[]
   su_person_education?: string[]
   su_person_email?: string
   su_person_fax?: string
@@ -107,37 +122,40 @@ export interface Person extends DrupalNode {
   lib_guides: LibGuide[]
 }
 
-export interface LibGuide {
+export type LibGuide = {
   id: string
   title: string
   url: string
   type: string
 }
 
-export interface Publication extends DrupalNode {
+export type Publication = DrupalNode & {
+  type: 'node--stanford_publication'
   su_publication_author_ref: DrupalNode[]
   su_publication_citation: DrupalPublicationCitation
-  su_publication_components?: DrupalParagraph[]
+  su_publication_components?: StanfordParagraph[]
   su_publication_cta?: DrupalLinkType
   su_publication_image?: DrupalImageMedia
   su_publication_topics?: DrupalTaxonomyTerm[]
   su_shared_tags?: DrupalTaxonomyTerm[]
 }
 
-export interface Library extends DrupalNode {
+export type Library = DrupalNode & {
+  type: 'node--sul_library'
   su_library__address?: DrupalAddress
   su_library__banner?: DrupalImageMedia
   su_library__contact_img?: DrupalImageMedia
   su_library__email?: string
   su_library__hours?: string
   su_library__map_link?: DrupalLinkType
-  su_library__paragraphs?: DrupalParagraph[]
+  su_library__paragraphs?: StanfordParagraph[]
   su_library__phone?: number
   sul_library__a11y?: string
   layout_selection?: DrupalLayoutSelection
 }
 
-export interface StudyPlace extends DrupalNode {
+export type StudyPlace = DrupalNode & {
+  type: 'node--sul_study_place'
   sul_study__branch: Library
   sul_study__capacity: DrupalTaxonomyTerm
   sul_study__features?: DrupalTaxonomyTerm[]
@@ -145,14 +163,33 @@ export interface StudyPlace extends DrupalNode {
 }
 
 // Paragraph Types.
-export interface LayoutParagraphsBehaviors {
+export type StanfordParagraph = LayoutParagraph |
+  BannerParagraph |
+  CardParagraph |
+  ImageGalleryParagraph |
+  ListParagraph |
+  EntityTeaserParagraph |
+  MediaCaptionParagraph |
+  WysiwygParagraph |
+  CollectionParagraph |
+  FeaturedCollectionParagraph |
+  ContactCardParagraph |
+  ButtonParagraph |
+  LibGuideParagraph
+
+export type LayoutParagraphsBehaviors = {
   layout_paragraphs: {
     parent_uuid: string
     region: string
   }
 }
 
-export interface BannerParagraph extends DrupalParagraph {
+export type LayoutParagraph = DrupalParagraph & {
+  type: 'paragraph--layout'
+}
+
+export type BannerParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_banner'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     hero_pattern?: {
@@ -167,7 +204,8 @@ export interface BannerParagraph extends DrupalParagraph {
 }
 
 
-export interface CardParagraph extends DrupalParagraph {
+export type CardParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_card'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_card_styles?: {
@@ -184,7 +222,8 @@ export interface CardParagraph extends DrupalParagraph {
   su_card_super_header?: string
 }
 
-export interface ImageGalleryParagraph extends DrupalParagraph {
+export type ImageGalleryParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_gallery'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -194,7 +233,8 @@ export interface ImageGalleryParagraph extends DrupalParagraph {
   su_gallery_images: DrupalGalleryImageMedia[]
 }
 
-export interface ListParagraph extends DrupalParagraph {
+export type ListParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_lists'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_list_styles?: {
@@ -211,7 +251,8 @@ export interface ListParagraph extends DrupalParagraph {
   su_list_view: DrupalViewField
 }
 
-export interface EntityTeaserParagraph extends DrupalParagraph {
+export type EntityTeaserParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_entity'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_teaser_styles?: {
@@ -225,7 +266,8 @@ export interface EntityTeaserParagraph extends DrupalParagraph {
   su_entity_item?: DrupalNode[]
 }
 
-export interface MediaCaptionParagraph extends DrupalParagraph {
+export type MediaCaptionParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_media_caption'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -234,14 +276,16 @@ export interface MediaCaptionParagraph extends DrupalParagraph {
   su_media_caption_media?: DrupalMedia
 }
 
-export interface WysiwygParagraph extends DrupalParagraph {
+export type WysiwygParagraph = DrupalParagraph & {
+  type: 'paragraph--stanford_wysiwyg'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
   su_wysiwyg_text?: string
 }
 
-export interface CollectionParagraph extends DrupalParagraph {
+export type CollectionParagraph = DrupalParagraph & {
+  type: 'paragraph--collection'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -249,12 +293,14 @@ export interface CollectionParagraph extends DrupalParagraph {
   sul_collection_card: CollectionCardParagraph[]
 }
 
-export interface CollectionCardParagraph extends DrupalParagraph {
+export type CollectionCardParagraph = DrupalParagraph & {
+  type: 'paragraph--collection_card'
   sul_card_info: string
   sul_card: CardParagraph
 }
 
-export interface FeaturedCollectionParagraph extends DrupalParagraph {
+export type FeaturedCollectionParagraph = DrupalParagraph & {
+  type: 'paragraph--sul_feat_collection'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_feat_collections_styles?: {
@@ -266,7 +312,8 @@ export interface FeaturedCollectionParagraph extends DrupalParagraph {
   sul_collection__link?: DrupalLinkType
 }
 
-export interface ContactCardParagraph extends DrupalParagraph {
+export type ContactCardParagraph = DrupalParagraph & {
+  type: 'paragraph--sul_contact_card'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -279,7 +326,8 @@ export interface ContactCardParagraph extends DrupalParagraph {
   sul_contact__title?: string
 }
 
-export interface ButtonParagraph extends DrupalParagraph {
+export type ButtonParagraph = DrupalParagraph & {
+  type: 'paragraph--sul_button'
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_button_styles?: {
@@ -290,13 +338,14 @@ export interface ButtonParagraph extends DrupalParagraph {
   sul_button_headline?: string
 }
 
-export interface LibGuideParagraph extends DrupalParagraph {
+export type LibGuideParagraph = DrupalParagraph & {
+  type: 'paragraph--sul_libguide'
   sul_libguide__headline: string
   sul_libguide__desc?: string
   sul_libguide_id: number
 }
 
-export interface DrupalImageFile extends DrupalFile {
+export type DrupalImageFile = DrupalFile & {
   uri: {
     value: string
     url: string
@@ -305,31 +354,36 @@ export interface DrupalImageFile extends DrupalFile {
 }
 
 // Media Types.
-export interface DrupalImageMedia extends DrupalMedia {
+export type DrupalImageMedia = DrupalMedia & {
+  type: 'media--image'
   field_media_image: DrupalImageFile
 }
 
-export interface DrupalVideoMedia extends DrupalMedia {
+export type DrupalVideoMedia = DrupalMedia & {
+  type: 'media--video'
   field_media_oembed_video: string
 }
 
-export interface DrupalFileMedia extends DrupalMedia {
+export type DrupalFileMedia = DrupalMedia & {
+  type: 'media--file'
   field_media_file: DrupalFile
 }
 
-export interface DrupalGalleryImageMedia extends DrupalMedia {
+export type DrupalGalleryImageMedia = DrupalMedia & {
+  type: 'media--stanford_gallery_images'
   su_gallery_caption?: string
   su_gallery_image: DrupalImageFile
 }
 
-export interface DrupalEmbeddableMedia extends DrupalMedia {
+export type DrupalEmbeddableMedia = DrupalMedia & {
+  type: 'media--embeddable'
   field_media_embeddable_code?: string
   field_media_embeddable_oembed?: string
 }
 
 // Config Pages
-export interface GlobalMessageType extends JsonApiResource {
-  su_global_msg_type: string
+export type GlobalMessageType = JsonApiResource & {
+  su_global_msg_type: 'plain' | 'success' | 'info' | 'warning' | 'error'
   su_global_msg_enabled: boolean
   su_global_msg_link?: DrupalLinkType
   su_global_msg_header?: string
@@ -338,21 +392,21 @@ export interface GlobalMessageType extends JsonApiResource {
 }
 
 // Field Structures.
-export interface DrupalLayoutSelection {
+export type DrupalLayoutSelection = {
   id: string
   resourceIdObjMeta: {
     drupal_internal__target_id: string
   }
 }
 
-export interface DrupalWysiwyg {
+export type DrupalWysiwyg = {
   format: string
   processed: string;
   summary?: string;
   value: string;
 }
 
-export interface DrupalLinkType {
+export type DrupalLinkType = {
   options: {
     attributes?: {
       [key: string]: string
@@ -363,7 +417,7 @@ export interface DrupalLinkType {
   url: string
 }
 
-export interface DrupalSmartDate {
+export type DrupalSmartDate = {
   duration: string
   end_value: string
   rrule?: number
@@ -372,7 +426,7 @@ export interface DrupalSmartDate {
   value: string
 }
 
-export interface DrupalAddress {
+export type DrupalAddress = {
   additional_name?: string
   address_line1?: string
   address_line2?: string
@@ -386,7 +440,7 @@ export interface DrupalAddress {
   sorting_code?: string
 }
 
-export interface DrupalName {
+export type DrupalName = {
   credentials?: string
   family?: string
   generational?: string
@@ -395,7 +449,7 @@ export interface DrupalName {
   title?: string
 }
 
-export interface DrupalViewField {
+export type DrupalViewField = {
   id: string
   resourceIdObjMeta: {
     arguments?: string
@@ -406,7 +460,7 @@ export interface DrupalViewField {
 }
 
 // Publication Citation entities.
-export interface DrupalPublicationCitation extends JsonApiResource {
+export type DrupalPublicationCitation = JsonApiResource & {
   changed: string
   created: string
   drupal_internal__id: string
@@ -426,7 +480,7 @@ export interface DrupalPublicationCitation extends JsonApiResource {
   su_year?: number
 }
 
-export interface Breadcrumb {
+export type Breadcrumb = {
   href: string
   text: string
 }

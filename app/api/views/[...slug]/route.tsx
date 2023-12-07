@@ -4,7 +4,7 @@ import {getView} from "@/lib/drupal/get-view";
 import {NextRequest, NextResponse} from "next/server";
 import fetchComponents from "@/lib/fetch-components";
 
-export const GET = async (request: NextRequest, {params: {slug}}) => {
+export const GET = async (request: NextRequest, {params: {slug}}:{params: {slug: string[]}}) => {
   const [viewId, displayId, options] = slug
   let [args, itemsToDisplay] = options ? options.split(":") : ['', null];
   const drupalParams = new DrupalJsonApiParams();
@@ -13,7 +13,7 @@ export const GET = async (request: NextRequest, {params: {slug}}) => {
   drupalParams.addCustomParam({'views-argument': args.replace(/^\//, '').split('/')});
 
   if (itemsToDisplay) {
-    drupalParams.addPageLimit(itemsToDisplay);
+    drupalParams.addPageLimit(parseInt(itemsToDisplay));
   }
 
   const view = await getView<Promise<DrupalView>>(`${viewId}--${displayId}`, {params: drupalParams.getQueryObject()});

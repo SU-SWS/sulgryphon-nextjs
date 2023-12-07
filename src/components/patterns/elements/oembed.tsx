@@ -12,7 +12,6 @@ interface Props extends PropsWithoutRef<any> {
 const Oembed = ({url, ...props}: Props) => {
   const {ref, inView} = useInView({triggerOnce: true})
   return (
-    // @ts-ignore
     <div ref={ref} {...props}>
       {inView && <Embed url={url} LoadingFallbackElement={<Loading/>}/>}
     </div>

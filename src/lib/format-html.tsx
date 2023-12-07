@@ -162,7 +162,7 @@ const cleanMediaMarkup = (node: Element) => {
     // const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
     const iframe = findIframeInMedia(node);
 
-    // @ts-ignore
+
     let {"data-src": iframeSrc} = iframe && iframe.attribs;
     iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');
     return (

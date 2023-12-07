@@ -79,7 +79,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
                 </div>
               </Conditional>
 
-              <Conditional showWhen={paragraph.sul_contact__email}>
+              {paragraph.sul_contact__email &&
                 <div className="relative flex flex-row items-center rs-mb-0 type-1">
                   <EnvelopeIcon width={19} className="mt-02em mr-12 flex-shrink-0"/>
                   <EmailLink
@@ -87,7 +87,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
                     className="underline text-white hocus:text-illuminating-dark hocus:no-underline active:text-digital-red-light font-normal break-words"
                   />
                 </div>
-              </Conditional>
+              }
 
               <Conditional showWhen={paragraph.sul_contact__address}>
                 <div className="relative flex items-center type-1">

@@ -1,6 +1,8 @@
+
 import {stringify} from "qs"
 import {AccessToken, DrupalNode, Locale} from "next-drupal";
 import {getAccessToken} from "./get-access-token";
+import {StanfordNode} from "@/lib/drupal/drupal";
 
 const JSONAPI_PREFIX = process.env.DRUPAL_JSONAPI_PREFIX || "/jsonapi"
 
@@ -106,15 +108,13 @@ export async function getJsonApiIndex(
 
 export const trimNodeData = <T, >(node: DrupalNode | DrupalNode[], desiredProperties: string[]): T => {
   if (!Array.isArray(node)) {
-    // @ts-ignore
-    const data: StanfordNode = {id: node.id, title: node.title, path: node.path};
+    const data: Omit<StanfordNode, 'drupal_internal__nid'> = {id: node.id, title: node.title, path: node.path};
     desiredProperties.map((property: string) => data[property] = node[property]);
     return data as T;
   }
 
   return node.filter(node => !!node).map(entity => {
-    // @ts-ignore
-    const data: StanfordNode = {id: entity.id, title: entity.title, path: entity.path};
+    const data: Omit<StanfordNode, 'drupal_internal__nid'> = {id: entity.id, title: entity.title, path: entity.path};
     desiredProperties.map(property => data[property] = entity[property]);
     return data;
   }) as T

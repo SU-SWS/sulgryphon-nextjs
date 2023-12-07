@@ -14,7 +14,7 @@ import {getResourceCollection} from "@/lib/drupal/get-resource";
 const GlobalMessage = async () => {
   let response;
   try {
-    response = await getResourceCollection('config_pages--stanford_global_message');
+    response = await getResourceCollection<GlobalMessageType[]>('config_pages--stanford_global_message');
     if (response.length === 0) {
       return null;
     }
@@ -22,7 +22,7 @@ const GlobalMessage = async () => {
     return null;
   }
 
-  const configPage = response.at(0) satisfies GlobalMessageType;
+  const configPage = response.at(0);
   if (!configPage || !configPage.su_global_msg_enabled) {
     return null;
   }

@@ -5,16 +5,16 @@ import {useEffect, useState} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
-import OutsideClickHandler from "@/components/utils/outside-click-handler";
 import {DrupalMenuLinkContent} from "next-drupal";
 import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
+import useOutsideClick from "@/lib/hooks/useOutsideClick";
 
 const maxMenuDepth = 1;
 
-const MainMenu = ({menuItems}) => {
+const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [addCloseAnimation, setAddCloseAnimation] = useState(false)
   const browserUrl = useNavigationEvent();
@@ -31,13 +31,9 @@ const MainMenu = ({menuItems}) => {
   }
 
   useEffect(() => setMenuOpen(false), [browserUrl]);
-
+  const outsideClickProps = useOutsideClick(() => setMenuOpen(false))
   return (
-    <OutsideClickHandler
-      onClickOutside={handleClickFocusOutside}
-      onFocusOutside={handleClickFocusOutside}
-      className="max-w-1500 w-full mx-auto lg:px-40 3xl:px-0"
-    >
+    <div className="max-w-1500 w-full mx-auto lg:px-40 3xl:px-0" {...outsideClickProps}>
       <button
         className="lg:hidden text-black-true absolute z-20 top-20 right-20 border-b-2 border-transparent hocus:border-black-true"
         onClick={openCloseMenu}
@@ -107,7 +103,7 @@ const MainMenu = ({menuItems}) => {
           </nav>
         </div>
       </div>
-    </OutsideClickHandler>
+    </div>
   )
 }
 
@@ -118,14 +114,24 @@ interface MenuItemProps {
   url: string
   items?: DrupalMenuLinkContent[]
   expanded: boolean
-  tabIndex: number
+  tabIndex?: number
   activeTrail: string[]
-  menuLevel: number
-  onClick: () => {}
+  menuLevel?: number
+  onClick: () => void
 }
 
 
-const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
+const MenuItem = ({
+                    id,
+                    title,
+                    url,
+                    items,
+                    expanded,
+                    onClick,
+                    tabIndex = 0,
+                    activeTrail = [],
+                    menuLevel = 0
+                  }: MenuItemProps) => {
   if (menuLevel > maxMenuDepth) {
     return null;
   }
@@ -156,6 +162,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
   }
 
   useEffect(() => setSubmenuOpen(false), [browserUrl])
+  const outsideClickProps = useOutsideClick(() => setSubmenuOpen(false))
 
   // Add classes to the link item based on various conditions.
   const getLinkBorderClasses = () => {
@@ -199,12 +206,7 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
   }
 
   return (
-    <OutsideClickHandler
-      onClickOutside={() => setSubmenuOpen(false)}
-      onFocusOutside={() => setSubmenuOpen(false)}
-      component="li"
-      className="p-0 m-0 relative lg:flex"
-    >
+    <li className="p-0 m-0 relative lg:flex" {...outsideClickProps}>
       <Conditional showWhen={url.length >= 1}>
         <Link
           tabIndex={tabIndex}
@@ -233,7 +235,8 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
 
           <span
             className={"flex items-center bg-black h-[68px] w-[70px] lg:h-auto absolute lg:relative z-10 top-0 right-0" + (menuLevel >= 1 ? ' lg:bg-fog-light' : ' lg:bg-transparent lg:w-[40px]')}>
-            <span className="border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
+            <span
+              className="border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
               <ChevronDownIcon
                 className={"lg:group-hocus:text-archway transition-all text-white lg:text-black-true mx-auto" + (submenuOpen ? " scale-y-[-1]" : "")}
                 height={40}
@@ -271,12 +274,12 @@ const MenuItem = ({id, title, url, items, expanded, onClick, tabIndex = 0, activ
           }
         </ul>
       </Conditional>
-    </OutsideClickHandler>
+    </li>
   )
 }
 
 
-const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
+const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}: { open: boolean, addCloseAnimation: boolean }) => {
   return (
     <span className="block w-[30px] mx-auto">
       <span
@@ -289,13 +292,20 @@ const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}) => {
   )
 }
 
-const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}) => {
+const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}: {
+  isOpen: boolean,
+  onButtonClick: () => void,
+  menuLevel: number,
+  title: string,
+  tabIndex: number
+}) => {
   return (
     <button
       className={"group bg-black h-[68px] w-[70px] lg:h-auto absolute lg:relative z-20 top-0 right-0 hover:after:content-[''] after:block after:absolute after:h-1 after:w-[30px] after:left-5 after:bottom-25 after:z-5 " + (menuLevel >= 1 ? ' lg:bg-fog-light' : ' lg:bg-transparent lg:w-[40px]')}
       onClick={onButtonClick}
       {...props}>
-      <span className="transition block border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
+      <span
+        className="transition block border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
         <ChevronDownIcon
           className={" transition-all text-white lg:text-black-true lg:group-hocus:text-archway mx-auto" + (isOpen ? " scale-y-[-1]" : "")}
           height={40}

@@ -1,6 +1,5 @@
 "use client";
 
-import Conditional from "@/components/utils/conditional";
 import {useSearchParams} from "next/navigation";
 import Loading from "@/components/patterns/icons/loading";
 import Link from "@/components/patterns/elements/drupal-link";
@@ -8,6 +7,7 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useDataFetch from "@/lib/hooks/useDataFetch";
 import {Suspense} from "react";
 import {Metadata} from "next";
+import {StanfordNode} from "@/lib/drupal/drupal";
 
 const SearchResults = () => {
   return (
@@ -22,18 +22,16 @@ const SearchResults = () => {
 const SearchResultsList = () => {
   const params = useSearchParams();
   const searchString = params ? params.get('q') as string : '';
-  const {isLoading, data} = useDataFetch(`/api/search?q=${searchString}`)
+  const {isLoading, data} = useDataFetch<StanfordNode[]>(`/api/search?q=${searchString}`)
 
-  if (isLoading) {
-    return <Loading/>
-  }
+  if (isLoading) return <Loading/>
 
   return (
     <div aria-live="polite">
-      <Conditional showWhen={data.length === 0}>
+      {(!data || data.length === 0) &&
         <p>No results found for your search. Please try again.</p>
-      </Conditional>
-      <Conditional showWhen={data.length > 0}>
+      }
+      {(data && data.length > 0) &&
         <ul className="list-unstyled">
           {data.slice(0, 20).map((item, i) =>
             <li key={`search-result-${i}`} className="border-b border-black-20 last:border-0 pb-30 pt-30 first:pt-0">
@@ -41,7 +39,7 @@ const SearchResultsList = () => {
             </li>
           )}
         </ul>
-      </Conditional>
+      }
     </div>
   )
 }

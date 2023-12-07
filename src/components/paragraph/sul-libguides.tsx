@@ -2,11 +2,11 @@
 
 import formatHtml from "@/lib/format-html";
 import {PropsWithoutRef} from "react";
-import {Guide} from "@/lib/libguides";
 import Libguide from "@/components/node/stanford-person/libguide";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useDataFetch from "@/lib/hooks/useDataFetch";
+import {LibGuide} from "@/lib/drupal/drupal";
 
 interface Props extends PropsWithoutRef<any> {
   headline?: string;
@@ -25,14 +25,16 @@ const SulLibguides = ({...props}: Props) => {
 }
 
 const Component = ({headline, description, libguideId, fullWidth, ...props}: Props) => {
-  const {data: libguides} = useDataFetch(`/api/libguides/subjects/${libguideId}`);
+  const {data: libguides} = useDataFetch<LibGuide[]>(`/api/libguides/subjects/${libguideId}`);
 
   return (
     <div className="relative centered lg:max-w-[980px]" {...props}>
       {headline && <h2>{headline}</h2>}
       {description && <div>{formatHtml(description)}</div>}
 
-      {libguides && <Libguide guides={libguides satisfies Guide[]} headingLevel={headline ? 3 : 2}/>}
+      {(libguides && libguides.length > 0) &&
+        <Libguide guides={libguides} headingLevel={headline ? 3 : 2}/>
+      }
     </div>
   )
 }

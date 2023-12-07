@@ -1,7 +1,7 @@
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, UseQueryResult} from "@tanstack/react-query";
 import axios from "axios";
 
-const useDataFetch = (url: string, queryKeys: string[] = [], options = {}) => {
+const useDataFetch = <T, >(url: string, queryKeys: string[] = [], options = {}): UseQueryResult<T> => {
   queryKeys.push(url);
 
   return useQuery({

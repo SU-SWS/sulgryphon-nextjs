@@ -2,9 +2,9 @@ import "server-only";
 import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import Link from "@/components/patterns/elements/drupal-link";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {Event} from "@/lib/drupal/drupal";
+import {Event, StanfordParagraph} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
-import {DrupalParagraph} from "next-drupal";
+
 import formatHtml from "@/lib/format-html";
 import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
@@ -14,7 +14,7 @@ import TelephoneLink from "@/components/patterns/elements/telephone-link";
 const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   if (node.su_event_source?.url) redirect(node.su_event_source.url)
 
-  node.su_event_components = await fetchComponents(node.su_event_components ?? []) as DrupalParagraph[];
+  node.su_event_components = await fetchComponents<StanfordParagraph>(node.su_event_components ?? []);
   node.su_event_components = node.su_event_components.filter(item => item?.id?.length > 0);
 
   const inPast = new Date(node.su_event_date_time?.end_value) < new Date();

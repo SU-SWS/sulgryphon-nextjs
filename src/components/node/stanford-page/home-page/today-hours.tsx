@@ -38,8 +38,8 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
 
   const libraryOptions: option[] = [];
-  Object.keys(libraries).map(i => {
-    libraryOptions.push({value: libraries[i].id, label: libraries[i].title})
+  libraries.map(library => {
+    libraryOptions.push({value: library.id, label: library.title})
   })
 
   const imageUrl = library?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x || library?.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_md_2x
@@ -81,8 +81,9 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
   )
 }
 
-const TodayLibraryHours = ({branchId, ...props}: { branchId?: string }) => {
-  const libraryHours = useTodayLibraryHours(branchId);
+const TodayLibraryHours = ({branchId}: { branchId?: string }) => {
+
+  const libraryHours = useTodayLibraryHours(branchId || '');
 
   if (!libraryHours) {
     return (
