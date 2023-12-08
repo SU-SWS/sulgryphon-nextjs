@@ -9,6 +9,7 @@ jobs:
       env:
         NEXT_PUBLIC_DRUPAL_BASE_URL: ${{ secrets.NEXT_PUBLIC_DRUPAL_BASE_URL }}
         NEXT_IMAGE_DOMAIN: ${{ secrets.NEXT_IMAGE_DOMAIN }}
+        BUILD_COMPLETE: ${{ secrets.BUILD_COMPLETE }}
     steps:
       - uses: actions/checkout@v2
       - name: Restore Cache

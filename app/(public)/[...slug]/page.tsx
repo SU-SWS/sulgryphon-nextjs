@@ -172,7 +172,7 @@ export const generateStaticParams = async () => {
       'node--sul_library'
     ], {}, {params: params.getQueryObject()});
 
-    let fetchMore = process.env.BUILD_COMPLETE === 'true' || process.env.CI !== 'true';
+    let fetchMore = process.env.BUILD_COMPLETE === 'true';
     let fetchedData: GetStaticPathsResult["paths"] = []
     let page = 1;
     while (fetchMore) {
