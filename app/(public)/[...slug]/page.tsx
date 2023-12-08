@@ -163,10 +163,6 @@ export const generateStaticParams = async () => {
   params.addPageLimit(50);
   let paths: GetStaticPathsResult["paths"] = [];
 
-  if (process.env.BUILD_COMPLETE !== 'true') {
-    console.log('Building only portion of the site. Enable the `BUILD_COMPLETE` for production environments.');
-  }
-
   try {
     paths = await getPathsFromContext([
       'node--stanford_page',
@@ -176,7 +172,7 @@ export const generateStaticParams = async () => {
       'node--sul_library'
     ], {}, {params: params.getQueryObject()});
 
-    let fetchMore = process.env.BUILD_COMPLETE === 'true';
+    let fetchMore = process.env.BUILD_COMPLETE === 'true' || process.env.CI !== 'true';
     let fetchedData: GetStaticPathsResult["paths"] = []
     let page = 1;
     while (fetchMore) {
