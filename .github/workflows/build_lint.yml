@@ -7,9 +7,11 @@ jobs:
     container:
       image: node:18
       env:
-        NEXT_PUBLIC_DRUPAL_BASE_URL: ${{ secrets.NEXT_PUBLIC_DRUPAL_BASE_URL }}
-        NEXT_IMAGE_DOMAIN: ${{ secrets.NEXT_IMAGE_DOMAIN }}
         BUILD_COMPLETE: ${{ secrets.BUILD_COMPLETE }}
+        LIBGUIDE_CLIENT_ID: ${{ secrets.LIBGUIDE_CLIENT_ID }}
+        LIBGUIDE_CLIENT_SECRET: ${{ secrets.LIBGUIDE_CLIENT_SECRET }}
+        NEXT_PUBLIC_DRUPAL_BASE_URL: ${{ secrets.NEXT_PUBLIC_DRUPAL_BASE_URL }}
+        NEXT_PUBLIC_SITE_NAME: ${{ secrets.NEXT_PUBLIC_SITE_NAME }}
     steps:
       - uses: actions/checkout@v2
       - name: Restore Cache

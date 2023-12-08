@@ -16,6 +16,7 @@ const icons: Icon[] = [16, 32, 96, 128, 192, 196].map(size => ({
 }));
 
 export const metadata = {
+  metadataBase: new URL('https://library.stanford.edu'),
   title: process.env.NEXT_PUBLIC_SITE_NAME,
   openGraph: {
     type: 'website',
