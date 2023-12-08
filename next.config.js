@@ -1,3 +1,5 @@
+const drupalUrl = new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL);
+
 module.exports = {
   poweredByHeader: false,
   experimental: {
@@ -6,12 +8,13 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        hostname: process.env.NEXT_IMAGE_DOMAIN,
+        protocol: drupalUrl.protocol.replace(':', ''),
+        hostname: drupalUrl.hostname,
       },
     ],
   },
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: process.env.CI !== 'true',
   },
   async rewrites() {
     return {

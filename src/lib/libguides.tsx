@@ -5,7 +5,10 @@ import {LibGuide} from "@/lib/drupal/drupal";
 
 const CACHE_KEY = 'LIBGUIDE_TOKEN';
 
-const fetchLibGuides = async ({accountId, subjectId}: { accountId?: number, subjectId?: number }) => {
+const fetchLibGuides = async ({accountId, subjectId}: {
+  accountId?: number,
+  subjectId?: number
+}): Promise<LibGuide[]> => {
   if (!accountId && !subjectId) return [];
 
   try {
