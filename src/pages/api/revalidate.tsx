@@ -8,7 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const slug = decodeURIComponent(req.query.slug as string);
   try {
     await res.revalidate(slug)
-    return res.json({revalidated: true})
   } catch (err: unknown) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
