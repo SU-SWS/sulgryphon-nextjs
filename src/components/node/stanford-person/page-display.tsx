@@ -16,7 +16,7 @@ import Paragraph from "@/components/paragraph";
 import EmailLink from "@/components/patterns/elements/email-link";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
-  node.su_person_components = await fetchComponents<StanfordParagraph>(node.su_person_components ?? []);
+  node.su_person_components = await fetchComponents<StanfordParagraph>(node.su_person_components || []);
   node.su_person_components = node.su_person_components.filter(item => !!item?.id);
   node.lib_guides = node.sul_person__libguide_id ? await fetchLibGuides({accountId: node.sul_person__libguide_id}) : [];
 

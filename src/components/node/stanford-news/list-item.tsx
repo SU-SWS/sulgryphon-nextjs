@@ -15,7 +15,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: PropsWithoutRef<Props
   const imageUrl = node.su_news_featured_media?.field_media_image?.image_style_uri?.breakpoint_2xl_1x || node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_1x
   const placeholder = node.su_news_featured_media?.field_media_image?.uri.base64 || node.su_news_banner?.field_media_image?.uri.base64;
 
-  const topics = node.su_news_topics?.filter(topic => !!topic.name) ?? [];
+  const topics = node.su_news_topics?.filter(topic => !!topic?.name) || [];
   return (
     <article {...props}>
       <div className="text-18 mb-14">

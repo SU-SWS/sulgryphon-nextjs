@@ -102,7 +102,7 @@ export async function getViewItems<T>(view: string, itemsToDisplay: number = -1,
 
   try {
     const viewData = await getView<DrupalNode[]>(view, {params: drupalParams.getQueryObject()});
-    items = viewData.results ?? [];
+    items = viewData.results || [];
   } catch (e) {
     console.log(`Unable to fetch view ${view}`)
   }

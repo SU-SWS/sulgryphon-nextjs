@@ -21,8 +21,8 @@ interface EntityProps extends PropsWithoutRef<any> {
 }
 
 const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], fullWidth = true, ...props}: EntityProps) => {
-  const items = await fetchComponents<StanfordNode>(entities ?? []);
-  const entityItems = items.filter(item => !!item.id)
+  const items = await fetchComponents<StanfordNode>(entities || []);
+  const entityItems = items.filter(item => !!item?.id)
 
   const wrapperClasses = styles?.background === 'black' ? 'text-white py-40' : '';
 

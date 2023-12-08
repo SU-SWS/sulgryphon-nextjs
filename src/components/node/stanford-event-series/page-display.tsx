@@ -6,7 +6,7 @@ import {EventSeries, StanfordParagraph} from "@/lib/drupal/drupal";
 import fetchComponents from "@/lib/fetch-components";
 
 const StanfordEventSeries = async ({node, ...props}: { node: EventSeries }) => {
-  node.su_event_series_components = await fetchComponents<StanfordParagraph>(node.su_event_series_components ?? []);
+  node.su_event_series_components = await fetchComponents<StanfordParagraph>(node.su_event_series_components || []);
   node.su_event_series_components = node.su_event_series_components.filter(item => !!item?.id);
   return (
     <article {...props}>

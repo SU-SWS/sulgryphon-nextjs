@@ -14,7 +14,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
       term.name?.length > 0 && index === self.findIndex((t: DrupalTaxonomyTerm) => (
         t.id === term.id
       ))
-  ) ?? [];
+  ) || [];
 
   const imageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const imageAlt = node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';

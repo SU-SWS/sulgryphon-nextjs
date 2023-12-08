@@ -94,7 +94,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           headline={paragraph.su_entity_headline}
           description={paragraph.su_entity_description}
           link={paragraph.su_entity_button}
-          entities={paragraph.su_entity_item ?? []}
+          entities={paragraph.su_entity_item || []}
           styles={paragraph.behavior_settings?.sul_teaser_styles}
           headerId={headerId}
           {...props}

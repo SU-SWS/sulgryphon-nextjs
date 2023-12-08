@@ -163,6 +163,10 @@ export const generateStaticParams = async () => {
   params.addPageLimit(50);
   let paths: GetStaticPathsResult["paths"] = [];
 
+  if (process.env.BUILD_COMPLETE !== 'true') {
+    console.log('Building only portion of the site. Enable the `BUILD_COMPLETE` for production environments.');
+  }
+
   try {
     paths = await getPathsFromContext([
       'node--stanford_page',

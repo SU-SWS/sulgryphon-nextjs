@@ -16,7 +16,7 @@ import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
-  node.su_news_components = await fetchComponents<StanfordParagraph>(node.su_news_components ?? [])
+  node.su_news_components = await fetchComponents<StanfordParagraph>(node.su_news_components || [])
   node.su_news_components = node.su_news_components.filter(item => !item?.id);
 
   // Redirect the user to the external source.

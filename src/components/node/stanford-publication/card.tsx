@@ -4,7 +4,7 @@ import Conditional from "@/components/utils/conditional";
 import Link from "@/components/patterns/elements/drupal-link";
 
 const StanfordPublicationCard = ({node, ...props}: { node: Publication }) => {
-  const topics = node.su_publication_topics?.filter(topic => !!topic.name) ?? [];
+  const topics = node.su_publication_topics?.filter(topic => !!topic?.name) || [];
   return (
     <article {...props}>
       <Card
