@@ -1,4 +1,3 @@
-import "server-only";
 import {cache} from "@/lib/drupal/get-cache";
 import axios from "axios";
 import {LibGuide} from "@/lib/drupal/drupal";
