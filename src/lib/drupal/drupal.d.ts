@@ -1,5 +1,6 @@
 import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal";
 import {JsonApiResource} from "next-drupal";
+import {DayHours} from "@/lib/hooks/useLibraryHours";
 
 export type StanfordNode = BasicPage |
   Course |
@@ -483,4 +484,32 @@ export type DrupalPublicationCitation = JsonApiResource & {
 export type Breadcrumb = {
   href: string
   text: string
+}
+
+
+export type LibraryHours = {
+  type: string
+  id: string
+  name: string
+  primary_location: string
+  locations: {
+    type: string
+    id: string
+    name: string
+    primary: boolean
+    hours: DayHours[]
+    links: {
+      self: string
+    }
+    library: {
+      type: string
+      id: string
+      name: string
+      primary_location: string
+      hours: DayHours[]
+      links: [Object]
+      locations: []
+    }
+  }[]
+  hours: DayHours[]
 }

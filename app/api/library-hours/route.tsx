@@ -1,33 +1,8 @@
 import {deserialize} from "@/lib/drupal/deserialize";
 import {NextResponse} from "next/server";
 import {DayHours} from "@/lib/hooks/useLibraryHours";
+import {LibraryHours} from "@/lib/drupal/drupal";
 
-export type LibraryHours = {
-  type: string
-  id: string
-  name: string
-  primary_location: string
-  locations: {
-    type: string
-    id: string
-    name: string
-    primary: boolean
-    hours: DayHours[]
-    links: {
-      self: string
-    }
-    library: {
-      type: string
-      id: string
-      name: string
-      primary_location: string
-      hours: DayHours[]
-      links: [Object]
-      locations: []
-    }
-  }[]
-  hours: DayHours[]
-}
 
 type FetchedData = {
   data: []
@@ -53,7 +28,7 @@ export const GET = async () => {
 
   const deserializedData = deserialize(data) as LibraryHours[];
   if (!deserializedData) {
-    return [];
+    return NextResponse.json([]);
   }
 
   const locations: Record<string, {
