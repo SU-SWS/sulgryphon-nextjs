@@ -7,7 +7,7 @@ import {DrupalMenuLinkContent} from "next-drupal";
 import {GetStaticPathsResult, Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {StanfordNode} from "@/lib/drupal/drupal";
+import {StanfordNode, StanfordParagraph} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
@@ -15,6 +15,7 @@ import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
+import fetchComponents from "@/lib/fetch-components";
 
 type Params = {
   slug: string | string[]

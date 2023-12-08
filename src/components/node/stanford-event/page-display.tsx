@@ -15,7 +15,7 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
   if (node.su_event_source?.url) redirect(node.su_event_source.url)
 
   node.su_event_components = await fetchComponents<StanfordParagraph>(node.su_event_components ?? []);
-  node.su_event_components = node.su_event_components.filter(item => item?.id?.length > 0);
+  node.su_event_components = node.su_event_components.filter(item => !!item?.id);
 
   const inPast = new Date(node.su_event_date_time?.end_value) < new Date();
   const start = new Date(node.su_event_date_time?.value);

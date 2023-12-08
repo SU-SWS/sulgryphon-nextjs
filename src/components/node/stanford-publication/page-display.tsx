@@ -9,7 +9,7 @@ import fetchComponents from "@/lib/fetch-components";
 const StanfordPublication = async ({node, ...props}: { node: Publication }) => {
 
   node.su_publication_components = await fetchComponents<StanfordParagraph>(node.su_publication_components ?? []);
-  node.su_publication_components = node.su_publication_components.filter(item => item?.id?.length > 0);
+  node.su_publication_components = node.su_publication_components.filter(item => !!item?.id);
 
   const getMonthName = (monthNumber: number) => {
     const date = new Date();

@@ -32,6 +32,8 @@ export const metadata = {
   }
 }
 
+export const revalidate = 86400;
+
 const RootLayout = ({children, modal}: { children: ReactNode, modal: ReactNode }) => {
   const draftMode = isDraftMode();
   return (
