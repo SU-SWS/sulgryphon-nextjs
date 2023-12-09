@@ -9,7 +9,7 @@ interface AccessToken {
 
 const CACHE_KEY = "NEXT_DRUPAL_ACCESS_TOKEN"
 
-export async function getAccessToken(draftMode: boolean = false): Promise<AccessToken | null> {
+export const getAccessToken = async (draftMode: boolean = false): Promise<AccessToken | null> => {
 
   if (!process.env.DRUPAL_DRAFT_CLIENT || !process.env.DRUPAL_DRAFT_SECRET || !draftMode) {
     return null;
@@ -20,31 +20,25 @@ export async function getAccessToken(draftMode: boolean = false): Promise<Access
     return cached
   }
 
-  const basic = Buffer.from(
-    `${process.env.DRUPAL_DRAFT_CLIENT}:${process.env.DRUPAL_DRAFT_SECRET}`
-  ).toString("base64")
+  const basic = Buffer.from(`${process.env.DRUPAL_DRAFT_CLIENT}:${process.env.DRUPAL_DRAFT_SECRET}`).toString("base64")
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/oauth/token`,
     {
       method: "POST",
-      next: {revalidate: 1},
-      headers: {
-        Authorization: `Basic ${basic}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+      next: {revalidate: 299},
+      headers: {Authorization: `Basic ${basic}`, "Content-Type": "application/x-www-form-urlencoded"},
       body: `grant_type=client_credentials`,
     }
   )
 
   if (!response.ok) {
     console.log('unable to fetch oauth token: ' + await response.text());
-    cache.set(CACHE_KEY, null, 30)
+    cache.set(CACHE_KEY, null, 299)
     return null;
   }
 
   const result: AccessToken = await response.json()
-
   cache.set(CACHE_KEY, result, result.expires_in)
 
   return result

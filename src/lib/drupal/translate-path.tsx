@@ -1,13 +1,14 @@
 import {AccessToken, DrupalTranslatedPath} from "next-drupal";
 import {buildHeaders, buildUrl, getPathFromContext} from "./utils";
+import {PageProps} from "@/lib/drupal/drupal";
 
-export async function translatePath(
+export const translatePath = async (
   path: string,
   options?: {
     accessToken?: AccessToken
     draftMode?: boolean
   }
-): Promise<DrupalTranslatedPath | null> {
+): Promise<DrupalTranslatedPath | null> => {
   options = {
     draftMode: false,
     ...options
@@ -29,14 +30,14 @@ export async function translatePath(
   return json
 }
 
-export async function translatePathFromContext(
-  context: {params: {slug: string | string[]}  },
+export const translatePathFromContext = async (
+  context: PageProps,
   options?: {
     accessToken?: AccessToken
     prefix?: string
     draftMode?: boolean
   }
-): Promise<DrupalTranslatedPath | null> {
+): Promise<DrupalTranslatedPath | null> => {
   options = {
     prefix: "",
     draftMode: false,

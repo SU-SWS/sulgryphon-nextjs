@@ -2,14 +2,10 @@ import {AccessToken, JsonApiWithLocaleOptions, DrupalMenuLinkContent} from "next
 import {buildUrl, buildHeaders} from "./utils";
 import {deserialize} from "@/lib/drupal/deserialize";
 
-export async function getMenu(
+export const getMenu = async(
   name: string,
-  options?: {
-    deserialize?: boolean
-    accessToken?: AccessToken
-    draftMode: boolean
-  } & JsonApiWithLocaleOptions,
-): Promise<{ items: DrupalMenuLinkContent[], tree: DrupalMenuLinkContent[] }> {
+  options?: { deserialize?: boolean,accessToken?: AccessToken,draftMode: boolean } & JsonApiWithLocaleOptions,
+): Promise<{ items: DrupalMenuLinkContent[], tree: DrupalMenuLinkContent[] }> => {
 
   options = {
     deserialize: true,
@@ -20,6 +16,7 @@ export async function getMenu(
   const url = buildUrl(`/jsonapi/menu_items/${name}`)
 
   const response = await fetch(url.toString(), {
+    next: {revalidate: 86400},
     headers: await buildHeaders(options),
   })
 
@@ -38,18 +35,14 @@ export async function getMenu(
     expanded: item.expanded
   } as DrupalMenuLinkContent));
   const {items: tree} = buildMenuTree(items)
-
-  return {
-    items,
-    tree,
-  }
+  return {items, tree}
 }
 
 
-function buildMenuTree<T extends DrupalMenuLinkContent>(
+const buildMenuTree = <T extends DrupalMenuLinkContent>(
   links: DrupalMenuLinkContent[],
   parent: DrupalMenuLinkContent["id"] = ""
-): { items: DrupalMenuLinkContent[] } {
+): { items: DrupalMenuLinkContent[] } => {
   if (!links?.length) {
     return {
       items: [],

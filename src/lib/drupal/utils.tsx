@@ -1,20 +1,12 @@
-
 import {stringify} from "qs"
-import {AccessToken, DrupalNode, Locale} from "next-drupal";
+import {AccessToken} from "next-drupal";
 import {getAccessToken} from "./get-access-token";
-import {StanfordNode} from "@/lib/drupal/drupal";
+import {PageProps, StanfordNode} from "@/lib/drupal/drupal";
 
 const JSONAPI_PREFIX = process.env.DRUPAL_JSONAPI_PREFIX || "/jsonapi"
 
-export const buildUrl = (
-  path: string,
-  params?: string | Record<string, string> | URLSearchParams
-): URL => {
-  const url = new URL(
-    path.charAt(0) === "/"
-      ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}`
-      : path
-  )
+export const buildUrl = (path: string, params?: string | Record<string, string> | URLSearchParams): URL => {
+  const url = new URL(path.charAt(0) === "/" ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}` : path)
 
   if (params) {
     // Use instead URLSearchParams for nested params.
@@ -24,26 +16,20 @@ export const buildUrl = (
   return url
 }
 
-export function getPathFromContext(
-  context: { params: {slug: string[] | string} },
-  prefix = ""
-): string {
+export const getPathFromContext = (context: PageProps, prefix = ""): string => {
   let {slug} = context.params
 
   slug = Array.isArray(slug) ? slug.map((s) => encodeURIComponent(s)).join("/") : slug
-
   return prefix ? `${prefix}/${slug}` : slug
 }
 
-export async function buildHeaders({accessToken, headers = {"Content-Type": "application/json"}, draftMode = false}: {
+export const buildHeaders = async ({accessToken, headers = {"Content-Type": "application/json"}, draftMode = false}: {
   accessToken?: AccessToken
   headers?: HeadersInit
   draftMode?: boolean
-} = {}): Promise<Headers> {
+} = {}): Promise<Headers> => {
+  if (process.env.REQUEST_HEADERS) headers = {...headers, ...JSON.parse(process.env.REQUEST_HEADERS)};
 
-  if (process.env.REQUEST_HEADERS) {
-    headers = {...headers, ...JSON.parse(process.env.REQUEST_HEADERS)};
-  }
 
   const requestHeaders = new Headers(headers);
   // This allows an access_token (preferrably long-lived) to be set directly on the env.
@@ -62,51 +48,33 @@ export async function buildHeaders({accessToken, headers = {"Content-Type": "app
   return requestHeaders
 }
 
-export async function getJsonApiPathForResourceType(
-  type: string,
-  locale?: Locale
-) {
-  const index = await getJsonApiIndex(locale)
-
+export const getJsonApiPathForResourceType = async (type: string): Promise<string> => {
+  const index = await getJsonApiIndex()
   return index?.links[type]?.href
 }
 
-export async function getJsonApiIndex(
-  locale?: Locale,
-  options?: {
-    accessToken?: AccessToken
-  }
-): Promise<{
-  links: {
-    [type: string]: {
-      href: string
-    }
-  }
-}> {
-  const url = buildUrl(
-    locale ? `/${locale}${JSONAPI_PREFIX}` : `${JSONAPI_PREFIX}`
-  )
+export const getJsonApiIndex = async (options?: { accessToken?: AccessToken }): Promise<{
+  links: { [type: string]: { href: string } }
+}> => {
+  const url = buildUrl(JSONAPI_PREFIX).toString()
 
   // As per https://www.drupal.org/node/2984034 /jsonapi is public.
   // We only call buildHeaders if accessToken or locale is explicitly set.
   // This is for rare cases where /jsonapi might be protected.
-  const response = await fetch(url.toString(), {
-    headers:
-      locale || options
-        ? await buildHeaders(options)
-        : {
-          "Content-Type": "application/json",
-        },
+  // Cache the response for 1 year because it should almost never change.
+  const response = await fetch(url, {
+    next: {revalidate: 31536000},
+    headers: options ? await buildHeaders(options) : {"Content-Type": "application/json"},
   })
 
   if (!response.ok) {
-    throw new Error(url.toString() + ': ' + response.statusText)
+    throw new Error(`${url}: ${response.statusText}`)
   }
 
   return await response.json()
 }
 
-export const trimNodeData = <T, >(node: DrupalNode | DrupalNode[], desiredProperties: string[]): T => {
+export const trimNodeData = <T, >(node: StanfordNode | StanfordNode[], desiredProperties: string[]): T => {
   if (!Array.isArray(node)) {
     const data: Omit<StanfordNode, 'drupal_internal__nid'> = {id: node.id, title: node.title, path: node.path};
     desiredProperties.map((property: string) => data[property] = node[property]);

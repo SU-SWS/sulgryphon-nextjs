@@ -3,8 +3,12 @@ import {stringify} from "qs"
 import {buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContext} from "./utils";
 import {deserialize} from "@/lib/drupal/deserialize";
 import {JsonApiParams} from "next-drupal";
+import {PageProps} from "@/lib/drupal/drupal";
 
-export async function getResources<T>(items: { type: string, id: string }[], draftMode: boolean = false): Promise<T[]> {
+export const getResources = async <T, >(
+  items: { type: string, id: string }[],
+  draftMode: boolean = false
+): Promise<T[]> => {
   const requests: PromiseLike<any>[] = [];
   items.map(item => requests.push(getResource(item.type, item.id, {draftMode})));
 
@@ -15,9 +19,9 @@ export async function getResources<T>(items: { type: string, id: string }[], dra
   })));
 }
 
-export async function getResourceFromContext<T extends JsonApiResource>(
+export const getResourceFromContext = async <T extends JsonApiResource>(
   type: string,
-  context: { params: { slug: string | string[] } },
+  context: PageProps,
   options?: {
     prefix?: string
     deserialize?: boolean
@@ -26,7 +30,7 @@ export async function getResourceFromContext<T extends JsonApiResource>(
     isVersionable?: boolean
     draftMode?: boolean
   }
-): Promise<T | undefined> {
+): Promise<T | undefined> => {
   options = {
     deserialize: true,
     draftMode: false,
@@ -41,16 +45,14 @@ export async function getResourceFromContext<T extends JsonApiResource>(
   const resource = await getResourceByPath<T>(path, {
     deserialize: options.deserialize,
     isVersionable: options.isVersionable,
-    params: {
-      ...options?.params,
-    },
+    params: {...options?.params},
     draftMode: options.draftMode
   })
 
   return resource
 }
 
-export async function getResourceByPath<T extends JsonApiResource>(
+export const getResourceByPath = async <T extends JsonApiResource>(
   path: string,
   options?: {
     accessToken?: AccessToken
@@ -58,18 +60,10 @@ export async function getResourceByPath<T extends JsonApiResource>(
     isVersionable?: boolean
     draftMode?: boolean
   } & JsonApiWithLocaleOptions,
-): Promise<T | undefined> {
-  options = {
-    deserialize: true,
-    isVersionable: false,
-    params: {},
-    draftMode: false,
-    ...options,
-  }
+): Promise<T | undefined> => {
+  options = {deserialize: true, isVersionable: false, params: {}, draftMode: false, ...options}
 
-  if (!path) {
-    return
-  }
+  if (!path) return
 
   const resourceParams = stringify(options.params)
 
@@ -115,71 +109,43 @@ export async function getResourceByPath<T extends JsonApiResource>(
   }
   const json = await response.json()
 
-  if (!json["resolvedResource#uri{0}"]) {
-    return
-  }
+  if (!json["resolvedResource#uri{0}"]) return
 
   const data = JSON.parse(json["resolvedResource#uri{0}"]?.body)
 
-  if (data.errors) {
-    throw new Error(data.errors[0].detail)
-  }
+  if (data.errors) throw new Error(data.errors[0].detail)
 
   return options.deserialize ? deserialize(data) : data
 }
 
-export async function getResourceCollection<T = JsonApiResource[]>(
+export const getResourceCollection = async <T = JsonApiResource[]>(
   type: string,
-  options?: {
-    deserialize?: boolean
-    accessToken?: AccessToken
-    draftMode?: boolean
-  } & JsonApiWithLocaleOptions,
-): Promise<T> {
-  options = {
-    deserialize: true,
-    draftMode: false,
-    ...options,
-  }
+  options?: { deserialize?: boolean,accessToken?: AccessToken,draftMode?: boolean } & JsonApiWithLocaleOptions,
+): Promise<T> => {
+  options = {deserialize: true, draftMode: false, ...options}
 
   const apiPath = await getJsonApiPathForResourceType(type)
 
-  if (!apiPath) {
-    throw new Error(`Error: resource of type ${type} not found.`)
-  }
+  if (!apiPath) throw new Error(`Error: resource of type ${type} not found.`)
 
-  const url = buildUrl(apiPath, {
-    ...options?.params,
-  })
 
-  const response = await fetch(url.toString(), {
-    headers: await buildHeaders(options),
-  })
+  const url = buildUrl(apiPath, {...options?.params})
 
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
+  const response = await fetch(url.toString(), {headers: await buildHeaders(options)})
+
+  if (!response.ok) throw new Error(response.statusText)
 
   const json = await response.json()
 
   return options.deserialize ? deserialize(json) : json
 }
 
-export async function getResource<T extends JsonApiResource>(
+export const getResource = async <T extends JsonApiResource>(
   type: string,
   uuid: string,
-  options?: {
-    accessToken?: AccessToken
-    deserialize?: boolean
-    draftMode?: boolean
-  } & JsonApiWithLocaleOptions,
-): Promise<T> {
-  options = {
-    deserialize: true,
-    params: {},
-    draftMode: false,
-    ...options,
-  }
+  options?: { accessToken?: AccessToken,deserialize?: boolean,draftMode?: boolean } & JsonApiWithLocaleOptions,
+): Promise<T> => {
+  options = {deserialize: true, params: {}, draftMode: false, ...options}
 
   const apiPath = await getJsonApiPathForResourceType(type)
 
@@ -187,34 +153,24 @@ export async function getResource<T extends JsonApiResource>(
     throw new Error(`Error: resource of type ${type} not found.`)
   }
 
-  const url = buildUrl(`${apiPath}/${uuid}`, {
-    ...options?.params,
-  })
+  const url = buildUrl(`${apiPath}/${uuid}`, {...options?.params})
 
-  const response = await fetch(url.toString(), {
-    headers: await buildHeaders(options),
-  })
+  const response = await fetch(url.toString(), {headers: await buildHeaders(options)})
 
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
+  if (!response.ok) throw new Error(response.statusText)
 
   const json = await response.json()
   return options.deserialize ? deserialize(json) : json
 }
 
-export async function getConfigPageResource<T extends DrupalNode>(
+export const getConfigPageResource = async <T extends DrupalNode>(
   name: string,
-  options?: {
-    deserialize?: boolean
-    accessToken?: AccessToken
-  } & JsonApiWithLocaleOptions): Promise<T | undefined> {
+  options?: { deserialize?: boolean,accessToken?: AccessToken } & JsonApiWithLocaleOptions
+): Promise<T | undefined> => {
   let response;
   try {
     response = await getResourceCollection<JsonApiResource>(`config_pages--${name}`, options);
-    if (response.length === 0) {
-      return;
-    }
+    if (response.length === 0) return;
   } catch (e) {
     return;
   }
