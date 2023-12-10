@@ -1,15 +1,12 @@
-import "server-only";
-
 import {Person, StanfordParagraph} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import Conditional from "@/components/utils/conditional";
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {EnvelopeIcon, LinkIcon, MapIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import Link from "@/components/patterns/elements/drupal-link";
-import LibCal from "./libcal";
-import LibGuides from "./libguide";
+import LibCal from "@/components/node/stanford-person/libcal";
+import LibGuides from "@/components/node/stanford-person/libguide";
 import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
 import Paragraph from "@/components/paragraph";
@@ -36,6 +33,7 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
                 fill={true}
                 placeholder={placeholder ? 'blur' : 'empty'}
                 blurDataURL={placeholder}
+                sizes="200w"
               />
             </div>
           </div>
@@ -70,9 +68,9 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
             </div>
           }
 
-          <Conditional showWhen={node.lib_guides.length > 0}>
+          {node.lib_guides.length > 0 &&
             <LibGuides guides={node.lib_guides} className="mb-50"/>
-          </Conditional>
+          }
 
           {(node.su_person_education && node.su_person_education.length > 0) &&
             <div className="rs-mb-7">

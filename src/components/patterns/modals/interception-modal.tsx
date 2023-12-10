@@ -32,13 +32,8 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
-    document.getElementsByTagName('body')[0].style.height = '100vh';
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.getElementsByTagName('body')[0].style.height = 'auto';
-      document.getElementsByTagName('body')[0].style.overflow = 'auto';
     }
   }, [onKeyDown]);
 

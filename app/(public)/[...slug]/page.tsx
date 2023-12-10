@@ -9,7 +9,6 @@ import {getNodeMetadata} from "./metadata";
 import LibraryHeader from "@/components/node/sul-library/library-header";
 import {PageProps, Params, StanfordNode} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
-import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
@@ -129,12 +128,9 @@ const NodePage = async ({params}: PageProps) => {
       }
 
       {!fullWidth &&
-        <div
-          className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
+        <div className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
 
-          <Suspense fallback={<></>}>
-            <SecondaryMenu menuItems={tree}/>
-          </Suspense>
+          <SecondaryMenu menuItems={tree}/>
 
           <div className="flex-1">
             <NodePageDisplay node={node}/>
@@ -148,7 +144,7 @@ const NodePage = async ({params}: PageProps) => {
 export default NodePage;
 
 export const generateStaticParams = async () => {
-
+  const completeBuild = process.env.BUILD_COMPLETE === 'true'
   const params = new DrupalJsonApiParams();
   params.addPageLimit(50);
   let paths: GetStaticPathsResult["paths"] = [];
@@ -162,7 +158,7 @@ export const generateStaticParams = async () => {
       'node--sul_library'
     ], {params: params.getQueryObject()});
 
-    let fetchMore = process.env.BUILD_COMPLETE === 'true';
+    let fetchMore = completeBuild;
     let fetchedData: GetStaticPathsResult["paths"] = []
     let page = 1;
     while (fetchMore) {
@@ -183,5 +179,5 @@ export const generateStaticParams = async () => {
   } catch (e) {
 
   }
-  return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (process.env.BUILD_COMPLETE ? -1 : 5));
+  return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (completeBuild ? -1 : 5));
 }

@@ -9,20 +9,15 @@ import {
   InformationCircleIcon
 } from "@heroicons/react/20/solid";
 import Conditional from "@/components/utils/conditional";
-import {getResourceCollection} from "@/lib/drupal/get-resource";
+import {getConfigPageResource} from "@/lib/drupal/get-resource";
 
 const GlobalMessage = async () => {
-  let response;
+  let configPage;
   try {
-    response = await getResourceCollection<GlobalMessageType[]>('config_pages--stanford_global_message');
-    if (response.length === 0) {
-      return null;
-    }
+    configPage = await getConfigPageResource<GlobalMessageType>('stanford_global_message');
   } catch (e) {
     return null;
   }
-
-  const configPage = response.at(0);
   if (!configPage || !configPage.su_global_msg_enabled) {
     return null;
   }
