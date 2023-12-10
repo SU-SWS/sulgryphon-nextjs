@@ -4,11 +4,14 @@ import {PropsWithChildren, useCallback, useEffect, useRef} from "react";
 import {useRouter} from "next/navigation";
 import ReactFocusLock from "react-focus-lock";
 import {XMarkIcon} from "@heroicons/react/20/solid";
+import {useLockedBody} from "usehooks-ts";
 
 const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
   const overlay = useRef(null);
   const wrapper = useRef(null);
   const router = useRouter();
+
+  useLockedBody();
 
   const onDismiss = useCallback(() => {
     router.back();
