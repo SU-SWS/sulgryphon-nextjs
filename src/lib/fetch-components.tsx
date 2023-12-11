@@ -1,7 +1,7 @@
 import {getResource} from "@/lib/drupal/get-resource";
 import {JsonApiResource} from "next-drupal";
 
-async function fetchComponents<T>(components: JsonApiResource[], options = {}):Promise<T[]> {
+const fetchComponents = async <T, >(components: JsonApiResource[], options = {}): Promise<T[]> => {
   const requests: PromiseLike<any>[] = [];
   components.map(component => requests.push(getResource(component.type, component.id, options)));
 
