@@ -1,11 +1,8 @@
-"use client";
 
-import {usePathname} from "next/navigation";
 import {useMemo} from "react";
 import {DrupalMenuLinkContent} from "next-drupal";
 
-const useActiveTrail = (menuItems: DrupalMenuLinkContent[]) => {
-  const currentPath = usePathname();
+const useActiveTrail = (menuItems: DrupalMenuLinkContent[], currentPath: string) => {
 
   const getActiveTrail = (menuItems: DrupalMenuLinkContent[], trail: string[] = []): string[] => {
 

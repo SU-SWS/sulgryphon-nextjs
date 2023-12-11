@@ -130,7 +130,7 @@ const NodePage = async ({params}: PageProps) => {
       {!fullWidth &&
         <div className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
 
-          <SecondaryMenu menuItems={tree}/>
+          <SecondaryMenu menuItems={tree} currentPath={node.path.alias}/>
 
           <div className="flex-1">
             <NodePageDisplay node={node}/>

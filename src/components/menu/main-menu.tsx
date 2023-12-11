@@ -11,14 +11,15 @@ import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
+import {usePathname} from "next/navigation";
 
 const maxMenuDepth = 1;
 
-const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[]}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [addCloseAnimation, setAddCloseAnimation] = useState(false)
   const browserUrl = useNavigationEvent();
-  const activeTrail = useActiveTrail(menuItems);
+  const activeTrail = useActiveTrail(menuItems, usePathname() || '');
   const isDesktop = useIsDesktop();
 
   const openCloseMenu = () => {

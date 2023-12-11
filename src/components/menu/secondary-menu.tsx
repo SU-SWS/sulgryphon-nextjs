@@ -23,11 +23,11 @@ const getCurrentPageTitle = (activeTrail: string[], items: DrupalMenuLinkContent
   }
 }
 
-const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+const SecondaryMenu = ({menuItems, currentPath}: { menuItems: DrupalMenuLinkContent[], currentPath: string }) => {
   const browserUrl = useNavigationEvent();
   const [menuOpen, setMenuOpen] = useState(false)
   const outsideClickProps = useOutsideClick(() => setMenuOpen(false))
-  const activeTrail = useActiveTrail(menuItems);
+  const activeTrail = useActiveTrail(menuItems, currentPath);
   const isDesktop = useIsDesktop()
 
   // Peel off the menu items from the parent.
@@ -37,13 +37,7 @@ const SecondaryMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const currentPageTitle = useMemo(() => getCurrentPageTitle(activeTrail, menuItems, activeTrail), [activeTrail, menuItems]);
   useEffect(() => setMenuOpen(false), [browserUrl]);
 
-  if (typeof subTree === 'undefined' || (subTree.length <= 1 && typeof subTree[0]?.items == 'undefined')) {
-    return null;
-  }
-
-  const closeMobileMenu = () => {
-    setMenuOpen(false)
-  }
+  if (typeof subTree === 'undefined' || (subTree.length <= 1 && typeof subTree[0]?.items == 'undefined')) return null;
 
   return (
     <aside className="lg:w-1/3 2xl:w-1/4 relative">
