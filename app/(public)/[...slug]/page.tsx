@@ -3,23 +3,19 @@ import {getPathsFromContext} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
-import {DrupalMenuLinkContent, DrupalNode} from "next-drupal";
+import {DrupalMenuLinkContent} from "next-drupal";
 import {GetStaticPathsResult, Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
-import Conditional from "@/components/utils/conditional";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {Library} from "@/lib/drupal/drupal";
+import {PageProps, Params, StanfordNode} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
-import {Suspense} from "react";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 
-// Opt out of caching for all data requests in the route segment
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 2592000;
 
 class RedirectError extends Error {
   constructor(public message: string) {
@@ -27,13 +23,13 @@ class RedirectError extends Error {
   }
 }
 
-const fetchNodeData = async (context) => {
+const fetchNodeData = async (params: Params) => {
   const draftMode = isDraftMode();
-  const path = await translatePathFromContext(context, {draftMode});
+  const path = await translatePathFromContext({params}, {draftMode});
 
   // Check for redirect.
   if (path?.redirect?.[0].to) {
-    const currentPath = '/' + (typeof context.params.slug === 'object' ? context.params.slug.join('/') : context.params.slug);
+    const currentPath = '/' + (typeof params.slug === 'object' ? params.slug.join('/') : params.slug);
     const [destination] = path.redirect;
 
     if (destination.to != currentPath) {
@@ -45,20 +41,20 @@ const fetchNodeData = async (context) => {
     throw new Error('Unable to translate path');
   }
 
-  if (context?.params?.slug?.[0] === 'node' && path?.entity?.path) {
+  if (params?.slug?.[0] === 'node' && path?.entity?.path) {
     throw new RedirectError(path.entity.path);
   }
 
-  const node = await getResourceFromContext<DrupalNode>(path.jsonapi.resourceName, context,{draftMode})
+  const node = await getResourceFromContext<StanfordNode>(path.jsonapi.resourceName, {params}, {draftMode})
   const fullWidth: boolean = (node?.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node?.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
   return {node, fullWidth}
 }
 
-export const generateMetadata = async (context): Promise<Metadata> => {
+export const generateMetadata = async ({params}: PageProps): Promise<Metadata> => {
   try {
-    const {node} = await fetchNodeData(context);
+    const {node} = await fetchNodeData(params);
     if (!node) return {};
 
     return getNodeMetadata(node);
@@ -68,7 +64,7 @@ export const generateMetadata = async (context): Promise<Metadata> => {
   return {};
 }
 
-const NodePage = async (context) => {
+const NodePage = async ({params}: PageProps) => {
   let tree: DrupalMenuLinkContent[] = [];
   try {
     ({tree} = await getMenu('main'));
@@ -77,7 +73,7 @@ const NodePage = async (context) => {
 
   let nodeData;
   try {
-    nodeData = await fetchNodeData(context);
+    nodeData = await fetchNodeData(params);
   } catch (e) {
     if (e instanceof RedirectError) {
       redirect(e.message);
@@ -85,72 +81,70 @@ const NodePage = async (context) => {
     notFound();
   }
   const {node, fullWidth} = nodeData;
+  if (!node) notFound();
 
   return (
-    <main id="main-content" className="su-mb-50">
+    <main id="main-content" className="mb-50">
       {!node.status &&
         <UnpublishedBanner/>
       }
-      <Conditional showWhen={node.type === 'node--sul_library'}>
-        <LibraryHeader node={node as Library}/>
-      </Conditional>
+      {node.type === 'node--sul_library' &&
+        <LibraryHeader node={node}/>
+      }
 
-      <Conditional showWhen={node.type === 'node--stanford_news'}>
+      {node.type === 'node--stanford_news' &&
         <InternalHeaderBanner>
           <div
-            className="su-flex su-flex-col su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-mt-80 md:mt-100 su-mb-50 su-p-0">
+            className="flex flex-col w-full max-w-[calc(100vw-10rem)] md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto mt-80 md:mt-100 mb-50 p-0">
             <h1
-              className="su-text-white su-order-2">
+              className="text-white order-2">
               {node.title}
             </h1>
 
             {(node.su_news_topics && node.su_news_topics.length > 0) &&
-              <div className="su-mb-20 su-order-1">
+              <div className="mb-20 order-1">
                 {node.su_news_topics.slice(0, 1).map((topic, index) =>
-                  <span key={topic.id} className="su-text-illuminating-dark su-font-semibold">{topic.name}</span>
+                  <span key={topic.id} className="text-illuminating-dark font-semibold">{topic.name}</span>
                 )}
               </div>
             }
           </div>
         </InternalHeaderBanner>
-      </Conditional>
+      }
 
-      <Conditional showWhen={!(node.type === 'node--sul_library' || node.type === 'node--stanford_news')}>
+      {!(node.type === 'node--sul_library' || node.type === 'node--stanford_news') &&
         <InternalHeaderBanner>
           <h1
-            className="su-w-full su-max-w-[calc(100vw-10rem)] md:su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+            className="w-full max-w-[calc(100vw-10rem)] md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto relative text-white mt-80 md:mt-100 mb-50 p-0">
             {node.title}
           </h1>
         </InternalHeaderBanner>
-      </Conditional>
+      }
 
-      <Conditional showWhen={fullWidth}>
+      {fullWidth &&
         <div>
           <NodePageDisplay node={node}/>
         </div>
-      </Conditional>
+      }
 
-      <Conditional showWhen={!fullWidth}>
-        <div
-          className="su-centered su-flex su-flex-col lg:su-flex-row su-justify-between su-gap-[8rem]">
+      {!fullWidth &&
+        <div className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
 
-          <Suspense fallback={<></>}>
-            <SecondaryMenu menuItems={tree}/>
-          </Suspense>
+          <SecondaryMenu menuItems={tree} currentPath={node.path.alias}/>
 
-          <div className="su-flex-1">
+          <div className="flex-1">
             <NodePageDisplay node={node}/>
           </div>
         </div>
-      </Conditional>
+      }
     </main>
   )
 }
 
 export default NodePage;
 
-export const generateStaticParams = async (context) => {
-
+export const generateStaticParams = async () => {
+  const completeBuild = process.env.BUILD_COMPLETE === 'true'
   const params = new DrupalJsonApiParams();
   params.addPageLimit(50);
   let paths: GetStaticPathsResult["paths"] = [];
@@ -162,9 +156,9 @@ export const generateStaticParams = async (context) => {
       'node--stanford_news',
       'node--stanford_person',
       'node--sul_library'
-    ], {}, {params: params.getQueryObject()});
+    ], {params: params.getQueryObject()});
 
-    let fetchMore = process.env.BUILD_COMPLETE === 'true';
+    let fetchMore = completeBuild;
     let fetchedData: GetStaticPathsResult["paths"] = []
     let page = 1;
     while (fetchMore) {
@@ -177,7 +171,7 @@ export const generateStaticParams = async (context) => {
         'node--stanford_news',
         'node--stanford_person',
         'node--sul_library'
-      ], {}, {params: params.getQueryObject()})
+      ], {params: params.getQueryObject()})
       paths = [...paths, ...fetchedData];
       fetchMore = fetchedData.length > 0;
       page++;
@@ -185,5 +179,5 @@ export const generateStaticParams = async (context) => {
   } catch (e) {
 
   }
-  return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (process.env.BUILD_COMPLETE ? -1 : 5));
+  return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (completeBuild ? -1 : 5));
 }

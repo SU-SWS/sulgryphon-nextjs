@@ -1,30 +1,27 @@
-import {DrupalNode, DrupalParagraph} from "next-drupal";
-import {BasicPage, Event, Library, News, Person} from "@/lib/drupal/drupal";
+import {DrupalParagraph} from "next-drupal";
+import {BasicPage, Event, Library, News, Person, StanfordNode} from "@/lib/drupal/drupal";
 
-interface keyable {
-  [key: string]: any
-}
 
-export const getNodeMetadata = (node: DrupalNode): keyable => {
-  let metadata: keyable = {};
+export const getNodeMetadata = (node: StanfordNode): Record<string, any> => {
+  let metadata: Record<string, any> = {};
   switch (node.type) {
     case 'node--stanford_page':
       metadata = getMetadataForBasicPage(node);
       break;
 
     case 'node--stanford_person':
-      metadata = getMetadataForPersonPage(node as Person);
+      metadata = getMetadataForPersonPage(node);
       break;
     case 'node--stanford_event':
-      metadata = getMetadataForEventPage(node as Event);
+      metadata = getMetadataForEventPage(node);
       break;
 
     case 'node--stanford_news':
-      metadata = getMetadataForNewsPage(node as News);
+      metadata = getMetadataForNewsPage(node);
       break;
 
     case 'node--sul_library':
-      metadata = getMetadataForBranchPage(node as Library);
+      metadata = getMetadataForBranchPage(node);
       break;
   }
 

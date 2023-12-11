@@ -7,8 +7,8 @@ import dynamic from "next/dynamic";
 import {ArrowPathIcon} from "@heroicons/react/20/solid";
 
 const Paragraph = dynamic(() =>
-  import('../../../../../components/paragraph/index'), {
-  loading: () => <ArrowPathIcon className="su-mx-auto su-animate-spin" width={30} height={30}/>
+  import('../../../../../src/components/paragraph/index'), {
+  loading: () => <ArrowPathIcon className="mx-auto animate-spin" width={30} height={30}/>
 });
 
 const ParagraphPreview = ({}) => {
@@ -16,7 +16,7 @@ const ParagraphPreview = ({}) => {
   const [paragraph, setParagraph] = useState<DrupalParagraph | null>(null);
   const [iframeId, setIframeId] = useState<string | null>(null);
 
-  const setParagraphData = ({data}) => {
+  const setParagraphData = ({data}: { data: string }) => {
     try {
       const jsonData = JSON.parse(data);
       setParagraph(deserialize(jsonData) as DrupalParagraph)
@@ -60,7 +60,7 @@ const ParagraphPreview = ({}) => {
   useLayoutEffect(() => emitComponentHeight(), [emitComponentHeight, paragraph]);
 
   return (
-    <div ref={previewRef} className="su-p-30">
+    <div ref={previewRef} className="p-30">
       {paragraph &&
         <Paragraph paragraph={paragraph}/>
       }

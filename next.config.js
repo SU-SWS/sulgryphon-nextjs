@@ -1,3 +1,5 @@
+const drupalUrl = new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL);
+
 module.exports = {
   poweredByHeader: false,
   experimental: {
@@ -6,29 +8,13 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        hostname: process.env.NEXT_IMAGE_DOMAIN,
+        protocol: drupalUrl.protocol.replace(':', ''),
+        hostname: drupalUrl.hostname,
       },
     ],
   },
   typescript: {
-    ignoreBuildErrors: true
-  },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/_next/image',
-          destination: '/_next/image?url=/no-image.png',
-          has: [{type: 'query', key: 'url', value: (`htt[p|ps]://${process.env.NEXT_IMAGE_DOMAIN}.*`)}],
-          missing: [{type: 'query', key: 'url', value: '(.*itok=([\\w|-]+))'}]
-        },
-        {
-          source: '/_next/image',
-          destination: '/_next/image?url=:url',
-          has: [{type: 'query', key: 'url', value: '(?<url>.*[jpg|png|jpeg|gif]\?itok=([\\w|-]+)).*'}]
-        },
-      ]
-    };
+    ignoreBuildErrors: process.env.CI !== 'true',
   },
   async headers() {
     if (process.env.NEXT_PUBLIC_NOBOTS === 'true') {
@@ -69,5 +55,22 @@ module.exports = {
         permanent: true,
       }
     ]
-  }
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/_next/image',
+          destination: '/_next/image?url=/no-image.png',
+          has: [{type: 'query', key: 'url', value: (`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}.*`)}],
+          missing: [{type: 'query', key: 'url', value: '(.*itok=([\\w|-]+))'}]
+        },
+        {
+          source: '/_next/image',
+          destination: '/_next/image?url=:url',
+          has: [{type: 'query', key: 'url', value: '(?<url>.*[jpg|png|jpeg|gif]\?itok=([\\w|-]+)).*'}]
+        },
+      ]
+    };
+  },
 }

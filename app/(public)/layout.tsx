@@ -16,13 +16,13 @@ const Layout = ({children}: { children: ReactNode }) => {
           <GoogleAnalytics/>
         </>
       }
-      <div className="su-grid su-grid-rows-1 su-min-h-screen">
+      <div className="grid grid-rows-1 min-h-screen">
         <div>
           <Header/>
           {children}
         </div>
 
-        <footer className="su-row-start-2 su-row-end-3">
+        <footer className="row-start-2 row-end-3">
           <LibraryFooter/>
           <GlobalFooter/>
         </footer>

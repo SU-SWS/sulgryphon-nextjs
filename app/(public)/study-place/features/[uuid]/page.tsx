@@ -2,6 +2,7 @@ import {getResource} from "@/lib/drupal/get-resource";
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features";
 import {DrupalTaxonomyTerm} from "next-drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
+import {StudyPlace} from "@/lib/drupal/drupal";
 
 export const metadata = {
   title: 'Study Place Features',
@@ -10,11 +11,11 @@ export const metadata = {
   }
 }
 
-const Page = async ({params: {uuid}}, ...context) => {
-  const node = await getResource('node--sul_study_place', uuid);
+const Page = async ({params: {uuid}}: {params: {uuid: string}}) => {
+  const node = await getResource<StudyPlace>('node--sul_study_place', uuid);
   // Filter out empty terms and deduplicate terms by their ID.
-  const features: DrupalTaxonomyTerm[] = node.sul_study__features?.filter((term: DrupalTaxonomyTerm, index, self) =>
-      term.name?.length > 0 && index === self.findIndex((t: DrupalTaxonomyTerm) => (
+  const features = node.sul_study__features?.filter((term, index, self) =>
+      term.name?.length > 0 && index === self.findIndex((t) => (
         t.id === term.id
       ))
   ) ?? [];
@@ -23,11 +24,11 @@ const Page = async ({params: {uuid}}, ...context) => {
     <main id="main-content">
       <InternalHeaderBanner>
         <h1
-          className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          className="w-full max-w-[calc(100vw-10rem)] md::max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto relative text-white mt-80 md:mt-100 mb-50 p-0">
           {node.title} Features
         </h1>
       </InternalHeaderBanner>
-      <div className="su-centered">
+      <div className="centered">
       <StudyPlaceFeatures
         branchHours={node.sul_study__branch?.su_library__hours}
         branchTitle={node.sul_study__branch.title}
