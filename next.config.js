@@ -13,27 +13,13 @@ module.exports = {
       },
     ],
     deviceSizes: [
-      // 640,
-      750,
-      // 828,
-      // 1080,
+      320,
+      768,
       1200,
-      // 1920,
-      // 2048,
-      3840
-    ],
-    imageSizes: [
-      // 16,
-      // 32,
-      // 48,
-      // 64,
-      // 96,
-      128,
-      // 256,
-      384
+      2000,
     ],
     loader: 'custom',
-    loaderFile: './components/patterns/elements/image-loader.tsx',
+    loaderFile: './src/components/patterns/elements/image-loader.tsx',
   },
   typescript: {
     ignoreBuildErrors: process.env.CI !== 'true',
