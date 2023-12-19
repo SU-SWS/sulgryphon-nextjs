@@ -6,11 +6,11 @@ const Layout = ({children}: { children: ReactNode }) => {
     <div>
       <InternalHeaderBanner>
         <h1
-          className="su-w-full su-max-w-[calc(100vw-10rem)] md::su-max-w-[calc(100vw-20rem)] 3xl:su-max-w-[calc(1500px-20rem)] su-mx-auto su-relative su-text-white su-mt-80 md:mt-100 su-mb-50 su-p-0">
+          className="w-full max-w-[calc(100vw-10rem)] md::max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)] mx-auto relative text-white mt-80 md:mt-100 mb-50 p-0">
           Search
         </h1>
       </InternalHeaderBanner>
-      <div className="su-centered">{children}</div>
+      <div className="centered">{children}</div>
     </div>
   )
 }

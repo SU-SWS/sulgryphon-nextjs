@@ -5,13 +5,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.query.secret !== process.env.DRUPAL_REVALIDATE_SECRET) {
     return res.status(401).json({ message: 'Invalid token' })
   }
-
+  const slug = decodeURIComponent(req.query.slug as string);
   try {
-    await res.revalidate(decodeURI(req.query.slug as string))
-    return res.json({ revalidated: true })
-  } catch (err) {
+    await res.revalidate(slug)
+  } catch (err: unknown) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
-    return res.status(500).send('Error revalidating')
+    console.error('Error revalidating: ' + (err instanceof Error ? err.message : ''));
   }
+  return res.json({revalidated: true, path: slug})
 }

@@ -11,5 +11,5 @@ export const GET = async (request: NextRequest) => {
     return NextResponse.json({message: 'Missing slug'}, {status: 400});
   }
   revalidatePath(slug)
-  return NextResponse.json({revalidated: true});
+  return NextResponse.json({revalidated: true, path: slug});
 }
