@@ -521,3 +521,18 @@ export type PageProps = {
   params: Params
   searchParams?: Record<string, string | string[] | undefined>
 }
+
+export type DrupalRedirect = JsonApiResource & {
+  redirect_source: {
+    path: string,
+    query: []
+  },
+  redirect_redirect: {
+    uri: string,
+    title: string,
+    options: [],
+    target_uuid: string,
+    url: string
+  },
+  status_code: number
+}

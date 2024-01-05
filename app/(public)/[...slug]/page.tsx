@@ -1,19 +1,19 @@
 import {getResourceFromContext} from "@/lib/drupal/get-resource";
-import {getPathsFromContext} from "@/lib/drupal/get-paths";
+import {getAllDrupalPaths, getPathsFromContext, pathIsValid} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
 import {DrupalMenuLinkContent} from "next-drupal";
-import {GetStaticPathsResult, Metadata} from "next";
+import {Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
 import LibraryHeader from "@/components/node/sul-library/library-header";
 import {PageProps, Params, StanfordNode} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
-import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
+import {getPathFromContext} from "@/lib/drupal/utils";
 
 export const revalidate = 2592000;
 
@@ -23,29 +23,34 @@ class RedirectError extends Error {
   }
 }
 
-const fetchNodeData = async (params: Params) => {
+const fetchNodeData = async (params: Params): Promise<{ node: StanfordNode, fullWidth: boolean }> => {
   const draftMode = isDraftMode();
-  const path = await translatePathFromContext({params}, {draftMode});
+  const path = getPathFromContext({params});
+  if (!pathIsValid(path)) throw new Error();
+
+  const pathInfo = await translatePathFromContext({params}, {draftMode});
 
   // Check for redirect.
-  if (path?.redirect?.[0].to) {
+  if (pathInfo?.redirect?.[0].to) {
     const currentPath = '/' + (typeof params.slug === 'object' ? params.slug.join('/') : params.slug);
-    const [destination] = path.redirect;
+    const [destination] = pathInfo.redirect;
 
     if (destination.to != currentPath) {
       throw new RedirectError(destination.to);
     }
   }
 
-  if (!path || !path.jsonapi) {
+  if (!pathInfo || !pathInfo.jsonapi) {
     throw new Error('Unable to translate path');
   }
 
-  if (params?.slug?.[0] === 'node' && path?.entity?.path) {
-    throw new RedirectError(path.entity.path);
+  if (params?.slug?.[0] === 'node' && pathInfo?.entity?.path) {
+    throw new RedirectError(pathInfo.entity.path);
   }
 
-  const node = await getResourceFromContext<StanfordNode>(path.jsonapi.resourceName, {params}, {draftMode})
+  const node = await getResourceFromContext<StanfordNode>(pathInfo.jsonapi.resourceName, {params}, {draftMode})
+  if (!node) throw new Error();
+
   const fullWidth: boolean = (node?.type === 'node--stanford_page' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full') ||
     (node?.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
@@ -144,40 +149,12 @@ const NodePage = async ({params}: PageProps) => {
 export default NodePage;
 
 export const generateStaticParams = async () => {
-  const completeBuild = process.env.BUILD_COMPLETE === 'true'
-  const params = new DrupalJsonApiParams();
-  params.addPageLimit(50);
-  let paths: GetStaticPathsResult["paths"] = [];
+  const allPaths = await getAllDrupalPaths();
+  const nodePaths = allPaths.get('node');
 
-  try {
-    paths = await getPathsFromContext([
-      'node--stanford_page',
-      'node--stanford_event',
-      'node--stanford_news',
-      'node--stanford_person',
-      'node--sul_library'
-    ], {params: params.getQueryObject()});
-
-    let fetchMore = completeBuild;
-    let fetchedData: GetStaticPathsResult["paths"] = []
-    let page = 1;
-    while (fetchMore) {
-      console.log('Fetching page ' + page);
-      params.addPageOffset(page * 50);
-
-      fetchedData = await getPathsFromContext([
-        'node--stanford_page',
-        'node--stanford_event',
-        'node--stanford_news',
-        'node--stanford_person',
-        'node--sul_library'
-      ], {params: params.getQueryObject()})
-      paths = [...paths, ...fetchedData];
-      fetchMore = fetchedData.length > 0;
-      page++;
-    }
-  } catch (e) {
-
+  let params: Params[] = [];
+  if (nodePaths) {
+    params = nodePaths.map(path => ({slug: path.split('/')}))
   }
-  return paths.map(path => typeof path !== "string" ? path?.params : path).slice(0, (completeBuild ? -1 : 5));
+  return process.env.BUILD_COMPLETE === 'true' ? params : params.slice(0, 1);
 }
