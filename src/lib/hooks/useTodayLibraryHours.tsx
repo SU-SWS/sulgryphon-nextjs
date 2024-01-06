@@ -1,7 +1,7 @@
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours";
 import {getLibrarySelectOptions, HoursSelectOption} from "@/components/node/sul-library/library-select-options";
 
-interface HoursProps {
+type HoursProps = {
   closedAllDay: boolean
   isOpen: boolean
   openingTime?: string
@@ -10,10 +10,10 @@ interface HoursProps {
   selectOptions: HoursSelectOption[]
 }
 
-const useTodayLibraryHours = (branchId: string): HoursProps | null => {
+const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
   const libraryHours = useLibraryHours(branchId) as LocationHours;
   if (!libraryHours || !libraryHours?.primaryHours) {
-    return null;
+    return;
   }
 
   const rightNow = new Date()

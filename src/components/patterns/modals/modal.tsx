@@ -4,6 +4,7 @@ import {ReactNode, useCallback, useEffect} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import ReactFocusLock from "react-focus-lock";
+import {useLockedBody} from "usehooks-ts";
 
 interface ModalProps {
   children: ReactNode
@@ -13,9 +14,10 @@ interface ModalProps {
   labelledBy?: string
 }
 
-const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) => {
+const Modal = ({children, isOpen, onClose, labelledBy}: ModalProps) => {
 
   const [animationParent] = useAutoAnimate()
+  useLockedBody(isOpen);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -24,24 +26,11 @@ const Modal = ({children, isOpen, onClose, ariaLabel, labelledBy}: ModalProps) =
     [onClose]
   );
 
-  const lockScroll = () => {
-    document.getElementsByTagName('body')[0].style.height = '100vh';
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-  };
-
-  const unlockScroll = () => {
-    document.getElementsByTagName('body')[0].style.height = 'auto';
-    document.getElementsByTagName('body')[0].style.overflow = 'auto';
-  };
 
   useEffect(() => {
-    isOpen ? lockScroll() : unlockScroll();
     document.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-    }
-  }, [isOpen]);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onKeyDown, isOpen]);
 
   if (!isOpen) {
     return null;

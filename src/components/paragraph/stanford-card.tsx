@@ -52,7 +52,6 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
           superHeader={superHeader}
           body={body}
           link={link}
-          linkStyle={linkStyle}
           backgroundSprinkles={sprinklePosition}
           fullWidth={singleRow && fullWidth}
           headerId={headerId}

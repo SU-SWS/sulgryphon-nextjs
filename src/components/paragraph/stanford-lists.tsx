@@ -13,12 +13,11 @@ interface ListProps extends PropsWithoutRef<any> {
     list_paragraph: { hide_empty?: boolean, empty_message?: string }
     sul_list_styles: { link_display_style?: string }
   }
-  fullWidth?: boolean
   headerId?: string
 }
 
 
-const ListParagraph = async ({headerId, headline, description, link, view, styles, fullWidth}: ListProps) => {
+const ListParagraph = async ({headerId, headline, description, link, view, styles}: ListProps) => {
   if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
     link.options.attributes['aria-labelledby'] = headerId;
     delete link?.options?.attributes?.['aria-label'];

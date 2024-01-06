@@ -16,6 +16,7 @@ interface HoursProps extends PropsWithoutRef<any> {
 }
 
 const TodayHours = ({libraries, ...props}: HoursProps) => {
+  if (!libraries || libraries.length === 0) return;
   return (
     <ErrorBoundary fallback={<></>}>
       <CachedClientFetch>
@@ -31,8 +32,6 @@ interface option {
 }
 
 const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) => {
-  if (libraries.length === 0) return null;
-
   const formId = useId();
   const [selectedLibrary, setSelectedLibrary] = useState(libraries.find(library => library.su_library__hours === 'green')?.id ?? libraries[0].id);
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);

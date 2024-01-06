@@ -12,13 +12,12 @@ interface ModalProps extends PropsWithoutRef<any> {
   contactImageAlt: string
   contactImageUrl: string
   features?: { id: string, name: string }[]
-  libCal?: string
   imagePlaceholder?: string
   type: string
   headingId?: string
 }
 
-const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, contactImageAlt, contactImageUrl, features, libCal, type, imagePlaceholder, headingId}: ModalProps) => {
+const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, contactImageAlt, contactImageUrl, features, type, imagePlaceholder, headingId}: ModalProps) => {
 
   return (
     <div

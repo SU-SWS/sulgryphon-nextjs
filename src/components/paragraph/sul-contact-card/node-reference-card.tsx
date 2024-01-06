@@ -5,14 +5,13 @@ import Conditional from "@/components/utils/conditional";
 import {ContactCardParagraph} from "@/lib/drupal/drupal";
 import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node-reference-card-hours";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
-import {PropsWithoutRef} from "react";
 import EmailLink from "@/components/patterns/elements/email-link";
 
-interface Props extends PropsWithoutRef<any> {
+interface Props {
   paragraph: ContactCardParagraph
 }
 
-const NodeReferenceCard = ({paragraph, ...props}: Props) => {
+const NodeReferenceCard = ({paragraph}: Props) => {
   const imageUrl = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
   const imageAlt = paragraph.sul_contact_branch?.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.uri.base64;
@@ -75,7 +74,8 @@ const NodeReferenceCard = ({paragraph, ...props}: Props) => {
               {paragraph.sul_contact__branch?.su_library__email &&
                 <div className="relative flex flex-row items-center rs-mb-0 type-1">
                   <EnvelopeIcon width={19} className="mt-02em mr-12 flex-shrink-0"/>
-                  <EmailLink email={paragraph.sul_contact__branch?.su_library__email} className="underline text-white hocus:text-illuminating-dark hocus:no-underline active:text-digital-red-light font-normal break-words"/>
+                  <EmailLink email={paragraph.sul_contact__branch?.su_library__email}
+                             className="underline text-white hocus:text-illuminating-dark hocus:no-underline active:text-digital-red-light font-normal break-words"/>
                 </div>
               }
 

@@ -4,10 +4,9 @@ import {StanfordParagraph} from "@/lib/drupal/drupal";
 interface LayoutProps {
   items: StanfordParagraph[],
   fullWidth?: boolean
-  config: {}
 }
 
-const ThreeColumn = ({items, config = {}}: LayoutProps) => {
+const ThreeColumn = ({items}: LayoutProps) => {
   const leftItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'left');
   const mainItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'main');
   const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');

@@ -11,11 +11,10 @@ import {
   useEffect,
   useId,
   useLayoutEffect,
-  useRef,
-  useState
+  useRef
 } from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import {useIsClient} from "usehooks-ts";
+import {useBoolean, useIsClient} from "usehooks-ts";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 
 interface Props {
@@ -23,7 +22,7 @@ interface Props {
   label?: string
   ariaLabelledby?: string
   defaultValue?: any
-  onChange?: (event: MouseEvent | KeyboardEvent | FocusEvent | null, value: SelectValue<string, boolean>) => void | null
+  onChange?: (_event: MouseEvent | KeyboardEvent | FocusEvent | null, _value: SelectValue<string, boolean>) => void | null
   multiple?: boolean
   disabled?: boolean
   value?: SelectValue<string, boolean>
@@ -95,8 +94,8 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   const labelId = useId();
   const labeledBy = ariaLabelledby ?? labelId;
   const listboxRef = useRef<HTMLUListElement>(null);
-  const [listboxVisible, setListBoxVisible] = useState<boolean>(false);
-  const outsideClickProps = useOutsideClick(() => setListBoxVisible(false))
+  const {value: listboxVisible, setFalse: hideListbox, setValue: setListBoxVisible} = useBoolean(false);
+  const outsideClickProps = useOutsideClick(hideListbox)
   const isClient = useIsClient();
 
   const {getButtonProps, getListboxProps, contextValue, value} = useSelect<string, boolean>({
@@ -107,9 +106,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
     ...props
   });
 
-  useEffect(() => {
-    if (listboxVisible) listboxRef.current?.focus();
-  }, [listboxVisible]);
+  useEffect(() => listboxRef.current?.focus(), [listboxVisible]);
 
   useLayoutEffect(() => {
     const parentContainer = listboxRef.current?.parentElement?.getBoundingClientRect();

@@ -4,17 +4,16 @@ import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import Oembed from "@/components/patterns/elements/oembed";
 import Link from "@/components/patterns/elements/drupal-link";
-import {PropsWithoutRef} from "react";
+import {HTMLAttributes} from "react";
 
-interface Props extends PropsWithoutRef<any> {
+interface Props extends HTMLAttributes<HTMLDivElement>{
   image?: DrupalImageMedia
   videoUrl?: string
   caption?: string
   link?: DrupalLinkType
-  fullWidth?: boolean
 }
 
-const StanfordMediaCaption = ({caption, image, videoUrl, link, fullWidth = true, ...props}: Props) => {
+const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props) => {
 
   const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';

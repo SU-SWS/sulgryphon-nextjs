@@ -11,10 +11,9 @@ import formatHtml from "@/lib/format-html";
 
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph
-  fullWidth?: boolean
 }
 
-const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordImageGalleryProps) => {
+const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) => {
   const [modalOpen, setModalOpen] = useState('');
 
   return (

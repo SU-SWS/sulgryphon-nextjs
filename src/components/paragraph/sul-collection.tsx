@@ -13,10 +13,9 @@ import {Item} from "react-stately";
 interface CollectionProps extends PropsWithoutRef<any> {
   cards: CollectionCardParagraph[]
   heading?: string
-  fullWidth?: boolean
 }
 
-const SulCollection = ({cards, heading, fullWidth = true, ...props}: CollectionProps) => {
+const SulCollection = ({cards, heading, ...props}: CollectionProps) => {
   const elementId = useId()
 
   return (

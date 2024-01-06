@@ -5,7 +5,6 @@ import {getNodeMetadata} from "./[...slug]/metadata";
 import HomePageBanner from "@/components/node/stanford-page/home-page/home-page-banner";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import fetchComponents from "@/lib/fetch-components";
-import {DrupalParagraph} from "next-drupal";
 import {notFound} from "next/navigation";
 
 export const revalidate = 1800;

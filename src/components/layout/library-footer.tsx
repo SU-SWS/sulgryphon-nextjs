@@ -76,7 +76,8 @@ const LibraryFooter = () => {
   )
 }
 
-const SocialLinks = () => {
+// Keep in case it decides to be added back.
+const _SocialLinks = () => {
   return (
     <div className="flex flex-wrap md:flex-nowrap mt-50 gap-lg justify-around">
       <FooterLink href="#">

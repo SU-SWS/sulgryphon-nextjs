@@ -1,6 +1,5 @@
 import {getResource} from "@/lib/drupal/get-resource";
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features";
-import {DrupalTaxonomyTerm} from "next-drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import {StudyPlace} from "@/lib/drupal/drupal";
 

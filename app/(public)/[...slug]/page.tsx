@@ -1,5 +1,5 @@
 import {getResourceFromContext} from "@/lib/drupal/get-resource";
-import {getAllDrupalPaths, getPathsFromContext, pathIsValid} from "@/lib/drupal/get-paths";
+import {getAllDrupalPaths, pathIsValid} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {translatePathFromContext} from "@/lib/drupal/translate-path";
@@ -15,7 +15,7 @@ import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 import {getPathFromContext} from "@/lib/drupal/utils";
 
-export const revalidate = 2592000;
+export const revalidate = false;
 
 class RedirectError extends Error {
   constructor(public message: string) {
@@ -108,7 +108,7 @@ const NodePage = async ({params}: PageProps) => {
 
             {(node.su_news_topics && node.su_news_topics.length > 0) &&
               <div className="mb-20 order-1">
-                {node.su_news_topics.slice(0, 1).map((topic, index) =>
+                {node.su_news_topics.slice(0, 1).map(topic =>
                   <span key={topic.id} className="text-illuminating-dark font-semibold">{topic.name}</span>
                 )}
               </div>
@@ -134,12 +134,11 @@ const NodePage = async ({params}: PageProps) => {
 
       {!fullWidth &&
         <div className="centered flex flex-col lg:flex-row justify-between gap-[8rem]">
-
-          <SecondaryMenu menuItems={tree} currentPath={node.path.alias}/>
-
-          <div className="flex-1">
+          <div className="flex-1 order-last">
             <NodePageDisplay node={node}/>
           </div>
+
+          <SecondaryMenu menuItems={tree} currentPath={node.path.alias}/>
         </div>
       }
     </main>

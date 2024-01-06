@@ -1,5 +1,4 @@
 import {getViewItems} from "@/components/views/view";
-import {DrupalNode} from "next-drupal";
 import CardList from "@/components/views/card-list";
 import {StanfordNode} from "@/lib/drupal/drupal";
 

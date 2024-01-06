@@ -3,7 +3,7 @@ import Card from "@/components/patterns/card";
 import Conditional from "@/components/utils/conditional";
 import {EventSeries} from "@/lib/drupal/drupal";
 
-const StanfordEventSeriesCard = ({node, h3Heading, ...props}: { node: EventSeries, h3Heading?: boolean }) => {
+const StanfordEventSeriesCard = ({node, ...props}: { node: EventSeries }) => {
   return (
     <article {...props}>
       <Card

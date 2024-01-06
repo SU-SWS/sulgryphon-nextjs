@@ -4,10 +4,9 @@ import ManualFieldsCard from "@/components/paragraph/sul-contact-card/manual-fie
 
 interface ContactCardProps {
   paragraph: ContactCardParagraph
-  fullWidth?: boolean
 }
 
-const SulContactCard = ({paragraph, fullWidth = true, ...props}: ContactCardProps) => {
+const SulContactCard = ({paragraph, ...props}: ContactCardProps) => {
   const Component = paragraph.sul_contact__branch ? NodeReferenceCard : ManualFieldsCard;
   return (
     <div

@@ -1,4 +1,3 @@
-import {GetStaticPathsResult} from "next";
 import {AccessToken, JsonApiParams, JsonApiResourceWithPath} from "next-drupal";
 import {getResourceCollection} from "@/lib/drupal/get-resource";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";

@@ -4,9 +4,10 @@ import {ClockIcon} from "@heroicons/react/24/outline";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
-import {useId, useState} from "react";
+import {useId} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
+import {useBoolean} from "usehooks-ts";
 
 const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
   return (
@@ -23,18 +24,15 @@ const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
 
 const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
   const elementId = useId();
-  const [expandedHours, setExpandedHours] = useState(false);
-  const outsideClickProps = useOutsideClick(() => setExpandedHours(false))
-  if (!hoursId) {
-    return null;
-  }
-  const hours = useTodayLibraryHours(hoursId);
 
-  if (!hours) {
-    return null;
+  const {value: expandedHours, setFalse: closeExpandedHours, toggle: toggleExpandedHours} = useBoolean(false)
+  const outsideClickProps = useOutsideClick(closeExpandedHours)
+  const hours = useTodayLibraryHours(hoursId);
+  if (!hoursId || !hours) {
+    return;
   }
   const {isOpen, selectOptions, closingTime, openingTime, closedAllDay} = hours;
-  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? `Open: ${openingTime} - ${closingTime}` :  `Closed: ${openingTime} - ${closingTime}`);
+  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? `Open: ${openingTime} - ${closingTime}` : `Closed: ${openingTime} - ${closingTime}`);
 
   return (
     <>
@@ -50,7 +48,7 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
         <button
           className="rounded group shadow-md border border-black-10 w-full px-15 py-5 mb-5"
           aria-expanded={expandedHours}
-          onClick={() => setExpandedHours(!expandedHours)}
+          onClick={toggleExpandedHours}
           aria-controls={elementId}
         >
           <div className="flex justify-between items-center text-21">

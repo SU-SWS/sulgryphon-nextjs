@@ -1,11 +1,9 @@
-import {StudyPlace} from "@/lib/drupal/drupal";
-
-const SulStudyPlace = ({node, ...props}: { node: StudyPlace }) => {
+const SulStudyPlace = () => {
 
   return (
-    <>
+    <div>
       Place of Study
-    </>
+    </div>
   )
 }
 

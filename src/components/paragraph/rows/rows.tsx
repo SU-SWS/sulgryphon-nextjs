@@ -1,4 +1,3 @@
-import {DrupalParagraph} from "next-drupal";
 import OneColumn from "@/components/paragraph/rows/one-column";
 import TwoColumn from "@/components/paragraph/rows/two-column";
 import ThreeColumn from "@/components/paragraph/rows/three-column";
@@ -14,7 +13,7 @@ export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => 
 
   // Set the layouts first.
   items.map(item => {
-    if (item.type === 'paragraph--layout' && item?.behavior_settings?.layout_paragraphs?.layout) {
+    if (item.type === 'paragraph--layout' && item.behavior_settings.layout_paragraphs.layout) {
       layouts[item.id] = {layout: item, children: []}
     }
   })
@@ -53,7 +52,7 @@ const Row = ({layoutSettings, items, fullWidth = true}: {
       {layoutSettings.layout === 'sul_helper_2_column' &&
         <TwoColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
       {layoutSettings.layout === 'sul_helper_3_column' &&
-        <ThreeColumn config={layoutSettings.config} items={items} fullWidth={fullWidth}/>}
+        <ThreeColumn items={items} fullWidth={fullWidth}/>}
     </>
   )
 }
