@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "@/components/patterns/elements/drupal-link";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
@@ -16,7 +16,8 @@ import {useBoolean} from "usehooks-ts";
 
 const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false);
-  const [addCloseAnimation, setAddCloseAnimation] = useState(false)
+  const {value: addCloseAnimation, setValue: setAddCloseAnimation} = useBoolean(false);
+
   const browserUrl = useNavigationEvent();
   const activeTrail = useActiveTrail(menuItems, usePathname() || '');
   const isDesktop = useIsDesktop();
@@ -43,10 +44,12 @@ const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
       <div className="relative">
         <div
           aria-hidden={!isDesktop && !menuOpen}
-          className={"h-[calc(100vh-100px)] lg:h-auto overflow-y-scroll lg:overflow-visible py-20 lg:py-0 lg:pb-0 border-t-4 lg:border-0 border-cardinal-red bg-black-true lg:bg-transparent absolute lg:relative w-full z-10 lg:block lg:animate-none -translate-y-full lg:transform-none" + (menuOpen ? " animate-slide-down" : (addCloseAnimation ? " animate-slide-up" : ""))}>
-          <SearchForm className="px-20 pb-20 lg:hidden" action="/all"
+          className={"h-[calc(100vh-100px)] lg:h-auto overflow-y-scroll lg:overflow-visible py-20 lg:py-0 lg:pb-0 border-t-4 lg:border-0 border-cardinal-red bg-black-true lg:bg-transparent absolute lg:relative w-full z-10 lg:block lg:animate-none -translate-y-full lg:transform-none" + (menuOpen ? " animate-slide-down" : (addCloseAnimation ? " animate-slide-up" : ""))}
+        >
+          <SearchForm className={"px-20 pb-20 lg:hidden " + (!isDesktop && !menuOpen ? 'hidden' : 'block')}
+                      action="/all"
                       inputProps={{className: "p-10 w-full rounded-full lg:hidden"}}/>
-          <nav aria-label="Main Menu">
+          <nav aria-label="Main Menu" className={!isDesktop && !menuOpen ? 'hidden' : 'block'}>
             <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
               {menuItems.map(item =>
                 <MenuItem key={item.id} {...item} activeTrail={activeTrail}/>
@@ -60,7 +63,7 @@ const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
 
 
           <nav
-            className="text-white p-40 mt-40 text-center flex gap-10 items-center justify-center lg:hidden">
+            className={"text-white p-40 mt-40 text-center flex gap-10 items-center justify-center lg:hidden " + (!isDesktop && !menuOpen ? 'hidden' : 'block')}>
             <div className="mr-20">Quick Links:</div>
             <ul className="list-unstyled flex flex-wrap items-center gap-10">
               <li className="m-0">

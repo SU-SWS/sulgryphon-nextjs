@@ -42,7 +42,6 @@ const SecondaryMenu = ({menuItems, currentPath}: { menuItems: DrupalMenuLinkCont
 
   return (
     <aside className="order-first lg:w-1/3 2xl:w-1/4 relative">
-      <a className="skiplink" href="#main-content">Skip to main content</a>
       <Conditional showWhen={(menuOpen)}>
         <div className="lg:hidden backdrop-blur-sm fixed z-10 top-0 left-0 w-full h-screen"/>
       </Conditional>
