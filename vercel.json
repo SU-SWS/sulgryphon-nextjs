@@ -1,4 +1,5 @@
 {
+  "installCommand": "yarn workspaces focus --production",
   "rewrites": [
     {
       "source": "/all",

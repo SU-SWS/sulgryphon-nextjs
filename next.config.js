@@ -13,6 +13,9 @@ module.exports = {
       },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: process.env.CI !== 'true',
+  },
   typescript: {
     ignoreBuildErrors: process.env.CI !== 'true',
   },
