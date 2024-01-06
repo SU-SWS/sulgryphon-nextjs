@@ -3,14 +3,15 @@ import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
 import {MapPinIcon} from "@heroicons/react/24/outline";
 import StudyPlaceHours from "./study-place-today-hours";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface ModalProps extends PropsWithoutRef<any> {
   branchHours?: string
   branchTitle: string
   branchUrl: string
   capacity?: string
-  contactImageAlt: string
-  contactImageUrl: string
+  contactImageAlt?: string
+  contactImageUrl?: string
   features?: { id: string, name: string }[]
   imagePlaceholder?: string
   type: string
@@ -27,9 +28,10 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
           <div className={"overflow-hidden aspect-[4/3] relative "}>
             <Image
               className="object-cover object-center static"
-              src={contactImageUrl}
-              alt={contactImageAlt}
-              fill={true}
+              src={buildUrl(contactImageUrl).toString()}
+              alt={contactImageAlt || ''}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
               placeholder={imagePlaceholder ? 'blur' : 'empty'}
               blurDataURL={imagePlaceholder}
             />

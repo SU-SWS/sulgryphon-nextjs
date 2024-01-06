@@ -2,6 +2,7 @@ import {getResource} from "@/lib/drupal/get-resource";
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import {StudyPlace} from "@/lib/drupal/drupal";
+import {notFound} from "next/navigation";
 
 export const metadata = {
   title: 'Study Place Features',
@@ -12,11 +13,11 @@ export const metadata = {
 
 const Page = async ({params: {uuid}}: {params: {uuid: string}}) => {
   const node = await getResource<StudyPlace>('node--sul_study_place', uuid);
+  if(!node) notFound();
+
   // Filter out empty terms and deduplicate terms by their ID.
   const features = node.sul_study__features?.filter((term, index, self) =>
-      term.name?.length > 0 && index === self.findIndex((t) => (
-        t.id === term.id
-      ))
+      term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
   ) ?? [];
 
   return (
@@ -34,7 +35,7 @@ const Page = async ({params: {uuid}}: {params: {uuid: string}}) => {
         branchUrl={node.sul_study__branch.path.alias}
         capacity={node.sul_study__capacity?.name}
         contactImageAlt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
-        contactImageUrl={node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x}
+        contactImageUrl={node.sul_study__branch.su_library__contact_img?.field_media_image.uri.url}
         features={features.map(feature => ({id: feature.id, name: feature.name}))}
         libCal={node.sul_study__libcal_id}
         type={node.sul_study__type.name}

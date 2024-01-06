@@ -6,13 +6,14 @@ import {ContactCardParagraph} from "@/lib/drupal/drupal";
 import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node-reference-card-hours";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import EmailLink from "@/components/patterns/elements/email-link";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props {
   paragraph: ContactCardParagraph
 }
 
 const NodeReferenceCard = ({paragraph}: Props) => {
-  const imageUrl = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageUrl = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image.uri.url
   const imageAlt = paragraph.sul_contact_branch?.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = paragraph.sul_contact__branch?.su_library__contact_img?.field_media_image?.uri.base64;
 
@@ -33,9 +34,10 @@ const NodeReferenceCard = ({paragraph}: Props) => {
           <div className="overflow-hidden aspect-[16/9] relative flex-shrink-0 @6xl:w-1/2">
             <Image
               className="object-cover object-center static"
-              src={imageUrl}
+              src={buildUrl(imageUrl).toString()}
               alt={imageAlt}
-              fill={true}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
               placeholder={placeholder ? 'blur' : 'empty'}
               blurDataURL={placeholder}
             />

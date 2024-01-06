@@ -204,7 +204,8 @@ const cleanMediaMarkup = (node: Element) => {
               className="object-cover object-center"
               src={src.trim()}
               alt={alt ? alt.trim() : ""}
-              fill={true}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             />
           </div>
         </Conditional>

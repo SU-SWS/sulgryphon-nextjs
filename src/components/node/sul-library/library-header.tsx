@@ -7,13 +7,14 @@ import Wave from "@/components/patterns/wave";
 import Image from "next/image";
 import LibraryHeaderHours from "./library-hours";
 import EmailLink from "@/components/patterns/elements/email-link";
+import {buildUrl} from "@/lib/drupal/utils";
 
 const LibraryHeader = ({node}: { node: Library }) => {
-  const bannerImageUrl = node.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
+  const bannerImageUrl = node.su_library__banner?.field_media_image.uri.url;
   const bannerImageAlt = node.su_library__banner?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const bannerPlaceholder = node.su_library__banner?.field_media_image?.uri.base64;
 
-  const contactImageUrl = node.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x ?? bannerImageUrl;
+  const contactImageUrl = node.su_library__contact_img?.field_media_image.uri.url || bannerImageUrl;
   const contactImageAlt = node.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? bannerImageAlt;
   const contactPlaceholder = node.su_library__contact_img?.field_media_image?.uri.base64 ?? bannerPlaceholder;
 
@@ -24,9 +25,10 @@ const LibraryHeader = ({node}: { node: Library }) => {
           {bannerImageUrl &&
             <Image
               className="object-cover object-center"
-              src={bannerImageUrl}
+              src={buildUrl(bannerImageUrl).toString()}
               alt={bannerImageAlt}
-              fill={true}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
               placeholder={bannerPlaceholder ? 'blur' : 'empty'}
               blurDataURL={bannerPlaceholder}
             />
@@ -48,9 +50,10 @@ const LibraryHeader = ({node}: { node: Library }) => {
               className="border-0 rounded"
               image={contactImageUrl && <Image
                 className="object-cover object-center"
-                src={contactImageUrl}
+                src={buildUrl(contactImageUrl).toString()}
                 alt={contactImageAlt}
-                fill={true}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
                 placeholder={contactPlaceholder ? 'blur' : 'empty'}
                 blurDataURL={contactPlaceholder}
               />

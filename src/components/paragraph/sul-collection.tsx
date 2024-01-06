@@ -9,6 +9,7 @@ import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
 import {Tabs} from "@/components/patterns/elements/tabs";
 import {Item} from "react-stately";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface CollectionProps extends PropsWithoutRef<any> {
   cards: CollectionCardParagraph[]
@@ -64,7 +65,7 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl, heade
   videoUrl?: string
   headerId?: string
 }) => {
-  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageUrl = image?.uri.url
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
 
@@ -74,9 +75,10 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl, heade
       video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
       image={imageUrl && <Image
         className="object-cover object-center"
-        src={imageUrl}
+        src={buildUrl(imageUrl).toString()}
         alt={imageAlt}
-        fill={true}
+        fill
+        sizes="(max-width: 768px) 100vw, 1500px"
         placeholder={placeholder ? 'blur' : 'empty'}
         blurDataURL={placeholder}
       />}

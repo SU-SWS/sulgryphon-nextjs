@@ -55,22 +55,5 @@ module.exports = {
         permanent: true,
       }
     ]
-  },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/_next/image',
-          destination: '/_next/image?url=/no-image.png',
-          has: [{type: 'query', key: 'url', value: (`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}.*`)}],
-          missing: [{type: 'query', key: 'url', value: '(.*itok=([\\w|-]+))'}]
-        },
-        {
-          source: '/_next/image',
-          destination: '/_next/image?url=:url',
-          has: [{type: 'query', key: 'url', value: '(?<url>.*[jpg|png|jpeg|gif]\?itok=([\\w|-]+)).*'}]
-        },
-      ]
-    };
-  },
+  }
 }

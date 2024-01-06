@@ -6,6 +6,7 @@ import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
 import {PropsWithoutRef} from "react";
 import EmailLink from "@/components/patterns/elements/email-link";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props extends PropsWithoutRef<any> {
   node: Person
@@ -14,7 +15,7 @@ interface Props extends PropsWithoutRef<any> {
 
 const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) => {
   const HeadingElement = h3Heading ? 'h3' : 'h2';
-  const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
+  const imageUrl = node.su_person_photo?.field_media_image.uri.url;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
   if (!node.path?.alias) console.error('Missing path alias for person card component: ' + node.id)
@@ -26,12 +27,13 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props
         <div className="flex items-center mx-auto mb-50 @3xl:ml-0 @3xl:mb-0 @3xl:mr-50">
           <div className="relative aspect-[1/1] w-[155px]">
             <Image
-              src={imageUrl}
+              src={buildUrl(imageUrl).toString()}
               alt={imageAlt}
               placeholder={placeholder ? 'blur' : 'empty'}
               blurDataURL={placeholder}
               className="object-contain rounded-full"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             />
           </div>
         </div>

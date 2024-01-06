@@ -10,6 +10,7 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import {Library} from "@/lib/drupal/drupal";
 import SelectList from "@/components/patterns/elements/select-list";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface HoursProps extends PropsWithoutRef<any> {
   libraries: { id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia }[]
@@ -41,7 +42,7 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
     libraryOptions.push({value: library.id, label: library.title})
   })
 
-  const imageUrl = library?.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x || library?.su_library__banner?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageUrl = library?.su_library__contact_img?.field_media_image.uri.url || library?.su_library__banner?.field_media_image.uri.url
   const placeholder = library?.su_library__contact_img?.field_media_image?.uri.base64;
 
   return (
@@ -51,9 +52,10 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
         className="border-0 rounded"
         image={imageUrl && <Image
           className="object-cover object-center"
-          src={imageUrl}
+          src={buildUrl(imageUrl).toString()}
           alt=""
-          fill={true}
+          fill
+          sizes="500px"
           placeholder={placeholder ? 'blur' : 'empty'}
           blurDataURL={placeholder}
         />}

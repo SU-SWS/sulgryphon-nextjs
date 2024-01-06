@@ -5,6 +5,7 @@ import Card from "@/components/patterns/card";
 import HorizontalCard from "@/components/patterns/horizontal-card";
 import Oembed from "@/components/patterns/elements/oembed";
 import {PropsWithoutRef} from "react";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props extends PropsWithoutRef<any> {
   header?: string
@@ -24,11 +25,9 @@ interface Props extends PropsWithoutRef<any> {
 const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
   const isHorizontal = orientation === 'horizontal';
 
-  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageUrl = image?.uri.url;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
-
-
 
   if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === header) {
     link.options.attributes['aria-labelledby'] = headerId;
@@ -42,9 +41,10 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
           video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
           image={imageUrl && <Image
             className="object-cover object-center"
-            src={imageUrl}
+            src={buildUrl(imageUrl).toString()}
             alt={imageAlt}
-            fill={true}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
           />}
@@ -63,9 +63,10 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
           video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
           image={imageUrl && <Image
             className="object-cover object-center"
-            src={imageUrl}
+            src={buildUrl(imageUrl).toString()}
             alt={imageAlt}
-            fill={true}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
           />}

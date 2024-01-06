@@ -5,6 +5,7 @@ import formatHtml from "@/lib/format-html";
 import Oembed from "@/components/patterns/elements/oembed";
 import Link from "@/components/patterns/elements/drupal-link";
 import {HTMLAttributes} from "react";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props extends HTMLAttributes<HTMLDivElement>{
   image?: DrupalImageMedia
@@ -15,7 +16,7 @@ interface Props extends HTMLAttributes<HTMLDivElement>{
 
 const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props) => {
 
-  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageUrl = image?.uri.url;
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
 
@@ -25,9 +26,10 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
         <div className="overflow-hidden aspect-[16/9] relative mb-10">
           <Image
             className="object-cover object-center"
-            src={imageUrl}
+            src={buildUrl(imageUrl).toString()}
             alt={imageAlt}
-            fill={true}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
           />

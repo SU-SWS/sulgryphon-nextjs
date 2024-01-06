@@ -14,19 +14,18 @@ import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import fetchComponents from "@/lib/fetch-components";
 import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
+import {buildUrl} from "@/lib/drupal/utils";
 
 const StanfordNews = async ({node, ...props}: { node: News }) => {
+  // Redirect the user to the external source.
+  if (node.su_news_source?.url && node.su_news_source?.url?.length > 0) redirect(node.su_news_source?.url);
+
   node.su_news_components = await fetchComponents<StanfordParagraph>(node.su_news_components || [])
   node.su_news_components = node.su_news_components.filter(item => !!item?.id);
 
-  // Redirect the user to the external source.
-  if (node.su_news_source?.url && node.su_news_source?.url?.length > 0) {
-    redirect(node.su_news_source?.url);
-  }
-
-  const imageUrl = node.su_news_banner?.field_media_image?.image_style_uri?.breakpoint_2xl_2x;
-  const imageAlt = node.su_news_banner?.field_media_image?.resourceIdObjMeta?.alt ?? '';
-  const placeholder = node.su_news_banner?.field_media_image?.uri.base64;
+  const imageUrl = node.su_news_banner?.type === 'media--image' && node.su_news_banner?.field_media_image?.uri.url
+  const imageAlt = node.su_news_banner?.type === 'media--image' && node.su_news_banner?.field_media_image?.resourceIdObjMeta?.alt;
+  const placeholder = node.su_news_banner?.type === 'media--image' && node.su_news_banner?.field_media_image?.uri.base64;
 
   return (
     <article {...props} className=" centered mt-50">
@@ -95,11 +94,11 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
         <figure className="relative mb-100 lg:w-10/12 mx-auto aspect-[16/9]">
           <Image
             className="object-cover"
-            src={imageUrl}
-            alt={imageAlt}
+            src={buildUrl(imageUrl).toString()}
+            alt={imageAlt || ''}
             fill
             placeholder={placeholder ? 'blur' : 'empty'}
-            blurDataURL={placeholder}
+            blurDataURL={placeholder || undefined}
           />
 
           {node.su_news_banner_media_caption &&

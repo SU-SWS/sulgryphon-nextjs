@@ -1,4 +1,3 @@
-import Conditional from "@/components/utils/conditional";
 import StanfordCard from "@/components/paragraph/stanford-card";
 import StanfordBanner from "@/components/paragraph/stanford-banner";
 import StanfordImageGallery from "@/components/paragraph/stanford-image-gallery";
@@ -21,16 +20,16 @@ interface ParagraphProps extends PropsWithoutRef<any> {
   singleRow?: boolean;
 }
 
-const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => {
+const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: ParagraphProps) => {
   props['data-type'] = paragraph.type;
   props['data-id'] = paragraph.id;
   const headerId = useId();
 
   return (
     <>
-      <Conditional showWhen={paragraph.status != undefined && !paragraph.status}>
+      {(paragraph.status != undefined && !paragraph.status) &&
         <UnpublishedBanner/>
-      </Conditional>
+      }
 
       {paragraph.type === 'paragraph--stanford_card' &&
         <StanfordCard
@@ -45,6 +44,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           orientation={paragraph.behavior_settings?.sul_card_styles?.orientation}
           singleRow={singleRow}
           headerId={headerId}
+          fullWidth={fullWidth}
           {...props}
         />}
 
@@ -118,6 +118,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           cards={paragraph.sul_collection__cards}
           styles={paragraph.behavior_settings?.sul_feat_collections_styles}
           headerId={headerId}
+          fullWidth={fullWidth}
           {...props}
         />
       }
@@ -131,6 +132,7 @@ const Paragraph = ({paragraph, singleRow = false, ...props}: ParagraphProps) => 
           link={paragraph.sul_button_link}
           styles={paragraph.behavior_settings?.sul_button_styles}
           headerId={headerId}
+          fullWidth={fullWidth}
           {...props}
         />
       }
