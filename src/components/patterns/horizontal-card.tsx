@@ -17,7 +17,6 @@ interface CardProps {
   footer?: ReactNodeLike
   body?: string
   link?: DrupalLinkType
-  linkStyle?: string
   className?: string
   backgroundSprinkles?: 'top_right' | 'top_left' | 'bottom_right' | 'bottom_left'
   fullWidth?: boolean
@@ -25,7 +24,7 @@ interface CardProps {
   headingLevel?: string
 }
 
-const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, linkStyle, headingLevel = 'h2', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, headingLevel = 'h2', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
   const ref = useRef(null);
   const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
   return (

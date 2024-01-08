@@ -9,7 +9,7 @@ interface Props extends PropsWithoutRef<any> {
   libguideId: number
 }
 
-const SulLibguides = async ({headline, description, libguideId, fullWidth, ...props}: Props) => {
+const SulLibguides = async ({headline, description, libguideId, ...props}: Props) => {
   const guides = await fetchLibGuides({subjectId: libguideId})
 
   return (

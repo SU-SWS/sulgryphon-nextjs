@@ -123,7 +123,7 @@ export const getResourceByPath = async <T extends JsonApiResource>(
   return options.deserialize ? deserialize(data) : data
 }
 
-export const getResourceCollection = async <T = JsonApiResource[]>(
+export const getResourceCollection = async <T extends JsonApiResource>(
   type: string,
   options?: {
     deserialize?: boolean,
@@ -131,7 +131,7 @@ export const getResourceCollection = async <T = JsonApiResource[]>(
     draftMode?: boolean,
     next?: NextFetchRequestConfig
   } & JsonApiWithLocaleOptions,
-): Promise<T> => {
+): Promise<T[]> => {
   options = {deserialize: true, draftMode: false, ...options}
 
   const apiPath = await getJsonApiPathForResourceType(type)
@@ -184,7 +184,7 @@ export const getConfigPageResource = async <T extends JsonApiResource>(
 
   let response;
   try {
-    response = await getResourceCollection<JsonApiResource>(`config_pages--${name}`, options);
+    response = await getResourceCollection<T>(`config_pages--${name}`, options);
     if (response.length === 0) return;
   } catch (e) {
     return;

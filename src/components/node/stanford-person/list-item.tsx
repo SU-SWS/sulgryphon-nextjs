@@ -2,10 +2,11 @@ import {Person} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import Link from "@/components/patterns/elements/drupal-link";
 import LibCal from "./libcal";
+import {buildUrl} from "@/lib/drupal/utils";
 
 const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
-  const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
-  const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
+  const imageUrl = node.su_person_photo?.field_media_image.uri.url;
+  const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt || '';
   const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
 
   return (
@@ -15,9 +16,10 @@ const StanfordPersonListItem = ({node, ...props}: { node: Person }) => {
         <div
           className="relative rounded-full overflow-hidden aspect-[1/1] w-[130px] @lg:w-[215px] mx-auto">
           <Image
-            src={imageUrl}
+            src={buildUrl(imageUrl).toString()}
             alt={imageAlt}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
             className="object-cover"

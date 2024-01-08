@@ -12,7 +12,6 @@ interface EntityProps extends PropsWithoutRef<any> {
   description?: string
   link?: DrupalLinkType
   entities: DrupalNode[]
-  fullWidth?: boolean
   headerId?: string
   styles?: {
     orientation?: string
@@ -20,7 +19,7 @@ interface EntityProps extends PropsWithoutRef<any> {
   }
 }
 
-const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], fullWidth = true, ...props}: EntityProps) => {
+const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], ...props}: EntityProps) => {
   const items = await fetchComponents<StanfordNode>(entities || []);
   const entityItems = items.filter(item => !!item?.id)
 
@@ -53,7 +52,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
 
         {entities &&
           <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
-            {entityItems.map((item, i) =>
+            {entityItems.map(item =>
               <div key={item.id} className="mx-auto w-full">
                 <NodeCardDisplay node={item} h3Heading={!!headline}/>
               </div>

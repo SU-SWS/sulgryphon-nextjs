@@ -6,6 +6,7 @@ import Conditional from "@/components/utils/conditional";
 import StudyPlaceHours from "./study-place-today-hours";
 import {DrupalTaxonomyTerm} from "next-drupal";
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid";
+import {buildUrl} from "@/lib/drupal/utils";
 
 const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
 
@@ -16,7 +17,7 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
       ))
   ) || [];
 
-  const imageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x
+  const imageUrl = node.sul_study__branch.su_library__contact_img?.field_media_image.uri.url
   const imageAlt = node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = node.sul_study__branch.su_library__contact_img?.field_media_image?.uri.base64;
 
@@ -27,9 +28,10 @@ const SulStudyPlaceCard = ({node}: { node: StudyPlace }) => {
           <div className={"overflow-hidden aspect-[4/3] relative "}>
             <Image
               className="object-cover object-center static"
-              src={imageUrl}
+              src={buildUrl(imageUrl).toString()}
               alt={imageAlt}
-              fill={true}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
               placeholder={placeholder ? 'blur' : 'empty'}
               blurDataURL={placeholder}
             />

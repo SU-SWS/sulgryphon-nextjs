@@ -13,7 +13,7 @@ const HomePageBanner = async () => {
     .addInclude(['su_library__contact_img.field_media_image'])
     .addSort('title', 'ASC');
 
-  const libraries = await getResourceCollection<Library[]>('node--sul_library', {params: params.getQueryObject()});
+  const libraries = await getResourceCollection<Library>('node--sul_library', {params: params.getQueryObject()});
 
   // Trim all the fat.
   const trimmedLibraries = libraries.map(library => (

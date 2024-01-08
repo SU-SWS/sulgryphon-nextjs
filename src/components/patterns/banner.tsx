@@ -11,11 +11,10 @@ interface BannerProps {
   link?: DrupalLinkType
   overlayPosition?: string
   className?: string
-  fullWidth?: boolean
   headerId?: string
 }
 
-const Banner = ({headerId, image, header, superHeader, body, link, overlayPosition, fullWidth = true, ...props}: BannerProps) => {
+const Banner = ({headerId, image, header, superHeader, body, link, overlayPosition, ...props}: BannerProps) => {
 
   const hasCardText = header || superHeader || body || link;
 

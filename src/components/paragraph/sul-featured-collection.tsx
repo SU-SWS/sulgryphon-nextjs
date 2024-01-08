@@ -10,6 +10,7 @@ import OnlyIfCentered from "@/components/utils/only-if-centered";
 import Card from "@/components/patterns/card";
 import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props extends PropsWithoutRef<any> {
   headline?: string
@@ -109,7 +110,7 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl}:{
   image?: DrupalImageMedia
   videoUrl?: string
 }) => {
-  const imageUrl = image?.image_style_uri.breakpoint_2xl_2x;
+  const imageUrl = image?.uri.url
   const imageAlt = image?.resourceIdObjMeta.alt ?? '';
   const placeholder = image?.uri.base64;
 
@@ -118,9 +119,10 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl}:{
       video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
       image={imageUrl && <Image
         className="object-cover object-center"
-        src={imageUrl}
+        src={buildUrl(imageUrl).toString()}
         alt={imageAlt}
-        fill={true}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
         placeholder={placeholder ? 'blur' : 'empty'}
         blurDataURL={placeholder}
       />}

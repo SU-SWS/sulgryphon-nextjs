@@ -81,7 +81,7 @@ export type News = DrupalNode & {
   su_news_byline?: string
   su_news_components?: StanfordParagraph[]
   su_news_dek?: string
-  su_news_featured_media?: DrupalMedia
+  su_news_featured_media?: DrupalImageMedia
   su_news_publishing_date?: string
   su_news_source?: DrupalLinkType
   su_news_topics?: DrupalTaxonomyTerm[]
@@ -347,6 +347,7 @@ export type LibGuideParagraph = DrupalParagraph & {
 }
 
 export type DrupalImageFile = DrupalFile & {
+  image_style_uri: { [key: string]: string }
   uri: {
     value: string
     url: string
@@ -520,4 +521,19 @@ export type Params = {
 export type PageProps = {
   params: Params
   searchParams?: Record<string, string | string[] | undefined>
+}
+
+export type DrupalRedirect = JsonApiResource & {
+  redirect_source: {
+    path: string,
+    query: []
+  },
+  redirect_redirect: {
+    uri: string,
+    title: string,
+    options: [],
+    target_uuid: string,
+    url: string
+  },
+  status_code: number
 }

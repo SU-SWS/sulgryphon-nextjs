@@ -1,6 +1,7 @@
 "use client";
 
 const Error = ({error, reset}: { error: Error; reset: () => void }) => {
+  console.error(error.message);
   return (
     <div className="centered my-50">
       <h2>Something went wrong!</h2>

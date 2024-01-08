@@ -1,14 +1,15 @@
 import Image from "next/image";
 
-import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
+import {DrupalImageFile, DrupalLinkType} from "@/lib/drupal/drupal";
 import Banner from "@/components/patterns/banner";
 import {PropsWithoutRef} from "react";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props extends PropsWithoutRef<any> {
   header?: string
   superHeader?: string
   body?: string
-  image?: DrupalImageMedia
+  image?: DrupalImageFile
   link?: DrupalLinkType
   overlayPosition?: string
   fullWidth?: boolean
@@ -17,16 +18,17 @@ interface Props extends PropsWithoutRef<any> {
 
 const StanfordBanner = ({header, superHeader, body, image, link, overlayPosition, ...props}: Props) => {
 
-  const imageUrl = image?.image_style_uri?.breakpoint_2xl_2x;
+  const imageUrl = image?.uri.url;
   const placeholder = image?.uri.base64;
 
   return (
     <Banner
       image={imageUrl && <Image
         className="object-cover object-center"
-        src={imageUrl}
-        alt={image?.resourceIdObjMeta.alt}
-        fill={true}
+        src={buildUrl(imageUrl).toString()}
+        alt={image?.resourceIdObjMeta?.alt || ''}
+        fill
+        sizes="100vw"
         placeholder={placeholder ? 'blur' : 'empty'}
         blurDataURL={placeholder}
       />}

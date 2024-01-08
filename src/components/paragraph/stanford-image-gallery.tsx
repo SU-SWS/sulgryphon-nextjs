@@ -8,13 +8,13 @@ import {DrupalLinkButton} from "@/components/patterns/link";
 import Modal from "@/components/patterns/modals/modal";
 import {useState} from "react";
 import formatHtml from "@/lib/format-html";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface StanfordImageGalleryProps {
   paragraph: ImageGalleryParagraph
-  fullWidth?: boolean
 }
 
-const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordImageGalleryProps) => {
+const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) => {
   const [modalOpen, setModalOpen] = useState('');
 
   return (
@@ -26,15 +26,16 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
         {paragraph.su_gallery_images.map(image =>
           <figure key={image.id} className="table h-fit">
             <div className="aspect-[16/9] relative w-full">
-              <Link href={image.su_gallery_image.image_style_uri.responsive_large} className=""
+              <Link href={buildUrl(image.su_gallery_image.uri.url).toString()} className=""
                     onClick={(e) => {
                       e.preventDefault();
                       setModalOpen(image.id)
                     }}>
                 <Image
-                  src={image.su_gallery_image.image_style_uri.cta_1x_596x397}
+                  src={buildUrl(image.su_gallery_image.uri.url).toString()}
                   alt={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
                   placeholder={image.su_gallery_image.uri.base64 ? 'blur' : 'empty'}
                   blurDataURL={image.su_gallery_image.uri.base64}
                   className="object-cover"
@@ -58,9 +59,10 @@ const StanfordImageGallery = ({paragraph, fullWidth = true, ...props}: StanfordI
               <figure className="relative h-full w-full table">
                 <div className="table-row relative h-full">
                   <Image
-                    src={image.su_gallery_image.image_style_uri.breakpoint_2xl_2x}
+                    src={buildUrl(image.su_gallery_image.uri.url).toString()}
                     alt={image.su_gallery_image?.resourceIdObjMeta?.alt ?? ''}
-                    fill={true}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
                     className="object-contain"
                   />
                 </div>

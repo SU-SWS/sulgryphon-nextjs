@@ -9,9 +9,7 @@ const Page = async ({params: {uuid}}: { params: { uuid: string } }) => {
   const node = await getResource<StudyPlace>('node--sul_study_place', uuid);
   // Filter out empty terms and deduplicate terms by their ID.
   const features: DrupalTaxonomyTerm[] = node.sul_study__features?.filter((term, index, self) =>
-      term.name?.length > 0 && index === self.findIndex((t) => (
-        t.id === term.id
-      ))
+      term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
   ) ?? [];
 
   return (
@@ -23,7 +21,7 @@ const Page = async ({params: {uuid}}: { params: { uuid: string } }) => {
         branchUrl={node.sul_study__branch.path.alias}
         capacity={node.sul_study__capacity?.name}
         contactImageAlt={node.sul_study__branch.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? ''}
-        contactImageUrl={node.sul_study__branch.su_library__contact_img?.field_media_image?.image_style_uri?.breakpoint_md_2x}
+        contactImageUrl={node.sul_study__branch.su_library__contact_img?.field_media_image.uri.url}
         features={features.map(feature => ({id: feature.id, name: feature.name}))}
         libCal={node.sul_study__libcal_id}
         type={node.sul_study__type.name}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "@/components/patterns/elements/drupal-link";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
@@ -12,27 +12,24 @@ import SearchModal from "@/components/search/search-modal";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {usePathname} from "next/navigation";
+import {useBoolean} from "usehooks-ts";
 
-const maxMenuDepth = 1;
+const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+  const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false);
+  const {value: addCloseAnimation, setValue: setAddCloseAnimation} = useBoolean(false);
 
-const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[]}) => {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [addCloseAnimation, setAddCloseAnimation] = useState(false)
   const browserUrl = useNavigationEvent();
   const activeTrail = useActiveTrail(menuItems, usePathname() || '');
   const isDesktop = useIsDesktop();
 
   const openCloseMenu = () => {
-    setMenuOpen(!menuOpen);
+    toggleMenu();
     setAddCloseAnimation(true);
   }
-  // When clicking or focusing outside the main menu, close the main menu and all submenus.
-  const handleClickFocusOutside = () => {
-    setMenuOpen(false)
-  }
 
-  useEffect(() => setMenuOpen(false), [browserUrl]);
-  const outsideClickProps = useOutsideClick(() => setMenuOpen(false))
+  useEffect(() => closeMenu, [browserUrl, closeMenu]);
+  const outsideClickProps = useOutsideClick(closeMenu)
+
   return (
     <div className="max-w-1500 w-full mx-auto lg:px-40 3xl:px-0" {...outsideClickProps}>
       <button
@@ -47,13 +44,15 @@ const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[]}) => {
       <div className="relative">
         <div
           aria-hidden={!isDesktop && !menuOpen}
-          className={"h-[calc(100vh-100px)] lg:h-auto overflow-y-scroll lg:overflow-visible py-20 lg:py-0 lg:pb-0 border-t-4 lg:border-0 border-cardinal-red bg-black-true lg:bg-transparent absolute lg:relative w-full z-10 lg:block lg:animate-none -translate-y-full lg:transform-none" + (menuOpen ? " animate-slide-down" : (addCloseAnimation ? " animate-slide-up" : ""))}>
-          <SearchForm className="px-20 pb-20 lg:hidden" action="/all"
+          className={"h-[calc(100vh-100px)] lg:h-auto overflow-y-scroll lg:overflow-visible py-20 lg:py-0 lg:pb-0 border-t-4 lg:border-0 border-cardinal-red bg-black-true lg:bg-transparent absolute lg:relative w-full z-10 lg:block lg:animate-none -translate-y-full lg:transform-none" + (menuOpen ? " animate-slide-down" : (addCloseAnimation ? " animate-slide-up" : ""))}
+        >
+          <SearchForm className={"px-20 pb-20 lg:hidden " + (!isDesktop && !menuOpen ? 'hidden' : 'block')}
+                      action="/all"
                       inputProps={{className: "p-10 w-full rounded-full lg:hidden"}}/>
-          <nav aria-label="Main Menu">
+          <nav aria-label="Main Menu" className={!isDesktop && !menuOpen ? 'hidden' : 'block'}>
             <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
               {menuItems.map(item =>
-                <MenuItem key={item.id} {...item} activeTrail={activeTrail} onClick={handleClickFocusOutside}/>
+                <MenuItem key={item.id} {...item} activeTrail={activeTrail}/>
               )}
 
               <li className="hidden lg:flex items-center ml-20">
@@ -64,7 +63,7 @@ const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[]}) => {
 
 
           <nav
-            className="text-white p-40 mt-40 text-center flex gap-10 items-center justify-center lg:hidden">
+            className={"text-white p-40 mt-40 text-center flex gap-10 items-center justify-center lg:hidden " + (!isDesktop && !menuOpen ? 'hidden' : 'block')}>
             <div className="mr-20">Quick Links:</div>
             <ul className="list-unstyled flex flex-wrap items-center gap-10">
               <li className="m-0">
@@ -118,31 +117,15 @@ interface MenuItemProps {
   tabIndex?: number
   activeTrail: string[]
   menuLevel?: number
-  onClick: () => void
 }
 
-
-const MenuItem = ({
-                    id,
-                    title,
-                    url,
-                    items,
-                    expanded,
-                    onClick,
-                    tabIndex = 0,
-                    activeTrail = [],
-                    menuLevel = 0
-                  }: MenuItemProps) => {
-  if (menuLevel > maxMenuDepth) {
-    return null;
-  }
-
+const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
   const browserUrl = useNavigationEvent();
-  const [submenuOpen, setSubmenuOpen] = useState(false)
+  const {value: submenuOpen, setFalse: closeSubmenu, toggle: toggleSubmenu} = useBoolean(false);
   const active = activeTrail.includes(id);
 
   // Helper for tailwind JIT to add the classes.
-  const titleSpacing: string[] = [
+  const _titleSpacing: string[] = [
     'lg:ml-[0px]',
     'lg:ml-[30px]',
     'lg:ml-[60px]',
@@ -156,14 +139,8 @@ const MenuItem = ({
   ];
   const belowItems = (items && items?.length > 0) ? items : [];
 
-
-  // Expand/Collapse menu button click handler.
-  const openCloseSubmenu = () => {
-    setSubmenuOpen(!submenuOpen);
-  }
-
-  useEffect(() => setSubmenuOpen(false), [browserUrl])
-  const outsideClickProps = useOutsideClick(() => setSubmenuOpen(false))
+  useEffect(() => closeSubmenu(), [browserUrl, closeSubmenu])
+  const outsideClickProps = useOutsideClick(closeSubmenu)
 
   // Add classes to the link item based on various conditions.
   const getLinkBorderClasses = () => {
@@ -222,11 +199,11 @@ const MenuItem = ({
         </Link>
       </Conditional>
 
-      <Conditional showWhen={url.length === 0}>
+      {url.length === 0 &&
         <button
           tabIndex={tabIndex}
           className={"group flex items-center font-semibold text-left text-white lg:text-black-true hocus:text-white lg:hocus:text-archway hocus:bg-black lg:hocus:bg-transparent w-full p-20 " + getLinkBorderClasses()}
-          onClick={openCloseSubmenu}
+          onClick={toggleSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
           <span
@@ -234,47 +211,38 @@ const MenuItem = ({
             {title}
           </span>
 
-          <span
-            className={"flex items-center bg-black h-[68px] w-[70px] lg:h-auto absolute lg:relative z-10 top-0 right-0" + (menuLevel >= 1 ? ' lg:bg-fog-light' : ' lg:bg-transparent lg:w-[40px]')}>
-            <span
-              className="border-b-2 border-transparent group-hocus:border-white lg:group-hocus:border-archway w-fit mx-auto">
-              <ChevronDownIcon
-                className={"lg:group-hocus:text-archway transition-all text-white lg:text-black-true mx-auto" + (submenuOpen ? " scale-y-[-1]" : "")}
-                height={40}
-              />
-            </span>
-          </span>
         </button>
-      </Conditional>
+      }
 
-      <Conditional showWhen={menuLevel == 0 && belowItems.length >= 1 && expanded}>
-        <Conditional showWhen={url.length > 0}>
-          <DropDownButton
-            isOpen={submenuOpen}
-            menuLevel={menuLevel}
-            onButtonClick={openCloseSubmenu}
-            title={title}
-            aria-expanded={submenuOpen ? "true" : "false"}
-            tabIndex={tabIndex}
-          />
-        </Conditional>
-        <ul
-          aria-hidden={!submenuOpen}
-          data-attribute-menu-level={menuLevel}
-          className={"w-full m-0 p-0 list-unstyled lg:bg-white lg:top-full lg:w-[200%]" + (submenuOpen ? " block" : " hidden") + (menuLevel == 0 ? " lg:absolute xl:right-auto lg:shadow-lg" : "")}
-        >
-          {belowItems.map(item =>
-            <MenuItem
-              key={item.id}
-              activeTrail={activeTrail}
-              {...item}
-              menuLevel={menuLevel + 1}
-              tabIndex={submenuOpen ? 0 : -1}
-              onClick={onClick}
-            />)
+      {(menuLevel == 0 && belowItems.length >= 1 && expanded) &&
+        <>
+          {url.length > 0 &&
+            <DropDownButton
+              isOpen={submenuOpen}
+              menuLevel={menuLevel}
+              onButtonClick={toggleSubmenu}
+              title={title}
+              aria-expanded={submenuOpen ? "true" : "false"}
+              tabIndex={tabIndex}
+            />
           }
-        </ul>
-      </Conditional>
+          <ul
+            aria-hidden={!submenuOpen}
+            data-attribute-menu-level={menuLevel}
+            className={"w-full m-0 p-0 list-unstyled lg:bg-white lg:top-full lg:w-[200%]" + (submenuOpen ? " block" : " hidden") + (menuLevel == 0 ? " lg:absolute xl:right-auto lg:shadow-lg" : "")}
+          >
+            {belowItems.map(item =>
+              <MenuItem
+                key={item.id}
+                activeTrail={activeTrail}
+                {...item}
+                menuLevel={menuLevel + 1}
+                tabIndex={submenuOpen ? 0 : -1}
+              />)
+            }
+          </ul>
+        </>
+      }
     </li>
   )
 }

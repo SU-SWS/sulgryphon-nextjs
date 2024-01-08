@@ -6,6 +6,7 @@ import LibCal from "./libcal";
 import {Person} from "@/lib/drupal/drupal";
 import EmailLink from "@/components/patterns/elements/email-link";
 import {PropsWithoutRef} from "react";
+import {buildUrl} from "@/lib/drupal/utils";
 
 interface Props {
   node: Person
@@ -14,7 +15,7 @@ interface Props {
 
 const VerticalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) => {
   const HeadingElement = h3Heading ? 'h3' : 'h2';
-  const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
+  const imageUrl = node.su_person_photo?.field_media_image.uri.url;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const imageHeight = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.height;
   const imageWidth = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.width;
@@ -30,7 +31,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>)
             <div
               className="rounded-full aspect-[1/1] w-[130px] @lg:w-[150px] overflow-hidden">
               <Image
-                src={imageUrl}
+                src={buildUrl(imageUrl).toString()}
                 alt={imageAlt}
                 height={imageHeight}
                 width={imageWidth}

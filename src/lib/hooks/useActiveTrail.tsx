@@ -1,5 +1,3 @@
-
-import {useMemo} from "react";
 import {DrupalMenuLinkContent} from "next-drupal";
 
 const useActiveTrail = (menuItems: DrupalMenuLinkContent[], currentPath: string) => {
@@ -25,7 +23,7 @@ const useActiveTrail = (menuItems: DrupalMenuLinkContent[], currentPath: string)
     }
     return [];
   }
-  return useMemo(() => getActiveTrail(menuItems), [menuItems, currentPath]);
+  return getActiveTrail(menuItems);
 }
 
 export default useActiveTrail;

@@ -8,7 +8,7 @@ export const getView = async <T, >(
 ): Promise<{
   results: T
   meta: Record<string, any>
-  links: { [key in "next" | "prev" | "self"]?: { href: "string" } }
+  links: { [_key in "next" | "prev" | "self"]?: { href: "string" } }
 }> => {
   options = {deserialize: true, ...options}
 

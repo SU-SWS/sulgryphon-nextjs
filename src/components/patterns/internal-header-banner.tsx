@@ -1,5 +1,5 @@
 import Wave from "@/components/patterns/wave";
-import {PropsWithChildren, ReactNode} from "react";
+import {PropsWithChildren} from "react";
 
 const InternalHeaderBanner = ({children}: PropsWithChildren) => {
   return (

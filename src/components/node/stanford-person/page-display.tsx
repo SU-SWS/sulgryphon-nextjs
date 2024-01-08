@@ -11,13 +11,14 @@ import fetchLibGuides from "@/lib/libguides";
 import fetchComponents from "@/lib/fetch-components";
 import Paragraph from "@/components/paragraph";
 import EmailLink from "@/components/patterns/elements/email-link";
+import {buildUrl} from "@/lib/drupal/utils";
 
 const StanfordPerson = async ({node, ...props}: { node: Person }) => {
   node.su_person_components = await fetchComponents<StanfordParagraph>(node.su_person_components || []);
   node.su_person_components = node.su_person_components.filter(item => !!item?.id);
   node.lib_guides = node.sul_person__libguide_id ? await fetchLibGuides({accountId: node.sul_person__libguide_id}) : [];
 
-  const imageUrl = node.su_person_photo?.field_media_image?.image_style_uri?.medium_square;
+  const imageUrl = node.su_person_photo?.field_media_image.uri.url;
   const imageAlt = node.su_person_photo?.field_media_image?.resourceIdObjMeta?.alt ?? '';
   const placeholder = node.su_person_photo?.field_media_image?.uri.base64;
 
@@ -28,12 +29,12 @@ const StanfordPerson = async ({node, ...props}: { node: Person }) => {
           <div className="rs-mr-4 rs-mb-1 sm:mb-[0rem]">
             <div className="relative rounded-full w-[220px] h-[220px] overflow-hidden">
               <Image
-                src={imageUrl}
+                src={buildUrl(imageUrl).toString()}
                 alt={imageAlt}
-                fill={true}
+                fill
                 placeholder={placeholder ? 'blur' : 'empty'}
                 blurDataURL={placeholder}
-                sizes="200w"
+                sizes="500px"
               />
             </div>
           </div>

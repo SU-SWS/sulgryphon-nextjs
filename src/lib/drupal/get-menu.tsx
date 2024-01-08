@@ -40,9 +40,9 @@ export const getMenu = async(
 
 
 const buildMenuTree = <T extends DrupalMenuLinkContent>(
-  links: DrupalMenuLinkContent[],
-  parent: DrupalMenuLinkContent["id"] = ""
-): { items: DrupalMenuLinkContent[] } => {
+  links: T[],
+  parent: T["id"] = ""
+): { items: T[] } => {
   if (!links?.length) {
     return {
       items: [],

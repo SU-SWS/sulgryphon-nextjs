@@ -4,6 +4,7 @@ import {Event} from "@/lib/drupal/drupal";
 import Image from "next/image";
 import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";
 import {PropsWithoutRef} from "react";
+import {buildUrl} from "@/lib/drupal/utils";
 
 const getTimeString = (start: Date, end: Date): string => {
   const startHour = parseInt(start.toLocaleTimeString("en-US", {
@@ -101,7 +102,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) 
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
 
-  const imageUrl = node.sul_event__image?.field_media_image?.image_style_uri?.breakpoint_2xl_1x;
+  const imageUrl = node.sul_event__image?.field_media_image?.uri.url;
   const placeholder = node.sul_event__image?.field_media_image?.uri.base64;
 
   return (
@@ -113,9 +114,10 @@ const StanfordEventCard = ({node, h3Heading, ...props}: PropsWithoutRef<Props>) 
         >
           <Image
             className="object-cover object-center"
-            src={imageUrl}
+            src={buildUrl(imageUrl).toString()}
             alt=""
-            fill={true}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             placeholder={placeholder ? 'blur' : 'empty'}
             blurDataURL={placeholder}
           />
