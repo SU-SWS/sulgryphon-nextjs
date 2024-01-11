@@ -132,7 +132,7 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
-        <p aria-live="polite">
+        <p aria-live="polite" aria-atomic="true">
           Showing {itemsToDisplay.length} of {items.length}
           <br/>
           <Conditional showWhen={itemsToDisplay.length == 0}>
