@@ -50,8 +50,8 @@ const LibraryFooter = () => {
         <div>
           <h2 className="text-m0 mb-20">Who we are</h2>
           <ul className="list-unstyled">
-            <li><FooterLink href="/about-us">About Us</FooterLink></li>
-            <li><FooterLink href="/staff-directory">Staff Directory</FooterLink></li>
+            <li><FooterLink href="/about-us">About us</FooterLink></li>
+            <li><FooterLink href="/staff-directory">Staff directory</FooterLink></li>
             <li><FooterLink href="/department-directory">Department directory</FooterLink></li>
             <li><FooterLink href="https://searchworks.stanford.edu/catalog?f%5Bcollection%5D%5B%5D=hn730ks3626">Staff publications and research</FooterLink></li>
             <li><FooterLink href="https://stanford.joinhandshake.com/login">Student job openings</FooterLink></li>
@@ -60,7 +60,7 @@ const LibraryFooter = () => {
         <div>
           <h2 className="text-m1 mb-20">Administration</h2>
           <ul className="list-unstyled">
-            <li><FooterLink href="/general-policies">General Policies</FooterLink></li>
+            <li><FooterLink href="/general-policies">General policies</FooterLink></li>
             <li><FooterLink href="/copyright-notice">Copyright notice</FooterLink></li>
             <li><FooterLink href="https://library-status.stanford.edu/">System status</FooterLink></li>
           </ul>
