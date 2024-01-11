@@ -86,7 +86,7 @@ export const getResourceByPath = async <T extends JsonApiResource>(
   ]
 
   const url = buildUrl("/subrequests", {_format: "json"})
-  console.log('subrequest', JSON.stringify(payload));
+  console.log('subrequest path', JSON.stringify(path));
 
   let response = await fetch(url.toString(), {
     next: options.next,
