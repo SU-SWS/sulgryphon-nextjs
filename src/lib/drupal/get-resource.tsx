@@ -86,6 +86,7 @@ export const getResourceByPath = async <T extends JsonApiResource>(
   ]
 
   const url = buildUrl("/subrequests", {_format: "json"})
+  console.log('subrequest', JSON.stringify(payload));
 
   let response = await fetch(url.toString(), {
     next: options.next,
@@ -180,7 +181,6 @@ export const getConfigPageResource = async <T extends JsonApiResource>(
     next?: NextFetchRequestConfig
   } & JsonApiWithLocaleOptions
 ): Promise<T | undefined> => {
-  options = {next: {revalidate: 604800}, ...options}
 
   let response;
   try {
