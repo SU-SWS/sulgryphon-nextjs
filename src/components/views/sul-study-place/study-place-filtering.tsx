@@ -117,14 +117,18 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
             onChange={(event, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
           />
 
+          <div className="flex flex-col pl-12 mr-72 pr-72">
+            <button type="submit" className="button">
+              Submit
+            </button>
+
+            <a href="" className="text-center mt-16" onClick={handleReset}>
+              Clear Filters
+            </a>
+          </div>
         </fieldset>
 
-        <button type="submit" className="button mr-20">
-          Filter
-        </button>
-        <button className="button" onClick={handleReset}>
-          Reset
-        </button>
+
       </form>
 
       <Conditional showWhen={items.length == 0}>
