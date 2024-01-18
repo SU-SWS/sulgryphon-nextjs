@@ -129,7 +129,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
       >
         <div className="flex justify-between flex-wrap">
           {label &&
-            <div className={"relative " + (optionChosen ? "text-m0 top-[-15px] w-full" : "text-m1")}>
+            <div className={"relative " + (optionChosen ? "top-[-15px] w-full" : "")}>
               <div id={labelId} className="bg-white w-fit px-5">
                 {label}
               </div>
