@@ -16,7 +16,6 @@ export const getMenu = async(
   const url = buildUrl(`/jsonapi/menu_items/${name}`)
 
   const response = await fetch(url.toString(), {
-    next: {revalidate: 86400},
     headers: await buildHeaders(options),
   })
 

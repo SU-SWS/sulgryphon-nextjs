@@ -7,7 +7,7 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import fetchComponents from "@/lib/fetch-components";
 import {notFound} from "next/navigation";
 
-export const revalidate = 1800;
+export const revalidate = false;
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const node = await getResourceByPath<BasicPage>('/');
