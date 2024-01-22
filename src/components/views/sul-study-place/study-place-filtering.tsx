@@ -80,7 +80,7 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
         <fieldset
           className="grid grid-cols-1 @xl:grid-cols-2 @7xl:grid-cols-4 gap-xs lg:gap-xl mb-30"
           aria-label="Filter study places">
-          <legend className="font-bold mb-10 whitespace-nowrap">Filter places to study.</legend>
+          <legend className="font-bold mb-10 whitespace-nowrap">Filter by:</legend>
           <SelectList
             label="Type"
             options={typeOfStudies}
@@ -132,7 +132,7 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
-        <p aria-live="polite">
+        <p className={'mt-60 mb-32 type-2 font-serif font-bold'} aria-live="polite">
           Showing {itemsToDisplay.length} of {items.length}
           <br/>
           <Conditional showWhen={itemsToDisplay.length == 0}>
