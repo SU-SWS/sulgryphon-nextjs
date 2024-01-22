@@ -12,6 +12,14 @@ module.exports = {
         hostname: drupalUrl.hostname,
       },
     ],
+    deviceSizes: [
+      320,
+      768,
+      1200,
+      2000,
+    ],
+    loader: 'custom',
+    loaderFile: './src/components/patterns/elements/image-loader.tsx',
   },
   eslint: {
     ignoreDuringBuilds: process.env.CI !== 'true',
