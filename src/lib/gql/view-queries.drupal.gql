@@ -27,28 +27,6 @@ query stanfordBasicPagesCards($filters: StanfordBasicPagesCardsContextualFilterI
     }
 }
 
-query stanfordCourses($filters: StanfordCoursesContextualFilterInput) {
-    stanfordCourses(contextualFilter: $filters) {
-        results {
-            ...FragmentNodeStanfordCourse
-        }
-        pageInfo {
-            ...FragmentViewPageInfo
-        }
-    }
-}
-
-query stanfordCoursesCardGrid($filters: StanfordCoursesCardGridContextualFilterInput) {
-    stanfordCoursesCardGrid(contextualFilter: $filters) {
-        results {
-            ...FragmentNodeStanfordCourse
-        }
-        pageInfo {
-            ...FragmentViewPageInfo
-        }
-    }
-}
-
 query stanfordEventsCardGrid($filters: StanfordEventsCardGridContextualFilterInput) {
     stanfordEventsCardGrid(contextualFilter: $filters) {
         results {
@@ -115,27 +93,14 @@ query stanfordPerson($filters: StanfordPersonContextualFilterInput) {
     }
 }
 
-query stanfordPublicationsApa($filters: StanfordPublicationsApaContextualFilterInput) {
-    stanfordPublicationsApa(contextualFilter: $filters) {
+query sulStudyPlaces {
+    sulStudyPlaces {
         results {
-            ...FragmentNodeStanfordPublicationTeaser
-        }
-        pageInfo {
-            ...FragmentViewPageInfo
+            ...FragmentNodeSulStudyPlaceTeaser
         }
     }
 }
 
-query stanfordPublicationsChicago($filters: StanfordPublicationsChicagoContextualFilterInput) {
-    stanfordPublicationsChicago(contextualFilter: $filters) {
-        results {
-            ...FragmentNodeStanfordPublicationTeaser
-        }
-        pageInfo {
-            ...FragmentViewPageInfo
-        }
-    }
-}
 
 query stanfordSharedTags($filters: StanfordSharedTagsContextualFilterInput) {
     stanfordSharedTags(contextualFilter: $filters) {

@@ -181,6 +181,9 @@ fragment FragmentNodeStanfordEvent on NodeStanfordEvent {
     suEventType {
         ...FragmentTermInterface
     }
+    sulEventImage {
+        ...FragmentMediaImage
+    }
 }
 
 fragment FragmentNodeStanfordEventSeries on NodeStanfordEventSeries {
@@ -337,6 +340,8 @@ fragment FragmentNodeUnion on NodeUnion {
     ...FragmentNodeStanfordPerson
     ...FragmentNodeStanfordPolicy
     ...FragmentNodeStanfordPublication
+    ...FragmentNodeSulStudyPlace
+    ...FragmentNodeSulLibrary
 }
 
 fragment FragmentNodeStanfordCourseTeaser on NodeStanfordCourse {
@@ -356,6 +361,9 @@ fragment FragmentNodeStanfordEventTeaser on NodeStanfordEvent {
     suEventType {
         ...FragmentTermInterface
     }
+    sulEventImage {
+        ...FragmentMediaImage
+    }
 }
 
 fragment FragmentNodeStanfordEventSeriesTeaser on NodeStanfordEventSeries {
@@ -365,6 +373,9 @@ fragment FragmentNodeStanfordEventSeriesTeaser on NodeStanfordEventSeries {
 
 fragment FragmentNodeStanfordNewsTeaser on NodeStanfordNews {
     ...FragmentNodeInterface
+    suNewsBanner {
+        ...FragmentMediaImage
+    }
     suNewsFeaturedMedia {
         ...FragmentMediaImage
     }
@@ -409,10 +420,32 @@ fragment FragmentNodeStanfordPublicationTeaser on NodeStanfordPublication {
 
 fragment FragmentNodeSulLibraryTeaser on NodeSulLibrary {
     ...FragmentNodeInterface
+    suLibraryHours
+    suLibraryPhone
+    suLibraryEmail
+    suLibraryContactImg {
+        ...FragmentMediaImage
+    }
+    suLibraryAddress {
+        ...FragmentAddressType
+    }
 }
 
 fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
     ...FragmentNodeInterface
+    sulStudyLibcalId
+    sulStudyFeatures {
+        ...FragmentTermInterface
+    }
+    sulStudyCapacity {
+        ...FragmentTermInterface
+    }
+    sulStudyType {
+        ...FragmentTermInterface
+    }
+    sulStudyBranch {
+        ...FragmentNodeSulLibraryTeaser
+    }
 }
 
 fragment FragmentNodeTeaserUnion on NodeUnion {

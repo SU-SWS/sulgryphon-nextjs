@@ -9,6 +9,7 @@ interface Props {
 }
 
 const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
+
   const featuredImageUrl = node.suNewsFeaturedMedia?.mediaImage.url
   const bannerImageUrl = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.url;
   const imageUrl =  featuredImageUrl || bannerImageUrl

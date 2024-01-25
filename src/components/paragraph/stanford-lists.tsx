@@ -1,8 +1,10 @@
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {HTMLAttributes} from "react";
-import {Maybe, Link as LinkType, ViewReference} from "@/lib/gql/__generated__/drupal";
+import {cache, HTMLAttributes} from "react";
+import {Maybe, Link as LinkType, ViewReference, NodeUnion} from "@/lib/gql/__generated__/drupal";
 import {ParagraphBehaviors} from "@/lib/drupal/drupal";
+import {graphqlClient} from "@/lib/gql/fetcher";
+import View from "@/components/views/view";
 
 type ListProps = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>
@@ -52,14 +54,122 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
       {description &&
         <div>{formatHtml(description)}</div>
       }
-
-      View goes here
+      {(viewItems && viewId && displayId) &&
+        <View items={viewItems} viewId={viewId} displayId={displayId} hasHeading={!!headline}/>
+      }
     </div>
   )
 }
 
-const getViewItems = async (view: string, display: string, filters?: ViewReference["contextualFilter"]) => {
-  return [];
+const getViewItems = cache(async (viewId: string, displayId: string, contextualFilter?: ViewReference["contextualFilter"]): Promise<NodeUnion[]> => {
+
+  let items: NodeUnion[] = []
+
+  const tags = ['views'];
+
+  switch (`${viewId}--${displayId}`) {
+    case 'stanford_shared_tags--card_grid':
+      tags.push('views:all');
+      break;
+
+    case 'stanford_basic_pages--basic_page_type_list':
+    case 'stanford_basic_pages--viewfield_block_1':
+      tags.push('views:stanford_page');
+      break
+
+    case 'stanford_events--cards':
+    case 'stanford_events--list_page':
+    case 'stanford_events--past_events_list_block':
+      tags.push('views:stanford_event');
+      break
+
+    case 'stanford_news--block_1':
+    case 'stanford_news--vertical_cards':
+      tags.push('views:stanford_news');
+      break
+
+    case 'stanford_person--grid_list_all':
+      tags.push('views:stanford_person');
+      break
+
+    case 'sul_study_places--study_places':
+      tags.push('views:sul_study_place');
+      break
+  }
+
+  const client = graphqlClient(undefined, {next: {tags}});
+  let filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
+  let graphqlResponse;
+
+  switch (`${viewId}--${displayId}`) {
+    case 'stanford_shared_tags--card_grid':
+      filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
+      graphqlResponse = await client.stanfordSharedTags({filters});
+      items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_basic_pages--basic_page_type_list':
+      graphqlResponse = await client.stanfordBasicPages({filters});
+      items = graphqlResponse.stanfordBasicPages?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_basic_pages--viewfield_block_1':
+      graphqlResponse = await client.stanfordBasicPagesCards({filters});
+      items = graphqlResponse.stanfordBasicPagesCards?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_events--cards':
+      filters = getViewFilters(['term_node_taxonomy_name_depth', 'term_node_taxonomy_name_depth_1', 'term_node_taxonomy_name_depth_2', 'term_node_taxonomy_name_depth_3'], contextualFilter)
+      graphqlResponse = await client.stanfordEventsCardGrid({filters});
+      items = graphqlResponse.stanfordEventsCardGrid?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_events--list_page':
+      filters = getViewFilters(['term_node_taxonomy_name_depth', 'term_node_taxonomy_name_depth_1', 'term_node_taxonomy_name_depth_2', 'term_node_taxonomy_name_depth_3'], contextualFilter);
+      graphqlResponse = await client.stanfordEvents({filters});
+      items = graphqlResponse.stanfordEvents?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_events--past_events_list_block':
+      graphqlResponse = await client.stanfordEventsPastEvents({filters});
+      items = graphqlResponse.stanfordEventsPastEvents?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_news--block_1':
+      graphqlResponse = await client.stanfordNewsDefaultList({filters});
+      items = graphqlResponse.stanfordNewsDefaultList?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_news--vertical_cards':
+      graphqlResponse = await client.stanfordNewsCardGrid({filters});
+      items = graphqlResponse.stanfordNewsCardGrid?.results as unknown as NodeUnion[]
+      break
+
+    case 'stanford_person--grid_list_all':
+      graphqlResponse = await client.stanfordPerson({filters});
+      items = graphqlResponse.stanfordPerson?.results as unknown as NodeUnion[]
+      break
+
+    case 'sul_study_places--study_places':
+      graphqlResponse = await client.sulStudyPlaces();
+      items = graphqlResponse.sulStudyPlaces?.results as unknown as NodeUnion[]
+      break
+
+    default:
+      console.error(`Unable to find query for view: ${viewId} display: ${displayId}`)
+      break;
+  }
+  return items;
+})
+
+const getViewFilters = (keys: string[], values?: Maybe<string[]>) => {
+  if (!keys || !values) return;
+  const filters: Record<string, string | undefined> = keys.reduce((obj, key, index) => ({
+    ...obj,
+    [key]: values[index]
+  }), {})
+  Object.keys(filters).forEach(key => filters[key] === undefined && delete filters[key]);
+  return filters;
 }
 
 

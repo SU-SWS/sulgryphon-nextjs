@@ -12,9 +12,10 @@ interface Props {
 }
 
 const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
+
   const HeadingElement = h3Heading ? 'h3' : 'h2';
-  const start = new Date(node.suEventDateTime.value);
-  const end = new Date(node.suEventDateTime.end_value);
+  const start = new Date(node.suEventDateTime.value * 1000);
+  const end = new Date(node.suEventDateTime.end_value * 1000);
   const startMonth = start.toLocaleDateString("en-US", {month: "short", timeZone: 'America/Los_Angeles'})
   const startDay = parseInt(start.toLocaleDateString("en-US", {day: "numeric", timeZone: 'America/Los_Angeles'}))
 

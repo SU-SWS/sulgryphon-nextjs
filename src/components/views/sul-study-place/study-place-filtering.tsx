@@ -14,6 +14,7 @@ interface SelectOption {
 }
 
 const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
+  console.log(items[0])
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedLibraries, setSelectedLibraries] = useState<string[]>([]);
   const [selectedCapacity, setSelectedCapacity] = useState<string[]>([]);
