@@ -1,7 +1,7 @@
 import NodeCard from "@/components/node/node-card";
-import {StanfordNode} from "@/lib/drupal/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal";
 
-const CardList = ({items, h3Heading}:{items: StanfordNode[], h3Heading?: boolean}) => {
+const CardList = ({items, h3Heading}: { items: NodeUnion[], h3Heading?: boolean }) => {
 
   const gridClasses = [
     '',

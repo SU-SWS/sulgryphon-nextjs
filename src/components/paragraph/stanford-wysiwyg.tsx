@@ -1,7 +1,7 @@
 import formatHtml from "@/lib/format-html";
-import {PropsWithoutRef} from "react";
+import {HTMLAttributes} from "react";
 
-interface Props extends PropsWithoutRef<any> {
+type Props = HTMLAttributes<HTMLDivElement> & {
   text?: string
 }
 

@@ -66,9 +66,9 @@ const GlobalMessage = async () => {
         </div>
 
         <div>
-          <Conditional showWhen={configPage.su_global_msg_header}>
+          {(configPage.su_global_msg_header) &&
             <h2 className="text-m3">{configPage.su_global_msg_header}</h2>
-          </Conditional>
+          }
 
           {configPage.su_global_msg_message &&
             <div className={chosenOption.textColor}>

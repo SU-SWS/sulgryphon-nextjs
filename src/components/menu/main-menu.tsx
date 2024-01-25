@@ -185,7 +185,7 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
 
   return (
     <li className="p-0 m-0 relative lg:flex" {...outsideClickProps}>
-      <Conditional showWhen={url.length >= 1}>
+      {(url.length >= 1) &&
         <Link
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
@@ -197,7 +197,7 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
             {title}
           </div>
         </Link>
-      </Conditional>
+      }
 
       {url.length === 0 &&
         <button

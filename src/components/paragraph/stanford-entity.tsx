@@ -2,32 +2,31 @@ import formatHtml from "@/lib/format-html";
 import NodeCardDisplay from "@/components/node/node-card";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {PropsWithoutRef} from "react";
-import {DrupalLinkType, StanfordNode} from "@/lib/drupal/drupal";
-import {DrupalNode} from "next-drupal";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
-import fetchComponents from "@/lib/fetch-components";
+import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
 
 interface EntityProps extends PropsWithoutRef<any> {
-  headline?: string
-  description?: string
-  link?: DrupalLinkType
-  entities: DrupalNode[]
+  headline?: Maybe<string>
+  description?: Maybe<string>
+  link?: Maybe<LinkType>
+  entities: NodeUnion[]
   headerId?: string
   styles?: {
-    orientation?: string
-    background?: string
+    orientation?: Maybe<string>
+    background?: Maybe<string>
   }
 }
 
 const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], ...props}: EntityProps) => {
-  const items = await fetchComponents<StanfordNode>(entities || []);
-  const entityItems = items.filter(item => !!item?.id)
 
   const wrapperClasses = styles?.background === 'black' ? 'text-white py-40' : '';
 
-  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
-    link.options.attributes['aria-labelledby'] = headerId;
-    delete link?.options?.attributes?.['aria-label'];
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+
+  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
+    linkAttributes['aria-labelledby'] = headerId;
+    delete linkAttributes['aria-label'];
   }
 
   const gridClasses = [
@@ -35,7 +34,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
     '@7xl:grid-cols-1-1',
     '@7xl:grid-cols-1-1 @15xl:grid-cols-1-1-1',
   ]
-  const gridClass = entityItems.length >= 3 ? gridClasses[2] : gridClasses[(entityItems.length % 3) - 1]
+  const gridClass = entities.length >= 3 ? gridClasses[2] : gridClasses[(entities.length % 3) - 1]
 
   return (
     <div className="@container relative centered" {...props}>
@@ -52,7 +51,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
 
         {entities &&
           <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
-            {entityItems.map(item =>
+            {entities.map(item =>
               <div key={item.id} className="mx-auto w-full">
                 <NodeCardDisplay node={item} h3Heading={!!headline}/>
               </div>
@@ -60,7 +59,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
           </div>
         }
         {link?.url &&
-          <DrupalLinkButton href={link?.url} className="block mx-auto" {...link.options?.attributes}>
+          <DrupalLinkButton href={link?.url} className="block mx-auto" {...linkAttributes}>
             {link.title}
           </DrupalLinkButton>
         }

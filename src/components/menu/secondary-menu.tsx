@@ -6,7 +6,6 @@ import Link from "@/components/patterns/elements/drupal-link";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
-import Conditional from "@/components/utils/conditional";
 import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
@@ -42,9 +41,9 @@ const SecondaryMenu = ({menuItems, currentPath}: { menuItems: DrupalMenuLinkCont
 
   return (
     <aside className="order-first lg:w-1/3 2xl:w-1/4 relative">
-      <Conditional showWhen={(menuOpen)}>
+      {((menuOpen)) &&
         <div className="lg:hidden backdrop-blur-sm fixed z-10 top-0 left-0 w-full h-screen"/>
-      </Conditional>
+      }
 
       <button
         onClick={toggleMenuOpen}
@@ -107,7 +106,7 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
           {title}
         </Link>
 
-        <Conditional showWhen={items?.length > 0}>
+        {(items?.length > 0) &&
           <div className="relative flex items-center">
             <button
               className="group mr-20"
@@ -123,16 +122,16 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
                 className="sr-only">{title.trim() + " submenu"}</span>
             </button>
           </div>
-        </Conditional>
+        }
       </div>
 
-      <Conditional showWhen={items?.length > 0}>
+      {(items?.length > 0) &&
         <ul className={"list-unstyled" + (submenuOpen ? " block" : " hidden")}>
           {items.map(item =>
             <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>
           )}
         </ul>
-      </Conditional>
+      }
     </li>
   )
 }

@@ -6,22 +6,23 @@ import StanfordPage from "@/components/node/stanford-page/page-display";
 import StanfordPerson from "@/components/node/stanford-person/page-display";
 import StanfordPublication from "@/components/node/stanford-publication/page-display";
 import SulLibrary from "@/components/node/sul-library/page-display";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal";
 
 interface NodeProps {
-  node: any
+  node: NodeUnion
 }
 
 export const NodePageDisplay = ({node, ...props}: NodeProps) => {
   return (
     <>
-      {node.type === "node--stanford_course" && <StanfordCourse node={node} {...props}/>}
-      {node.type === "node--stanford_event" && <StanfordEvent node={node} {...props}/>}
-      {node.type === "node--stanford_event_series" && <StanfordEventSeries node={node} {...props}/>}
-      {node.type === "node--stanford_news" && <StanfordNews node={node} {...props}/>}
-      {node.type === "node--stanford_page" && <StanfordPage node={node} {...props}/>}
-      {node.type === "node--stanford_person" && <StanfordPerson node={node} {...props}/>}
-      {node.type === "node--stanford_publication" && <StanfordPublication node={node} {...props}/>}
-      {node.type === "node--sul_library" && <SulLibrary node={node} {...props}/>}
+      {node.__typename === "NodeStanfordCourse" && <StanfordCourse node={node} {...props}/>}
+      {node.__typename === "NodeStanfordEvent" && <StanfordEvent node={node} {...props}/>}
+      {node.__typename === "NodeStanfordEventSeries" && <StanfordEventSeries node={node} {...props}/>}
+      {node.__typename === "NodeStanfordNews" && <StanfordNews node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPage" && <StanfordPage node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPerson" && <StanfordPerson node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPublication" && <StanfordPublication node={node} {...props}/>}
+      {node.__typename === "NodeSulLibrary" && <SulLibrary node={node} {...props}/>}
     </>
   )
 }

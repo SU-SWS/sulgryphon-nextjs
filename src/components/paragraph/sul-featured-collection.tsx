@@ -1,35 +1,39 @@
 "use client";
 
-import Conditional from "@/components/utils/conditional";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import Wave from "@/components/patterns/wave";
 import {DrupalLink} from "@/components/patterns/link";
-import {CardParagraph, DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal"
-import {PropsWithoutRef, useRef} from "react";
+import {HTMLAttributes, useRef} from "react";
 import OnlyIfCentered from "@/components/utils/only-if-centered";
 import Card from "@/components/patterns/card";
 import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
 import {buildUrl} from "@/lib/drupal/utils";
+import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
 
-interface Props extends PropsWithoutRef<any> {
-  headline?: string
-  link?: DrupalLinkType
-  cards: CardParagraph[]
+type Props = HTMLAttributes<HTMLTableSectionElement> & {
+  headline?: Maybe<string>
+  link?: Maybe<LinkType>
+  cards: ParagraphStanfordCard[]
   styles?: {
-    link_display_style?: string
+    link_display_style?: Maybe<string>
   }
-  fullWidth?: boolean
+  fullWidth?: Maybe<boolean>
   headerId?: string
 }
 
 const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWidth = true, ...props}: Props) => {
   const ref = useRef(null);
 
-  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
-    link.options.attributes['aria-labelledby'] = headerId;
-    delete link?.options?.attributes?.['aria-label'];
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+
+  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
+    linkAttributes['aria-labelledby'] = headerId;
+    delete linkAttributes['aria-label'];
   }
+
+
   return (
     <section
       className="relative centered"
@@ -41,18 +45,20 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
           <AboveHeaderBorder/>
           <header className="md:flex gap-2xl mb-80">
 
-            <Conditional showWhen={headline}>
+            {(headline) &&
               <h2 id={headerId} className="mb-0 type-5 flex-grow">{headline}</h2>
-            </Conditional>
+            }
 
-            <div>
-              <DrupalLink
-                url={link?.url}
-                title={link?.title}
-                style={styles?.link_display_style}
-                {...link?.options?.attributes}
-              />
-            </div>
+            {link?.url &&
+              <div>
+                <DrupalLink
+                  url={link?.url}
+                  title={link?.title}
+                  style={styles?.link_display_style}
+                  {...linkAttributes}
+                />
+              </div>
+            }
           </header>
         </>
       }
@@ -62,12 +68,12 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
           {cards.map(card =>
             <li key={card.id}>
               <CollectionCard
-                header={card.su_card_header}
-                superHeader={card.su_card_super_header}
-                body={card.su_card_body}
-                link={card.su_card_link}
-                image={card?.su_card_media?.field_media_image}
-                videoUrl={card?.su_card_media?.field_media_oembed_video}
+                header={card.suCardHeader}
+                superHeader={card.suCardSuperHeader}
+                body={card.suCardBody?.processed}
+                link={card.suCardLink}
+                image={card.suCardMedia?.__typename === 'MediaImage' ? card.suCardMedia : undefined}
+                videoUrl={card.suCardMedia?.__typename === 'MediaVideo' ? card.suCardMedia.mediaOembedVideo : undefined}
               />
             </li>
           )}
@@ -102,17 +108,16 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   )
 }
 
-const CollectionCard = ({header, superHeader, body, link, image, videoUrl}:{
-  header?: string
-  superHeader?: string
-  body?: string
-  link?: DrupalLinkType
-  image?: DrupalImageMedia
-  videoUrl?: string
+const CollectionCard = ({header, superHeader, body, link, image, videoUrl}: {
+  header?: Maybe<string>
+  superHeader?: Maybe<string>
+  body?: Maybe<string>
+  link?: Maybe<LinkType>
+  image?: Maybe<MediaImage>
+  videoUrl?: Maybe<string>
 }) => {
-  const imageUrl = image?.uri.url
-  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
-  const placeholder = image?.uri.base64;
+  const imageUrl = image?.mediaImage.url
+  const imageAlt = image?.mediaImage.alt || '';
 
   return (
     <Card
@@ -123,8 +128,6 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl}:{
         alt={imageAlt}
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-        placeholder={placeholder ? 'blur' : 'empty'}
-        blurDataURL={placeholder}
       />}
       header={header}
       superHeader={superHeader}

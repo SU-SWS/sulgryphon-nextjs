@@ -1,29 +1,11 @@
-import {getViewItems} from "@/components/views/view";
-import {Course} from "@/lib/drupal/drupal";
 import CardList from "@/components/views/card-list";
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordCourse[]
 }
 
-const CourseCardView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<Course>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
-
+const CourseCardView = async ({items}: Props) => {
   return (
     <CardList items={items}/>
   )

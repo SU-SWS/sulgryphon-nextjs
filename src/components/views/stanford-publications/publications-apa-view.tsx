@@ -1,28 +1,11 @@
-import {getViewItems} from "@/components/views/view";
 import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item";
-import {Publication} from "@/lib/drupal/drupal";
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordPublication[]
 }
 
-const PublicationsApaView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<Publication>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
+const PublicationsApaView = async ({items}: Props) => {
   return (
     <ul className="list-unstyled flex flex-wrap justify-between gap-2xl">
       {items.map(item =>

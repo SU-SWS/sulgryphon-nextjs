@@ -1,28 +1,27 @@
 import Link from "@/components/patterns/elements/drupal-link";
-import {DrupalPublicationCitation, Publication} from "@/lib/drupal/drupal";
+import {CitationUnion, NodeStanfordPublication} from "@/lib/gql/__generated__/drupal";
 
-const StanfordPublicationListItem = ({node, ...props}: {node:Publication}) => {
+const StanfordPublicationListItem = ({node, ...props}: {node:NodeStanfordPublication}) => {
   return (
     <article {...props}>
-      <Link href={node.path?.alias ?? "#"}>
+      <Link href={node.path}>
         <h2 className="text-cardinal-red">{node.title}</h2>
       </Link>
-      {node.su_publication_citation && <Citation citation={node.su_publication_citation}/>}
+      {node.suPublicationCitation && <Citation citation={node.suPublicationCitation}/>}
     </article>
   )
 }
 
-const Citation = ({citation}: {citation: DrupalPublicationCitation}) => {
+const Citation = ({citation}: {citation: CitationUnion}) => {
   return (
     <>
-      {citation.su_author && citation.su_author.map((author, index) =>
+      {citation.suAuthor && citation.suAuthor.map((author, index) =>
         <div key={`citation-author-${index}`}>
           {author.given} {author.family}
         </div>
       )}
 
-      {citation.su_publisher}
-      {citation.su_page}
+      {citation.suPublisher}
 
     </>
   )

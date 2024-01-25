@@ -1,24 +1,25 @@
 import Image from "next/image";
-
-import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import Oembed from "@/components/patterns/elements/oembed";
 import Link from "@/components/patterns/elements/drupal-link";
 import {HTMLAttributes} from "react";
 import {buildUrl} from "@/lib/drupal/utils";
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
 
-interface Props extends HTMLAttributes<HTMLDivElement>{
-  image?: DrupalImageMedia
-  videoUrl?: string
-  caption?: string
-  link?: DrupalLinkType
+interface Props extends HTMLAttributes<HTMLElement>{
+  image?: Maybe<MediaImage>
+  videoUrl?: Maybe<string>
+  caption?: Maybe<string>
+  link?: Maybe<LinkType>
 }
 
 const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props) => {
 
-  const imageUrl = image?.uri.url;
-  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
-  const placeholder = image?.uri.base64;
+  const imageUrl = image?.mediaImage.url;
+  const imageAlt = image?.mediaImage.alt || '';
+
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
 
   return (
     <figure className="relative centered" {...props}>
@@ -30,8 +31,6 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
             alt={imageAlt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-            placeholder={placeholder ? 'blur' : 'empty'}
-            blurDataURL={placeholder}
           />
         </div>
       }
@@ -42,8 +41,8 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
         </div>
       }
 
-      {link &&
-        <Link href={link.url} className="block text-right" {...link.options?.attributes}>
+      {link?.url &&
+        <Link href={link.url} className="block text-right" {...linkAttributes}>
           {link.title}
         </Link>
       }

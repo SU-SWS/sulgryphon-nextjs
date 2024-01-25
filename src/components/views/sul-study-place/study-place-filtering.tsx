@@ -1,20 +1,19 @@
 "use client";
 
 import {FormEvent, MouseEvent, RefObject, useEffect, useRef, useState} from "react";
-import {StudyPlace} from "@/lib/drupal/drupal";
-import Conditional from "@/components/utils/conditional";
 import {SignalIcon} from "@heroicons/react/20/solid";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 import SelectList from "@/components/patterns/elements/select-list";
 import {SelectValue} from "@mui/base/useSelect";
 import autoAnimate from "@formkit/auto-animate";
+import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal";
 
 interface SelectOption {
   value: string
   label: string
 }
 
-const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
+const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedLibraries, setSelectedLibraries] = useState<string[]>([]);
   const [selectedCapacity, setSelectedCapacity] = useState<string[]>([]);
@@ -29,19 +28,19 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
   let libraryOptions: SelectOption[] = [];
 
   items.map(item => {
-    item.sul_study__features?.map(term => {
+    item.sulStudyFeatures?.map(term => {
       if (featureOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
         featureOptions.push({value: term.id, label: term.name})
       }
     })
-    if (capacityOptions.findIndex(option => option.value === item.sul_study__capacity?.id) === -1 && item.sul_study__capacity?.name) {
-      capacityOptions.push({value: item.sul_study__capacity.id, label: item.sul_study__capacity.name})
+    if (capacityOptions.findIndex(option => option.value === item.sulStudyCapacity?.id) === -1 && item.sulStudyCapacity?.name) {
+      capacityOptions.push({value: item.sulStudyCapacity.id, label: item.sulStudyCapacity.name})
     }
-    if (typeOfStudies.findIndex(option => option.value === item.sul_study__type.id) === -1 && item.sul_study__type.name) {
-      typeOfStudies.push({value: item.sul_study__type.id, label: item.sul_study__type.name})
+    if (typeOfStudies.findIndex(option => option.value === item.sulStudyType.id) === -1 && item.sulStudyType.name) {
+      typeOfStudies.push({value: item.sulStudyType.id, label: item.sulStudyType.name})
     }
-    if (libraryOptions.findIndex(option => option.value === item.sul_study__branch.id) === -1 && item.sul_study__branch.title) {
-      libraryOptions.push({value: item.sul_study__branch.id, label: item.sul_study__branch.title})
+    if (libraryOptions.findIndex(option => option.value === item.sulStudyBranch.id) === -1 && item.sulStudyBranch.title) {
+      libraryOptions.push({value: item.sulStudyBranch.id, label: item.sulStudyBranch.title})
     }
   });
 
@@ -52,11 +51,11 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const filteredItems = items.filter((item: StudyPlace) =>
-      (!selectedLibraries.length || selectedLibraries.indexOf(item.sul_study__branch.id) != -1) &&
-      (!selectedTypes.length || selectedTypes.indexOf(item.sul_study__type.id) != -1) &&
-      (!selectedCapacity.length || selectedCapacity.indexOf(item.sul_study__capacity?.id) != -1) &&
-      (!selectedFeatures.length || (item.sul_study__features && item.sul_study__features.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0))
+    const filteredItems = items.filter((item: NodeSulStudyPlace) =>
+      (!selectedLibraries.length || selectedLibraries.indexOf(item.sulStudyBranch.id) != -1) &&
+      (!selectedTypes.length || selectedTypes.indexOf(item.sulStudyType.id) != -1) &&
+      (!selectedCapacity.length || selectedCapacity.indexOf(item.sulStudyCapacity?.id || '') != -1) &&
+      (!selectedFeatures.length || (item.sulStudyFeatures && item.sulStudyFeatures.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0))
     );
     setItemsToDisplay(filteredItems)
   }
@@ -127,19 +126,20 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
         </button>
       </form>
 
-      <Conditional showWhen={items.length == 0}>
+      {items.length === 0 &&
         <SignalIcon width={50} className="animate-ping mx-auto my-50"/>
-      </Conditional>
+      }
 
-      <Conditional showWhen={items.length > 0}>
+      {items.length > 0 &&
         <p className={'mt-60 mb-32 type-2 font-serif font-bold'} aria-live="polite">
           Showing {itemsToDisplay.length} of {items.length}
           <br/>
-          <Conditional showWhen={itemsToDisplay.length == 0}>
+          {(itemsToDisplay.length == 0) &&
             <>No items match the search.</>
-          </Conditional>
+          }
         </p>
-        <Conditional showWhen={itemsToDisplay.length > 0}>
+      }
+        {itemsToDisplay.length > 0 &&
           <ul
             ref={parent}
             className="list-unstyled grid @3xl:grid-cols-2 @7xl:grid-cols-3 gap-xl"
@@ -150,10 +150,7 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
               </li>
             )}
           </ul>
-        </Conditional>
-
-
-      </Conditional>
+        }
     </div>
   )
 }

@@ -1,49 +1,39 @@
-import View from "@/components/views/view";
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {DrupalLinkType, DrupalViewField} from "@/lib/drupal/drupal";
-import {PropsWithoutRef} from "react";
+import {HTMLAttributes} from "react";
+import {Maybe, Link as LinkType, ViewReference} from "@/lib/gql/__generated__/drupal";
+import {ParagraphBehaviors} from "@/lib/drupal/drupal";
 
-interface ListProps extends PropsWithoutRef<any> {
-  headline?: string
-  description?: string
-  link?: DrupalLinkType
-  view?: DrupalViewField
-  styles?: {
-    list_paragraph: { hide_empty?: boolean, empty_message?: string }
-    sul_list_styles: { link_display_style?: string }
-  }
+type ListProps = HTMLAttributes<HTMLDivElement> & {
+  headline?: Maybe<string>
+  description?: Maybe<string>
+  link?: Maybe<LinkType>
+  view?: Maybe<ViewReference>
+  behaviors?: ParagraphBehaviors
   headerId?: string
 }
 
 
-const ListParagraph = async ({headerId, headline, description, link, view, styles}: ListProps) => {
-  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
-    link.options.attributes['aria-labelledby'] = headerId;
-    delete link?.options?.attributes?.['aria-label'];
+const ListParagraph = async ({headerId, headline, description, link, view, behaviors}: ListProps) => {
+
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+
+  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
+    linkAttributes['aria-labelledby'] = headerId;
+    delete linkAttributes['aria-label'];
   }
 
-  const viewId = view?.resourceIdObjMeta?.drupal_internal__target_id;
-  const displayId = view?.resourceIdObjMeta?.display_id;
-  let args = view?.resourceIdObjMeta?.arguments ?? '';
-  const itemsToDisplay = view?.resourceIdObjMeta?.items_to_display ?? -1;
+  const viewId = view?.view;
+  const displayId = view?.display;
 
-  let viewDisplay;
-
-  if (viewId && displayId) {
-    viewDisplay = <View
-      viewId={viewId}
-      displayId={displayId}
-      itemsToDisplay={itemsToDisplay}
-      args={args}
-      emptyMessage={styles?.list_paragraph?.empty_message}
-      hasHeading={!!headline}
-    />
+  let viewItems = viewId && displayId ? await getViewItems(viewId, displayId, view?.contextualFilter) : [];
+  // let viewItems = (viewId && displayId) ? await getViewResults<StanfordNode>(viewId, displayId, paragraph.suListView?.contextualFilter) : [];
+  if (view?.pageSize) {
+    viewItems = viewItems.slice(0, view.pageSize)
   }
 
-  if (styles?.list_paragraph?.hide_empty && (!viewDisplay || viewDisplay.type() === null)) {
-    return null;
-  }
+  if (behaviors?.list_paragraph?.hide_empty && viewItems.length === 0) return null;
 
   return (
     <div className="centered flex flex-col gap-xl">
@@ -52,8 +42,8 @@ const ListParagraph = async ({headerId, headline, description, link, view, style
           <h2 id={headerId} className="m-0">{headline}</h2>
         }
 
-        {link &&
-          <DrupalLinkButton href={link.url} {...link.options?.attributes}>
+        {link?.url &&
+          <DrupalLinkButton href={link.url} {...linkAttributes}>
             {link.title}
           </DrupalLinkButton>
         }
@@ -63,10 +53,13 @@ const ListParagraph = async ({headerId, headline, description, link, view, style
         <div>{formatHtml(description)}</div>
       }
 
-      {viewDisplay}
-
+      View goes here
     </div>
   )
+}
+
+const getViewItems = async (view: string, display: string, filters?: ViewReference["contextualFilter"]) => {
+  return [];
 }
 
 

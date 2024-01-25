@@ -1,26 +1,32 @@
-import {DrupalParagraph} from "next-drupal";
-import {BasicPage, Event, Library, News, Person, StanfordNode} from "@/lib/drupal/drupal";
+import {
+  NodeStanfordEvent, NodeStanfordNews,
+  NodeStanfordPage, NodeStanfordPerson,
+  NodeSulLibrary,
+  NodeUnion,
+  ParagraphStanfordWysiwyg,
+  ParagraphUnion
+} from "@/lib/gql/__generated__/drupal";
 
 
-export const getNodeMetadata = (node: StanfordNode): Record<string, any> => {
+export const getNodeMetadata = (node: NodeUnion): Record<string, any> => {
   let metadata: Record<string, any> = {};
-  switch (node.type) {
-    case 'node--stanford_page':
+  switch (node.__typename) {
+    case 'NodeStanfordPage':
       metadata = getMetadataForBasicPage(node);
       break;
 
-    case 'node--stanford_person':
+    case 'NodeStanfordPerson':
       metadata = getMetadataForPersonPage(node);
       break;
-    case 'node--stanford_event':
+    case 'NodeStanfordEvent':
       metadata = getMetadataForEventPage(node);
       break;
 
-    case 'node--stanford_news':
+    case 'NodeStanfordNews':
       metadata = getMetadataForNewsPage(node);
       break;
 
-    case 'node--sul_library':
+    case 'NodeSulLibrary':
       metadata = getMetadataForBranchPage(node);
       break;
   }
@@ -30,15 +36,15 @@ export const getNodeMetadata = (node: StanfordNode): Record<string, any> => {
     metadataBase: new URL('https://library.stanford.edu'),
     title: node.title + " | " + process.env.NEXT_PUBLIC_SITE_NAME,
     other: {
-      changed: node.changed,
-      path: node.path?.alias,
+      changed: node.changed.time,
+      path: node.path,
     }
   };
 }
 
-const getMetadataForBranchPage = (node: Library) => {
-  const firstHtml = getFirstTextFromParagraphs(node.su_library__paragraphs ?? []);
-  const image = node.su_library__contact_img?.field_media_image || node.su_library__banner?.field_media_image;
+const getMetadataForBranchPage = (node: NodeSulLibrary) => {
+  const firstHtml = getFirstTextFromParagraphs(node.suLibraryParagraphs ?? []);
+  const image = node.suLibraryContactImg?.mediaImage || node.suLibraryBanner?.mediaImage;
 
   return {
     description: firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : '',
@@ -48,72 +54,73 @@ const getMetadataForBranchPage = (node: Library) => {
       description: firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : '',
       images: [
         {
-          url: image?.image_style_uri?.card_956x478,
+          url: image?.url,
           width: 956,
           height: 478,
-          alt: image?.resourceIdObjMeta?.alt ?? "",
+          alt: image?.alt || "",
         }
       ]
     }
   }
 }
 
-const getMetadataForBasicPage = (node: BasicPage) => {
-  const firstHtml = getFirstTextFromParagraphs(node.su_page_components ?? []);
+const getMetadataForBasicPage = (node: NodeStanfordPage) => {
+  const firstHtml = getFirstTextFromParagraphs(node.suPageComponents ?? []);
 
   return {
-    description: node.su_page_description ?? (firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : ''),
+    description: node.suPageDescription ?? (firstHtml ? getPlainText(firstHtml).split(' ').slice(0, 30).join(' ') : ''),
     openGraph: {
       type: 'website',
       title: node.title,
-      description: node.su_page_description,
+      description: node.suPageDescription,
       images: [
         {
-          url: node.su_page_image?.field_media_image?.image_style_uri?.card_956x478,
+          url: node.suPageImage?.mediaImage.url,
           width: 956,
           height: 478,
-          alt: node.su_page_image?.field_media_image?.resourceIdObjMeta?.alt ?? "",
+          alt: node.suPageImage?.mediaImage.alt || "",
         }
       ]
     }
   }
 }
-const getMetadataForPersonPage = (node: Person) => {
+const getMetadataForPersonPage = (node: NodeStanfordPerson) => {
   return {
-    description: node.su_person_full_title,
+    description: node.suPersonFullTitle,
     openGraph: {
       type: "profile",
-      firstName: node.su_person_first_name,
-      lastName: node.su_person_last_name
+      firstName: node.suPersonFirstName,
+      lastName: node.suPersonLastName
     }
   }
 }
 
-const getMetadataForEventPage = (node: Event) => {
+const getMetadataForEventPage = (node: NodeStanfordEvent) => {
   return {
-    description: getPlainText(node.body ?? '').split(' ').slice(0, 20).join(' '),
+    description: getPlainText(node.body?.processed ?? '').split(' ').slice(0, 20).join(' '),
   }
 }
-const getMetadataForNewsPage = (node: News) => {
+
+const getMetadataForNewsPage = (node: NodeStanfordNews) => {
   let publishTime;
-  if (node.su_news_publishing_date) {
-    publishTime = new Date(node.su_news_publishing_date).toISOString()
+  if (node.suNewsPublishingDate) {
+    publishTime = new Date(node.suNewsPublishingDate.time).toISOString()
   }
-  const image = node.su_news_featured_media?.field_media_image || node.su_news_banner?.field_media_image;
+  const image = node.suNewsFeaturedMedia?.mediaImage || (node.suNewsBanner?.__typename === 'MediaImage' ? node.suNewsBanner.mediaImage : undefined);
 
   return {
-    description: node.su_news_dek,
+    description: node.suNewsDek,
     openGraph: {
       type: "article",
-      description: node.su_news_dek,
+      description: node.suNewsDek,
       publishedTime: publishTime ?? null,
-      tag: node.su_news_topics?.map(term => term.name) ?? [],
+      tag: node.suNewsTopics?.map(term => term.name) ?? [],
       images: [
         {
-          url: image?.image_style_uri?.card_956x478,
+          url: image?.url,
           width: 956,
           height: 478,
-          alt: image?.resourceIdObjMeta?.alt ?? "",
+          alt: image?.alt || "",
         }
       ]
     }
@@ -124,6 +131,7 @@ const getPlainText = (html: string) => {
   return html.replace(/(<([^>]+)>)/ig, '').replace(/ +/g, ' ');
 }
 
-const getFirstTextFromParagraphs = (paragraphs: DrupalParagraph[]) => {
-  return paragraphs.find(p => p.type === 'paragraph--stanford_wysiwyg')?.su_wysiwyg_text
+const getFirstTextFromParagraphs = (paragraphs: ParagraphUnion[]) => {
+  const firstWysiwyg = paragraphs.find(p => p.__typename === 'ParagraphStanfordWysiwyg') as ParagraphStanfordWysiwyg | undefined;
+  return firstWysiwyg?.suWysiwygText?.processed;
 }

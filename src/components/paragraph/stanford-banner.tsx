@@ -1,36 +1,33 @@
 import Image from "next/image";
 
-import {DrupalImageFile, DrupalLinkType} from "@/lib/drupal/drupal";
 import Banner from "@/components/patterns/banner";
-import {PropsWithoutRef} from "react";
 import {buildUrl} from "@/lib/drupal/utils";
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {HTMLAttributes} from "react";
 
-interface Props extends PropsWithoutRef<any> {
-  header?: string
-  superHeader?: string
-  body?: string
-  image?: DrupalImageFile
-  link?: DrupalLinkType
-  overlayPosition?: string
-  fullWidth?: boolean
-  className?: string
+type Props = HTMLAttributes<HTMLDivElement> & {
+  header?: Maybe<string>
+  superHeader?: Maybe<string>
+  body?: Maybe<string>
+  image?: Maybe<MediaImage>
+  link?: Maybe<LinkType>
+  overlayPosition?: Maybe<string>
+  fullWidth?: Maybe<boolean>
+  headerId?: Maybe<string>
 }
 
 const StanfordBanner = ({header, superHeader, body, image, link, overlayPosition, ...props}: Props) => {
 
-  const imageUrl = image?.uri.url;
-  const placeholder = image?.uri.base64;
+  const imageUrl = image?.mediaImage.url;
 
   return (
     <Banner
       image={imageUrl && <Image
         className="object-cover object-center"
         src={buildUrl(imageUrl).toString()}
-        alt={image?.resourceIdObjMeta?.alt || ''}
+        alt={image?.mediaImage.alt || ''}
         fill
         sizes="100vw"
-        placeholder={placeholder ? 'blur' : 'empty'}
-        blurDataURL={placeholder}
       />}
       header={header}
       superHeader={superHeader}
