@@ -124,7 +124,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
     <div className="relative h-fit" {...outsideClickProps}>
       <button
         {...getButtonProps()}
-        className="w-full border shadow-md rounded-lg text-left p-6"
+        className="w-full border shadow-md rounded-lg text-left py-7 px-5"
         aria-labelledby={labeledBy}
       >
         <div className="flex flex-wrap">
