@@ -6,7 +6,6 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {DrupalMenuLinkContent} from "next-drupal";
-import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";

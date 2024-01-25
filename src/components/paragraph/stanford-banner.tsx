@@ -13,7 +13,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   link?: Maybe<LinkType>
   overlayPosition?: Maybe<string>
   fullWidth?: Maybe<boolean>
-  headerId?: Maybe<string>
+  headerId?: string
 }
 
 const StanfordBanner = ({header, superHeader, body, image, link, overlayPosition, ...props}: Props) => {

@@ -17,6 +17,7 @@ export const getMenu = async(
 
   const response = await fetch(url.toString(), {
     headers: await buildHeaders(options),
+    next: {tags: [`menu:${name}`]}
   })
 
   if (!response.ok) {

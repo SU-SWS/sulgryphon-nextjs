@@ -1,7 +1,6 @@
 import OneColumn from "@/components/paragraph/rows/one-column";
 import TwoColumn from "@/components/paragraph/rows/two-column";
 import ThreeColumn from "@/components/paragraph/rows/three-column";
-import {LayoutParagraph, StanfordParagraph} from "@/lib/drupal/drupal";
 import {ParagraphLayout, ParagraphUnion} from "@/lib/gql/__generated__/drupal";
 import {getParagraphBehaviors} from "@/components/paragraph";
 
@@ -17,7 +16,7 @@ type Layout = Record<string, {
   children: ParagraphUnion[]
 }>
 
-export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => {
+export const ParagraphRows = ({items, fullWidth}: RowProps) => {
   const layouts: Layout = {};
 
   // Set the layouts first.
@@ -51,25 +50,27 @@ export const ParagraphRows = ({items, fullWidth = true, ...props}: RowProps) => 
           layout={layouts[layoutId].layout}
           layoutSettings={layouts[layoutId].config}
           items={layouts[layoutId].children}
+          fullWidth={fullWidth}
         />
       )}
     </div>
   )
 }
 
-const Row = ({layout, layoutSettings, items}: {
+const Row = ({layout, layoutSettings, items, fullWidth}: {
   layout: string
   layoutSettings?: Record<string, any>
   items: ParagraphUnion[]
+  fullWidth?: boolean
 }) => {
   return (
     <>
       {layout === 'sul_helper_1_column' &&
-        <OneColumn config={layoutSettings} items={items} fullWidth={false}/>}
+        <OneColumn config={layoutSettings} items={items} fullWidth={fullWidth}/>}
       {layout === 'sul_helper_2_column' &&
-        <TwoColumn config={layoutSettings} items={items} fullWidth={false}/>}
+        <TwoColumn config={layoutSettings} items={items} fullWidth={fullWidth}/>}
       {layout === 'sul_helper_3_column' &&
-        <ThreeColumn items={items} fullWidth={false}/>}
+        <ThreeColumn items={items} fullWidth={fullWidth}/>}
     </>
   )
 }

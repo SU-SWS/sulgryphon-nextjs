@@ -1,10 +1,10 @@
-import {getAllDrupalPaths} from "@/lib/drupal/get-paths";
+import {getNodePaths} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {PageProps, Params} from "@/lib/drupal/drupal";
+import {PageProps} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import SecondaryMenu from "@/components/menu/secondary-menu";
 import {getMenu} from "@/lib/drupal/get-menu";
@@ -25,8 +25,9 @@ const NodePage = async ({params}: PageProps) => {
   if (!entity) notFound();
 
   const {tree: menuTree} = await getMenu('main');
+
   const fullWidth = (entity.__typename === 'NodeStanfordPage' && entity.layoutSelection?.id === 'stanford_basic_page_full') ||
-    (entity.__typename === 'NodeSulLibrary' && entity.layoutSelection?.id === 'stanford_basic_page_full');
+    (entity.__typename === 'NodeSulLibrary' && entity.layoutSelection?.id === 'sul_library_full_width');
 
   return (
     <main id="main-content" className="mb-50">
@@ -93,14 +94,9 @@ export const generateMetadata = async ({params}: PageProps): Promise<Metadata> =
 }
 
 export const generateStaticParams = async () => {
-  const allPaths = await getAllDrupalPaths();
-  const nodePaths = allPaths.get('node');
-
-  let params: Params[] = [];
-  if (nodePaths) {
-    params = nodePaths.map(path => ({slug: path.split('/')}))
-  }
-  return process.env.BUILD_COMPLETE === 'true' ? params : params.slice(0, 1);
+  if (process.env.BUILD_COMPLETE !== 'true') return [];
+  const nodePaths = await getNodePaths();
+  return nodePaths.map(path => ({slug: path.split('/')}));
 }
 
 export default NodePage;

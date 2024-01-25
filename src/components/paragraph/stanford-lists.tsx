@@ -15,7 +15,6 @@ type ListProps = HTMLAttributes<HTMLDivElement> & {
   headerId?: string
 }
 
-
 const ListParagraph = async ({headerId, headline, description, link, view, behaviors}: ListProps) => {
 
   const linkAttributes: Record<string, string> = {};
@@ -28,8 +27,13 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
 
   const viewId = view?.view;
   const displayId = view?.display;
+  let viewItems: NodeUnion[] = [];
 
-  let viewItems = viewId && displayId ? await getViewItems(viewId, displayId, view?.contextualFilter) : [];
+  try {
+    viewItems = viewId && displayId ? await getViewItems(viewId, displayId, view?.contextualFilter) : [];
+  } catch (e) {
+    console.log(`An error occurred when fetching view items: View ID: ${viewId}, Display: ${displayId}, Filters: ${view?.contextualFilter?.join('/')}`)
+  }
   // let viewItems = (viewId && displayId) ? await getViewResults<StanfordNode>(viewId, displayId, paragraph.suListView?.contextualFilter) : [];
   if (view?.pageSize) {
     viewItems = viewItems.slice(0, view.pageSize)

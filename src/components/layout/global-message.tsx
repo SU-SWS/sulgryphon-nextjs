@@ -8,7 +8,6 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon
 } from "@heroicons/react/20/solid";
-import Conditional from "@/components/utils/conditional";
 import {getConfigPageResource} from "@/lib/drupal/get-resource";
 
 const GlobalMessage = async () => {

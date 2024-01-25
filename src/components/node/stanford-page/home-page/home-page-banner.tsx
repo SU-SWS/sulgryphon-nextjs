@@ -5,7 +5,6 @@ import {getResourceCollection} from "@/lib/drupal/get-resource";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import Link from "@/components/patterns/elements/drupal-link";
 import {Library} from "@/lib/drupal/drupal";
-import {formatDate} from "@/lib/format-date";
 
 const HomePageBanner = async () => {
   const params = new DrupalJsonApiParams();

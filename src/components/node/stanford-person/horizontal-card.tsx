@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "@/components/patterns/elements/drupal-link";
-import Conditional from "@/components/utils/conditional";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import LibCal from "./libcal";
-import {Person} from "@/lib/drupal/drupal";
 
 import EmailLink from "@/components/patterns/elements/email-link";
 import {buildUrl} from "@/lib/drupal/utils";

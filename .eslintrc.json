@@ -11,5 +11,5 @@
     ]
   },
   "plugins": ["unused-imports"],
-  "ignorePatterns": []
+  "ignorePatterns": ["**/__generated__/**/*"]
 }
