@@ -124,12 +124,12 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
     <div className="relative h-fit" {...outsideClickProps}>
       <button
         {...getButtonProps()}
-        className="w-full border border-black-40 rounded text-left p-5"
+        className="w-full border shadow-md rounded-lg text-left p-6"
         aria-labelledby={labeledBy}
       >
-        <div className="flex justify-between flex-wrap">
+        <div className="flex flex-wrap">
           {label &&
-            <div className={"relative " + (optionChosen ? "top-[-15px] w-full" : "")}>
+            <div className={"relative p-10" + (optionChosen ? "top-[-15px] w-full" : "")}>
               <div id={labelId} className="bg-white w-fit px-5">
                 {label}
               </div>
@@ -141,12 +141,12 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
             </div>
           }
 
-          <ChevronDownIcon width={20} className="flex-shrink-0"/>
+          <ChevronDownIcon width={30} className="font-bold flex-shrink-0"/>
         </div>
       </button>
 
       <div
-        className={"absolute z-[10] w-full top-full left-0 max-h-[300px] pb-5 overflow-y-scroll shadow-lg border border-black-20 bg-white " + (listboxVisible ? '' : 'hidden')}>
+        className={"absolute z-[10] w-full top-full left-0 max-h-[300px] pb-5 overflow-y-scroll shadow-md border border-black-20 bg-white " + (listboxVisible ? '' : 'hidden')}>
         <ul
           {...getListboxProps()}
           className={"list-unstyled " + (listboxVisible ? '' : 'hidden')}
