@@ -9,7 +9,7 @@ import fetchLibGuides from "@/lib/libguides";
 import EmailLink from "@/components/patterns/elements/email-link";
 import {buildUrl} from "@/lib/drupal/utils";
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal";
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import Paragraph from "@/components/paragraph";
 
 const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) => {
 
@@ -57,7 +57,9 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
 
           {node.suPersonComponents &&
             <div className="mb-40">
-              <ParagraphRows items={node.suPersonComponents}/>
+              {node.suPersonComponents.map(paragraph =>
+                <Paragraph key={paragraph.id} paragraph={paragraph}/>
+              )}
             </div>
           }
 

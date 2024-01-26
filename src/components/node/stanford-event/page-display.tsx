@@ -6,7 +6,7 @@ import {redirect} from "next/navigation";
 import EmailLink from "@/components/patterns/elements/email-link";
 import TelephoneLink from "@/components/patterns/elements/telephone-link";
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import Paragraph from "@/components/paragraph";
 
 const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
   if (node.suEventSource?.url) redirect(node.suEventSource.url)
@@ -193,7 +193,9 @@ const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
 
       {node.suEventComponents &&
         <div className="mb-40">
-          <ParagraphRows items={node.suEventComponents}/>
+          {node.suEventComponents.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
         </div>
       }
     </article>

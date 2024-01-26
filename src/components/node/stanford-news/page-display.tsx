@@ -10,7 +10,7 @@ import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import {redirect} from "next/navigation";
 import {buildUrl} from "@/lib/drupal/utils";
 import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal";
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
+import Paragraph from "@/components/paragraph";
 
 const StanfordNews = async ({node, ...props}: { node: NodeStanfordNews }) => {
   // Redirect the user to the external source.
@@ -115,7 +115,9 @@ const StanfordNews = async ({node, ...props}: { node: NodeStanfordNews }) => {
 
       {node.suNewsComponents &&
         <div className="centered 2xl:w-2/3">
-          <ParagraphRows items={node.suNewsComponents}/>
+          {node.suNewsComponents.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
         </div>
       }
     </article>

@@ -1,6 +1,6 @@
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import NodeListDisplay from "@/components/node/node-list-display";
 import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal";
+import Paragraph from "@/components/paragraph";
 
 const StanfordEventSeries = async ({node, ...props}: { node: NodeStanfordEventSeries }) => {
 
@@ -18,7 +18,11 @@ const StanfordEventSeries = async ({node, ...props}: { node: NodeStanfordEventSe
       }
 
       {node.suEventSeriesComponents &&
-        <ParagraphRows items={node.suEventSeriesComponents}/>
+        <>
+          {node.suEventSeriesComponents.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
+        </>
       }
 
       {(node.suEventSeriesEvent) &&
