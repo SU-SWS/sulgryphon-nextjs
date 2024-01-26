@@ -280,6 +280,8 @@ fragment FragmentNodeStanfordPerson on NodeStanfordPerson {
     suPersonTypeGroup {
         ...FragmentTermInterface
     }
+    sulPersonLibguideId
+    sulPersonLibcalId
 }
 
 fragment FragmentNodeStanfordPolicy on NodeStanfordPolicy {
@@ -399,6 +401,7 @@ fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     ...FragmentNodeInterface
     suPersonFullTitle
     suPersonEmail
+    sulPersonLibguideId
     sulPersonLibcalId
     suPersonPhoto {
         ...FragmentMediaImage

@@ -23,6 +23,7 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
           <div className="rs-mr-4 rs-mb-1 sm:mb-[0rem]">
             <div className="relative rounded-full w-[220px] h-[220px] overflow-hidden">
               <Image
+                className="object-cover"
                 src={buildUrl(imageUrl).toString()}
                 alt=""
                 fill
@@ -34,7 +35,6 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
 
         <div className="flex flex-col justify-center gap-2xl">
           <div>
-
             {(node.suPersonFullTitle || node.suPersonShortTitle) &&
               <div className="type-0 leading">{node.suPersonFullTitle || node.suPersonShortTitle}</div>
             }
