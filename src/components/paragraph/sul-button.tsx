@@ -21,7 +21,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
   const isCentered = useIsCentered(ref)
 
   const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
 
   if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
     linkAttributes['aria-labelledby'] = headerId;

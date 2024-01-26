@@ -26,7 +26,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   const ref = useRef(null);
 
   const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
 
   if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
     linkAttributes['aria-labelledby'] = headerId;

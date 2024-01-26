@@ -18,7 +18,7 @@ type ListProps = HTMLAttributes<HTMLDivElement> & {
 const ListParagraph = async ({headerId, headline, description, link, view, behaviors}: ListProps) => {
 
   const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
 
   if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
     linkAttributes['aria-labelledby'] = headerId;

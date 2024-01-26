@@ -19,7 +19,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
   const imageAlt = image?.mediaImage.alt || '';
 
   const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
 
   return (
     <figure className="relative centered" {...props}>

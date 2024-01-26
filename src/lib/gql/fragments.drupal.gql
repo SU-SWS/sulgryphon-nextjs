@@ -1,5 +1,13 @@
 # All the various fragments that could be used in the queries.
 
+fragment FragmentLink on Link {
+    url
+    title
+    attributes {
+        ariaLabel
+    }
+}
+
 fragment FragmentSuPolicyLog on SuPolicyLog {
     __typename
     id
@@ -55,8 +63,7 @@ fragment FragmentNodeSulLibrary on NodeSulLibrary {
     suLibraryEmail
     suLibraryHours
     suLibraryMapLink {
-        url
-        title
+        ...FragmentLink
     }
     suLibraryParagraphs {
         ...FragmentParagraphUnion
@@ -115,8 +122,7 @@ fragment FragmentNodeStanfordCourse on NodeStanfordCourse {
     suCourseId
     suCourseInstructors
     suCourseLink {
-        url
-        title
+        ...FragmentLink
     }
     suCourseQuarters {
         ...FragmentTermInterface
@@ -144,8 +150,7 @@ fragment FragmentNodeStanfordEvent on NodeStanfordEvent {
     }
     suEventContactInfo
     suEventCta {
-        url
-        title
+        ...FragmentLink
     }
     suEventDateTime {
         ...FragmentSmartDateType
@@ -162,15 +167,13 @@ fragment FragmentNodeStanfordEvent on NodeStanfordEvent {
         ...FragmentAddressType
     }
     suEventMapLink {
-        url
-        title
+        ...FragmentLink
     }
     suEventSchedule {
         ...FragmentParagraphUnion
     }
     suEventSource {
-        url
-        title
+        ...FragmentLink
     }
     suEventSponsor
     suEventSubheadline
@@ -220,8 +223,7 @@ fragment FragmentNodeStanfordNews on NodeStanfordNews {
         time
     }
     suNewsSource {
-        url
-        title
+        ...FragmentLink
     }
     suNewsTopics {
         ...FragmentTermInterface
@@ -236,8 +238,7 @@ fragment FragmentNodeStanfordPerson on NodeStanfordPerson {
     suPersonAcademicAppt
     suPersonAdminAppts
     suPersonAffiliations {
-        url
-        title
+        ...FragmentLink
     }
     suPersonComponents {
         ...FragmentParagraphUnion
@@ -249,8 +250,7 @@ fragment FragmentNodeStanfordPerson on NodeStanfordPerson {
     suPersonFullTitle
     suPersonLastName
     suPersonLinks {
-        url
-        title
+        ...FragmentLink
     }
     suPersonLocationAddress {
         processed
@@ -258,16 +258,14 @@ fragment FragmentNodeStanfordPerson on NodeStanfordPerson {
     suPersonLocationName
     suPersonMailCode
     suPersonMapUrl {
-        url
-        title
+        ...FragmentLink
     }
     suPersonMobilePhone
     suPersonPhoto {
         ...FragmentMediaImage
     }
     suPersonProfileLink {
-        url
-        title
+        ...FragmentLink
     }
     suPersonPronouns
     suPersonResearch {
@@ -319,8 +317,7 @@ fragment FragmentNodeStanfordPublication on NodeStanfordPublication {
         ...FragmentParagraphUnion
     }
     suPublicationCta {
-        url
-        title
+        ...FragmentLink
     }
     suPublicationImage {
         ...FragmentMediaImage
@@ -355,6 +352,9 @@ fragment FragmentNodeStanfordCourseTeaser on NodeStanfordCourse {
 fragment FragmentNodeStanfordEventTeaser on NodeStanfordEvent {
     ...FragmentNodeInterface
     suEventAltLoc
+    suEventMapLink {
+        ...FragmentLink
+    }
     suEventDateTime {
         ...FragmentSmartDateType
     }
@@ -488,8 +488,7 @@ fragment FragmentParagraphSulButton on ParagraphSulButton {
     ...FragmentParagraphInterface
     sulButtonHeadline
     sulButtonLink {
-        url
-        title
+        ...FragmentLink
     }
 }
 
@@ -507,12 +506,10 @@ fragment FragmentParagraphSulContactCard on ParagraphSulContactCard {
         ...FragmentMediaImage
     }
     sulContactLink {
-        url
-        title
+        ...FragmentLink
     }
     sulContactMapLink {
-        url
-        title
+        ...FragmentLink
     }
     sulContactPhone
     sulContactTitle
@@ -525,8 +522,7 @@ fragment FragmentParagraphSulFeatCollection on ParagraphSulFeatCollection {
     }
     sulCollectionHeadline
     sulCollectionLink {
-        url
-        title
+        ...FragmentLink
     }
 }
 
@@ -555,8 +551,7 @@ fragment FragmentParagraphStanfordBanner on ParagraphStanfordBanner {
     }
     suBannerSupHeader
     suBannerButton {
-        url
-        title
+        ...FragmentLink
     }
     suBannerImage {
         ...FragmentMediaImage
@@ -571,8 +566,7 @@ fragment FragmentParagraphStanfordCard on ParagraphStanfordCard {
         processed
     }
     suCardLink {
-        url
-        title
+        ...FragmentLink
     }
     suCardMedia {
         ...FragmentMediaUnion
@@ -586,8 +580,7 @@ fragment FragmentParagraphStanfordEntity on ParagraphStanfordEntity {
         processed
     }
     suEntityButton {
-        url
-        title
+        ...FragmentLink
     }
     suEntityItem {
         ...FragmentNodeTeaserUnion
@@ -601,8 +594,7 @@ fragment FragmentParagraphStanfordGallery on ParagraphStanfordGallery {
         processed
     }
     suGalleryButton {
-        url
-        title
+        ...FragmentLink
     }
     suGalleryImages {
         ...FragmentMediaStanfordGalleryImage
@@ -616,8 +608,7 @@ fragment FragmentParagraphStanfordList on ParagraphStanfordList {
         processed
     }
     suListButton {
-        url
-        title
+        ...FragmentLink
     }
     suListView {
         view
@@ -639,8 +630,7 @@ fragment FragmentParagraphStanfordPersonCtum on ParagraphStanfordPersonCtum {
     suPersonCtaName
     suPersonCtaTitle
     suPersonCtaLink {
-        url
-        title
+        ...FragmentLink
     }
     suPersonCtaImage {
         ...FragmentMediaImage
@@ -660,8 +650,7 @@ fragment FragmentParagraphStanfordSchedule on ParagraphStanfordSchedule {
         ...FragmentAddressType
     }
     suScheduleUrl {
-        url
-        title
+        ...FragmentLink
     }
     suScheduleSpeaker {
         ...FragmentParagraphStanfordPersonCtum

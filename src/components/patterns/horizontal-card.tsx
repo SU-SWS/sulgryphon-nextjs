@@ -27,7 +27,7 @@ const HorizontalCard = ({headerId, video, image, superHeader, header, footer, bo
   const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
 
   const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['link-attributes'] = link.attributes.ariaLabel;
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
 
   if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === header) {
     linkAttributes['aria-labelledby'] = headerId;
