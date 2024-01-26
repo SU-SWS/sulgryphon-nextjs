@@ -81,6 +81,7 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
           view={paragraph.suListView}
           behaviors={paragraphBehaviors}
           headerId={headerId}
+          uuid={paragraph.id}
           {...props}
         />
       }

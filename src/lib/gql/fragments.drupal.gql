@@ -397,10 +397,12 @@ fragment FragmentNodeStanfordPageTeaser on NodeStanfordPage {
 
 fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     ...FragmentNodeInterface
+    suPersonFullTitle
+    suPersonEmail
+    sulPersonLibcalId
     suPersonPhoto {
         ...FragmentMediaImage
     }
-    suPersonFullTitle
 }
 
 fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {

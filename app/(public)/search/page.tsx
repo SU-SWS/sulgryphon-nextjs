@@ -2,6 +2,9 @@ import {getSearchIndex} from "@/lib/drupal/get-search-index";
 import Search, {SearchResult} from "./search";
 import {StanfordNode, StanfordParagraph, WysiwygParagraph} from "@/lib/drupal/drupal";
 
+export const revalidate = false;
+export const dynamic = 'force-static';
+
 const Page = () => {
   const search = async (searchString: string): Promise<SearchResult[]> => {
     "use server";

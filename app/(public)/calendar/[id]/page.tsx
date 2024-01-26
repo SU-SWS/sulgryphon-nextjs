@@ -7,6 +7,9 @@ export const metadata = {
   }
 }
 
+export const revalidate = false;
+export const dynamic = 'force-static';
+
 const Calendar = ({params: {id}}: {params: {id: string}}) => {
   return (
     <main id="main-content">

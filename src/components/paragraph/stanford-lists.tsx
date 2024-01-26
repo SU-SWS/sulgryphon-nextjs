@@ -13,9 +13,10 @@ type ListProps = HTMLAttributes<HTMLDivElement> & {
   view?: Maybe<ViewReference>
   behaviors?: ParagraphBehaviors
   headerId?: string
+  uuid: string
 }
 
-const ListParagraph = async ({headerId, headline, description, link, view, behaviors}: ListProps) => {
+const ListParagraph = async ({headerId, headline, description, link, view, behaviors, uuid}: ListProps) => {
 
   const linkAttributes: Record<string, string> = {};
   if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
@@ -29,11 +30,21 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
   const displayId = view?.display;
   let viewItems: NodeUnion[] = [];
 
-  try {
-    viewItems = viewId && displayId ? await getViewItems(viewId, displayId, view?.contextualFilter) : [];
-  } catch (e) {
-    console.log(`An error occurred when fetching view items: View ID: ${viewId}, Display: ${displayId}, Filters: ${view?.contextualFilter?.join('/')}`)
+  if (viewId && displayId) {
+    try {
+      viewItems = await getViewItems(viewId, displayId, view?.contextualFilter);
+    } catch (e) {
+      try {
+        console.log(`${uuid}: Retrying to fetch view items: View ID: ${viewId}, Display: ${displayId}, Filters: ${view?.contextualFilter?.join('/')}`)
+
+        // Try again to build the view. Sometimes it fails the first time.
+        viewItems = await getViewItems(viewId, displayId, view?.contextualFilter);
+      } catch (e) {
+        console.log(`${uuid}: An error occurred when fetching view items: View ID: ${viewId}, Display: ${displayId}, Filters: ${view?.contextualFilter?.join('/')}`)
+      }
+    }
   }
+
   // let viewItems = (viewId && displayId) ? await getViewResults<StanfordNode>(viewId, displayId, paragraph.suListView?.contextualFilter) : [];
   if (view?.pageSize) {
     viewItems = viewItems.slice(0, view.pageSize)
@@ -107,7 +118,8 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
 
   switch (`${viewId}--${displayId}`) {
     case 'stanford_shared_tags--card_grid':
-      filters = getViewFilters(['term_node_taxonomy_name_depth', 'type', 'nid'], contextualFilter)
+      filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
+      if (filters && Object.keys(filters).length === 2) filters.nid = '0'
       graphqlResponse = await client.stanfordSharedTags({filters});
       items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
       break

@@ -146,17 +146,17 @@ const fixClasses = (classes: string | boolean): string => {
 const cleanMediaMarkup = (node: Element) => {
 
   const findIframeInMedia = (item: Element): Element | undefined => {
-    const iframe = item.children.find(child => child instanceof Element && child.name === 'iframe')
+    const iframe = item.children?.find(child => child instanceof Element && child.name === 'iframe')
     if (iframe) return iframe as Element;
-    for (let i = 0; i <= item.children.length; i++) {
+    for (let i = 0; i <= item.children?.length; i++) {
       const childIframe = findIframeInMedia(item.children[i] as Element)
       if (childIframe) return childIframe;
     }
   }
 
-  const wrapperDiv = node.children.find(child => child instanceof Element && child.name === 'div')
-  const picture = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'picture')
-  let image = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'img')
+  const wrapperDiv = node.children?.find(child => child instanceof Element && child.name === 'div')
+  const picture = wrapperDiv instanceof Element && wrapperDiv.children?.find(child => child instanceof Element && child.name === 'picture')
+  let image = wrapperDiv instanceof Element && wrapperDiv.children?.find(child => child instanceof Element && child.name === 'img')
 
   // Special handling of video media type.
   if (node.attribs.class.indexOf('media--type-video') >= 0) {
@@ -174,7 +174,7 @@ const cleanMediaMarkup = (node: Element) => {
   }
 
   if (picture instanceof Element) {
-    image = picture.children.find(child => child instanceof Element && child.name === 'img')
+    image = picture.children?.find(child => child instanceof Element && child.name === 'img')
   }
 
   if (image instanceof Element) {
