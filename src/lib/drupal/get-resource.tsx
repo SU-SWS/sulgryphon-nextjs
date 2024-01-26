@@ -60,6 +60,7 @@ export const getConfigPageResource = cache(async <T extends JsonApiResource>(
     next?: NextFetchRequestConfig
   } & JsonApiWithLocaleOptions
 ): Promise<T | undefined> => {
+  options = {next: {tags:[`config-pages:${name}`]}, ...options}
 
   let response;
   try {
