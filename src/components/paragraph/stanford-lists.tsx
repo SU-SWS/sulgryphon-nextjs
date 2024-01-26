@@ -102,12 +102,12 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
   }
 
   const client = graphqlClient(undefined, {next: {tags}});
-  let filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
+  let filters = getViewFilters(['term_node_taxonomy_name_depth', 'nid'], contextualFilter)
   let graphqlResponse;
 
   switch (`${viewId}--${displayId}`) {
     case 'stanford_shared_tags--card_grid':
-      filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
+      filters = getViewFilters(['term_node_taxonomy_name_depth', 'type', 'nid'], contextualFilter)
       graphqlResponse = await client.stanfordSharedTags({filters});
       items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
       break
@@ -135,11 +135,13 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
       break
 
     case 'stanford_events--past_events_list_block':
+      filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
       graphqlResponse = await client.stanfordEventsPastEvents({filters});
       items = graphqlResponse.stanfordEventsPastEvents?.results as unknown as NodeUnion[]
       break
 
     case 'stanford_news--block_1':
+      filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
       graphqlResponse = await client.stanfordNewsDefaultList({filters});
       items = graphqlResponse.stanfordNewsDefaultList?.results as unknown as NodeUnion[]
       break
@@ -150,6 +152,7 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
       break
 
     case 'stanford_person--grid_list_all':
+      filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
       graphqlResponse = await client.stanfordPerson({filters});
       items = graphqlResponse.stanfordPerson?.results as unknown as NodeUnion[]
       break

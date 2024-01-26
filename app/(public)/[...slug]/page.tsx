@@ -19,7 +19,7 @@ export const dynamic = 'force-static';
 
 const NodePage = async ({params}: PageProps) => {
   const path = getPathFromContext({params});
-  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path);
+  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path, isDraftMode());
 
   if (routeRedirect) redirect(routeRedirect.url);
   if (!entity) notFound();
