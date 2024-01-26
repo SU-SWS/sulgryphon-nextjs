@@ -9,7 +9,7 @@ interface Props {
 }
 
 const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
-
+  const goToUrl = node.suNewsSource?.url || node.path;
   const featuredImageUrl = node.suNewsFeaturedMedia?.mediaImage.url
   const bannerImageUrl = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.url;
   const imageUrl =  featuredImageUrl || bannerImageUrl
@@ -30,7 +30,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
       }
 
       <HeadingElement className="text-m2 order-last">
-        <Link href={node.path}
+        <Link href={goToUrl}
               className="text-black-true hover:text-brick-dark underline hover:no-underline">
           {node.title}
         </Link>

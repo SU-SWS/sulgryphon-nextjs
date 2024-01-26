@@ -26,6 +26,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, ' ');
 
   const imageUrl = node.sulEventImage?.mediaImage.url;
+  const goToUrl = node.suEventSource?.url || node.path;
 
   return (
     <article {...props} className="@container mx-auto">
@@ -78,7 +79,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
 
         <div className="flex flex-col gap-[1.2rem]">
           <HeadingElement className="text-m2 order-2">
-            <Link href={node.path}
+            <Link href={goToUrl}
                   className="text-black-true hover:text-brick-dark underline hover:no-underline">
               {node.title}
             </Link>

@@ -16,6 +16,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
   const bannerImageUrl = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.url;
   const imageUrl =  featuredImageUrl || bannerImageUrl
 
+  const goToUrl = node.suNewsSource?.url || node.path;
   return (
     <article {...props}>
       <div className="text-18 mb-14">
@@ -23,7 +24,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
       </div>
       <div className={"grid gap-2xl " + (imageUrl ? "grid-cols-3-1" : "")}>
         <div>
-          <Link className="text-digital-red no-underline hover:underline" href={node.path}>
+          <Link className="text-digital-red no-underline hover:underline" href={goToUrl}>
             <HeadingElement className="type-2">{node.title}</HeadingElement>
           </Link>
           {node.suNewsDek && <div className="rs-mb-1">{node.suNewsDek}</div>}
