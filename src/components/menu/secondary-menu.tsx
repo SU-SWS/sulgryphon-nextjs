@@ -1,29 +1,28 @@
 "use client";
 
 import {useEffect, useMemo} from "react";
-import {DrupalMenuLinkContent} from "next-drupal";
 import Link from "@/components/patterns/elements/drupal-link";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
-import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {useBoolean} from "usehooks-ts";
+import {MenuItem} from "@/lib/gql/__generated__/drupal";
 
-const getCurrentPageTitle = (activeTrail: string[], items: DrupalMenuLinkContent[], trail: string[]): string | undefined => {
+const getCurrentPageTitle = (activeTrail: string[], items: MenuItem[], trail: string[]): string | undefined => {
   const currentItem = items.find(item => item.id === trail.at(0));
   if (!currentItem) return;
   if (currentItem.id === activeTrail.at(-1)) {
     return currentItem.title;
   }
 
-  if (currentItem.items && currentItem.items.length > 0 && trail.length > 1) {
-    return getCurrentPageTitle(activeTrail, currentItem.items, trail.slice(1));
+  if (currentItem.children && currentItem.children.length > 0 && trail.length > 1) {
+    return getCurrentPageTitle(activeTrail, currentItem.children, trail.slice(1));
   }
 }
 
-const SecondaryMenu = ({menuItems, currentPath}: { menuItems: DrupalMenuLinkContent[], currentPath: string }) => {
+const SecondaryMenu = ({menuItems, currentPath}: { menuItems: MenuItem[], currentPath: string }) => {
   const browserUrl = useNavigationEvent();
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenuOpen} = useBoolean(false)
   const outsideClickProps = useOutsideClick(closeMenu)
@@ -32,12 +31,12 @@ const SecondaryMenu = ({menuItems, currentPath}: { menuItems: DrupalMenuLinkCont
 
   // Peel off the menu items from the parent.
   const topMenuItem = activeTrail.length > 0 ? menuItems.find(item => item.id === activeTrail[0]) : false;
-  const subTree = useMemo(() => topMenuItem && topMenuItem.items ? topMenuItem.items : [], [topMenuItem]);
+  const subTree = useMemo(() => topMenuItem && topMenuItem.children ? topMenuItem.children : [], [topMenuItem]);
 
   const currentPageTitle = useMemo(() => getCurrentPageTitle(activeTrail, menuItems, activeTrail), [activeTrail, menuItems]);
   useEffect(() => closeMenu(), [browserUrl, closeMenu]);
 
-  if (typeof subTree === 'undefined' || (subTree.length <= 1 && typeof subTree[0]?.items == 'undefined')) return null;
+  if (typeof subTree === 'undefined' || (subTree.length <= 1 && typeof subTree[0]?.children == 'undefined')) return null;
 
   return (
     <aside className="order-first lg:w-1/3 2xl:w-1/4 relative">
@@ -70,17 +69,13 @@ const SecondaryMenu = ({menuItems, currentPath}: { menuItems: DrupalMenuLinkCont
 }
 
 
-interface SideMenuItemProps {
-  id: string
-  title: string
-  url: string
+type SideMenuItemProps = MenuItem & {
   parentItemProps?: any
   menuLevel?: number
   activeTrail: string[]
-  items?: DrupalMenuLinkContent[]
 }
 
-const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: SideMenuItemProps) => {
+const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, children}: SideMenuItemProps) => {
 
   const isActive = activeTrail.length > 0 && activeTrail[activeTrail.length - 1] == id;
   const {value: submenuOpen, toggle: toggleSubmenu} = useBoolean(activeTrail.indexOf(id) >= 0)
@@ -98,15 +93,14 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
       <div
         className={"flex " + depthClasses[menuLevel] + (isActive ? " bg-archway" : "")}>
         <Link
-          href={url}
+          href={url ||'#'}
           className={"flex-grow p-10 block relative no-underline hover:underline " + (isActive ? "text-white hocus:text-white" : "text-black-90 hocus:text-archway")}
-          onClick={() => syncDrupalPreviewRoutes(url)}
           aria-current={isActive ? "page" : undefined}
         >
           {title}
         </Link>
 
-        {(items?.length > 0) &&
+        {(children?.length > 0) &&
           <div className="relative flex items-center">
             <button
               className="group mr-20"
@@ -125,9 +119,9 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, items = []}: 
         }
       </div>
 
-      {(items?.length > 0) &&
+      {(children?.length > 0) &&
         <ul className={"list-unstyled" + (submenuOpen ? " block" : " hidden")}>
-          {items.map(item =>
+          {children.map(item =>
             <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1}/>
           )}
         </ul>

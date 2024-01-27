@@ -7,11 +7,11 @@ import LibraryHeader from "@/components/node/sul-library/library-header";
 import {PageProps} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import SecondaryMenu from "@/components/menu/secondary-menu";
-import {getMenu} from "@/lib/drupal/get-menu";
+
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 import {getPathFromContext} from "@/lib/drupal/utils";
-import {getEntityFromPath} from "@/lib/gql/fetcher";
+import {getEntityFromPath, getMenu} from "@/lib/gql/fetcher";
 import {NodeUnion} from "@/lib/gql/__generated__/drupal";
 
 export const revalidate = false;
@@ -24,7 +24,7 @@ const NodePage = async ({params}: PageProps) => {
   if (routeRedirect) redirect(routeRedirect.url);
   if (!entity) notFound();
 
-  const {tree: menuTree} = await getMenu('main');
+  const menuItems = await getMenu()
 
   const fullWidth = (entity.__typename === 'NodeStanfordPage' && entity.layoutSelection?.id === 'stanford_basic_page_full') ||
     (entity.__typename === 'NodeSulLibrary' && entity.layoutSelection?.id === 'sul_library_full_width');
@@ -79,7 +79,7 @@ const NodePage = async ({params}: PageProps) => {
             <NodePageDisplay node={entity}/>
           </div>
 
-          <SecondaryMenu menuItems={menuTree} currentPath={entity.path}/>
+          <SecondaryMenu menuItems={menuItems} currentPath={entity.path}/>
         </div>
       }
     </main>

@@ -2,18 +2,12 @@ import Link from "@/components/patterns/elements/drupal-link";
 import Lockup from "@/components/patterns/lockup";
 import MainMenu from "@/components/menu/main-menu";
 import GlobalMessage from "@/components/layout/global-message";
-import {DrupalMenuLinkContent} from "next-drupal";
-import {getMenu} from "@/lib/drupal/get-menu";
 import FallbackMainMenu from "@/components/menu/fallback-main-menu";
 import {Suspense} from "react";
+import {getMenu} from "@/lib/gql/fetcher";
 
 const Header = async () => {
-
-  let tree: DrupalMenuLinkContent[] = [];
-  try {
-    ({tree} = await getMenu('main'));
-  } catch (e) {
-  }
+  const menuItems = await getMenu();
 
   return (
     <>
@@ -44,8 +38,8 @@ const Header = async () => {
             </ul>
           </nav>
         </div>
-        <Suspense fallback={<FallbackMainMenu menuItems={tree}/>}>
-          <MainMenu menuItems={tree}/>
+        <Suspense fallback={<FallbackMainMenu menuItems={menuItems}/>}>
+          <MainMenu menuItems={menuItems}/>
         </Suspense>
       </header>
     </>

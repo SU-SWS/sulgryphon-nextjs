@@ -4057,6 +4057,15 @@ export type FragmentSmartDateTypeFragment = { __typename?: 'SmartDateType', valu
 
 export type FragmentAddressTypeFragment = { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null };
 
+export type FragmentMenuLinkFragment = { __typename?: 'MenuItem', url?: string | null, title: string, id: string, expanded: boolean };
+
+export type MenuQueryVariables = Exact<{
+  name?: InputMaybe<MenuAvailable>;
+}>;
+
+
+export type MenuQuery = { __typename?: 'Query', menu?: { __typename?: 'Menu', items: Array<{ __typename?: 'MenuItem', url?: string | null, title: string, id: string, expanded: boolean, children: Array<{ __typename?: 'MenuItem', url?: string | null, title: string, id: string, expanded: boolean, children: Array<{ __typename?: 'MenuItem', url?: string | null, title: string, id: string, expanded: boolean, children: Array<{ __typename?: 'MenuItem', url?: string | null, title: string, id: string, expanded: boolean, children: Array<{ __typename?: 'MenuItem', url?: string | null, title: string, id: string, expanded: boolean }> }> }> }> }> } | null };
+
 export type RouteQueryVariables = Exact<{
   path: Scalars['String']['input'];
 }>;
@@ -5095,6 +5104,14 @@ ${FragmentNodeStanfordPolicyFragmentDoc}
 ${FragmentNodeStanfordPublicationFragmentDoc}
 ${FragmentNodeSulStudyPlaceFragmentDoc}
 ${FragmentNodeSulLibraryFragmentDoc}`;
+export const FragmentMenuLinkFragmentDoc = gql`
+    fragment FragmentMenuLink on MenuItem {
+  url
+  title
+  id
+  expanded
+}
+    `;
 export const FragmentViewPageInfoFragmentDoc = gql`
     fragment FragmentViewPageInfo on ViewPageInfo {
   page
@@ -5270,6 +5287,27 @@ export const ConfigPagesDocument = gql`
   }
 }
     `;
+export const MenuDocument = gql`
+    query Menu($name: MenuAvailable = MAIN) {
+  menu(name: $name) {
+    items {
+      ...FragmentMenuLink
+      children {
+        ...FragmentMenuLink
+        children {
+          ...FragmentMenuLink
+          children {
+            ...FragmentMenuLink
+            children {
+              ...FragmentMenuLink
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${FragmentMenuLinkFragmentDoc}`;
 export const RouteDocument = gql`
     query Route($path: String!) {
   route(path: $path) {
@@ -5435,6 +5473,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     ConfigPages(variables?: ConfigPagesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ConfigPagesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<ConfigPagesQuery>(ConfigPagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ConfigPages', 'query', variables);
+    },
+    Menu(variables?: MenuQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<MenuQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MenuQuery>(MenuDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Menu', 'query', variables);
     },
     Route(variables: RouteQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<RouteQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<RouteQuery>(RouteDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Route', 'query', variables);

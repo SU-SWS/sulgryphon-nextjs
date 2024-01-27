@@ -1,4 +1,12 @@
-import {getSdk, NodeUnion, RouteQuery, RouteRedirect, TermUnion} from "@/lib/gql/__generated__/drupal";
+import {
+  getSdk,
+  MenuAvailable,
+  MenuItem,
+  NodeUnion,
+  RouteQuery,
+  RouteRedirect,
+  TermUnion
+} from "@/lib/gql/__generated__/drupal";
 import {GraphQLClient} from "graphql-request";
 import type {RequestConfig} from "graphql-request/src/types";
 import {getAccessToken} from "@/lib/drupal/get-access-token";
@@ -39,3 +47,9 @@ export const getEntityFromPath = cache(async <T extends NodeUnion | TermUnion, >
   entity = (query.route?.__typename === 'RouteInternal' && query.route.entity) ? query.route.entity as T : undefined
   return {entity, redirect: undefined};
 })
+
+export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> => {
+  const menu = await graphqlClient(undefined, {next: {tags: [`menu:${name || "main"}`]}}).Menu({name});
+  return (menu.menu?.items || []) as MenuItem[];
+})
+
