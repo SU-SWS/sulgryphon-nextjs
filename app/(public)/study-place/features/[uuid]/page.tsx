@@ -11,6 +11,9 @@ export const metadata = {
   }
 }
 
+export const revalidate = false;
+export const dynamic = 'force-static';
+
 const Page = async ({params: {uuid}}: { params: { uuid: string } }) => {
   const query = await graphqlClient().Node({uuid})
   const node = query.node as NodeUnion;

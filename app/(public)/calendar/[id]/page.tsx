@@ -28,4 +28,6 @@ const Calendar = ({params: {id}}: {params: {id: string}}) => {
     </main>
   )
 }
+
+
 export default Calendar;
