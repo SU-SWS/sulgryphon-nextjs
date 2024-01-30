@@ -3642,21 +3642,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.17.19":
-  version: 5.17.19
-  resolution: "@tanstack/query-core@npm:5.17.19"
-  checksum: b98b4c12e15c9d026db10d3b9e74689e80e100d4b3caa1c675547f2f5b369817fc5d2033501e75a37e511f9a62424d4b5ed3b4936cf075721806a949339c256e
+"@tanstack/query-core@npm:5.18.0":
+  version: 5.18.0
+  resolution: "@tanstack/query-core@npm:5.18.0"
+  checksum: 49ad7eb9dc9463910a86947e1794d1725b45d470c95b1364fba516eaeecb51f6b94bfcac3bf82d2db15ee49cd9e6ca45fbdf0ce83b126a238e3cbb6294d54be3
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.17.19":
-  version: 5.17.19
-  resolution: "@tanstack/react-query@npm:5.17.19"
+"@tanstack/react-query@npm:^5.18.0":
+  version: 5.18.0
+  resolution: "@tanstack/react-query@npm:5.18.0"
   dependencies:
-    "@tanstack/query-core": "npm:5.17.19"
+    "@tanstack/query-core": "npm:5.18.0"
   peerDependencies:
     react: ^18.0.0
-  checksum: b3ab0a51f08a2118ff2023ea98768b0b81237be177e215675712ad71b86946d65ce0020affdd2ba7a70b0796af5d8a8896c5b95b7e43a38002bc89c2fd13217d
+  checksum: c8831a63e2e351dada19e63e168b885917d40b02c7299bdc9352af0747eefa474c2eca8d84acd3f1b4856091981bd2bce55103e117442a9b15412008f472cd6d
   languageName: node
   linkType: hard
 
@@ -3697,12 +3697,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.11.6":
+"@types/node@npm:*":
   version: 20.11.6
   resolution: "@types/node@npm:20.11.6"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 922bc1e78076bb79fd168902c80321b54487181e3be3386e183fc535d102d91c8902da25148eaec841410fab7fb872fd4a93ec9ac9299cedf0ebcbf16b442aa1
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.11.13":
+  version: 20.11.13
+  resolution: "@types/node@npm:20.11.13"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 8ff8526fa0dbabcf4e9c538c6a7220675f750c39d0794e34998daa0656d7e0dfdf3e47403d2ab8beb756422a517e1f2646b4494afa59ef330495d65fc58fa4d8
   languageName: node
   linkType: hard
 
@@ -4225,14 +4234,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.6":
-  version: 1.6.6
-  resolution: "axios@npm:1.6.6"
+"axios@npm:^1.6.7":
+  version: 1.6.7
+  resolution: "axios@npm:1.6.7"
   dependencies:
     follow-redirects: "npm:^1.15.4"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 974f54cfade94fd4c0191309122a112c8d233089cecb0070cd8e0904e9bd9c364ac3a6fd0f981c978508077249788950427c565f54b7b2110e5c3426006ff343
+  checksum: 131bf8e62eee48ca4bd84e6101f211961bf6a21a33b95e5dfb3983d5a2fe50d9fffde0b57668d7ce6f65063d3dc10f2212cbcb554f75cfca99da1c73b210358d
   languageName: node
   linkType: hard
 
@@ -4315,14 +4324,14 @@ __metadata:
     "@mui/base": "npm:^5.0.0-beta.33"
     "@tailwindcss/container-queries": "npm:^0.1.1"
     "@tailwindcss/typography": "npm:^0.5.10"
-    "@tanstack/react-query": "npm:^5.17.19"
+    "@tanstack/react-query": "npm:^5.18.0"
     "@types/debug": "npm:^4.1.12"
-    "@types/node": "npm:^20.11.6"
+    "@types/node": "npm:^20.11.13"
     "@types/qs": "npm:^6.9.11"
     "@types/react": "npm:^18.2.48"
     "@uidotdev/usehooks": "npm:^2.4.1"
     autoprefixer: "npm:^10.4.17"
-    axios: "npm:^1.6.6"
+    axios: "npm:^1.6.7"
     critters: "npm:^0.0.20"
     debug: "npm:^4.3.4"
     decanter: "npm:^7.2.0"
