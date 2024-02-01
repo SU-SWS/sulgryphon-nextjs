@@ -1,25 +1,19 @@
-import "server-only";
 import {CalendarIcon, MapIcon, PhoneIcon, UserGroupIcon} from "@heroicons/react/20/solid";
 import Link from "@/components/patterns/elements/drupal-link";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {Event, StanfordParagraph} from "@/lib/drupal/drupal";
-import fetchComponents from "@/lib/fetch-components";
-
 import formatHtml from "@/lib/format-html";
-import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
 import EmailLink from "@/components/patterns/elements/email-link";
 import TelephoneLink from "@/components/patterns/elements/telephone-link";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
+import Paragraph from "@/components/paragraph";
 
-const StanfordEvent = async ({node, ...props}: { node: Event }) => {
-  if (node.su_event_source?.url) redirect(node.su_event_source.url)
+const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
+  if (node.suEventSource?.url) redirect(node.suEventSource.url)
 
-  node.su_event_components = await fetchComponents<StanfordParagraph>(node.su_event_components || []);
-  node.su_event_components = node.su_event_components.filter(item => !!item?.id);
-
-  const inPast = new Date(node.su_event_date_time?.end_value) < new Date();
-  const start = new Date(node.su_event_date_time?.value);
-  const end = new Date(node.su_event_date_time?.end_value);
+  const inPast = new Date(node.suEventDateTime.end_value * 1000) < new Date();
+  const start = new Date(node.suEventDateTime.value * 1000);
+  const end = new Date(node.suEventDateTime.end_value * 1000);
 
   let dateTimeString;
   if (start.getMonth() === end.getMonth() && start.getDate() === end.getDate() && start.getFullYear() === end.getFullYear()) {
@@ -71,23 +65,27 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
     <article {...props} className="mt-50">
       {inPast && <div className="text-black-70 uppercase">Past Event</div>}
 
-      {(node.su_event_type && node.su_event_type.length > 0) && node.su_event_type.map(term =>
-        <div key={term.id} className="text-digital-red text-16 md:text-18 2xl:text-19">
-          {term.name}
+      {(node.suEventType && node.suEventType.length > 0) &&
+        <div>
+          {node.suEventType.map(term =>
+            <div key={term.id} className="text-digital-red text-16 md:text-18 2xl:text-19">
+              {term.name}
+            </div>
+          )}
         </div>
-      )}
+      }
 
-      {node.su_event_subheadline && <h2 className="type-3 rs-mb-1">{node.su_event_subheadline}</h2>}
-      {node.su_event_dek && <div className="rs-mb-4 text-16 md:text-21">{node.su_event_dek}</div>}
+      {node.suEventSubheadline && <h2 className="type-3 rs-mb-1">{node.suEventSubheadline}</h2>}
+      {node.suEventDek && <div className="rs-mb-4 text-16 md:text-21">{node.suEventDek}</div>}
 
-      {node.su_event_sponsor &&
-          <div className="rs-pb-3">
-            {node.su_event_sponsor.map((sponsor, index) =>
-              <div key={`event-sponsor-${index}`} className="type-1">
-                {sponsor}
-              </div>
-            )}
-          </div>
+      {node.suEventSponsor &&
+        <div className="rs-pb-3">
+          {node.suEventSponsor.map((sponsor, index) =>
+            <div key={`event-sponsor-${index}`} className="type-1">
+              {sponsor}
+            </div>
+          )}
+        </div>
       }
 
       <div className="w-[80%] mx-auto shadow-sm border border-[#c6c6c6] p-[40px] mb-[50px]">
@@ -97,111 +95,106 @@ const StanfordEvent = async ({node, ...props}: { node: Event }) => {
             <div>
               <div className="flex flex-row items-start mt-20">
                 <CalendarIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
-                <time dateTime={node.su_event_date_time.value} className="text-16 md:text-18">
+                <time dateTime={node.suEventDateTime.value} className="text-16 md:text-18">
                   {dateTimeString}
                 </time>
               </div>
               {inPast &&
-                  <div className="text-14 md:text-16 pt-4 text-black-70 ml-[31px]">
-                    This event has passed.
-                  </div>}
+                <div className="text-14 md:text-16 pt-4 text-black-70 ml-[31px]">
+                  This event has passed.
+                </div>}
             </div>
 
-            {(node.su_event_location || node.su_event_alt_loc) &&
-                <div>
-                  {node.su_event_location &&
-                      <div className="flex flex-col">
-                        <div className="flex flex-row items-start mt-40 mb-4">
-                          <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
-                          <h3 className="text-16 md:text-18">Location</h3>
-                        </div>
-                        <div className="ml-36">
-                          <div className="text-16 md:text-18">{node.su_event_location.organization}</div>
-                          <div className="text-16 md:text-18">{node.su_event_location.address_line1}</div>
-                          <div className="text-16 md:text-18">{node.su_event_location.address_line2}</div>
-                          <div
-                              className="text-16 md:text-18">{node.su_event_location.locality}, {node.su_event_location.administrative_area} {node.su_event_location.postal_code}</div>
-                        </div>
-                      </div>
-                  }
-                  {node.su_event_alt_loc &&
-                      <div>
-                        <div className="flex flex-row items-start mt-40 mb-4">
-                          <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
-                          <h3 className="text-16 md:text-18">Location</h3>
-                        </div>
-                        <div className="ml-36 leading-snug">
-                          <>{node.su_event_alt_loc}</>
-                        </div>
-                      </div>
-                  }
+            {(node.suEventLocation || node.suEventAltLoc) &&
+              <div>
+                {node.suEventLocation &&
+                  <div className="flex flex-col">
+                    <div className="flex flex-row items-start mt-40 mb-4">
+                      <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                      <h3 className="text-16 md:text-18">Location</h3>
+                    </div>
+                    <div className="ml-36">
+                      <div className="text-16 md:text-18">{node.suEventLocation.organization}</div>
+                      <div className="text-16 md:text-18">{node.suEventLocation.addressLine1}</div>
+                      <div className="text-16 md:text-18">{node.suEventLocation.addressLine2}</div>
+                      <div
+                        className="text-16 md:text-18">{node.suEventLocation.locality}, {node.suEventLocation.administrativeArea} {node.suEventLocation.postalCode}</div>
+                    </div>
+                  </div>
+                }
+                {node.suEventAltLoc &&
+                  <div>
+                    <div className="flex flex-row items-start mt-40 mb-4">
+                      <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                      <h3 className="text-16 md:text-18">Location</h3>
+                    </div>
+                    <div className="ml-36 leading-snug">
+                      {node.suEventAltLoc}
+                    </div>
+                  </div>
+                }
 
-                  {node.su_event_map_link &&
-                      <Link href={node.su_event_map_link.url} className="block ml-36">
-                        {node.su_event_map_link.title}
-                      </Link>
-                  }
-                </div>
+                {node.suEventMapLink?.url &&
+                  <Link href={node.suEventMapLink.url} className="block ml-36">
+                    {node.suEventMapLink.title}
+                  </Link>
+                }
+              </div>
             }
           </div>
 
           <div>
-            {(node.su_event_telephone || node.su_event_email) &&
-                <div>
-                  <div className="flex flex-row items-start mt-40 md:mt-20 mb-4">
-                    <PhoneIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
-                    <h3 className="text-16 md:text-18">Contact</h3>
-                  </div>
-                  {node.su_event_telephone &&
-                    <TelephoneLink
-                      tel={node.su_event_telephone}
-                      className="block mb-4 ml-36"
-                    />
-                  }
-                  {node.su_event_email &&
-                    <EmailLink email={node.su_event_email} className="block ml-36 break-words"/>
-                  }
+            {(node.suEventTelephone || node.suEventEmail) &&
+              <div>
+                <div className="flex flex-row items-start mt-40 md:mt-20 mb-4">
+                  <PhoneIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                  <h3 className="text-16 md:text-18">Contact</h3>
                 </div>
+                {node.suEventTelephone &&
+                  <TelephoneLink
+                    tel={node.suEventTelephone}
+                    className="block mb-4 ml-36"
+                  />
+                }
+                {node.suEventEmail &&
+                  <EmailLink email={node.suEventEmail} className="block ml-36 break-words"/>
+                }
+              </div>
             }
 
-            {(node.su_event_audience && node.su_event_audience?.length > 0) &&
-                <div>
-                  <div className="flex flex-row items-start mt-40 mb-4">
-                    <UserGroupIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
-                    <h3 className="text-16 md:text-18">This event is open to:</h3>
-                  </div>
-                  {node.su_event_audience.map(audience =>
-                    <div className="text-16 md:text-18 ml-36" key={audience.id}>{audience.name}</div>
-                  )}
+            {node.suEventAudience &&
+              <div>
+                <div className="flex flex-row items-start mt-40 mb-4">
+                  <UserGroupIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                  <h3 className="text-16 md:text-18">This event is open to:</h3>
                 </div>
+                {node.suEventAudience.map(audience =>
+                  <div className="text-16 md:text-18 ml-36" key={audience.id}>{audience.name}</div>
+                )}
+              </div>
             }
           </div>
         </div>
 
-        {node.su_event_cta &&
-            <div className="rs-pt-4 rs-pb-6">
-              <DrupalLinkButton href={node.su_event_cta.url} className="block mx-auto">
-                {node.su_event_cta.title}
-              </DrupalLinkButton>
-            </div>
+        {node.suEventCta?.url &&
+          <div className="rs-pt-4 rs-pb-6">
+            <DrupalLinkButton href={node.suEventCta.url} className="block mx-auto">
+              {node.suEventCta.title}
+            </DrupalLinkButton>
+          </div>
         }
       </div>
 
-      {node.su_event_source &&
-          <Link
-              href={node.su_event_source.url}>{node.su_event_source.title ? node.su_event_source.title : 'View this event'}</Link>
-      }
-
-      {node.body &&
+      {node.body?.processed &&
         <div className="centered lg:max-w-[980px] mb-40">
-          {formatHtml(node.body)}
+          {formatHtml(node.body.processed)}
         </div>
       }
 
-      {node.su_event_components &&
+      {node.suEventComponents &&
         <div className="mb-40">
-          {node.su_event_components.map(component =>
-            <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
+          {node.suEventComponents.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
           )}
         </div>
       }

@@ -1,10 +1,10 @@
 import Link from "@/components/patterns/elements/drupal-link";
-import {Library} from "@/lib/drupal/drupal";
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal";
 
-const SulLibraryListItem = ({node, ...props}: {node: Library}) => {
+const SulLibraryListItem = ({node, ...props}: {node: NodeSulLibrary}) => {
   return (
     <article {...props}>
-      <Link href={node.path?.alias ?? "#"}>
+      <Link href={node.path}>
         <h2 className="text-cardinal-red">{node.title}</h2>
       </Link>
     </article>

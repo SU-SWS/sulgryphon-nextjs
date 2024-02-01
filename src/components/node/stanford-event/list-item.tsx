@@ -1,13 +1,14 @@
-import {Event} from "@/lib/drupal/drupal";
+
 import StanfordEventCard from "@/components/node/stanford-event/card";
-import {PropsWithoutRef} from "react";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
+
 
 interface Props {
-  node: Event
+  node: NodeStanfordEvent
   h3Heading?: boolean
 }
 
-const StanfordEventListItem = ({node, ...props}: PropsWithoutRef<Props>) => {
+const StanfordEventListItem = ({node, ...props}: Props) => {
   // For now, just return the card. Change this if designs come through.
   return <StanfordEventCard node={node} {...props}/>
 }

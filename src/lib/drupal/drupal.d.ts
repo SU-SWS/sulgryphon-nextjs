@@ -1,6 +1,29 @@
 import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal";
 import {JsonApiResource} from "next-drupal";
 import {DayHours} from "@/lib/hooks/useLibraryHours";
+import {Maybe} from "@/lib/gql/__generated__/drupal";
+
+export type ParagraphBehaviors = {
+  layout_paragraphs?: {
+    layout?: 'sul_helper_1_column' | 'sul_helper_2_column' | 'sul_helper_3_column'
+    parent_uuid?: string
+    region?: string
+    config?: {}
+  }
+  sul_button_styles?: {}
+  sul_feat_collections_styles?: {}
+  sul_teaser_styles?: {}
+  hero_pattern?: {
+    overlay_position?: string
+  }
+  sul_card_styles?: {
+    background_sprinkles?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
+    orientation?: string
+    link_display_style?: string
+  }
+  list_paragraph?: { hide_empty?: Maybe<boolean>, empty_message?: Maybe<string> }
+  sul_list_styles?: { link_display_style?: Maybe<string> }
+}
 
 export type StanfordNode = BasicPage |
   Course |

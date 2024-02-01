@@ -1,4 +1,4 @@
-import {Library} from "@/lib/drupal/drupal";
+
 import Card from "@/components/patterns/card";
 import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/20/solid";
 import Link from "@/components/patterns/elements/drupal-link";
@@ -8,15 +8,14 @@ import Image from "next/image";
 import LibraryHeaderHours from "./library-hours";
 import EmailLink from "@/components/patterns/elements/email-link";
 import {buildUrl} from "@/lib/drupal/utils";
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal";
 
-const LibraryHeader = ({node}: { node: Library }) => {
-  const bannerImageUrl = node.su_library__banner?.field_media_image.uri.url;
-  const bannerImageAlt = node.su_library__banner?.field_media_image?.resourceIdObjMeta?.alt ?? '';
-  const bannerPlaceholder = node.su_library__banner?.field_media_image?.uri.base64;
+const LibraryHeader = ({node}: { node: NodeSulLibrary }) => {
+  const bannerImageUrl = node.suLibraryBanner?.mediaImage.url;
+  const bannerImageAlt = node.suLibraryBanner?.mediaImage.alt|| '';
 
-  const contactImageUrl = node.su_library__contact_img?.field_media_image.uri.url || bannerImageUrl;
-  const contactImageAlt = node.su_library__contact_img?.field_media_image?.resourceIdObjMeta?.alt ?? bannerImageAlt;
-  const contactPlaceholder = node.su_library__contact_img?.field_media_image?.uri.base64 ?? bannerPlaceholder;
+  const contactImageUrl = node.suLibraryContactImg?.mediaImage.url || bannerImageUrl;
+  const contactImageAlt = node.suLibraryContactImg?.mediaImage.alt || bannerImageAlt;
 
   return (
     <header className="mb-100 relative">
@@ -29,8 +28,6 @@ const LibraryHeader = ({node}: { node: Library }) => {
               alt={bannerImageAlt}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-              placeholder={bannerPlaceholder ? 'blur' : 'empty'}
-              blurDataURL={bannerPlaceholder}
             />
           }
         </div>
@@ -54,51 +51,49 @@ const LibraryHeader = ({node}: { node: Library }) => {
                 alt={contactImageAlt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-                placeholder={contactPlaceholder ? 'blur' : 'empty'}
-                blurDataURL={contactPlaceholder}
               />
               }
               footer={
                 <>
                   <div className="leading-tight text-black md:rs-px-2 rs-pb-1 mt-[-2rem]">
-                    {node.su_library__phone &&
+                    {node.suLibraryPhone &&
                       <div className="relative flex flex-row items-start mb-4 type-1">
                         <PhoneIcon width={19}
                                    className="md:absolute md:left-[-38px] md:top-01em mr-12"/>
-                        {node.su_library__phone}
+                        {node.suLibraryPhone}
                       </div>
                     }
-                    {node.su_library__email &&
+                    {node.suLibraryEmail &&
                       <div
                         className="relative flex flex-row items-start mt-20 md:mt-18 mb-4 type-1">
                         <EnvelopeIcon width={19}
                                       className="md:absolute md:left-[-38px] md:top-02em mt-01em md:mt-0 mr-12"/>
-                        <EmailLink email={node.su_library__email} className="no-underline hocus:underline break-words"/>
+                        <EmailLink email={node.suLibraryEmail} className="no-underline hocus:underline break-words"/>
                       </div>
                     }
-                    {node.su_library__address &&
+                    {node.suLibraryAddress &&
                       <div
                         className="relative flex flex-row items-start mt-20 md:mt-18 mb-4 type-1">
                         <MapPinIcon width={19}
                                     className="md:absolute md:left-[-38px] md:top-01em mt-01em md:mt-0 mr-12"/>
-                        {node.su_library__map_link ? (
-                          <Link href={node.su_library__map_link.uri} className="no-underline hocus:underline">
-                            <div>{node.su_library__address.address_line1}</div>
-                            <div>{node.su_library__address.address_line2}</div>
-                            <div>{node.su_library__address.locality}, {node.su_library__address.administrative_area} {node.su_library__address.postal_code}</div>
+                        {node.suLibraryMapLink?.url ? (
+                          <Link href={node.suLibraryMapLink.url} className="no-underline hocus:underline">
+                            <div>{node.suLibraryAddress.addressLine1}</div>
+                            <div>{node.suLibraryAddress.addressLine2}</div>
+                            <div>{node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea} {node.suLibraryAddress.postalCode}</div>
                           </Link>
                         ) : (
                           <>
-                            <div>{node.su_library__address.address_line1}</div>
-                            <div>{node.su_library__address.address_line2}</div>
-                            <div>{node.su_library__address.locality}, {node.su_library__address.administrative_area} {node.su_library__address.postal_code}</div>
+                            <div>{node.suLibraryAddress.addressLine1}</div>
+                            <div>{node.suLibraryAddress.addressLine2}</div>
+                            <div>{node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea} {node.suLibraryAddress.postalCode}</div>
                           </>
                         )}
                       </div>
                     }
                   </div>
-                  {node.su_library__hours &&
-                    <LibraryHeaderHours hoursId={node.su_library__hours}/>
+                  {node.suLibraryHours &&
+                    <LibraryHeaderHours hoursId={node.suLibraryHours}/>
                   }
                 </>
               }

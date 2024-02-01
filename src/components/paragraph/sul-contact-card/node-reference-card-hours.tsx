@@ -3,7 +3,7 @@
 import {ClockIcon} from "@heroicons/react/24/outline";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 
-const NodeReferenceCardHours = ({branchId, branchName}:{branchId: string, branchName: string}) => {
+const NodeReferenceCardHours = ({branchId, branchName}: { branchId: string, branchName: string }) => {
   const hours = useTodayLibraryHours(branchId);
   if (!hours) {
     return null;

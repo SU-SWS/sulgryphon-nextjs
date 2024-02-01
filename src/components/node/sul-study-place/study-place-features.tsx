@@ -1,12 +1,13 @@
-import {PropsWithoutRef} from "react";
+
 import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
 import {MapPinIcon} from "@heroicons/react/24/outline";
 import StudyPlaceHours from "./study-place-today-hours";
 import {buildUrl} from "@/lib/drupal/utils";
+import {Maybe} from "@/lib/gql/__generated__/drupal";
 
-interface ModalProps extends PropsWithoutRef<any> {
-  branchHours?: string
+interface ModalProps {
+  branchHours?: Maybe<string>
   branchTitle: string
   branchUrl: string
   capacity?: string

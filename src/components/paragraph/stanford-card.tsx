@@ -1,37 +1,36 @@
 import Image from "next/image";
 
-import {DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
 import Card from "@/components/patterns/card";
 import HorizontalCard from "@/components/patterns/horizontal-card";
 import Oembed from "@/components/patterns/elements/oembed";
-import {PropsWithoutRef} from "react";
 import {buildUrl} from "@/lib/drupal/utils";
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {HTMLAttributes} from "react";
 
-interface Props extends PropsWithoutRef<any> {
-  header?: string
-  superHeader?: string
-  body?: string
-  link?: DrupalLinkType
-  linkStyle?: string
-  sprinklePosition: "top_right" | "top_left" | "bottom_right" | "bottom_left"
-  image?: DrupalImageMedia
-  videoUrl?: string
-  orientation?: string
-  fullWidth?: boolean
-  className?: string
+type Props = HTMLAttributes<HTMLDivElement> & {
+  header?: Maybe<string>
+  superHeader?: Maybe<string>
+  body?: Maybe<string>
+  link?: Maybe<LinkType>
+  linkStyle?: Maybe<string>
+  sprinklePosition?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
+  image?: Maybe<MediaImage>
+  videoUrl?: Maybe<string>
+  orientation?: Maybe<string>
+  fullWidth?: Maybe<boolean>
   headerId?: string
+  singleRow?: Maybe<boolean>
 }
 
 const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
   const isHorizontal = orientation === 'horizontal';
 
-  const imageUrl = image?.uri.url;
-  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
-  const placeholder = image?.uri.base64;
+  const imageUrl = image?.mediaImage.url;
+  const imageAlt = image?.mediaImage.alt || '';
 
-  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === header) {
-    link.options.attributes['aria-labelledby'] = headerId;
-    delete link?.options?.attributes?.['aria-label'];
+  if (headerId && link?.attributes?.ariaLabel && link?.attributes?.ariaLabel === header) {
+    link.attributes.ariaLabelledBy = headerId;
+    delete link.attributes.ariaLabel
   }
 
   return (
@@ -45,8 +44,6 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
             alt={imageAlt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-            placeholder={placeholder ? 'blur' : 'empty'}
-            blurDataURL={placeholder}
           />}
           header={header}
           superHeader={superHeader}
@@ -67,8 +64,6 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
             alt={imageAlt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-            placeholder={placeholder ? 'blur' : 'empty'}
-            blurDataURL={placeholder}
           />}
           header={header}
           superHeader={superHeader}

@@ -1,31 +1,12 @@
-import {getViewItems} from "@/components/views/view";
 import CardList from "@/components/views/card-list";
-import {StanfordNode} from "@/lib/drupal/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeUnion[]
   hasHeading: boolean
 }
 
-const SharedTagsCardView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<StanfordNode>(view, itemsToDisplay, args.split('/'));
-
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
-
+const SharedTagsCardView = async ({items, hasHeading}: Props) => {
   return (
     <CardList items={items} h3Heading={hasHeading}/>
   )
