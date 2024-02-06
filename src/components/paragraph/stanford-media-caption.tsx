@@ -42,15 +42,16 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
         </div>
       }
 
-      <div className={'text-right'}>
         {link &&
-          <Link href={link.url}
-                className="hocus:underline transition-colors hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
-                {...link.options?.attributes}>
-            {link.title}
-          </Link>
+          <div className='text-right'>
+            <Link href={link.url}
+                  className="hocus:underline transition-colors hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                  {...link.options?.attributes}>
+              {link.title}
+            </Link>
+          </div>
         }
-      </div>
+
 
       {caption &&
         <figcaption className="text-right float-right text-19 leading">
