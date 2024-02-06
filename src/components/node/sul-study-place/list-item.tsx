@@ -1,7 +1,8 @@
-import {StudyPlace} from "@/lib/drupal/drupal";
-import SulStudyPlaceCard from "./card";
 
-const SulStudyPlaceListItem = ({node, ...props}: { node: StudyPlace }) => {
+import SulStudyPlaceCard from "./card";
+import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal";
+
+const SulStudyPlaceListItem = ({node, ...props}: { node: NodeSulStudyPlace }) => {
   // For now, just return the card. Change this if designs come through.
   return <SulStudyPlaceCard node={node} {...props}/>
 }

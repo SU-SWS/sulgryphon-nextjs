@@ -7,22 +7,23 @@ import StanfordPersonListItem from "@/components/node/stanford-person/list-item"
 import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item";
 import SulLibraryListItem from "@/components/node/sul-library/list-item";
 import SulStudyPlaceListItem from "@/components/node/sul-study-place/list-item";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal";
 
 interface NodeProps {
-  node: any
+  node: NodeUnion
 }
 const NodeListDisplay = ({node, ...props}: NodeProps) => {
   return (
     <>
-      {node.type === "node--stanford_course" && <StanfordCourseListItem node={node} {...props}/>}
-      {node.type === "node--stanford_event" && <StanfordEventListItem node={node} {...props}/>}
-      {node.type === "node--stanford_event_series" && <StanfordEventSeriesListItem node={node} {...props}/>}
-      {node.type === "node--stanford_news" && <StanfordNewsListItem node={node} {...props}/>}
-      {node.type === "node--stanford_page" && <StanfordPageListItem node={node} {...props}/>}
-      {node.type === "node--stanford_person" && <StanfordPersonListItem node={node} {...props}/>}
-      {node.type === "node--stanford_publication" && <StanfordPublicationListItem node={node} {...props}/>}
-      {node.type === "node--sul_library" && <SulLibraryListItem node={node} {...props}/>}
-      {node.type === "node--sul_study_place" && <SulStudyPlaceListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordCourse" && <StanfordCourseListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordEvent" && <StanfordEventListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordEventSeries" && <StanfordEventSeriesListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordNews" && <StanfordNewsListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPage" && <StanfordPageListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPerson" && <StanfordPersonListItem node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPublication" && <StanfordPublicationListItem node={node} {...props}/>}
+      {node.__typename === "NodeSulLibrary" && <SulLibraryListItem node={node} {...props}/>}
+      {node.__typename === "NodeSulStudyPlace" && <SulStudyPlaceListItem node={node} {...props}/>}
     </>
   )
 }

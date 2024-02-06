@@ -1,8 +1,8 @@
 import Link from "@/components/patterns/elements/drupal-link";
 import SearchModal from "@/components/search/search-modal";
-import {DrupalMenuLinkContent} from "next-drupal";
+import {MenuItem} from "@/lib/gql/__generated__/drupal";
 
-const FallbackMainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+const FallbackMainMenu = ({menuItems}: { menuItems: MenuItem[] }) => {
   return (
     <nav className="centered">
       <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
@@ -18,8 +18,8 @@ const FallbackMainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) =
   )
 }
 
-const MenuItem = ({url, title}: { url: string, title: string }) => {
-  const linkUrl = url.length >= 1 ? url : '#';
+const MenuItem = ({url, title}: MenuItem) => {
+  const linkUrl = (url && url.length >= 1) ? url : '#';
 
   return (
     <li className="p-0 m-0 relative lg:flex lg:flex-wrap">

@@ -1,22 +1,13 @@
-import {StudyPlace} from "@/lib/drupal/drupal";
-import {getViewItems} from "@/components/views/view";
 import StudyPlaceFiltering from "@/components/views/sul-study-place/study-place-filtering";
+import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeSulStudyPlace[]
 }
 
 
-const StudyPlacesFilteredCards = async ({view}: Props) => {
-  const items = await getViewItems<StudyPlace>(view);
-  const validItems = items.filter(item => {
-    if (!item.sul_study__branch.title) console.error('Orphaned place of study: ' + item.title + ' | ' + item.id);
-    return !!item.sul_study__branch.title;
-  })
-  return <StudyPlaceFiltering items={validItems}/>
+const StudyPlacesFilteredCards = async ({items}: Props) => {
+  return <StudyPlaceFiltering items={items}/>
 }
 
 export default StudyPlacesFilteredCards;

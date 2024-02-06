@@ -1,24 +1,17 @@
 "use client";
 
-import {Person} from "@/lib/drupal/drupal";
-
 import VerticalPersonCard from "./vertical-card";
 import HorizontalPersonCard from "./horizontal-card";
 import {useResizeDetector} from "react-resize-detector";
-import {ErrorBoundary} from "react-error-boundary";
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal";
 
-const StanfordPersonCard = ({node, ...props}: { node: Person }) => {
+const StanfordPersonCard = ({node, ...props}: { node: NodeStanfordPerson }) => {
   const {width, ref} = useResizeDetector();
   const Card = (width && width < 510) ? VerticalPersonCard : HorizontalPersonCard;
   return (
-    <ErrorBoundary
-      fallback={<></>}
-      onError={e => console.error(e.message)}
-    >
-      <div ref={ref}>
-        <Card node={node} {...props}/>
-      </div>
-    </ErrorBoundary>
+    <div ref={ref}>
+      <Card node={node} {...props}/>
+    </div>
   )
 }
 export default StanfordPersonCard;

@@ -1,8 +1,6 @@
 "use client";
 
-import {CollectionCardParagraph, DrupalImageMedia, DrupalLinkType} from "@/lib/drupal/drupal";
-import {PropsWithoutRef, useId} from "react";
-import Conditional from "@/components/utils/conditional";
+import {HTMLAttributes, useId} from "react";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import Card from "@/components/patterns/card";
 import Oembed from "@/components/patterns/elements/oembed";
@@ -10,21 +8,24 @@ import Image from "next/image";
 import {Tabs} from "@/components/patterns/elements/tabs";
 import {Item} from "react-stately";
 import {buildUrl} from "@/lib/drupal/utils";
+import {Maybe, MediaImage, ParagraphCollectionCard, Link as LinkType} from "@/lib/gql/__generated__/drupal";
 
-interface CollectionProps extends PropsWithoutRef<any> {
-  cards: CollectionCardParagraph[]
-  heading?: string
+type Props = HTMLAttributes<HTMLDivElement> & {
+  cards?: Maybe<ParagraphCollectionCard[]>
+  heading?: Maybe<string>
 }
 
-const SulCollection = ({cards, heading, ...props}: CollectionProps) => {
+const SulCollection = ({cards, heading, ...props}: Props) => {
   const elementId = useId()
 
   return (
     <section className="relative centered @container" aria-labelledby={`${elementId}-heading`} {...props}>
-      <Conditional showWhen={heading}>
-        <AboveHeaderBorder/>
-        <h2 id={`${elementId}-heading`} className="type-5">{heading}</h2>
-      </Conditional>
+      {heading &&
+        <>
+          <AboveHeaderBorder/>
+          <h2 id={`${elementId}-heading`} className="type-5">{heading}</h2>
+        </>
+      }
 
 
       <Tabs
@@ -35,18 +36,18 @@ const SulCollection = ({cards, heading, ...props}: CollectionProps) => {
         tabClass="py-20 pl-10 mb-2 w-full text-left hocus:underline cursor-pointer aria-selected:bg-archway aria-selected:text-white"
         tabPanelClass="@5xl:w-2/3"
       >
-        {cards.map(card =>
+        {cards?.map(card =>
           <Item
             key={'button-' + card.id}
-            title={card.sul_card_info}
+            title={card.sulCardInfo}
           >
             <CollectionCard
-              header={card.sul_card.su_card_header}
-              superHeader={card.sul_card.su_card_super_header}
-              body={card.sul_card.su_card_body}
-              link={card.sul_card.su_card_link}
-              image={card.sul_card.su_card_media?.field_media_image}
-              videoUrl={card.sul_card.su_card_media?.field_media_oembed_video}
+              header={card.sulCard?.suCardHeader}
+              superHeader={card.sulCard?.suCardSuperHeader}
+              body={card.sulCard?.suCardBody?.processed}
+              link={card.sulCard?.suCardLink}
+              image={card.sulCard?.suCardMedia?.__typename === 'MediaImage' ? card.sulCard.suCardMedia : undefined}
+              videoUrl={card.sulCard?.suCardMedia?.__typename === 'MediaVideo' ? card.sulCard.suCardMedia.mediaOembedVideo : undefined}
               headerId={`${elementId}-card-${card.id}-header`}
             />
           </Item>
@@ -57,17 +58,16 @@ const SulCollection = ({cards, heading, ...props}: CollectionProps) => {
 }
 
 const CollectionCard = ({header, superHeader, body, link, image, videoUrl, headerId}: {
-  header?: string
-  superHeader?: string
-  body?: string
-  link?: DrupalLinkType
-  image?: DrupalImageMedia,
-  videoUrl?: string
+  header?: Maybe<string>
+  superHeader?: Maybe<string>
+  body?: Maybe<string>
+  link?: Maybe<LinkType>
+  image?: MediaImage
+  videoUrl?: Maybe<string>
   headerId?: string
 }) => {
-  const imageUrl = image?.uri.url
-  const imageAlt = image?.resourceIdObjMeta.alt ?? '';
-  const placeholder = image?.uri.base64;
+  const imageUrl = image?.mediaImage.url
+  const imageAlt = image?.mediaImage.alt || '';
 
   return (
     <Card
@@ -79,8 +79,6 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl, heade
         alt={imageAlt}
         fill
         sizes="(max-width: 768px) 100vw, 1500px"
-        placeholder={placeholder ? 'blur' : 'empty'}
-        blurDataURL={placeholder}
       />}
       header={header}
       superHeader={superHeader}

@@ -1,28 +1,12 @@
-import {getViewItems} from "@/components/views/view";
-import {Publication} from "@/lib/drupal/drupal";
 import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item";
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordPublication[]
 }
 
-const PublicationsChicagoView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
-  args = args ? args + '/0/0/0' : '0/0/0/0';
+const PublicationsChicagoView = async ({items}: Props) => {
 
-  const items = await getViewItems<Publication>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
   return (
     <div className="mb-20">
       {items.map(item =>

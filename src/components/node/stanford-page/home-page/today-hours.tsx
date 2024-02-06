@@ -3,7 +3,7 @@
 import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
-import {PropsWithoutRef, useId, useState} from "react";
+import {HTMLAttributes, useId, useState} from "react";
 import {DrupalImageMedia} from "@/lib/drupal/drupal";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
@@ -12,7 +12,7 @@ import {Library} from "@/lib/drupal/drupal";
 import SelectList from "@/components/patterns/elements/select-list";
 import {buildUrl} from "@/lib/drupal/utils";
 
-interface HoursProps extends PropsWithoutRef<any> {
+type HoursProps = HTMLAttributes<HTMLDivElement> & {
   libraries: { id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia }[]
 }
 

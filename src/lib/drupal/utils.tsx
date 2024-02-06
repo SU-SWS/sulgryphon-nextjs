@@ -1,7 +1,7 @@
 import {stringify} from "qs"
 import {AccessToken} from "next-drupal";
 import {getAccessToken} from "./get-access-token";
-import {PageProps, StanfordNode} from "@/lib/drupal/drupal";
+import {PageProps} from "@/lib/drupal/drupal";
 
 const JSONAPI_PREFIX = process.env.DRUPAL_JSONAPI_PREFIX || "/jsonapi"
 
@@ -72,18 +72,4 @@ export const getJsonApiIndex = async (options?: { accessToken?: AccessToken }): 
   }
 
   return await response.json()
-}
-
-export const trimNodeData = <T, >(node: StanfordNode | StanfordNode[], desiredProperties: string[]): T => {
-  if (!Array.isArray(node)) {
-    const data: Omit<StanfordNode, 'drupal_internal__nid'> = {id: node.id, title: node.title, path: node.path};
-    desiredProperties.map((property: string) => data[property] = node[property]);
-    return data as T;
-  }
-
-  return node.filter(node => !!node).map(entity => {
-    const data: Omit<StanfordNode, 'drupal_internal__nid'> = {id: entity.id, title: entity.title, path: entity.path};
-    desiredProperties.map(property => data[property] = entity[property]);
-    return data;
-  }) as T
 }

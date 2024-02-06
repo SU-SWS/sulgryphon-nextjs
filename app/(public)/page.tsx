@@ -1,28 +1,28 @@
-import {getResourceByPath} from "@/lib/drupal/get-resource";
-import {BasicPage, StanfordParagraph} from "@/lib/drupal/drupal";
 import {Metadata} from "next";
 import {getNodeMetadata} from "./[...slug]/metadata";
 import HomePageBanner from "@/components/node/stanford-page/home-page/home-page-banner";
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
-import fetchComponents from "@/lib/fetch-components";
 import {notFound} from "next/navigation";
+import {getEntityFromPath} from "@/lib/gql/fetcher";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal";
 
-export const revalidate = 1800;
+export const revalidate = false;
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const node = await getResourceByPath<BasicPage>('/');
-  return node ? getNodeMetadata(node) : {};
+  const {entity} = await getEntityFromPath<NodeStanfordPage>('/');
+  return entity ? getNodeMetadata(entity) : {};
 }
 
 const Page = async () => {
-  const node = await getResourceByPath<BasicPage>('/');
-  if (!node) notFound();
-  node.su_page_components = await fetchComponents<StanfordParagraph>(node.su_page_components ?? []);
+  const {entity} = await getEntityFromPath<NodeStanfordPage>('/')
+  if (!entity) notFound();
 
   return (
     <main id="main-content" className="mb-50">
       <HomePageBanner/>
-      <ParagraphRows items={node.su_page_components} fullWidth/>
+      {entity.suPageComponents &&
+        <ParagraphRows items={entity.suPageComponents} fullWidth/>
+      }
     </main>
   )
 }

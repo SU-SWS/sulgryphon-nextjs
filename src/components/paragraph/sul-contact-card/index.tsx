@@ -1,13 +1,14 @@
-import {ContactCardParagraph} from "@/lib/drupal/drupal";
 import NodeReferenceCard from "@/components/paragraph/sul-contact-card/node-reference-card";
 import ManualFieldsCard from "@/components/paragraph/sul-contact-card/manual-fields-card";
+import {HTMLAttributes} from "react";
+import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal";
 
-interface ContactCardProps {
-  paragraph: ContactCardParagraph
+type ContactCardProps = HTMLAttributes<HTMLDivElement> & {
+  paragraph: ParagraphSulContactCard
 }
 
 const SulContactCard = ({paragraph, ...props}: ContactCardProps) => {
-  const Component = paragraph.sul_contact__branch ? NodeReferenceCard : ManualFieldsCard;
+  const Component = paragraph.sulContactBranch ? NodeReferenceCard : ManualFieldsCard;
   return (
     <div
       className="relative centered" {...props}>
