@@ -40,11 +40,15 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
           <Oembed url={videoUrl} className="h-full"/>
         </div>
       }
-
-      {link?.url &&
-        <Link href={link.url} className="block text-right" {...linkAttributes}>
-          {link.title}
-        </Link>
+      
+      {link &&
+        <div className='text-right'>
+          <Link href={link.url}
+                className="hocus:underline transition-colors hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                {...link.options?.attributes}>
+            {link.title}
+          </Link>
+        </div>
       }
 
       {caption &&
