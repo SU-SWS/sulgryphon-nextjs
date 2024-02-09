@@ -27,8 +27,10 @@ class RedirectError extends Error {
 const fetchNodeData = cache(async (params: Params): Promise<{ node: StanfordNode, fullWidth: boolean }> => {
   const draftMode = isDraftMode();
   const path = getPathFromContext({params});
-  const valid = await pathIsValid(path)
-  if (!valid) throw new Error();
+
+  if (!draftMode) {
+    if (!await pathIsValid(path)) throw new Error();
+  }
 
   const pathInfo = await translatePathFromContext({params}, {draftMode});
 
