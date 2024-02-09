@@ -117,7 +117,7 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
             onChange={(event, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
           />
 
-          <div className="flex flex-col pl-12 mr-80 mt-20">
+          <div className="flex flex-col pl-12 max-w-[176px] mt-6">
             <button type="submit" className="button">
               Submit
             </button>
