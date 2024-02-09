@@ -130,7 +130,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
         <div className="flex flex-wrap">
           {label &&
             <div className={"relative p-10" + (optionChosen ? "top-[-15px] w-full" : "")}>
-              <div id={labelId} className="bg-white w-fit px-5">
+              <div id={labelId} className="bg-white w-fit px-4">
                 {label}
               </div>
             </div>
