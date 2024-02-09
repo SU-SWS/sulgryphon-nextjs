@@ -14,6 +14,7 @@ import {getMenu} from "@/lib/drupal/get-menu";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 import {getPathFromContext} from "@/lib/drupal/utils";
+import {cache} from "react";
 
 export const revalidate = false;
 
@@ -23,11 +24,13 @@ class RedirectError extends Error {
   }
 }
 
-const fetchNodeData = async (params: Params): Promise<{ node: StanfordNode, fullWidth: boolean }> => {
+const fetchNodeData = cache(async (params: Params): Promise<{ node: StanfordNode, fullWidth: boolean }> => {
   const draftMode = isDraftMode();
   const path = getPathFromContext({params});
-  const valid = await pathIsValid(path)
-  if (!valid) throw new Error();
+
+  if (!draftMode) {
+    if (!await pathIsValid(path)) throw new Error();
+  }
 
   const pathInfo = await translatePathFromContext({params}, {draftMode});
 
@@ -56,9 +59,11 @@ const fetchNodeData = async (params: Params): Promise<{ node: StanfordNode, full
     (node?.type === 'node--sul_library' && node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width');
 
   return {node, fullWidth}
-}
+})
 
 export const generateMetadata = async ({params}: PageProps): Promise<Metadata> => {
+  if (isDraftMode()) return {};
+
   try {
     const {node} = await fetchNodeData(params);
     if (!node) return {};

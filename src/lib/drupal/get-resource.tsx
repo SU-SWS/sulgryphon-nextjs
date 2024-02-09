@@ -4,20 +4,7 @@ import {buildUrl, buildHeaders, getJsonApiPathForResourceType, getPathFromContex
 import {deserialize} from "@/lib/drupal/deserialize";
 import {JsonApiParams} from "next-drupal";
 import {PageProps} from "@/lib/drupal/drupal";
-
-export const getResources = async <T, >(
-  items: { type: string, id: string }[],
-  draftMode: boolean = false
-): Promise<T[]> => {
-  const requests: PromiseLike<any>[] = [];
-  items.map(item => requests.push(getResource(item.type, item.id, {draftMode})));
-
-  // @ts-ignore
-  return Promise.all(requests.map((p, i): T => p.catch((e: unknown) => {
-    console.error(`Failed Fetching (probably unpublished) component ${items[i].type}-${items[i].id}`, e);
-    return null
-  })));
-}
+import {cache} from "react";
 
 export const getResourceFromContext = async <T extends JsonApiResource>(
   type: string,
@@ -54,7 +41,7 @@ export const getResourceFromContext = async <T extends JsonApiResource>(
   return resource
 }
 
-export const getResourceByPath = async <T extends JsonApiResource>(
+export const getResourceByPath = cache(async <T extends JsonApiResource>(
   path: string,
   options?: {
     accessToken?: AccessToken
@@ -86,6 +73,7 @@ export const getResourceByPath = async <T extends JsonApiResource>(
   ]
 
   const url = buildUrl("/subrequests", {_format: "json"})
+  console.log('subrequest path', path);
 
   let response = await fetch(url.toString(), {
     next: options.next,
@@ -121,7 +109,7 @@ export const getResourceByPath = async <T extends JsonApiResource>(
   if (data.errors) throw new Error(data.errors[0].detail)
 
   return options.deserialize ? deserialize(data) : data
-}
+})
 
 export const getResourceCollection = async <T extends JsonApiResource>(
   type: string,
@@ -180,7 +168,6 @@ export const getConfigPageResource = async <T extends JsonApiResource>(
     next?: NextFetchRequestConfig
   } & JsonApiWithLocaleOptions
 ): Promise<T | undefined> => {
-  options = {next: {revalidate: 604800}, ...options}
 
   let response;
   try {
