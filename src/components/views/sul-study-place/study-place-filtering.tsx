@@ -132,7 +132,7 @@ const StudyPlacesFiltering = ({items}: {items: StudyPlace[]}) => {
       </Conditional>
 
       <Conditional showWhen={items.length > 0}>
-        <p className={'mt-60 mb-32 type-2 font-serif font-bold'} aria-live="polite">
+        <p className={'mt-60 mb-32 type-2 font-serif font-bold'} aria-live="polite" aria-atomic="true">
           Showing {itemsToDisplay.length} of {items.length}
           <br/>
           <Conditional showWhen={itemsToDisplay.length == 0}>
