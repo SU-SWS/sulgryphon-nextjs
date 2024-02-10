@@ -32,7 +32,7 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
     return;
   }
   const {isOpen, selectOptions, closingTime, openingTime, closedAllDay} = hours;
-  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? `Open: ${openingTime} - ${closingTime}` : `Closed: ${openingTime} - ${closingTime}`);
+  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? `Open until ${closingTime}` : `Closed until ${openingTime}`);
 
   return (
     <>
