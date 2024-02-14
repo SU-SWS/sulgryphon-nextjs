@@ -44,10 +44,14 @@ export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{
     <Link
       href={href}
       {...props}
-      className={twMerge("relative pr-30 hocus:text-brick no-underline rs-mt-neg1 pt-10", props.className)}
+      className={'pt-10'}
     >
-      {children}
-      <ChevronRightIcon className="inline absolute top-0 right-0 h-full pt-10"/>
+      <tspan  className={twMerge("relative pr-30 no-underline rs-mt-neg1 hover:bg-black-10 hover:text-brick hocus:underline focus:bg-black-true active:bg-black-true", props.className)}
+      >
+        {children}
+        <ChevronRightIcon className="inline absolute top-0 right-0 h-full "/>
+      </tspan>
+
     </Link>
   )
 }
@@ -60,6 +64,7 @@ interface DrupalLinkProps extends PropsWithChildren<any> {
 
 
 export const DrupalLink = ({url, title, style, children, ...props}: DrupalLinkProps) => {
+  console.log(url);
   if (!url) {
     return null;
   }
