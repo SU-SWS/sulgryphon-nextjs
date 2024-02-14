@@ -44,13 +44,13 @@ export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{
     <Link
       href={href}
       {...props}
-      className={'pt-10'}
+      className='pt-10'
     >
-      <tspan  className={twMerge("relative pr-30 no-underline rs-mt-neg1 hover:bg-black-10 hover:text-brick hocus:underline focus:bg-black-true active:bg-black-true", props.className)}
+      <span className={twMerge("relative pr-30 no-underline rs-mt-neg1 hover:bg-black-10 hover:text-brick hocus:underline focus:bg-black-true active:bg-black-true", props.className)}
       >
         {children}
         <ChevronRightIcon className="inline absolute top-0 right-0 h-full "/>
-      </tspan>
+      </span>
 
     </Link>
   )
