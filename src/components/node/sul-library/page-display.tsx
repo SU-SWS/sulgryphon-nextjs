@@ -8,27 +8,26 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
   node.su_library__paragraphs = await fetchComponents<StanfordParagraph>(node.su_library__paragraphs || []);
   node.su_library__paragraphs = node.su_library__paragraphs.filter(item => !!item?.id);
   const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width'
+  const containerClasses = ["mb-50", "lg:max-w-[980px]", "mx-auto", "centered"];
+  const containerStyles = containerClasses.join(' ');
 
   return (
     <article className="mb-50 @container" {...props}>
       {node.su_library__hours &&
-        <div className="relative centered lg:max-w-[980px] py-20">
+        <div className={containerStyles}>
           <LibraryAdditionalHours hoursId={node.su_library__hours}/>
         </div>
       }
 
-      <ParagraphRows items={node.su_library__paragraphs} fullWidth={fullWidth}/>
+      {<ParagraphRows items={node.su_library__paragraphs} fullWidth={fullWidth}/>}
 
       {node.sul_library__a11y &&
-        <div
-          className="centered mb-50 flex flex-col @6xl:flex-row gap-[90px]">
-            <div className="order-last @6xl:order-first flex-1 basis-1/2">
+            <div className={containerStyles}>
               <div className="shadow-md py-20 px-30 w-fit mx-auto border border-black-10">
                 <h2 className="text-m3">Accessibility</h2>
                 {formatHtml(node.sul_library__a11y)}
               </div>
             </div>
-        </div>
       }
 
     </article>
