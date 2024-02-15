@@ -60,7 +60,6 @@ interface DrupalLinkProps extends PropsWithChildren<any> {
 
 
 export const DrupalLink = ({url, title, style, children, ...props}: DrupalLinkProps) => {
-  console.log(url);
   if (!url) {
     return null;
   }
