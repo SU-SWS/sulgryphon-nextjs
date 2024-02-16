@@ -12,7 +12,7 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
   return (
     <article className="mb-50 @container" {...props}>
       {node.su_library__hours &&
-        <div className="mb-50 lg:max-w-[980px] mx-auto centered">
+        <div className="mb-50 lg:max-w-[980px] w-full mx-auto centered">
           <LibraryAdditionalHours hoursId={node.su_library__hours}/>
         </div>
       }
@@ -20,11 +20,9 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
       <ParagraphRows items={node.su_library__paragraphs} fullWidth={fullWidth}/>
 
       {node.sul_library__a11y &&
-        <div  className="mb-50 lg:max-w-[980px] mx-auto centered">
-          <div className="shadow-md py-20 px-30 w-fit mx-auto border border-black-10">
-            <h2 className="text-m3">Accessibility</h2>
-            {formatHtml(node.sul_library__a11y)}
-          </div>
+        <div  className="mb-50 lg:max-w-[980px] w-full mx-auto centered shadow-md py-20 px-30 border border-black-10">
+          <h2 className="text-m3">Accessibility</h2>
+          {formatHtml(node.sul_library__a11y)}
         </div>
       }
 
