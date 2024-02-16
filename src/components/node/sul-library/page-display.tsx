@@ -8,8 +8,6 @@ const SulLibrary = async ({node, ...props}: { node: Library }) => {
   node.su_library__paragraphs = await fetchComponents<StanfordParagraph>(node.su_library__paragraphs || []);
   node.su_library__paragraphs = node.su_library__paragraphs.filter(item => !!item?.id);
   const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'sul_library_full_width'
-  const containerClasses = ["mb-50", "lg:max-w-[980px]", "mx-auto", "centered"];
-  const containerStyles = containerClasses.join(' ');
 
   return (
     <article className="mb-50 @container" {...props}>
