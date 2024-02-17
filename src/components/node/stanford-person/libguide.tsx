@@ -15,6 +15,7 @@ interface Props extends PropsWithoutRef<any> {
 const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
+  const genPurposeGuides = guides.filter(guide => guide.type === 'General Purpose Guides');
 
   return (
     <div {...props}>
@@ -27,6 +28,19 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
             {headingLevel === 2 && <h2 className="type-1">Course Guides</h2>}
             {headingLevel === 3 && <h3 className="type-1">Course Guides</h3>}
             <LibGuideSection heading="Course Guides" guides={courseGuides}/>
+          </div>
+        </Conditional>
+      </ErrorBoundary>
+
+      <ErrorBoundary
+        fallback={<></>}
+        onError={e => console.error(e.message)}
+      >
+        <Conditional showWhen={topicGuides.length > 0 && courseGuides > 0}>
+          <div className="mb-40">
+            {headingLevel === 2 && <h2 className="type-1">General Purpose Guides</h2>}
+            {headingLevel === 3 && <h2 className="type-1">General Purpose Guides</h2>}
+            <LibGuideSection heading="Course Guides" guides={genPurposeGuides}/>
           </div>
         </Conditional>
       </ErrorBoundary>
