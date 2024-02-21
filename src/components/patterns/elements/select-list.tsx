@@ -136,7 +136,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
             </div>
           }
           {optionChosen &&
-            <div className="overflow-hidden max-w-[calc(100%-30px)]">
+            <div className="p-10 overflow-hidden max-w-[calc(100%-30px)]">
               {renderSelectedValue(value, options)}
             </div>
           }
