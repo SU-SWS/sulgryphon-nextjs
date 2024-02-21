@@ -40,8 +40,8 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
         <Conditional showWhen={genPurposeGuides.length > 0}>
           <div className="mb-40">
             {headingLevel === 2 && <h2 className="type-1">General Purpose Guides</h2>}
-            {headingLevel === 3 && <h2 className="type-1">General Purpose Guides</h2>}
-            <LibGuideSection heading="Course Guides" guides={genPurposeGuides}/>
+            {headingLevel === 3 && <h3 className="type-1">General Purpose Guides</h3>}
+            <LibGuideSection heading="General Purpose Guides" guides={genPurposeGuides}/>
           </div>
         </Conditional>
       </ErrorBoundary>
@@ -52,12 +52,11 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
       >
         <Conditional showWhen={subjectGuides.length > 0}>
           <div className="mb-40">
-            {headingLevel === 2 && <h2 className="type-1">Topic Guides</h2>}
-            {headingLevel === 3 && <h3 className="type-1">Topic Guides</h3>}
-            <LibGuideSection heading="Topic Guides" guides={subjectGuides}/>
+            {headingLevel === 2 && <h2 className="type-1">Subject Guides</h2>}
+            {headingLevel === 3 && <h3 className="type-1">Subject Guides</h3>}
+            <LibGuideSection heading="Subject Guides" guides={subjectGuides}/>
           </div>
         </Conditional>
-
       </ErrorBoundary>
 
       <ErrorBoundary
