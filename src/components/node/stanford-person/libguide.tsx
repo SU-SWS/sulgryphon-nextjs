@@ -15,7 +15,7 @@ interface Props extends PropsWithoutRef<any> {
 const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
   const genPurposeGuides = guides.filter(guide => guide.type === 'General Purpose Guides');
-  const subjectGuides = guides.filter(guides => guide.type === "Subject Guides")
+  const subjectGuides = guides.filter(guide => guide.type === "Subject Guides")
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
 
   return (
