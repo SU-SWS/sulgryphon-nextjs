@@ -25,7 +25,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
       className={"bg-white flex w-full leading-display shadow-md border-0 rounded flex-row"}>
       <div className="hidden md:block rs-px-3 rs-py-3 w-1/2">
         {contactImageUrl &&
-          <div className={"overflow-hidden aspect-[4/3] relative "}>
+          <div className={"overflow-hidden aspect-[16/9] relative "}>
             <Image
               className="object-cover object-center static"
               src={buildUrl(contactImageUrl).toString()}
