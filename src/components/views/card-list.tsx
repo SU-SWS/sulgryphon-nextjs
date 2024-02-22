@@ -12,7 +12,7 @@ const CardList = ({items, h3Heading}: { items: NodeUnion[], h3Heading?: boolean 
 
   return (
     <div className="@container">
-      <ul className={`list-unstyled grid gap-[90px] ${gridClass}`}>
+      <ul className={`list-unstyled grid gap-[45px] ${gridClass}`}>
         {items.filter(item => !!item?.id).map(item =>
           <li key={item.id} className="w-full max-w-[500px] mx-auto">
             <NodeCard node={item} key={item.id} h3Heading={h3Heading}/>
