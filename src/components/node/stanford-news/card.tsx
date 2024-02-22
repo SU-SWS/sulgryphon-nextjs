@@ -18,7 +18,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article {...props} className="flex flex-col">
       {imageUrl &&
-        <div className="overflow-hidden aspect-[4/3] relative mb-40" aria-hidden="true">
+        <div className="overflow-hidden aspect-[16/9] relative mb-40" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
