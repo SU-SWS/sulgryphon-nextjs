@@ -10,7 +10,7 @@ import SulCollection from "@/components/paragraph/sul-collection";
 import SulFeaturedCollection from "@/components/paragraph/sul-featured-collection";
 import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
-import {HTMLAttributes, useId} from "react";
+import {HTMLAttributes, Suspense, useId} from "react";
 import SulLibguides from "@/components/paragraph/sul-libguides";
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal";
 import {ParagraphBehaviors} from "@/lib/drupal/drupal";
@@ -74,16 +74,18 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
         <StanfordWysiwyg text={paragraph.suWysiwygText?.processed} {...props}/>}
 
       {paragraph.__typename === 'ParagraphStanfordList' &&
-        <StanfordLists
-          headline={paragraph.suListHeadline}
-          description={paragraph.suListDescription?.processed}
-          link={paragraph.suListButton}
-          view={paragraph.suListView}
-          behaviors={paragraphBehaviors}
-          headerId={headerId}
-          uuid={paragraph.id}
-          {...props}
-        />
+        <Suspense>
+          <StanfordLists
+            headline={paragraph.suListHeadline}
+            description={paragraph.suListDescription?.processed}
+            link={paragraph.suListButton}
+            view={paragraph.suListView}
+            behaviors={paragraphBehaviors}
+            headerId={headerId}
+            uuid={paragraph.id}
+            {...props}
+          />
+        </Suspense>
       }
 
       {paragraph.__typename === 'ParagraphStanfordEntity' &&
