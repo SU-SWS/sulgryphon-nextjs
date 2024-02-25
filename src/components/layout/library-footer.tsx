@@ -37,14 +37,6 @@ const LibraryFooter = () => {
             </li>
             <li><Link className="text-m0 text-white hocus:text-white no-underline hocus:underline"
                       href="/contact-us">Contact us<ArrowRightIcon className="inline-block ml-10" width={15}/></Link></li>
-            {isDraftMode() &&
-              <li>
-                <Link className="text-m0 text-white hocus:text-white no-underline hocus:underline"
-                      href="/api/draft/disable" prefetch={false}>
-                  Disable Draft Mode
-                </Link>
-              </li>
-            }
           </ul>
         </div>
         <div>
@@ -100,6 +92,12 @@ const _SocialLinks = () => {
         <YoutubeIcon className="transition-all text-white hocus:text-cool-grey" height={30}/>
         <span className="sr-only">Youtube</span>
       </FooterLink>
+
+      {isDraftMode() &&
+        <Link className="sr-only" href="/api/draft/disable" prefetch>
+          Disable Draft Mode
+        </Link>
+      }
     </div>
   )
 }

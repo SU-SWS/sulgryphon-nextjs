@@ -23,27 +23,17 @@ export const getPathFromContext = (context: PageProps, prefix = ""): string => {
   return prefix ? `${prefix}/${slug}` : slug
 }
 
-export const buildHeaders = async ({accessToken, headers = {"Content-Type": "application/json"}, draftMode = false}: {
+export const buildHeaders = async ({accessToken, headers = {}, draftMode = false}: {
   accessToken?: AccessToken
   headers?: HeadersInit
   draftMode?: boolean
 } = {}): Promise<Headers> => {
   if (process.env.REQUEST_HEADERS) headers = {...headers, ...JSON.parse(process.env.REQUEST_HEADERS)};
 
-
   const requestHeaders = new Headers(headers);
-  // This allows an access_token (preferrably long-lived) to be set directly on the env.
-  // This reduces the number of OAuth call to the Drupal server.
-  // Intentionally marked as unstable for now.
-  if (process.env.UNSTABLE_DRUPAL_ACCESS_TOKEN) {
-    requestHeaders.set('Authorization', `Bearer ${process.env.UNSTABLE_DRUPAL_ACCESS_TOKEN}`)
-    return requestHeaders
-  }
 
   const token = accessToken || (await getAccessToken(draftMode))
-  if (token) {
-    requestHeaders.set('Authorization', `Bearer ${token.access_token}`)
-  }
+  if (token) requestHeaders.set('Authorization', `Bearer ${token.access_token}`)
 
   return requestHeaders
 }
