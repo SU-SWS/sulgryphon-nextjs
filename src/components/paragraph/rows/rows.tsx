@@ -1,7 +1,7 @@
 import OneColumn from "@/components/paragraph/rows/one-column";
 import TwoColumn from "@/components/paragraph/rows/two-column";
 import ThreeColumn from "@/components/paragraph/rows/three-column";
-import {ParagraphLayout, ParagraphUnion} from "@/lib/gql/__generated__/drupal";
+import {ParagraphLayout, ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
 import {getParagraphBehaviors} from "@/components/paragraph";
 
 type RowProps = {

@@ -3,7 +3,7 @@ import NodeCardDisplay from "@/components/node/node-card";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {PropsWithoutRef} from "react";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
-import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 interface EntityProps extends PropsWithoutRef<any> {
   headline?: Maybe<string>

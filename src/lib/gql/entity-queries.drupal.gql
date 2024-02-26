@@ -6,6 +6,63 @@ query Node($uuid: ID!) {
     }
 }
 
+query Nodes {
+    nodeStanfordCourses(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordEventSeriesItems(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordEvents(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordNewsItems(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordPages(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordPeople(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordPolicies(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeStanfordPublications(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+    nodeSulLibraries(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeInterface
+        }
+    }
+}
+
+query Libraries {
+    nodeSulLibraries(first: 1000, sortKey: CREATED_AT) {
+        nodes {
+            ...FragmentNodeSulLibrary
+        }
+    }
+}
+
+
 query Media($uuid: ID!) {
     media(id: $uuid) {
         ...FragmentMediaUnion

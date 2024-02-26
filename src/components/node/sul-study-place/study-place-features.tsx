@@ -4,7 +4,7 @@ import Image from "next/image";
 import {MapPinIcon} from "@heroicons/react/24/outline";
 import StudyPlaceHours from "./study-place-today-hours";
 import {buildUrl} from "@/lib/drupal/utils";
-import {Maybe} from "@/lib/gql/__generated__/drupal";
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
 
 interface ModalProps {
   branchHours?: Maybe<string>

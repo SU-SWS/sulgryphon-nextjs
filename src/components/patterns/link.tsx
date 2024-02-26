@@ -2,7 +2,7 @@ import Link from "@/components/patterns/elements/drupal-link";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {PropsWithChildren} from "react";
 import {twMerge} from "tailwind-merge";
-import {Maybe} from "@/lib/gql/__generated__/drupal";
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
 
 export const DrupalLinkButton = ({href, children, className = '', ...props}: PropsWithChildren<{href: string, className?: string}>) => {
   return (

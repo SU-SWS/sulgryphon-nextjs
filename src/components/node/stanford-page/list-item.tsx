@@ -1,6 +1,6 @@
 
 import StanfordPageCard from "@/components/node/stanford-page/card";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   node: NodeStanfordPage

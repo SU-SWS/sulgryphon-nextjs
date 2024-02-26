@@ -6,7 +6,7 @@ import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
 import SelectList from "@/components/patterns/elements/select-list";
 import {SelectValue} from "@mui/base/useSelect";
 import autoAnimate from "@formkit/auto-animate";
-import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal";
+import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d";
 
 interface SelectOption {
   value: string

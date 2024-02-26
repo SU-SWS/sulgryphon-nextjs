@@ -1,5 +1,5 @@
 import StudyPlaceFiltering from "@/components/views/sul-study-place/study-place-filtering";
-import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal";
+import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   items: NodeSulStudyPlace[]

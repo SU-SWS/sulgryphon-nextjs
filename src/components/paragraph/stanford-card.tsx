@@ -4,7 +4,7 @@ import Card from "@/components/patterns/card";
 import HorizontalCard from "@/components/patterns/horizontal-card";
 import Oembed from "@/components/patterns/elements/oembed";
 import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 import {HTMLAttributes} from "react";
 
 type Props = HTMLAttributes<HTMLDivElement> & {

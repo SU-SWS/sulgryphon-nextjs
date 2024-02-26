@@ -9,7 +9,7 @@ import Card from "@/components/patterns/card";
 import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
 import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
   headline?: Maybe<string>

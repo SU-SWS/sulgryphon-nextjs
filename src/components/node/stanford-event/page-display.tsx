@@ -5,7 +5,7 @@ import formatHtml from "@/lib/format-html";
 import {redirect} from "next/navigation";
 import EmailLink from "@/components/patterns/elements/email-link";
 import TelephoneLink from "@/components/patterns/elements/telephone-link";
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 import Paragraph from "@/components/paragraph";
 
 const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {

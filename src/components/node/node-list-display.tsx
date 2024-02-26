@@ -7,7 +7,7 @@ import StanfordPersonListItem from "@/components/node/stanford-person/list-item"
 import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item";
 import SulLibraryListItem from "@/components/node/sul-library/list-item";
 import SulStudyPlaceListItem from "@/components/node/sul-study-place/list-item";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface NodeProps {
   node: NodeUnion

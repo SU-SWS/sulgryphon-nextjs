@@ -1,5 +1,5 @@
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPage = async ({node}: { node: NodeStanfordPage }) => {
   const fullWidth = node.layoutSelection?.id === 'stanford_basic_page_full';

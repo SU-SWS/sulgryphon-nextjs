@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "@/components/patterns/elements/drupal-link";
 import LibCal from "./libcal";
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPersonListItem = ({node, ...props}: { node: NodeStanfordPerson }) => {
   const imageUrl = node.suPersonPhoto?.mediaImage.url;

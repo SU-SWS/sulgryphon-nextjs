@@ -8,7 +8,7 @@ import Image from "next/image";
 import {Tabs} from "@/components/patterns/elements/tabs";
 import {Item} from "react-stately";
 import {buildUrl} from "@/lib/drupal/utils";
-import {Maybe, MediaImage, ParagraphCollectionCard, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {Maybe, MediaImage, ParagraphCollectionCard, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   cards?: Maybe<ParagraphCollectionCard[]>

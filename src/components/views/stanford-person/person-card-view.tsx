@@ -1,5 +1,5 @@
 import CardList from "@/components/views/card-list";
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   items: NodeStanfordPerson[]

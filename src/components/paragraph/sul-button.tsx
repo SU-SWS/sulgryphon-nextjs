@@ -3,7 +3,7 @@
 import Link from "@/components/patterns/elements/drupal-link";
 import useIsCentered from "@/lib/hooks/useIsCentered";
 import {HTMLAttributes, useRef} from "react";
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>

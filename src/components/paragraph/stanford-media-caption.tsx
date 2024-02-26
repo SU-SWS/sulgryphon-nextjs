@@ -4,7 +4,7 @@ import Oembed from "@/components/patterns/elements/oembed";
 import Link from "@/components/patterns/elements/drupal-link";
 import {HTMLAttributes} from "react";
 import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props extends HTMLAttributes<HTMLElement>{
   image?: Maybe<MediaImage>

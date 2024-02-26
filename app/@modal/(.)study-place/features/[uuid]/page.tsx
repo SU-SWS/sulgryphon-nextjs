@@ -1,7 +1,7 @@
 import InterceptionModal from "@/components/patterns/modals/interception-modal";
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features";
 import {graphqlClient} from "@/lib/gql/fetcher";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 const Page = async ({params: {uuid}}: { params: { uuid: string } }) => {
   const query = await graphqlClient().Node({uuid})

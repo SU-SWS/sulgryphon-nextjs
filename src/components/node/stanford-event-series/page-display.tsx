@@ -1,5 +1,5 @@
 import NodeListDisplay from "@/components/node/node-list-display";
-import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d";
 import Paragraph from "@/components/paragraph";
 
 const StanfordEventSeries = async ({node, ...props}: { node: NodeStanfordEventSeries }) => {

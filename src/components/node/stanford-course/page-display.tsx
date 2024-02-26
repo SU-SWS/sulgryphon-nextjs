@@ -1,6 +1,6 @@
 import formatHtml from "@/lib/format-html";
 import Link from "@/components/patterns/elements/drupal-link";
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordCourse = ({node, ...props}: { node: NodeStanfordCourse }) => {
 

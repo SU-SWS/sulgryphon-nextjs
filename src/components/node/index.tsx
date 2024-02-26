@@ -6,7 +6,7 @@ import StanfordPage from "@/components/node/stanford-page/page-display";
 import StanfordPerson from "@/components/node/stanford-person/page-display";
 import StanfordPublication from "@/components/node/stanford-publication/page-display";
 import SulLibrary from "@/components/node/sul-library/page-display";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface NodeProps {
   node: NodeUnion

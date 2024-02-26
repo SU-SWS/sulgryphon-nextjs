@@ -1,7 +1,7 @@
 
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {DrupalLinkButton} from "@/components/patterns/link";
-import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPublication = async ({node, ...props}: { node: NodeStanfordPublication }) => {
   return (

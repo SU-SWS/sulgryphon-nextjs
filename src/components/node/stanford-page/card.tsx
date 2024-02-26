@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "@/components/patterns/elements/drupal-link";
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   node: NodeStanfordPage

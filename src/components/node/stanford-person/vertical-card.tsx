@@ -5,7 +5,7 @@ import LibCal from "./libcal";
 import EmailLink from "@/components/patterns/elements/email-link";
 
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   node: NodeStanfordPerson

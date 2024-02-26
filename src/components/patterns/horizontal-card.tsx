@@ -6,7 +6,7 @@ import CardSprinkles from "@/components/patterns/card-sprinkles";
 import {ElementType, HTMLAttributes, useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
 import Link from "@/components/patterns/elements/drupal-link";
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>

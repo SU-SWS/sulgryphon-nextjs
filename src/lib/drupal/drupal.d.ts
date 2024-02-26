@@ -1,7 +1,7 @@
 import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal";
 import {JsonApiResource} from "next-drupal";
 import {DayHours} from "@/lib/hooks/useLibraryHours";
-import {Maybe} from "@/lib/gql/__generated__/drupal";
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
 
 export type ParagraphBehaviors = {
   layout_paragraphs?: {

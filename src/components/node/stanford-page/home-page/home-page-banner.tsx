@@ -1,27 +1,22 @@
 import Wave from "@/components/patterns/wave";
 import SearchForm from "@/components/search/search-form";
-import TodayHours from "./today-hours";
-import {getResourceCollection} from "@/lib/drupal/get-resource";
-import {DrupalJsonApiParams} from "drupal-jsonapi-params";
+import TodayHours, {TrimmedLibrary} from "./today-hours";
 import Link from "@/components/patterns/elements/drupal-link";
-import {Library} from "@/lib/drupal/drupal";
+import {graphqlClient} from "@/lib/gql/fetcher";
+import {MediaImage} from "@/lib/gql/__generated__/drupal.d";
 
 const HomePageBanner = async () => {
-  const params = new DrupalJsonApiParams();
-
-  params.addFilter('su_library__hours', null, 'IS NOT NULL')
-    .addInclude(['su_library__contact_img.field_media_image'])
-    .addSort('title', 'ASC');
-
-  const libraries = await getResourceCollection<Library>('node--sul_library', {params: params.getQueryObject()});
+  const librariesQuery = await graphqlClient({next: {tags: ['node:sul_library']}}).Libraries();
+  const libraries = librariesQuery.nodeSulLibraries.nodes.filter(node => !!node.suLibraryHours)
 
   // Trim all the fat.
-  const trimmedLibraries = libraries.map(library => (
+  const trimmedLibraries: TrimmedLibrary[] = libraries.map(library => (
     {
       id: library.id,
       title: library.title,
-      su_library__hours: library.su_library__hours,
-      su_library__contact_img: library.su_library__contact_img
+      suLibraryHours: library.suLibraryHours,
+      suLibraryContactImg: library.suLibraryContactImg as MediaImage,
+      suLibraryBanner: library.suLibraryBanner as MediaImage
     }
   ))
 

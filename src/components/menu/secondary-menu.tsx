@@ -8,7 +8,7 @@ import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {useBoolean} from "usehooks-ts";
-import {MenuItem} from "@/lib/gql/__generated__/drupal";
+import {MenuItem} from "@/lib/gql/__generated__/drupal.d";
 
 const getCurrentPageTitle = (activeTrail: string[], items: MenuItem[], trail: string[]): string | undefined => {
   const currentItem = items.find(item => item.id === trail.at(0));

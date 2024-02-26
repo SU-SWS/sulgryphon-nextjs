@@ -1,5 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link";
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal";
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
 
 const SulLibraryCard = ({node, ...props}: {node: NodeSulLibrary}) => {
   return (

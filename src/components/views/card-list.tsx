@@ -1,5 +1,5 @@
 import NodeCard from "@/components/node/node-card";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 const CardList = ({items, h3Heading}: { items: NodeUnion[], h3Heading?: boolean }) => {
 

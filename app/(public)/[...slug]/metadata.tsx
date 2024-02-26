@@ -5,7 +5,7 @@ import {
   NodeUnion,
   ParagraphStanfordWysiwyg,
   ParagraphUnion
-} from "@/lib/gql/__generated__/drupal";
+} from "@/lib/gql/__generated__/drupal.d";
 
 
 export const getNodeMetadata = (node: NodeUnion): Record<string, any> => {

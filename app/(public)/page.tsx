@@ -4,7 +4,7 @@ import HomePageBanner from "@/components/node/stanford-page/home-page/home-page-
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import {notFound} from "next/navigation";
 import {getEntityFromPath} from "@/lib/gql/fetcher";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
 export const revalidate = false;
 

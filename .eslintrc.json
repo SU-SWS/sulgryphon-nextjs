@@ -1,6 +1,13 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
   "extends": [
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:deprecation/recommended"
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": "off",
@@ -11,5 +18,5 @@
     ]
   },
   "plugins": ["unused-imports"],
-  "ignorePatterns": ["**/__generated__/**/*"]
+  "ignorePatterns": ["**/__generated__/**/*", "src/styles/tailwind/**"]
 }

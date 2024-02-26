@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import Banner from "@/components/patterns/banner";
 import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 import {HTMLAttributes} from "react";
 
 type Props = HTMLAttributes<HTMLDivElement> & {

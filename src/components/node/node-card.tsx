@@ -8,7 +8,7 @@ import StanfordPersonCard from "@/components/node/stanford-person/card";
 import StanfordPublicationCard from "@/components/node/stanford-publication/card";
 import SulLibraryCard from "@/components/node/sul-library/card";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface NodeProps extends PropsWithRef<any> {
   node: NodeUnion

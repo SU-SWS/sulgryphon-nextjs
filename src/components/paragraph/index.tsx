@@ -12,7 +12,7 @@ import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
 import {HTMLAttributes, Suspense, useId} from "react";
 import SulLibguides from "@/components/paragraph/sul-libguides";
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal";
+import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
 import {ParagraphBehaviors} from "@/lib/drupal/drupal";
 
 type ParagraphProps = HTMLAttributes<HTMLDivElement> & {

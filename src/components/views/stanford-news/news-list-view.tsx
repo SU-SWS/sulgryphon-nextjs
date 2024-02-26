@@ -1,5 +1,5 @@
 import StanfordNewsListItem from "@/components/node/stanford-news/list-item";
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   items: NodeStanfordNews[]

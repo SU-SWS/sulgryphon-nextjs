@@ -1,5 +1,5 @@
 import Paragraph from "@/components/paragraph";
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal";
+import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface LayoutProps {
   items: ParagraphUnion[],

@@ -1,5 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link";
-import {CitationUnion, NodeStanfordPublication} from "@/lib/gql/__generated__/drupal";
+import {CitationUnion, NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPublicationListItem = ({node, ...props}: {node:NodeStanfordPublication}) => {
   return (

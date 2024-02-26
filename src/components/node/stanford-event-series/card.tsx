@@ -1,6 +1,6 @@
 import Link from "@/components/patterns/elements/drupal-link";
 import Card from "@/components/patterns/card";
-import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordEventSeriesCard = ({node, ...props}: { node: NodeStanfordEventSeries }) => {
   return (

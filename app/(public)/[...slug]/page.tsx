@@ -1,18 +1,14 @@
-import {getNodePaths} from "@/lib/drupal/get-paths";
 import NodePageDisplay from "@/components/node";
 import {notFound, redirect} from "next/navigation";
 import {Metadata} from "next";
 import {getNodeMetadata} from "./metadata";
 import LibraryHeader from "@/components/node/sul-library/library-header";
-import {PageProps} from "@/lib/drupal/drupal";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import SecondaryMenu from "@/components/menu/secondary-menu";
-
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
-import {getPathFromContext} from "@/lib/drupal/utils";
-import {getEntityFromPath, getMenu} from "@/lib/gql/fetcher";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 export const revalidate = false;
 export const dynamic = 'force-static';
@@ -93,10 +89,24 @@ export const generateMetadata = async ({params}: PageProps): Promise<Metadata> =
   return entity ? getNodeMetadata(entity) : {}
 }
 
-export const generateStaticParams = async () => {
-  if (process.env.BUILD_COMPLETE !== 'true') return [];
-  const nodePaths = await getNodePaths();
-  return nodePaths.map(path => ({slug: path.split('/')}));
+export const generateStaticParams = async (): Promise<PageProps["params"][]> => {
+  if (process.env.BUILD_COMPLETE !== 'true') return []
+  const nodePaths = await getAllNodePaths();
+  return nodePaths.map(path => ({slug: path.split('/').filter(part => !!part)}));
 }
+
+const getPathFromContext = (context: PageProps, prefix = ""): string => {
+  let {slug} = context.params
+
+  slug = Array.isArray(slug) ? slug.map((s) => encodeURIComponent(s)).join("/") : slug
+  slug = slug.replace(/^\//, '');
+  return prefix ? `${prefix}/${slug}` : `/${slug}`
+}
+
+type PageProps = {
+  params: { slug: string | string[] }
+  searchParams?: Record<string, string | string[] | undefined>
+}
+
 
 export default NodePage;

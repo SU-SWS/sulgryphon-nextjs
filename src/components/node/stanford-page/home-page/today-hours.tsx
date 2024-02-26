@@ -4,16 +4,23 @@ import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
 import {HTMLAttributes, useId, useState} from "react";
-import {DrupalImageMedia} from "@/lib/drupal/drupal";
 import {ErrorBoundary} from "react-error-boundary";
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
-import {Library} from "@/lib/drupal/drupal";
 import SelectList from "@/components/patterns/elements/select-list";
 import {buildUrl} from "@/lib/drupal/utils";
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
+
+export type TrimmedLibrary = {
+  id: string
+  title: string
+  suLibraryHours?: NodeSulLibrary["suLibraryHours"]
+  suLibraryContactImg?: NodeSulLibrary["suLibraryContactImg"]
+  suLibraryBanner: NodeSulLibrary["suLibraryBanner"]
+}
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
-  libraries: { id: string, title: string, su_library__hours?: string, su_library__contact_img?: DrupalImageMedia }[]
+  libraries: TrimmedLibrary[]
 }
 
 const TodayHours = ({libraries, ...props}: HoursProps) => {
@@ -21,7 +28,7 @@ const TodayHours = ({libraries, ...props}: HoursProps) => {
   return (
     <ErrorBoundary fallback={<></>}>
       <CachedClientFetch>
-        <LibrariesTodayHours libraries={libraries as Library[]} {...props}/>
+        <LibrariesTodayHours libraries={libraries} {...props}/>
       </CachedClientFetch>
     </ErrorBoundary>
   )
@@ -32,9 +39,9 @@ interface option {
   label: string
 }
 
-const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) => {
+const LibrariesTodayHours = ({libraries, ...props}: { libraries: HoursProps["libraries"] }) => {
   const formId = useId();
-  const [selectedLibrary, setSelectedLibrary] = useState(libraries.find(library => library.su_library__hours === 'green')?.id ?? libraries[0].id);
+  const [selectedLibrary, setSelectedLibrary] = useState(libraries.find(library => library.suLibraryHours === 'green')?.id ?? libraries[0].id);
   const library = libraries.find((item, index) => selectedLibrary ? item.id === selectedLibrary : index === 0);
 
   const libraryOptions: option[] = [];
@@ -42,8 +49,7 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
     libraryOptions.push({value: library.id, label: library.title})
   })
 
-  const imageUrl = library?.su_library__contact_img?.field_media_image.uri.url || library?.su_library__banner?.field_media_image.uri.url
-  const placeholder = library?.su_library__contact_img?.field_media_image?.uri.base64;
+  const imageUrl = library?.suLibraryContactImg?.mediaImage.url || library?.suLibraryBanner?.mediaImage.url
 
   return (
     <div {...props}>
@@ -56,8 +62,6 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
           alt=""
           fill
           sizes="500px"
-          placeholder={placeholder ? 'blur' : 'empty'}
-          blurDataURL={placeholder}
         />}
         footer={
           <div className="relative pb-100 md:rs-pb-6">
@@ -73,7 +77,9 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: Library[] }) =>
                   onChange={(e, value) => setSelectedLibrary(value as string)}
                 />
               </div>
-              <TodayLibraryHours branchId={library?.su_library__hours}/>
+              {library?.suLibraryHours &&
+                <TodayLibraryHours branchId={library.suLibraryHours}/>
+              }
             </div>
           </div>
         }

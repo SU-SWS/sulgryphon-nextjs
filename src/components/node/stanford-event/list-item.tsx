@@ -1,6 +1,6 @@
 
 import StanfordEventCard from "@/components/node/stanford-event/card";
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
 
 interface Props {

@@ -1,6 +1,6 @@
 import {ReactNodeLike} from "prop-types";
 import Card from "@/components/patterns/card";
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 import {HTMLAttributes} from "react";
 
 type BannerProps = HTMLAttributes<HTMLDivElement> & {

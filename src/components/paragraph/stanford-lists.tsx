@@ -1,7 +1,7 @@
 import formatHtml from "@/lib/format-html";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {cache, HTMLAttributes} from "react";
-import {Maybe, Link as LinkType, ViewReference, NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {Maybe, Link as LinkType, ViewReference, NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 import {ParagraphBehaviors} from "@/lib/drupal/drupal";
 import {graphqlClient} from "@/lib/gql/fetcher";
 import View from "@/components/views/view";
@@ -107,7 +107,7 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
       break
   }
 
-  const client = graphqlClient(undefined, {next: {tags}});
+  const client = graphqlClient({next: {tags}});
   let filters = getViewFilters(['term_node_taxonomy_name_depth', 'nid'], contextualFilter)
   let graphqlResponse;
 

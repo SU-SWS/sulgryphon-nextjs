@@ -8,7 +8,8 @@ import {
   InformationCircleIcon
 } from "@heroicons/react/20/solid";
 import {getConfigPage} from "@/lib/gql/fetcher";
-import {StanfordGlobalMessage} from "@/lib/gql/__generated__/drupal";
+import {StanfordGlobalMessage} from "@/lib/gql/__generated__/drupal.d";
+import {JSX} from "react";
 
 const GlobalMessage = async () => {
   let configPage: StanfordGlobalMessage | undefined;

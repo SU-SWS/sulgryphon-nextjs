@@ -5,7 +5,7 @@ import {MapPinIcon} from "@heroicons/react/24/outline";
 import StudyPlaceHours from "./study-place-today-hours";
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid";
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d";
 
 const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 

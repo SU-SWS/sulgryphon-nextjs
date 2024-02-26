@@ -3,7 +3,7 @@ import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/patterns/link";
 import {ElementType} from "react";
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
 interface CardProps {
   video?: Maybe<ReactNodeLike>

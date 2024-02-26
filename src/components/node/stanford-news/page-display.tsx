@@ -9,7 +9,7 @@ import {formatDate} from "@/lib/format-date";
 import NewsPrintButton from "@/components/node/stanford-news/print-button";
 import {redirect} from "next/navigation";
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d";
 import Paragraph from "@/components/paragraph";
 
 const StanfordNews = async ({node, ...props}: { node: NodeStanfordNews }) => {

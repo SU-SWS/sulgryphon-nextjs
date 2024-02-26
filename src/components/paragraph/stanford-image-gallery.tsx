@@ -7,7 +7,7 @@ import Modal from "@/components/patterns/modals/modal";
 import {HTMLAttributes, useState} from "react";
 import formatHtml from "@/lib/format-html";
 import {buildUrl} from "@/lib/drupal/utils";
-import {ParagraphStanfordGallery} from "@/lib/gql/__generated__/drupal";
+import {ParagraphStanfordGallery} from "@/lib/gql/__generated__/drupal.d";
 
 type StanfordImageGalleryProps = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordGallery

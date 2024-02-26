@@ -4,7 +4,7 @@ import Image from "next/image";
 import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";
 
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   node: NodeStanfordEvent

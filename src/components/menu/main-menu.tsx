@@ -11,7 +11,7 @@ import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {usePathname} from "next/navigation";
 import {useBoolean} from "usehooks-ts";
-import {MenuItem} from "@/lib/gql/__generated__/drupal";
+import {MenuItem} from "@/lib/gql/__generated__/drupal.d";
 
 const MainMenu = ({menuItems}: { menuItems: MenuItem[] }) => {
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false);

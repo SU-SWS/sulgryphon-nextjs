@@ -1,4 +1,4 @@
-import {Maybe} from "@/lib/gql/__generated__/drupal";
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordSpacer = ({size}: { size?: Maybe<'spacer-reduced' | 'spacer-minimal' | string> }) => {
   let height;

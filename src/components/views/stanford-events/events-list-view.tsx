@@ -1,5 +1,5 @@
 import EventsCardView from "@/components/views/stanford-events/events-card-view";
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   items: NodeStanfordEvent[]

@@ -3,7 +3,7 @@
 import VerticalPersonCard from "./vertical-card";
 import HorizontalPersonCard from "./horizontal-card";
 import {useResizeDetector} from "react-resize-detector";
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPersonCard = ({node, ...props}: { node: NodeStanfordPerson }) => {
   const {width, ref} = useResizeDetector();

@@ -5,7 +5,7 @@ import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node
 import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import EmailLink from "@/components/patterns/elements/email-link";
 import {buildUrl} from "@/lib/drupal/utils";
-import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal";
+import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   paragraph: ParagraphSulContactCard

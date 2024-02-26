@@ -1,7 +1,7 @@
 
 import Card from "@/components/patterns/card";
 import Link from "@/components/patterns/elements/drupal-link";
-import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPublicationCard = ({node, ...props}: { node: NodeStanfordPublication }) => {
   const topics = node.suPublicationTopics?.filter(topic => !!topic?.name) || [];

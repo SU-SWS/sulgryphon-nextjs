@@ -2,7 +2,7 @@
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import LibraryAdditionalHours from "@/components/node/sul-library/library-additional-hours";
 import formatHtml from "@/lib/format-html";
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal";
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
 
 const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
 

@@ -13,7 +13,7 @@ import {
   NodeStanfordPage,
   NodeStanfordPerson, NodeSulStudyPlace,
   NodeUnion
-} from "@/lib/gql/__generated__/drupal";
+} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   items: NodeUnion[]

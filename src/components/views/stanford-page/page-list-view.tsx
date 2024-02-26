@@ -1,5 +1,5 @@
 import PageCardView from "@/components/views/stanford-page/page-card-view";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
   items: NodeStanfordPage[]

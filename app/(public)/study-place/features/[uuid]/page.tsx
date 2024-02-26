@@ -2,7 +2,7 @@ import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-fe
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import {notFound} from "next/navigation";
 import {graphqlClient} from "@/lib/gql/fetcher";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 export const metadata = {
   title: 'Study Place Features',
