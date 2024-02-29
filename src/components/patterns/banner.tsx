@@ -1,7 +1,7 @@
 import {ReactNodeLike} from "prop-types";
 import Card from "@/components/patterns/card";
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
-import {HTMLAttributes} from "react";
+import {ElementType, HTMLAttributes} from "react";
 
 type BannerProps = HTMLAttributes<HTMLDivElement> & {
   image?: Maybe<ReactNodeLike>;
@@ -11,9 +11,22 @@ type BannerProps = HTMLAttributes<HTMLDivElement> & {
   link?: Maybe<LinkType>
   overlayPosition?: Maybe<string>
   headerId?: string
+  headingTag?: ElementType
+  hideHeading?: boolean
 }
 
-const Banner = ({headerId, image, header, superHeader, body, link, overlayPosition, ...props}: BannerProps) => {
+const Banner = ({
+  headerId,
+  image,
+  header,
+  superHeader,
+  body,
+  link,
+  overlayPosition,
+  headingTag,
+  hideHeading,
+  ...props
+}: BannerProps) => {
 
   const hasCardText = header || superHeader || body || link;
 
@@ -35,6 +48,8 @@ const Banner = ({headerId, image, header, superHeader, body, link, overlayPositi
               body={body}
               link={link}
               headerId={headerId}
+              headingLevel={headingTag}
+              hideHeading={hideHeading}
             />
           </div>
         </div>

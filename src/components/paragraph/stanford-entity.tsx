@@ -4,6 +4,7 @@ import {DrupalLinkButton} from "@/components/patterns/link";
 import {PropsWithoutRef} from "react";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
 import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import {twMerge} from "tailwind-merge";
 
 interface EntityProps extends PropsWithoutRef<any> {
   headline?: Maybe<string>
@@ -15,9 +16,19 @@ interface EntityProps extends PropsWithoutRef<any> {
     orientation?: Maybe<string>
     background?: Maybe<string>
   }
+  hideHeading?: boolean
 }
 
-const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], ...props}: EntityProps) => {
+const StanfordEntity = async ({
+  headerId,
+  headline,
+  description,
+  link,
+  styles,
+  hideHeading,
+  entities = [],
+  ...props
+}: EntityProps) => {
 
   const wrapperClasses = styles?.background === 'black' ? 'text-white py-40' : '';
 
@@ -40,7 +51,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
     <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {headline &&
-          <h2 id={headerId} className="text-left type-5 mb-40">
+          <h2 id={headerId} className={twMerge("text-left type-5 mb-40", hideHeading && "sr-only")}>
             <AboveHeaderBorder/>
             {headline}
           </h2>

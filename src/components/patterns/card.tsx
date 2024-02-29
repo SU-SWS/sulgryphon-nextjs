@@ -4,6 +4,7 @@ import formatHtml from "@/lib/format-html";
 import {DrupalLink} from "@/components/patterns/link";
 import {ElementType} from "react";
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import {twMerge} from "tailwind-merge";
 
 interface CardProps {
   video?: Maybe<ReactNodeLike>
@@ -16,7 +17,8 @@ interface CardProps {
   linkStyle?: Maybe<string>
   className?: Maybe<string>
   headerId?: string
-  headingLevel?: Maybe<string>
+  headingLevel?: Maybe<ElementType>
+  hideHeading?: boolean
 }
 
 const Card = ({
@@ -29,9 +31,10 @@ const Card = ({
   body,
   link,
   linkStyle,
-  headingLevel = 'h3'
+  headingLevel,
+  hideHeading
 }: CardProps) => {
-  const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
+  const Heading: ElementType = headingLevel || "h2";
 
   const linkAttributes: Record<string, string> = {};
   if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
@@ -64,7 +67,7 @@ const Card = ({
         }
 
         {(header) &&
-          <Heading id={headerId} className="leading-tight font-bold type-2 mb-03em">
+          <Heading id={headerId} className={twMerge("leading-tight font-bold type-2 mb-03em", hideHeading && "sr-only")}>
             {header}
           </Heading>
         }

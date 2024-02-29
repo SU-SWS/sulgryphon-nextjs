@@ -5,7 +5,7 @@ import HorizontalCard from "@/components/patterns/horizontal-card";
 import Oembed from "@/components/patterns/elements/oembed";
 import {buildUrl} from "@/lib/drupal/utils";
 import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
-import {HTMLAttributes} from "react";
+import {ElementType, HTMLAttributes} from "react";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   header?: Maybe<string>
@@ -20,9 +20,27 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   fullWidth?: Maybe<boolean>
   headerId?: string
   singleRow?: Maybe<boolean>
+  headingTag?: ElementType
+  hideHeading?: boolean
 }
 
-const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUrl, linkStyle, sprinklePosition, orientation, fullWidth = true, singleRow = false, ...props}: Props) => {
+const StanfordCard = ({
+  headerId,
+  header,
+  superHeader,
+  body,
+  link,
+  image,
+  videoUrl,
+  linkStyle,
+  sprinklePosition,
+  orientation,
+  headingTag = "h2",
+  fullWidth = true,
+  singleRow = false,
+  hideHeading,
+  ...props
+}: Props) => {
   const isHorizontal = orientation === 'horizontal';
 
   const imageUrl = image?.mediaImage.url;
@@ -34,7 +52,7 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
   }
 
   return (
-    <div className={"relative" + (!isHorizontal ? " centered lg:max-w-[980px] w-full mx-auto": "")} {...props}>
+    <div className={"relative" + (!isHorizontal ? " centered lg:max-w-[980px] w-full mx-auto" : "")} {...props}>
       {isHorizontal &&
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
@@ -52,6 +70,8 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
           backgroundSprinkles={sprinklePosition}
           fullWidth={singleRow && fullWidth}
           headerId={headerId}
+          headingLevel={headingTag}
+          hideHeading={hideHeading}
         />
       }
 
@@ -71,6 +91,8 @@ const StanfordCard = ({headerId, header, superHeader, body, link, image, videoUr
           link={link}
           linkStyle={linkStyle}
           headerId={headerId}
+          headingLevel={headingTag}
+          hideHeading={hideHeading}
         />
       }
     </div>

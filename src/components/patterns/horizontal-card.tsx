@@ -7,6 +7,7 @@ import {ElementType, HTMLAttributes, useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
 import Link from "@/components/patterns/elements/drupal-link";
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import {twMerge} from "tailwind-merge";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
@@ -19,12 +20,27 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   backgroundSprinkles?: 'top_right' | 'top_left' | 'bottom_right' | 'bottom_left'
   fullWidth?: Maybe<boolean>
   headerId?: string
-  headingLevel?: Maybe<string>
+  headingLevel?: Maybe<ElementType>
+  hideHeading?: boolean
 }
 
-const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, headingLevel = 'h2', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({
+  headerId,
+  video,
+  image,
+  superHeader,
+  header,
+  footer,
+  body,
+  link,
+  headingLevel,
+  fullWidth = true,
+  backgroundSprinkles = 'top_right',
+  hideHeading,
+  ...props
+}: CardProps) => {
   const ref = useRef(null);
-  const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
+  const Heading: ElementType = headingLevel || 'h2';
 
   const linkAttributes: Record<string, string> = {};
   if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
@@ -70,7 +86,7 @@ const HorizontalCard = ({headerId, video, image, superHeader, header, footer, bo
             }
 
             {(header) &&
-              <Heading id={headerId} className="text-m5">{header}</Heading>
+              <Heading id={headerId} className={twMerge("text-m5", hideHeading && "sr-only")}>{header}</Heading>
             }
 
             {(body) &&

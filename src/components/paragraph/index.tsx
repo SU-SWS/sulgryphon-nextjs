@@ -10,7 +10,7 @@ import SulCollection from "@/components/paragraph/sul-collection";
 import SulFeaturedCollection from "@/components/paragraph/sul-featured-collection";
 import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
-import {HTMLAttributes, Suspense, useId} from "react";
+import {ElementType, HTMLAttributes, Suspense, useId} from "react";
 import SulLibguides from "@/components/paragraph/sul-libguides";
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
 import {ParagraphBehaviors} from "@/lib/drupal/drupal";
@@ -25,6 +25,7 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
   const headerId = useId();
 
   const paragraphBehaviors = getParagraphBehaviors(paragraph);
+
   return (
     <>
       {paragraph.__typename === 'ParagraphStanfordCard' &&
@@ -41,6 +42,8 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
           singleRow={singleRow}
           headerId={headerId}
           fullWidth={fullWidth}
+          headingTag={(paragraphBehaviors.su_card_styles?.heading?.replace(/\..*/, '') || "h2") as ElementType}
+          hideHeading={paragraphBehaviors.su_card_styles?.hide_heading}
           {...props}
         />}
 
@@ -53,6 +56,8 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
           image={paragraph.suBannerImage}
           overlayPosition={paragraphBehaviors?.hero_pattern?.overlay_position}
           headerId={headerId}
+          headingTag={(paragraphBehaviors.hero_pattern?.heading?.replace(/\..*/, '') || "h2") as ElementType}
+          hideHeading={paragraphBehaviors.hero_pattern?.hide_heading}
           {...props}
         />
       }
@@ -83,6 +88,7 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
             behaviors={paragraphBehaviors}
             headerId={headerId}
             uuid={paragraph.id}
+            hideHeading={paragraphBehaviors.list_paragraph?.hide_heading}
             {...props}
           />
         </Suspense>
@@ -96,6 +102,7 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
           entities={paragraph.suEntityItem || []}
           styles={paragraphBehaviors?.sul_teaser_styles}
           headerId={headerId}
+          hideHeading={paragraphBehaviors.stanford_teaser?.hide_heading}
           {...props}
         />
       }

@@ -5,6 +5,7 @@ import {Maybe, Link as LinkType, ViewReference, NodeUnion} from "@/lib/gql/__gen
 import {ParagraphBehaviors} from "@/lib/drupal/drupal";
 import {graphqlClient} from "@/lib/gql/fetcher";
 import View from "@/components/views/view";
+import {twMerge} from "tailwind-merge";
 
 type ListProps = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>
@@ -14,9 +15,10 @@ type ListProps = HTMLAttributes<HTMLDivElement> & {
   behaviors?: ParagraphBehaviors
   headerId?: string
   uuid: string
+  hideHeading?: boolean
 }
 
-const ListParagraph = async ({headerId, headline, description, link, view, behaviors, uuid}: ListProps) => {
+const ListParagraph = async ({headerId, headline, description, link, view, behaviors, uuid, hideHeading}: ListProps) => {
 
   const linkAttributes: Record<string, string> = {};
   if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
@@ -51,7 +53,7 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
     <div className="centered flex flex-col gap-xl">
       <div className="flex justify-between items-center mb-40">
         {headline &&
-          <h2 id={headerId} className="m-0">{headline}</h2>
+          <h2 id={headerId} className={twMerge("m-0", hideHeading && "sr-only")}>{headline}</h2>
         }
 
         {link?.url &&

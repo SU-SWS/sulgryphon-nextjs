@@ -15,14 +15,21 @@ export type ParagraphBehaviors = {
   sul_teaser_styles?: {}
   hero_pattern?: {
     overlay_position?: string
+    heading?: "h2" | "h3"| "h4"| "div.su-font-splash"
+    hide_heading?: boolean
+  }
+  su_card_styles?: {
+    heading?: "h2" | "h3"| "h4"| "div.su-font-splash"
+    hide_heading?: boolean
   }
   sul_card_styles?: {
     background_sprinkles?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
     orientation?: string
     link_display_style?: string
   }
-  list_paragraph?: { hide_empty?: Maybe<boolean>, empty_message?: Maybe<string> }
+  list_paragraph?: { hide_empty?: Maybe<boolean>, empty_message?: Maybe<string>, hide_heading?: boolean }
   sul_list_styles?: { link_display_style?: Maybe<string> }
+  stanford_teaser?: {hide_heading?: boolean}
 }
 
 export type StanfordNode = BasicPage |
