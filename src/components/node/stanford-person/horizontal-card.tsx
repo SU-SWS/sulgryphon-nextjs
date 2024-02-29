@@ -25,7 +25,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: Props) => {
             <Image
               src={buildUrl(imageUrl).toString()}
               alt=""
-              className="object-contain rounded-full"
+              className="object-cover rounded-full"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             />
