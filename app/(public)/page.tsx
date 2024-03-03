@@ -6,7 +6,9 @@ import {notFound} from "next/navigation";
 import {getEntityFromPath} from "@/lib/gql/fetcher";
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
+// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const revalidate = false;
+export const dynamic = 'force-static';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const {entity} = await getEntityFromPath<NodeStanfordPage>('/');

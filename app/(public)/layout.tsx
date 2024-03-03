@@ -3,8 +3,12 @@ import GlobalFooter from "@/components/layout/global-footer";
 import Header from "@/components/layout/header";
 import {ReactNode} from "react";
 import Script from "next/script";
-import GoogleAnalytics from "@/components/utils/google-analytics";
+import {GoogleAnalytics} from "@next/third-parties/google";
 import {isDraftMode} from "@/lib/drupal/is-draft-mode";
+
+// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+export const revalidate = false;
+export const dynamic = 'force-static';
 
 const Layout = ({children}: { children: ReactNode }) => {
   const draftMode = isDraftMode()
@@ -13,7 +17,7 @@ const Layout = ({children}: { children: ReactNode }) => {
       {(!draftMode && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) &&
         <>
           <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js"/>
-          <GoogleAnalytics/>
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}/>
         </>
       }
       <div className="grid grid-rows-1 min-h-screen">

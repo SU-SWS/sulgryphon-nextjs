@@ -1,42 +1,34 @@
 import {MetadataRoute} from "next";
+import {graphqlClient} from "@/lib/gql/fetcher";
+import {headers} from "next/headers";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
-const xml2js = require('xml2js');
+// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+export const revalidate = false;
+export const dynamic = 'force-static';
 
 const Sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const xmlParser = new xml2js.Parser();
+  const nodeQuery = await graphqlClient({next: {tags: ['paths']}}).Nodes();
+  const nodes: NodeUnion[] = [];
 
-  const urls: MetadataRoute.Sitemap = [];
+  nodeQuery.nodeStanfordCourses.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeStanfordEventSeriesItems.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeStanfordEvents.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeStanfordNewsItems.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeStanfordPages.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeStanfordPeople.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeStanfordPolicies.nodes.map(node => nodes.push(node as NodeUnion));
+  nodeQuery.nodeSulLibraries.nodes.map(node => nodes.push(node as NodeUnion));
 
-  interface DrupalSitemapItem {
-    loc: string[];
-    lastmod?: string[];
-  }
+  const sitemap: MetadataRoute.Sitemap = [];
 
-  interface DrupalSitemap {
-    urlset: {
-      url: DrupalSitemapItem[];
-    }
-  }
+  nodes.map(node => sitemap.push({
+    url: `https://library.stanford.edu${node.path}`,
+    lastModified: new Date(node.changed.time),
+    priority: node.__typename === "NodeStanfordPage" ? 1 : .8,
+    changeFrequency: node.__typename === "NodeStanfordPage" ? "weekly" : "monthly"
+  }));
 
-  try {
-    const drupalSitemap: DrupalSitemapItem[] = await fetch(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + '/sitemap.xml')
-      .then(response => response.text())
-      .then<Promise<DrupalSitemap>>(result => xmlParser.parseStringPromise(result))
-      // Allow the promise to resolve.
-      .then(result => result)
-      .then(sitemap => sitemap.urlset.url);
-
-    const publicDomain = process.env.NEXT_PUBLIC_DOMAIN ?? '';
-    drupalSitemap?.map(item => {
-      urls.push({
-        url: item.loc[0].replace(/http[s]?:\/\/.*?\//g, publicDomain + `/`),
-        lastModified: item.lastmod?.[0],
-      })
-    })
-  } catch (e) {
-    console.log(e)
-  }
-
-  return urls
+  return sitemap;
 }
 export default Sitemap;
