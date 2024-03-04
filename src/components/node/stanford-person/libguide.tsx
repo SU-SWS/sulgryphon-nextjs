@@ -13,8 +13,6 @@ interface Props extends PropsWithoutRef<any> {
 }
 
 const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
-  console.log('works');
-  console.log('the guides: ', guides);
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
   const genPurposeGuides = guides.filter(guide => guide.type === 'General Purpose Guide');
   const subjectGuides = guides.filter(guide => guide.type === "Subject Guide")
@@ -76,8 +74,6 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
     </div>
   )
 }
-
-// console.log(guides);
 
 const LibGuideSection = ({heading, guides}: {heading: string, guides: LibGuide[]}) => {
   const firstGuides = guides.slice(0, 5);
