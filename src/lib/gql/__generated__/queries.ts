@@ -525,15 +525,15 @@ export const FragmentParagraphStanfordMediaCaptionFragmentDoc = gql`
     ...FragmentMediaUnion
   }
   suMediaCaptionLink {
-    url
-    title
+    ...FragmentLink
   }
   suMediaCaptionCaption {
     processed
   }
 }
     ${FragmentParagraphInterfaceFragmentDoc}
-${FragmentMediaUnionFragmentDoc}`;
+${FragmentMediaUnionFragmentDoc}
+${FragmentLinkFragmentDoc}`;
 export const FragmentParagraphStanfordPersonCtumFragmentDoc = gql`
     fragment FragmentParagraphStanfordPersonCtum on ParagraphStanfordPersonCtum {
   ...FragmentParagraphInterface
