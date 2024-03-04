@@ -629,8 +629,7 @@ fragment FragmentParagraphStanfordMediaCaption on ParagraphStanfordMediaCaption 
         ...FragmentMediaUnion
     }
     suMediaCaptionLink {
-        url
-        title
+        ...FragmentLink
     }
     suMediaCaptionCaption {
         processed

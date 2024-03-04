@@ -5,8 +5,8 @@ const CardList = ({items, h3Heading}: { items: NodeUnion[], h3Heading?: boolean 
 
   const gridClasses = [
     '',
-    '@4xl:grid-cols-1-1',
-    '@4xl:grid-cols-1-1 @7xl:grid-cols-1-1-1',
+    '@4xl:grid-cols-2',
+    '@4xl:grid-cols-2 @7xl:grid-cols-3',
   ]
   const gridClass = items.length >= 3 ? gridClasses[2] : gridClasses[(items.length % 3) - 1]
 

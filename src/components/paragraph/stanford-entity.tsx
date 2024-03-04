@@ -42,8 +42,8 @@ const StanfordEntity = async ({
 
   const gridClasses = [
     '',
-    '@7xl:grid-cols-1-1',
-    '@7xl:grid-cols-1-1 @15xl:grid-cols-1-1-1',
+    '@7xl:grid-cols-2',
+    '@7xl:grid-cols-2 @15xl:grid-cols-3',
   ]
   const gridClass = entities.length >= 3 ? gridClasses[2] : gridClasses[(entities.length % 3) - 1]
 

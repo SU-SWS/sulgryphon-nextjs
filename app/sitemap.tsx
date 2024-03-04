@@ -1,6 +1,5 @@
 import {MetadataRoute} from "next";
 import {graphqlClient} from "@/lib/gql/fetcher";
-import {headers} from "next/headers";
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
