@@ -12,6 +12,8 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 
 const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   const courseGuides = guides.filter(guide => guide.type === 'Course Guide');
+  const genPurposeGuides = guides.filter(guide => guide.type === 'General Purpose Guide');
+  const subjectGuides = guides.filter(guide => guide.type === "Subject Guide")
   const topicGuides = guides.filter(guide => guide.type === 'Topic Guide');
 
   return (
@@ -24,6 +26,21 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
         </div>
       }
 
+      {genPurposeGuides.length > 0 &&
+        <div className="mb-40">
+          {headingLevel === 2 && <h2 className="type-1">General Purpose Guides</h2>}
+          {headingLevel === 3 && <h3 className="type-1">General Purpose Guides</h3>}
+          <LibGuideSection heading="General Purpose Guides" guides={genPurposeGuides}/>
+        </div>
+      }
+
+      {subjectGuides.length > 0 &&
+        <div className="mb-40">
+          {headingLevel === 2 && <h2 className="type-1">Subject Guides</h2>}
+          {headingLevel === 3 && <h3 className="type-1">Subject Guides</h3>}
+          <LibGuideSection heading="Subject Guides" guides={subjectGuides}/>
+        </div>
+      }
 
       {(topicGuides.length > 0) &&
         <div className="mb-40">
@@ -32,6 +49,7 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
           <LibGuideSection heading="Topic Guides" guides={topicGuides}/>
         </div>
       }
+
     </div>
   )
 }
