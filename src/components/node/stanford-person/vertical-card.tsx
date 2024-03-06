@@ -24,7 +24,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
           className="relative flex justify-center pb-70 @lg:pb-80">
           <div className="absolute top-[-11rem]">
             <div
-              className="rounded-full aspect-[1/1] w-[130px] @lg:w-[150px] overflow-hidden">
+              className="relative rounded-full aspect-[1/1] w-[130px] @lg:w-[150px] overflow-hidden">
               <Image
                 className="rounded-full object-cover"
                 src={buildUrl(imageUrl).toString()}
