@@ -11,25 +11,21 @@ const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
   return (
     <article className="mb-50 @container" {...props}>
 
-      {(node.sulLibraryA11y || node.suLibraryHours) &&
-        <div
-          className="centered mb-50 flex flex-col @6xl:flex-row gap-[90px]">
-          {node.sulLibraryA11y &&
-            <div className="order-last @6xl:order-first flex-1 basis-1/2">
-              <div className="shadow-md py-20 px-30 w-fit mx-auto border border-black-10">
-                <h2 className="text-m3">Accessibility</h2>
-                {formatHtml(node.sulLibraryA11y.processed)}
-              </div>
-            </div>
-          }
-
-          {node.suLibraryHours &&
-            <LibraryAdditionalHours hoursId={node.suLibraryHours}/>
-          }
+      {node.suLibraryHours &&
+        <div className="mb-50 lg:max-w-[980px] w-full mx-auto centered">
+          <LibraryAdditionalHours hoursId={node.suLibraryHours}/>
         </div>
       }
+
       {node.suLibraryParagraphs &&
         <ParagraphRows items={node.suLibraryParagraphs} fullWidth={fullWidth}/>
+      }
+
+      {node.sulLibraryA11y &&
+        <div  className="mb-50 lg:max-w-[980px] w-full mx-auto centered shadow-md py-20 px-30 border border-black-10">
+          <h2 className="text-m3">Accessibility</h2>
+          {formatHtml(node.sulLibraryA11y.processed)}
+        </div>
       }
     </article>
   )

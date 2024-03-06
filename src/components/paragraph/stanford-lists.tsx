@@ -51,7 +51,7 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
 
   return (
     <div className="centered flex flex-col gap-xl">
-      <div className="flex justify-between items-center mb-40">
+      <div className="flex justify-between items-center mb-20">
         {headline &&
           <h2 id={headerId} className={twMerge("m-0", hideHeading && "sr-only")}>{headline}</h2>
         }

@@ -45,10 +45,10 @@ export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{
     <Link
       href={href}
       {...props}
-      className={twMerge("relative pr-30 hocus:text-brick no-underline rs-mt-neg1 pt-10", props.className)}
+      className={twMerge("relative pr-30 no-underline rs-mt-neg1 hocus:bg-black-10 hocus:underline hocus:su-dark-brick active:text-cardinal-red", props.className)}
     >
       {children}
-      <ChevronRightIcon className="inline absolute top-0 right-0 h-full pt-10"/>
+      <ChevronRightIcon className="inline absolute top-0 right-0 h-full"/>
     </Link>
   )
 }
