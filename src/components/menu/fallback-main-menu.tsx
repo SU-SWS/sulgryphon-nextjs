@@ -1,8 +1,8 @@
 import Link from "@/components/patterns/elements/drupal-link";
 import SearchModal from "@/components/search/search-modal";
-import {MenuItem} from "@/lib/gql/__generated__/drupal.d";
+import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d";
 
-const FallbackMainMenu = ({menuItems}: { menuItems: MenuItem[] }) => {
+const FallbackMainMenu = ({menuItems}: { menuItems: MenuItemType[] }) => {
   return (
     <nav className="centered">
       <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
@@ -18,7 +18,7 @@ const FallbackMainMenu = ({menuItems}: { menuItems: MenuItem[] }) => {
   )
 }
 
-const MenuItem = ({url, title}: MenuItem) => {
+const MenuItem = ({url, title}: MenuItemType) => {
   const linkUrl = (url && url.length >= 1) ? url : '#';
 
   return (

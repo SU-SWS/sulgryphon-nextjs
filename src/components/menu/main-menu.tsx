@@ -11,9 +11,9 @@ import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {usePathname} from "next/navigation";
 import {useBoolean} from "usehooks-ts";
-import {MenuItem} from "@/lib/gql/__generated__/drupal.d";
+import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d";
 
-const MainMenu = ({menuItems}: { menuItems: MenuItem[] }) => {
+const MainMenu = ({menuItems}: { menuItems: MenuItemType[] }) => {
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false);
   const {value: addCloseAnimation, setValue: setAddCloseAnimation} = useBoolean(false);
 
@@ -107,7 +107,7 @@ const MainMenu = ({menuItems}: { menuItems: MenuItem[] }) => {
 }
 
 
-type MenuItemProps = MenuItem & {
+type MenuItemProps = MenuItemType & {
   expanded: boolean
   tabIndex?: number
   activeTrail: string[]
