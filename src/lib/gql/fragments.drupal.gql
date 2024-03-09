@@ -451,6 +451,7 @@ fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
     sulStudyBranch {
         ...FragmentNodeSulLibraryTeaser
     }
+    sulStudyRoomNumber
 }
 
 fragment FragmentNodeTeaserUnion on NodeUnion {

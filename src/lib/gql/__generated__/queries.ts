@@ -436,6 +436,7 @@ export const FragmentNodeSulStudyPlaceTeaserFragmentDoc = gql`
   sulStudyBranch {
     ...FragmentNodeSulLibraryTeaser
   }
+  sulStudyRoomNumber
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
