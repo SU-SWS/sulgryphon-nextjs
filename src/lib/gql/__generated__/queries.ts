@@ -437,10 +437,15 @@ export const FragmentNodeSulStudyPlaceTeaserFragmentDoc = gql`
     ...FragmentNodeSulLibraryTeaser
   }
   sulStudyRoomNumber
+  sulStudyRoomDonorName
+  sulStudyImage {
+    ...FragmentMediaImage
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
-${FragmentNodeSulLibraryTeaserFragmentDoc}`;
+${FragmentNodeSulLibraryTeaserFragmentDoc}
+${FragmentMediaImageFragmentDoc}`;
 export const FragmentNodeTeaserUnionFragmentDoc = gql`
     fragment FragmentNodeTeaserUnion on NodeUnion {
   ...FragmentNodeInterface

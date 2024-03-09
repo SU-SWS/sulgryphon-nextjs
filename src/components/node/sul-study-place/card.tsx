@@ -19,10 +19,12 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
   const imageUrl = node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
   const imageAlt = node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt|| '';
 
+  console.log(node.sulStudyImage);
+
   return (
     <>
       <div className="@container flex w-full leading-display shadow-md border-0 rounded flex-col">
-        {imageUrl &&
+        {(imageUrl && !node.sulStudyImage) &&
           <div className={"overflow-hidden aspect-[16/9] relative "}>
             <Image
               className="object-cover object-center static"
@@ -32,6 +34,12 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
               sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             />
           </div>
+        }
+        {(node.sulStudyImage) &&
+          <div>
+
+          </div>
+
         }
 
         {(node.sulStudyLibcalId) &&
@@ -52,7 +60,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 
         <div className={"card-body items-start rs-px-2 rs-py-3 "}>
           <div className="leading-display text-18 pt-0 font-normal ">
-            <h2 className="type-3 rs-mb-1">{node.sulStudyType.name}</h2>
+            <h2 className="type-3 rs-mb-1">{node.sulStudyRoomDonorName} {node.sulStudyType.name}</h2>
             <div className="leading-tight">
 
               {node.sulStudyBranch?.suLibraryHours &&
@@ -66,6 +74,12 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
                   <div>{node.sulStudyBranch.title}</div>
                 </Link>
               </div>
+
+              {(node.sulStudyRoomNumber) &&
+                <div className="relative flex flex-row items-start type-1 rs-mb-2">
+                <div>Room-{node.sulStudyRoomNumber}</div>
+                </div>
+              }
 
               {(node.sulStudyCapacity || features) &&
                 <ul className="ml-10 rs-mb-1">

@@ -452,6 +452,10 @@ fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
         ...FragmentNodeSulLibraryTeaser
     }
     sulStudyRoomNumber
+    sulStudyRoomDonorName
+    sulStudyImage {
+      ...FragmentMediaImage
+    }
 }
 
 fragment FragmentNodeTeaserUnion on NodeUnion {
