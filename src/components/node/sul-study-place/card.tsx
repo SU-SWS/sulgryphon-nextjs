@@ -54,29 +54,24 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
           <div className="leading-display text-18 pt-0 font-normal ">
             <h2 className="type-3 rs-mb-1">{node.sulStudyRoomDonorName} {node.sulStudyType.name}</h2>
             <div className="leading-tight ">
-              <div>
-                {node.sulStudyBranch?.suLibraryHours &&
-                  <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
-                }
-
-                <div className={`relative flex flex-row items-start type-1  ${(node.sulStudyRoomNumber > 0 ? "mb-20" : "rs-mb-2")}`}>
-                  <MapPinIcon width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
-                  <Link href={node.sulStudyBranch.path}
-                        className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
-                    <div>{node.sulStudyBranch.title}</div>
-                  </Link>
-                </div>
-
-                {(node.sulStudyRoomNumber) &&
-                  <div className="relative flex flex-row items-start type-1 rs-mb-2">
-                    <BuildingLibraryIcon className="w-24 h-24 mr-12 flex-shrink-0 "/>
-
-                    <div>Room-{node.sulStudyRoomNumber}</div>
-                  </div>
-                }
+              {node.sulStudyBranch?.suLibraryHours &&
+                <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
+              }
+              <div className="relative flex flex-row items-start type-1 mb-20">
+                <MapPinIcon width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+                <Link href={node.sulStudyBranch.path}
+                      className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
+                  <div>{node.sulStudyBranch.title}</div>
+                </Link>
               </div>
 
+              {(node.sulStudyRoomNumber) &&
+                <div className="relative flex flex-row items-start type-1 rs-mb-2">
+                  <BuildingLibraryIcon className="w-24 h-24 mr-12 flex-shrink-0 "/>
 
+                  <div>Room-{node.sulStudyRoomNumber}</div>
+                </div>
+              }
 
               {(node.sulStudyCapacity || features) &&
                 <ul className="ml-10 rs-mb-1">
