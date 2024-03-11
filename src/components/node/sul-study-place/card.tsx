@@ -16,15 +16,15 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
       ))
   ) || [];
 
-  const imageUrl = node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
-  const imageAlt = node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt|| '';
+  const imageUrl = node.sulStudyImage?.mediaImage.url || node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
+  const imageAlt = node.sulStudyImage?.mediaImage.alt || node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt|| '';
 
   console.log(node.sulStudyImage);
 
   return (
     <>
       <div className="@container flex w-full leading-display shadow-md border-0 rounded flex-col">
-        {(imageUrl && !node.sulStudyImage) &&
+        {(imageUrl) &&
           <div className={"overflow-hidden aspect-[16/9] relative "}>
             <Image
               className="object-cover object-center static"
@@ -34,12 +34,6 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
               sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             />
           </div>
-        }
-        {(node.sulStudyImage) &&
-          <div>
-
-          </div>
-
         }
 
         {(node.sulStudyLibcalId) &&
