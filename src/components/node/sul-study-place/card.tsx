@@ -1,7 +1,7 @@
 
 import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
-import {MapPinIcon} from "@heroicons/react/24/outline";
+import {MapPinIcon, BuildingLibraryIcon} from "@heroicons/react/24/outline";
 import StudyPlaceHours from "./study-place-today-hours";
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid";
 import {buildUrl} from "@/lib/drupal/utils";
@@ -18,8 +18,6 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 
   const imageUrl = node.sulStudyImage?.mediaImage.url || node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
   const imageAlt = node.sulStudyImage?.mediaImage.alt || node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt|| '';
-
-  console.log(node.sulStudyImage);
 
   return (
     <>
@@ -55,25 +53,30 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
         <div className={"card-body items-start rs-px-2 rs-py-3 "}>
           <div className="leading-display text-18 pt-0 font-normal ">
             <h2 className="type-3 rs-mb-1">{node.sulStudyRoomDonorName} {node.sulStudyType.name}</h2>
-            <div className="leading-tight">
+            <div className="leading-tight ">
+              <div>
+                {node.sulStudyBranch?.suLibraryHours &&
+                  <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
+                }
 
-              {node.sulStudyBranch?.suLibraryHours &&
-                <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
-              }
+                <div className={`relative flex flex-row items-start type-1  ${(node.sulStudyRoomNumber > 0 ? "mb-20" : "rs-mb-2")}`}>
+                  <MapPinIcon width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+                  <Link href={node.sulStudyBranch.path}
+                        className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
+                    <div>{node.sulStudyBranch.title}</div>
+                  </Link>
+                </div>
 
-              <div className="relative flex flex-row items-start type-1 rs-mb-2">
-                <MapPinIcon width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
-                <Link href={node.sulStudyBranch.path}
-                      className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
-                  <div>{node.sulStudyBranch.title}</div>
-                </Link>
+                {(node.sulStudyRoomNumber) &&
+                  <div className="relative flex flex-row items-start type-1 rs-mb-2">
+                    <BuildingLibraryIcon className="w-24 h-24 mr-12 flex-shrink-0 "/>
+
+                    <div>Room-{node.sulStudyRoomNumber}</div>
+                  </div>
+                }
               </div>
 
-              {(node.sulStudyRoomNumber) &&
-                <div className="relative flex flex-row items-start type-1 rs-mb-2">
-                <div>Room-{node.sulStudyRoomNumber}</div>
-                </div>
-              }
+
 
               {(node.sulStudyCapacity || features) &&
                 <ul className="ml-10 rs-mb-1">
