@@ -88,7 +88,7 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
             behaviors={paragraphBehaviors}
             headerId={headerId}
             uuid={paragraph.id}
-            hideHeading={paragraphBehaviors.list_paragraph?.hide_heading}
+            headingBehavior={paragraphBehaviors.list_paragraph?.heading_behavior}
             {...props}
           />
         </Suspense>
@@ -102,7 +102,7 @@ const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: 
           entities={paragraph.suEntityItem || []}
           styles={paragraphBehaviors?.sul_teaser_styles}
           headerId={headerId}
-          hideHeading={paragraphBehaviors.stanford_teaser?.hide_heading}
+          headingBehavior={paragraphBehaviors.stanford_teaser?.heading_behavior}
           {...props}
         />
       }

@@ -27,9 +27,13 @@ export type ParagraphBehaviors = {
     orientation?: string
     link_display_style?: string
   }
-  list_paragraph?: { hide_empty?: Maybe<boolean>, empty_message?: Maybe<string>, hide_heading?: boolean }
+  list_paragraph?: {
+    hide_empty?: Maybe<boolean>,
+    empty_message?: Maybe<string>,
+    heading_behavior?: Maybe<'show' | 'hide' | 'remove'>
+  }
   sul_list_styles?: { link_display_style?: Maybe<string> }
-  stanford_teaser?: {hide_heading?: boolean}
+  stanford_teaser?: { heading_behavior?: Maybe<'show' | 'hide' | 'remove'> }
 }
 
 export type StanfordNode = BasicPage |

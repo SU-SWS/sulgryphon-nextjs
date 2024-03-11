@@ -15,10 +15,10 @@ type ListProps = HTMLAttributes<HTMLDivElement> & {
   behaviors?: ParagraphBehaviors
   headerId?: string
   uuid: string
-  hideHeading?: boolean
+  headingBehavior?: Maybe<'show' | 'hide' | 'remove'>
 }
 
-const ListParagraph = async ({headerId, headline, description, link, view, behaviors, uuid, hideHeading}: ListProps) => {
+const ListParagraph = async ({headerId, headline, description, link, view, behaviors, uuid, headingBehavior}: ListProps) => {
 
   const linkAttributes: Record<string, string> = {};
   if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
@@ -52,8 +52,10 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
   return (
     <div className="centered flex flex-col gap-xl">
       <div className="flex justify-between items-center mb-20">
-        {headline &&
-          <h2 id={headerId} className={twMerge("m-0", hideHeading && "sr-only")}>{headline}</h2>
+        {(headline && headingBehavior !== "remove") &&
+          <h2 id={headerId} className={twMerge("m-0", headingBehavior === "hide" && "sr-only")}>
+            {headline}
+          </h2>
         }
 
         {link?.url &&

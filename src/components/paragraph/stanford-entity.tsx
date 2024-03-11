@@ -16,7 +16,7 @@ interface EntityProps extends PropsWithoutRef<any> {
     orientation?: Maybe<string>
     background?: Maybe<string>
   }
-  hideHeading?: boolean
+  headingBehavior?: Maybe<'show' | 'hide' | 'remove'>
 }
 
 const StanfordEntity = async ({
@@ -25,7 +25,7 @@ const StanfordEntity = async ({
   description,
   link,
   styles,
-  hideHeading,
+  headingBehavior,
   entities = [],
   ...props
 }: EntityProps) => {
@@ -50,8 +50,8 @@ const StanfordEntity = async ({
   return (
     <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
-        {headline &&
-          <h2 id={headerId} className={twMerge("text-left type-5 mb-40", hideHeading && "sr-only")}>
+        {(headline && headingBehavior !== "remove") &&
+          <h2 id={headerId} className={twMerge("text-left type-5 mb-40", headingBehavior === "hide" && "sr-only")}>
             <AboveHeaderBorder/>
             {headline}
           </h2>
