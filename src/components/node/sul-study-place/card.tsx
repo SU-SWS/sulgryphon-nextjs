@@ -57,7 +57,9 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
               {node.sulStudyBranch?.suLibraryHours &&
                 <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
               }
-              <div className="relative flex flex-row items-start type-1 mb-20">
+
+              <div
+                className={`relative flex flex-row items-start type-1  ${(node?.sulStudyRoomNumber?.length > 0 ? "mb-20" : "rs-mb-2")}`}>
                 <MapPinIcon width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
                 <Link href={node.sulStudyBranch.path}
                       className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
