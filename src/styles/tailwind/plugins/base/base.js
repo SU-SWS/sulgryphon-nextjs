@@ -1,7 +1,3 @@
-/**
- * SUL custom base styles
- */
-
 module.exports = function () {
   return function ({ addBase }) {
     addBase({
@@ -12,7 +8,7 @@ module.exports = function () {
         fontSize: '2.31em',
         letterSpacing: '-0.02em',
         '@screen md': {
-          fontSize: '2.99em',
+          fontSize: '2.69em',
         },
         '@screen lg': {
           fontSize: '3.81em',
@@ -22,7 +18,7 @@ module.exports = function () {
         fontSize: '1.75em',
         letterSpacing: '-0.016em',
         '@screen md': {
-          fontSize: '2.07em',
+          fontSize: '1.86em',
         },
         '@screen lg': {
           fontSize: '2.44em',
@@ -32,7 +28,7 @@ module.exports = function () {
         fontSize: '1.52em',
         letterSpacing: '-0.014em',
         '@screen md': {
-          fontSize: '1.73em',
+          fontSize: '1.56em',
         },
         '@screen lg': {
           fontSize: '1.95em',
@@ -42,7 +38,7 @@ module.exports = function () {
         fontSize: '1.32em',
         letterSpacing: '-0.012em',
         '@screen md': {
-          fontSize: '1.44em',
+          fontSize: '1.3em',
         },
         '@screen lg': {
           fontSize: '1.56em',
@@ -52,7 +48,7 @@ module.exports = function () {
         fontSize: '1.15em',
         letterSpacing: '-0.01em',
         '@screen md': {
-          fontSize: '1.2em',
+          fontSize: '1.08em',
         },
         '@screen lg': {
           fontSize: '1.25em',
