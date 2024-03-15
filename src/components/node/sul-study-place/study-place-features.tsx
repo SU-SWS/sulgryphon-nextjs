@@ -24,19 +24,19 @@ interface ModalProps {
 }
 
 const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, contactImageAlt, contactImageUrl, features, type, imagePlaceholder, headingId, roomNumber, roomDonorName, roomImageUrl, roomImageAlt}: ModalProps) => {
-  const ImageUrl = roomImageUrl || contactImageUrl;
-  const ImageAlt = roomImageAlt || contactImageAlt
+  const imageUrl = roomImageUrl || contactImageUrl;
+  const imageAlt = roomImageAlt || contactImageAlt
 
   return (
     <div
       className={"bg-white flex w-full leading-display shadow-md border-0 rounded flex-row"}>
       <div className="hidden md:block rs-px-3 rs-py-3 w-1/2">
-        {(ImageUrl) &&
+        {(imageUrl) &&
           <div className={"overflow-hidden aspect-[16/9] relative "}>
             <Image
               className="object-cover object-center static"
-              src={buildUrl(ImageUrl).toString()}
-              alt={ImageAlt || ''}
+              src={buildUrl(imageUrl).toString()}
+              alt={imageAlt || ''}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
               placeholder={imagePlaceholder ? 'blur' : 'empty'}
@@ -48,7 +48,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
       <div className="card-body items-start rs-px-3 rs-pb-3 rs-pt-7 md:rs-pt-3 w-full">
         <div className="leading-display text-18 pt-0 font-normal ">
-          <h2 id={headingId} className="type-3 rs-mb-1">{roomDonorName} {type}</h2>
+          <h2 id={headingId} className="type-3 rs-mb-1">{[roomDonorName, type].join(" ")}</h2>
           <div className="leading-tight">
 
             {branchHours &&

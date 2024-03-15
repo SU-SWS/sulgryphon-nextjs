@@ -52,7 +52,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 
         <div className={"card-body items-start rs-px-2 rs-py-3 "}>
           <div className="leading-display text-18 pt-0 font-normal ">
-            <h2 className="type-3 rs-mb-1">{node.sulStudyRoomDonorName} {node.sulStudyType.name}</h2>
+            <h2 className="type-3 rs-mb-1">{[node.sulStudyRoomDonorName, node.sulStudyType.name].join(" ")}</h2>
 
             <div className="leading-tight">
               {node.sulStudyBranch?.suLibraryHours &&
@@ -66,7 +66,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
                 </Link>
               </div>
 
-              {(node.sulStudyRoomNumber) &&
+              {node.sulStudyRoomNumber &&
                 <div className="relative flex flex-row items-start type-1 rs-mb-2">
                   <BuildingLibraryIcon className="w-24 h-24 mr-12 flex-shrink-0 "/>
                   <div>Room-{node.sulStudyRoomNumber}</div>
