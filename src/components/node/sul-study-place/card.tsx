@@ -33,12 +33,6 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
             />
           </div>
         }
-        {(node.sulStudyImage) &&
-          <div>
-
-          </div>
-
-        }
 
         {(node.sulStudyLibcalId) &&
           <a
@@ -104,6 +98,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
                   <ChevronRightIcon height={30} className="inline top-0 right-0 h-full"/>
                 </Link>
               }
+
             </div>
           </div>
         </div>
