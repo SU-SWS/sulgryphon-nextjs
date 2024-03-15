@@ -26,6 +26,10 @@ const Page = async ({params: {uuid}}: { params: { uuid: string } }) => {
         contactImageUrl={node.sulStudyBranch.suLibraryContactImg?.mediaImage.url}
         features={features.map(feature => ({id: feature.id, name: feature.name}))}
         type={node.sulStudyType.name}
+        roomNumber={node.sulStudyRoomNumber}
+        roomDonorName={node.sulStudyRoomDonorName}
+        roomImageUrl={node.sulStudyImage?.mediaImage?.url}
+        roomImageAlt={node.sulStudyImage?.mediaImage?.alt}
       />
     </InterceptionModal>
   )
