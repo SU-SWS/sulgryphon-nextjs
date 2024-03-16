@@ -18,7 +18,6 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 
   const imageUrl = node.sulStudyImage?.mediaImage.url || node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
   const imageAlt = node.sulStudyImage?.mediaImage.alt || node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt|| '';
-
   return (
     <>
       <div className="@container flex w-full leading-display shadow-md border-0 rounded flex-col">
@@ -52,7 +51,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 
         <div className={"card-body items-start rs-px-2 rs-py-3 "}>
           <div className="leading-display text-18 pt-0 font-normal">
-            <h2 className="type-3 rs-mb-1">{node.sulStudyRoomDonorName ? `${node.sulStudyRoomDonorName} ${node.sulStudyType.name}` : node.sulStudyType.name}</h2>
+            <h2 className="type-3 rs-mb-1">{[node.sulStudyRoomDonorName, node.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
 
             <div className="leading-tight">
               {node.sulStudyBranch?.suLibraryHours &&
