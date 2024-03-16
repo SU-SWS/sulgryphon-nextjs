@@ -51,8 +51,8 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
         }
 
         <div className={"card-body items-start rs-px-2 rs-py-3 "}>
-          <div className="leading-display text-18 pt-0 font-normal ">
-            <h2 className="type-3 rs-mb-1">{[node.sulStudyRoomDonorName, node.sulStudyType.name].join(" ")}</h2>
+          <div className="leading-display text-18 pt-0 font-normal">
+            <h2 className="type-3 rs-mb-1">{node.sulStudyRoomDonorName ? `${node.sulStudyRoomDonorName} ${node.sulStudyType.name}` : node.sulStudyType.name}</h2>
 
             <div className="leading-tight">
               {node.sulStudyBranch?.suLibraryHours &&
