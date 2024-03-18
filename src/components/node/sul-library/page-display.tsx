@@ -22,7 +22,7 @@ const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
       }
 
       {node.sulLibraryA11y &&
-        <div  className="mb-50 lg:max-w-[980px] w-full mx-auto centered shadow-md py-20 px-30 border border-black-10">
+        <div  className="mb-50 lg:max-w-[980px] w-full mx-auto centered py-20">
           <h2 className="text-m3">Accessibility</h2>
           {formatHtml(node.sulLibraryA11y.processed)}
         </div>
