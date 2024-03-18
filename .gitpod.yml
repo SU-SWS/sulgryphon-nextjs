@@ -74,22 +74,17 @@ tasks:
       gp ports await 3000 &&
       gp url 3000 | xargs gp preview --external
   - name: SSH Keys
-    command: |
-      rm -rf ~/.ssh/id_rsa &&
-      rm -rf ~/.ssh/id_rsa.pub &&
-      eval $(command gp env -e) &&
-      mkdir -p ~/.ssh &&
-      [[ ! -z $SSH_PUBLIC_KEY  ]] &&
-      echo $SSH_PUBLIC_KEY | base64 -d > ~/.ssh/id_rsa.pub &&
-      chmod 644 ~/.ssh/id_rsa.pub &&
-      [[ ! -z $SSH_PRIVATE_KEY  ]] &&
-      echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa &&
-      chmod 600 ~/.ssh/id_rsa &&
-      cd /workspace/front &&
-      [[ ! -z $GITCONFIG  ]] &&
-      echo $GITCONFIG | base64 -d > ~/.gitconfig &&
-      chmod 644 ~/.gitconfig
-      git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|')
+    before: |
+      mkdir -p ~/.ssh
+      if [[ ! -z $SSH_PUBLIC_KEY  ]]; then
+          echo $SSH_PUBLIC_KEY | base64 -d > ~/.ssh/id_rsa.pub && chmod 644 ~/.ssh/id_rsa.pub
+      fi
+      if [[ ! -z $SSH_PRIVATE_KEY ]]; then
+          echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      fi
+      if [[ ! -z $GITCONFIG ]]; then
+          echo $GITCONFIG | base64 -d > ~/.gitconfig && chmod 644 ~/.gitconfig
+      fi
 
 vscode:
   extensions:
