@@ -37,8 +37,6 @@ tasks:
       mkdir -p blt &&
       cp .gitpod/blt.yml blt/local.blt.yml &&
       find docroot/sites/ -name 'local*' | xargs rm -rf &&
-      cp .gitpod/global.settings.php docroot/sites/settings/global.settings.php &&
-      cp .gitpod/default.local.services.yml docroot/sites/local.services.yml &&
       export NEXT_PUBLIC_DRUPAL_BASE_URL=`gp url 8001` &&
       export PREVIEW_URL=${NEXT_PUBLIC_DRUPAL_BASE_URL#"https://"} &&
       blt blt:telemetry:disable --no-interaction &&
