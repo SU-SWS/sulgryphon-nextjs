@@ -40,7 +40,7 @@ const LibraryFooter = () => {
           </ul>
         </div>
         <div>
-          <h2 className="text-m0 mb-20">Who we are</h2>
+          <h2 className="text-m1 mb-20">Who we are</h2>
           <ul className="list-unstyled">
             <li><FooterLink href="/about-us">About us</FooterLink></li>
             <li><FooterLink href="/staff-directory">Staff directory</FooterLink></li>
