@@ -120,7 +120,6 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
   switch (`${viewId}--${displayId}`) {
     case 'stanford_shared_tags--card_grid':
       filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
-      if (filters && Object.keys(filters).length === 2) filters.nid = '0'
       graphqlResponse = await client.stanfordSharedTags({filters, pageSize: itemsPerPage});
       items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
       break
