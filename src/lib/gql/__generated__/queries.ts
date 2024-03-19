@@ -436,10 +436,16 @@ export const FragmentNodeSulStudyPlaceTeaserFragmentDoc = gql`
   sulStudyBranch {
     ...FragmentNodeSulLibraryTeaser
   }
+  sulStudyRoomNumber
+  sulStudyRoomDonorName
+  sulStudyImage {
+    ...FragmentMediaImage
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
-${FragmentNodeSulLibraryTeaserFragmentDoc}`;
+${FragmentNodeSulLibraryTeaserFragmentDoc}
+${FragmentMediaImageFragmentDoc}`;
 export const FragmentNodeTeaserUnionFragmentDoc = gql`
     fragment FragmentNodeTeaserUnion on NodeUnion {
   ...FragmentNodeInterface
@@ -943,10 +949,16 @@ export const FragmentNodeSulStudyPlaceFragmentDoc = gql`
   sulStudyType {
     ...FragmentTermInterface
   }
+  sulStudyRoomNumber
+  sulStudyRoomDonorName
+  sulStudyImage {
+    ...FragmentMediaImage
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentNodeSulLibraryFragmentDoc}
-${FragmentTermInterfaceFragmentDoc}`;
+${FragmentTermInterfaceFragmentDoc}
+${FragmentMediaImageFragmentDoc}`;
 export const FragmentNodeUnionFragmentDoc = gql`
     fragment FragmentNodeUnion on NodeUnion {
   ...FragmentNodeInterface

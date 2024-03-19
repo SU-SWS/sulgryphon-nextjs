@@ -90,6 +90,11 @@ fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
     sulStudyType {
         ...FragmentTermInterface
     }
+    sulStudyRoomNumber
+    sulStudyRoomDonorName
+    sulStudyImage {
+      ...FragmentMediaImage
+    }
 }
 
 fragment FragmentNodeStanfordPage on NodeStanfordPage {
@@ -450,6 +455,11 @@ fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
     }
     sulStudyBranch {
         ...FragmentNodeSulLibraryTeaser
+    }
+    sulStudyRoomNumber
+    sulStudyRoomDonorName
+    sulStudyImage {
+      ...FragmentMediaImage
     }
 }
 
