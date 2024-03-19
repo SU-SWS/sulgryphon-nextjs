@@ -11,6 +11,9 @@ module.exports = {
         protocol: drupalUrl.protocol.replace(':', ''),
         hostname: drupalUrl.hostname,
       },
+      {
+        hostname: '**.gitpod.io'
+      }
     ],
   },
   eslint: {
