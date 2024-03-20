@@ -1,3 +1,7 @@
+/**
+ * SUL custom base styles
+ */
+
 module.exports = function () {
   return function ({ addBase }) {
     addBase({
@@ -5,20 +9,20 @@ module.exports = function () {
         fontFamily: '"Source Serif Pro", Georgia, Times, "Times New Roman", serif',
       },
       'h1': {
-        fontSize: '1.85em',
+        fontSize: '2.31em',
         letterSpacing: '-0.02em',
         '@screen md': {
-          fontSize: '2.39em',
+          fontSize: '2.99em',
         },
         '@screen lg': {
           fontSize: '3.81em',
         },
       },
       'h2': {
-        fontSize: '1.4em',
+        fontSize: '1.75em',
         letterSpacing: '-0.016em',
         '@screen md': {
-          fontSize: '1.66em',
+          fontSize: '2.07em',
         },
         '@screen lg': {
           fontSize: '2.44em',
