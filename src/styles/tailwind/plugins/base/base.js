@@ -29,30 +29,30 @@ module.exports = function () {
         },
       },
       'h3': {
-        fontSize: '1.52em',
+        fontSize: '1.22em',
         letterSpacing: '-0.014em',
         '@screen md': {
-          fontSize: '1.73em',
+          fontSize: '1.38em',
         },
         '@screen lg': {
           fontSize: '1.95em',
         },
       },
       'h4': {
-        fontSize: '1.32em',
+        fontSize: '1.06em',
         letterSpacing: '-0.012em',
         '@screen md': {
-          fontSize: '1.44em',
+          fontSize: '1.15em',
         },
         '@screen lg': {
           fontSize: '1.56em',
         },
       },
       'h5': {
-        fontSize: '1.15em',
+        fontSize: '0.92em',
         letterSpacing: '-0.01em',
         '@screen md': {
-          fontSize: '1.2em',
+          fontSize: '0.96em',
         },
         '@screen lg': {
           fontSize: '1.25em',
