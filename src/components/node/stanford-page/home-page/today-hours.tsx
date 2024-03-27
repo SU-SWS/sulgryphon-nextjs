@@ -53,7 +53,6 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: HoursProps["lib
 
   return (
     <div {...props}>
-
       <Card
         className="border-0 rounded"
         image={imageUrl && <Image
@@ -64,7 +63,7 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: HoursProps["lib
           sizes="500px"
         />}
         footer={
-          <div className="relative pb-100 md:rs-pb-6">
+          <div className="relative pb-120 md:rs-pb-7">
             <div className="absolute w-full">
               <h3 id={formId} className="text-black leading-tight font-bold type-2 mb-03em">
                 Today&apos;s Hours

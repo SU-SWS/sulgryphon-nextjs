@@ -77,7 +77,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
     <div className="@container">
       <form className="relative z-[1]" onSubmit={handleSubmit}>
         <fieldset
-          className="grid grid-cols-1 @xl:grid-cols-2 @7xl:grid-cols-4 gap-xs lg:gap-xl mb-30"
+          className="grid grid-cols-1 @xl:grid-cols-2 @7xl:grid-cols-5 gap-xs lg:gap-xl mb-30"
           aria-label="Filter study places">
           <legend className="font-bold mb-10 whitespace-nowrap">Filter by:</legend>
           <SelectList
@@ -116,14 +116,18 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             onChange={(event, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
           />
 
+          <div className="flex flex-col pl-12 max-w-[176px] mt-6">
+            <button type="submit" className="button">
+              Submit
+            </button>
+
+            <a href="" className="text-center mt-20" onClick={handleReset}>
+              Clear Filters
+            </a>
+          </div>
         </fieldset>
 
-        <button type="submit" className="button mr-20">
-          Filter
-        </button>
-        <button className="button" onClick={handleReset}>
-          Reset
-        </button>
+
       </form>
 
       {items.length === 0 &&
