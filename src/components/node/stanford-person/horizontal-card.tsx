@@ -27,7 +27,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: Props) => {
               alt=""
               className="object-cover rounded-full"
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
+              sizes="(max-width: 1700px) 100vw, 1500px"
             />
           </div>
         </div>

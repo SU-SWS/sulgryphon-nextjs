@@ -30,7 +30,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
             src={buildUrl(imageUrl).toString()}
             alt={imageAlt}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
+            sizes="(max-width: 900px) 100vw, 1500px"
           />
         </div>
       }

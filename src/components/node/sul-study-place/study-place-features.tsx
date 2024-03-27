@@ -38,7 +38,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
               src={buildUrl(imageUrl).toString()}
               alt={imageAlt || ''}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
+              sizes="(max-width: 1700px) 100vw, 1500px"
               placeholder={imagePlaceholder ? 'blur' : 'empty'}
               blurDataURL={imagePlaceholder}
             />

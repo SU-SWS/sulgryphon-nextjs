@@ -37,7 +37,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                         src={buildUrl(image.suGalleryImage.url).toString()}
                         alt={image.suGalleryImage.alt || ''}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
+                        sizes="(max-width: 1700px) 100vw, 1500px"
                         className="object-cover"
                       />
                     </Link>
@@ -62,7 +62,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                           src={buildUrl(image.suGalleryImage.url).toString()}
                           alt={image.suGalleryImage?.alt || ''}
                           fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
+                          sizes="(max-width: 1700px) 100vw, 1500px"
                           className="object-contain"
                         />
                       </div>
