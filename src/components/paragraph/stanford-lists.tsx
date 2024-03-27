@@ -114,8 +114,7 @@ const getViewItems = cache(async (viewId: string, displayId: string, contextualF
   const client = graphqlClient({next: {tags}});
   let filters = getViewFilters(['term_node_taxonomy_name_depth', 'nid'], contextualFilter)
   let graphqlResponse;
-
-  const itemsPerPage = pageSize ? Math.ceil(pageSize / 3) * 3 : undefined;
+  const itemsPerPage = pageSize ? Math.min(Math.ceil(pageSize / 3) * 3, 99) : undefined;
 
   switch (`${viewId}--${displayId}`) {
     case 'stanford_shared_tags--card_grid':
