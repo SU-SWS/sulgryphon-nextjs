@@ -2,22 +2,27 @@
 
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from "react";
-import {syncDrupalPreviewRoutes} from "@/lib/drupal/sync-drupal-preview-path";
 
 const useNavigationEvent = () => {
-
-  const [url, setUrl] = useState<string | null>(null);
+  const [url, setUrl] = useState<string>();
   const pathname = usePathname();
 
   useEffect(() => {
     if (!pathname) return;
 
-    if (pathname !== url && !(pathname?.startsWith('/calendar/') || pathname?.startsWith('/study-place/'))) {
-      setUrl(pathname ? pathname : null);
+    if (pathname !== url && !(pathname?.startsWith('/gallery-image/'))) {
+      setUrl(pathname);
+
+      if (pathname && window && window.top !== window.self) {
+        // console.log('pathname', pathname);
+        window.parent.postMessage(
+          {type: "NEXT_DRUPAL_ROUTE_SYNC", path: pathname},
+          process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string
+        )
+      }
     }
   }, [url, pathname]);
 
-  useEffect(() => syncDrupalPreviewRoutes(url), [url])
   return url;
 }
 

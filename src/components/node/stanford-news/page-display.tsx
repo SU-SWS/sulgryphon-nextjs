@@ -1,40 +1,32 @@
-import "server-only";
 import Oembed from "@/components/patterns/elements/oembed";
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
-
 import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon";
 import TwitterIcon from "@/components/patterns/icons/TwitterIcon";
 import FacebookIcon from "@/components/patterns/icons/FacebookIcon";
-import Conditional from "@/components/utils/conditional";
 import NewsSocialLink from "@/components/node/stanford-news/news-social-link";
-import {News, StanfordParagraph} from "@/lib/drupal/drupal";
 import {formatDate} from "@/lib/format-date";
 import NewsPrintButton from "@/components/node/stanford-news/print-button";
-import fetchComponents from "@/lib/fetch-components";
-import Paragraph from "@/components/paragraph";
 import {redirect} from "next/navigation";
 import {buildUrl} from "@/lib/drupal/utils";
+import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d";
+import Paragraph from "@/components/paragraph";
 
-const StanfordNews = async ({node, ...props}: { node: News }) => {
+const StanfordNews = async ({node, ...props}: { node: NodeStanfordNews }) => {
   // Redirect the user to the external source.
-  if (node.su_news_source?.url && node.su_news_source?.url?.length > 0) redirect(node.su_news_source?.url);
+  if (node.suNewsSource?.url) redirect(node.suNewsSource?.url);
 
-  node.su_news_components = await fetchComponents<StanfordParagraph>(node.su_news_components || [])
-  node.su_news_components = node.su_news_components.filter(item => !!item?.id);
-
-  const imageUrl = node.su_news_banner?.type === 'media--image' && node.su_news_banner?.field_media_image?.uri.url
-  const imageAlt = node.su_news_banner?.type === 'media--image' && node.su_news_banner?.field_media_image?.resourceIdObjMeta?.alt;
-  const placeholder = node.su_news_banner?.type === 'media--image' && node.su_news_banner?.field_media_image?.uri.base64;
+  const imageUrl = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.url
+  const imageAlt = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.alt;
 
   return (
     <article {...props} className=" centered mt-50">
       <div className="centered 2xl:w-2/3 mb-100">
 
-        {node.su_news_dek && <div className="">{node.su_news_dek}</div>}
+        {node.suNewsDek && <div className="">{node.suNewsDek}</div>}
         <div className="md:flex">
           <div className="flex md:order-last">
-            <Conditional showWhen={!node.su_news_hide_social}>
+            {!node.suNewsHideSocial &&
               <ul className="flex list-unstyled md:pl-[10px] mt-[-3px]">
                 <li className="mr-1em">
 
@@ -80,11 +72,11 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
                   <NewsPrintButton/>
                 </li>
               </ul>
-            </Conditional>
+            }
           </div>
           <div>
-            {node.su_news_publishing_date && <>{formatDate(node.su_news_publishing_date + ' 12:00:00')} |&nbsp;</>}
-            {node.su_news_byline}
+            {node.suNewsPublishingDate && <>{formatDate(node.suNewsPublishingDate.time)} |&nbsp;</>}
+            {node.suNewsByline}
           </div>
         </div>
       </div>
@@ -97,38 +89,37 @@ const StanfordNews = async ({node, ...props}: { node: News }) => {
             src={buildUrl(imageUrl).toString()}
             alt={imageAlt || ''}
             fill
-            placeholder={placeholder ? 'blur' : 'empty'}
-            blurDataURL={placeholder || undefined}
           />
 
-          {node.su_news_banner_media_caption &&
+          {node.suNewsBannerMediaCaption &&
             <figcaption className="text-center caption">
-              {node.su_news_banner_media_caption}
+              {node.suNewsBannerMediaCaption}
             </figcaption>
           }
 
         </figure>
       }
 
-      {node?.su_news_banner?.field_media_oembed_video &&
+      {node.suNewsBanner?.__typename === 'MediaVideo' &&
         <figure className="relative mb-100 w-10/12 mx-auto aspect-[16/9]">
           <Oembed
-            url={node.su_news_banner.field_media_oembed_video}
+            url={node.suNewsBanner.mediaOembedVideo}
           />
-          {node.su_news_banner_media_caption &&
+          {node.suNewsBannerMediaCaption &&
             <figcaption className="text-center caption">
-              {node.su_news_banner_media_caption}
+              {node.suNewsBannerMediaCaption}
             </figcaption>
           }
         </figure>
       }
 
-
-      <div className="centered 2xl:w-2/3">
-        {node.su_news_components.map(component =>
-          <Paragraph key={component.id} paragraph={component} fullWidth={false}/>
-        )}
-      </div>
+      {node.suNewsComponents &&
+        <div className="centered 2xl:w-2/3">
+          {node.suNewsComponents.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
+        </div>
+      }
     </article>
   )
 }

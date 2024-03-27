@@ -1,22 +1,20 @@
-import {Publication} from "@/lib/drupal/drupal";
-import Card from "@/components/patterns/card";
-import Conditional from "@/components/utils/conditional";
-import Link from "@/components/patterns/elements/drupal-link";
 
-const StanfordPublicationCard = ({node, ...props}: { node: Publication }) => {
-  const topics = node.su_publication_topics?.filter(topic => !!topic?.name) || [];
+import Card from "@/components/patterns/card";
+import Link from "@/components/patterns/elements/drupal-link";
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d";
+
+const StanfordPublicationCard = ({node, ...props}: { node: NodeStanfordPublication }) => {
+  const topics = node.suPublicationTopics?.filter(topic => !!topic?.name) || [];
   return (
     <article {...props}>
       <Card
         superHeader={
-          <Conditional showWhen={node.su_publication_citation?.citation_type?.label}>
             <div className="text-16 md:text-18 2xl:text-19 rs-mb-2">
-              {node.su_publication_citation?.citation_type?.label}
+              {node.suPublicationCitation?.__typename}
             </div>
-          </Conditional>
         }
         header={
-          <Link className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red" href={node.path?.alias ?? "#"}>
+          <Link className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red" href={node.path}>
             {node.title}
           </Link>
         }

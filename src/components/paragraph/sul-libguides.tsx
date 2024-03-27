@@ -1,11 +1,12 @@
 import formatHtml from "@/lib/format-html";
-import {PropsWithoutRef} from "react";
+import {HTMLAttributes} from "react";
 import Libguide from "@/components/node/stanford-person/libguide";
 import fetchLibGuides from "@/lib/libguides";
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
 
-interface Props extends PropsWithoutRef<any> {
-  headline?: string;
-  description?: string;
+type Props = HTMLAttributes<HTMLDivElement> & {
+  headline?: Maybe<string>
+  description?: Maybe<string>
   libguideId: number
 }
 

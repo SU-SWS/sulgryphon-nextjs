@@ -1,10 +1,10 @@
 import Link from "@/components/patterns/elements/drupal-link";
-import {ComponentProps} from "react";
+import {HTMLAttributes} from "react";
 
 import Logo from "@/components/patterns/logo";
 import StanfordWordMark from "@/components/patterns/icons/stanford-wordmark";
 
-interface LockupProps extends ComponentProps<any> {
+type LockupProps = HTMLAttributes<HTMLDivElement> & {
   whiteText?: boolean
 }
 

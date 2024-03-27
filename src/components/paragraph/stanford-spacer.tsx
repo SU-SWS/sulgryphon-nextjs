@@ -1,4 +1,6 @@
-const StanfordSpacer = ({size}: { size: 'spacer-reduced' | 'spacer-minimal' | string }) => {
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
+
+const StanfordSpacer = ({size}: { size?: Maybe<'spacer-reduced' | 'spacer-minimal' | string> }) => {
   let height;
   switch (size) {
     case 'spacer-reduced':

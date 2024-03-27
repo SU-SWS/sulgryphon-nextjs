@@ -45,7 +45,7 @@ const LibraryAdditionalHoursComponent = ({hoursId}: {hoursId: string}) => {
           </Link>
         </div>
         {additionalLocations.map(location =>
-          <div key={location.id} className="grid @xl:grid-cols-1-1 mb-30 last:mb-0">
+          <div key={location.id} className="grid @xl:grid-cols-2 mb-30 last:mb-0">
             <div id={`${id}-${location.id}`} className="flex items-center">{location.name}</div>
 
             <div className="flex gap-xs">

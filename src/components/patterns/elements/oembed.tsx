@@ -1,19 +1,19 @@
 "use client";
 
 import {ArrowPathIcon} from "@heroicons/react/20/solid";
-import {useInView} from "react-intersection-observer";
 import Embed from "react-tiny-oembed";
 import {PropsWithoutRef} from "react";
+import {useIntersectionObserver} from "usehooks-ts";
 
 interface Props extends PropsWithoutRef<any> {
   url: string
 }
 
 const Oembed = ({url, ...props}: Props) => {
-  const {ref, inView} = useInView({triggerOnce: true})
+  const {isIntersecting, ref} = useIntersectionObserver({freezeOnceVisible: true})
   return (
     <div ref={ref} {...props}>
-      {inView && <Embed url={url} LoadingFallbackElement={<Loading/>}/>}
+      {isIntersecting && <Embed url={url} LoadingFallbackElement={<Loading/>}/>}
     </div>
   )
 }

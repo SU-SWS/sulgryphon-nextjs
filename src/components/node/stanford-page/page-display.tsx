@@ -1,19 +1,14 @@
-import "server-only";
-
 import {ParagraphRows} from "@/components/paragraph/rows/rows";
-import {BasicPage, StanfordParagraph} from "@/lib/drupal/drupal";
-import fetchComponents from "@/lib/fetch-components";
-import {isDraftMode} from "@/lib/drupal/is-draft-mode";
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
-const StanfordPage = async ({node}: { node: BasicPage }) => {
-  const draftMode = isDraftMode();
-  node.su_page_components = await fetchComponents<StanfordParagraph>(node.su_page_components || [], {draftMode});
-  node.su_page_components = node.su_page_components.filter(item => !!item?.id);
+const StanfordPage = async ({node}: { node: NodeStanfordPage }) => {
+  const fullWidth = node.layoutSelection?.id === 'stanford_basic_page_full';
 
-  const fullWidth = node.layout_selection?.resourceIdObjMeta?.drupal_internal__target_id === 'stanford_basic_page_full';
   return (
     <article>
-      <ParagraphRows items={node.su_page_components} fullWidth={fullWidth}/>
+      {node.suPageComponents &&
+        <ParagraphRows items={node.suPageComponents} fullWidth={fullWidth}/>
+      }
     </article>
   )
 }

@@ -2,6 +2,7 @@ import Link from "@/components/patterns/elements/drupal-link";
 import {ChevronRightIcon} from "@heroicons/react/20/solid";
 import {PropsWithChildren} from "react";
 import {twMerge} from "tailwind-merge";
+import {Maybe} from "@/lib/gql/__generated__/drupal.d";
 
 export const DrupalLinkButton = ({href, children, className = '', ...props}: PropsWithChildren<{href: string, className?: string}>) => {
   return (
@@ -44,18 +45,18 @@ export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{
     <Link
       href={href}
       {...props}
-      className={twMerge("relative pr-30 hocus:text-brick no-underline rs-mt-neg1 pt-10", props.className)}
+      className={twMerge("relative pr-30 no-underline rs-mt-neg1 hocus:bg-black-10 hocus:underline hocus:su-dark-brick active:text-cardinal-red", props.className)}
     >
       {children}
-      <ChevronRightIcon className="inline absolute top-0 right-0 h-full pt-10"/>
+      <ChevronRightIcon className="inline absolute top-0 right-0 h-full"/>
     </Link>
   )
 }
 
 interface DrupalLinkProps extends PropsWithChildren<any> {
-  url?: string
-  title?: string
-  style?: string
+  url?: Maybe<string>
+  title?: Maybe<string>
+  style?: Maybe<string>
 }
 
 

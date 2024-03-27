@@ -1,4 +1,3 @@
-import {GlobalMessageType} from "@/lib/drupal/drupal";
 import formatHtml from "@/lib/format-html";
 import {DrupalActionLink} from "@/components/patterns/link";
 import {
@@ -8,21 +7,23 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon
 } from "@heroicons/react/20/solid";
-import Conditional from "@/components/utils/conditional";
-import {getConfigPageResource} from "@/lib/drupal/get-resource";
+import {getConfigPage} from "@/lib/gql/fetcher";
+import {StanfordGlobalMessage} from "@/lib/gql/__generated__/drupal.d";
+import {JSX} from "react";
 
 const GlobalMessage = async () => {
-  let configPage;
+  let configPage: StanfordGlobalMessage | undefined;
   try {
-    configPage = await getConfigPageResource<GlobalMessageType>('stanford_global_message');
+    configPage = await getConfigPage<StanfordGlobalMessage>("StanfordGlobalMessage")
   } catch (e) {
     return null;
   }
-  if (!configPage || !configPage.su_global_msg_enabled) {
+
+  if (!configPage || !configPage.suGlobalMsgEnabled) {
     return null;
   }
 
-  const options = {
+  const options: Record<StanfordGlobalMessage["suGlobalMsgType"], { bgColor: string, textColor: string, linkClasses: string, icon: JSX.Element }> = {
     plain: {
       bgColor: "bg-foggy-light",
       textColor: "text-black-true",
@@ -54,7 +55,7 @@ const GlobalMessage = async () => {
       icon: <ExclamationTriangleIcon width={30}/>
     },
   }
-  const chosenOption = options[configPage.su_global_msg_type];
+  const chosenOption = options[configPage.suGlobalMsgType || "success"];
 
   return (
     <div className={"relative z-30 lg:z-0 " + chosenOption.bgColor + " " + chosenOption.textColor}>
@@ -62,23 +63,23 @@ const GlobalMessage = async () => {
       <div className="centered flex gap-2xl py-20">
         <div className="flex-shrink-0 flex items-center justify-center">
           {chosenOption.icon}
-          {configPage.su_global_msg_label}
+          {configPage.suGlobalMsgLabel}
         </div>
 
         <div>
-          <Conditional showWhen={configPage.su_global_msg_header}>
-            <h2 className="text-m3">{configPage.su_global_msg_header}</h2>
-          </Conditional>
+          {configPage.suGlobalMsgHeader &&
+            <h2 className="text-m3">{configPage.suGlobalMsgHeader}</h2>
+          }
 
-          {configPage.su_global_msg_message &&
+          {configPage.suGlobalMsgMessage?.processed &&
             <div className={chosenOption.textColor}>
-              {formatHtml(configPage.su_global_msg_message?.replace(/<a /, `<a class="${chosenOption.linkClasses}" `))}
+              {formatHtml(configPage.suGlobalMsgMessage.processed.replace(/<a /, `<a class="${chosenOption.linkClasses}" `))}
             </div>
           }
 
-          {configPage.su_global_msg_link?.url &&
-            <DrupalActionLink href={configPage.su_global_msg_link?.url} className={chosenOption.linkClasses}>
-              {configPage.su_global_msg_link?.title}
+          {configPage.suGlobalMsgLink?.url &&
+            <DrupalActionLink href={configPage.suGlobalMsgLink.url} className={chosenOption.linkClasses}>
+              {configPage.suGlobalMsgLink.title}
             </DrupalActionLink>
           }
         </div>

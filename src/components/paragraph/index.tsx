@@ -10,143 +10,154 @@ import SulCollection from "@/components/paragraph/sul-collection";
 import SulFeaturedCollection from "@/components/paragraph/sul-featured-collection";
 import SulContactCard from "@/components/paragraph/sul-contact-card";
 import SulButton from "@/components/paragraph/sul-button";
-import {PropsWithoutRef, useId} from "react";
+import {ElementType, HTMLAttributes, Suspense, useId} from "react";
 import SulLibguides from "@/components/paragraph/sul-libguides";
-import UnpublishedBanner from "@/components/patterns/unpublished-banner";
+import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
+import {ParagraphBehaviors} from "@/lib/drupal/drupal";
 
-interface ParagraphProps extends PropsWithoutRef<any> {
-  paragraph: any;
+type ParagraphProps = HTMLAttributes<HTMLDivElement> & {
+  paragraph: ParagraphUnion;
   fullWidth?: boolean;
   singleRow?: boolean;
 }
 
 const Paragraph = ({paragraph, singleRow = false, fullWidth = false, ...props}: ParagraphProps) => {
-  props['data-type'] = paragraph.type;
-  props['data-id'] = paragraph.id;
   const headerId = useId();
+
+  const paragraphBehaviors = getParagraphBehaviors(paragraph);
 
   return (
     <>
-      {(paragraph.status != undefined && !paragraph.status) &&
-        <UnpublishedBanner/>
-      }
-
-      {paragraph.type === 'paragraph--stanford_card' &&
+      {paragraph.__typename === 'ParagraphStanfordCard' &&
         <StanfordCard
-          header={paragraph.su_card_header}
-          superHeader={paragraph.su_card_super_header}
-          body={paragraph.su_card_body}
-          link={paragraph.su_card_link}
-          linkStyle={paragraph.behavior_settings?.sul_card_styles?.link_display_style}
-          sprinklePosition={paragraph.behavior_settings?.sul_card_styles?.background_sprinkles}
-          image={paragraph?.su_card_media?.field_media_image}
-          videoUrl={paragraph?.su_card_media?.field_media_oembed_video}
-          orientation={paragraph.behavior_settings?.sul_card_styles?.orientation}
+          header={paragraph.suCardHeader}
+          superHeader={paragraph.suCardSuperHeader}
+          body={paragraph.suCardBody?.processed}
+          link={paragraph.suCardLink}
+          linkStyle={paragraphBehaviors?.sul_card_styles?.link_display_style}
+          sprinklePosition={paragraphBehaviors?.sul_card_styles?.background_sprinkles}
+          image={paragraph.suCardMedia?.__typename === 'MediaImage' ? paragraph.suCardMedia : undefined}
+          videoUrl={paragraph.suCardMedia?.__typename === 'MediaVideo' ? paragraph.suCardMedia.mediaOembedVideo : undefined}
+          orientation={paragraphBehaviors?.sul_card_styles?.orientation}
           singleRow={singleRow}
           headerId={headerId}
           fullWidth={fullWidth}
+          headingTag={(paragraphBehaviors.su_card_styles?.heading?.replace(/\..*/, '') || "h2") as ElementType}
+          hideHeading={paragraphBehaviors.su_card_styles?.hide_heading}
           {...props}
         />}
 
-      {paragraph.type === 'paragraph--stanford_banner' &&
+      {paragraph.__typename === 'ParagraphStanfordBanner' &&
         <StanfordBanner
-          header={paragraph.su_banner_header}
-          superHeader={paragraph.su_banner_sup_header}
-          body={paragraph.su_banner_body}
-          link={paragraph.su_banner_button}
-          image={paragraph?.su_banner_image?.field_media_image}
-          overlayPosition={paragraph.behavior_settings?.hero_pattern?.overlay_position}
+          header={paragraph.suBannerHeader}
+          superHeader={paragraph.suBannerSupHeader}
+          body={paragraph.suBannerBody?.processed}
+          link={paragraph.suBannerButton}
+          image={paragraph.suBannerImage}
+          overlayPosition={paragraphBehaviors?.hero_pattern?.overlay_position}
           headerId={headerId}
+          headingTag={(paragraphBehaviors.hero_pattern?.heading?.replace(/\..*/, '') || "h2") as ElementType}
+          hideHeading={paragraphBehaviors.hero_pattern?.hide_heading}
           {...props}
         />
       }
 
-      {paragraph.type === 'paragraph--stanford_gallery' &&
+      {paragraph.__typename === 'ParagraphStanfordGallery' &&
         <StanfordImageGallery paragraph={paragraph} {...props}/>}
 
-      {paragraph.type === 'paragraph--stanford_media_caption' &&
+      {paragraph.__typename === 'ParagraphStanfordMediaCaption' &&
         <StanfordMediaCaption
-          caption={paragraph.su_media_caption_caption}
-          link={paragraph.su_media_caption_link}
-          image={paragraph.su_media_caption_media?.field_media_image}
-          videoUrl={paragraph.su_media_caption_media?.field_media_oembed_video}
+          caption={paragraph.suMediaCaptionCaption?.processed}
+          link={paragraph.suMediaCaptionLink}
+          image={paragraph.suMediaCaptionMedia?.__typename === 'MediaImage' ? paragraph.suMediaCaptionMedia: undefined}
+          videoUrl={paragraph.suMediaCaptionMedia?.__typename === 'MediaVideo' ? paragraph.suMediaCaptionMedia.mediaOembedVideo: undefined}
           {...props}
         />
       }
 
-      {paragraph.type === 'paragraph--stanford_wysiwyg' &&
-        <StanfordWysiwyg text={paragraph.su_wysiwyg_text} {...props}/>}
+      {paragraph.__typename === 'ParagraphStanfordWysiwyg' &&
+        <StanfordWysiwyg text={paragraph.suWysiwygText?.processed} {...props}/>}
 
-      {paragraph.type === 'paragraph--stanford_lists' &&
-        <StanfordLists
-          headline={paragraph.su_list_headline}
-          description={paragraph.su_list_description}
-          link={paragraph.su_list_button}
-          view={paragraph.su_list_view}
-          styles={paragraph.behavior_settings}
-          headerId={headerId}
-          {...props}
-        />
+      {paragraph.__typename === 'ParagraphStanfordList' &&
+        <Suspense>
+          <StanfordLists
+            headline={paragraph.suListHeadline}
+            description={paragraph.suListDescription?.processed}
+            link={paragraph.suListButton}
+            view={paragraph.suListView}
+            behaviors={paragraphBehaviors}
+            headerId={headerId}
+            uuid={paragraph.id}
+            headingBehavior={paragraphBehaviors.list_paragraph?.heading_behavior}
+            {...props}
+          />
+        </Suspense>
       }
 
-      {paragraph.type === 'paragraph--stanford_entity' &&
+      {paragraph.__typename === 'ParagraphStanfordEntity' &&
         <StanfordEntity
-          headline={paragraph.su_entity_headline}
-          description={paragraph.su_entity_description}
-          link={paragraph.su_entity_button}
-          entities={paragraph.su_entity_item || []}
-          styles={paragraph.behavior_settings?.sul_teaser_styles}
+          headline={paragraph.suEntityHeadline}
+          description={paragraph.suEntityDescription?.processed}
+          link={paragraph.suEntityButton}
+          entities={paragraph.suEntityItem || []}
+          styles={paragraphBehaviors?.sul_teaser_styles}
           headerId={headerId}
+          headingBehavior={paragraphBehaviors.stanford_teaser?.heading_behavior}
           {...props}
         />
       }
 
-      {paragraph.type === 'paragraph--stanford_spacer' && <StanfordSpacer size={paragraph.su_spacer_size}/>}
+      {paragraph.__typename === 'ParagraphStanfordSpacer' && <StanfordSpacer size={paragraph.suSpacerSize}/>}
 
-      {paragraph.type === 'paragraph--collection' &&
+      {paragraph.__typename === 'ParagraphCollection' &&
         <SulCollection
-          cards={paragraph.sul_collection_card}
-          heading={paragraph.sul_collection_heading}
+          cards={paragraph.sulCollectionCard}
+          heading={paragraph.sulCollectionHeading}
           {...props}
         />
       }
 
-      {paragraph.type === 'paragraph--sul_feat_collection' &&
+      {paragraph.__typename === 'ParagraphSulFeatCollection' &&
         <SulFeaturedCollection
-          headline={paragraph.sul_collection__headline}
-          link={paragraph.sul_collection__link}
-          cards={paragraph.sul_collection__cards}
-          styles={paragraph.behavior_settings?.sul_feat_collections_styles}
+          headline={paragraph.sulCollectionHeadline}
+          link={paragraph.sulCollectionLink}
+          cards={paragraph.sulCollectionCards}
+          styles={paragraphBehaviors?.sul_feat_collections_styles}
           headerId={headerId}
           fullWidth={fullWidth}
           {...props}
         />
       }
 
-      {paragraph.type === 'paragraph--sul_contact_card' &&
+      {paragraph.__typename === 'ParagraphSulContactCard' &&
         <SulContactCard paragraph={paragraph} {...props}/>}
 
-      {paragraph.type === 'paragraph--sul_button' &&
+      {paragraph.__typename === 'ParagraphSulButton' &&
         <SulButton
-          headline={paragraph.sul_button_headline}
-          link={paragraph.sul_button_link}
-          styles={paragraph.behavior_settings?.sul_button_styles}
+          headline={paragraph.sulButtonHeadline}
+          link={paragraph.sulButtonLink}
+          styles={paragraphBehaviors?.sul_button_styles}
           headerId={headerId}
           fullWidth={fullWidth}
           {...props}
         />
       }
 
-      {paragraph.type === 'paragraph--sul_libguide' &&
+      {paragraph.__typename === 'ParagraphSulLibguide' &&
         <SulLibguides
-          headline={paragraph.sul_libguide__headline}
-          description={paragraph.sul_libguide__desc}
-          libguideId={paragraph.sul_libguide_id}
+          headline={paragraph.sulLibguideHeadline}
+          description={paragraph.sulLibguideDesc?.processed}
+          libguideId={paragraph.sulLibguideId}
           {...props}
         />
       }
     </>
   );
+}
+
+export const getParagraphBehaviors = (paragraph: ParagraphUnion): ParagraphBehaviors => {
+  if (paragraph.behaviors) return JSON.parse(paragraph.behaviors)
+  return {}
 }
 
 export default Paragraph;

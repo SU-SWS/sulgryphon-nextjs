@@ -1,29 +1,12 @@
-import {getViewItems} from "@/components/views/view";
-import {Person} from "@/lib/drupal/drupal";
 import CardList from "@/components/views/card-list";
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordPerson[]
   hasHeading: boolean
 }
 
-const PersonCardView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<Person>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
+const PersonCardView = async ({items, hasHeading}: Props) => {
   return (
     <CardList items={items} h3Heading={hasHeading}/>
   )

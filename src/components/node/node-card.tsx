@@ -8,23 +8,24 @@ import StanfordPersonCard from "@/components/node/stanford-person/card";
 import StanfordPublicationCard from "@/components/node/stanford-publication/card";
 import SulLibraryCard from "@/components/node/sul-library/card";
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card";
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface NodeProps extends PropsWithRef<any> {
-  node: any
+  node: NodeUnion
 }
 
 const NodeCardDisplay = ({node, ...props}: NodeProps) => {
   return (
     <>
-      {node.type === "node--stanford_course" && <StanfordCourseCard node={node} {...props}/>}
-      {node.type === "node--stanford_event" && <StanfordEventCard node={node} {...props}/>}
-      {node.type === "node--stanford_event_series" && <StanfordEventSeriesCard node={node} {...props}/>}
-      {node.type === "node--stanford_news" && <StanfordNewsCard node={node} {...props}/>}
-      {node.type === "node--stanford_page" && <StanfordPageCard node={node} {...props}/>}
-      {node.type === "node--stanford_person" && <StanfordPersonCard node={node} {...props}/>}
-      {node.type === "node--stanford_publication" && <StanfordPublicationCard node={node} {...props}/>}
-      {node.type === "node--sul_library" && <SulLibraryCard node={node} {...props}/>}
-      {node.type === "node--sul_study_place" && <SulStudyPlaceCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordCourse" && <StanfordCourseCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordEvent" && <StanfordEventCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordEventSeries" && <StanfordEventSeriesCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordNews" && <StanfordNewsCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPage" && <StanfordPageCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPerson" && <StanfordPersonCard node={node} {...props}/>}
+      {node.__typename === "NodeStanfordPublication" && <StanfordPublicationCard node={node} {...props}/>}
+      {node.__typename === "NodeSulLibrary" && <SulLibraryCard node={node} {...props}/>}
+      {node.__typename === "NodeSulStudyPlace" && <SulStudyPlaceCard node={node} {...props}/>}
     </>
   )
 }

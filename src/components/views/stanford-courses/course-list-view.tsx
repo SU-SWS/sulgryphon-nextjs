@@ -1,30 +1,11 @@
 import StanfordCourseListItem from "@/components/node/stanford-course/list-item";
-import {getViewItems} from "@/components/views/view";
-import {Course} from "@/lib/drupal/drupal";
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordCourse[]
 }
 
-const CourseListView = async ({view, args, itemsToDisplay, emptyMessage}: Props) => {
-
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<Course>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
-
+const CourseListView = async ({items}: Props) => {
   return (
     <div className="mb-20">
       {items.map(item =>

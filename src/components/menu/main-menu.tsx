@@ -5,16 +5,15 @@ import {useEffect} from "react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
-import {DrupalMenuLinkContent} from "next-drupal";
-import Conditional from "@/components/utils/conditional";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
 import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {usePathname} from "next/navigation";
 import {useBoolean} from "usehooks-ts";
+import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d";
 
-const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
+const MainMenu = ({menuItems}: { menuItems: MenuItemType[] }) => {
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false);
   const {value: addCloseAnimation, setValue: setAddCloseAnimation} = useBoolean(false);
 
@@ -108,18 +107,14 @@ const MainMenu = ({menuItems}: { menuItems: DrupalMenuLinkContent[] }) => {
 }
 
 
-interface MenuItemProps {
-  id: string
-  title: string
-  url: string
-  items?: DrupalMenuLinkContent[]
+type MenuItemProps = MenuItemType & {
   expanded: boolean
   tabIndex?: number
   activeTrail: string[]
   menuLevel?: number
 }
 
-const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
+const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
   const browserUrl = useNavigationEvent();
   const {value: submenuOpen, setFalse: closeSubmenu, toggle: toggleSubmenu} = useBoolean(false);
   const active = activeTrail.includes(id);
@@ -137,7 +132,7 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
     'ml-[90px]',
     'ml-[120px]'
   ];
-  const belowItems = (items && items?.length > 0) ? items : [];
+  const belowItems = (children && children?.length > 0) ? children : [];
 
   useEffect(() => closeSubmenu(), [browserUrl, closeSubmenu])
   const outsideClickProps = useOutsideClick(closeSubmenu)
@@ -148,7 +143,7 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
 
     // If there are children under the menu item.
     if (belowItems.length >= 1) {
-      classes.push(menuLevel == 0 ? (url.length > 1 ? 'lg:w-[calc(100%-40px)]' : "") : ' lg:pr-0 lg:mr-[2px]');
+      classes.push(menuLevel == 0 ? ((url && url.length > 1) ? 'lg:w-[calc(100%-40px)]' : "") : ' lg:pr-0 lg:mr-[2px]');
     }
 
     // Special treatment for the top level items.
@@ -185,7 +180,7 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
 
   return (
     <li className="p-0 m-0 relative lg:flex" {...outsideClickProps}>
-      <Conditional showWhen={url.length >= 1}>
+      {(url && url.length >= 1) &&
         <Link
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : '#'}
@@ -197,9 +192,9 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
             {title}
           </div>
         </Link>
-      </Conditional>
+      }
 
-      {url.length === 0 &&
+      {(!url || url.length === 0) &&
         <button
           tabIndex={tabIndex}
           className={"group flex items-center font-semibold text-left text-white lg:text-black-true hocus:text-white lg:hocus:text-archway hocus:bg-black lg:hocus:bg-transparent w-full p-20 " + getLinkBorderClasses()}
@@ -216,7 +211,7 @@ const MenuItem = ({id, title, url, items, expanded, tabIndex = 0, activeTrail = 
 
       {(menuLevel == 0 && belowItems.length >= 1 && expanded) &&
         <>
-          {url.length > 0 &&
+          {(url && url.length > 0) &&
             <DropDownButton
               isOpen={submenuOpen}
               menuLevel={menuLevel}

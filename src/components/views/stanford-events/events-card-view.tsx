@@ -1,31 +1,12 @@
-import {getViewItems} from "@/components/views/view";
-import {Event} from "@/lib/drupal/drupal";
 import CardList from "@/components/views/card-list";
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordEvent[]
   hasHeading: boolean
 }
 
-const EventsCardView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
-
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<Event>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
-
+const EventsCardView = async ({items, hasHeading}: Props) => {
   return (
     <CardList items={items} h3Heading={hasHeading}/>
   )

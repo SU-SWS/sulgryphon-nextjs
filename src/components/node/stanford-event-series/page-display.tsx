@@ -1,38 +1,40 @@
-import "server-only";
-import Conditional from "@/components/utils/conditional";
-import {ParagraphRows} from "@/components/paragraph/rows/rows";
 import NodeListDisplay from "@/components/node/node-list-display";
-import {EventSeries, StanfordParagraph} from "@/lib/drupal/drupal";
-import fetchComponents from "@/lib/fetch-components";
+import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d";
+import Paragraph from "@/components/paragraph";
 
-const StanfordEventSeries = async ({node, ...props}: { node: EventSeries }) => {
-  node.su_event_series_components = await fetchComponents<StanfordParagraph>(node.su_event_series_components || []);
-  node.su_event_series_components = node.su_event_series_components.filter(item => !!item?.id);
+const StanfordEventSeries = async ({node, ...props}: { node: NodeStanfordEventSeries }) => {
+
   return (
     <article {...props}>
-      <Conditional showWhen={node.su_event_series_subheadline}>
+      {node.suEventSeriesSubheadline &&
         <h2 className="type-3 rs-mb-1">
-          {node.su_event_series_subheadline}
+          {node.suEventSeriesSubheadline}
         </h2>
-      </Conditional>
-      <Conditional showWhen={node.su_event_series_dek}>
+      }
+      {node.suEventSeriesDek &&
         <div className="rs-mb-4 text-16 md:text-21">
-          {node.su_event_series_dek}
+          {node.suEventSeriesDek}
         </div>
-      </Conditional>
+      }
 
-      <ParagraphRows items={node.su_event_series_components}/>
+      {node.suEventSeriesComponents &&
+        <>
+          {node.suEventSeriesComponents.map(paragraph =>
+            <Paragraph key={paragraph.id} paragraph={paragraph}/>
+          )}
+        </>
+      }
 
-      <Conditional showWhen={node.su_event_series_event}>
+      {(node.suEventSeriesEvent) &&
         <div className={"md:centered rs-my-6 grid gap-xl"}>
-          {node.su_event_series_event.map(item =>
+          {node.suEventSeriesEvent.map(item =>
             <div key={item.id}
                  className={"pb-50 mb-50 last:pb-0 border-[#c6c6c6] last:border-none border-b"}>
               <NodeListDisplay node={item} key={item.id}/>
             </div>
           )}
         </div>
-      </Conditional>
+      }
     </article>
   )
 }

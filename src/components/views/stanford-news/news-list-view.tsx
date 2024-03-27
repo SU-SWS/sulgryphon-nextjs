@@ -1,30 +1,12 @@
-import {getViewItems} from "@/components/views/view";
-import {News} from "@/lib/drupal/drupal";
 import StanfordNewsListItem from "@/components/node/stanford-news/list-item";
+import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d";
 
 interface Props {
-  view: string
-  args: string
-  itemsToDisplay: number
-  emptyMessage: string
+  items: NodeStanfordNews[]
   hasHeading: boolean
 }
 
-const NewsListView = async ({view, args, itemsToDisplay, emptyMessage, hasHeading}: Props) => {
-  args = args ? args + '/0/0/0' : '0/0/0/0';
-
-  const items = await getViewItems<News>(view, itemsToDisplay, args.split('/'));
-  if (items.length === 0) {
-    if (emptyMessage) {
-      return (
-        <div>
-          {emptyMessage}
-        </div>
-      )
-    }
-    return null;
-  }
-
+const NewsListView = async ({items, hasHeading}: Props) => {
   return (
     <ul className="list-unstyled gap-2xl">
       {items.map(item =>

@@ -1,20 +1,32 @@
 import {ReactNodeLike} from "prop-types";
-import Conditional from "@/components/utils/conditional";
 import Card from "@/components/patterns/card";
-import {DrupalLinkType} from "@/lib/drupal/drupal";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import {ElementType, HTMLAttributes} from "react";
 
-interface BannerProps {
-  image?: ReactNodeLike;
-  superHeader?: string
-  header?: string
-  body?: string
-  link?: DrupalLinkType
-  overlayPosition?: string
-  className?: string
+type BannerProps = HTMLAttributes<HTMLDivElement> & {
+  image?: Maybe<ReactNodeLike>;
+  superHeader?: Maybe<string>
+  header?: Maybe<string>
+  body?: Maybe<string>
+  link?: Maybe<LinkType>
+  overlayPosition?: Maybe<string>
   headerId?: string
+  headingTag?: ElementType
+  hideHeading?: boolean
 }
 
-const Banner = ({headerId, image, header, superHeader, body, link, overlayPosition, ...props}: BannerProps) => {
+const Banner = ({
+  headerId,
+  image,
+  header,
+  superHeader,
+  body,
+  link,
+  overlayPosition,
+  headingTag,
+  hideHeading,
+  ...props
+}: BannerProps) => {
 
   const hasCardText = header || superHeader || body || link;
 
@@ -25,7 +37,7 @@ const Banner = ({headerId, image, header, superHeader, body, link, overlayPositi
         {image}
       </div>
 
-      <Conditional showWhen={hasCardText}>
+      {(hasCardText) &&
         <div
           className={`mx-auto block lg:absolute lg:top-auto lg:bottom-36 ${overlayPosition === 'right' ? 'lg:right-36' : 'lg:left-36'}`}>
           <div
@@ -36,10 +48,12 @@ const Banner = ({headerId, image, header, superHeader, body, link, overlayPositi
               body={body}
               link={link}
               headerId={headerId}
+              headingLevel={headingTag}
+              hideHeading={hideHeading}
             />
           </div>
         </div>
-      </Conditional>
+      }
     </div>
   )
 }

@@ -1,18 +1,18 @@
 "use client";
 
-import {DrupalLinkType} from "@/lib/drupal/drupal";
 import Link from "@/components/patterns/elements/drupal-link";
-import Conditional from "@/components/utils/conditional";
 import useIsCentered from "@/lib/hooks/useIsCentered";
-import {PropsWithoutRef, useRef} from "react";
+import {HTMLAttributes, useRef} from "react";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
 
-interface Props extends PropsWithoutRef<any> {
-  headline?: string
-  link: DrupalLinkType
+type Props = HTMLAttributes<HTMLDivElement> & {
+  headline?: Maybe<string>
+  link: LinkType
   styles?: {
-    background?: string
+    background?: Maybe<string>
   }
   headerId?: string
+  fullWidth?: Maybe<boolean>
 }
 
 const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props}: Props) => {
@@ -20,25 +20,30 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
   const ref = useRef<HTMLDivElement>(null);
   const isCentered = useIsCentered(ref)
 
-  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
-    link.options.attributes['aria-labelledby'] = headerId;
-    delete link?.options?.attributes?.['aria-label'];
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
+
+  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
+    linkAttributes['aria-labelledby'] = headerId;
+    delete linkAttributes['aria-label'];
   }
 
   return (
-    <div className={"relative" + ((!fullWidth || !isCentered) ? " w-full " : " full-screen ") } ref={ref} {...props}>
+    <div className={"relative" + ((!fullWidth || !isCentered) ? " w-full " : " full-screen ")} ref={ref} {...props}>
       <div
         className={"py-50 " + (isGray ? "bg-black-10" : "bg-black-true")}>
         <div className="centered">
-          <Conditional showWhen={headline}>
+          {(headline) &&
             <h2 id={headerId} className={"text-center text-m3 " + (!isGray ? 'text-white' : '')}>
               {headline}
             </h2>
-          </Conditional>
+          }
 
-          <Link href={link.url} className="button block mx-auto text-center w-fit" {...link.options?.attributes}>
-            {link.title}
-          </Link>
+          {link?.url &&
+            <Link href={link.url} className="button block mx-auto text-center w-fit" {...linkAttributes}>
+              {link.title}
+            </Link>
+          }
         </div>
       </div>
     </div>

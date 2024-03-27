@@ -4,7 +4,7 @@ import {ReactNode, useCallback, useEffect} from 'react';
 import {XMarkIcon} from "@heroicons/react/20/solid";
 import {useAutoAnimate} from "@formkit/auto-animate/react";
 import ReactFocusLock from "react-focus-lock";
-import {useLockedBody} from "usehooks-ts";
+import {useEventListener, useScrollLock} from "usehooks-ts";
 
 interface ModalProps {
   children: ReactNode
@@ -17,20 +17,21 @@ interface ModalProps {
 const Modal = ({children, isOpen, onClose, labelledBy}: ModalProps) => {
 
   const [animationParent] = useAutoAnimate()
-  useLockedBody(isOpen);
+  const {lock, unlock} = useScrollLock({
+    autoLock: false,
+    lockTarget: 'body',
+  })
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") onClose();
+  }, [onClose]);
 
-  const onKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    },
-    [onClose]
-  );
-
+  useEventListener("keydown", onKeyDown);
 
   useEffect(() => {
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [onKeyDown, isOpen]);
+    isOpen ? lock(): unlock()
+    // Disabling eslint because adding lock and unlock as dependencies prevents the unlock from firing when it needs to.
+    // eslint-disable-next-line
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;

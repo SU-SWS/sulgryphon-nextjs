@@ -2,46 +2,56 @@ import formatHtml from "@/lib/format-html";
 import NodeCardDisplay from "@/components/node/node-card";
 import {DrupalLinkButton} from "@/components/patterns/link";
 import {PropsWithoutRef} from "react";
-import {DrupalLinkType, StanfordNode} from "@/lib/drupal/drupal";
-import {DrupalNode} from "next-drupal";
 import AboveHeaderBorder from "@/components/patterns/above-header-border";
-import fetchComponents from "@/lib/fetch-components";
+import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import {twMerge} from "tailwind-merge";
 
 interface EntityProps extends PropsWithoutRef<any> {
-  headline?: string
-  description?: string
-  link?: DrupalLinkType
-  entities: DrupalNode[]
+  headline?: Maybe<string>
+  description?: Maybe<string>
+  link?: Maybe<LinkType>
+  entities: NodeUnion[]
   headerId?: string
   styles?: {
-    orientation?: string
-    background?: string
+    orientation?: Maybe<string>
+    background?: Maybe<string>
   }
+  headingBehavior?: Maybe<'show' | 'hide' | 'remove'>
 }
 
-const StanfordEntity = async ({headerId, headline, description, link, styles, entities = [], ...props}: EntityProps) => {
-  const items = await fetchComponents<StanfordNode>(entities || []);
-  const entityItems = items.filter(item => !!item?.id)
+const StanfordEntity = async ({
+  headerId,
+  headline,
+  description,
+  link,
+  styles,
+  headingBehavior,
+  entities = [],
+  ...props
+}: EntityProps) => {
 
   const wrapperClasses = styles?.background === 'black' ? 'text-white py-40' : '';
 
-  if (headerId && link?.options?.attributes?.['aria-label'] && link?.options?.attributes?.['aria-label'] === headline) {
-    link.options.attributes['aria-labelledby'] = headerId;
-    delete link?.options?.attributes?.['aria-label'];
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
+
+  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
+    linkAttributes['aria-labelledby'] = headerId;
+    delete linkAttributes['aria-label'];
   }
 
   const gridClasses = [
     '',
-    '@7xl:grid-cols-1-1',
-    '@7xl:grid-cols-1-1 @15xl:grid-cols-1-1-1',
+    '@7xl:grid-cols-2',
+    '@7xl:grid-cols-2 @15xl:grid-cols-3',
   ]
-  const gridClass = entityItems.length >= 3 ? gridClasses[2] : gridClasses[(entityItems.length % 3) - 1]
+  const gridClass = entities.length >= 3 ? gridClasses[2] : gridClasses[(entities.length % 3) - 1]
 
   return (
     <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
-        {headline &&
-          <h2 id={headerId} className="text-left type-5 mb-40">
+        {(headline && headingBehavior !== "remove") &&
+          <h2 id={headerId} className={twMerge("text-left type-5 mb-40", headingBehavior === "hide" && "sr-only")}>
             <AboveHeaderBorder/>
             {headline}
           </h2>
@@ -52,7 +62,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
 
         {entities &&
           <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
-            {entityItems.map(item =>
+            {entities.map(item =>
               <div key={item.id} className="mx-auto w-full">
                 <NodeCardDisplay node={item} h3Heading={!!headline}/>
               </div>
@@ -60,7 +70,7 @@ const StanfordEntity = async ({headerId, headline, description, link, styles, en
           </div>
         }
         {link?.url &&
-          <DrupalLinkButton href={link?.url} className="block mx-auto" {...link.options?.attributes}>
+          <DrupalLinkButton href={link?.url} className="block mx-auto" {...linkAttributes}>
             {link.title}
           </DrupalLinkButton>
         }

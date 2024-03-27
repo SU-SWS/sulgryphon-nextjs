@@ -1,8 +1,8 @@
-import {DrupalMenuLinkContent} from "next-drupal";
+import {MenuItem} from "@/lib/gql/__generated__/drupal.d";
 
-const useActiveTrail = (menuItems: DrupalMenuLinkContent[], currentPath: string) => {
+const useActiveTrail = (menuItems: MenuItem[], currentPath: string) => {
 
-  const getActiveTrail = (menuItems: DrupalMenuLinkContent[], trail: string[] = []): string[] => {
+  const getActiveTrail = (menuItems: MenuItem[], trail: string[] = []): string[] => {
 
     let childTrail, currentTrail;
     for (let i = 0; i < menuItems.length; i++) {
@@ -13,8 +13,8 @@ const useActiveTrail = (menuItems: DrupalMenuLinkContent[], currentPath: string)
         return currentTrail;
       }
 
-      if (typeof menuItems[i].items === 'object' && menuItems[i].items) {
-        childTrail = getActiveTrail(menuItems[i].items as DrupalMenuLinkContent[], [...currentTrail]);
+      if (menuItems[i].children)  {
+        childTrail = getActiveTrail(menuItems[i].children, [...currentTrail]);
         if (childTrail.length > 0) {
           return childTrail;
         }

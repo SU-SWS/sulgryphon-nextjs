@@ -2,31 +2,54 @@
 
 import {ReactNodeLike} from "prop-types";
 import formatHtml from "@/lib/format-html";
-import Conditional from "@/components/utils/conditional";
 import CardSprinkles from "@/components/patterns/card-sprinkles";
-import {ElementType, useRef} from "react";
+import {ElementType, HTMLAttributes, useRef} from "react";
 import FullScreenBackground from "@/components/patterns/full-screen-background";
 import Link from "@/components/patterns/elements/drupal-link";
-import {DrupalLinkType} from "@/lib/drupal/drupal";
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import {twMerge} from "tailwind-merge";
 
-interface CardProps {
-  video?: ReactNodeLike
-  image?: ReactNodeLike
-  superHeader?: any
-  header?: any
-  footer?: ReactNodeLike
-  body?: string
-  link?: DrupalLinkType
-  className?: string
+type CardProps = HTMLAttributes<HTMLDivElement> & {
+  video?: Maybe<ReactNodeLike>
+  image?: Maybe<ReactNodeLike>
+  superHeader?: Maybe<any>
+  header?: Maybe<any>
+  footer?: Maybe<ReactNodeLike>
+  body?: Maybe<string>
+  link?: Maybe<LinkType>
   backgroundSprinkles?: 'top_right' | 'top_left' | 'bottom_right' | 'bottom_left'
-  fullWidth?: boolean
+  fullWidth?: Maybe<boolean>
   headerId?: string
-  headingLevel?: string
+  headingLevel?: Maybe<ElementType>
+  hideHeading?: boolean
 }
 
-const HorizontalCard = ({headerId, video, image, superHeader, header, footer, body, link, headingLevel = 'h2', fullWidth = true, backgroundSprinkles = 'top_right', ...props}: CardProps) => {
+const HorizontalCard = ({
+  headerId,
+  video,
+  image,
+  superHeader,
+  header,
+  footer,
+  body,
+  link,
+  headingLevel,
+  fullWidth = true,
+  backgroundSprinkles = 'top_right',
+  hideHeading,
+  ...props
+}: CardProps) => {
   const ref = useRef(null);
-  const Heading: ElementType = headingLevel === 'h2' ? 'h2' : 'h3';
+  const Heading: ElementType = headingLevel || 'h2';
+
+  const linkAttributes: Record<string, string> = {};
+  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
+
+  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === header) {
+    linkAttributes['aria-labelledby'] = headerId;
+    delete linkAttributes['aria-label'];
+  }
+
   return (
     <div className="relative" {...props} ref={ref}>
 
@@ -49,37 +72,37 @@ const HorizontalCard = ({headerId, video, image, superHeader, header, footer, bo
         className="@container centered relative basefont-23 leading-display text-white mt-[77px] @6xl:mt-0 pt-[5.8rem] pb-[7.2rem] lg:px-80">
 
         <div className="grid @6xl:grid-cols-2 gap-2xl items-center">
-          <Conditional showWhen={image || video}>
+          {(image || video) &&
             <div
               className="w-full overflow-hidden aspect-[16/9] relative mt-[-135px] @6xl:mt-0">
               {image}
               {video}
             </div>
-          </Conditional>
+          }
 
           <div className="">
-            <Conditional showWhen={superHeader}>
+            {(superHeader) &&
               <span className="type-0 mb-0 leading-display font-bold underline">{superHeader}</span>
-            </Conditional>
+            }
 
-            <Conditional showWhen={header}>
-              <Heading id={headerId} className="text-m5">{header}</Heading>
-            </Conditional>
+            {(header) &&
+              <Heading id={headerId} className={twMerge("text-m5", hideHeading && "sr-only")}>{header}</Heading>
+            }
 
-            <Conditional showWhen={body}>
+            {(body) &&
               <div>{formatHtml(body)}</div>
-            </Conditional>
+            }
 
-            <Conditional showWhen={footer}>
+            {(footer) &&
               <div
                 className="leading-display text-18 rs-pt-0 text-digital-red font-normal">{footer}</div>
-            </Conditional>
+            }
 
             {link?.url &&
               <Link
                 href={link.url}
                 className="border-2 border-digital-red rounded-full cta-button font-semibold leading-display block w-fit no-underline hocus:underline group transition-colors px-26 pt-10 pb-11 text-16 md:text-20 text-white hocus:bg-black-true hocus:text-white rs-mt-neg1 bg-digital-red"
-                {...link.options?.attributes}
+                {...linkAttributes}
               >
                 {link.title}
               </Link>

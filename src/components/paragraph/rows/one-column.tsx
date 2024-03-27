@@ -1,8 +1,8 @@
 import Paragraph from "@/components/paragraph";
-import {StanfordParagraph} from "@/lib/drupal/drupal";
+import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface LayoutProps {
-  items: StanfordParagraph[],
+  items: ParagraphUnion[],
   fullWidth?: boolean
   config?: {}
 }

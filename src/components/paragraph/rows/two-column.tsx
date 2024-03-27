@@ -1,18 +1,16 @@
-import Paragraph from "@/components/paragraph";
-import {StanfordParagraph} from "@/lib/drupal/drupal";
+import Paragraph, {getParagraphBehaviors} from "@/components/paragraph";
+import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d";
 
 interface LayoutProps {
-  items: StanfordParagraph[],
+  items: ParagraphUnion[],
   fullWidth?: boolean
-  config?: {
-    column_widths: string
-  }
+  config?: Record<string, string>
 }
 
 const TwoColumn = ({config, items}: LayoutProps) => {
 
-  const leftItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'left');
-  const rightItems = items.filter(item => item.behavior_settings.layout_paragraphs.region === 'right');
+  const leftItems = items.filter(item => getParagraphBehaviors(item)?.layout_paragraphs?.region === 'left');
+  const rightItems = items.filter(item => getParagraphBehaviors(item)?.layout_paragraphs?.region !== 'left');
 
   let gridClass = 'lg:grid-cols-2';
   if (config?.column_widths === '33-67') {

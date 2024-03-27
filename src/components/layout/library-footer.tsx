@@ -37,24 +37,17 @@ const LibraryFooter = () => {
             </li>
             <li><Link className="text-m0 text-white hocus:text-white no-underline hocus:underline"
                       href="/contact-us">Contact us<ArrowRightIcon className="inline-block ml-10" width={15}/></Link></li>
-            {isDraftMode() &&
-              <li>
-                <Link className="text-m0 text-white hocus:text-white no-underline hocus:underline"
-                      href="/api/draft/disable" prefetch={false}>
-                  Disable Draft Mode
-                </Link>
-              </li>
-            }
           </ul>
         </div>
         <div>
-          <h2 className="text-m0 mb-20">Who we are</h2>
+          <h2 className="text-m1 mb-20">Who we are</h2>
           <ul className="list-unstyled">
             <li><FooterLink href="/about-us">About us</FooterLink></li>
             <li><FooterLink href="/staff-directory">Staff directory</FooterLink></li>
             <li><FooterLink href="/department-directory">Department directory</FooterLink></li>
             <li><FooterLink href="https://searchworks.stanford.edu/catalog?f%5Bcollection%5D%5B%5D=hn730ks3626">Staff publications and research</FooterLink></li>
             <li><FooterLink href="https://stanford.joinhandshake.com/login">Student job openings</FooterLink></li>
+            <li><FooterLink href="/careers">Careers</FooterLink></li>
           </ul>
         </div>
         <div>
@@ -100,6 +93,12 @@ const _SocialLinks = () => {
         <YoutubeIcon className="transition-all text-white hocus:text-cool-grey" height={30}/>
         <span className="sr-only">Youtube</span>
       </FooterLink>
+
+      {isDraftMode() &&
+        <Link className="sr-only" href="/api/draft/disable" prefetch>
+          Disable Draft Mode
+        </Link>
+      }
     </div>
   )
 }
