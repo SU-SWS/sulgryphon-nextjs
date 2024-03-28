@@ -1,5 +1,23 @@
 {
   "installCommand": "yarn workspaces focus --production",
+  "redirects": [
+    {
+      "source": "/sites/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/node/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/taxonomy/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/apcproxy/suproxy.pac",
+      "destination": "/"
+    }
+  ],
   "rewrites": [
     {
       "source": "/all",
