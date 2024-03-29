@@ -13,16 +13,16 @@ export const buildUrl = (path: string, params?: string | Record<string, string> 
   return url
 }
 
-export const buildHeaders = async ({accessToken, headers = {}, draftMode = false}: {
+export const buildHeaders = async ({accessToken, headers = {}, previewMode = false}: {
   accessToken?: AccessToken
   headers?: HeadersInit
-  draftMode?: boolean
+  previewMode?: boolean
 } = {}): Promise<Headers> => {
   if (process.env.REQUEST_HEADERS) headers = {...headers, ...JSON.parse(process.env.REQUEST_HEADERS)};
 
   const requestHeaders = new Headers(headers);
 
-  const token = accessToken || (await getAccessToken(draftMode))
+  const token = accessToken || (await getAccessToken(previewMode))
   if (token) requestHeaders.set('Authorization', `Bearer ${token.access_token}`)
 
   return requestHeaders

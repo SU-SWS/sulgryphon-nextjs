@@ -9,9 +9,9 @@ interface AccessToken {
 
 const CACHE_KEY = "NEXT_DRUPAL_ACCESS_TOKEN"
 
-export const getAccessToken = async (draftMode: boolean = false): Promise<AccessToken | null> => {
+export const getAccessToken = async (previewMode: boolean = false): Promise<AccessToken | null> => {
 
-  if (!process.env.DRUPAL_DRAFT_CLIENT || !process.env.DRUPAL_DRAFT_SECRET || !draftMode) {
+  if (!process.env.DRUPAL_DRAFT_CLIENT || !process.env.DRUPAL_DRAFT_SECRET || !previewMode) {
     return null;
   }
 

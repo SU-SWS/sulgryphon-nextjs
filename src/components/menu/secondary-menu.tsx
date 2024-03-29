@@ -5,10 +5,10 @@ import Link from "@/components/patterns/elements/drupal-link";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
-import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {useBoolean} from "usehooks-ts";
 import {MenuItem} from "@/lib/gql/__generated__/drupal.d";
+import {usePathname} from "next/navigation";
 
 const getCurrentPageTitle = (activeTrail: string[], items: MenuItem[], trail: string[]): string | undefined => {
   const currentItem = items.find(item => item.id === trail.at(0));
@@ -23,7 +23,7 @@ const getCurrentPageTitle = (activeTrail: string[], items: MenuItem[], trail: st
 }
 
 const SecondaryMenu = ({menuItems, currentPath}: { menuItems: MenuItem[], currentPath: string }) => {
-  const browserUrl = useNavigationEvent();
+  const browserUrl = usePathname();
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenuOpen} = useBoolean(false)
   const outsideClickProps = useOutsideClick(closeMenu)
   const activeTrail = useActiveTrail(menuItems, currentPath);

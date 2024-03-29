@@ -31,14 +31,14 @@ export const graphqlClient = (requestConfig: RequestConfig = {}) => {
   return getSdk(client);
 }
 
-export const getEntityFromPath = cache(async <T extends NodeUnion | TermUnion, >(path: string, draftMode: boolean = false): Promise<{
+export const getEntityFromPath = cache(async <T extends NodeUnion | TermUnion, >(path: string, previewMode: boolean = false): Promise<{
   entity?: T,
   redirect?: RouteRedirect
   error?: string
 }> => {
   "use server";
 
-  const headers = await buildHeaders({draftMode})
+  const headers = await buildHeaders({previewMode})
   let entity: T | undefined;
   let query: RouteQuery;
 
@@ -84,10 +84,10 @@ const getConfigPagesData = cache(async (): Promise<ConfigPagesQuery> => {
   return query;
 })
 
-export const getMenu = cache(async (name?: MenuAvailable, draftMode?: boolean): Promise<MenuItem[]> => {
+export const getMenu = cache(async (name?: MenuAvailable, previewMode?: boolean): Promise<MenuItem[]> => {
   "use server";
 
-  const headers = await buildHeaders({draftMode});
+  const headers = await buildHeaders({previewMode});
 
   const menu = await graphqlClient({headers, next: {tags: ['menus', `menu:${name || "main"}`]}}).Menu({name});
   const menuItems = (menu.menu?.items || []) as MenuItem[];

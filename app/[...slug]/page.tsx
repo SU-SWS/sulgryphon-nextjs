@@ -5,7 +5,7 @@ import {getNodeMetadata} from "./metadata";
 import LibraryHeader from "@/components/node/sul-library/library-header";
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner";
 import SecondaryMenu from "@/components/menu/secondary-menu";
-import {isDraftMode} from "@/lib/drupal/is-draft-mode";
+import {isPreviewMode} from "@/lib/drupal/is-draft-mode";
 import UnpublishedBanner from "@/components/patterns/unpublished-banner";
 import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher";
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
@@ -15,7 +15,7 @@ export const dynamic = 'force-static';
 
 const NodePage = async ({params}: PageProps) => {
   const path = getPathFromContext({params});
-  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path, isDraftMode());
+  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path);
 
   if (routeRedirect) redirect(routeRedirect.url);
   if (!entity) notFound();
@@ -83,7 +83,7 @@ const NodePage = async ({params}: PageProps) => {
 }
 
 export const generateMetadata = async ({params}: PageProps): Promise<Metadata> => {
-  if (isDraftMode()) return {};
+  if (isPreviewMode()) return {};
   const path = getPathFromContext({params});
   const {entity} = await getEntityFromPath<NodeUnion>(path);
   return entity ? getNodeMetadata(entity) : {}

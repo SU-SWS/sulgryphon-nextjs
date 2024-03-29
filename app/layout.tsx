@@ -1,9 +1,14 @@
 import "../src/styles/globals.css"
 
-import Editori11y from "@/components/editori11y";
 import {ReactNode} from "react";
 import {Icon} from "next/dist/lib/metadata/types/metadata-types";
-import {isDraftMode} from "@/lib/drupal/is-draft-mode";
+import DrupalWindowSync from "@/components/utils/drupal-window-sync";
+import Script from "next/script";
+import {GoogleAnalytics} from "@next/third-parties/google";
+import Header from "@/components/layout/header";
+import LibraryFooter from "@/components/layout/library-footer";
+import GlobalFooter from "@/components/layout/global-footer";
+import {isPreviewMode} from "@/lib/drupal/is-draft-mode";
 
 const appleIcons: Icon[] = [60, 72, 76, 114, 120, 144, 152, 180].map(size => ({
   url: `https://www-media.stanford.edu/assets/favicon/apple-touch-icon-${size}x${size}.png`,
@@ -36,16 +41,33 @@ export const metadata = {
 export const revalidate = false;
 
 const RootLayout = ({children, modal}: { children: ReactNode, modal: ReactNode }) => {
-  const draftMode = isDraftMode();
+  const previewMode = isPreviewMode()
   return (
     <html lang="en">
-    {draftMode && <Editori11y/>}
+    <DrupalWindowSync/>
     <body>
     <nav aria-label="Skip link">
       <a className="skiplink" href="#main-content">Skip to main content</a>
     </nav>
-    {children}
-    {modal}
+    {(!previewMode && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) &&
+      <>
+        <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js"/>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}/>
+      </>
+    }
+    <div className="grid grid-rows-1 min-h-screen">
+      <div>
+        <Header/>
+        {children}
+        {modal}
+      </div>
+
+      <footer className="row-start-2 row-end-3">
+        <LibraryFooter/>
+        <GlobalFooter/>
+      </footer>
+    </div>
+
     </body>
     </html>
   )

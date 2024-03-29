@@ -7,7 +7,6 @@ import {useIsDesktop} from "@/lib/hooks/useIsDesktop";
 import useActiveTrail from "@/lib/hooks/useActiveTrail";
 import SearchForm from "@/components/search/search-form";
 import SearchModal from "@/components/search/search-modal";
-import useNavigationEvent from "@/lib/hooks/useNavigationEvent";
 import useOutsideClick from "@/lib/hooks/useOutsideClick";
 import {usePathname} from "next/navigation";
 import {useBoolean} from "usehooks-ts";
@@ -17,7 +16,7 @@ const MainMenu = ({menuItems}: { menuItems: MenuItemType[] }) => {
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false);
   const {value: addCloseAnimation, setValue: setAddCloseAnimation} = useBoolean(false);
 
-  const browserUrl = useNavigationEvent();
+  const browserUrl = usePathname();
   const activeTrail = useActiveTrail(menuItems, usePathname() || '');
   const isDesktop = useIsDesktop();
 
@@ -115,7 +114,7 @@ type MenuItemProps = MenuItemType & {
 }
 
 const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail = [], menuLevel = 0}: MenuItemProps) => {
-  const browserUrl = useNavigationEvent();
+  const browserUrl = usePathname();
   const {value: submenuOpen, setFalse: closeSubmenu, toggle: toggleSubmenu} = useBoolean(false);
   const active = activeTrail.includes(id);
 
