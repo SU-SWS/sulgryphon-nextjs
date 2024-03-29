@@ -16,6 +16,26 @@
     {
       "source": "/apcproxy/suproxy.pac",
       "destination": "/"
+    },
+    {
+      "source": "/(.*).php",
+      "destination": "/"
+    },
+    {
+      "source": "/(.*).htm(.*)",
+      "destination": "/"
+    },
+    {
+      "source": "/(.*).sh",
+      "destination": "/"
+    },
+    {
+      "source": "/!",
+      "destination": "/"
+    },
+    {
+      "source": "/wp-content/:path*",
+      "destination": "/"
     }
   ],
   "rewrites": [
