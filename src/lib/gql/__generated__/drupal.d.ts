@@ -3192,7 +3192,7 @@ export type SuArticleJournal = CitationInterface & {
   /**
    * Add a URL to an external source for this publication item such as https://example.com/.
    * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of thie publication will link
+   * By adding an external source URL, all listings of this publication will link
    * to the external source instead of a page on this website.
    */
   suUrl?: Maybe<Link>;
@@ -3218,7 +3218,7 @@ export type SuArticleNewspaper = CitationInterface & {
   /**
    * Add a URL to an external source for this publication item such as https://example.com/.
    * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of thie publication will link
+   * By adding an external source URL, all listings of this publication will link
    * to the external source instead of a page on this website.
    */
   suUrl?: Maybe<Link>;
@@ -3255,7 +3255,7 @@ export type SuBook = CitationInterface & {
   /**
    * Add a URL to an external source for this publication item such as https://example.com/.
    * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of thie publication will link
+   * By adding an external source URL, all listings of this publication will link
    * to the external source instead of a page on this website.
    */
   suUrl?: Maybe<Link>;
@@ -3332,7 +3332,7 @@ export type SuThesi = CitationInterface & {
   /**
    * Add a URL to an external source for this publication item such as https://example.com/.
    * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of thie publication will link
+   * By adding an external source URL, all listings of this publication will link
    * to the external source instead of a page on this website.
    */
   suUrl?: Maybe<Link>;
