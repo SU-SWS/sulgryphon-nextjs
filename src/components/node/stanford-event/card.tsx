@@ -32,7 +32,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
     <article {...props} className="@container mx-auto">
       {imageUrl &&
         <div
-          className={"overflow-hidden aspect-[16/9] relative"}
+          className={"overflow-hidden aspect-[4/3] relative"}
           aria-hidden="true"
         >
           <Image
