@@ -13,9 +13,9 @@ import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
 export const revalidate = false;
 export const dynamic = 'force-static';
 
-const NodePage = async ({params}: PageProps) => {
+const NodePage = async ({params, previewMode}: PageProps) => {
   const path = getPathFromContext({params});
-  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path);
+  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path, previewMode);
 
   if (routeRedirect) redirect(routeRedirect.url);
   if (!entity) notFound();
@@ -106,6 +106,7 @@ const getPathFromContext = (context: PageProps, prefix = ""): string => {
 type PageProps = {
   params: { slug: string | string[] }
   searchParams?: Record<string, string | string[] | undefined>
+  previewMode?: boolean
 }
 
 

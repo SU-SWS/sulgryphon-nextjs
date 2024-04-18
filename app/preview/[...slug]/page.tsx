@@ -4,7 +4,7 @@ import NodePage from "../../[...slug]/page";
 
 const PreviewNodePage = async ({params}: PageProps) => {
   if (!isPreviewMode()) notFound();
-  return <NodePage params={params}/>
+  return <NodePage params={params} previewMode={true}/>
 }
 
 type PageProps = {
