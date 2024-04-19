@@ -47,6 +47,7 @@ tasks:
       sed -i 's/#DRUPAL_PREVIEW_SECRET/DRUPAL_PREVIEW_SECRET/' .env.local &&
       yarn install
     command: |
+      gp ports await 3306 &&
       eval $(gp env -e APACHE_DOCROOT_IN_REPO=../back/docroot) &&
       cd /workspace/back &&
       find docroot -name 'local.drush.yml' | xargs rm &&
