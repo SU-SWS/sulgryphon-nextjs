@@ -30,9 +30,7 @@ tasks:
     init: >
       eval $(gp env -e APACHE_DOCROOT_IN_REPO=../back/docroot) &&
       cd /workspace/back &&
-      rm -rf config/default &&
-      mkdir -p config/default &&
-      touch config/default/core.extension.yml &&
+      git checkout 2.x &&
       composer install --no-interaction &&
       mkdir -p blt &&
       cp .gitpod/blt.yml blt/local.blt.yml &&
@@ -49,19 +47,16 @@ tasks:
       sed -i 's/#DRUPAL_PREVIEW_SECRET/DRUPAL_PREVIEW_SECRET/' .env.local &&
       yarn install
     command: |
-      cd /workspace/back &&
-      echo 'Restarting Apache' &&
+      gp ports await 3306 &&
       eval $(gp env -e APACHE_DOCROOT_IN_REPO=../back/docroot) &&
-      apache2ctl restart &&
-      gp ports await 8001 &&
+      cd /workspace/back &&
       find docroot -name 'local.drush.yml' | xargs rm &&
       export NEXT_PUBLIC_DRUPAL_BASE_URL=`gp url 8001` &&
       export PREVIEW_URL=${NEXT_PUBLIC_DRUPAL_BASE_URL#"https://"} &&
       echo "<?php \$sites['$PREVIEW_URL'] = 'library';" > docroot/sites/local.sites.php &&
-      blt blt:telemetry:disable --no-interaction &&
-      echo 'Establishing Settings' &&
       blt settings &&
-      echo 'Logging Into Drupal' &&
+      apache2ctl restart &&
+      gp ports await 8001 &&
       drush @library.local uli --uri=$NEXT_PUBLIC_DRUPAL_BASE_URL &&
       drush @library.local uli --uri=$NEXT_PUBLIC_DRUPAL_BASE_URL | xargs gp preview --external &&
       git config core.fileMode false &&
@@ -77,10 +72,10 @@ tasks:
       gp url 3000 | xargs gp preview --external
   - name: SSH Keys
     before: |
-      git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|')
       mkdir -p ~/.ssh
       if [[ ! -z $SSH_PUBLIC_KEY  ]]; then
           echo $SSH_PUBLIC_KEY | base64 -d > ~/.ssh/id_rsa.pub && chmod 644 ~/.ssh/id_rsa.pub
+          git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|')
       fi
       if [[ ! -z $SSH_PRIVATE_KEY ]]; then
           echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
