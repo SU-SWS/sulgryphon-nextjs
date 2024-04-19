@@ -71,10 +71,10 @@ tasks:
       gp url 3000 | xargs gp preview --external
   - name: SSH Keys
     before: |
-      git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|')
       mkdir -p ~/.ssh
       if [[ ! -z $SSH_PUBLIC_KEY  ]]; then
           echo $SSH_PUBLIC_KEY | base64 -d > ~/.ssh/id_rsa.pub && chmod 644 ~/.ssh/id_rsa.pub
+          git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|')
       fi
       if [[ ! -z $SSH_PRIVATE_KEY ]]; then
           echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
