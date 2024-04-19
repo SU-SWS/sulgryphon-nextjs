@@ -30,9 +30,7 @@ tasks:
     init: >
       eval $(gp env -e APACHE_DOCROOT_IN_REPO=../back/docroot) &&
       cd /workspace/back &&
-      rm -rf config/default &&
-      mkdir -p config/default &&
-      touch config/default/core.extension.yml &&
+      git checkout 2.x &&
       composer install --no-interaction &&
       mkdir -p blt &&
       cp .gitpod/blt.yml blt/local.blt.yml &&
