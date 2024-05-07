@@ -12,7 +12,7 @@ const NodeReferenceCardHours = ({branchId, branchName}: { branchId: string, bran
   const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
 
   return (
-    <div className="relative flex flex-row items-start rs-mb-0 type-1">
+    <div className="relative flex flex-row items-start rs-mb-0 type-0">
       <ClockIcon
         width={19}
         className="mr-12 mt-01em flex-shrink-0"

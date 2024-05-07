@@ -142,7 +142,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
         {itemsToDisplay.length > 0 &&
           <ul
             ref={parent}
-            className="list-unstyled grid @3xl:grid-cols-2 @7xl:grid-cols-3 gap-xl"
+            className="list-unstyled grid @3xl:grid-cols-2 @7xl:grid-cols-3 gap-2xl"
           >
             {itemsToDisplay.map(item =>
               <li key={item.id} className="">

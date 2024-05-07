@@ -69,7 +69,7 @@ const HorizontalCard = ({
       }
 
       <div
-        className="@container centered relative basefont-23 leading-display text-white mt-[77px] @6xl:mt-0 pt-[5.8rem] pb-[7.2rem] lg:px-80">
+        className="@container centered relative basefont-20 leading-display text-white mt-[77px] @6xl:mt-0 pt-[5.8rem] pb-[7.2rem] lg:px-80">
 
         <div className="grid @6xl:grid-cols-2 gap-2xl items-center">
           {(image || video) &&
@@ -86,7 +86,7 @@ const HorizontalCard = ({
             }
 
             {(header) &&
-              <Heading id={headerId} className={twMerge("text-m5", hideHeading && "sr-only")}>{header}</Heading>
+              <Heading id={headerId} className={twMerge("text-m4", hideHeading && "sr-only")}>{header}</Heading>
             }
 
             {(body) &&
