@@ -17,7 +17,7 @@ const StanfordPage = async ({node}: { node: NodeStanfordPage }) => {
       {node.suPageComponents &&
         <ParagraphRows items={node.suPageComponents} fullWidth={fullWidth}/>
       }
-      <div className="rs-py-4">Last updated {lastUpdated}</div>
+      <div className="centered rs-py-4">Last updated {lastUpdated}</div>
     </article>
   )
 }

@@ -7,6 +7,14 @@ import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
 const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
 
   const fullWidth = node.layoutSelection?.id === 'sul_library_full_width'
+  const updated = node.changed.time;
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const lastUpdated  = new Date(updated).toLocaleDateString(undefined, options)
 
   return (
     <article className="mb-50 @container" {...props}>
@@ -27,6 +35,7 @@ const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
           {formatHtml(node.sulLibraryA11y.processed)}
         </div>
       }
+      <div className="centered rs-py-4">Last updated {lastUpdated}</div>
     </article>
   )
 }

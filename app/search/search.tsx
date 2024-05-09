@@ -92,8 +92,8 @@ const SearchResultItem = ({item}: { item: SearchResult }) => {
       {item?.description && <p>{item.description}</p>}
 
       {lastUpdated &&
-        <div className="text-black-60 text-m0">
-          Last Updated: {lastUpdated}
+        <div className="rs-py-4">
+          Last updated {lastUpdated}
         </div>
       }
     </>
