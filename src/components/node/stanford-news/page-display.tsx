@@ -19,14 +19,11 @@ const StanfordNews = async ({node, ...props}: { node: NodeStanfordNews }) => {
   const imageUrl = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.url
   const imageAlt = node.suNewsBanner?.__typename === 'MediaImage' && node.suNewsBanner.mediaImage.alt;
 
-  const updated = node.changed.time;
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  const lastUpdated  = new Date(updated).toLocaleDateString(undefined, options)
+  const lastUpdated  = new Date(node.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   return (
     <article {...props} className=" centered mt-50">

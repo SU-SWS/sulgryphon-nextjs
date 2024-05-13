@@ -3,14 +3,12 @@ import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
 
 const StanfordPage = async ({node}: { node: NodeStanfordPage }) => {
   const fullWidth = node.layoutSelection?.id === 'stanford_basic_page_full';
-  const updated = node.changed.time;
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  const lastUpdated  = new Date(updated).toLocaleDateString(undefined, options)
+  
+  const lastUpdated  = new Date(node.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   return (
     <article>

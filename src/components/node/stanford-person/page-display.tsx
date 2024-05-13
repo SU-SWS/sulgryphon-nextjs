@@ -16,14 +16,11 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
   const libGuides = node.sulPersonLibguideId ? await fetchLibGuides({accountId: node.sulPersonLibguideId}) : [];
   const imageUrl = node.suPersonPhoto?.mediaImage.url
 
-  const updated = node.changed.time;
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  const lastUpdated  = new Date(updated).toLocaleDateString(undefined, options)
+  const lastUpdated  = new Date(node.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   return (
     <article {...props}>

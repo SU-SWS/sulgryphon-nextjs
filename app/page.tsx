@@ -17,14 +17,11 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 const Page = async () => {
   const {entity} = await getEntityFromPath<NodeStanfordPage>('/')
-  const updated = entity.changed.time;
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  const lastUpdated  = new Date(updated).toLocaleDateString(undefined, options)
+  const lastUpdated  = new Date(entity.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   if (!entity) notFound();
 
