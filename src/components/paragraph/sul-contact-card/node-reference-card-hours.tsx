@@ -1,6 +1,6 @@
 "use client";
 
-import {ClockIcon} from "@heroicons/react/24/outline";
+import ClockIcon from "@/components/patterns/icons/ClockIcon";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 
 const NodeReferenceCardHours = ({branchId, branchName}: { branchId: string, branchName: string }) => {

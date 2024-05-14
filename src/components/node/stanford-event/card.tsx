@@ -1,8 +1,8 @@
-import {CalendarDaysIcon} from "@heroicons/react/20/solid";
+import CalendarDayIcon from "@/components/patterns/icons/CalendarDayIcon";
 import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
-import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";
-
+import MapPinIcon from "@/components/patterns/icons/MapPinIcon";
+import ClockIcon from "@/components/patterns/icons/ClockIcon";
 import {buildUrl} from "@/lib/drupal/utils";
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
@@ -91,7 +91,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
 
 
           <div className="flex order-3">
-            <CalendarDaysIcon width={20} className="mr-20 flex-shrink-0"/>
+            <CalendarDayIcon width={20} className="mr-20 flex-shrink-0"/>
             {start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})}
           </div>
 
