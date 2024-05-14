@@ -78,8 +78,8 @@ const LibraryHeader = ({node}: { node: NodeSulLibrary }) => {
                                     className="md:absolute md:left-[-38px] md:top-01em mt-01em md:mt-0 mr-12"/>
                         {node.suLibraryMapLink?.url ? (
                           <Link href={node.suLibraryMapLink.url} className="no-underline hocus:underline">
-                            <div>{node.suLibraryAddress.addressLine1}</div>
-                            <div>{node.suLibraryAddress.addressLine2}</div>
+                            <div>{node.suLibraryAddress?.addressLine1}<span className="sr-only">&nbsp;</span></div>
+                            <div>{node.suLibraryAddress.addressLine2}<span className="sr-only">&nbsp;</span></div>
                             <div>{node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea} {node.suLibraryAddress.postalCode}</div>
                           </Link>
                         ) : (
