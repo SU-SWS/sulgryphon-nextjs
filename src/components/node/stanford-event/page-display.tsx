@@ -110,7 +110,7 @@ const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
                 {node.suEventLocation &&
                   <div className="flex flex-col">
                     <div className="flex flex-row items-start mt-40 mb-4">
-                      <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                      <MapIcon title="Map" className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
                       <h3 className="text-16 md:text-18">Location</h3>
                     </div>
                     <div className="ml-36">
@@ -125,7 +125,7 @@ const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
                 {node.suEventAltLoc &&
                   <div>
                     <div className="flex flex-row items-start mt-40 mb-4">
-                      <MapIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                      <MapIcon title="Map" className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
                       <h3 className="text-16 md:text-18">Location</h3>
                     </div>
                     <div className="ml-36 leading-snug">
@@ -147,7 +147,7 @@ const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
             {(node.suEventTelephone || node.suEventEmail) &&
               <div>
                 <div className="flex flex-row items-start mt-40 md:mt-20 mb-4">
-                  <PhoneIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                  <PhoneIcon title="Telephone" className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
                   <h3 className="text-16 md:text-18">Contact</h3>
                 </div>
                 {node.suEventTelephone &&
@@ -165,7 +165,7 @@ const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
             {node.suEventAudience &&
               <div>
                 <div className="flex flex-row items-start mt-40 mb-4">
-                  <UserGroupIcon className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                  <UserGroupIcon title="People" className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
                   <h3 className="text-16 md:text-18">This event is open to:</h3>
                 </div>
                 {node.suEventAudience.map(audience =>

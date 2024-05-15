@@ -45,7 +45,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
           {(node.suPersonEmail) &&
             <div className="">
-              <EnvelopeIcon width={20} className="inline-block mr-6 text-digital-blue"/>
+              <EnvelopeIcon title="Email" width={20} className="inline-block mr-6 text-digital-blue"/>
 
               <EmailLink
                 email={node.suPersonEmail}

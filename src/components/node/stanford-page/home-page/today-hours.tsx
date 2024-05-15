@@ -95,7 +95,7 @@ const TodayLibraryHours = ({branchId}: { branchId?: string }) => {
   if (!libraryHours) {
     return (
       <div className="text-black flex">
-        <ClockIcon width={15} className="mr-5"/>
+        <ClockIcon title="Time" width={15} className="mr-5"/>
         <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
       </div>
     );
@@ -106,7 +106,7 @@ const TodayLibraryHours = ({branchId}: { branchId?: string }) => {
   return (
     <>
       <div className="text-black flex justify-between mb-4" aria-live="polite">
-        <div className="flex"><ClockIcon width={15} className="mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
+        <div className="flex"><ClockIcon title="Time" width={15} className="mr-5"/> {isOpen ? 'Open' : 'Closed'}</div>
         <div>
           {hoursDisplay}
         </div>

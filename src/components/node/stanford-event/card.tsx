@@ -1,8 +1,6 @@
-import CalendarDayIcon from "@/components/patterns/icons/CalendarDayIcon";
+import { CalendarDaysIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
-import MapPinIcon from "@/components/patterns/icons/MapPinIcon";
-import ClockIcon from "@/components/patterns/icons/ClockIcon";
 import {buildUrl} from "@/lib/drupal/utils";
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
@@ -91,18 +89,18 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
 
 
           <div className="flex order-3">
-            <CalendarDayIcon width={20} className="mr-20 flex-shrink-0"/>
+            <CalendarDaysIcon title="Calendar" width={20} className="mr-20 flex-shrink-0"/>
             {start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})}
           </div>
 
           <div className="flex order-4">
-            <ClockIcon width={20} className="mr-20 flex-shrink-0"/>
+            <ClockIcon title="Time" width={20} className="mr-20 flex-shrink-0"/>
             <div>{dateTimeString}</div>
           </div>
 
           {node.suEventMapLink?.url &&
             <div className="flex order-5">
-              <MapPinIcon width={20} className="mr-20 flex-shrink-0"/>
+              <MapPinIcon title="Map" width={20} className="mr-20 flex-shrink-0"/>
               <Link href={node.suEventMapLink?.url}>
                 {node.suEventMapLink?.title}
               </Link>
