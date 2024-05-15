@@ -16,7 +16,7 @@ const NodeReferenceCardHours = ({branchId, branchName}: { branchId: string, bran
       <ClockIcon
         width={19}
         className="mr-12 mt-01em flex-shrink-0" 
-        title="Time"
+        title="Hours"
       />
       <div className="text-white">
         {isOpen && <>Open<span className="mx-5">&nbsp;/&nbsp;</span></>}

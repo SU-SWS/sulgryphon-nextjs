@@ -22,7 +22,7 @@ const StudyPlaceHoursComponent = ({hoursId}: { hoursId: string }) => {
 
   return (
     <div className="flex text-black-true mb-20 type-1">
-      <ClockIcon title="Time" width={19} className="mr-12 flex-shrink-0"/>
+      <ClockIcon title="Hours" width={19} className="mr-12 flex-shrink-0"/>
       <div aria-live="polite">
         {hoursDisplay}
       </div>

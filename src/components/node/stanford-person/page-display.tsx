@@ -118,7 +118,7 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
             {(node.suPersonTelephone || node.suPersonMobilePhone || node.suPersonFax || node.suPersonMailCode || node.suPersonEmail) &&
               <>
                 <div className="relative flex flex-row items-start mt-40 md:mt-20 mb-4">
-                  <PhoneIcon title="Telephone" width={26} className="md:absolute md:left-[-32px] mr-3 md:mr-0"/>
+                  <PhoneIcon title="Phone" width={26} className="md:absolute md:left-[-32px] mr-3 md:mr-0"/>
                   <h2 className="type-0">Contact</h2>
                 </div>
                 <ul className="list-none p-0 children:mb-0">
@@ -152,7 +152,7 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
             {(node.suPersonLocationName || node.suPersonLocationAddress || node.suPersonMapUrl) &&
               <>
               <div className="relative flex flex-row items-start mt-40 md:mt-20 mb-4">
-                <MapIcon title="Map" width={26} className="md:absolute md:left-[-32px] mr-3 md:mr-0"/>
+                <MapIcon title="Location" width={26} className="md:absolute md:left-[-32px] mr-3 md:mr-0"/>
                 <h2 className="type-0">Location</h2>
               </div>
 

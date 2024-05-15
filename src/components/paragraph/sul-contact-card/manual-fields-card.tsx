@@ -51,7 +51,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
 
               {(paragraph.sulContactHours || paragraph.sulContactLink?.url) &&
                 <div className="relative flex flex-row rs-mb-0 type-1">
-                  <ClockIcon title="Time" width={19} className="mr-12 mt-01em flex-shrink-0"/>
+                  <ClockIcon title="Hours" width={19} className="mr-12 mt-01em flex-shrink-0"/>
                   <div className="text-white rs-mb-neg2 sm:mb-0">
                     {paragraph.sulContactHours}
 
@@ -72,7 +72,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
 
               {(paragraph.sulContactPhone) &&
                 <div className="relative flex flex-row items-center rs-mb-0 type-1">
-                  <PhoneIcon title="Telephone" width={19} className="mr-12 flex-shrink-0"/>
+                  <PhoneIcon title="Phone" width={19} className="mr-12 flex-shrink-0"/>
                   {paragraph.sulContactPhone}
                 </div>
               }
@@ -89,7 +89,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
 
               {paragraph.sulContactAddress &&
                 <div className="relative flex items-center type-1">
-                  <MapPinIcon title="Map" width={19} className="mr-12 flex-shrink-0"/>
+                  <MapPinIcon title="Location" width={19} className="mr-12 flex-shrink-0"/>
 
                   {paragraph.sulContactMapLink?.url &&
                     <Link href={paragraph.sulContactMapLink.url}

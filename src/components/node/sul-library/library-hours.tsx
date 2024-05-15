@@ -37,7 +37,7 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
   return (
     <>
       <div className="flex text-black-true mb-20 type-1">
-        <ClockIcon title="Time" width={19} className="inline mr-10"/>
+        <ClockIcon title="Hours" width={19} className="inline mr-10"/>
         {hoursDisplay}
       </div>
 

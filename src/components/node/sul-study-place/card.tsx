@@ -40,7 +40,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
           >
             <div className="flex justify-end items-center gap-xs">
               <div className="w-0 @md:w-[87px] h-[3px] bg-illuminating-dark"></div>
-              <CalendarDaysIcon title="Calendar" className="inline-block flex-shrink-0 w-[24px]"/>
+              <CalendarDaysIcon title="Date" className="inline-block flex-shrink-0 w-[24px]"/>
               <div className="relative pr-30 font-bold no-underline">
                 Reserve Space <span className="sr-only">at {node.sulStudyBranch.title}</span>
                 <ChevronRightIcon className="inline absolute top-0 right-0 h-full"/>
@@ -58,7 +58,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
                 <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
               }
               <div className="relative flex flex-row items-start type-1 mb-20">
-                <MapPinIcon title="Map" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+                <MapPinIcon title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
                 <Link href={node.sulStudyBranch.path}
                       className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
                   <div>{node.sulStudyBranch.title}</div>
@@ -67,7 +67,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
 
               {node.sulStudyRoomNumber &&
                 <div className="relative flex flex-row items-start type-1 rs-mb-2">
-                  <BuildingLibraryIcon title="Library Building" className="w-24 h-24 mr-12 flex-shrink-0 "/>
+                  <BuildingLibraryIcon title="Library" className="w-24 h-24 mr-12 flex-shrink-0 "/>
                   <div>Room-{node.sulStudyRoomNumber}</div>
                 </div>
               }

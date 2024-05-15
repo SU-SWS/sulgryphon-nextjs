@@ -57,7 +57,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
             <div
               className={`relative flex flex-row items-start type-1 ${roomNumber ? "mb-20" : "rs-mb-2"}`}>
-              <MapPinIcon title="Map" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+              <MapPinIcon title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
               <Link href={branchUrl}
                     className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
                 <div>{branchTitle}</div>
@@ -66,7 +66,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
             {roomNumber &&
               <div className="relative flex flex-row items-start type-1 rs-mb-2">
-                <BuildingLibraryIcon title="Library Building" className="w-24 h-24 mr-12 flex-shrink-0 "/>
+                <BuildingLibraryIcon title="Library" className="w-24 h-24 mr-12 flex-shrink-0 "/>
 
                 <div>Room-{roomNumber}</div>
               </div>
