@@ -79,7 +79,7 @@ const NodeReferenceCard = ({paragraph}: Props) => {
 
               {(paragraph.sulContactBranch?.suLibraryAddress) &&
                 <div className="relative flex flex-row items-start type-1">
-                  <MapPinIcon title="Map" title="Map" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+                  <MapPinIcon title="Map" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
 
                   {(paragraph.sulContactBranch?.suLibraryMapLink?.url) ? (
                     <Link href={paragraph.sulContactBranch?.suLibraryMapLink.url}
