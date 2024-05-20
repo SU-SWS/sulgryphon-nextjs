@@ -8,6 +8,12 @@ const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
 
   const fullWidth = node.layoutSelection?.id === 'sul_library_full_width'
 
+  const lastUpdated  = new Date(node.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+  
   return (
     <article className="mb-50 @container" {...props}>
 
@@ -27,6 +33,7 @@ const SulLibrary = async ({node, ...props}: { node: NodeSulLibrary }) => {
           {formatHtml(node.sulLibraryA11y.processed)}
         </div>
       }
+      <div className="centered rs-py-4">Last updated {lastUpdated}</div>
     </article>
   )
 }

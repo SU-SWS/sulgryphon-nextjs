@@ -16,6 +16,12 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
   const libGuides = node.sulPersonLibguideId ? await fetchLibGuides({accountId: node.sulPersonLibguideId}) : [];
   const imageUrl = node.suPersonPhoto?.mediaImage.url
 
+  const lastUpdated  = new Date(node.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
   return (
     <article {...props}>
       <div className="sm:flex no-wrap rs-mb-5 mt-50">
@@ -205,8 +211,9 @@ const StanfordPerson = async ({node, ...props}: { node: NodeStanfordPerson }) =>
 
         </div>
       </div>
+      <div className="centered rs-pb-4">Last updated {lastUpdated}</div>
     </article>
-)
+  )
 }
 
 export default StanfordPerson;
