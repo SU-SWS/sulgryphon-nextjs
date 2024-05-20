@@ -165,7 +165,7 @@ const StanfordEvent = async ({node, ...props}: { node: NodeStanfordEvent }) => {
             {node.suEventAudience &&
               <div>
                 <div className="flex flex-row items-start mt-40 mb-4">
-                  <UserGroupIcon title="People" className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
+                  <UserGroupIcon title="Person" className="inline-block flex-shrink-0 mr-06em w-[24px]"/>
                   <h3 className="text-16 md:text-18">This event is open to:</h3>
                 </div>
                 {node.suEventAudience.map(audience =>
