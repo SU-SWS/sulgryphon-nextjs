@@ -51,7 +51,7 @@ const StanfordEntity = async ({
     <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {(headline && headingBehavior !== "remove") &&
-          <h2 id={headerId} className={twMerge("text-left type-5 mb-40", headingBehavior === "hide" && "sr-only")}>
+          <h2 id={headerId} className={twMerge("text-left mb-40", headingBehavior === "hide" && "sr-only")}>
             <AboveHeaderBorder/>
             {headline}
           </h2>

@@ -49,15 +49,15 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
           </a>
         }
 
-        <div className={"card-body items-start rs-px-2 rs-py-3 "}>
+        <div className={"card-body items-start rs-px-2 rs-py-2"}>
           <div className="leading-display text-18 pt-0 font-normal">
-            <h2 className="type-3 rs-mb-1">{[node.sulStudyRoomDonorName, node.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
+            <h2 className="type-2 rs-mb-1">{[node.sulStudyRoomDonorName, node.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
 
             <div className="leading-tight">
               {node.sulStudyBranch?.suLibraryHours &&
                 <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
               }
-              <div className="relative flex flex-row items-start type-1 mb-20">
+              <div className="relative flex flex-row items-start type-0 mb-20">
                 <MapPinIcon title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
                 <Link href={node.sulStudyBranch.path}
                       className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
@@ -66,7 +66,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
               </div>
 
               {node.sulStudyRoomNumber &&
-                <div className="relative flex flex-row items-start type-1 rs-mb-2">
+                <div className="relative flex flex-row items-start type-0 rs-mb-2">
                   <BuildingLibraryIcon title="Library" className="w-24 h-24 mr-12 flex-shrink-0 "/>
                   <div>Room-{node.sulStudyRoomNumber}</div>
                 </div>
@@ -75,12 +75,12 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
               {(node.sulStudyCapacity || features) &&
                 <ul className="ml-10 rs-mb-1">
                   {node.sulStudyCapacity &&
-                    <li className="type-1 leading-display">{node.sulStudyCapacity.name}</li>
+                    <li className="type-0 leading-display">{node.sulStudyCapacity.name}</li>
                   }
 
                   {features && features.slice(0, 4).map(feature =>
                     <li key={`feature-${node.id}-${feature.id}`} data-foo={`feature-${node.id}-${feature.id}`}
-                        className="type-1 leading-display">
+                        className="type-0 leading-display">
                       {feature.name}
                     </li>
                   )}
@@ -90,7 +90,7 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
               {(features && features.length > 4) &&
                 <Link
                   href={`/study-place/features/${node.id}`}
-                  className="type-1 transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                  className="type-0 transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                   aria-haspopup="dialog"
                 >
                   Show all&nbsp;<span className="sr-only">{node.sulStudyBranch.title}&nbsp;</span>features

@@ -26,7 +26,7 @@ const NodeReferenceCard = ({paragraph}: Props) => {
   return (
     <div className="@container">
       <div
-        className="flex w-full basefont-23 leading-display shadow-md border-0 rounded flex-col @6xl:flex-row">
+        className="flex w-full basefont-20 leading-display shadow-md border-0 rounded flex-col @6xl:flex-row">
 
         {imageUrl &&
           <div className="overflow-hidden aspect-[16/9] relative flex-shrink-0 @6xl:w-1/2">
@@ -46,10 +46,10 @@ const NodeReferenceCard = ({paragraph}: Props) => {
             {paragraph.sulContactBranch?.path ? (
               <Link href={paragraph.sulContactBranch?.path}
                     className="underline text-white hocus:text-illuminating-dark hocus:no-underline active:text-digital-red-light">
-                <h2 className="type-3 rs-mb-1">{paragraph.sulContactBranch?.title}</h2>
+                <h2 className="type-2 rs-mb-1">{paragraph.sulContactBranch?.title}</h2>
               </Link>
             ) : (
-              <h2 className="type-3 rs-mb-1 text-white">{paragraph.sulContactTitle}</h2>
+              <h2 className="type-2 rs-mb-1 text-white">{paragraph.sulContactTitle}</h2>
             )}
 
             <div className="leading-tight md:rs-pr-2 text-white">
@@ -63,14 +63,14 @@ const NodeReferenceCard = ({paragraph}: Props) => {
               }
 
               {(paragraph.sulContactBranch?.suLibraryPhone) &&
-                <div className="relative flex flex-row items-center rs-mb-0 type-1">
+                <div className="relative flex flex-row items-center rs-mb-0 type-0">
                   <PhoneIcon title="Phone" width={19} className="mr-12 flex-shrink-0"/>
                   {paragraph.sulContactBranch?.suLibraryPhone}
                 </div>
               }
 
               {paragraph.sulContactBranch?.suLibraryEmail &&
-                <div className="relative flex flex-row items-center rs-mb-0 type-1">
+                <div className="relative flex flex-row items-center rs-mb-0 type-0">
                   <EnvelopeIcon title="Email" width={19} className="mt-02em mr-12 flex-shrink-0"/>
                   <EmailLink email={paragraph.sulContactBranch?.suLibraryEmail}
                              className="underline text-white hocus:text-illuminating-dark hocus:no-underline active:text-digital-red-light font-normal break-words"/>
@@ -78,8 +78,8 @@ const NodeReferenceCard = ({paragraph}: Props) => {
               }
 
               {(paragraph.sulContactBranch?.suLibraryAddress) &&
-                <div className="relative flex flex-row items-start type-1">
-                  <MapPinIcon title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+                <div className="relative flex flex-row items-start type-0">
+                  <MapPinIcon  title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
 
                   {(paragraph.sulContactBranch?.suLibraryMapLink?.url) ? (
                     <Link href={paragraph.sulContactBranch?.suLibraryMapLink.url}

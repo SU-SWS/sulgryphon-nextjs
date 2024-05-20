@@ -48,7 +48,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
       <div className="card-body items-start rs-px-3 rs-pb-3 rs-pt-7 md:rs-pt-3 w-full">
         <div className="leading-display text-18 pt-0 font-normal ">
-          <h2 id={headingId} className="type-3 rs-mb-1">{[roomDonorName, type].filter(item => !!item).join(" ")}</h2>
+          <h2 id={headingId} className="type-2 rs-mb-1">{[roomDonorName, type].filter(item => !!item).join(" ")}</h2>
           <div className="leading-tight">
 
             {branchHours &&

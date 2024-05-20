@@ -118,6 +118,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
       break
 
     case 'stanford_person--grid_list_all':
+    case 'sul_people--table_list_all':
       tags.push('views:stanford_person');
       break
 
@@ -179,6 +180,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
       break
 
     case 'stanford_person--grid_list_all':
+    case 'sul_people--table_list_all':
       filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
       graphqlResponse = await client.stanfordPerson({filters, ...queryVariables});
       items = graphqlResponse.stanfordPerson?.results as unknown as NodeUnion[]

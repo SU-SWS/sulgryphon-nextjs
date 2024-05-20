@@ -43,10 +43,10 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
       {(headline || link?.url) &&
         <>
           <AboveHeaderBorder/>
-          <header className="md:flex gap-2xl mb-80">
+          <header className="md:flex gap-2xl mb-40">
 
             {(headline) &&
-              <h2 id={headerId} className="mb-0 type-5 flex-grow">{headline}</h2>
+              <h2 id={headerId} className="mb-0 flex-grow">{headline}</h2>
             }
 
             {link?.url &&

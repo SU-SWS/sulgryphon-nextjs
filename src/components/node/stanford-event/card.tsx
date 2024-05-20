@@ -43,17 +43,17 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         </div>
       }
 
-      <div className="flex items-start gap-xl flex-col">
+      <div className="flex items-start gap-xs flex-col">
         <div
           className="flex w-full flex-row items-center bg-black-true text-white text-center uppercase"
           aria-hidden
         >
           <div className="flex flex-col items-center mx-auto">
             <div
-              className="pt-20 px-30 font-semibold">
+              className="pt-10 px-30 font-semibold">
               {startMonth}
             </div>
-            <div className="pb-20 px-30 text-m4">
+            <div className="pb-10 px-30 text-m3">
               {startDay}
             </div>
           </div>
@@ -64,10 +64,10 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
               <div className="font-bold">&mdash;</div>
               <div className="mx-auto">
                 <div
-                  className="pt-20 px-30 font-semibold">
+                  className="pt-10 px-30 font-semibold">
                   {endMonth}
                 </div>
-                <div className="pb-20 px-30 text-m4">
+                <div className="pb-10 px-30 text-m3">
                   {endDay}
                 </div>
               </div>
@@ -75,8 +75,8 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
           }
         </div>
 
-        <div className="flex flex-col gap-[1.2rem]">
-          <HeadingElement className="text-m1 order-2">
+        <div className="flex flex-col gap-[.5rem]">
+          <HeadingElement className="text-m0 order-2">
             <Link href={goToUrl}
                   className="text-black-true hover:text-brick-dark underline hover:no-underline">
               {node.title}
