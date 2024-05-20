@@ -21,7 +21,7 @@ const HomePageBanner = async () => {
   ))
 
   return (
-    <header className="bg-black-true mb-100 relative">
+    <header className="bg-black-true mb-50 relative">
       <div className="pb-20 centered relative z-10 top-50 md:top-100 md:px-50 min-h-[350px] md:min-h-[300px]">
         <div className="xl:mx-20 md:flex justify-between">
           <div className="text-white mb-40 md:w-1/3 lg:w-1/2">

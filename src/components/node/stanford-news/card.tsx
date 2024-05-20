@@ -18,7 +18,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article {...props} className="flex flex-col">
       {imageUrl &&
-        <div className="overflow-hidden aspect-[16/9] relative mb-40" aria-hidden="true">
+        <div className="overflow-hidden aspect-[16/9] relative mb-10" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
@@ -29,7 +29,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
         </div>
       }
 
-      <HeadingElement className="text-m1 order-last">
+      <HeadingElement className="text-m0 order-last">
         <Link href={goToUrl}
               className="text-black-true hover:text-brick-dark underline hover:no-underline">
           {node.title}
@@ -37,7 +37,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
       </HeadingElement>
 
       {node.suNewsTopics?.[0]?.name &&
-        <div className="font-semibold mb-20">
+        <div className="font-semibold mb-10">
           {node.suNewsTopics[0].name}
         </div>
       }

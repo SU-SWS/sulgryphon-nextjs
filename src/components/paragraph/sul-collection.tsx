@@ -23,7 +23,7 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
       {heading &&
         <>
           <AboveHeaderBorder/>
-          <h2 id={`${elementId}-heading`} className="type-5">{heading}</h2>
+          <h2 id={`${elementId}-heading`}>{heading}</h2>
         </>
       }
 
