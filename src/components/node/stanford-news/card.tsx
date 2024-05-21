@@ -29,7 +29,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
         </div>
       }
 
-      <HeadingElement className="text-m0 order-last">
+      <HeadingElement className="text-m0 order-last leading-cozy">
         <Link href={goToUrl}
               className="text-black-true hover:text-brick-dark underline hover:no-underline">
           {node.title}
