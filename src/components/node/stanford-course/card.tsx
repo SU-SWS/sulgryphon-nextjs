@@ -11,7 +11,7 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: Props) => {
   const HeadingElement = h3Heading ? 'h3' : 'h2';
   return (
     <article
-      className="block w-full basefont-20 leading-display bg-white text-black border border-solid border-black-10 shadow-md rs-pt-2 rs-px-2 rs-pb-3" {...props}>
+      className="block w-full basefont-18 leading-display bg-white text-black border border-solid border-black-10 shadow-md rs-pt-2 rs-px-2 rs-pb-3" {...props}>
       <div className="rs-pb-0">
         <span className="font-bold leading-cozy">
           {node.suCourseSubject?.name}

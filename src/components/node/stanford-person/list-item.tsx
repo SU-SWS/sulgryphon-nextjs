@@ -9,7 +9,7 @@ const StanfordPersonListItem = ({node, ...props}: { node: NodeStanfordPerson }) 
 
   return (
     <article
-      className="@container flex flex-col gap-lg w-full basefont-20 leading-display bg-white text-black" {...props}>
+      className="@container flex flex-col gap-lg w-full basefont-18 leading-display bg-white text-black" {...props}>
       {imageUrl &&
         <div
           className="relative rounded-full overflow-hidden aspect-[1/1] w-[130px] @lg:w-[215px] mx-auto">

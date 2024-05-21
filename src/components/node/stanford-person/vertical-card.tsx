@@ -18,7 +18,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
   return (
     <article
-      className="@container w-full basefont-20 leading-display bg-white text-black border-x border-t-5 border-b border-solid border-black-10 border-t-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-70" {...props}>
+      className="@container w-full basefont-18 leading-display bg-white text-black border-x border-t-5 border-b border-solid border-black-10 border-t-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-70" {...props}>
       {imageUrl &&
         <div
           className="relative flex justify-center pb-70 @lg:pb-80">

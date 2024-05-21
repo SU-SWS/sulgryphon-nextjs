@@ -26,7 +26,7 @@ const NodeReferenceCard = ({paragraph}: Props) => {
   return (
     <div className="@container">
       <div
-        className="flex w-full basefont-20 leading-display shadow-md border-0 rounded flex-col @6xl:flex-row">
+        className="flex w-full basefont-18 leading-display shadow-md border-0 rounded flex-col @6xl:flex-row">
 
         {imageUrl &&
           <div className="overflow-hidden aspect-[16/9] relative flex-shrink-0 @6xl:w-1/2">

@@ -18,7 +18,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
   return (
     <article
-      className="flex flex-col @3xl:flex-row w-full basefont-20 leading-display bg-white text-black border-x border-t border-b-5 border-solid border-black-10  border-b-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-0" {...props}>
+      className="flex flex-col @3xl:flex-row w-full basefont-18 leading-display bg-white text-black border-x border-t border-b-5 border-solid border-black-10  border-b-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-0" {...props}>
       {imageUrl &&
         <div className="flex items-center mx-auto mb-50 @3xl:ml-0 @3xl:mb-0 @3xl:mr-50">
           <div className="relative aspect-[1/1] w-[155px]">
