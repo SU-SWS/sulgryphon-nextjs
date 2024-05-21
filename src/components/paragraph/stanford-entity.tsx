@@ -61,13 +61,13 @@ const StanfordEntity = async ({
         }
 
         {entities &&
-          <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
+          <ul className={`list-unstyled mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
             {entities.map(item =>
-              <div key={item.id} className="mx-auto w-full">
+              <li key={item.id} className="mx-auto w-full">
                 <NodeCardDisplay node={item} h3Heading={!!headline}/>
-              </div>
+              </li>
             )}
-          </div>
+          </ul>
         }
         {link?.url &&
           <DrupalLinkButton href={link?.url} className="block mx-auto" {...linkAttributes}>
