@@ -45,7 +45,7 @@ const Card = ({
   }
   return (
     <div
-      className="card block w-full basefont-18 leading-display bg-white text-black border border-solid border-black-10 shadow-md">
+      className="card block w-full basefont-20 leading-display bg-white text-black border border-solid border-black-10 shadow-md">
 
       {(image) &&
         <div className="overflow-hidden aspect-[16/9] relative" aria-hidden="true">

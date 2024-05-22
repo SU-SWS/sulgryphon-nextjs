@@ -1,7 +1,7 @@
 const GlobalFooter = () => {
   return (
     <div
-      className="global-footer basefont-18 rs-py-1 text-white bg-cardinal-red">
+      className="global-footer basefont-20 rs-py-1 text-white bg-cardinal-red">
       <div className="centered flex flex-col lg:flex-row" title="Common Stanford resources">
         <div className="text-center mt-5 mb-9">
           <a  rel="nofollow" className="logo text-white hocus:text-white type-3" href="https://www.stanford.edu">
