@@ -71,7 +71,7 @@ const StanfordNews = async ({node, ...props}: { node: NodeStanfordNews }) => {
                     prefix={`mailto:?subject=${node.title}&body=`}
                   >
                     <span className="sr-only">Forward Email</span>
-                    <EnvelopeIcon width={28}/>
+                    <EnvelopeIcon title="Email" width={28}/>
                   </NewsSocialLink>
                 </li>
                 <li className="mr-1em">
