@@ -78,7 +78,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         </div>
 
         <div className="flex flex-col gap-[.5rem]">
-          <HeadingElement className="text-m0 order-2">
+          <HeadingElement className="text-m0 order-2 leading-cozy">
             <Link href={goToUrl}
                   className="text-black-true hover:text-brick-dark underline hover:no-underline">
               {node.title}
