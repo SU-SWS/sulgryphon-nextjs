@@ -60,15 +60,26 @@ const StanfordEntity = async ({
           <div className="mb-40">{formatHtml(description)}</div>
         }
 
-        {entities &&
+        {entities?.length > 1 ? (
           <ul className={`list-unstyled mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
-            {entities.map(item =>
+            {entities.map((item, index) => ( 
               <li key={item.id} className="mx-auto w-full">
-                <NodeCardDisplay node={item} h3Heading={!!headline}/>
-              </li>
-            )}
+                <NodeCardDisplay node={item} h3Heading={headline}/>
+              </li>)
+            )
+            }
           </ul>
+          )
+          :
+          (
+            <div className="mx-auto w-full">
+              <NodeCardDisplay node={entities[0]} h3Heading={headline}/>
+            </div>
+          )
         }
+
+
+
         {link?.url &&
           <DrupalLinkButton href={link?.url} className="block mx-auto" {...linkAttributes}>
             {link.title}
