@@ -78,8 +78,6 @@ const StanfordEntity = async ({
           )
         }
 
-
-
         {link?.url &&
           <DrupalLinkButton href={link?.url} className="block mx-auto" {...linkAttributes}>
             {link.title}
