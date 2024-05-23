@@ -52,7 +52,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
             {node.suPersonEmail &&
               <div className="flex items-center">
-                <EnvelopeIcon width={20} className="flex-shrink-0 mr-3 text-digital-blue"/>
+                <EnvelopeIcon title="Email" width={20} className="flex-shrink-0 mr-3 text-digital-blue"/>
 
                 <EmailLink
                   email={node.suPersonEmail}

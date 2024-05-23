@@ -49,7 +49,7 @@ const LibraryAdditionalHoursComponent = ({hoursId}: {hoursId: string}) => {
             <div id={`${id}-${location.id}`} className="flex items-center">{location.name}</div>
 
             <div className="flex gap-xs">
-              <ClockIcon width={20}/>
+              <ClockIcon title="Hours" width={20}/>
               <div>{getLibrarySelectOptions(location.hours).find(option => option.value === today)?.label}</div>
             </div>
           </div>
