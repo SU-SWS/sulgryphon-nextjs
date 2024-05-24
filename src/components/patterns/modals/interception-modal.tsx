@@ -44,6 +44,7 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
       <dialog
         ref={overlay}
         className="modal fixed w-screen h-full overscroll-contain overflow-y-scroll overflow-x-hidden top-0 left-0 items-center justify-center z-[10000] bg-black-true bg-opacity-[90%] flex"
+        aria-modal="true"
         onClick={onClick}
         open
         {...props}
