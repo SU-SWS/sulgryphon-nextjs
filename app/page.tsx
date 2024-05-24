@@ -32,7 +32,7 @@ const Page = async () => {
       {entity.suPageComponents &&
         <ParagraphRows items={entity.suPageComponents} fullWidth/>
       }
-      <div className="centered rs-pb-4">Last updated {lastUpdated}</div>
+      <div className="centered rs-py-4">Last updated {lastUpdated}</div>
     </main>
   )
 }
