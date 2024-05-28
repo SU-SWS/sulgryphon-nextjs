@@ -13,6 +13,7 @@ export const GET = async (request: NextRequest) => {
 
   const tagsInvalidated = ['paths', `paths:${path}`];
   if (path.startsWith('/tags/')) path.substring(6).split('/').map(tag => tagsInvalidated.push(tag))
+  if (path === "/home") tagsInvalidated.push("paths:/")
 
   tagsInvalidated.map(tag => revalidateTag(tag));
   return NextResponse.json({revalidated: true, tags: tagsInvalidated});
