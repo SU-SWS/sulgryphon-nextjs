@@ -101,7 +101,7 @@ const HorizontalCard = ({
             {link?.url &&
               <Link
                 href={link.url}
-                className="border-2 border-digital-red rounded-full cta-button font-semibold leading-display block w-fit no-underline hocus:underline group transition-colors px-26 pt-10 pb-11 text-16 md:text-20 text-white hocus:bg-black-true hocus:text-white rs-mt-neg1 bg-digital-red"
+                className="border-2 border-digital-red rounded-full cta-button font-semibold leading-display block w-fit no-underline hocus:underline group transition-colors px-26 pt-10 pb-11 text-16 md:text-18 text-white hocus:bg-black-true hocus:text-white rs-mt-neg1 bg-digital-red"
                 {...linkAttributes}
               >
                 {link.title}

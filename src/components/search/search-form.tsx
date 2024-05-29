@@ -49,9 +49,9 @@ const SearchFormComponent = ({action = '/search', inputProps = {}, ...props}: Fo
         </div>
         <button
           type="submit"
-          className="rounded-full p-15 bg-digital-red hover:bg-cardinal-red-dark transition text-white hocus:underline"
+          className="rounded-full p-15 text-16 md:text-18 bg-digital-red hover:bg-cardinal-red-dark transition text-white hocus:underline"
         >
-          Search
+         Search
         </button>
       </form>
     </div>
