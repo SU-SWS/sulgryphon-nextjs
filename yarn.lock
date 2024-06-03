@@ -4512,7 +4512,8 @@ __metadata:
     react-focus-lock: "npm:^2.12.1"
     react-obfuscate: "npm:^3.6.9"
     react-obfuscate-email: "npm:^1.1.2"
-    react-stately: "npm:^3.31.1"
+    react-stately: "npm:^3.31.0"
+    react-super-responsive-table: "npm:^5.2.3"
     react-tiny-oembed: "npm:^1.1.0"
     sharp: "npm:^0.33.4"
     tailwind-merge: "npm:^2.3.0"
@@ -8805,7 +8806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-stately@npm:^3.31.1":
+"react-stately@npm:^3.31.0":
   version: 3.31.1
   resolution: "react-stately@npm:3.31.1"
   dependencies:
@@ -8835,6 +8836,17 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
   checksum: 10c0/b30fbf31615f6e2d0c58ccbbc086bcd06edc98ae4f7aabeb10ad990692ac50732307a893ad789264b76330cce671b8787bc8536b8265286767800fdd37c59b8d
+  languageName: node
+  linkType: hard
+
+"react-super-responsive-table@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "react-super-responsive-table@npm:5.2.3"
+  peerDependencies:
+    prop-types: ">= 15"
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/395b855c9c31f370084948009dc6404bf318e2943821d02e589a5e8c549f61c3ff1258a2a4abb6799dc943ccb2e6fdf2cde154b56ccc304abbeebc53f2624a40
   languageName: node
   linkType: hard
 
