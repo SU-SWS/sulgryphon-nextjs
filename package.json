@@ -41,6 +41,7 @@
     "react-obfuscate": "^3.6.9",
     "react-obfuscate-email": "^1.1.2",
     "react-stately": "^3.31.0",
+    "react-super-responsive-table": "^5.2.3",
     "react-tiny-oembed": "^1.1.0",
     "sharp": "^0.33.3",
     "tailwind-merge": "^2.3.0",
