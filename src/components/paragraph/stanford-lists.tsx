@@ -137,6 +137,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
   const itemsPerPage = pageSize ? Math.min(Math.ceil(pageSize / 3) * 3, 99) : undefined;
   const queryVariables = {pageSize: itemsPerPage, page, offset};
 
+
   switch (`${viewId}--${displayId}`) {
     case 'stanford_shared_tags--card_grid':
       filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
@@ -145,7 +146,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
       break
 
     case 'sul_shared_tag_events--card_grid':
-      filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
+      filters = getViewFilters(['term_node_taxonomy_name_depth'], contextualFilter)
       graphqlResponse = await client.sulSharedTagEventsCardGridGraphql({filters, ...queryVariables});
       items = graphqlResponse.sulSharedTagEventsCardGridGraphql?.results as unknown as NodeUnion[]
       break

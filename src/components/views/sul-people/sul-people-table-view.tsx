@@ -5,7 +5,7 @@ interface Props {
   hasHeading: boolean
 }
 
-const SulPeopleTableView = async ({items, hasHeading}: Props) => {
+const SulPeopleTableView = async ({}: Props) => {
   return (
     <table>
       Build the table

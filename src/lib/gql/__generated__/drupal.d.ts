@@ -22,6 +22,7 @@ export type Scalars = {
   Timestamp: { input: any; output: any; }
   UntypedStructuredData: { input: any; output: any; }
   UtcOffset: { input: any; output: any; }
+  _: { input: any; output: any; }
 };
 
 /** Complex address data. */
@@ -183,7 +184,9 @@ export enum ConnectionSortKeys {
   /** Sort by entity title. */
   Title = 'TITLE',
   /** Sort by updated date */
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
+  /** Sort by term weight. */
+  Weight = 'WEIGHT'
 }
 
 /** A Date range has a start and an end. */
@@ -379,7 +382,7 @@ export type ImageStyleInterface = {
 /** Entity type image_style. */
 export type ImageStyleUnion = ImageStyle;
 
-/** Generic untyped input for key-value pairs. */
+/** Generic input for key-value pairs. */
 export type KeyValueInput = {
   key: Scalars['String']['input'];
   value?: InputMaybe<Scalars['String']['input']>;
@@ -745,6 +748,8 @@ export type MenuItem = {
   id: Scalars['ID']['output'];
   /** Whether this menu item links to an internal route. */
   internal: Scalars['Boolean']['output'];
+  /** The language of the menu item. */
+  langcode: Language;
   /** The route this menu item uses. Route loading can be disabled per menu type. */
   route?: Maybe<RouteUnion>;
   /** The title of the menu item. */
@@ -786,10 +791,18 @@ export type MetaTagLink = MetaTag & {
 /** A meta link element's attributes. */
 export type MetaTagLinkAttributes = {
   __typename?: 'MetaTagLinkAttributes';
-  /** The href attribute of the link. */
+  /** Specifies the location of the linked document. */
   href?: Maybe<Scalars['String']['output']>;
-  /** The rel attribute of the link. */
+  /** Specifies the location of the linked document. */
+  hreflang?: Maybe<Scalars['String']['output']>;
+  /** Specifies on what device the linked document will be displayed. */
+  media?: Maybe<Scalars['String']['output']>;
+  /** Specifies the relationship between the current document and the linked document. */
   rel?: Maybe<Scalars['String']['output']>;
+  /** Specifies the size of the linked resource. Only for rel="icon". */
+  sizes?: Maybe<Scalars['String']['output']>;
+  /** Specifies the media type of the linked document. */
+  type?: Maybe<Scalars['String']['output']>;
 };
 
 /** A meta property element. */
@@ -810,8 +823,30 @@ export type MetaTagPropertyAttributes = {
   property?: Maybe<Scalars['String']['output']>;
 };
 
+/** A meta script element. */
+export type MetaTagScript = MetaTag & {
+  __typename?: 'MetaTagScript';
+  /** The meta tag element attributes. */
+  attributes: MetaTagScriptAttributes;
+  /** The content of the script tag. */
+  content?: Maybe<Scalars['String']['output']>;
+  /** The HTML tag for this meta element. */
+  tag: Scalars['String']['output'];
+};
+
+/** A meta script element's attributes. */
+export type MetaTagScriptAttributes = {
+  __typename?: 'MetaTagScriptAttributes';
+  /** The integrity attribute of the script tag. */
+  integrity?: Maybe<Scalars['String']['output']>;
+  /** The src attribute of the script tag. */
+  src?: Maybe<Scalars['String']['output']>;
+  /** The type attribute of the script tag. */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
 /** A meta tag element. */
-export type MetaTagUnion = MetaTagLink | MetaTagProperty | MetaTagValue;
+export type MetaTagUnion = MetaTagLink | MetaTagProperty | MetaTagScript | MetaTagValue;
 
 /** A meta content element. */
 export type MetaTagValue = MetaTag & {
@@ -831,10 +866,10 @@ export type MetaTagValueAttributes = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
-/** A GraphQL mutation is a request that changes data on the server. */
+/** The schema's entry-point for mutations. */
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Placeholder field to enable schema mutation extension. */
+  /** Placeholder for mutation extension. */
   _: Scalars['Boolean']['output'];
 };
 
@@ -1661,6 +1696,8 @@ export type ParagraphCollection = LayoutParagraphsInterface & MetaTagInterface &
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Collection card */
   sulCollectionCard?: Maybe<Array<ParagraphCollectionCard>>;
   /** The main headline. This shows up large. */
@@ -1682,6 +1719,8 @@ export type ParagraphCollectionCard = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Card */
   sulCard?: Maybe<ParagraphStanfordCard>;
   /** Text used as the clickable button. */
@@ -1700,6 +1739,8 @@ export type ParagraphInterface = {
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
 };
 
 /** Entity type paragraph. */
@@ -1717,6 +1758,8 @@ export type ParagraphLayout = LayoutParagraphsInterface & MetaTagInterface & Par
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
 };
 
 /** Entity type paragraph. */
@@ -1734,6 +1777,8 @@ export type ParagraphStanfordAccordion = LayoutParagraphsInterface & MetaTagInte
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Body/Answer */
   suAccordionBody: Text;
   /** The clickable text displayed above the body. */
@@ -1755,6 +1800,8 @@ export type ParagraphStanfordBanner = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** The main content area for the banner. Shows up in an opaque box over the image.  */
   suBannerBody?: Maybe<Text>;
   /** A call to action link that shows up below the main body content. */
@@ -1782,6 +1829,8 @@ export type ParagraphStanfordCard = LayoutParagraphsInterface & MetaTagInterface
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** The main text of the card. */
   suCardBody?: Maybe<Text>;
   /** This is the main headline of the card type.  */
@@ -1812,6 +1861,8 @@ export type ParagraphStanfordEntity = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** This button will appear below the content items. */
   suEntityButton?: Maybe<Link>;
   /** Description */
@@ -1848,6 +1899,8 @@ export type ParagraphStanfordGallery = LayoutParagraphsInterface & MetaTagInterf
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Button */
   suGalleryButton?: Maybe<Link>;
   /** Description */
@@ -1873,6 +1926,8 @@ export type ParagraphStanfordList = LayoutParagraphsInterface & MetaTagInterface
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** This button will appear at the end of the list view. */
   suListButton?: Maybe<Link>;
   /** Description */
@@ -1909,6 +1964,8 @@ export type ParagraphStanfordMediaCaption = LayoutParagraphsInterface & MetaTagI
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** A “caption” is a brief description of the media that appears below the item. */
   suMediaCaptionCaption?: Maybe<Text>;
   /** Link the media to something. Only works with images. */
@@ -1935,6 +1992,8 @@ export type ParagraphStanfordPageTitleBanner = LayoutParagraphsInterface & MetaT
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** The page title banner background image. Please use hi-resolution images. */
   suTitleBannerImage: MediaImage;
 };
@@ -1954,6 +2013,8 @@ export type ParagraphStanfordPersonCtum = LayoutParagraphsInterface & MetaTagInt
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Image */
   suPersonCtaImage?: Maybe<MediaImage>;
   /**
@@ -1983,6 +2044,8 @@ export type ParagraphStanfordSchedule = LayoutParagraphsInterface & MetaTagInter
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Date & Time */
   suScheduleDateTime?: Maybe<SmartDateType>;
   /** Description */
@@ -2012,6 +2075,8 @@ export type ParagraphStanfordSpacer = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Select the size for the spacer.  Choosing None will apply the standard spacer height. */
   suSpacerSize?: Maybe<Scalars['String']['output']>;
 };
@@ -2031,6 +2096,8 @@ export type ParagraphStanfordWysiwyg = LayoutParagraphsInterface & MetaTagInterf
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Body */
   suWysiwygText?: Maybe<Text>;
 };
@@ -2050,6 +2117,8 @@ export type ParagraphSulButton = LayoutParagraphsInterface & MetaTagInterface & 
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Headline */
   sulButtonHeadline?: Maybe<Scalars['String']['output']>;
   /** Button Link */
@@ -2071,6 +2140,8 @@ export type ParagraphSulContactCard = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Address */
   sulContactAddress?: Maybe<Address>;
   /** Branch */
@@ -2106,6 +2177,8 @@ export type ParagraphSulFeatCollection = LayoutParagraphsInterface & MetaTagInte
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Cards */
   sulCollectionCards: Array<ParagraphStanfordCard>;
   /** Headline */
@@ -2129,6 +2202,8 @@ export type ParagraphSulLibguide = LayoutParagraphsInterface & MetaTagInterface 
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Description */
   sulLibguideDesc?: Maybe<Text>;
   /** Headline */
@@ -2140,11 +2215,7 @@ export type ParagraphSulLibguide = LayoutParagraphsInterface & MetaTagInterface 
 /** Entity type paragraph. */
 export type ParagraphUnion = ParagraphCollection | ParagraphCollectionCard | ParagraphLayout | ParagraphStanfordAccordion | ParagraphStanfordBanner | ParagraphStanfordCard | ParagraphStanfordEntity | ParagraphStanfordGallery | ParagraphStanfordList | ParagraphStanfordMediaCaption | ParagraphStanfordPageTitleBanner | ParagraphStanfordPersonCtum | ParagraphStanfordSchedule | ParagraphStanfordSpacer | ParagraphStanfordWysiwyg | ParagraphSulButton | ParagraphSulContactCard | ParagraphSulFeatCollection | ParagraphSulLibguide;
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type Query = {
   __typename?: 'Query';
   /** Load a Block plugin. */
@@ -2234,301 +2305,193 @@ export type Query = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryBlockArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryBlockContentArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryConfigPagesArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryLockupSettingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMenuArgs = {
-  langcode?: InputMaybe<Scalars['String']['input']>;
   name: MenuAvailable;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordCoursesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordEventSeriesItemsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordEventsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordNewsItemsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPeopleArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPoliciesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPublicationsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeSulLibrariesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeSulStudyPlacesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryParagraphArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryRedirectArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryRedirectsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryRouteArgs = {
-  langcode?: InputMaybe<Scalars['String']['input']>;
   path: Scalars['String']['input'];
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicPagesArgs = {
   contextualFilter?: InputMaybe<StanfordBasicPagesContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2537,11 +2500,7 @@ export type QueryStanfordBasicPagesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicPagesCardsArgs = {
   contextualFilter?: InputMaybe<StanfordBasicPagesCardsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2550,27 +2509,18 @@ export type QueryStanfordBasicPagesCardsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicSiteSettingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordCoursesArgs = {
   contextualFilter?: InputMaybe<StanfordCoursesContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2579,11 +2529,7 @@ export type QueryStanfordCoursesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordCoursesCardGridArgs = {
   contextualFilter?: InputMaybe<StanfordCoursesCardGridContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2592,11 +2538,7 @@ export type QueryStanfordCoursesCardGridArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordEventsArgs = {
   contextualFilter?: InputMaybe<StanfordEventsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2605,11 +2547,7 @@ export type QueryStanfordEventsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordEventsCardGridArgs = {
   contextualFilter?: InputMaybe<StanfordEventsCardGridContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2618,11 +2556,7 @@ export type QueryStanfordEventsCardGridArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordEventsPastEventsArgs = {
   contextualFilter?: InputMaybe<StanfordEventsPastEventsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2631,43 +2565,29 @@ export type QueryStanfordEventsPastEventsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordGlobalMessagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordLocalFootersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordNewsCardGridArgs = {
   contextualFilter?: InputMaybe<StanfordNewsCardGridContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2676,11 +2596,7 @@ export type QueryStanfordNewsCardGridArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordNewsDefaultListArgs = {
   contextualFilter?: InputMaybe<StanfordNewsDefaultListContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2690,11 +2606,7 @@ export type QueryStanfordNewsDefaultListArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordPersonArgs = {
   contextualFilter?: InputMaybe<StanfordPersonContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2703,11 +2615,7 @@ export type QueryStanfordPersonArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordPublicationsApaArgs = {
   contextualFilter?: InputMaybe<StanfordPublicationsApaContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2716,11 +2624,7 @@ export type QueryStanfordPublicationsApaArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordPublicationsChicagoArgs = {
   contextualFilter?: InputMaybe<StanfordPublicationsChicagoContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2729,11 +2633,7 @@ export type QueryStanfordPublicationsChicagoArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordSharedTagsArgs = {
   contextualFilter?: InputMaybe<StanfordSharedTagsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2743,27 +2643,18 @@ export type QueryStanfordSharedTagsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordSuperFootersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QuerySulSharedTagEventsCardGridGraphqlArgs = {
   contextualFilter?: InputMaybe<SulSharedTagEventsCardGridGraphqlContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2772,14 +2663,9 @@ export type QuerySulSharedTagEventsCardGridGraphqlArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryTermArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Entity type redirect. */
@@ -2944,6 +2830,8 @@ export type StanfordBasicPagesCardsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2969,6 +2857,8 @@ export type StanfordBasicPagesResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3059,6 +2949,8 @@ export type StanfordCoursesCardGridResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3084,6 +2976,8 @@ export type StanfordCoursesResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3112,6 +3006,8 @@ export type StanfordEventsCardGridResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3144,6 +3040,8 @@ export type StanfordEventsPastEventsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3165,6 +3063,8 @@ export type StanfordEventsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3324,6 +3224,8 @@ export type StanfordNewsCardGridResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3349,6 +3251,8 @@ export type StanfordNewsDefaultListResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3374,6 +3278,8 @@ export type StanfordPersonResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3399,6 +3305,8 @@ export type StanfordPublicationsApaResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3424,6 +3332,8 @@ export type StanfordPublicationsChicagoResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3450,6 +3360,8 @@ export type StanfordSharedTagsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3674,10 +3586,15 @@ export type SuThesi = CitationInterface & {
   suYear?: Maybe<Scalars['Int']['output']>;
 };
 
+/** The schema's entry-point for subscriptions. */
+export type Subscription = {
+  __typename?: 'Subscription';
+  /** Placeholder for subscription extension. */
+  _: Scalars['Boolean']['output'];
+};
+
 export type SulSharedTagEventsCardGridGraphqlContextualFilterInput = {
-  nid?: InputMaybe<Scalars['String']['input']>;
   term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Result for view sul_shared_tag_events display card_grid_graphql. */
@@ -3687,6 +3604,8 @@ export type SulSharedTagEventsCardGridGraphqlResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -4183,7 +4102,7 @@ export type UnsupportedType = {
   unsupported?: Maybe<Scalars['Boolean']['output']>;
 };
 
-/** Views represent collections of curated data from the site. */
+/** Views represent collections of curated data from the CMS. */
 export type View = {
   /** The description of the view. */
   description?: Maybe<Scalars['String']['output']>;
@@ -4199,6 +4118,31 @@ export type View = {
   pageInfo: ViewPageInfo;
   /** The machine name of the view. */
   view: Scalars['String']['output'];
+};
+
+/** An exposed filter option for the view. */
+export type ViewFilter = {
+  __typename?: 'ViewFilter';
+  /** The filter element attributes. */
+  attributes: Scalars['UntypedStructuredData']['output'];
+  /** The filter element description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The filter identifier. */
+  id: Scalars['ID']['output'];
+  /** The filter element label. */
+  label?: Maybe<Scalars['String']['output']>;
+  /** Whether the filter allows multiple values. */
+  multiple: Scalars['Boolean']['output'];
+  /** The filter element options if any are defined. */
+  options?: Maybe<Scalars['UntypedStructuredData']['output']>;
+  /** The filter plugin type. */
+  plugin: Scalars['String']['output'];
+  /** Whether the filter is required. */
+  required: Scalars['Boolean']['output'];
+  /** The filter field type. */
+  type: Scalars['String']['output'];
+  /** The value for the filter. Could be an array for multiple values. */
+  value?: Maybe<Scalars['UntypedStructuredData']['output']>;
 };
 
 /** Information about the page in a view. */
@@ -4217,11 +4161,15 @@ export type ViewPageInfo = {
 /** A reference to an embedded view */
 export type ViewReference = {
   __typename?: 'ViewReference';
+  /** The contextual filter values used. */
   contextualFilter?: Maybe<Array<Scalars['String']['output']>>;
+  /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** How many results per page. */
   pageSize?: Maybe<Scalars['Int']['output']>;
   /** The name of the query used to fetch the data, if the view is a GraphQL display. */
   query?: Maybe<Scalars['String']['output']>;
+  /** The machine name of the view. */
   view: Scalars['String']['output'];
 };
 
