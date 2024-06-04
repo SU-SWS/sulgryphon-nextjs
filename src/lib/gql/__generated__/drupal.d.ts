@@ -22,6 +22,7 @@ export type Scalars = {
   Timestamp: { input: any; output: any; }
   UntypedStructuredData: { input: any; output: any; }
   UtcOffset: { input: any; output: any; }
+  _: { input: any; output: any; }
 };
 
 /** Complex address data. */
@@ -50,6 +51,84 @@ export type AddressCountry = {
   /** The name of the country. */
   name?: Maybe<Scalars['String']['output']>;
 };
+
+/** Block content is a modular piece of content that can be displayed in various regions of a website's layout. */
+export type BlockContent = BlockInterface & {
+  __typename?: 'BlockContent';
+  /** The Content Block entity to be displayed within the block. */
+  entity: BlockContentUnion;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The rendered output of the block. */
+  render?: Maybe<Scalars['Html']['output']>;
+  /** The title of the block if provided. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Entity type block_content. */
+export type BlockContentInterface = {
+  /** The time that the content block was last edited. */
+  changed: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The content block language code. */
+  langcode: Language;
+  /** The computed meta tags for the entity. */
+  metatag: Array<MetaTagUnion>;
+  /** A boolean indicating whether this block is reusable. */
+  reusable: Scalars['Boolean']['output'];
+  /** A brief description of your block. */
+  title: Scalars['String']['output'];
+};
+
+/** A block with a component paragraph field */
+export type BlockContentStanfordComponentBlock = BlockContentInterface & MetaTagInterface & {
+  __typename?: 'BlockContentStanfordComponentBlock';
+  /** The time that the content block was last edited. */
+  changed: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The content block language code. */
+  langcode: Language;
+  /** The computed meta tags for the entity. */
+  metatag: Array<MetaTagUnion>;
+  /** A boolean indicating whether this block is reusable. */
+  reusable: Scalars['Boolean']['output'];
+  /** Component */
+  suComponent?: Maybe<Array<BlockContentStanfordComponentBlockSuComponentUnion>>;
+  /** A brief description of your block. */
+  title: Scalars['String']['output'];
+};
+
+/** Component */
+export type BlockContentStanfordComponentBlockSuComponentUnion = ParagraphStanfordBanner | ParagraphStanfordCard | ParagraphStanfordMediaCaption | ParagraphStanfordSpacer | ParagraphStanfordWysiwyg;
+
+/** Entity type block_content. */
+export type BlockContentUnion = BlockContentStanfordComponentBlock;
+
+/** Blocks are a modular piece of content that can be displayed in various regions of a website's layout. */
+export type BlockInterface = {
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The rendered output of the block. */
+  render?: Maybe<Scalars['Html']['output']>;
+  /** The title of the block if provided. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** A generic block plugin is a modular piece of content that can be displayed in various regions of a website's layout. */
+export type BlockPlugin = BlockInterface & {
+  __typename?: 'BlockPlugin';
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The rendered output of the block. */
+  render?: Maybe<Scalars['Html']['output']>;
+  /** The title of the block if provided. */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Block types that can exist in the system. */
+export type BlockUnion = BlockContent | BlockPlugin;
 
 /** Entity type citation. */
 export type CitationInterface = {
@@ -105,7 +184,9 @@ export enum ConnectionSortKeys {
   /** Sort by entity title. */
   Title = 'TITLE',
   /** Sort by updated date */
-  UpdatedAt = 'UPDATED_AT'
+  UpdatedAt = 'UPDATED_AT',
+  /** Sort by term weight. */
+  Weight = 'WEIGHT'
 }
 
 /** A Date range has a start and an end. */
@@ -166,6 +247,10 @@ export type Image = {
   __typename?: 'Image';
   /** The alt text of the image. */
   alt?: Maybe<Scalars['String']['output']>;
+  /** Relative focal point X coordinate in percent. */
+  focalX: Scalars['Int']['output'];
+  /** Relative focal point Y coordinate in percent. */
+  focalY: Scalars['Int']['output'];
   /** The height of the image. */
   height: Scalars['Int']['output'];
   /** The mime type of the image. */
@@ -176,11 +261,128 @@ export type Image = {
   title?: Maybe<Scalars['String']['output']>;
   /** The URL of the image. */
   url: Scalars['String']['output'];
+  /** Image variations control different sizes and formats for images. */
+  variations?: Maybe<Array<ImageStyleDerivative>>;
   /** The width of the image. */
   width: Scalars['Int']['output'];
 };
 
-/** Generic untyped input for key-value pairs. */
+
+/** A image object to represent an managed file. */
+export type ImageVariationsArgs = {
+  styles?: InputMaybe<Array<InputMaybe<ImageStyleAvailable>>>;
+};
+
+/** Entity type image_style. */
+export type ImageStyle = ImageStyleInterface & {
+  __typename?: 'ImageStyle';
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+/** List of image styles available to use. */
+export enum ImageStyleAvailable {
+  /** Breakpoint - 2XL - 1x */
+  Breakpoint2Xl1X = 'BREAKPOINT2XL1X',
+  /** Breakpoint - 2XL - 2x */
+  Breakpoint2Xl2X = 'BREAKPOINT2XL2X',
+  /** Breakpoint - LG - 1x */
+  BreakpointLg1X = 'BREAKPOINT_LG1X',
+  /** Breakpoint - LG - 2x */
+  BreakpointLg2X = 'BREAKPOINT_LG2X',
+  /** Breakpoint - MD - 1x */
+  BreakpointMd1X = 'BREAKPOINT_MD1X',
+  /** Breakpoint - MD - 2x */
+  BreakpointMd2X = 'BREAKPOINT_MD2X',
+  /** Breakpoint - SM - 1x */
+  BreakpointSm1X = 'BREAKPOINT_SM1X',
+  /** Breakpoint - SM - 2x */
+  BreakpointSm2X = 'BREAKPOINT_SM2X',
+  /** Breakpoint - XL - 1x */
+  BreakpointXl1X = 'BREAKPOINT_XL1X',
+  /** Breakpoint - XL - 2x */
+  BreakpointXl2X = 'BREAKPOINT_XL2X',
+  /** Card - 1X - 478x318 */
+  Card1X478X318 = 'CARD1X478X318',
+  /** Card - 2X - 956x636 */
+  Card2X956X636 = 'CARD2X956X636',
+  /** Card - 478x239 */
+  Card478X239 = 'CARD478X239',
+  /** Card - 956x478 */
+  Card956X478 = 'CARD956X478',
+  /** Card - 1192x596 */
+  Card1192X596 = 'CARD1192X596',
+  /** Card - 1900x950 */
+  Card1900X950 = 'CARD1900X950',
+  /** CTA - 1X - 507x338 */
+  Cta1X507X338 = 'CTA1X507X338',
+  /** CTA - 1X - 596x397 */
+  Cta1X596X397 = 'CTA1X596X397',
+  /** CTA - 2X - 1014x676 */
+  Cta2X1014X676 = 'CTA2X1014X676',
+  /** CTA - 2X - 1192x794 */
+  Cta2X1192X794 = 'CTA2X1192X794',
+  /** Large (480 wide) */
+  Large = 'LARGE',
+  /** Large Square (480x480) */
+  LargeSquare = 'LARGE_SQUARE',
+  /** Linkit result thumbnail */
+  LinkitResultThumbnail = 'LINKIT_RESULT_THUMBNAIL',
+  /** Media Library thumbnail (220×220) */
+  MediaLibrary = 'MEDIA_LIBRARY',
+  /** Medium (220 wide) */
+  Medium = 'MEDIUM',
+  /** Medium Square (220x220) */
+  MediumSquare = 'MEDIUM_SQUARE',
+  /** Full Width Banner Tall */
+  NewsFullWidthBannerTall = 'NEWS_FULL_WIDTH_BANNER_TALL',
+  /** Responsive Large (2000) */
+  ResponsiveLarge = 'RESPONSIVE_LARGE',
+  /** Responsive Medium (1300) */
+  ResponsiveMedium = 'RESPONSIVE_MEDIUM',
+  /** Responsive Small (800) */
+  ResponsiveSmall = 'RESPONSIVE_SMALL',
+  /** Square - 478 */
+  Square478 = 'SQUARE478',
+  /** Square - 956 */
+  Square956 = 'SQUARE956',
+  /** Square - 1192 */
+  Square1192 = 'SQUARE1192',
+  /** Square - 1900 */
+  Square1900 = 'SQUARE1900',
+  /** Circle */
+  StanfordCircle = 'STANFORD_CIRCLE',
+  /** News List (280x132) */
+  SuNewsList = 'SU_NEWS_LIST',
+  /** Thumbnail (100 wide) */
+  Thumbnail = 'THUMBNAIL',
+  /** Thumbnail Square (100x100) */
+  ThumbnailSquare = 'THUMBNAIL_SQUARE',
+  /** Tiny Blur */
+  TinyBlur = 'TINY_BLUR'
+}
+
+/** ImageStyle derivatives for an Image. */
+export type ImageStyleDerivative = {
+  __typename?: 'ImageStyleDerivative';
+  height: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+  width: Scalars['Int']['output'];
+};
+
+/** Entity type image_style. */
+export type ImageStyleInterface = {
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+/** Entity type image_style. */
+export type ImageStyleUnion = ImageStyle;
+
+/** Generic input for key-value pairs. */
 export type KeyValueInput = {
   key: Scalars['String']['input'];
   value?: InputMaybe<Scalars['String']['input']>;
@@ -546,6 +748,8 @@ export type MenuItem = {
   id: Scalars['ID']['output'];
   /** Whether this menu item links to an internal route. */
   internal: Scalars['Boolean']['output'];
+  /** The language of the menu item. */
+  langcode: Language;
   /** The route this menu item uses. Route loading can be disabled per menu type. */
   route?: Maybe<RouteUnion>;
   /** The title of the menu item. */
@@ -587,10 +791,18 @@ export type MetaTagLink = MetaTag & {
 /** A meta link element's attributes. */
 export type MetaTagLinkAttributes = {
   __typename?: 'MetaTagLinkAttributes';
-  /** The href attribute of the link. */
+  /** Specifies the location of the linked document. */
   href?: Maybe<Scalars['String']['output']>;
-  /** The rel attribute of the link. */
+  /** Specifies the location of the linked document. */
+  hreflang?: Maybe<Scalars['String']['output']>;
+  /** Specifies on what device the linked document will be displayed. */
+  media?: Maybe<Scalars['String']['output']>;
+  /** Specifies the relationship between the current document and the linked document. */
   rel?: Maybe<Scalars['String']['output']>;
+  /** Specifies the size of the linked resource. Only for rel="icon". */
+  sizes?: Maybe<Scalars['String']['output']>;
+  /** Specifies the media type of the linked document. */
+  type?: Maybe<Scalars['String']['output']>;
 };
 
 /** A meta property element. */
@@ -611,8 +823,30 @@ export type MetaTagPropertyAttributes = {
   property?: Maybe<Scalars['String']['output']>;
 };
 
+/** A meta script element. */
+export type MetaTagScript = MetaTag & {
+  __typename?: 'MetaTagScript';
+  /** The meta tag element attributes. */
+  attributes: MetaTagScriptAttributes;
+  /** The content of the script tag. */
+  content?: Maybe<Scalars['String']['output']>;
+  /** The HTML tag for this meta element. */
+  tag: Scalars['String']['output'];
+};
+
+/** A meta script element's attributes. */
+export type MetaTagScriptAttributes = {
+  __typename?: 'MetaTagScriptAttributes';
+  /** The integrity attribute of the script tag. */
+  integrity?: Maybe<Scalars['String']['output']>;
+  /** The src attribute of the script tag. */
+  src?: Maybe<Scalars['String']['output']>;
+  /** The type attribute of the script tag. */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
 /** A meta tag element. */
-export type MetaTagUnion = MetaTagLink | MetaTagProperty | MetaTagValue;
+export type MetaTagUnion = MetaTagLink | MetaTagProperty | MetaTagScript | MetaTagValue;
 
 /** A meta content element. */
 export type MetaTagValue = MetaTag & {
@@ -632,10 +866,10 @@ export type MetaTagValueAttributes = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
-/** A GraphQL mutation is a request that changes data on the server. */
+/** The schema's entry-point for mutations. */
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Placeholder field to enable schema mutation extension. */
+  /** Placeholder for mutation extension. */
   _: Scalars['Boolean']['output'];
 };
 
@@ -1462,6 +1696,8 @@ export type ParagraphCollection = LayoutParagraphsInterface & MetaTagInterface &
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Collection card */
   sulCollectionCard?: Maybe<Array<ParagraphCollectionCard>>;
   /** The main headline. This shows up large. */
@@ -1483,6 +1719,8 @@ export type ParagraphCollectionCard = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Card */
   sulCard?: Maybe<ParagraphStanfordCard>;
   /** Text used as the clickable button. */
@@ -1501,6 +1739,8 @@ export type ParagraphInterface = {
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
 };
 
 /** Entity type paragraph. */
@@ -1518,6 +1758,8 @@ export type ParagraphLayout = LayoutParagraphsInterface & MetaTagInterface & Par
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
 };
 
 /** Entity type paragraph. */
@@ -1535,6 +1777,8 @@ export type ParagraphStanfordAccordion = LayoutParagraphsInterface & MetaTagInte
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Body/Answer */
   suAccordionBody: Text;
   /** The clickable text displayed above the body. */
@@ -1556,6 +1800,8 @@ export type ParagraphStanfordBanner = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** The main content area for the banner. Shows up in an opaque box over the image.  */
   suBannerBody?: Maybe<Text>;
   /** A call to action link that shows up below the main body content. */
@@ -1583,6 +1829,8 @@ export type ParagraphStanfordCard = LayoutParagraphsInterface & MetaTagInterface
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** The main text of the card. */
   suCardBody?: Maybe<Text>;
   /** This is the main headline of the card type.  */
@@ -1613,6 +1861,8 @@ export type ParagraphStanfordEntity = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** This button will appear below the content items. */
   suEntityButton?: Maybe<Link>;
   /** Description */
@@ -1649,6 +1899,8 @@ export type ParagraphStanfordGallery = LayoutParagraphsInterface & MetaTagInterf
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Button */
   suGalleryButton?: Maybe<Link>;
   /** Description */
@@ -1674,6 +1926,8 @@ export type ParagraphStanfordList = LayoutParagraphsInterface & MetaTagInterface
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** This button will appear at the end of the list view. */
   suListButton?: Maybe<Link>;
   /** Description */
@@ -1710,6 +1964,8 @@ export type ParagraphStanfordMediaCaption = LayoutParagraphsInterface & MetaTagI
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** A “caption” is a brief description of the media that appears below the item. */
   suMediaCaptionCaption?: Maybe<Text>;
   /** Link the media to something. Only works with images. */
@@ -1736,6 +1992,8 @@ export type ParagraphStanfordPageTitleBanner = LayoutParagraphsInterface & MetaT
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** The page title banner background image. Please use hi-resolution images. */
   suTitleBannerImage: MediaImage;
 };
@@ -1755,6 +2013,8 @@ export type ParagraphStanfordPersonCtum = LayoutParagraphsInterface & MetaTagInt
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Image */
   suPersonCtaImage?: Maybe<MediaImage>;
   /**
@@ -1784,6 +2044,8 @@ export type ParagraphStanfordSchedule = LayoutParagraphsInterface & MetaTagInter
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Date & Time */
   suScheduleDateTime?: Maybe<SmartDateType>;
   /** Description */
@@ -1813,6 +2075,8 @@ export type ParagraphStanfordSpacer = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Select the size for the spacer.  Choosing None will apply the standard spacer height. */
   suSpacerSize?: Maybe<Scalars['String']['output']>;
 };
@@ -1832,6 +2096,8 @@ export type ParagraphStanfordWysiwyg = LayoutParagraphsInterface & MetaTagInterf
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Body */
   suWysiwygText?: Maybe<Text>;
 };
@@ -1851,6 +2117,8 @@ export type ParagraphSulButton = LayoutParagraphsInterface & MetaTagInterface & 
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Headline */
   sulButtonHeadline?: Maybe<Scalars['String']['output']>;
   /** Button Link */
@@ -1872,6 +2140,8 @@ export type ParagraphSulContactCard = LayoutParagraphsInterface & MetaTagInterfa
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Address */
   sulContactAddress?: Maybe<Address>;
   /** Branch */
@@ -1907,6 +2177,8 @@ export type ParagraphSulFeatCollection = LayoutParagraphsInterface & MetaTagInte
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Cards */
   sulCollectionCards: Array<ParagraphStanfordCard>;
   /** Headline */
@@ -1930,6 +2202,8 @@ export type ParagraphSulLibguide = LayoutParagraphsInterface & MetaTagInterface 
   langcode: Language;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
   /** Description */
   sulLibguideDesc?: Maybe<Text>;
   /** Headline */
@@ -1941,13 +2215,13 @@ export type ParagraphSulLibguide = LayoutParagraphsInterface & MetaTagInterface 
 /** Entity type paragraph. */
 export type ParagraphUnion = ParagraphCollection | ParagraphCollectionCard | ParagraphLayout | ParagraphStanfordAccordion | ParagraphStanfordBanner | ParagraphStanfordCard | ParagraphStanfordEntity | ParagraphStanfordGallery | ParagraphStanfordList | ParagraphStanfordMediaCaption | ParagraphStanfordPageTitleBanner | ParagraphStanfordPersonCtum | ParagraphStanfordSchedule | ParagraphStanfordSpacer | ParagraphStanfordWysiwyg | ParagraphSulButton | ParagraphSulContactCard | ParagraphSulFeatCollection | ParagraphSulLibguide;
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type Query = {
   __typename?: 'Query';
+  /** Load a Block plugin. */
+  block?: Maybe<BlockUnion>;
+  /** Load a BlockContent entity by id. */
+  blockContent?: Maybe<BlockContentUnion>;
   /** Load a ConfigPages entity by id. */
   configPages?: Maybe<ConfigPagesUnion>;
   /** Schema information. */
@@ -1982,6 +2256,10 @@ export type Query = {
   nodeSulStudyPlaces: NodeSulStudyPlaceConnection;
   /** Load a Paragraph entity by id. */
   paragraph?: Maybe<ParagraphUnion>;
+  /** Load a Redirect entity by id. */
+  redirect?: Maybe<Redirect>;
+  /** List of all Redirect on the platform. */
+  redirects: RedirectConnection;
   /** Load a Route by path. */
   route?: Maybe<RouteUnion>;
   /** Query for view stanford_basic_pages display basic_page_type_list_graphql. */
@@ -2018,6 +2296,8 @@ export type Query = {
   stanfordSharedTags?: Maybe<StanfordSharedTagsResult>;
   /** List of all StanfordSuperFooter on the platform. */
   stanfordSuperFooters: StanfordSuperFooterConnection;
+  /** Query for view sul_shared_tag_events display card_grid_graphql. */
+  sulSharedTagEventsCardGridGraphql?: Maybe<SulSharedTagEventsCardGridGraphqlResult>;
   /** Query for view sul_study_places display study_spaces_graphql. */
   sulStudyPlaces?: Maybe<SulStudyPlacesResult>;
   /** Load a Term entity by id. */
@@ -2025,253 +2305,193 @@ export type Query = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
-export type QueryConfigPagesArgs = {
+/** The schema's entry-point for queries. */
+export type QueryBlockArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
+export type QueryBlockContentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+/** The schema's entry-point for queries. */
+export type QueryConfigPagesArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+/** The schema's entry-point for queries. */
 export type QueryLockupSettingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMediaArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryMenuArgs = {
-  langcode?: InputMaybe<Scalars['String']['input']>;
   name: MenuAvailable;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordCoursesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordEventSeriesItemsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordEventsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordNewsItemsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPeopleArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPoliciesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeStanfordPublicationsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeSulLibrariesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryNodeSulStudyPlacesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryParagraphArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
+export type QueryRedirectArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+/** The schema's entry-point for queries. */
+export type QueryRedirectsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  reverse?: InputMaybe<Scalars['Boolean']['input']>;
+  sortKey?: InputMaybe<ConnectionSortKeys>;
+};
+
+
+/** The schema's entry-point for queries. */
 export type QueryRouteArgs = {
-  langcode?: InputMaybe<Scalars['String']['input']>;
   path: Scalars['String']['input'];
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicPagesArgs = {
   contextualFilter?: InputMaybe<StanfordBasicPagesContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2280,11 +2500,7 @@ export type QueryStanfordBasicPagesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicPagesCardsArgs = {
   contextualFilter?: InputMaybe<StanfordBasicPagesCardsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2293,27 +2509,18 @@ export type QueryStanfordBasicPagesCardsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicSiteSettingsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordCoursesArgs = {
   contextualFilter?: InputMaybe<StanfordCoursesContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2322,11 +2529,7 @@ export type QueryStanfordCoursesArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordCoursesCardGridArgs = {
   contextualFilter?: InputMaybe<StanfordCoursesCardGridContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2335,11 +2538,7 @@ export type QueryStanfordCoursesCardGridArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordEventsArgs = {
   contextualFilter?: InputMaybe<StanfordEventsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2348,11 +2547,7 @@ export type QueryStanfordEventsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordEventsCardGridArgs = {
   contextualFilter?: InputMaybe<StanfordEventsCardGridContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2361,11 +2556,7 @@ export type QueryStanfordEventsCardGridArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordEventsPastEventsArgs = {
   contextualFilter?: InputMaybe<StanfordEventsPastEventsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2374,43 +2565,29 @@ export type QueryStanfordEventsPastEventsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordGlobalMessagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordLocalFootersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordNewsCardGridArgs = {
   contextualFilter?: InputMaybe<StanfordNewsCardGridContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2419,11 +2596,7 @@ export type QueryStanfordNewsCardGridArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordNewsDefaultListArgs = {
   contextualFilter?: InputMaybe<StanfordNewsDefaultListContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2433,11 +2606,7 @@ export type QueryStanfordNewsDefaultListArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordPersonArgs = {
   contextualFilter?: InputMaybe<StanfordPersonContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2446,11 +2615,7 @@ export type QueryStanfordPersonArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordPublicationsApaArgs = {
   contextualFilter?: InputMaybe<StanfordPublicationsApaContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2459,11 +2624,7 @@ export type QueryStanfordPublicationsApaArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordPublicationsChicagoArgs = {
   contextualFilter?: InputMaybe<StanfordPublicationsChicagoContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2472,11 +2633,7 @@ export type QueryStanfordPublicationsChicagoArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordSharedTagsArgs = {
   contextualFilter?: InputMaybe<StanfordSharedTagsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2486,31 +2643,94 @@ export type QueryStanfordSharedTagsArgs = {
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
 export type QueryStanfordSuperFootersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  langcode?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
   sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 
-/**
- * The schema's entry-point for queries.
- *
- * This acts as the public, top-level API from which all queries must start.
- */
+/** The schema's entry-point for queries. */
+export type QuerySulSharedTagEventsCardGridGraphqlArgs = {
+  contextualFilter?: InputMaybe<SulSharedTagEventsCardGridGraphqlContextualFilterInput>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The schema's entry-point for queries. */
 export type QueryTermArgs = {
   id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
 };
+
+/** Entity type redirect. */
+export type Redirect = EdgeNode & MetaTagInterface & RedirectInterface & {
+  __typename?: 'Redirect';
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The computed meta tags for the entity. */
+  metatag: Array<MetaTagUnion>;
+  /** To */
+  redirectRedirect: Link;
+  /**
+   * Enter an internal Drupal path or path alias to redirect (e.g. <em
+   * class="placeholder">node/123</em> or <em
+   * class="placeholder">taxonomy/term/123</em>). Fragment anchors (e.g. <em
+   * class="placeholder">#anchor</em>) are <strong>not</strong> allowed.
+   */
+  redirectSource: RedirectSourceType;
+  /** The redirect status code. */
+  statusCode: Scalars['Int']['output'];
+};
+
+/** A paginated set of results for Redirect. */
+export type RedirectConnection = Connection & {
+  __typename?: 'RedirectConnection';
+  edges: Array<RedirectEdge>;
+  nodes: Array<Redirect>;
+  pageInfo: ConnectionPageInfo;
+};
+
+/** Edge for Redirect. */
+export type RedirectEdge = Edge & {
+  __typename?: 'RedirectEdge';
+  cursor: Scalars['Cursor']['output'];
+  node: Redirect;
+};
+
+/** Entity type redirect. */
+export type RedirectInterface = {
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The computed meta tags for the entity. */
+  metatag: Array<MetaTagUnion>;
+  /** To */
+  redirectRedirect: Link;
+  /**
+   * Enter an internal Drupal path or path alias to redirect (e.g. <em
+   * class="placeholder">node/123</em> or <em
+   * class="placeholder">taxonomy/term/123</em>). Fragment anchors (e.g. <em
+   * class="placeholder">#anchor</em>) are <strong>not</strong> allowed.
+   */
+  redirectSource: RedirectSourceType;
+  /** The redirect status code. */
+  statusCode: Scalars['Int']['output'];
+};
+
+/** Redirect Source data. */
+export type RedirectSourceType = {
+  __typename?: 'RedirectSourceType';
+  /** Source URL */
+  url: Scalars['String']['output'];
+};
+
+/** Entity type redirect. */
+export type RedirectUnion = Redirect;
 
 /** Routes represent incoming requests that resolve to content. */
 export type Route = {
@@ -2610,6 +2830,8 @@ export type StanfordBasicPagesCardsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2635,6 +2857,8 @@ export type StanfordBasicPagesResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2725,6 +2949,8 @@ export type StanfordCoursesCardGridResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2750,6 +2976,8 @@ export type StanfordCoursesResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2778,6 +3006,8 @@ export type StanfordEventsCardGridResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2810,6 +3040,8 @@ export type StanfordEventsPastEventsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2831,6 +3063,8 @@ export type StanfordEventsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -2990,6 +3224,8 @@ export type StanfordNewsCardGridResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3015,6 +3251,8 @@ export type StanfordNewsDefaultListResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3040,6 +3278,8 @@ export type StanfordPersonResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3065,6 +3305,8 @@ export type StanfordPublicationsApaResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3090,6 +3332,8 @@ export type StanfordPublicationsChicagoResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3116,6 +3360,8 @@ export type StanfordSharedTagsResult = View & {
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
   /** The ID of the view. */
   id: Scalars['ID']['output'];
   /** The human friendly label of the view. */
@@ -3338,6 +3584,40 @@ export type SuThesi = CitationInterface & {
   suUrl?: Maybe<Link>;
   /** To display the year in the citation style for Chicago format, the publisher field must be populated. */
   suYear?: Maybe<Scalars['Int']['output']>;
+};
+
+/** The schema's entry-point for subscriptions. */
+export type Subscription = {
+  __typename?: 'Subscription';
+  /** Placeholder for subscription extension. */
+  _: Scalars['Boolean']['output'];
+};
+
+export type SulSharedTagEventsCardGridGraphqlContextualFilterInput = {
+  term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Result for view sul_shared_tag_events display card_grid_graphql. */
+export type SulSharedTagEventsCardGridGraphqlResult = View & {
+  __typename?: 'SulSharedTagEventsCardGridGraphqlResult';
+  /** The description of the view. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The machine name of the display. */
+  display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
+  /** The ID of the view. */
+  id: Scalars['ID']['output'];
+  /** The human friendly label of the view. */
+  label?: Maybe<Scalars['String']['output']>;
+  /** The language code of the view. */
+  langcode?: Maybe<Scalars['String']['output']>;
+  /** Information about the page in the view. */
+  pageInfo: ViewPageInfo;
+  /** The results of the view. */
+  results: Array<NodeUnion>;
+  /** The machine name of the view. */
+  view: Scalars['String']['output'];
 };
 
 /** Result for view sul_study_places display study_spaces_graphql. */
@@ -3822,7 +4102,7 @@ export type UnsupportedType = {
   unsupported?: Maybe<Scalars['Boolean']['output']>;
 };
 
-/** Views represent collections of curated data from the site. */
+/** Views represent collections of curated data from the CMS. */
 export type View = {
   /** The description of the view. */
   description?: Maybe<Scalars['String']['output']>;
@@ -3838,6 +4118,31 @@ export type View = {
   pageInfo: ViewPageInfo;
   /** The machine name of the view. */
   view: Scalars['String']['output'];
+};
+
+/** An exposed filter option for the view. */
+export type ViewFilter = {
+  __typename?: 'ViewFilter';
+  /** The filter element attributes. */
+  attributes: Scalars['UntypedStructuredData']['output'];
+  /** The filter element description. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The filter identifier. */
+  id: Scalars['ID']['output'];
+  /** The filter element label. */
+  label?: Maybe<Scalars['String']['output']>;
+  /** Whether the filter allows multiple values. */
+  multiple: Scalars['Boolean']['output'];
+  /** The filter element options if any are defined. */
+  options?: Maybe<Scalars['UntypedStructuredData']['output']>;
+  /** The filter plugin type. */
+  plugin: Scalars['String']['output'];
+  /** Whether the filter is required. */
+  required: Scalars['Boolean']['output'];
+  /** The filter field type. */
+  type: Scalars['String']['output'];
+  /** The value for the filter. Could be an array for multiple values. */
+  value?: Maybe<Scalars['UntypedStructuredData']['output']>;
 };
 
 /** Information about the page in a view. */
@@ -3856,16 +4161,20 @@ export type ViewPageInfo = {
 /** A reference to an embedded view */
 export type ViewReference = {
   __typename?: 'ViewReference';
+  /** The contextual filter values used. */
   contextualFilter?: Maybe<Array<Scalars['String']['output']>>;
+  /** The machine name of the display. */
   display: Scalars['String']['output'];
+  /** How many results per page. */
   pageSize?: Maybe<Scalars['Int']['output']>;
   /** The name of the query used to fetch the data, if the view is a GraphQL display. */
   query?: Maybe<Scalars['String']['output']>;
+  /** The machine name of the view. */
   view: Scalars['String']['output'];
 };
 
 /** All available view result types. */
-export type ViewResultUnion = StanfordBasicPagesCardsResult | StanfordBasicPagesResult | StanfordCoursesCardGridResult | StanfordCoursesResult | StanfordEventsCardGridResult | StanfordEventsPastEventsResult | StanfordEventsResult | StanfordNewsCardGridResult | StanfordNewsDefaultListResult | StanfordPersonResult | StanfordPublicationsApaResult | StanfordPublicationsChicagoResult | StanfordSharedTagsResult | SulStudyPlacesResult;
+export type ViewResultUnion = StanfordBasicPagesCardsResult | StanfordBasicPagesResult | StanfordCoursesCardGridResult | StanfordCoursesResult | StanfordEventsCardGridResult | StanfordEventsPastEventsResult | StanfordEventsResult | StanfordNewsCardGridResult | StanfordNewsDefaultListResult | StanfordPersonResult | StanfordPublicationsApaResult | StanfordPublicationsChicagoResult | StanfordSharedTagsResult | SulSharedTagEventsCardGridGraphqlResult | SulStudyPlacesResult;
 
 export type NodeQueryVariables = Exact<{
   uuid: Scalars['ID']['input'];
@@ -4319,3 +4628,13 @@ export type StanfordSharedTagsQueryVariables = Exact<{
 
 
 export type StanfordSharedTagsQuery = { __typename?: 'Query', stanfordSharedTags?: { __typename?: 'StanfordSharedTagsResult', results: Array<{ __typename: 'NodeStanfordCourse', id: string, title: string, status: boolean, path: string, suCourseAcademicYear?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suCourseSubject?: { __typename: 'TermSuCourseSubject', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, suEventAltLoc?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null, attributes?: { __typename?: 'LinkAttributes', ariaLabel?: string | null } | null } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, sulEventImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | { __typename: 'NodeStanfordEventSeries', id: string, title: string, status: boolean, path: string, suEventSeriesDek?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any } } | { __typename: 'NodeStanfordNews', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suNewsBanner?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | { __typename?: 'MediaVideo' } | null, suNewsFeaturedMedia?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suNewsTopics?: Array<{ __typename: 'TermStanfordNewsTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null } | { __typename: 'NodeStanfordPage', id: string, title: string, status: boolean, path: string, suPageDescription?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suPageImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suPageBanner?: { __typename: 'ParagraphStanfordBanner', suBannerHeader?: string | null, suBannerSupHeader?: string | null, id: string, behaviors?: string | null, suBannerBody?: { __typename?: 'Text', processed?: any | null } | null, suBannerButton?: { __typename?: 'Link', url?: string | null, title?: string | null, attributes?: { __typename?: 'LinkAttributes', ariaLabel?: string | null } | null } | null, suBannerImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | null } | { __typename: 'NodeStanfordPerson', id: string, title: string, status: boolean, path: string, suPersonFullTitle?: string | null, suPersonEmail?: any | null, sulPersonLibguideId?: number | null, sulPersonLibcalId?: number | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suPersonPhoto?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | { __typename: 'NodeStanfordPolicy', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, body?: { __typename?: 'TextSummary', processed?: any | null, summary?: any | null } | null } | { __typename: 'NodeStanfordPublication', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suPublicationTopics?: Array<{ __typename: 'TermStanfordPublicationTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null } | { __typename: 'NodeSulLibrary', id: string, title: string, status: boolean, path: string, suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suLibraryContactImg?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null } | { __typename: 'NodeSulStudyPlace', id: string, title: string, status: boolean, path: string, sulStudyLibcalId?: number | null, sulStudyRoomNumber?: string | null, sulStudyRoomDonorName?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, sulStudyFeatures?: Array<{ __typename: 'TermSulStudyPlaceFeature', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, sulStudyCapacity?: { __typename: 'TermStudyPlaceCapacity', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null, sulStudyType: { __typename: 'TermSulStudyPlaceType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }, sulStudyBranch: { __typename: 'NodeSulLibrary', suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, id: string, title: string, status: boolean, path: string, suLibraryContactImg?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any } }, sulStudyImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
+
+export type SulSharedTagEventsCardGridGraphqlQueryVariables = Exact<{
+  filters?: InputMaybe<SulSharedTagEventsCardGridGraphqlContextualFilterInput>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SulSharedTagEventsCardGridGraphqlQuery = { __typename?: 'Query', sulSharedTagEventsCardGridGraphql?: { __typename?: 'SulSharedTagEventsCardGridGraphqlResult', results: Array<{ __typename: 'NodeStanfordCourse', id: string, title: string, status: boolean, path: string, suCourseAcademicYear?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suCourseSubject?: { __typename: 'TermSuCourseSubject', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, suEventAltLoc?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null, attributes?: { __typename?: 'LinkAttributes', ariaLabel?: string | null } | null } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, sulEventImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | { __typename: 'NodeStanfordEventSeries', id: string, title: string, status: boolean, path: string, suEventSeriesDek?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any } } | { __typename: 'NodeStanfordNews', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suNewsBanner?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | { __typename?: 'MediaVideo' } | null, suNewsFeaturedMedia?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suNewsTopics?: Array<{ __typename: 'TermStanfordNewsTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null } | { __typename: 'NodeStanfordPage', id: string, title: string, status: boolean, path: string, suPageDescription?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suPageImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suPageBanner?: { __typename: 'ParagraphStanfordBanner', suBannerHeader?: string | null, suBannerSupHeader?: string | null, id: string, behaviors?: string | null, suBannerBody?: { __typename?: 'Text', processed?: any | null } | null, suBannerButton?: { __typename?: 'Link', url?: string | null, title?: string | null, attributes?: { __typename?: 'LinkAttributes', ariaLabel?: string | null } | null } | null, suBannerImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | null } | { __typename: 'NodeStanfordPerson', id: string, title: string, status: boolean, path: string, suPersonFullTitle?: string | null, suPersonEmail?: any | null, sulPersonLibguideId?: number | null, sulPersonLibcalId?: number | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suPersonPhoto?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | { __typename: 'NodeStanfordPolicy', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, body?: { __typename?: 'TextSummary', processed?: any | null, summary?: any | null } | null } | { __typename: 'NodeStanfordPublication', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suPublicationTopics?: Array<{ __typename: 'TermStanfordPublicationTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null } | { __typename: 'NodeSulLibrary', id: string, title: string, status: boolean, path: string, suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, suLibraryContactImg?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null } | { __typename: 'NodeSulStudyPlace', id: string, title: string, status: boolean, path: string, sulStudyLibcalId?: number | null, sulStudyRoomNumber?: string | null, sulStudyRoomDonorName?: string | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any }, sulStudyFeatures?: Array<{ __typename: 'TermSulStudyPlaceFeature', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, sulStudyCapacity?: { __typename: 'TermStudyPlaceCapacity', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null, sulStudyType: { __typename: 'TermSulStudyPlaceType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }, sulStudyBranch: { __typename: 'NodeSulLibrary', suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, id: string, title: string, status: boolean, path: string, suLibraryContactImg?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null, changed: { __typename?: 'DateTime', time: any }, created: { __typename?: 'DateTime', time: any } }, sulStudyImage?: { __typename: 'MediaImage', id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
