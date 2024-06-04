@@ -1,6 +1,5 @@
 "use client";
 
-import React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import Link from 'next/link';
@@ -17,9 +16,8 @@ interface Props {
 }
 
 const SulPeopleTableView = async ({items, hasHeading }: Props) => {
-  // const imageUrl = item.suPersonPhoto?.mediaImage.url;
   const HeadingElement = hasHeading ? 'h3' : 'h2';
-  
+  const imageUrl = items.suPersonPhoto?.mediaImage.url;
 
   
   return (
@@ -37,7 +35,19 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
       {items.map((item) => ( 
         <>
         <Tr>
-          <Td>image</Td>
+          <Td>
+          {imageUrl &&
+          <>
+            <Image
+              src={buildUrl(imageUrl).toString()}
+              alt=""
+              className="object-cover rounded-full"
+              fill
+              sizes="(max-width: 1700px) 100vw, 1500px"
+            />
+          </>
+          }
+          </Td>
           <Td>
             <Link href={item.path}
                 className="no-underline hocus:underline active:underline text-digital-blue hocus:text-brick-dark active:text-digital-red">
@@ -48,18 +58,19 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
             }
           </Td>
           <Td>
-            {item.suPersonResearch}
+            {item.suPersonResearchInterests}
+            {item.suPersonResearchInterests}
           </Td>
           <Td>
             {(item.suPersonEmail) &&
-            <div className="">
+            <>
               <EnvelopeIcon title="Email" width={20} className="inline-block mr-6 text-digital-blue"/>
 
               <EmailLink
                 email={item.suPersonEmail}
                 className="underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red text-digital-blue break-words"
               />
-            </div>
+            </>
             }
           </Td>
           <Td>
