@@ -102,7 +102,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
       break;
 
     case 'sul_shared_tag_events--card_grid':
-      tags.push('views:all')
+      tags.push('views:stanford_event');
       break;
 
     case 'stanford_basic_pages--basic_page_type_list':
@@ -146,8 +146,8 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
 
     case 'sul_shared_tag_events--card_grid':
       filters = getViewFilters(['term_node_taxonomy_name_depth', 'type'], contextualFilter)
-      graphqlResponse = await client.stanfordSharedTags({filters, ...queryVariables});
-      items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
+      graphqlResponse = await client.sulSharedTagEventsCardGridGraphql({filters, ...queryVariables});
+      items = graphqlResponse.sulSharedTagEventsCardGridGraphql?.results as unknown as NodeUnion[]
       break
 
     case 'stanford_basic_pages--basic_page_type_list':
