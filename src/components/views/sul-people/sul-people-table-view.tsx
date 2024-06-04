@@ -5,7 +5,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import Link from 'next/link';
 import Image from "next/image";
 import {buildUrl} from "@/lib/drupal/utils";
-import LibCal from "@/components/node/stanford-person/libcal";
+import LibCal from './libcal';
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import EmailLink from "@/components/patterns/elements/email-link";
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
@@ -15,15 +15,15 @@ interface Props {
   hasHeading: boolean
 }
 
-
 const SulPeopleTableView = async ({items, hasHeading }: Props) => {
   const HeadingElement = hasHeading ? 'h3' : 'h2';
+  const imageUrl = items[0].suPersonPhoto?.mediaImage.url;
   
   return (
     <Table>
       <Thead>
-        <Tr>
-          <Th></Th>
+        <Tr className="!border-none">
+          <Th className=""></Th>
           <Th className="type-1">Name/Title</Th>
           <Th className="type-1">Research</Th>
           <Th className="type-1">Contact</Th>
@@ -31,23 +31,24 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-      {items.map((item) => ( 
+      {items.map((item, index) => ( 
         <>
-        <Tr>
-          <Td>
+        <Tr className="!border-none">
+          <Td className="min-w-70 md:border-b md:border-black-40">
+                  
           {imageUrl &&
           <>
             <Image
               src={buildUrl(imageUrl).toString()}
               alt=""
               className="object-cover rounded-full"
-              fill
-              sizes="(max-width: 1700px) 100vw, 1500px"
+              width="68"
+              height="68"
             />
           </>
           }
           </Td>
-          <Td>
+          <Td className="md:border-b md:border-black-40">
             <Link href={item.path}
                 className="no-underline hocus:underline active:underline text-digital-blue hocus:text-brick-dark active:text-digital-red">
               <HeadingElement className="type-0">{item.title}</HeadingElement>
@@ -56,11 +57,12 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
               <div className="type-0">{item.suPersonFullTitle}</div>
             }
           </Td>
-          <Td>
-            {item.suPersonResearchInterests}
-            {item.suPersonResearchInterests}
+          <Td className="min-w-1/5 md:border-b md:border-black-40">
+          {(item.suPersonResearch) &&
+              <div className="type-0">{item.suPersonResearch}</div>
+            }
           </Td>
-          <Td>
+          <Td className="md:border-b md:border-black-40">
             {(item.suPersonEmail) &&
             <>
               <EnvelopeIcon title="Email" width={20} className="inline-block mr-6 text-digital-blue"/>
@@ -72,7 +74,7 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
             </>
             }
           </Td>
-          <Td>
+          <Td className="md:border-b md:border-black-40">
             {item.sulPersonLibcalId &&
             <LibCal libcalId={item.sulPersonLibcalId} srText={item.title}/>
             }
