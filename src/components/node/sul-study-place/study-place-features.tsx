@@ -48,7 +48,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
       <div className="card-body items-start rs-px-3 rs-pb-3 rs-pt-7 md:rs-pt-3 w-full">
         <div className="leading-display text-18 pt-0 font-normal ">
-          <h2 id={headingId} className="type-3 rs-mb-1">{[roomDonorName, type].filter(item => !!item).join(" ")}</h2>
+          <h2 id={headingId} className="type-2 rs-mb-1">{[roomDonorName, type].filter(item => !!item).join(" ")}</h2>
           <div className="leading-tight">
 
             {branchHours &&
@@ -57,7 +57,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
             <div
               className={`relative flex flex-row items-start type-1 ${roomNumber ? "mb-20" : "rs-mb-2"}`}>
-              <MapPinIcon width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
+              <MapPinIcon title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
               <Link href={branchUrl}
                     className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
                 <div>{branchTitle}</div>
@@ -66,7 +66,7 @@ const StudyPlaceFeatures = ({branchHours, branchTitle, branchUrl, capacity, cont
 
             {roomNumber &&
               <div className="relative flex flex-row items-start type-1 rs-mb-2">
-                <BuildingLibraryIcon className="w-24 h-24 mr-12 flex-shrink-0 "/>
+                <BuildingLibraryIcon title="Library" className="w-24 h-24 mr-12 flex-shrink-0 "/>
 
                 <div>Room-{roomNumber}</div>
               </div>

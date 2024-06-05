@@ -18,7 +18,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
   return (
     <article
-      className="@container w-full basefont-23 leading-display bg-white text-black border-x border-t-5 border-b border-solid border-black-10 border-t-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-70" {...props}>
+      className="@container w-full basefont-20 leading-display bg-white text-black border-x border-t-5 border-b border-solid border-black-10 border-t-digital-red shadow-md rs-pt-2 rs-px-2 rs-pb-3 mt-70" {...props}>
       {imageUrl &&
         <div
           className="relative flex justify-center pb-70 @lg:pb-80">
@@ -43,7 +43,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
             href={node.path}
             className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red"
           >
-            <HeadingElement className="type-0 @lg:type-2 font-serif">{node.title}</HeadingElement>
+            <HeadingElement className="type-0 @lg:type-1 font-serif">{node.title}</HeadingElement>
           </Link>
           <div className="flex flex-col gap-[1.2rem]">
             {(node.suPersonFullTitle) &&
@@ -52,7 +52,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
             {node.suPersonEmail &&
               <div className="flex items-center">
-                <EnvelopeIcon width={20} className="flex-shrink-0 mr-3 text-digital-blue"/>
+                <EnvelopeIcon title="Email" width={20} className="flex-shrink-0 mr-3 text-digital-blue"/>
 
                 <EmailLink
                   email={node.suPersonEmail}

@@ -112,3 +112,14 @@ query stanfordSharedTags($filters: StanfordSharedTagsContextualFilterInput, $pag
         }
     }
 }
+
+query sulSharedTagEventsCardGridGraphql($filters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
+    sulSharedTagEventsCardGridGraphql(contextualFilter: $filters, pageSize: $pageSize, page: $page, offset: $offset) {
+        results {
+            ...FragmentNodeTeaserUnion
+        }
+        pageInfo {
+            ...FragmentViewPageInfo
+        }
+    }
+}

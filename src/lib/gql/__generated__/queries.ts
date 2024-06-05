@@ -1442,6 +1442,24 @@ export const StanfordSharedTagsDocument = gql`
 }
     ${FragmentNodeTeaserUnionFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
+export const SulSharedTagEventsCardGridGraphqlDocument = gql`
+    query sulSharedTagEventsCardGridGraphql($filters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
+  sulSharedTagEventsCardGridGraphql(
+    contextualFilter: $filters
+    pageSize: $pageSize
+    page: $page
+    offset: $offset
+  ) {
+    results {
+      ...FragmentNodeTeaserUnion
+    }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
+  }
+}
+    ${FragmentNodeTeaserUnionFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1503,6 +1521,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     stanfordSharedTags(variables?: DrupalTypes.StanfordSharedTagsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.StanfordSharedTagsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.StanfordSharedTagsQuery>(StanfordSharedTagsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'stanfordSharedTags', 'query', variables);
+    },
+    sulSharedTagEventsCardGridGraphql(variables?: DrupalTypes.SulSharedTagEventsCardGridGraphqlQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.SulSharedTagEventsCardGridGraphqlQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.SulSharedTagEventsCardGridGraphqlQuery>(SulSharedTagEventsCardGridGraphqlDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sulSharedTagEventsCardGridGraphql', 'query', variables);
     }
   };
 }

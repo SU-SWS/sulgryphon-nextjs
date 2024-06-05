@@ -9,53 +9,53 @@ module.exports = function () {
         fontFamily: '"Source Serif Pro", Georgia, Times, "Times New Roman", serif',
       },
       'h1': {
-        fontSize: '2.31em',
+        fontSize: '1.8em',
         letterSpacing: '-0.02em',
         '@screen md': {
-          fontSize: '2.99em',
+          fontSize: '2.31em',
         },
         '@screen lg': {
-          fontSize: '3.81em',
+          fontSize: '2.99em',
         },
       },
       'h2': {
-        fontSize: '1.75em',
+        fontSize: '1.42em',
         letterSpacing: '-0.016em',
         '@screen md': {
-          fontSize: '2.07em',
+          fontSize: '1.69em',
         },
         '@screen lg': {
-          fontSize: '2.44em',
+          fontSize: '2.03em',
         },
       },
       'h3': {
-        fontSize: '1.22em',
+        fontSize: '1.32em',
         letterSpacing: '-0.014em',
         '@screen md': {
-          fontSize: '1.38em',
+          fontSize: '1.52em',
         },
         '@screen lg': {
-          fontSize: '1.95em',
+          fontSize: '1.73em',
         },
       },
       'h4': {
-        fontSize: '1.06em',
+        fontSize: '1.21em',
         letterSpacing: '-0.012em',
+        '@screen md': {
+          fontSize: '1.32em',
+        },
+        '@screen lg': {
+          fontSize: '1.44em',
+        },
+      },
+      'h5': {
+        fontSize: '1.1em',
+        letterSpacing: '-0.01em',
         '@screen md': {
           fontSize: '1.15em',
         },
         '@screen lg': {
-          fontSize: '1.56em',
-        },
-      },
-      'h5': {
-        fontSize: '0.92em',
-        letterSpacing: '-0.01em',
-        '@screen md': {
-          fontSize: '0.96em',
-        },
-        '@screen lg': {
-          fontSize: '1.25em',
+          fontSize: '1.2em',
         },
       },
     });

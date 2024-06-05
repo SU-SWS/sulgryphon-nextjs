@@ -1,8 +1,6 @@
-import {CalendarDaysIcon} from "@heroicons/react/20/solid";
+import { CalendarDaysIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Link from "@/components/patterns/elements/drupal-link";
 import Image from "next/image";
-import {ClockIcon, MapPinIcon} from "@heroicons/react/24/outline";
-
 import {buildUrl} from "@/lib/drupal/utils";
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
 
@@ -45,17 +43,17 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         </div>
       }
 
-      <div className="flex items-start gap-xl flex-col">
+      <div className="flex items-start gap-xs flex-col">
         <div
           className="flex w-full flex-row items-center bg-black-true text-white text-center uppercase"
           aria-hidden
         >
           <div className="flex flex-col items-center mx-auto">
             <div
-              className="pt-20 px-30 font-semibold">
+              className="pt-10 px-30 font-semibold">
               {startMonth}
             </div>
-            <div className="pb-20 px-30 text-m4">
+            <div className="pb-10 px-30 text-m3">
               {startDay}
             </div>
           </div>
@@ -66,10 +64,10 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
               <div className="font-bold">&mdash;</div>
               <div className="mx-auto">
                 <div
-                  className="pt-20 px-30 font-semibold">
+                  className="pt-10 px-30 font-semibold">
                   {endMonth}
                 </div>
-                <div className="pb-20 px-30 text-m4">
+                <div className="pb-10 px-30 text-m3">
                   {endDay}
                 </div>
               </div>
@@ -77,8 +75,8 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
           }
         </div>
 
-        <div className="flex flex-col gap-[1.2rem]">
-          <HeadingElement className="text-m1 order-2">
+        <div className="flex flex-col gap-[.5rem]">
+          <HeadingElement className="text-m0 order-2 leading-cozy">
             <Link href={goToUrl}
                   className="text-black-true hover:text-brick-dark underline hover:no-underline">
               {node.title}
@@ -91,18 +89,18 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
 
 
           <div className="flex order-3">
-            <CalendarDaysIcon width={20} className="mr-20 flex-shrink-0"/>
+            <CalendarDaysIcon title="Date" width={20} className="mr-20 flex-shrink-0"/>
             {start.toLocaleDateString("en-US", {timeZone: 'America/Los_Angeles'})}
           </div>
 
           <div className="flex order-4">
-            <ClockIcon width={20} className="mr-20 flex-shrink-0"/>
+            <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0"/>
             <div>{dateTimeString}</div>
           </div>
 
           {node.suEventMapLink?.url &&
             <div className="flex order-5">
-              <MapPinIcon width={20} className="mr-20 flex-shrink-0"/>
+              <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0"/>
               <Link href={node.suEventMapLink?.url}>
                 {node.suEventMapLink?.title}
               </Link>

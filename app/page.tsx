@@ -17,7 +17,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 const Page = async () => {
   const {entity} = await getEntityFromPath<NodeStanfordPage>('/')
+
   if (!entity) notFound();
+
+  const lastUpdated  = new Date(entity.changed.time as string).toLocaleDateString('en-us', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   return (
     <main id="main-content" className="mb-50">
@@ -25,6 +32,7 @@ const Page = async () => {
       {entity.suPageComponents &&
         <ParagraphRows items={entity.suPageComponents} fullWidth/>
       }
+      <div className="centered rs-pb-4">Last updated {lastUpdated}</div>
     </main>
   )
 }

@@ -58,7 +58,7 @@ const LibraryHeader = ({node}: { node: NodeSulLibrary }) => {
                   <div className="leading-tight text-black md:rs-px-2 rs-pb-1 mt-[-2rem]">
                     {node.suLibraryPhone &&
                       <div className="relative flex flex-row items-start mb-4 type-1">
-                        <PhoneIcon width={19}
+                        <PhoneIcon title="Phone" width={19}
                                    className="md:absolute md:left-[-38px] md:top-01em mr-12"/>
                         {node.suLibraryPhone}
                       </div>
@@ -66,7 +66,7 @@ const LibraryHeader = ({node}: { node: NodeSulLibrary }) => {
                     {node.suLibraryEmail &&
                       <div
                         className="relative flex flex-row items-start mt-20 md:mt-18 mb-4 type-1">
-                        <EnvelopeIcon width={19}
+                        <EnvelopeIcon width={19} title="Email"
                                       className="md:absolute md:left-[-38px] md:top-02em mt-01em md:mt-0 mr-12"/>
                         <EmailLink email={node.suLibraryEmail} className="no-underline hocus:underline break-words"/>
                       </div>
@@ -74,12 +74,12 @@ const LibraryHeader = ({node}: { node: NodeSulLibrary }) => {
                     {node.suLibraryAddress &&
                       <div
                         className="relative flex flex-row items-start mt-20 md:mt-18 mb-4 type-1">
-                        <MapPinIcon width={19}
+                        <MapPinIcon title="Location" width={19}
                                     className="md:absolute md:left-[-38px] md:top-01em mt-01em md:mt-0 mr-12"/>
                         {node.suLibraryMapLink?.url ? (
                           <Link href={node.suLibraryMapLink.url} className="no-underline hocus:underline">
-                            <div>{node.suLibraryAddress.addressLine1}</div>
-                            <div>{node.suLibraryAddress.addressLine2}</div>
+                            <div>{node.suLibraryAddress?.addressLine1}<span className="sr-only">&nbsp;</span></div>
+                            <div>{node.suLibraryAddress.addressLine2}<span className="sr-only">&nbsp;</span></div>
                             <div>{node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea} {node.suLibraryAddress.postalCode}</div>
                           </Link>
                         ) : (

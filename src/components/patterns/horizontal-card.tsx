@@ -69,7 +69,7 @@ const HorizontalCard = ({
       }
 
       <div
-        className="@container centered relative basefont-23 leading-display text-white mt-[77px] @6xl:mt-0 pt-[5.8rem] pb-[7.2rem] lg:px-80">
+        className="@container centered relative basefont-20 leading-display text-white mt-[77px] @6xl:mt-0 pt-[5.8rem] pb-[7.2rem] lg:px-80">
 
         <div className="grid @6xl:grid-cols-2 gap-2xl items-center">
           {(image || video) &&
@@ -86,7 +86,7 @@ const HorizontalCard = ({
             }
 
             {(header) &&
-              <Heading id={headerId} className={twMerge("text-m5", hideHeading && "sr-only")}>{header}</Heading>
+              <Heading id={headerId} className={twMerge("text-m4", hideHeading && "sr-only")}>{header}</Heading>
             }
 
             {(body) &&
@@ -101,7 +101,7 @@ const HorizontalCard = ({
             {link?.url &&
               <Link
                 href={link.url}
-                className="border-2 border-digital-red rounded-full cta-button font-semibold leading-display block w-fit no-underline hocus:underline group transition-colors px-26 pt-10 pb-11 text-16 md:text-20 text-white hocus:bg-black-true hocus:text-white rs-mt-neg1 bg-digital-red"
+                className="border-2 border-digital-red rounded-full cta-button font-semibold leading-display block w-fit no-underline hocus:underline group transition-colors px-26 pt-10 pb-11 text-16 md:text-18 text-white hocus:bg-black-true hocus:text-white rs-mt-neg1 bg-digital-red"
                 {...linkAttributes}
               >
                 {link.title}

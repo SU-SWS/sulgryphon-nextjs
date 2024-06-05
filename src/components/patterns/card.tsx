@@ -45,7 +45,7 @@ const Card = ({
   }
   return (
     <div
-      className="card block w-full basefont-23 leading-display bg-white text-black border border-solid border-black-10 shadow-md">
+      className="card block w-full basefont-20 leading-display bg-white text-black border border-solid border-black-10 shadow-md">
 
       {(image) &&
         <div className="overflow-hidden aspect-[16/9] relative" aria-hidden="true">
@@ -67,7 +67,7 @@ const Card = ({
         }
 
         {(header) &&
-          <Heading id={headerId} className={twMerge("leading-tight font-bold type-2 mb-03em", hideHeading && "sr-only")}>
+          <Heading id={headerId} className={twMerge("leading-tight font-bold type-1 mb-03em", hideHeading && "sr-only")}>
             {header}
           </Heading>
         }
