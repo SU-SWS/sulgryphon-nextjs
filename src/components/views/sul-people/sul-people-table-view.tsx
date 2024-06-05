@@ -17,7 +17,6 @@ interface Props {
 
 const SulPeopleTableView = async ({items, hasHeading }: Props) => {
   const HeadingElement = hasHeading ? 'h3' : 'h2';
-  const imageUrl = items[0].suPersonPhoto?.mediaImage.url;
   
   return (
     <Table>
@@ -31,24 +30,18 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-      {items.map((item, index) => ( 
-        <>
+      {items.map((item, index) => (
         <Tr className="!border-none">
-          <Td className="min-w-70 md:border-b md:border-black-40">
-                  
-          {imageUrl &&
-          <>
+          <Td className="md:border-b md:border-black-40">
             <Image
-              src={buildUrl(imageUrl).toString()}
+              src={item.suPersonPhoto?.mediaImage.url}
               alt=""
-              className="object-cover rounded-full"
+              className="object-cover rounded-full center"
               width="68"
               height="68"
             />
-          </>
-          }
           </Td>
-          <Td className="md:border-b md:border-black-40">
+        <Td className="md:border-b md:border-black-40">
             <Link href={item.path}
                 className="no-underline hocus:underline active:underline text-digital-blue hocus:text-brick-dark active:text-digital-red">
               <HeadingElement className="type-0">{item.title}</HeadingElement>
@@ -58,8 +51,8 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
             }
           </Td>
           <Td className="min-w-1/5 md:border-b md:border-black-40">
-          {(item.suPersonResearch) &&
-              <div className="type-0">{item.suPersonResearch}</div>
+          {(item.suPersonResearchInterests) &&
+              <div className="type-0">{item.suPersonResearchInterests}</div>
             }
           </Td>
           <Td className="md:border-b md:border-black-40">
@@ -80,7 +73,7 @@ const SulPeopleTableView = async ({items, hasHeading }: Props) => {
             }
           </Td>
         </Tr>
-        </>)
+        )
       )
       }
       </Tbody>
