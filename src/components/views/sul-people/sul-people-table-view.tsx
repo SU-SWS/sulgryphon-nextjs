@@ -14,7 +14,7 @@ interface Props {
 
 const SulPeopleTableView = async ({items, hasHeading }: Props ) => {
   const HeadingElement = hasHeading ? 'h3' : 'h2';
-  console.log(items);
+
   return (
     <table className="text-center md:text-left">
       <thead className="sr-only sm:not-sr-only">
@@ -31,7 +31,7 @@ const SulPeopleTableView = async ({items, hasHeading }: Props ) => {
         <tr key="{id}" className="block md:text-left md:table-row">
           <td className="w-[216px] md:max-w-[200px] block md:table-cell md:border-b md:border-black-40 m-auto">
             <div
-              className="relative rounded-full aspect-[1/1] w-[130px] @lg:w-[150px] overflow-hidden">
+              className="relative rounded-full aspect-[1/1] w-[216px] md:w-[68px] overflow-hidden">
               <Link href={item.path}>
               <Image
                 className="rounded-full object-cover"
@@ -46,15 +46,15 @@ const SulPeopleTableView = async ({items, hasHeading }: Props ) => {
         <td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             <Link href={item.path}
                 className="no-underline inline-block hocus:underline hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red text-digital-blue ">
-              <HeadingElement className="type-0">{item.title}</HeadingElement>
+              <HeadingElement className="type-1">{item.title}</HeadingElement>
             </Link>
             {(item.suPersonFullTitle) &&
-              <div className="type-0">{item.suPersonFullTitle}</div>
+              <div className="text-19">{item.suPersonFullTitle}</div>
             }
           </td>
           <td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40">
           {(item.suPersonResearchInterests) &&
-              <div className="type-0">{item.suPersonResearchInterests}</div>
+              <div className="text-19">{item.suPersonResearchInterests}</div>
             }
           </td>
           <td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
@@ -64,7 +64,7 @@ const SulPeopleTableView = async ({items, hasHeading }: Props ) => {
 
               <EmailLink
                 email={item.suPersonEmail}
-                className="underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red text-digital-blue break-words"
+                className="text-19 underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red text-digital-blue break-words"
               />
             </>
             }
