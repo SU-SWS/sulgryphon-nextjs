@@ -411,6 +411,9 @@ fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     suPersonPhoto {
         ...FragmentMediaImage
     }
+    suPersonResearch {
+        processed
+    }
 }
 
 fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {

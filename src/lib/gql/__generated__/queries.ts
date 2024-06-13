@@ -399,6 +399,9 @@ export const FragmentNodeStanfordPersonTeaserFragmentDoc = gql`
   suPersonPhoto {
     ...FragmentMediaImage
   }
+  suPersonResearch {
+    processed
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}`;
