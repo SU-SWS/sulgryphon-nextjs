@@ -6,58 +6,69 @@ import LibCal from './libcal';
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
 import EmailLink from "@/components/patterns/elements/email-link";
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
+import formatHtml from "@/lib/format-html";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 interface Props {
   items: NodeStanfordPerson[]
   hasHeading: boolean
 }
 
-const SulPeopleTableView = async ({items, hasHeading }: Props ) => {
+const SulPeopleTableView = ({items, hasHeading }: Props ) => {
   const HeadingElement = hasHeading ? 'h3' : 'h2';
 
   return (
-    <table className="text-center md:text-left">
-      <thead className="sr-only sm:not-sr-only">
-        <tr className="block md:table-row sm:hidden">
-          <th className="type-1 block md:table-cell min-w-[100px]"></th>
-          <th className="type-1 block md:table-cell ">Name/Title</th>
-          <th className="type-1 block md:table-cell ">Expertise</th>
-          <th className="type-1 block md:table-cell ">Contact</th>
-          <th className="type-1 block md:table-cell ">Schedule</th>
-        </tr>
-      </thead>
-      <tbody>
-      {items.map((item, id) => (
-        <tr key="{id}" className="block md:text-left md:table-row">
-          <td className="w-[216px] md:max-w-[200px] block md:table-cell md:border-b md:border-black-40 m-auto">
-            <div
-              className="relative rounded-full aspect-[1/1] w-[216px] md:w-[68px] overflow-hidden">
-              <Link href={item.path}>
-              <Image
-                className="rounded-full object-cover"
-                src={item.suPersonPhoto?.mediaImage.url}
-                alt=""
-                fill
-                sizes="(max-width: 1700px) 100vw, 1500px"
-              />
+    <Table className="responsive-table text-center md:text-left">
+      <Thead className="sr-only sm:not-sr-only">
+        <Tr className="block md:table-row sm:hidden">
+          <Th className="type-1 block md:table-cell min-w-[100px]" scope="col">
+            <span className="sr-only">Photo</span>
+          </Th>
+          <Th className="type-1 block md:table-cell" scope="col">Name/Title</Th>
+          <Th className="type-1 block md:table-cell" scope="col">Expertise</Th>
+          <Th className="type-1 block md:table-cell" scope="col">Contact</Th>
+          <Th className="type-1 block md:table-cell" scope="col">Schedule</Th>
+        </Tr>
+      </Thead>
+
+      <Tbody>
+      {items.map(item => (
+        <Tr key={item.id} className="">
+          <Td className="md:border-b md:border-black-40 m-auto">
+              <Link href={item.path} className="block relative rounded-full aspect-[1/1] w-[200px] overflow-hidden" aria-labelledby={item.id}>
+                {item.suPersonPhoto?.mediaImage.url &&
+                  <Image
+                    className="object-cover"
+                    src={item.suPersonPhoto?.mediaImage.url}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 300px, 150px"
+                  />
+                }
               </Link>
-            </div>
-          </td>
-        <td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+          </Td>
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             <Link href={item.path}
                 className="no-underline inline-block hocus:underline hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red text-digital-blue ">
-              <HeadingElement className="type-1">{item.title}</HeadingElement>
+              <HeadingElement className="type-1" id={item.id}>{item.title}</HeadingElement>
             </Link>
             {(item.suPersonFullTitle) &&
               <div className="text-19">{item.suPersonFullTitle}</div>
             }
-          </td>
-          <td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40">
-          {(item.suPersonResearchInterests) &&
-              <div className="text-19">{item.suPersonResearchInterests}</div>
+          </Td>
+          <Td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40">
+          {!!item.suPersonResearch?.length &&
+              <ul className="text-19">
+                {item.suPersonResearch.map((research, i) =>
+                  <li key={`person-resarch-${i}`}>
+                    <>{formatHtml(research.processed)}</>
+                  </li>
+                  )}
+              </ul>
             }
-          </td>
-          <td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+          </Td>
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             {(item.suPersonEmail) &&
             <>
               <EnvelopeIcon title="Email" width={20} className="inline-block mr-6 text-digital-blue"/>
@@ -68,18 +79,18 @@ const SulPeopleTableView = async ({items, hasHeading }: Props ) => {
               />
             </>
             }
-          </td>
-          <td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+          </Td>
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             {item.sulPersonLibcalId &&
             <LibCal libcalId={item.sulPersonLibcalId} srText={item.title}/>
             }
-          </td>
-        </tr>
+          </Td>
+        </Tr>
         )
       )
       }
-      </tbody>
-    </table>
+      </Tbody>
+    </Table>
   )
 }
 export default SulPeopleTableView;
