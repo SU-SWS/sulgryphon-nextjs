@@ -35,8 +35,8 @@ const SulPeopleTableView = ({items, hasHeading }: Props ) => {
       <Tbody>
       {items.map(item => (
         <Tr key={item.id} className="">
-          <Td className="md:border-b md:border-black-40 m-auto">
-              <Link href={item.path} className="block relative rounded-full aspect-[1/1] w-[200px] overflow-hidden" aria-labelledby={item.id}>
+          <Td className="md:border-b md:border-black-40 m-auto text-center sm:text-left">
+              <Link href={item.path} className="block relative rounded-full aspect-[1/1] w-[200px] md:w-[68px] overflow-hidden" aria-labelledby={item.id}>
                 {item.suPersonPhoto?.mediaImage.url &&
                   <Image
                     className="object-cover"
@@ -48,7 +48,7 @@ const SulPeopleTableView = ({items, hasHeading }: Props ) => {
                 }
               </Link>
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
             <Link href={item.path}
                 className="no-underline inline-block hocus:underline hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red text-digital-blue ">
               <HeadingElement className="type-1" id={item.id}>{item.title}</HeadingElement>
@@ -57,18 +57,20 @@ const SulPeopleTableView = ({items, hasHeading }: Props ) => {
               <div className="text-19">{item.suPersonFullTitle}</div>
             }
           </Td>
-          <Td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40">
+          <Td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40 text-center sm:text-left">
           {!!item.suPersonResearch?.length &&
-              <ul className="text-19">
+              <ul className="text-19 list-none p-0">
                 {item.suPersonResearch.map((research, i) =>
-                  <li key={`person-resarch-${i}`}>
+                  <li key={`person-resarch-${i}`} className="inline">
                     <>{formatHtml(research.processed)}</>
+                    <>, </> 
+                    {/* need to change this */}
                   </li>
                   )}
               </ul>
             }
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
             {(item.suPersonEmail) &&
             <>
               <EnvelopeIcon title="Email" width={20} className="inline-block mr-6 text-digital-blue"/>
@@ -80,7 +82,7 @@ const SulPeopleTableView = ({items, hasHeading }: Props ) => {
             </>
             }
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
             {item.sulPersonLibcalId &&
             <LibCal libcalId={item.sulPersonLibcalId} srText={item.title}/>
             }
