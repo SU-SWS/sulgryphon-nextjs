@@ -48,7 +48,6 @@ const ListParagraph = async ({headerId, headline, description, link, view, behav
   }
 
   if (behaviors?.list_paragraph?.hide_empty && viewItems.length === 0) return null;
-
   return (
     <div className="centered flex flex-col gap-xl">
       <div className="flex justify-between items-center mb-20">
@@ -127,6 +126,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
       break
 
     case 'sul_study_places--study_places':
+    case 'sul_study_places--study_places_table':
       tags.push('views:sul_study_place');
       break
   }
@@ -198,6 +198,7 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
       break
 
     case 'sul_study_places--study_places':
+    case 'sul_study_places--study_places_table':
       graphqlResponse = await client.sulStudyPlaces();
       items = graphqlResponse.sulStudyPlaces?.results as unknown as NodeUnion[]
       break

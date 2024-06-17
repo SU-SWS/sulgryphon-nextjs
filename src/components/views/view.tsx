@@ -15,6 +15,7 @@ import {
   NodeUnion
 } from "@/lib/gql/__generated__/drupal.d";
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view";
+import SulStudyPlaceTableView from "./sul-study-place/sul-study-place-table";
 
 interface Props {
   items: NodeUnion[]
@@ -56,6 +57,9 @@ const View = async ({viewId, displayId, items, hasHeading}: Props) => {
 
     case 'sul_study_places--study_places':
       return <StudyPlacesFilteredCards items={items as NodeSulStudyPlace[]}/>
+
+    case 'sul_study_places--study_places_table':
+      return <SulStudyPlaceTableView items={items as NodeSulStudyPlace[]}/>
 
     case 'sul_people--table_list_all':
       return <SulPeopleTableView items={items as NodeStanfordPerson[]} hasHeading={hasHeading}/>
