@@ -60,11 +60,12 @@ const SulPeopleTableView = ({items, hasHeading }: Props ) => {
           <Td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40 text-center sm:text-left">
           {!!item.suPersonResearch?.length &&
               <ul className="text-19 list-none p-0">
+                <><span className="md:hidden font-bold bg-black-10 md:bg-transparent">Expertise: </span></>
                 {item.suPersonResearch.map((research, i) =>
-                  <li key={`person-resarch-${i}`} className="inline">
-                    <>{formatHtml(research.processed)}</>
-                    <>, </> 
-                    {/* need to change this */}
+                  <li key={`person-research-${i}`} className="inline bg-black-10 md:bg-transparent w-auto">
+                    <>
+                    {item.suPersonResearch.map((research, i) => formatHtml(research.processed)).join(', ')}
+                    </>
                   </li>
                   )}
               </ul>
