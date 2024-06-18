@@ -19,13 +19,15 @@ const StudyPlaceHoursComponent = ({hoursId}: { hoursId: string }) => {
   }
 
   const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = hours;
-  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? 'Open until ' + closingTime : (afterClose ? 'Open until ' + closingTime : 'Closed until ' + openingTime));
+  const openUntil = "Open until ";
+  const closedUntil = "Closed until "
+  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? openUntil + closingTime : (afterClose ? openUntil + closingTime : closedUntil + openingTime));
 
   return (
     <div className="flex text-black-true mb-20 type-0">
 
       <div aria-live="polite">
-        <span>{hoursDisplay}</span>
+        {hoursDisplay}
       </div>
     </div>
   )

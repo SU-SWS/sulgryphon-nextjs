@@ -66,7 +66,7 @@ const SulStudyPlaceTableView  = async ({items}: Props) => {
           </Td>
           <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             <div className="leading-display text-18 pt-0 font-normal">
-              <h2 className="text-20 rs-mb-1">{[item.sulStudyRoomDonorName, item.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
+              <h2 className="text-20 mb-[0px]">{[item.sulStudyRoomDonorName, item.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
               {item.sulStudyRoomNumber &&
                 <div className="relative type-0">
                   Room-{item.sulStudyRoomNumber}
