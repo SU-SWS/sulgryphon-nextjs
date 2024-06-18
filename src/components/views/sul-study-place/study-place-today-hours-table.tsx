@@ -19,15 +19,21 @@ const StudyPlaceHoursComponent = ({hoursId}: { hoursId: string }) => {
   }
 
   const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = hours;
-  const openUntil = "Open until ";
-  const closedUntil = "Closed until "
-  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? openUntil + closingTime : (afterClose ? openUntil + closingTime : closedUntil + openingTime));
+  // This is the open text.
+  const openUntil = "Open";
+  // This is for the open or closed text.
+  const openClosed = isOpen ? openUntil  : (afterClose ? openUntil : "Closed ");
+  // This is for the time logic.
+  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? closingTime : (afterClose ? closingTime : openingTime));
 
   return (
     <div className="flex text-black-true mb-20 type-0">
 
-      <div aria-live="polite">
-        {hoursDisplay}
+      <div aria-live="polite" className="centered">
+        <div>
+          <span className="rounded-full p-[1rem] fit-content inline-block bg-digital-green text-white">{openClosed}</span>
+          <time className="block" dateTime={hoursDisplay}>until {hoursDisplay}</time>
+        </div>
       </div>
     </div>
   )
