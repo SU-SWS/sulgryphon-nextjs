@@ -1,5 +1,5 @@
 import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupal";
-import {buildHeaders, buildUrl} from "@/lib/drupal/utils";
+import {buildUrl} from "@/lib/drupal/utils";
 import {deserialize} from "@/lib/drupal/deserialize";
 
 export const getSearchIndex = async <T = JsonApiResource[]>(
@@ -10,7 +10,7 @@ export const getSearchIndex = async <T = JsonApiResource[]>(
 
   const url = buildUrl(`/jsonapi/index/${name}`, options.params)
 
-  const response = await fetch(url.toString(), {headers: await buildHeaders(options)})
+  const response = await fetch(url.toString())
 
   if (!response.ok) throw new Error(response.statusText)
 

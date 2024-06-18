@@ -15,7 +15,9 @@ import {cache} from "react";
 import {cache as nodeCache} from "@/lib/drupal/get-cache";
 import {buildHeaders} from "@/lib/drupal/utils";
 
-export const graphqlClient = (requestConfig: RequestConfig = {}) => {
+export const graphqlClient = (requestConfig: RequestConfig = {}, isPreviewMode?: boolean) => {
+  requestConfig.headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
+
   const client = new GraphQLClient(
     process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + '/graphql',
     {
@@ -38,12 +40,11 @@ export const getEntityFromPath = cache(async <T extends NodeUnion | TermUnion, >
 }> => {
   "use server";
 
-  const headers = await buildHeaders({previewMode})
   let entity: T | undefined;
   let query: RouteQuery;
 
   try {
-    query = await graphqlClient({headers, next: {tags: [`paths:${path}`]}}).Route({path});
+    query = await graphqlClient({next: {tags: [`paths:${path}`]}}, previewMode).Route({path});
   } catch (e) {
     console.log(e instanceof Error ? e.message : 'An error occurred');
     return {entity: undefined, redirect: undefined, error: e instanceof Error ? e.message : 'An error occurred'}
@@ -87,9 +88,7 @@ const getConfigPagesData = cache(async (): Promise<ConfigPagesQuery> => {
 export const getMenu = cache(async (name?: MenuAvailable, previewMode?: boolean): Promise<MenuItem[]> => {
   "use server";
 
-  const headers = await buildHeaders({previewMode});
-
-  const menu = await graphqlClient({headers, next: {tags: ['menus', `menu:${name || "main"}`]}}).Menu({name});
+  const menu = await graphqlClient({next: {tags: ['menus', `menu:${name || "main"}`]}}, previewMode).Menu({name});
   const menuItems = (menu.menu?.items || []) as MenuItem[];
 
   const filterInaccessible = (items: MenuItem[]): MenuItem[] => {
