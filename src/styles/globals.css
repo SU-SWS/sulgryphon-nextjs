@@ -16,3 +16,29 @@
   width: 100%;
   height: 100%;
 }
+
+/* styles for the responsive tables */
+@layer utilities {
+  .responsive-table .tdBefore {
+    display: none !important;
+  }
+  .responsive-table tbody tr,
+  .responsive-table td.pivoted {
+    border: none !important;
+  }
+  .responsive-table tbody tr {
+    border-bottom: 1px #ABABA9 solid !important;
+  }
+  .responsive-table tr td.pivoted {
+    padding-left: 0 !important;
+    text-align: unset !important;
+  }
+  .responsive-table tr td.pivoted:first-of-type {
+    display: flex !important;
+    justify-content: center;
+  }
+
+  .responsive-table-study-places {
+    
+  }
+}

@@ -2,7 +2,7 @@
 
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid";
 import StudyPlaceFiltering from "@/components/views/sul-study-place/study-place-filtering";
-import StudyPlaceHours from "./study-place-today-hours";
+import StudyPlaceHours from "./study-place-today-hours-table";
 import Link from 'next/link';
 import Image from "next/image";
 import {EnvelopeIcon} from "@heroicons/react/20/solid";
@@ -16,9 +16,9 @@ interface Props {
   items: NodeSulStudyPlace[]
 }
 
-// const StudyPlacesFilteredCards = async ({items}: Props) => {
-//   return <StudyPlaceFiltering items={items}/>
-// }
+const StudyPlacesFilteredCards = async ({items}: Props) => {
+  return <StudyPlaceFiltering items={items}/>
+}
 
 // Filter out empty terms and deduplicate terms by their ID.
 // const features: TermUnion[] = item.sulStudyFeatures?.filter((term, index, self) =>
@@ -28,12 +28,11 @@ interface Props {
 // ) || [];
 
 
-
 const SulStudyPlaceTableView  = async ({items}: Props) => {
   console.log(items);
   return (
     
-    <Table className="responsive-table text-center md:text-left">
+    <Table className="responsive-table">
       <Thead className="sr-only sm:not-sr-only">
         <Tr className="block md:table-row sm:hidden">
           <Th className="type-1 block md:table-cell min-w-[100px]" scope="col">
@@ -52,8 +51,8 @@ const SulStudyPlaceTableView  = async ({items}: Props) => {
       <Tbody>
       {items.map(item => (
         <Tr key={item.id} className="">
-          <Td className="md:border-b md:border-black-40 m-auto text-center sm:text-left">
-              <Link href={item.path} className="block relative aspect-[3/2] w-[200px] md:w-[125px] overflow-hidden" aria-labelledby={item.id}>
+          <Td className="md:border-b md:border-black-40 m-auto">
+              <Link href={item.path} className="block relative aspect-[3/2] w-[338px] md:w-[125px] overflow-hidden" aria-labelledby={item.id}>
                 {item.sulStudyImage?.mediaImage.url &&
                   <Image
                     className="object-cover"
@@ -65,7 +64,7 @@ const SulStudyPlaceTableView  = async ({items}: Props) => {
                 }
               </Link>
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             <div className="leading-display text-18 pt-0 font-normal">
               <h2 className="text-20 rs-mb-1">{[item.sulStudyRoomDonorName, item.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
               {item.sulStudyRoomNumber &&
@@ -80,19 +79,21 @@ const SulStudyPlaceTableView  = async ({items}: Props) => {
               }
             </div>
           </Td>
-          <Td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40 text-center sm:text-left">
+          <Td className="w-auto md:w-2/5 block md:table-cell min-w-1/5 md:border-b md:border-black-40">
             <Link href={item.sulStudyBranch.path}
                 className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
                 <div>{item.sulStudyBranch.title}</div>
             </Link>
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
-            4
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
+            {item.sulStudyBranch?.suLibraryHours &&
+              <StudyPlaceHours hoursId={item.sulStudyBranch.suLibraryHours}/>
+            }
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
             5
           </Td>
-          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40 text-center sm:text-left">
+          <Td className="w-auto md:w-1/5 block md:table-cell md:border-b md:border-black-40">
               {(item.sulStudyLibcalId) &&
               <a
                 href={`https://appointments.library.stanford.edu/space/${item.sulStudyLibcalId}`}

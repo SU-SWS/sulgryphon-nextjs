@@ -17,14 +17,15 @@ const StudyPlaceHoursComponent = ({hoursId}: { hoursId: string }) => {
   if (!hours) {
     return null;
   }
+
   const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = hours;
-  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? 'Closes at ' + closingTime : (afterClose ? 'Closed at ' + closingTime : 'Opens at ' + openingTime));
+  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? 'Open until ' + closingTime : (afterClose ? 'Open until ' + closingTime : 'Closed until ' + openingTime));
 
   return (
     <div className="flex text-black-true mb-20 type-0">
-      <ClockIcon title="Hours" width={19} className="mr-12 flex-shrink-0"/>
+
       <div aria-live="polite">
-        {hoursDisplay}
+        <span>{hoursDisplay}</span>
       </div>
     </div>
   )
