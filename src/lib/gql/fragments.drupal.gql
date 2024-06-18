@@ -481,6 +481,7 @@ fragment FragmentParagraphInterface on ParagraphInterface {
     __typename
     id
     behaviors
+    status
 }
 
 fragment FragmentParagraphCollection on ParagraphCollection {

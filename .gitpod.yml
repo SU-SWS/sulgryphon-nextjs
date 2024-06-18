@@ -42,11 +42,9 @@ tasks:
       blt drupal:install --site=library -n &&
       drush @library.local cset system.theme default stanford_profile_admin_theme -y &&
       cd /workspace/front &&
-      cp .env.example .env.local &&
-      sed -i 's/#DRUPAL_REVALIDATE_SECRET/DRUPAL_REVALIDATE_SECRET/' .env.local &&
-      sed -i 's/#DRUPAL_PREVIEW_SECRET/DRUPAL_PREVIEW_SECRET/' .env.local &&
       yarn install
     command: |
+      cp .env.example .env.local &&
       gp ports await 3306 &&
       eval $(gp env -e APACHE_DOCROOT_IN_REPO=../back/docroot) &&
       cd /workspace/back &&
@@ -61,7 +59,7 @@ tasks:
       drush @library.local uli --uri=$NEXT_PUBLIC_DRUPAL_BASE_URL | xargs gp preview --external &&
       git config core.fileMode false &&
       echo 'Connecting Drupal to Frontend' &&
-      drush @library.local su-next-connect "$(gp url 3000)" --preview-secret=DRUPAL_PREVIEW_SECRET --revalidation-secret=DRUPAL_REVALIDATION_SECRET &&
+      drush @library.local su-next-connect "$(gp url 3000)" >> /workspace/front/.env.local &&
       cd /workspace/front &&
       yarn install &&
       yarn config set --home enableTelemetry 0 &&
