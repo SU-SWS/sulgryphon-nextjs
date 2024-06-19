@@ -24,6 +24,8 @@ const StudyPlacesFilteredCards = async ({items}: Props) => {
 //   ))
 // ) || [];
 
+
+
 const SulStudyPlaceTableView = async ({items}: Props) => {
   return (
     <Table className="responsive-table">
@@ -107,7 +109,15 @@ const SulStudyPlaceTableView = async ({items}: Props) => {
               </Link>
             </Td>
             <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">{item.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={item.sulStudyBranch.suLibraryHours} />}</Td>
-            <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">5</Td>
+            <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
+              <ul className="list-none p-0 m-0">
+                {item.sulStudyFeatures?.map((feature, index) => (
+                  <li key={index} className="type-0">
+                    {feature.name}
+                  </li>
+                ))}
+              </ul>
+            </Td>
             <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               {item.sulStudyLibcalId && (
                 <a
