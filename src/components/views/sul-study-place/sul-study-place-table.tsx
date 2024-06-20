@@ -27,8 +27,8 @@ interface Props {
 const SulStudyPlaceTableView = ({items}: Props) => {
   return (
     <Table className="responsive-table responsive-table-study">
-      <Thead className="sr-only sm:not-sr-only">
-        <Tr className="block sm:hidden md:table-row">
+      <Thead className="md:max-lg:not-sr-only sr-only">
+        <Tr className="block sm:hidden lg:!table-row">
           <Th
             className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
             scope="col"
@@ -72,9 +72,9 @@ const SulStudyPlaceTableView = ({items}: Props) => {
         {items.map(item => (
           <Tr
             key={item.id}
-            className=""
+            className="block md:grid lg:!table-row"
           >
-            <Td className="m-auto md:border-b md:border-black-40">
+            <Td className="image m-auto md:border-b md:border-black-40">
               <Link
                 href={item.path}
                 className="relative block aspect-[3/2] w-[338px] overflow-hidden md:w-[125px]"
@@ -91,14 +91,14 @@ const SulStudyPlaceTableView = ({items}: Props) => {
                 )}
               </Link>
             </Td>
-            <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
+            <Td className="place w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               <div className="pt-0 text-18 font-normal leading-display">
                 <h2 className="mb-[0px] font-sans text-20">{[item.sulStudyRoomDonorName, item.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
                 {item.sulStudyRoomNumber && <div className="type-0 relative">Room-{item.sulStudyRoomNumber}</div>}
                 {item.sulStudyCapacity && <div className="type-0 relative">{item.sulStudyCapacity.name}</div>}
               </div>
             </Td>
-            <Td className="min-w-1/5 block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
+            <Td className="min-w-1/5 libraryName w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               <Link
                 href={item.sulStudyBranch.path}
                 className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
@@ -106,8 +106,8 @@ const SulStudyPlaceTableView = ({items}: Props) => {
                 <div>{item.sulStudyBranch.title}</div>
               </Link>
             </Td>
-            <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">{item.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={item.sulStudyBranch.suLibraryHours} />}</Td>
-            <Td className="block w-auto md:table-cell md:w-2/5 md:border-b md:border-black-40">
+            <Td className="openclosed w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">{item.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={item.sulStudyBranch.suLibraryHours} />}</Td>
+            <Td className="features w-auto md:table-cell md:w-2/5 md:border-b md:border-black-40">
               {!!item.sulStudyFeatures?.length && (
                 <ul className="list-none bg-black-10 p-0 p-1em text-19 md:bg-transparent">
                   <>
@@ -127,7 +127,7 @@ const SulStudyPlaceTableView = ({items}: Props) => {
                 </ul>
               )}
             </Td>
-            <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
+            <Td className="reserve w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               {item.sulStudyLibcalId && (
                 <a
                   href={`https://appointments.library.stanford.edu/space/${item.sulStudyLibcalId}`}
