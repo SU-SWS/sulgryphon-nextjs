@@ -93,7 +93,7 @@ const SulStudyPlaceTableView = async ({items}: Props) => {
             </Td>
             <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               <div className="pt-0 text-18 font-normal leading-display">
-                <h2 className="mb-[0px] text-20">{[item.sulStudyRoomDonorName, item.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
+                <h2 className="mb-[0px] font-sans text-20">{[item.sulStudyRoomDonorName, item.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
                 {item.sulStudyRoomNumber && <div className="type-0 relative">Room-{item.sulStudyRoomNumber}</div>}
                 {item.sulStudyCapacity && <div className="type-0 relative">{item.sulStudyCapacity.name}</div>}
               </div>
@@ -109,9 +109,9 @@ const SulStudyPlaceTableView = async ({items}: Props) => {
             <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">{item.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={item.sulStudyBranch.suLibraryHours} />}</Td>
             <Td className="block w-auto md:table-cell md:w-2/5 md:border-b md:border-black-40">
               {!!item.sulStudyFeatures?.length && (
-                <ul className="list-none p-0 text-19">
+                <ul className="list-none bg-black-10 p-0 p-1em text-19 md:bg-transparent">
                   <>
-                    <span className="bg-black-10 font-bold md:hidden md:bg-transparent">Features: </span>
+                    <span className="bg-black-10 font-bold md:hidden">Features: </span>
                   </>
                   {item.sulStudyFeatures.map((feature, index) => (
                     <li
