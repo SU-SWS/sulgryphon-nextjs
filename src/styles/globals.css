@@ -37,8 +37,13 @@
     display: flex !important;
     justify-content: center;
   }
-
-  .responsive-table-study-places {
-    
+  .responsive-table ul li:last-child span {
+    display: none;
+  }
+  .responsive-table ul li:last-child span {
+    display: none;
+  }
+  .responsive-table-study tr td.pivoted:first-of-type {
+    justify-content: left;
   }
 }

@@ -24,11 +24,9 @@ const StudyPlacesFilteredCards = async ({items}: Props) => {
 //   ))
 // ) || [];
 
-
-
 const SulStudyPlaceTableView = async ({items}: Props) => {
   return (
-    <Table className="responsive-table">
+    <Table className="responsive-table responsive-table-study">
       <Thead className="sr-only sm:not-sr-only">
         <Tr className="block sm:hidden md:table-row">
           <Th
@@ -100,7 +98,7 @@ const SulStudyPlaceTableView = async ({items}: Props) => {
                 {item.sulStudyCapacity && <div className="type-0 relative">{item.sulStudyCapacity.name}</div>}
               </div>
             </Td>
-            <Td className="min-w-1/5 block w-auto md:table-cell md:w-2/5 md:border-b md:border-black-40">
+            <Td className="min-w-1/5 block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               <Link
                 href={item.sulStudyBranch.path}
                 className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
@@ -109,14 +107,25 @@ const SulStudyPlaceTableView = async ({items}: Props) => {
               </Link>
             </Td>
             <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">{item.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={item.sulStudyBranch.suLibraryHours} />}</Td>
-            <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
-              <ul className="list-none p-0 m-0">
-                {item.sulStudyFeatures?.map((feature, index) => (
-                  <li key={index} className="type-0">
-                    {feature.name}
-                  </li>
-                ))}
-              </ul>
+            <Td className="block w-auto md:table-cell md:w-2/5 md:border-b md:border-black-40">
+              {!!item.sulStudyFeatures?.length && (
+                <ul className="list-none p-0 text-19">
+                  <>
+                    <span className="bg-black-10 font-bold md:hidden md:bg-transparent">Features: </span>
+                  </>
+                  {item.sulStudyFeatures.map((feature, index) => (
+                    <li
+                      key={`feature${index}`}
+                      className="inline w-auto bg-black-10 md:bg-transparent"
+                    >
+                      <>
+                        {feature.name}
+                        <span className="list-comma">, </span>
+                      </>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </Td>
             <Td className="block w-auto md:table-cell md:w-1/5 md:border-b md:border-black-40">
               {item.sulStudyLibcalId && (
