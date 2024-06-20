@@ -13,9 +13,9 @@ interface Props {
   items: NodeSulStudyPlace[]
 }
 
-const StudyPlacesFilteredCards = async ({items}: Props) => {
-  return <StudyPlaceFiltering items={items} />
-}
+// const StudyPlacesFilteredTable = async ({items}: Props) => {
+//   return <StudyPlaceFilteringTable items={items} />
+// }
 
 // Filter out empty terms and deduplicate terms by their ID.
 // const features: TermUnion[] = item.sulStudyFeatures?.filter((term, index, self) =>
@@ -24,7 +24,7 @@ const StudyPlacesFilteredCards = async ({items}: Props) => {
 //   ))
 // ) || [];
 
-const SulStudyPlaceTableView = async ({items}: Props) => {
+const SulStudyPlaceTableView = ({items}: Props) => {
   return (
     <Table className="responsive-table responsive-table-study">
       <Thead className="sr-only sm:not-sr-only">
