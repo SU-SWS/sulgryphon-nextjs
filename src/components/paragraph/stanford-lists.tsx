@@ -137,6 +137,10 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
     case "sul_study_places--study_places":
       tags.push("views:sul_study_place")
       break
+
+    case "sul_branch_locations--branch_locations_table":
+      tags.push("views:sul_branch_location")
+      break
   }
 
   const client = graphqlClient({next: {tags}})
@@ -207,6 +211,11 @@ const getViewPagedItems = cache(async (viewId: string, displayId: string, contex
     case "sul_study_places--study_places":
       graphqlResponse = await client.sulStudyPlaces()
       items = graphqlResponse.sulStudyPlaces?.results as unknown as NodeUnion[]
+      break
+
+    case "sul_branch_locations--branch_locations_table":
+      graphqlResponse = await client.sulBranchLocations()
+      items = graphqlResponse.sulBranchLocations?.results as unknown as NodeUnion[]
       break
 
     default:
