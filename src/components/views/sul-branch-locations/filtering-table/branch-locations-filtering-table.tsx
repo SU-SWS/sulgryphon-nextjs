@@ -1,5 +1,6 @@
 "use client"
 
+import {ClockIcon} from "@heroicons/react/24/outline"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
@@ -51,30 +52,35 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   }
 
   return (
-    <div>
-      <div className="mx-auto w-fit">
+    <div className="pb-[32px]">
+      <div className="rs-mb-1 mx-auto w-fit">
         <button
           onClick={() => setDisplayedItems(items)}
-          className="rounded-l-full border-2 border-digital-red"
+          className="rounded-l-full border-2 border-digital-red px-24 py-4 text-16"
           aria-current={displayedItems.length === items.length}
         >
           All Locations
         </button>
         <button
           onClick={filterLocations}
-          className="rounded-r-full border-2 border-digital-red"
+          className="inline-block rounded-r-full border-2 border-digital-red px-24 py-4 text-16"
           aria-current={displayedItems.length !== items.length}
         >
+          <ClockIcon
+            title="Hours"
+            width={15}
+            className="mr-8 inline-block flex-shrink-0 text-digital-red"
+          />
           Open Now
         </button>
       </div>
-      <Table>
-        <Thead>
-          <Tr>
-            <Th className="whitespace-nowrap text-center">Library</Th>
-            <Th className="whitespace-nowrap text-center">Open/Closed</Th>
-            <Th className="whitespace-nowrap text-center">Contact</Th>
-            <Th className="whitespace-nowrap text-center">Address</Th>
+      <Table className="responsive-table responsive-table-branches">
+        <Thead className="md:max-lg:not-sr-only sr-only">
+          <Tr className="block sm:hidden lg:!table-row">
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell">Library</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Open/Closed</Th>
+            <Th className="md:table-cellwhitespace-nowrap type-1 block pl-[0px] text-center">Contact</Th>
+            <Th className="md:table-cellwhitespace-nowrap type-1 block pl-[0px] text-center">Address</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -92,9 +98,12 @@ const BranchLocationFilteringTable = ({items}: Props) => {
 
 const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hoursId}: BranchLocation) => {
   return (
-    <Tr key={id}>
-      <Td className="flex items-center gap-10">
-        <div className="relative aspect-[4/3] w-[200px]">
+    <Tr
+      key={id}
+      className="block md:grid lg:!table-row"
+    >
+      <Td className="image m-auto md:border-b md:border-black-40 lg:table-cell">
+        <div className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:w-[125px]">
           {imageUrl && (
             <Image
               className="object-cover"
@@ -105,10 +114,12 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             />
           )}
         </div>
+      </Td>
+      <Td className="place w-auto md:border-b md:border-black-40 lg:table-cell">
         <Link href={path}>{title}</Link>
       </Td>
-      <Td>{hoursId && <BranchHours hoursId={hoursId} />}</Td>
-      <Td>
+      <Td className="hours w-auto md:border-b md:border-black-40 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="contact w-auto md:border-b md:border-black-40 lg:table-cell">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
@@ -134,7 +145,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           </a>
         )}
       </Td>
-      <Td>
+      <Td className="address w-auto md:border-b md:border-black-40 lg:table-cell">
         {address && mapUrl && (
           <a href={mapUrl}>
             <Address {...address} />
@@ -205,11 +216,11 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       {...outsideClickProps}
       className="relative"
     >
-      {isOpen && <span className="mx-auto block w-fit rounded-full bg-green-800 p-10 text-white">Open</span>}
+      {isOpen && <span className="block w-fit rounded-full bg-green-800 p-10 text-white lg:mx-auto">Open</span>}
 
-      {!isOpen && <span className="text-centered mx-auto block p-10">Closed</span>}
+      {!isOpen && <span className="flex w-fit lg:mx-auto">Closed</span>}
 
-      <div className="mx-auto flex w-fit items-center whitespace-nowrap">
+      <div className="flex w-fit items-center whitespace-nowrap lg:mx-auto">
         {closeTimeString && <>Until {closeTimeString}</>}
         {openTimeString && <>Until {openTimeString}</>}
 
