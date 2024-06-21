@@ -22,6 +22,9 @@
   .responsive-table .tdBefore {
     display: none !important;
   }
+  .responsive-table td {
+    padding: .5em;
+  }
   .responsive-table tbody tr,
   .responsive-table td.pivoted {
     border: none !important;

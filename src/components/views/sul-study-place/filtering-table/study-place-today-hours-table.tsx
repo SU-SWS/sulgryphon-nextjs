@@ -34,7 +34,7 @@ const StudyPlaceHoursComponent = ({hoursId}: {hoursId: string}) => {
         <div>
           <span className="fit-content inline-block rounded-full bg-digital-green p-[1rem] text-white">{openClosed}</span>
           <time
-            className="block"
+            className="inline-block pl-[8px] lg:block lg:pl-0"
             dateTime={hoursDisplay}
           >
             until {hoursDisplay}
