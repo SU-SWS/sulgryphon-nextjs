@@ -153,6 +153,11 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   if (!libraryHours.primaryHours) {
     return
   }
+
+  // To test out various scenarios adjust right now. Go back 20 hours:
+  // const rightNow = new Date(new Date().getTime() - 20 * 60 * 60 * 1000)
+  // Go forward 10 hours
+  // const rightNow = new Date(new Date().getTime() + 10 * 60 * 60 * 1000)
   const rightNow = new Date()
 
   const todayHours = libraryHours.primaryHours.find(day => {
@@ -171,7 +176,29 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     isOpen = rightNow > openTime && rightNow < closeTime
   }
 
-  const openCloseDate = isOpen ? closeTime : openTime
+  const closeTimeString =
+    isOpen &&
+    closeTime &&
+    closeTime.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: "America/Los_Angeles",
+    })
+
+  const tomorrowHours = libraryHours.primaryHours.find(day => {
+    // Set the time so that it works with UTC time.
+    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
+    return dayDate === new Date(rightNow.getTime() + 1000 * 60 * 60 * 24).toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
+  }) as DayHours
+
+  const openTimeString =
+    !isOpen &&
+    tomorrowHours?.opens_at &&
+    new Date(tomorrowHours.opens_at).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: "America/Los_Angeles",
+    })
 
   return (
     <div
@@ -183,17 +210,10 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       {!isOpen && <span className="text-centered mx-auto block p-10">Closed</span>}
 
       <div className="mx-auto flex w-fit items-center whitespace-nowrap">
-        {openCloseDate && (
-          <>
-            until{" "}
-            {openCloseDate.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "numeric",
-              timeZone: "America/Los_Angeles",
-            })}
-          </>
-        )}
-        {!openCloseDate && "Hours this week"}
+        {closeTimeString && <>Until {closeTimeString}</>}
+        {openTimeString && <>Until {openTimeString}</>}
+
+        {!closeTimeString && !openTimeString && "Hours this week"}
 
         <button
           onClick={toggleExpandedHours}
