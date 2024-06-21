@@ -29,7 +29,7 @@ const StudyPlaceHoursComponent = ({hoursId}: {hoursId: string}) => {
     <div className="type-0 centered mb-20 text-black-true">
       <div
         aria-live="polite"
-        className="text-left md:text-center"
+        className="text-left lg:text-center"
       >
         <div>
           <span className="fit-content inline-block rounded-full bg-digital-green p-[1rem] text-white">{openClosed}</span>

@@ -50,14 +50,14 @@
   .responsive-table-study tr {
     display: grid;
     grid-template-columns: 340px 1fr;
-    gap: 25px;
+    column-gap: 25px;
     grid-template-rows: auto;
     grid-template-areas: 
-      "image place"
-      "image libraryName"
-      "image openclosed"
-      "image features"
-      "image reserve";
+    "image place"
+    "image libraryName"
+    "image openclosed"
+    "image features"
+    "image reserve";
   }
 
   .responsive-table-study tr .image {
