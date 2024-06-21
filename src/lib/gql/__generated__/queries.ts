@@ -224,6 +224,12 @@ export const FragmentNodeSulLibraryTeaserFragmentDoc = gql`
   suLibraryAddress {
     ...FragmentAddressType
   }
+  suLibraryEmail
+  suLibraryPhone
+  suLibraryMapLink {
+    url
+    title
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}

@@ -439,6 +439,12 @@ fragment FragmentNodeSulLibraryTeaser on NodeSulLibrary {
     suLibraryAddress {
         ...FragmentAddressType
     }
+    suLibraryEmail
+    suLibraryPhone
+    suLibraryMapLink {
+        url
+        title
+    }
 }
 
 fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
