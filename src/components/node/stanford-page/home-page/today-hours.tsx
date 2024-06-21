@@ -2,6 +2,7 @@
 
 import Card from "@/components/patterns/card";
 import {ClockIcon} from "@heroicons/react/24/outline";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import {HTMLAttributes, useId, useState} from "react";
 import {ErrorBoundary} from "react-error-boundary";
@@ -10,6 +11,7 @@ import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import SelectList from "@/components/patterns/elements/select-list";
 import {buildUrl} from "@/lib/drupal/utils";
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
+import Link from "next/link";
 
 export type TrimmedLibrary = {
   id: string
@@ -17,6 +19,7 @@ export type TrimmedLibrary = {
   suLibraryHours?: NodeSulLibrary["suLibraryHours"]
   suLibraryContactImg?: NodeSulLibrary["suLibraryContactImg"]
   suLibraryBanner: NodeSulLibrary["suLibraryBanner"]
+  map?: string
 }
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
@@ -79,6 +82,9 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: HoursProps["lib
               </div>
               {library?.suLibraryHours &&
                 <TodayLibraryHours branchId={library.suLibraryHours}/>
+              }
+              {library?.map &&
+                <span className="float-right w-auto inline"><Link href={library?.map} aria-label="Link to map"><MapPinIcon title="Map" width={25} className="mr-5 inline"/>Location</Link></span>
               }
             </div>
           </div>

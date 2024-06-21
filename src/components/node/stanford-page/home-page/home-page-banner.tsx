@@ -11,14 +11,15 @@ const HomePageBanner = async () => {
 
   // Trim all the fat.
   const trimmedLibraries: TrimmedLibrary[] = libraries.map(library => (
-    {
-      id: library.id,
-      title: library.title,
-      suLibraryHours: library.suLibraryHours,
-      suLibraryContactImg: library.suLibraryContactImg as MediaImage,
-      suLibraryBanner: library.suLibraryBanner as MediaImage
-    }
-  ))
+      {
+        id: library.id,
+        title: library.title,
+        suLibraryHours: library.suLibraryHours,
+        suLibraryContactImg: library.suLibraryContactImg as MediaImage,
+        suLibraryBanner: library.suLibraryBanner as MediaImage,
+        map: library.suLibraryMapLink?.url ?? undefined
+      }
+    ))
 
   return (
     <header className="bg-black-true mb-50 relative">
