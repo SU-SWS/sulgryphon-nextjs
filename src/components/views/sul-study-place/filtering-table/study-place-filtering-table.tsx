@@ -103,14 +103,14 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               <div className="flex items-center">
                 <button
                   onClick={showOpenAndClosed}
-                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-digital-red px-24 py-4 text-16 hocus:bg-red-100 hocus:underline"
+                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-digital-red px-24 py-4 text-16 underline hocus:bg-red-100 hocus:no-underline"
                   aria-current={!onlyOpenNow}
                 >
                   All Locations
                 </button>
                 <button
                   onClick={showOnlyOpenNow}
-                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-digital-red px-24 py-4 text-16 hocus:bg-red-100 hocus:underline"
+                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-digital-red px-24 py-4 text-16 underline hocus:bg-red-100 hocus:no-underline"
                   aria-current={onlyOpenNow}
                 >
                   <ClockIcon
