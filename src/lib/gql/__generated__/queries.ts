@@ -403,9 +403,13 @@ export const FragmentNodeStanfordPersonTeaserFragmentDoc = gql`
   suPersonResearch {
     processed
   }
+  suPersonTypeGroup {
+    ...FragmentTermInterface
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
-${FragmentMediaImageFragmentDoc}`;
+${FragmentMediaImageFragmentDoc}
+${FragmentTermInterfaceFragmentDoc}`;
 export const FragmentNodeStanfordPolicyTeaserFragmentDoc = gql`
     fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {
   ...FragmentNodeInterface

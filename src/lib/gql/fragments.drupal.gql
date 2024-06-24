@@ -414,6 +414,9 @@ fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     suPersonResearch {
         processed
     }
+    suPersonTypeGroup {
+        ...FragmentTermInterface
+    }
 }
 
 fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {
