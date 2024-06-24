@@ -103,14 +103,14 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               <div className="flex items-center">
                 <button
                   onClick={showOpenAndClosed}
-                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-digital-red px-24 py-4 text-16"
+                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-digital-red px-24 py-4 text-16 hocus:bg-red-100 hocus:underline"
                   aria-current={!onlyOpenNow}
                 >
                   All Locations
                 </button>
                 <button
                   onClick={showOnlyOpenNow}
-                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-digital-red px-24 py-4 text-16"
+                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-digital-red px-24 py-4 text-16 hocus:bg-red-100 hocus:underline"
                   aria-current={onlyOpenNow}
                 >
                   <ClockIcon
@@ -159,7 +159,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           >
             Showing {displayedItems.length} of {items.length}
           </caption>
-          <Thead className="md:max-lg:not-sr-only sr-only">
+          <Thead className="sr-only lg:not-sr-only">
             <Tr className="block sm:hidden lg:!table-row">
               <Th
                 className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
