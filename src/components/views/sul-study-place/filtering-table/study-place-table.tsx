@@ -1,5 +1,6 @@
 import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal"
 import StudyPlaceFilteringTable, {StudyPlaces} from "@/components/views/sul-study-place/filtering-table/study-place-filtering-table"
+import CachedClientFetch from "@/components/utils/cached-client-fetch"
 
 type Props = {
   items: NodeSulStudyPlace[]
@@ -24,11 +25,15 @@ const StudyPlaceTable = ({items}: Props) => {
       studyType: item.sulStudyType.name,
       roomNumber: item.sulStudyRoomNumber,
       capacity: item.sulStudyCapacity?.name,
-      libcalId: item.sulStudyLibcalId,
+      libCalId: item.sulStudyLibcalId,
       libHours: item.sulStudyBranch.suLibraryHours,
     })
   })
-  return <StudyPlaceFilteringTable items={trimmedItems} />
+  return (
+    <CachedClientFetch>
+      <StudyPlaceFilteringTable items={trimmedItems} />
+    </CachedClientFetch>
+  )
 }
 
 export default StudyPlaceTable
