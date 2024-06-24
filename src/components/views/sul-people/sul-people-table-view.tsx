@@ -39,10 +39,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
 
   return (
     <div>
-      <form className="mx-auto flex w-fit *:min-w-fit *:border *:border-cardinal-red *:p-10">
+      <form className="mx-auto flex w-fit text-16 text-digital-red *:min-w-fit *:border *:border-cardinal-red *:p-10">
         <button
           type="button"
-          className={"hidden rounded-l-full hocus:underline md:block " + (!typeFilter ? "bg-red-200" : "")}
+          className={"hidden rounded-l-full underline hocus:no-underline md:block " + (!typeFilter ? "bg-red-200" : "")}
           aria-current={!typeFilter}
           onClick={() => setTypeFilter("")}
         >
@@ -50,7 +50,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         </button>
         <button
           type="button"
-          className={"rounded-l-full hocus:underline md:rounded-l-none " + (typeFilter === "subject specialist" ? "bg-red-200" : "")}
+          className={"rounded-l-full underline hocus:no-underline md:rounded-l-none " + (typeFilter === "subject specialist" ? "bg-red-200" : "")}
           aria-current={typeFilter === "subject specialist"}
           onClick={() => setTypeFilter("subject specialist")}
         >
@@ -58,7 +58,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         </button>
         <button
           type="button"
-          className={"rounded-r-full hocus:underline " + (typeFilter === "technical specialist" ? "bg-red-200" : "")}
+          className={"rounded-r-full underline hocus:no-underline " + (typeFilter === "technical specialist" ? "bg-red-200" : "")}
           aria-current={typeFilter === "technical specialist"}
           onClick={() => setTypeFilter("technical specialist")}
         >
