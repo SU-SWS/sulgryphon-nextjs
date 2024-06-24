@@ -17,7 +17,7 @@ const HomePageBanner = async () => {
         suLibraryHours: library.suLibraryHours,
         suLibraryContactImg: library.suLibraryContactImg as MediaImage,
         suLibraryBanner: library.suLibraryBanner as MediaImage,
-        map: library.suLibraryMapLink?.url ?? undefined
+        map: library.suLibraryMapLink?.url
       }
     ))
 

@@ -10,8 +10,9 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch";
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
 import SelectList from "@/components/patterns/elements/select-list";
 import {buildUrl} from "@/lib/drupal/utils";
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
+import {NodeSulLibrary, Maybe} from "@/lib/gql/__generated__/drupal.d";
 import Link from "next/link";
+
 
 export type TrimmedLibrary = {
   id: string
@@ -19,7 +20,7 @@ export type TrimmedLibrary = {
   suLibraryHours?: NodeSulLibrary["suLibraryHours"]
   suLibraryContactImg?: NodeSulLibrary["suLibraryContactImg"]
   suLibraryBanner: NodeSulLibrary["suLibraryBanner"]
-  map?: string
+  map?: Maybe<string>
 }
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
@@ -84,7 +85,7 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: HoursProps["lib
                 <TodayLibraryHours branchId={library.suLibraryHours}/>
               }
               {library?.map &&
-                <span className="float-right w-auto inline"><Link href={library?.map} aria-label="Link to map"><MapPinIcon title="Map" width={25} className="mr-5 inline"/>Location</Link></span>
+                <span className="float-right w-auto inline"><span className="sr-only">{library.title} Location</span><Link href={library?.map} aria-label="Link to map"><MapPinIcon title="Map" width={25} className="mr-5 inline"/>Location</Link></span>
               }
             </div>
           </div>
