@@ -100,9 +100,9 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
   return (
     <Tr
       key={id}
-      className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[300px] md:text-left lg:!table-row lg:max-h-none"
+      className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[400px] md:text-left lg:!table-row lg:max-h-none"
     >
-      <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[500px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
+      <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[400px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
         <div className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:w-[125px]">
           {imageUrl && (
             <Image
