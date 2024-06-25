@@ -32,7 +32,7 @@ const StudyPlaceHoursComponent = ({hoursId}: {hoursId: string}) => {
         className="text-left lg:text-center"
       >
         <div>
-          <span className="fit-content inline-block rounded-full bg-digital-green p-[1rem] text-white">{openClosed}</span>
+          <span className="fit-content mb-8 inline-block rounded-full bg-digital-green p-[1rem] text-white">{openClosed}</span>
           <time
             className="inline-block pl-[8px] lg:block lg:pl-0"
             dateTime={hoursDisplay}

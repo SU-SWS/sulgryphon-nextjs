@@ -110,7 +110,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border-2 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border-2 border-r-0 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
                 <label className="group w-1/2 cursor-pointer">
@@ -215,9 +215,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.id}
-                className="block sm:flex-col sm:flex-wrap md:flex md:max-h-[375px] lg:!table-row lg:max-h-none"
+                className="block sm:flex-col sm:flex-wrap md:flex md:max-h-[425px] lg:!table-row lg:max-h-none"
               >
-                <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[500px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[425px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.branchImageUrl && (
                     <Link
                       href={item.branchPath}

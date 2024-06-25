@@ -101,6 +101,14 @@ query sulStudyPlaces {
     }
 }
 
+query sulBranchLocations {
+    sulBranchLocations {
+      results {
+          ...FragmentNodeSulLibraryTeaser
+      }
+    }
+}
+
 
 query stanfordSharedTags($filters: StanfordSharedTagsContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
     stanfordSharedTags(contextualFilter: $filters, pageSize: $pageSize, page: $page, offset: $offset) {
