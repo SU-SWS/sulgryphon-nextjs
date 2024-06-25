@@ -10,7 +10,7 @@
     "export": "next build && next export",
     "lint": "next lint && tsc",
     "graphql": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config codegen.ts -r dotenv/config",
-    "postinstall": "git config --local core.hooksPath .githooks/"
+    "postinstall": "git config --local core.hooksPath .githooks/; exit 0"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
@@ -42,6 +42,7 @@
     "react-obfuscate": "^3.6.9",
     "react-obfuscate-email": "^1.1.2",
     "react-stately": "^3.31.1",
+    "react-super-responsive-table": "^5.2.3",
     "react-tiny-oembed": "^1.1.0",
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.3.0",

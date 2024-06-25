@@ -1,8 +1,8 @@
 "use client"
 
-import useDataFetch from "@/lib/hooks/useDataFetch";
+import useDataFetch from "@/lib/hooks/useDataFetch"
 
-export interface DayHours {
+export type DayHours = {
   day: string
   weekday: string
   closed: boolean
@@ -10,7 +10,7 @@ export interface DayHours {
   closes_at?: string
 }
 
-export interface LocationHours {
+export type LocationHours = {
   name: string
   type: string
   primaryHours: DayHours[]
@@ -19,16 +19,16 @@ export interface LocationHours {
       id: string
       name: string
       hours: DayHours[]
-    }
+    },
   ]
 }
 
-const useLibraryHours = (branchId?: string): Record<string, LocationHours> | LocationHours => {
-  const {isLoading, error, data} = useDataFetch<Record<string, LocationHours>>('/api/library-hours');
+const useLibraryHours = <T extends Record<string, LocationHours> | LocationHours>(branchId?: string): T => {
+  const {isLoading, error, data} = useDataFetch<Record<string, LocationHours>>("/api/library-hours")
 
-  if (isLoading || !data) return {};
-  if (error) return {}
+  if (isLoading || !data) return {} as T
+  if (error) return {} as T
 
-  return branchId ? data[branchId] : data;
+  return (branchId ? data[branchId] : data) as T
 }
-export default useLibraryHours;
+export default useLibraryHours
