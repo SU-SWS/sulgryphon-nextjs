@@ -4,7 +4,7 @@ import {ClockIcon} from "@heroicons/react/24/outline"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
-import {useId, useState} from "react"
+import {useId} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
@@ -32,7 +32,7 @@ type Props = {
 
 const BranchLocationFilteringTable = ({items}: Props) => {
   const libraryHours = useLibraryHours<Record<string, LocationHours>>()
-  const [displayedItems, setDisplayedItems] = useState(items)
+  const {value: onlyOpenNow, setTrue: showOnlyOpenNow, setFalse: showOpenAndClosed} = useBoolean(false)
 
   const filterLocations = () => {
     const rightNow = new Date()
@@ -48,32 +48,46 @@ const BranchLocationFilteringTable = ({items}: Props) => {
 
       if (todayHours.opens_at && todayHours.closes_at && rightNow > new Date(todayHours.opens_at) && rightNow < new Date(todayHours.closes_at)) openBranches.push(hourId)
     })
-    setDisplayedItems(items.filter(item => item.hoursId && openBranches.includes(item.hoursId)))
+    return items.filter(item => item.hoursId && openBranches.includes(item.hoursId))
   }
+
+  const displayedItems = onlyOpenNow ? filterLocations() : items
 
   return (
     <div className="pb-[32px]">
-      <div className="rs-mb-1 mx-auto w-fit">
-        <button
-          onClick={() => setDisplayedItems(items)}
-          className="rounded-l-full border-2 border-r-0 border-digital-red px-24 py-4 text-16"
-          aria-current={displayedItems.length === items.length}
-        >
-          All Locations
-        </button>
-        <button
-          onClick={filterLocations}
-          className="inline-block rounded-r-full border-2 border-digital-red px-24 py-4 text-16"
-          aria-current={displayedItems.length !== items.length}
-        >
-          <ClockIcon
-            title="Hours"
-            width={15}
-            className="mr-8 inline-block flex-shrink-0 text-digital-red"
-          />
-          Open Now
-        </button>
-      </div>
+      <form>
+        <fieldset className="rs-mb-1 mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
+          <legend className="sr-only">Filter by speciality</legend>
+          <label className="group cursor-pointer border-r border-cardinal-red">
+            <input
+              type="radio"
+              name="open"
+              className="peer sr-only"
+              checked={!onlyOpenNow}
+              onChange={showOpenAndClosed}
+            />
+            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">All locations</span>
+          </label>
+          <label className="group cursor-pointer border-l border-cardinal-red">
+            <input
+              type="checkbox"
+              name="open"
+              className="peer sr-only"
+              checked={onlyOpenNow}
+              onChange={showOnlyOpenNow}
+            />
+            <span className="flex items-center rounded-r-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">
+              <ClockIcon
+                title="Hours"
+                width={15}
+                className="mr-8 inline-block flex-shrink-0 text-digital-red"
+              />
+              Open Now
+            </span>
+          </label>
+        </fieldset>
+      </form>
+
       <Table className="responsive-table">
         <Thead className="md:max-lg:not-sr-only sr-only">
           <Tr className="block sm:hidden lg:!table-row">
