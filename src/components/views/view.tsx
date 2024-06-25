@@ -9,6 +9,7 @@ import PageCardView from "@/components/views/stanford-page/page-card-view"
 import StudyPlacesFilteredCards from "@/components/views/sul-study-place/study-places-filtered-cards"
 import {NodeStanfordEvent, NodeStanfordNews, NodeStanfordPage, NodeStanfordPerson, NodeSulStudyPlace, NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view"
+import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
 
 interface Props {
   items: NodeUnion[]
@@ -95,6 +96,9 @@ const View = async ({viewId, displayId, items, hasHeading}: Props) => {
 
     case "sul_study_places--study_places":
       return <StudyPlacesFilteredCards items={items as NodeSulStudyPlace[]} />
+
+    case "sul_study_places--study_places_table":
+      return <StudyPlaceTable items={items as NodeSulStudyPlace[]} />
 
     case "sul_people--table_list_all":
       return (

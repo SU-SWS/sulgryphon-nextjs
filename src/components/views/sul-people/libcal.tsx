@@ -1,14 +1,18 @@
-import Link from "@/components/patterns/elements/drupal-link";
+import Link from "@/components/patterns/elements/drupal-link"
 
-const LibCal = ({libcalId, srText}: { libcalId?: number, srText: string }) => {
+const LibCal = ({libcalId, srText}: {libcalId?: number; srText: string}) => {
   return (
     <>
-      {libcalId &&
-        <Link href={`/calendar/${libcalId}`} className="button text-black whitespace-nowrap bg-white border border-solid border-digital-red hocus:shadow-button hocus:bg-inherit hocus:text-black w-fit text-16 md:text-18" aria-haspopup="dialog">
+      {libcalId && (
+        <Link
+          href={`/calendar/${libcalId}`}
+          className="button w-fit whitespace-nowrap border border-solid border-digital-red bg-white text-16 text-black hocus:bg-digital-red hocus:text-white hocus:shadow-button"
+          aria-haspopup="dialog"
+        >
           Schedule an appointment<span className="sr-only">&nbsp;for {srText}</span>
         </Link>
-      }
+      )}
     </>
   )
 }
-export default LibCal;
+export default LibCal

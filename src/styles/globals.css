@@ -17,9 +17,13 @@
   height: 100%;
 }
 
+/* styles for the responsive tables */
 @layer utilities {
   .responsive-table .tdBefore {
     display: none !important;
+  }
+  .responsive-table td {
+    padding: 16px 9px;
   }
   .responsive-table tbody tr,
   .responsive-table td.pivoted {
@@ -35,5 +39,13 @@
   .responsive-table tr td.pivoted:first-of-type {
     display: flex !important;
     justify-content: center;
+    align-items: flex-start;
+  }
+  .responsive-table ul li:last-child span {
+    display: none;
+  }
+  .responsive-table-study tr td.pivoted:first-of-type {
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 }

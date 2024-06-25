@@ -10,7 +10,7 @@
     "export": "next build && next export",
     "lint": "next lint && tsc",
     "graphql": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config codegen.ts -r dotenv/config",
-    "postinstall": "git config --local core.hooksPath .githooks/"
+    "postinstall": "git config --local core.hooksPath .githooks/; exit 0"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
