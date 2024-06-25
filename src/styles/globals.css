@@ -47,38 +47,7 @@
     display: none;
   }
   .responsive-table-study tr td.pivoted:first-of-type {
-    justify-content: left;
-  }
-
-  .responsive-table-study tr {
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    column-gap: 25px;
-    grid-template-rows: auto;
-    grid-template-areas: 
-    "image place"
-    "image libraryName"
-    "image openclosed"
-    "image features"
-    "image reserve";
-  }
-
-  .responsive-table-study tr .image {
-    grid-area: image;
-  }
-  .responsive-table-study tr .place {
-    grid-area: place;
-  }
-  .responsive-table-study tr .libraryName {
-    grid-area: libraryName;
-  }
-  .responsive-table-study tr .openclosed {
-    grid-area: openclosed;
-  }
-  .responsive-table-study tr .features {
-    grid-area: features;
-  }
-  .responsive-table-study tr .reserve {
-    grid-area: reserve;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 }

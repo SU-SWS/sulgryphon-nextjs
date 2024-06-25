@@ -204,17 +204,17 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.id}
-                className="block md:grid lg:!table-row"
+                className="block sm:flex-col sm:flex-wrap md:flex md:max-h-[375px] lg:!table-row lg:max-h-none"
               >
-                <Td className="image m-auto md:border-b md:border-black-40 lg:table-cell">
+                <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[500px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.branchImageUrl && (
                     <Link
                       href={item.branchPath}
-                      className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:w-[125px]"
+                      className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:min-w-[125px]"
                       aria-labelledby={item.id}
                     >
                       <Image
-                        className="object-cover"
+                        className="object-contain"
                         src={item.branchImageUrl}
                         alt=""
                         fill
@@ -223,14 +223,14 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </Link>
                   )}
                 </Td>
-                <Td className="place w-auto md:border-b md:border-black-40 lg:table-cell lg:w-1/5">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
                   <div className="pt-0 text-18 font-normal leading-display">
                     <h2 className="mb-[0px] font-sans text-20">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>
                 </Td>
-                <Td className="min-w-1/5 libraryName w-auto md:border-b md:border-black-40 lg:table-cell lg:w-1/5">
+                <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
                   <Link
                     href={item.branchPath}
                     className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
@@ -238,8 +238,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="openclosed w-auto md:border-b md:border-black-40 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
-                <Td className="features w-auto md:border-b md:border-black-40 lg:table-cell lg:w-2/5">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
                   {item.features && (
                     <div className="bg-black-10 p-0 p-1em text-19 lg:bg-transparent">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
@@ -247,7 +247,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="reserve w-auto md:border-b md:border-black-40 lg:table-cell lg:w-1/5">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
