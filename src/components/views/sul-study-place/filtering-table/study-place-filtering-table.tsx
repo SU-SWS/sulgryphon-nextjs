@@ -6,7 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d"
+import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
 import {useCallback, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ClockIcon} from "@heroicons/react/24/outline"
@@ -18,14 +18,14 @@ export type StudyPlaces = {
   title: NodeSulStudyPlace["id"]
   branchPath: NodeSulStudyPlace["sulStudyBranch"]["path"]
   branchTitle: NodeSulStudyPlace["sulStudyBranch"]["title"]
-  features?: string[]
-  branchImageUrl?: Maybe<string>
-  donorName?: Maybe<string>
-  studyType?: Maybe<string>
-  roomNumber?: Maybe<string>
-  capacity?: Maybe<string>
-  libCalId?: Maybe<number>
-  libHours?: Maybe<string>
+  features?: TermUnion["name"][]
+  branchImageUrl?: MediaImage["mediaImage"]["url"]
+  donorName?: NodeSulStudyPlace["sulStudyRoomDonorName"]
+  studyType?: NodeSulStudyPlace["sulStudyType"]["name"]
+  roomNumber?: NodeSulStudyPlace["sulStudyRoomNumber"]
+  capacity?: TermUnion["name"]
+  libCalId?: NodeSulStudyPlace["sulStudyLibcalId"]
+  libHours?: NodeSulStudyPlace["sulStudyBranch"]["suLibraryHours"]
 }
 
 interface Props {
@@ -100,28 +100,39 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-10 *:min-w-300 *:flex-1 *:2xl:min-w-0">
             {!!Object.keys(libraryHours).length && (
-              <div className="flex items-center">
-                <button
-                  onClick={showOpenAndClosed}
-                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-black-80 px-24 py-4 text-16 underline hocus:bg-[#979694] hocus:bg-opacity-10 hocus:no-underline"
-                  aria-current={!onlyOpenNow}
-                >
-                  All Locations
-                </button>
-                <button
-                  onClick={showOnlyOpenNow}
-                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-black-80 px-24 py-4 text-16 underline hocus:bg-[#979694] hocus:bg-opacity-10 hocus:no-underline"
-                  aria-current={onlyOpenNow}
-                >
-                  <ClockIcon
-                    title="Hours"
-                    width={15}
-                    className="mr-8 flex-shrink-0 text-black-80"
+              <fieldset className="flex w-full items-center">
+                <legend className="sr-only">Show only open now or all locations</legend>
+                <label className="group w-1/2 cursor-pointer">
+                  <input
+                    className="peer sr-only"
+                    type="radio"
+                    name="open"
+                    onChange={showOpenAndClosed}
+                    checked={!onlyOpenNow}
                   />
-                  Open Now
-                </button>
-              </div>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border-2 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                </label>
+
+                <label className="group w-1/2 cursor-pointer">
+                  <input
+                    className="peer sr-only"
+                    type="radio"
+                    name="open"
+                    onChange={showOnlyOpenNow}
+                    checked={onlyOpenNow}
+                  />
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border-2 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                    <ClockIcon
+                      title="Hours"
+                      width={15}
+                      className="mr-8 flex-shrink-0 text-black-80"
+                    />
+                    Open Now
+                  </span>
+                </label>
+              </fieldset>
             )}
+
             <SelectList
               options={typeOptions}
               label="Type of place"
@@ -241,7 +252,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 p-0 p-1em text-19 lg:bg-transparent">
+                    <div className="bg-black-10 p-0 text-19 lg:bg-transparent">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
@@ -260,7 +271,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                           className="inline-block w-[24px] flex-shrink-0"
                         />
                         <div className="relative pr-30 font-bold no-underline">
-                          Reserve Space <span className="sr-only">at {item.branchTitle}</span>
+                          Reserve Space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
                           <ChevronRightIcon className="absolute right-0 top-0 inline h-full" />
                         </div>
                       </div>
