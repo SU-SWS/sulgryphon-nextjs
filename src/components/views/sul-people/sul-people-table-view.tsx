@@ -39,7 +39,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
 
   return (
     <div>
-      <form className="mx-auto flex w-fit text-16 text-digital-red *:min-w-fit *:border *:border-cardinal-red *:p-10">
+      <form className="mx-auto mb-32 flex w-fit text-16 text-digital-red *:min-w-fit *:border *:border-cardinal-red *:p-10">
         <button
           type="button"
           className={"hidden rounded-l-full underline hocus:no-underline md:block " + (!typeFilter ? "bg-red-200" : "")}
