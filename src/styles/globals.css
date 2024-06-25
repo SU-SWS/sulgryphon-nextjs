@@ -23,7 +23,7 @@
     display: none !important;
   }
   .responsive-table td {
-    padding: .5em;
+    padding: 16px 9px;
   }
   .responsive-table tbody tr,
   .responsive-table td.pivoted {
@@ -39,9 +39,7 @@
   .responsive-table tr td.pivoted:first-of-type {
     display: flex !important;
     justify-content: center;
-  }
-  .responsive-table ul li:last-child span {
-    display: none;
+    align-items: flex-start;
   }
   .responsive-table ul li:last-child span {
     display: none;

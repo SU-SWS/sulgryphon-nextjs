@@ -103,7 +103,17 @@ const View = async ({viewId, displayId, items, hasHeading}: Props) => {
     case "sul_people--table_list_all":
       return (
         <SulPeopleTableView
-          items={items as NodeStanfordPerson[]}
+          items={(items as NodeStanfordPerson[]).map(item => ({
+            id: item.id,
+            title: item.title,
+            path: item.path,
+            types: item.suPersonTypeGroup?.map(typeGroup => typeGroup.name) || [],
+            photoUrl: item.suPersonPhoto?.mediaImage.url,
+            fullTitle: item.suPersonFullTitle,
+            researchAreas: item.suPersonResearch?.map(research => research.processed),
+            email: item.suPersonEmail,
+            libCalId: item.sulPersonLibcalId,
+          }))}
           hasHeading={hasHeading}
         />
       )

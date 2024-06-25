@@ -411,6 +411,12 @@ fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     suPersonPhoto {
         ...FragmentMediaImage
     }
+    suPersonResearch {
+        processed
+    }
+    suPersonTypeGroup {
+        ...FragmentTermInterface
+    }
 }
 
 fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {
