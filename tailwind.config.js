@@ -97,6 +97,9 @@ module.exports = {
         "menu-x-morph-r-a": "menu-x-morph-r-a .4s ease reverse forwards",
         "menu-x-morph-r-b": "menu-x-morph-r-b .4s ease reverse forwards",
         "menu-x-morph-r-c": "menu-x-morph-r-c .4s ease reverse forwards"
+      },
+      boxShadow: {
+        'button': '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
       }
     },
   },
