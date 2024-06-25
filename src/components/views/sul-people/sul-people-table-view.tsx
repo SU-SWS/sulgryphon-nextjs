@@ -11,9 +11,9 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {useState} from "react"
 
 export type TablePerson = {
-  id: string
-  title: string
-  path: string
+  id: NodeStanfordPerson["id"]
+  title: NodeStanfordPerson["title"]
+  path: NodeStanfordPerson["path"]
   types: string[]
   photoUrl?: Maybe<string>
   fullTitle?: NodeStanfordPerson["suPersonFullTitle"]
@@ -30,40 +30,62 @@ type Props = {
 const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const HeadingElement = hasHeading ? "h3" : "h2"
 
-  const [typeFilter, setTypeFilter] = useState("")
+  const [typeFilter, setTypeFilter] = useState<string[]>([])
   let displayedItems = items
 
-  if (typeFilter) {
-    displayedItems = items.filter(item => item.types?.map(type => type.toLowerCase()).includes(typeFilter.toLowerCase()))
+  if (typeFilter.length >= 1) {
+    displayedItems = items.filter(item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter.includes(value)).length)
+  }
+
+  const updateTypeFilter = (type?: string) => {
+    if (!type) {
+      return setTypeFilter([])
+    }
+    setTypeFilter(prevState => {
+      const newState = [...prevState]
+      const existingIndex = newState.indexOf(type)
+      if (existingIndex >= 0) {
+        newState.splice(existingIndex, 1)
+      } else {
+        newState.push(type)
+      }
+      return newState
+    })
   }
 
   return (
     <div>
-      <form className="mx-auto mb-32 flex w-fit text-16 text-digital-red *:min-w-fit *:border *:border-cardinal-red *:p-10">
-        <button
-          type="button"
-          className={"hidden rounded-l-full underline hocus:no-underline md:block " + (!typeFilter ? "bg-red-200" : "")}
-          aria-current={!typeFilter}
-          onClick={() => setTypeFilter("")}
-        >
-          All specialists
-        </button>
-        <button
-          type="button"
-          className={"rounded-l-full underline hocus:no-underline md:rounded-l-none " + (typeFilter === "subject specialist" ? "bg-red-200" : "")}
-          aria-current={typeFilter === "subject specialist"}
-          onClick={() => setTypeFilter("subject specialist")}
-        >
-          Subject specialists
-        </button>
-        <button
-          type="button"
-          className={"rounded-r-full underline hocus:no-underline " + (typeFilter === "technical specialist" ? "bg-red-200" : "")}
-          aria-current={typeFilter === "technical specialist"}
-          onClick={() => setTypeFilter("technical specialist")}
-        >
-          Technical specialists
-        </button>
+      <form className="mb-32">
+        <fieldset className="mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
+          <legend className="sr-only">Filter by speciality</legend>
+          <label className="group hidden cursor-pointer border-r border-cardinal-red md:block">
+            <input
+              type="checkbox"
+              className="peer sr-only"
+              checked={!typeFilter.length}
+              onChange={() => updateTypeFilter()}
+            />
+            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">All specialists</span>
+          </label>
+          <label className="group cursor-pointer">
+            <input
+              type="checkbox"
+              className="peer sr-only"
+              checked={typeFilter.includes("subject specialist")}
+              onChange={() => updateTypeFilter("subject specialist")}
+            />
+            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">All specialists</span>
+          </label>
+          <label className="group cursor-pointer border-l border-cardinal-red">
+            <input
+              type="checkbox"
+              className="peer sr-only"
+              checked={typeFilter.includes("technical specialist")}
+              onChange={() => updateTypeFilter("technical specialist")}
+            />
+            <span className="block rounded-r-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">Technical specialists</span>
+          </label>
+        </fieldset>
       </form>
       <Table className="responsive-table text-center md:text-left">
         <caption
