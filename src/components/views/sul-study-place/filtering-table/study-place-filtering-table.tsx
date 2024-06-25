@@ -103,20 +103,20 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               <div className="flex items-center">
                 <button
                   onClick={showOpenAndClosed}
-                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-digital-red px-24 py-4 text-16 underline hocus:bg-red-100 hocus:no-underline"
+                  className="w-1/2 whitespace-nowrap rounded-l-full border-2 border-black-80 px-24 py-4 text-16 underline hocus:bg-[#979694] hocus:bg-opacity-10 hocus:no-underline"
                   aria-current={!onlyOpenNow}
                 >
                   All Locations
                 </button>
                 <button
                   onClick={showOnlyOpenNow}
-                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-digital-red px-24 py-4 text-16 underline hocus:bg-red-100 hocus:no-underline"
+                  className="flex w-1/2 items-center whitespace-nowrap rounded-r-full border-2 border-black-80 px-24 py-4 text-16 underline hocus:bg-[#979694] hocus:bg-opacity-10 hocus:no-underline"
                   aria-current={onlyOpenNow}
                 >
                   <ClockIcon
                     title="Hours"
                     width={15}
-                    className="mr-8 flex-shrink-0 text-digital-red"
+                    className="mr-8 flex-shrink-0 text-black-80"
                   />
                   Open Now
                 </button>
@@ -251,7 +251,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="hocus:shadow-button button w-fit whitespace-nowrap border border-solid border-digital-red bg-white text-16 text-black hocus:bg-inherit hocus:text-black md:text-18"
+                      className="hocus:shadow-button button w-fit whitespace-nowrap border border-solid border-digital-red bg-white text-16 text-black hocus:bg-digital-red hocus:text-white md:text-18"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs">
