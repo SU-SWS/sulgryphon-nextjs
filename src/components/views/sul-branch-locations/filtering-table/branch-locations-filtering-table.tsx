@@ -56,7 +56,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
       <div className="rs-mb-1 mx-auto w-fit">
         <button
           onClick={() => setDisplayedItems(items)}
-          className="rounded-l-full border-2 border-digital-red px-24 py-4 text-16"
+          className="rounded-l-full border-2 border-r-0 border-digital-red px-24 py-4 text-16"
           aria-current={displayedItems.length === items.length}
         >
           All Locations
@@ -217,9 +217,9 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   return (
     <div
       {...outsideClickProps}
-      className="relative"
+      className="relative text-16"
     >
-      {isOpen && <span className="block w-fit rounded-full bg-green-800 p-10 text-white sm:text-center md:text-left lg:mx-auto lg:text-center">Open</span>}
+      {isOpen && <span className="mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:text-left lg:mx-auto lg:text-center">Open</span>}
 
       {!isOpen && <span className="flex w-fit sm:text-center md:text-left lg:mx-auto lg:text-center">Closed</span>}
 

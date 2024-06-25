@@ -23,7 +23,7 @@
     display: none !important;
   }
   .responsive-table td {
-    padding: .5em;
+    padding: 16px 9px;
   }
   .responsive-table tbody tr,
   .responsive-table td.pivoted {
