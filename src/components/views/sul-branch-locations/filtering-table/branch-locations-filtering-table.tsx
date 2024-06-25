@@ -74,7 +74,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
           Open Now
         </button>
       </div>
-      <Table className="responsive-table responsive-table-branches">
+      <Table className="responsive-table">
         <Thead className="md:max-lg:not-sr-only sr-only">
           <Tr className="block sm:hidden lg:!table-row">
             <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell">Library</Th>
@@ -100,13 +100,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
   return (
     <Tr
       key={id}
-      className="block md:grid lg:!table-row"
+      className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[300px] md:text-left lg:!table-row lg:max-h-none"
     >
-      <Td className="image m-auto md:border-b md:border-black-40 lg:table-cell">
+      <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[500px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
         <div className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:w-[125px]">
           {imageUrl && (
             <Image
-              className="object-cover"
+              className="object-contain"
               src={imageUrl}
               alt=""
               fill
@@ -115,15 +115,15 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           )}
         </div>
       </Td>
-      <Td className="place w-auto md:border-b md:border-black-40 lg:table-cell">
+      <Td className="block w-auto text-center sm:border-b sm:border-black-40 md:w-1/2 md:text-left lg:table-cell lg:w-1/4">
         <Link href={path}>{title}</Link>
       </Td>
-      <Td className="hours w-auto md:border-b md:border-black-40 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
-      <Td className="contact w-auto md:border-b md:border-black-40 lg:table-cell">
+      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="flex items-center gap-4"
+            className="flex items-center justify-center gap-4 md:justify-start"
           >
             <PhoneIcon
               title="Phone Number"
@@ -135,7 +135,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="flex items-center gap-4"
+            className="flex items-center justify-center gap-4 md:justify-start"
           >
             <EnvelopeIcon
               title="Email"
@@ -145,10 +145,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           </a>
         )}
       </Td>
-      <Td className="address w-auto md:border-b md:border-black-40 lg:table-cell">
+      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
         {address && mapUrl && (
           <a href={mapUrl}>
-            <Address {...address} />
+            <Address
+              {...address}
+              className="text-center md:text-left"
+            />
           </a>
         )}
       </Td>
@@ -216,11 +219,11 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       {...outsideClickProps}
       className="relative"
     >
-      {isOpen && <span className="block w-fit rounded-full bg-green-800 p-10 text-white lg:mx-auto">Open</span>}
+      {isOpen && <span className="block w-fit rounded-full bg-green-800 p-10 text-white sm:text-center md:text-left lg:mx-auto lg:text-center">Open</span>}
 
-      {!isOpen && <span className="flex w-fit lg:mx-auto">Closed</span>}
+      {!isOpen && <span className="flex w-fit sm:text-center md:text-left lg:mx-auto lg:text-center">Closed</span>}
 
-      <div className="flex w-fit items-center whitespace-nowrap lg:mx-auto">
+      <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {closeTimeString && <>Until {closeTimeString}</>}
         {openTimeString && <>Until {openTimeString}</>}
 
