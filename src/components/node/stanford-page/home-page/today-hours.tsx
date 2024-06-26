@@ -85,7 +85,7 @@ const LibrariesTodayHours = ({libraries, ...props}: { libraries: HoursProps["lib
                 <TodayLibraryHours branchId={library.suLibraryHours}/>
               }
               {library?.map &&
-                <span className="float-right w-auto inline"><span className="sr-only">{library.title} Location</span><Link href={library?.map} aria-label="Link to map"><MapPinIcon title="Map" width={25} className="mr-5 inline"/>Location</Link></span>
+                <span className="float-right w-auto inline"><Link href={library?.map} ><span className="sr-only">{library.title} Location</span><MapPinIcon title="Map" width={25} className="mr-5 inline"/>Location</Link></span>
               }
             </div>
           </div>
