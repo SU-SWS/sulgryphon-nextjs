@@ -162,7 +162,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
       </form>
       {!displayedItems.length && <p>No results match your search.</p>}
       {!!displayedItems.length && (
-        <Table className="responsive-table responsive-table-study">
+        <Table className="responsive-table responsive-table-study ml-[-20px] sm:ml-0">
           <caption
             className="sr-only"
             aria-live="polite"
@@ -217,7 +217,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 key={item.id}
                 className="block sm:flex-col sm:flex-wrap md:flex md:max-h-[425px] lg:!table-row lg:max-h-none"
               >
-                <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[425px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-full md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.branchImageUrl && (
                     <Link
                       href={item.branchPath}
@@ -234,14 +234,14 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </Link>
                   )}
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
+                <Td className="order-1 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
                   <div className="pt-0 text-18 font-normal leading-display">
                     <h2 className="mb-[0px] font-sans text-20">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>
                 </Td>
-                <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
+                <Td className="min-w-1/5 order-2 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
                   <Link
                     href={item.branchPath}
                     className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
@@ -249,8 +249,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
+                <Td className="order-1 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
+                <Td className="order-2 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
                   {item.features && (
                     <div className="bg-black-10 p-0 text-19 lg:bg-transparent">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
@@ -258,7 +258,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
+                <Td className="order-5 block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
