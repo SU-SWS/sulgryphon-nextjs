@@ -88,7 +88,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         </fieldset>
       </form>
 
-      <Table className="responsive-table">
+      <Table className="responsive-table responsive-table-branches ml-[-2:q0px] sm:ml-0">
         <Thead className="md:max-lg:not-sr-only sr-only">
           <Tr className="block sm:hidden lg:!table-row">
             <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell">Library</Th>
@@ -129,10 +129,15 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           )}
         </div>
       </Td>
-      <Td className="block w-auto text-center sm:border-b sm:border-black-40 md:w-1/2 md:text-left lg:table-cell lg:w-1/4">
-        <Link href={path}>{title}</Link>
+      <Td className="flex w-auto justify-around sm:border-b sm:border-black-40 md:block md:w-1/2 md:text-left lg:table-cell lg:w-1/4">
+        <Link
+          href={path}
+          className="inline-block w-full text-center md:w-auto md:text-left"
+        >
+          {title}
+        </Link>
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:block md:w-1/2 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
         {phone && (
           <a
