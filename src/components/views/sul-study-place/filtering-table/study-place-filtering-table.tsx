@@ -252,7 +252,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 p-0 text-19 lg:bg-transparent">
+                    <div className="bg-black-10 px-16 py-8 text-19 lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
