@@ -8,7 +8,8 @@ import EmailLink from "@/components/patterns/elements/email-link"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {useState} from "react"
+import {useId, useRef, useState} from "react"
+import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
 
 export type TablePerson = {
   id: NodeStanfordPerson["id"]
@@ -29,8 +30,12 @@ type Props = {
 
 const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const HeadingElement = hasHeading ? "h3" : "h2"
+  const id = useId()
+  const keywordRef = useRef<HTMLInputElement>(null)
 
   const [typeFilter, setTypeFilter] = useState<string[]>([])
+  const [keywordFilter, setKeywordFilter] = useState("")
+
   let displayedItems = items
 
   if (typeFilter.length >= 1) {
@@ -53,39 +58,67 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
     })
   }
 
+  if (keywordFilter) {
+    displayedItems = displayedItems.filter(item => item.title.toLowerCase().includes(keywordFilter.toLowerCase()) || item.fullTitle?.toLowerCase().includes(keywordFilter.toLowerCase()) || item.researchAreas?.join(" ").toLowerCase().includes(keywordFilter.toLowerCase()))
+  }
+
   return (
     <div>
-      <form className="mb-32">
-        <fieldset className="mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
-          <legend className="sr-only">Filter by speciality</legend>
-          <label className="group hidden cursor-pointer border-r border-cardinal-red md:block">
-            <input
-              type="checkbox"
-              className="peer sr-only"
-              checked={!typeFilter.length}
-              onChange={() => updateTypeFilter()}
-            />
-            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">All specialists</span>
-          </label>
-          <label className="group cursor-pointer">
-            <input
-              type="checkbox"
-              className="peer sr-only"
-              checked={typeFilter.includes("subject specialist")}
-              onChange={() => updateTypeFilter("subject specialist")}
-            />
-            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">All specialists</span>
-          </label>
-          <label className="group cursor-pointer border-l border-cardinal-red">
-            <input
-              type="checkbox"
-              className="peer sr-only"
-              checked={typeFilter.includes("technical specialist")}
-              onChange={() => updateTypeFilter("technical specialist")}
-            />
-            <span className="block rounded-r-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">Technical specialists</span>
-          </label>
-        </fieldset>
+      <form
+        className="mx-auto mb-32 flex w-fit gap-30"
+        onSubmit={e => e.preventDefault()}
+      >
+        <div className="relative w-fit">
+          <label htmlFor={id}>Search by name, title, or subject</label>
+
+          <input
+            className="block h-40 w-full rounded-full"
+            ref={keywordRef}
+            type="text"
+            id={id}
+          />
+
+          <button
+            type="submit"
+            className="absolute bottom-4 right-10 z-10"
+            onClick={() => setKeywordFilter(keywordRef.current?.value || "")}
+          >
+            <MagnifyingGlassIcon width={30} />
+            <span className="sr-only">Search</span>
+          </button>
+        </div>
+        <div>
+          <fieldset className="mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
+            <legend className="sr-only">Filter by speciality</legend>
+            <label className="group hidden cursor-pointer border-r border-cardinal-red md:block">
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={!typeFilter.length}
+                onChange={() => updateTypeFilter()}
+              />
+              <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">All specialists</span>
+            </label>
+            <label className="group cursor-pointer">
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={typeFilter.includes("subject specialist")}
+                onChange={() => updateTypeFilter("subject specialist")}
+              />
+              <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">All specialists</span>
+            </label>
+            <label className="group cursor-pointer border-l border-cardinal-red">
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={typeFilter.includes("technical specialist")}
+                onChange={() => updateTypeFilter("technical specialist")}
+              />
+              <span className="block rounded-r-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">Technical specialists</span>
+            </label>
+          </fieldset>
+        </div>
       </form>
       <Table className="responsive-table text-center md:text-left">
         <caption
