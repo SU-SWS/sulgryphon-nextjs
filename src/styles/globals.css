@@ -29,9 +29,6 @@
   .responsive-table .tdBefore {
     display: none !important;
   }
-  .responsive-table td {
-    padding: 16px 9px;
-  }
   .responsive-table tbody tr,
   .responsive-table td.pivoted {
     border: none !important;

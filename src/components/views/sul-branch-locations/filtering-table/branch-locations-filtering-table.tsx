@@ -88,13 +88,19 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         </fieldset>
       </form>
 
-      <Table className="responsive-table responsive-table-branches ml-[-2:q0px] sm:ml-0">
-        <Thead className="md:max-lg:not-sr-only sr-only">
+      <Table className="responsive-table responsive-table-branches ml-[-20px] sm:ml-0">
+        <Thead className="sr-only lg:not-sr-only">
           <Tr className="block sm:hidden lg:!table-row">
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell">Library</Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Open/Closed</Th>
-            <Th className="md:table-cellwhitespace-nowrap type-1 block pl-[0px] text-center">Contact</Th>
-            <Th className="md:table-cellwhitespace-nowrap type-1 block pl-[0px] text-center">Address</Th>
+            <Th
+              className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
+              scope="col"
+            >
+              <span className="sr-only">Photo</span>
+            </Th>
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Library</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell">Open/Closed</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Contact</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
           </Tr>
         </Thead>
         <Tbody>
