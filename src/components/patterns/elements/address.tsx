@@ -22,7 +22,6 @@ const Address = ({additionalName: _a, addressLine1, addressLine2, administrative
           {locality}, {administrativeArea} {postalCode}
         </div>
       )}
-      {country?.code && <div>{country?.code}</div>}
     </address>
   )
 }

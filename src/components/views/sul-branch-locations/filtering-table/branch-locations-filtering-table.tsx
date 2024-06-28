@@ -1,18 +1,17 @@
 "use client"
 
-import {ClockIcon} from "@heroicons/react/24/outline"
+import {ClockIcon, MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
+import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
 import {useId} from "react"
 import Image from "next/image"
 import Link from "next/link"
-import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import Address from "@/components/patterns/elements/address"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
-import {ChevronDownIcon} from "@heroicons/react/20/solid"
 
 export type BranchLocation = {
   id: NodeSulLibrary["id"]
@@ -167,7 +166,14 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
         {address && mapUrl && (
-          <a href={mapUrl}>
+          <a
+            href={mapUrl}
+            className="flex items-center justify-center gap-4 md:justify-start"
+          >
+            <MapPinIcon
+              title="Map"
+              width={20}
+            />
             <Address
               {...address}
               className="text-center md:text-left"
