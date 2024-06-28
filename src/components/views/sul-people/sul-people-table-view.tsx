@@ -74,7 +74,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
               checked={typeFilter.includes("subject specialist")}
               onChange={() => updateTypeFilter("subject specialist")}
             />
-            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">All specialists</span>
+            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">Subject Specialist</span>
           </label>
           <label className="group cursor-pointer border-l border-cardinal-red">
             <input
@@ -95,34 +95,34 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         >
           Showing {displayedItems.length} of {items.length}
         </caption>
-        <Thead className="sr-only sm:not-sr-only">
-          <Tr className="block sm:hidden md:table-row">
+        <Thead className="sr-only lg:not-sr-only">
+          <Tr className="block sm:hidden lg:!table-row">
             <Th
-              className="block min-w-[100px] pl-[0px] md:table-cell"
+              className="block min-w-[100px] pl-[0px] lg:table-cell"
               scope="col"
             >
               <span className="sr-only">Photo</span>
             </Th>
             <Th
-              className="block pl-[0px] text-24 md:table-cell"
+              className="block pl-[0px] text-24 lg:table-cell"
               scope="col"
             >
               Name/Title
             </Th>
             <Th
-              className="block pl-[0px] text-24 md:table-cell"
+              className="block pl-[0px] text-24 lg:table-cell"
               scope="col"
             >
               Expertise
             </Th>
             <Th
-              className="block pl-[0px] text-24 md:table-cell"
+              className="block pl-[0px] text-24 lg:table-cell"
               scope="col"
             >
               Contact
             </Th>
             <Th
-              className="block pl-[0px] text-24 md:table-cell"
+              className="block pl-[0px] text-24 lg:table-cell"
               scope="col"
             >
               Schedule
@@ -134,15 +134,15 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           {displayedItems.map(item => (
             <Tr
               key={item.id}
-              className=""
+              className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[400px] md:text-left lg:!table-row lg:max-h-none"
             >
-              <Td className="m-auto text-center sm:text-left md:border-b md:border-black-40">
-                <Link
-                  href={item.path}
-                  className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full md:w-[68px]"
-                  aria-labelledby={item.id}
-                >
-                  {item.photoUrl && (
+              {item.photoUrl && (
+                <Td className="m-auto block px-0 py-16 text-center sm:mr-25 sm:text-left md:min-h-[325px] md:w-1/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                  <Link
+                    href={item.path}
+                    className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
+                    aria-labelledby={item.id}
+                  >
                     <Image
                       className="object-cover"
                       src={item.photoUrl}
@@ -150,33 +150,35 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                       fill
                       sizes="(max-width: 768px) 300px, 150px"
                     />
-                  )}
-                </Link>
-              </Td>
-              <Td className="block w-auto text-center sm:text-left md:table-cell md:w-1/5 md:border-b md:border-black-40">
-                <Link
-                  href={item.path}
-                  className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
-                >
-                  <HeadingElement
-                    className="text-20"
-                    id={item.id}
+                  </Link>
+                </Td>
+              )}
+              {item.title && (
+                <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/4">
+                  <Link
+                    href={item.path}
+                    className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                   >
-                    {item.title}
-                  </HeadingElement>
-                </Link>
-                {item.fullTitle && <div className="text-16">{item.fullTitle}</div>}
-              </Td>
-              <Td className="min-w-1/5 block w-auto text-center sm:text-left md:table-cell md:w-2/5 md:border-b md:border-black-40">
-                {!!item.researchAreas?.length && (
+                    <HeadingElement
+                      className="font-sans text-20"
+                      id={item.id}
+                    >
+                      {item.title}
+                    </HeadingElement>
+                  </Link>
+                  {item.fullTitle && <div className="text-16">{item.fullTitle}</div>}
+                </Td>
+              )}
+              {!!item.researchAreas?.length && (
+                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-2/5">
                   <div className="bg-black-10 px-1em py-1em text-16 md:bg-transparent md:p-0">
                     <span className="font-bold md:hidden">Expertise: </span>
                     {item.researchAreas.join(", ")}
                   </div>
-                )}
-              </Td>
-              <Td className="block w-auto text-center sm:text-left md:table-cell md:w-1/5 md:border-b md:border-black-40">
-                {item.email && (
+                </Td>
+              )}
+              {item.email && (
+                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/5">
                   <>
                     <EnvelopeIcon
                       title="Email"
@@ -189,16 +191,16 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                       className="break-words text-16 text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                     />
                   </>
-                )}
-              </Td>
-              <Td className="block w-auto text-center sm:text-left md:table-cell md:w-1/5 md:border-b md:border-black-40">
-                {item.libCalId && (
+                </Td>
+              )}
+              {item.libCalId && (
+                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/5">
                   <LibCal
                     libcalId={item.libCalId}
                     srText={item.title}
                   />
-                )}
-              </Td>
+                </Td>
+              )}
             </Tr>
           ))}
         </Tbody>
