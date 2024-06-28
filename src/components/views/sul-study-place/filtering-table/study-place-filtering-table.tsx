@@ -110,7 +110,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border-2 border-r-0 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
                 <label className="group w-1/2 cursor-pointer">
@@ -121,7 +121,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-r-full border-2 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}
@@ -252,7 +252,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 p-0 text-19 lg:bg-transparent">
+                    <div className="bg-black-10 px-16 py-8 text-19 lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
