@@ -247,7 +247,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     >
       {isOpen && <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:mr-0 md:text-left lg:mx-auto lg:text-center">Open</span>}
 
-      {!isOpen && <span className="flex w-fit sm:text-center md:text-left lg:mx-auto lg:text-center">Closed</span>}
+      {!isOpen && <span className="mr-8 flex w-fit sm:text-center md:mr-0 md:text-left lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {closeTimeString && <>Until {closeTimeString}</>}
