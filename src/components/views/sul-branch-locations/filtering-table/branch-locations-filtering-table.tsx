@@ -178,6 +178,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             <MapPinIcon
               title="Map"
               width={20}
+              className="min-w-20"
             />
             <Address
               {...address}
