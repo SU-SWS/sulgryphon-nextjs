@@ -96,7 +96,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           Showing {displayedItems.length} of {items.length}
         </caption>
         <Thead className="sr-only lg:not-sr-only">
-          <Tr className="lock sm:hidden lg:!table-row">
+          <Tr className="block sm:hidden lg:!table-row">
             <Th
               className="block min-w-[100px] pl-[0px] lg:table-cell"
               scope="col"
