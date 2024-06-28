@@ -242,11 +242,11 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   return (
     <div
       {...outsideClickProps}
-      className="relative text-16"
+      className="relative m-auto text-16"
     >
-      {isOpen && <span className="mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:text-left lg:mx-auto lg:text-center">Open</span>}
+      {isOpen && <span className="m-auto mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Open</span>}
 
-      {!isOpen && <span className="flex w-fit sm:text-center md:text-left lg:mx-auto lg:text-center">Closed</span>}
+      {!isOpen && <span className="m-auto flex w-fit sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {closeTimeString && <>Until {closeTimeString}</>}
