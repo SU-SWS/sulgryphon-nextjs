@@ -6,7 +6,7 @@ const LibCal = ({libcalId, srText}: {libcalId?: number; srText: string}) => {
       {libcalId && (
         <Link
           href={`/calendar/${libcalId}`}
-          className="button w-fit whitespace-nowrap border border-solid border-digital-red bg-white text-16 text-black hocus:bg-digital-red hocus:text-white hocus:shadow-button"
+          className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button"
           aria-haspopup="dialog"
         >
           Schedule an appointment<span className="sr-only">&nbsp;for {srText}</span>
