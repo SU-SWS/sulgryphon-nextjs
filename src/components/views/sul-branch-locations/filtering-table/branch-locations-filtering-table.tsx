@@ -119,10 +119,10 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
   return (
     <Tr
       key={id}
-      className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[400px] md:text-left lg:!table-row lg:max-h-none"
+      className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-flow-col md:grid-rows-3 md:gap-4 md:text-left lg:!table-row lg:max-h-none"
     >
-      <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:min-h-[400px] md:w-1/2 lg:table-cell lg:min-h-fit lg:w-[125px]">
-        <div className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:w-[125px]">
+      <Td className="m-auto block sm:mr-25 sm:border-b sm:border-black-40 md:row-span-3 lg:table-cell lg:min-h-fit lg:w-[125px]">
+        <div className="relative block aspect-[3/2] w-[338px] overflow-hidden md:w-[210px] lg:w-[125px]">
           {imageUrl && (
             <Image
               className="object-contain"
@@ -134,11 +134,11 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           )}
         </div>
       </Td>
-      <Td className="block w-auto text-center sm:border-b sm:border-black-40 md:w-1/2 md:text-left lg:table-cell lg:w-1/4">
+      <Td className="block w-auto text-center sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4">
         <Link href={path}>{title}</Link>
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
+      <Td className="block w-auto sm:border-b sm:border-black-40 md:order-6 md:row-span-3 lg:-order-none lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
@@ -164,7 +164,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           </a>
         )}
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
+      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4">
         {address && mapUrl && (
           <a
             href={mapUrl}

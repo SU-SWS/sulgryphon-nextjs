@@ -34,9 +34,9 @@
     text-align: unset !important;
   }
   .responsive-table tr td.pivoted:first-of-type {
-    display: flex !important;
+    /* display: flex !important;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; */
   }
   .responsive-table ul li:last-child span {
     display: none;
