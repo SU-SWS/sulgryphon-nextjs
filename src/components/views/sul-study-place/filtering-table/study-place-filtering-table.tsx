@@ -262,10 +262,10 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:text-18"
+                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full md:text-18 lg:w-fit"
                       aria-haspopup="dialog"
                     >
-                      <div className="flex items-center justify-end gap-xs">
+                      <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
                         <div className="relative no-underline">
                           Reserve Space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
                         </div>
