@@ -1,6 +1,5 @@
 "use client"
 
-import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid"
 import StudyPlaceTodayHoursTable from "@/components/views/sul-study-place/filtering-table/study-place-today-hours-table"
 import Link from "next/link"
 import Image from "next/image"
@@ -262,17 +261,12 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button w-fit whitespace-nowrap border border-solid border-digital-red bg-white text-16 text-black hocus:bg-digital-red hocus:text-white hocus:shadow-button md:text-18"
+                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full md:text-18 lg:w-fit"
                       aria-haspopup="dialog"
                     >
-                      <div className="flex items-center justify-end gap-xs">
-                        <CalendarDaysIcon
-                          title="Date"
-                          className="inline-block w-[24px] flex-shrink-0"
-                        />
-                        <div className="relative pr-30 font-bold no-underline">
+                      <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
+                        <div className="relative no-underline">
                           Reserve Space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
-                          <ChevronRightIcon className="absolute right-0 top-0 inline h-full" />
                         </div>
                       </div>
                     </a>
