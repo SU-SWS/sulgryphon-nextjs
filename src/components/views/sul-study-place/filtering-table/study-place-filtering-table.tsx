@@ -1,6 +1,5 @@
 "use client"
 
-import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid"
 import StudyPlaceTodayHoursTable from "@/components/views/sul-study-place/filtering-table/study-place-today-hours-table"
 import Link from "next/link"
 import Image from "next/image"
