@@ -249,11 +249,11 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   return (
     <div
       {...outsideClickProps}
-      className="relative m-auto text-16"
+      className="relative flex text-16 md:block"
     >
-      {isOpen && <span className="m-auto mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Open</span>}
+      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Open</span>}
 
-      {!isOpen && <span className="m-auto flex w-fit sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Closed</span>}
+      {!isOpen && <span className="m-auto mr-8 flex w-fit sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {closeTimeString && <>Until {closeTimeString}</>}
@@ -278,8 +278,8 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
         className={expandedHours ? "absolute top-full z-10 block" : "hidden"}
         role="region"
       >
-        <div className="w-300 border border-black-60 bg-white p-20">
-          Hours this week
+        <div className="w-300 border border-black-60 bg-white p-20 text-left">
+          <div className="mb-10 font-bold">Hours this week</div>
           {libraryHours.primaryHours.map(dayHours => (
             <div
               key={`${hoursId}-${dayHours.weekday}`}
