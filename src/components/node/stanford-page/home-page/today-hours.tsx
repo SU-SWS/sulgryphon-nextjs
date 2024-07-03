@@ -91,7 +91,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
               </div>
               {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
               {library?.map && (
-                <span className="float-right inline w-auto">
+                <span className="relative top-0 float-right inline w-auto xl:top-[-25px]">
                   <Link href={library?.map}>
                     <span className="sr-only">{library.title}&nbsp;</span>
                     <MapPinIcon
@@ -127,12 +127,12 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
     )
   }
   const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = libraryHours
-  const hoursDisplay = !closedAllDay && (isOpen ? "Closes at " + closingTime : afterClose ? "Closed at " + closingTime : "Opens at " + openingTime)
+  const hoursDisplay = !closedAllDay && (isOpen ? "Open until " + closingTime : afterClose ? "Closed until " + openingTime : "Closed until " + openingTime)
 
   return (
     <>
       <div
-        className="mb-4 flex justify-between text-black"
+        className="mb-4 flex text-black"
         aria-live="polite"
       >
         <div className="flex">
@@ -141,7 +141,7 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
             width={15}
             className="mr-5"
           />{" "}
-          {isOpen ? "Open" : "Closed"}
+          {isOpen ? "" : "Closed"}
         </div>
         <div>{hoursDisplay}</div>
       </div>
