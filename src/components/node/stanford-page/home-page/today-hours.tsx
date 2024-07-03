@@ -89,20 +89,23 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                   onChange={(e, value) => setSelectedLibrary(value as string)}
                 />
               </div>
-              {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
-              {library?.map && (
-                <span className="relative top-0 float-right inline w-auto xl:top-[-25px]">
-                  <Link href={library?.map}>
-                    <span className="sr-only">{library.title}&nbsp;</span>
-                    <MapPinIcon
-                      title="Map"
-                      width={25}
-                      className="mr-5 inline"
-                    />
-                    Location
-                  </Link>
-                </span>
-              )}
+              <div className="flex flex-nowrap justify-between">
+                {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
+                {library?.map && (
+                  <span className="text-nowrap">
+                    <Link href={library?.map}>
+                      <span className="sr-only">{library.title}&nbsp;</span>
+                      <MapPinIcon
+                        title="Map"
+                        width={25}
+                        className="mr-5 inline-block"
+                      />
+                      Location
+                    </Link>
+                  </span>
+                )}
+              </div>
+              <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
             </div>
           </div>
         }
@@ -120,7 +123,7 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
         <ClockIcon
           title="Hours"
           width={15}
-          className="mr-5"
+          className="mr-5 inline-block"
         />
         <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
       </div>
@@ -132,20 +135,19 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
   return (
     <>
       <div
-        className="mb-4 flex text-black"
+        className="mb-4 text-black"
         aria-live="polite"
       >
-        <div className="flex">
+        <div className="inline">
           <ClockIcon
             title="Hours"
             width={15}
-            className="mr-5"
-          />{" "}
+            className="mr-5 inline-block"
+          />
           {isOpen ? "" : "Closed"}
         </div>
-        <div>{hoursDisplay}</div>
+        <div className="inline">{hoursDisplay}</div>
       </div>
-      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
     </>
   )
 }
