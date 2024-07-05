@@ -14,13 +14,11 @@ export type LocationHours = {
   name: string
   type: string
   primaryHours: DayHours[]
-  additionalLocations: [
-    {
-      id: string
-      name: string
-      hours: DayHours[]
-    },
-  ]
+  additionalLocations: {
+    id: string
+    name: string
+    hours: DayHours[]
+  }[]
 }
 
 const useLibraryHours = <T extends Record<string, LocationHours> | LocationHours>(branchId?: string): T => {

@@ -5,13 +5,14 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
-import {useId} from "react"
+import {useCallback, useId, useRef} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Address from "@/components/patterns/elements/address"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
-import {useBoolean} from "usehooks-ts"
+import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 
 export type BranchLocation = {
   id: NodeSulLibrary["id"]
@@ -36,6 +37,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   const filterLocations = () => {
     const rightNow = new Date()
     const openBranches: string[] = []
+
     Object.keys(libraryHours).map(hourId => {
       const todayHours = libraryHours[hourId].primaryHours.find(day => {
         const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
@@ -192,63 +194,37 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
 }
 
 const BranchHours = ({hoursId}: {hoursId: string}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
   const outsideClickProps = useOutsideClick(collapseHours)
   const id = useId()
   const libraryHours = useLibraryHours<LocationHours>(hoursId)
-  if (!libraryHours.primaryHours) {
+  const todayLibraryHours = useTodayLibraryHours(hoursId)
+
+  // If the user presses escape on the keyboard, close the submenus.
+  const handleEscape = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !expandedHours) return
+
+      collapseHours()
+      buttonRef.current?.focus()
+    },
+    [collapseHours, expandedHours]
+  )
+
+  useEventListener("keydown", handleEscape, containerRef)
+
+  if (!libraryHours.primaryHours || !todayLibraryHours) {
     return
   }
 
-  // To test out various scenarios adjust right now. Go back 20 hours:
-  // const rightNow = new Date(new Date().getTime() - 20 * 60 * 60 * 1000)
-  // Go forward 10 hours
-  // const rightNow = new Date(new Date().getTime() + 10 * 60 * 60 * 1000)
-  const rightNow = new Date()
-
-  const todayHours = libraryHours.primaryHours.find(day => {
-    // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-    return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-  }) as DayHours
-
-  let openTime,
-    closeTime,
-    isOpen = false
-
-  if (!todayHours.closed && todayHours.opens_at && todayHours.closes_at) {
-    openTime = new Date(todayHours.opens_at)
-    closeTime = new Date(todayHours.closes_at)
-    isOpen = rightNow > openTime && rightNow < closeTime
-  }
-
-  const closeTimeString =
-    isOpen &&
-    closeTime &&
-    closeTime.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      timeZone: "America/Los_Angeles",
-    })
-
-  const tomorrowHours = libraryHours.primaryHours.find(day => {
-    // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-    return dayDate === new Date(rightNow.getTime() + 1000 * 60 * 60 * 24).toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-  }) as DayHours
-
-  const openTimeString =
-    !isOpen &&
-    tomorrowHours?.opens_at &&
-    new Date(tomorrowHours.opens_at).toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      timeZone: "America/Los_Angeles",
-    })
+  const {isOpen, closingTime, nextOpeningTime} = todayLibraryHours
 
   return (
     <div
       {...outsideClickProps}
+      ref={containerRef}
       className="relative flex text-16 md:block"
     >
       {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Open</span>}
@@ -256,12 +232,12 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       {!isOpen && <span className="m-auto mr-8 flex w-fit sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
-        {closeTimeString && <>Until {closeTimeString}</>}
-        {openTimeString && <>Until {openTimeString}</>}
-
-        {!closeTimeString && !openTimeString && "Hours this week"}
+        {isOpen && closingTime && `Until ${closingTime}`}
+        {!isOpen && nextOpeningTime && `Until ${nextOpeningTime}`}
+        {!closingTime && !nextOpeningTime && "Hours this week"}
 
         <button
+          ref={buttonRef}
           onClick={toggleExpandedHours}
           aria-controls={id}
           aria-expanded={expandedHours}
