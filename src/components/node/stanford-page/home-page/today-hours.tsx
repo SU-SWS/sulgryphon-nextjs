@@ -93,19 +93,21 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                 {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
                 {library?.map && (
                   <span className="text-nowrap">
-                    <Link href={library?.map}>
+                    <Link
+                      href={library?.map}
+                      className="flex items-center"
+                    >
                       <span className="sr-only">{library.title}&nbsp;</span>
                       <MapPinIcon
                         title="Map"
                         width={25}
-                        className="mr-5 inline-block"
+                        className="mr-5"
                       />
                       Location
                     </Link>
                   </span>
                 )}
               </div>
-              <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
             </div>
           </div>
         }
@@ -117,23 +119,13 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
 const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
   const libraryHours = useTodayLibraryHours(branchId || "")
 
-  if (!libraryHours) {
-    return (
-      <div className="flex text-black">
-        <ClockIcon
-          title="Hours"
-          width={15}
-          className="mr-5 inline-block"
-        />
-        <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
-      </div>
-    )
-  }
+  if (!libraryHours) return <SeeAllHours />
+
   const {closedAllDay, isOpen, closingTime, nextOpeningTime} = libraryHours
   const hoursDisplay = !closedAllDay && (isOpen ? "Open until " + closingTime : "Closed until " + nextOpeningTime)
-
+  if (!hoursDisplay) return <SeeAllHours />
   return (
-    <>
+    <div>
       <div
         className="mb-4 flex items-center text-black"
         aria-live="polite"
@@ -141,11 +133,25 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
         <ClockIcon
           title="Hours"
           width={15}
-          className="mr-5 inline-block"
+          className="mr-5"
         />
         <div>{hoursDisplay}</div>
       </div>
-    </>
+      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+    </div>
+  )
+}
+
+const SeeAllHours = () => {
+  return (
+    <div className="flex items-center text-black">
+      <ClockIcon
+        title="Hours"
+        width={15}
+        className="mr-5"
+      />
+      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+    </div>
   )
 }
 
