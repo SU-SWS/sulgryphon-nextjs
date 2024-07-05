@@ -129,24 +129,21 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
       </div>
     )
   }
-  const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = libraryHours
-  const hoursDisplay = !closedAllDay && (isOpen ? "Open until " + closingTime : afterClose ? "Closed until " + openingTime : "Closed until " + openingTime)
+  const {closedAllDay, isOpen, closingTime, nextOpeningTime} = libraryHours
+  const hoursDisplay = !closedAllDay && (isOpen ? "Open until " + closingTime : "Closed until " + nextOpeningTime)
 
   return (
     <>
       <div
-        className="mb-4 text-black"
+        className="mb-4 flex items-center text-black"
         aria-live="polite"
       >
-        <div className="inline">
-          <ClockIcon
-            title="Hours"
-            width={15}
-            className="mr-5 inline-block"
-          />
-          {isOpen ? "" : "Closed"}
-        </div>
-        <div className="inline">{hoursDisplay}</div>
+        <ClockIcon
+          title="Hours"
+          width={15}
+          className="mr-5 inline-block"
+        />
+        <div>{hoursDisplay}</div>
       </div>
     </>
   )
