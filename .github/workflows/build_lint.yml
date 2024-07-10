@@ -12,10 +12,12 @@ jobs:
         LIBGUIDE_CLIENT_SECRET: ${{ secrets.LIBGUIDE_CLIENT_SECRET }}
         NEXT_PUBLIC_DRUPAL_BASE_URL: ${{ secrets.NEXT_PUBLIC_DRUPAL_BASE_URL }}
         NEXT_PUBLIC_SITE_NAME: ${{ secrets.NEXT_PUBLIC_SITE_NAME }}
+        DRUPAL_BASIC_AUTH: ${{ secrets.DRUPAL_BASIC_AUTH }}
+        DRUPAL_BASIC_AUTH_ADMIN: ${{ secrets.DRUPAL_BASIC_AUTH_ADMIN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Restore Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             node_modules

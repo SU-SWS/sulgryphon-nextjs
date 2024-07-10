@@ -1,6 +1,4 @@
 import {stringify} from "qs"
-import {AccessToken} from "next-drupal";
-import {getAccessToken} from "./get-access-token";
 
 export const buildUrl = (path: string, params?: string | Record<string, string> | URLSearchParams): URL => {
   const url = new URL(path.charAt(0) === "/" ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}` : path)
@@ -13,17 +11,10 @@ export const buildUrl = (path: string, params?: string | Record<string, string> 
   return url
 }
 
-export const buildHeaders = async ({accessToken, headers = {}, previewMode = false}: {
-  accessToken?: AccessToken
-  headers?: HeadersInit
-  previewMode?: boolean
-} = {}): Promise<Headers> => {
-  if (process.env.REQUEST_HEADERS) headers = {...headers, ...JSON.parse(process.env.REQUEST_HEADERS)};
+export const buildHeaders = (headers?: HeadersInit, isPreviewMode?: boolean): Headers => {
+  const requestHeaders = new Headers(headers)
+  const authCreds = (isPreviewMode ? process.env.DRUPAL_BASIC_AUTH_ADMIN : process.env.DRUPAL_BASIC_AUTH) as string
 
-  const requestHeaders = new Headers(headers);
-
-  const token = accessToken || (await getAccessToken(previewMode))
-  if (token) requestHeaders.set('Authorization', `Bearer ${token.access_token}`)
-
+  requestHeaders.set("Authorization", "Basic " + Buffer.from(authCreds).toString("base64"))
   return requestHeaders
 }

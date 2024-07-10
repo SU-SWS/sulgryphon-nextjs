@@ -411,6 +411,12 @@ fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     suPersonPhoto {
         ...FragmentMediaImage
     }
+    suPersonResearch {
+        processed
+    }
+    suPersonTypeGroup {
+        ...FragmentTermInterface
+    }
 }
 
 fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {
@@ -438,6 +444,12 @@ fragment FragmentNodeSulLibraryTeaser on NodeSulLibrary {
     }
     suLibraryAddress {
         ...FragmentAddressType
+    }
+    suLibraryEmail
+    suLibraryPhone
+    suLibraryMapLink {
+        url
+        title
     }
 }
 
@@ -481,6 +493,7 @@ fragment FragmentParagraphInterface on ParagraphInterface {
     __typename
     id
     behaviors
+    status
 }
 
 fragment FragmentParagraphCollection on ParagraphCollection {

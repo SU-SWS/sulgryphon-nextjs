@@ -74,6 +74,7 @@ export const FragmentParagraphInterfaceFragmentDoc = gql`
   __typename
   id
   behaviors
+  status
 }
     `;
 export const FragmentParagraphSulLibguideFragmentDoc = gql`
@@ -222,6 +223,12 @@ export const FragmentNodeSulLibraryTeaserFragmentDoc = gql`
   }
   suLibraryAddress {
     ...FragmentAddressType
+  }
+  suLibraryEmail
+  suLibraryPhone
+  suLibraryMapLink {
+    url
+    title
   }
 }
     ${FragmentNodeInterfaceFragmentDoc}
@@ -399,9 +406,16 @@ export const FragmentNodeStanfordPersonTeaserFragmentDoc = gql`
   suPersonPhoto {
     ...FragmentMediaImage
   }
+  suPersonResearch {
+    processed
+  }
+  suPersonTypeGroup {
+    ...FragmentTermInterface
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
-${FragmentMediaImageFragmentDoc}`;
+${FragmentMediaImageFragmentDoc}
+${FragmentTermInterfaceFragmentDoc}`;
 export const FragmentNodeStanfordPolicyTeaserFragmentDoc = gql`
     fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {
   ...FragmentNodeInterface
@@ -1424,6 +1438,15 @@ export const SulStudyPlacesDocument = gql`
   }
 }
     ${FragmentNodeSulStudyPlaceTeaserFragmentDoc}`;
+export const SulBranchLocationsDocument = gql`
+    query sulBranchLocations {
+  sulBranchLocations {
+    results {
+      ...FragmentNodeSulLibraryTeaser
+    }
+  }
+}
+    ${FragmentNodeSulLibraryTeaserFragmentDoc}`;
 export const StanfordSharedTagsDocument = gql`
     query stanfordSharedTags($filters: StanfordSharedTagsContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
   stanfordSharedTags(
@@ -1518,6 +1541,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     sulStudyPlaces(variables?: DrupalTypes.SulStudyPlacesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.SulStudyPlacesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.SulStudyPlacesQuery>(SulStudyPlacesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sulStudyPlaces', 'query', variables);
+    },
+    sulBranchLocations(variables?: DrupalTypes.SulBranchLocationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.SulBranchLocationsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.SulBranchLocationsQuery>(SulBranchLocationsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'sulBranchLocations', 'query', variables);
     },
     stanfordSharedTags(variables?: DrupalTypes.StanfordSharedTagsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.StanfordSharedTagsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.StanfordSharedTagsQuery>(StanfordSharedTagsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'stanfordSharedTags', 'query', variables);
