@@ -1,18 +1,18 @@
 "use client"
 
-import {ClockIcon} from "@heroicons/react/24/outline"
+import {ClockIcon, MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
+import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
-import {useId} from "react"
+import {useCallback, useId, useRef} from "react"
 import Image from "next/image"
 import Link from "next/link"
-import {EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import Address from "@/components/patterns/elements/address"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
-import {useBoolean} from "usehooks-ts"
+import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
-import {ChevronDownIcon} from "@heroicons/react/20/solid"
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 
 export type BranchLocation = {
   id: NodeSulLibrary["id"]
@@ -37,6 +37,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   const filterLocations = () => {
     const rightNow = new Date()
     const openBranches: string[] = []
+
     Object.keys(libraryHours).map(hourId => {
       const todayHours = libraryHours[hourId].primaryHours.find(day => {
         const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
@@ -88,13 +89,19 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         </fieldset>
       </form>
 
-      <Table className="responsive-table">
-        <Thead className="md:max-lg:not-sr-only sr-only">
+      <Table className="responsive-table responsive-table-branches ml-[-20px] sm:ml-0">
+        <Thead className="sr-only lg:not-sr-only">
           <Tr className="block sm:hidden lg:!table-row">
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell">Library</Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Open/Closed</Th>
-            <Th className="md:table-cellwhitespace-nowrap type-1 block pl-[0px] text-center">Contact</Th>
-            <Th className="md:table-cellwhitespace-nowrap type-1 block pl-[0px] text-center">Address</Th>
+            <Th
+              className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
+              scope="col"
+            >
+              <span className="sr-only">Photo</span>
+            </Th>
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Library</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell">Open/Closed</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Contact</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -129,10 +136,15 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           )}
         </div>
       </Td>
-      <Td className="block w-auto text-center sm:border-b sm:border-black-40 md:w-1/2 md:text-left lg:table-cell lg:w-1/4">
-        <Link href={path}>{title}</Link>
+      <Td className="flex w-auto justify-around sm:border-b sm:border-black-40 md:block md:w-1/2 md:text-left lg:table-cell lg:w-1/4">
+        <Link
+          href={path}
+          className="inline-block w-full text-center md:w-auto md:text-left"
+        >
+          {title}
+        </Link>
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:block md:w-1/2 lg:table-cell lg:w-1/4">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
         {phone && (
           <a
@@ -161,7 +173,15 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/4">
         {address && mapUrl && (
-          <a href={mapUrl}>
+          <a
+            href={mapUrl}
+            className="flex items-center justify-center gap-4 md:justify-start"
+          >
+            <MapPinIcon
+              title="Map"
+              width={20}
+              className="min-w-20"
+            />
             <Address
               {...address}
               className="text-center md:text-left"
@@ -174,76 +194,50 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
 }
 
 const BranchHours = ({hoursId}: {hoursId: string}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
   const outsideClickProps = useOutsideClick(collapseHours)
   const id = useId()
   const libraryHours = useLibraryHours<LocationHours>(hoursId)
-  if (!libraryHours.primaryHours) {
+  const todayLibraryHours = useTodayLibraryHours(hoursId)
+
+  // If the user presses escape on the keyboard, close the submenus.
+  const handleEscape = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !expandedHours) return
+
+      collapseHours()
+      buttonRef.current?.focus()
+    },
+    [collapseHours, expandedHours]
+  )
+
+  useEventListener("keydown", handleEscape, containerRef)
+
+  if (!libraryHours.primaryHours || !todayLibraryHours) {
     return
   }
 
-  // To test out various scenarios adjust right now. Go back 20 hours:
-  // const rightNow = new Date(new Date().getTime() - 20 * 60 * 60 * 1000)
-  // Go forward 10 hours
-  // const rightNow = new Date(new Date().getTime() + 10 * 60 * 60 * 1000)
-  const rightNow = new Date()
-
-  const todayHours = libraryHours.primaryHours.find(day => {
-    // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-    return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-  }) as DayHours
-
-  let openTime,
-    closeTime,
-    isOpen = false
-
-  if (!todayHours.closed && todayHours.opens_at && todayHours.closes_at) {
-    openTime = new Date(todayHours.opens_at)
-    closeTime = new Date(todayHours.closes_at)
-    isOpen = rightNow > openTime && rightNow < closeTime
-  }
-
-  const closeTimeString =
-    isOpen &&
-    closeTime &&
-    closeTime.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      timeZone: "America/Los_Angeles",
-    })
-
-  const tomorrowHours = libraryHours.primaryHours.find(day => {
-    // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-    return dayDate === new Date(rightNow.getTime() + 1000 * 60 * 60 * 24).toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-  }) as DayHours
-
-  const openTimeString =
-    !isOpen &&
-    tomorrowHours?.opens_at &&
-    new Date(tomorrowHours.opens_at).toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      timeZone: "America/Los_Angeles",
-    })
+  const {isOpen, closingTime, nextOpeningTime} = todayLibraryHours
 
   return (
     <div
       {...outsideClickProps}
-      className="relative text-16"
+      ref={containerRef}
+      className="relative flex text-16 md:block"
     >
-      {isOpen && <span className="mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:text-left lg:mx-auto lg:text-center">Open</span>}
+      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Open</span>}
 
-      {!isOpen && <span className="flex w-fit sm:text-center md:text-left lg:mx-auto lg:text-center">Closed</span>}
+      {!isOpen && <span className="m-auto mr-8 flex w-fit sm:text-center md:m-0 md:text-left lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
-        {closeTimeString && <>Until {closeTimeString}</>}
-        {openTimeString && <>Until {openTimeString}</>}
-
-        {!closeTimeString && !openTimeString && "Hours this week"}
+        {isOpen && closingTime && `Until ${closingTime}`}
+        {!isOpen && nextOpeningTime && `Until ${nextOpeningTime}`}
+        {!closingTime && !nextOpeningTime && "Hours this week"}
 
         <button
+          ref={buttonRef}
           onClick={toggleExpandedHours}
           aria-controls={id}
           aria-expanded={expandedHours}
@@ -260,8 +254,8 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
         className={expandedHours ? "absolute top-full z-10 block" : "hidden"}
         role="region"
       >
-        <div className="w-300 border border-black-60 bg-white p-20">
-          Hours this week
+        <div className="w-300 border border-black-60 bg-white p-20 text-left">
+          <div className="mb-10 font-bold">Hours this week</div>
           {libraryHours.primaryHours.map(dayHours => (
             <div
               key={`${hoursId}-${dayHours.weekday}`}

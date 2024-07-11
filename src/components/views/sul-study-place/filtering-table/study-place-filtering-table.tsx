@@ -1,6 +1,5 @@
 "use client"
 
-import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid"
 import StudyPlaceTodayHoursTable from "@/components/views/sul-study-place/filtering-table/study-place-today-hours-table"
 import Link from "next/link"
 import Image from "next/image"
@@ -110,7 +109,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border-2 border-r-0 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
                 <label className="group w-1/2 cursor-pointer">
@@ -121,7 +120,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-r-full border-2 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-digital-red peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}
@@ -252,7 +251,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:w-1/2 lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 p-0 text-19 lg:bg-transparent">
+                    <div className="bg-black-10 px-16 py-8 text-19 lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
@@ -262,17 +261,12 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button w-fit whitespace-nowrap border border-solid border-digital-red bg-white text-16 text-black hocus:bg-digital-red hocus:text-white hocus:shadow-button md:text-18"
+                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full md:text-18 lg:w-fit"
                       aria-haspopup="dialog"
                     >
-                      <div className="flex items-center justify-end gap-xs">
-                        <CalendarDaysIcon
-                          title="Date"
-                          className="inline-block w-[24px] flex-shrink-0"
-                        />
-                        <div className="relative pr-30 font-bold no-underline">
+                      <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
+                        <div className="relative no-underline">
                           Reserve Space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
-                          <ChevronRightIcon className="absolute right-0 top-0 inline h-full" />
                         </div>
                       </div>
                     </a>

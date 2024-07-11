@@ -19,11 +19,15 @@
 
 /* styles for the responsive tables */
 @layer utilities {
+  /* Added to get center alignment on branches table. */
+  @media screen and (max-width: 40em) {
+     .responsiveTable td.branch-hours {
+        display: flex;
+        justify-content: center;
+     }
+    }
   .responsive-table .tdBefore {
     display: none !important;
-  }
-  .responsive-table td {
-    padding: 16px 9px;
   }
   .responsive-table tbody tr,
   .responsive-table td.pivoted {
