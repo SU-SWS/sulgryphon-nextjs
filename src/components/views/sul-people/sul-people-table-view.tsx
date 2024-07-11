@@ -65,7 +65,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   return (
     <div>
       <form
-        className="mx-auto mb-32 flex w-fit flex-nowrap gap-30"
+        className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={e => e.preventDefault()}
       >
         <div className="relative w-[435px]">
