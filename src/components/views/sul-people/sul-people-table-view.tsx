@@ -65,14 +65,19 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   return (
     <div>
       <form
-        className="mx-auto mb-32 flex w-fit gap-30"
+        className="mx-auto mb-32 flex w-fit flex-nowrap gap-30"
         onSubmit={e => e.preventDefault()}
       >
-        <div className="relative w-fit">
-          <label htmlFor={id}>Search by name, title, or subject</label>
+        <div className="relative w-[435px]">
+          <label
+            className="type-0 font-semibold"
+            htmlFor={id}
+          >
+            Search by name, title, or subject
+          </label>
 
           <input
-            className="block h-40 w-full rounded-full"
+            className="type-0 block h-40 w-full rounded-full"
             ref={keywordRef}
             type="text"
             id={id}
@@ -80,14 +85,17 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
 
           <button
             type="submit"
-            className="absolute bottom-4 right-10 z-10"
+            className="absolute bottom-6 right-10 z-10"
             onClick={() => setKeywordFilter(keywordRef.current?.value || "")}
           >
-            <MagnifyingGlassIcon width={30} />
+            <MagnifyingGlassIcon
+              className="text-digital-red-dark"
+              width={25}
+            />
             <span className="sr-only">Search</span>
           </button>
         </div>
-        <div>
+        <div className="self-end">
           <fieldset className="mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
             <legend className="sr-only">Filter by speciality</legend>
             <label className="group hidden cursor-pointer border-r border-cardinal-red md:block">
