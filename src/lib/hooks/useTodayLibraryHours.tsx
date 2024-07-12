@@ -25,6 +25,8 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
   }) as DayHours
 
+  if (!todayHours) return
+
   let openTime,
     closeTime,
     isOpen = false,
@@ -61,15 +63,19 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     for (let i = rightNow.getDay(); i < 7; i++) {
       dayHours = libraryHours.primaryHours.find(day => day.weekday === weekdays[i])
       if (dayHours?.opens_at) {
-        const format: Intl.DateTimeFormatOptions = {weekday: "short", hour: "numeric"}
+        const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
         const openDateTime = new Date(dayHours.opens_at)
 
         if (openDateTime < rightNow) continue
 
+        if (rightNow.getDay() === i) nextOpeningTime = "Today"
+        if (rightNow.getDay() === i - 1) nextOpeningTime = "Tomorrow"
+        if (rightNow.getDay() < i - 1) nextOpeningTime = openDateTime.toLocaleDateString("en-us", {weekday: "long"})
+
         if (openDateTime.getMinutes() !== 0) {
           format.minute = "2-digit"
         }
-        nextOpeningTime = openDateTime.toLocaleString("en-us", format)
+        nextOpeningTime += " " + openDateTime.toLocaleString("en-us", format)
         i += 6
       }
     }

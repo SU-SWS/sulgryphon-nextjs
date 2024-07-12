@@ -11,7 +11,6 @@ import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulLibrary, Maybe} from "@/lib/gql/__generated__/drupal.d"
-import Link from "next/link"
 
 export type TrimmedLibrary = {
   id: string
@@ -89,11 +88,14 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                   onChange={(e, value) => setSelectedLibrary(value as string)}
                 />
               </div>
-              <div className="flex flex-nowrap justify-between">
+              <div className="">
                 {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
-                {library?.map && (
-                  <span className="text-nowrap">
-                    <Link
+
+                <div className="flex justify-between">
+                  <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+
+                  {library?.map && (
+                    <a
                       href={library?.map}
                       className="flex items-center"
                     >
@@ -104,9 +106,9 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                         className="mr-5"
                       />
                       Location
-                    </Link>
-                  </span>
-                )}
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -119,38 +121,24 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
 const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
   const libraryHours = useTodayLibraryHours(branchId || "")
 
-  if (!libraryHours) return <SeeAllHours />
+  if (!libraryHours) return
 
   const {closedAllDay, isOpen, closingTime, nextOpeningTime} = libraryHours
-  const hoursDisplay = !closedAllDay && (isOpen ? "Open until " + closingTime : "Closed until " + nextOpeningTime)
-  if (!hoursDisplay) return <SeeAllHours />
-  return (
-    <div>
-      <div
-        className="mb-4 flex items-center text-black"
-        aria-live="polite"
-      >
-        <ClockIcon
-          title="Hours"
-          width={15}
-          className="mr-5"
-        />
-        <div>{hoursDisplay}</div>
-      </div>
-      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
-    </div>
-  )
-}
+  const hoursDisplay = !closedAllDay && isOpen ? "Open until " + closingTime : "Closed" + (nextOpeningTime ? ` until ${nextOpeningTime}` : "")
+  if (!hoursDisplay) return
 
-const SeeAllHours = () => {
   return (
-    <div className="flex items-center text-black">
+    <div
+      className="mb-4 flex items-center text-black"
+      aria-live="polite"
+      aria-atomic
+    >
       <ClockIcon
         title="Hours"
         width={15}
         className="mr-5"
       />
-      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+      <div>{hoursDisplay}</div>
     </div>
   )
 }
