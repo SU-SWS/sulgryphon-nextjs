@@ -220,6 +220,16 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   }
 
   const {isOpen, closingTime, nextOpeningTime} = todayLibraryHours
+  const rightNow = new Date()
+  const sunday = new Date()
+  sunday.setDate(sunday.getDate() - rightNow.getDay())
+  const saturday = new Date()
+  saturday.setDate(saturday.getDate() + (7 - rightNow.getDay()))
+
+  const thisWeekHours = libraryHours.primaryHours.filter(dayHours => {
+    const day = new Date(dayHours.day + " 20:00:00")
+    return day >= sunday && day <= saturday
+  })
 
   return (
     <div
@@ -256,7 +266,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       >
         <div className="w-300 border border-black-60 bg-white p-20 text-left">
           <div className="mb-10 font-bold">Hours this week</div>
-          {libraryHours.primaryHours.map(dayHours => (
+          {thisWeekHours.map(dayHours => (
             <div
               key={`${hoursId}-${dayHours.weekday}`}
               className="grid grid-cols-2 gap-5"

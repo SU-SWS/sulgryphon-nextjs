@@ -54,30 +54,32 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   const afterClose = (closeTime && closeTime <= rightNow) || false
   let nextOpeningTime = undefined
+  let nextOpenDateTime = undefined
 
   // If the location is open, no need to return the next open time.
   if (!isOpen) {
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    let dayHours
-    // Start with tomorrow and find the next day that has a time that is open.
-    for (let i = rightNow.getDay(); i < 7; i++) {
-      dayHours = libraryHours.primaryHours.find(day => day.weekday === weekdays[i])
-      if (dayHours?.opens_at) {
-        const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
-        const openDateTime = new Date(dayHours.opens_at)
+    const futureHours = libraryHours.primaryHours.filter(dayHours => dayHours.opens_at && new Date(dayHours.opens_at) > rightNow)
+    const futureHourDateTime = new Date()
 
-        if (openDateTime < rightNow) continue
-
-        if (rightNow.getDay() === i) nextOpeningTime = "Today"
-        if (rightNow.getDay() === i - 1) nextOpeningTime = "Tomorrow"
-        if (rightNow.getDay() < i - 1) nextOpeningTime = openDateTime.toLocaleDateString("en-us", {weekday: "long"})
-
-        if (openDateTime.getMinutes() !== 0) {
-          format.minute = "2-digit"
-        }
-        nextOpeningTime += " " + openDateTime.toLocaleString("en-us", format)
-        i += 6
+    for (let i = 0; i < futureHours.length; i++) {
+      if (new Date(futureHours[i].opens_at as string).getDate() === rightNow.getDate()) {
+        nextOpenDateTime = new Date(futureHours[i].opens_at as string)
+        i = futureHours.length + 1
       }
+      futureHourDateTime.setDate(futureHourDateTime.getDate() + 1)
+    }
+
+    if (nextOpenDateTime) {
+      const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
+
+      if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "Today"
+      if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "Tomorrow"
+      if (rightNow.getDay() + 2 <= nextOpenDateTime.getDate()) nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {weekday: "long"})
+
+      if (nextOpenDateTime.getMinutes() !== 0) {
+        format.minute = "2-digit"
+      }
+      nextOpeningTime += " " + nextOpenDateTime.toLocaleString("en-us", format)
     }
   }
 
