@@ -1,12 +1,11 @@
 import {getSdk} from "@/lib/gql/__generated__/queries"
 import {ConfigPagesQuery, ConfigPagesUnion, MenuAvailable, MenuItem, NodeUnion, RouteQuery, RouteRedirect, TermUnion} from "@/lib/gql/__generated__/drupal.d"
 import {GraphQLClient} from "graphql-request"
-import type {RequestConfig} from "graphql-request/src/types"
 import {cache} from "react"
 import {cache as nodeCache} from "@/lib/drupal/get-cache"
 import {buildHeaders} from "@/lib/drupal/utils"
 
-export const graphqlClient = (requestConfig: RequestConfig = {}, isPreviewMode?: boolean) => {
+export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, isPreviewMode?: boolean) => {
   requestConfig.headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
 
   const client = new GraphQLClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + "/graphql", {
