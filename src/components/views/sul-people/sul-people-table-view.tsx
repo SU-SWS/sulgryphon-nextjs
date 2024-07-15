@@ -68,9 +68,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={e => e.preventDefault()}
       >
-        <div className="relative w-[435px]">
+        <div className="relative max-w-[350px] md:w-[435px]">
           <label
-            className="type-0 font-semibold"
+            className="pl-15 text-22 font-semibold"
             htmlFor={id}
           >
             Search by name, title, or subject
