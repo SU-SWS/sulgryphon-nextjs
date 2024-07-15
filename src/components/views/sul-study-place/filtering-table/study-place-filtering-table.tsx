@@ -109,7 +109,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
                 <label className="group w-1/2 cursor-pointer">
@@ -120,7 +120,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-8 text-16 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}

@@ -56,16 +56,16 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   return (
     <div>
       <form className="mb-32">
-        <fieldset className="mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
+        <fieldset className="mx-auto flex w-fit items-center rounded-full border border-black-80">
           <legend className="sr-only">Filter by speciality</legend>
-          <label className="group hidden cursor-pointer border-r border-cardinal-red md:block">
+          <label className="group hidden cursor-pointer border-r border-black-80 md:block">
             <input
               type="checkbox"
               className="peer sr-only"
               checked={!typeFilter.length}
               onChange={() => updateTypeFilter()}
             />
-            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">All specialists</span>
+            <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
           </label>
           <label className="group cursor-pointer">
             <input
@@ -74,16 +74,16 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
               checked={typeFilter.includes("subject specialist")}
               onChange={() => updateTypeFilter("subject specialist")}
             />
-            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">Subject Specialist</span>
+            <span className="block items-center rounded-l-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
           </label>
-          <label className="group cursor-pointer border-l border-cardinal-red">
+          <label className="group cursor-pointer border-l border-black-80">
             <input
               type="checkbox"
               className="peer sr-only"
               checked={typeFilter.includes("technical specialist")}
               onChange={() => updateTypeFilter("technical specialist")}
             />
-            <span className="block rounded-r-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">Technical specialists</span>
+            <span className="block items-center rounded-r-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
           </label>
         </fieldset>
       </form>
