@@ -19,7 +19,7 @@ ports:
     visibility: public
   - name: frontend
     description: NextJS frontend
-    port: 3000
+    port: 3000-3004
     onOpen: ignore
     visibility: public
   - port: 8002-9999
@@ -39,16 +39,21 @@ tasks:
       export PREVIEW_URL=${NEXT_PUBLIC_DRUPAL_BASE_URL#"https://"} &&
       blt blt:telemetry:disable --no-interaction &&
       blt settings &&
-      blt drupal:install --site=library -n &&
+      echo 'ssh: {options: "-o StrictHostKeyChecking=no"}' > drush/local.drush.yml &&
+      if [[ ! -z $SSH_PRIVATE_KEY ]]; then
+        echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa &&
+        blt drupal:sync --site=library -n || blt drupal:install --site=library -n
+      else
+        blt drupal:install --site=library -n
+      fi &&
       drush @library.local cset system.theme default stanford_profile_admin_theme -y &&
       cd /workspace/front &&
-      yarn install
+      yarn
     command: |
       cp .env.example .env.local &&
       gp ports await 3306 &&
       eval $(gp env -e APACHE_DOCROOT_IN_REPO=../back/docroot) &&
       cd /workspace/back &&
-      find docroot -name 'local.drush.yml' | xargs rm &&
       export NEXT_PUBLIC_DRUPAL_BASE_URL=`gp url 8001` &&
       export PREVIEW_URL=${NEXT_PUBLIC_DRUPAL_BASE_URL#"https://"} &&
       echo "<?php \$sites['$PREVIEW_URL'] = 'library';" > docroot/sites/local.sites.php &&
@@ -58,7 +63,6 @@ tasks:
       drush @library.local uli --uri=$NEXT_PUBLIC_DRUPAL_BASE_URL &&
       drush @library.local uli --uri=$NEXT_PUBLIC_DRUPAL_BASE_URL | xargs gp preview --external &&
       git config core.fileMode false &&
-      echo 'Connecting Drupal to Frontend' &&
       drush @library.local su-next-connect "$(gp url 3000)" >> /workspace/front/.env.local &&
       cd /workspace/front &&
       yarn install &&
@@ -70,13 +74,12 @@ tasks:
       gp url 3000 | xargs gp preview --external
   - name: SSH Keys
     before: |
+      code --add /workspace/back &&
       mkdir -p ~/.ssh
-      if [[ ! -z $SSH_PUBLIC_KEY  ]]; then
-          echo $SSH_PUBLIC_KEY | base64 -d > ~/.ssh/id_rsa.pub && chmod 644 ~/.ssh/id_rsa.pub
-          git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|')
-      fi
       if [[ ! -z $SSH_PRIVATE_KEY ]]; then
-          echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+          echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa &&
+          git remote set-url origin $(echo $GITPOD_WORKSPACE_CONTEXT | jq -r .repository.cloneUrl | sed -E 's|^.*.com/(.*)$|git@github.com:\1|') &&
+          cd /workspace/back && git remote set-url origin git@github.com:SU-SWS/ace-stanfordlagunita.git
       fi
       if [[ ! -z $GITCONFIG ]]; then
           echo $GITCONFIG | base64 -d > ~/.gitconfig && chmod 644 ~/.gitconfig
@@ -85,3 +88,4 @@ tasks:
 vscode:
   extensions:
     - bradlc.vscode-tailwindcss
+    - esbenp.prettier-vscode
