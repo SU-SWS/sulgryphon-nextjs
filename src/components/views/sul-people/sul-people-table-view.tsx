@@ -77,7 +77,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           </label>
 
           <input
-            className="type-0 block h-40 w-full rounded-full"
+            className="type-0 block h-40 w-full rounded-full pl-15"
             ref={keywordRef}
             type="text"
             id={id}
