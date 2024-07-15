@@ -33,6 +33,9 @@ jobs:
       image: pookmish/drupal8ci:latest
       env:
         BUILD_PAGES: 100
+        LIBGUIDE_CLIENT_ID: ${{ secrets.LIBGUIDE_CLIENT_ID }}
+        LIBGUIDE_CLIENT_SECRET: ${{ secrets.LIBGUIDE_CLIENT_SECRET }}
+        STANFORD_ENCRYPT: ${{ secrets.STANFORD_ENCRYPT }}
     services:
       mysql:
         image: mysql:5.7
