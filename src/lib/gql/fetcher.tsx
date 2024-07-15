@@ -52,8 +52,7 @@ export const getConfigPage = async <T extends ConfigPagesUnion>(configPageType: 
 
   let query: ConfigPagesQuery
   try {
-    const headers = await buildHeaders()
-    query = await graphqlClient({headers, next: {tags: ["config-pages"]}}).ConfigPages()
+    query = await graphqlClient({next: {tags: ["config-pages"]}}).ConfigPages()
   } catch (e) {
     console.error("Unable to fetch config pages")
     return
@@ -69,7 +68,7 @@ export const getConfigPage = async <T extends ConfigPagesUnion>(configPageType: 
 export const getMenu = cache(async (name?: MenuAvailable, previewMode?: boolean): Promise<MenuItem[]> => {
   "use server"
 
-  const menu = await graphqlClient({next: {tags: ["menus", `menu:${name || "main"}`]}}, previewMode).Menu({name})
+  const menu = await graphqlClient({next: {tags: ["menus", `menu:${name?.toLowerCase() || "main"}`]}}, previewMode).Menu({name})
   const menuItems = (menu.menu?.items || []) as MenuItem[]
 
   const filterInaccessible = (items: MenuItem[]): MenuItem[] => {
