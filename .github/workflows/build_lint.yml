@@ -33,10 +33,6 @@ jobs:
       image: pookmish/drupal8ci:latest
       env:
         BUILD_PAGES: 100
-        BUILD_COMPLETE: 'true'
-        LIBGUIDE_CLIENT_ID: ${{ secrets.LIBGUIDE_CLIENT_ID }}
-        LIBGUIDE_CLIENT_SECRET: ${{ secrets.LIBGUIDE_CLIENT_SECRET }}
-        STANFORD_ENCRYPT: ${{ secrets.STANFORD_ENCRYPT }}
     services:
       mysql:
         image: mysql:5.7
@@ -88,7 +84,8 @@ jobs:
           ln -sL ../default/files/ docroot/sites/library/files &&
           apachectl stop && apachectl start &&
           composer install -n &&
-          blt drupal:sync --site=library -n
+          blt drupal:sync --site=library -n &&
+          drush sqlq 'truncate config_pages__su_site_algolia_id'
       - name: Build Frontend
         run: |
           cd $GITHUB_WORKSPACE/frontend &&
