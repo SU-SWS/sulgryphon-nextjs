@@ -99,9 +99,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-10 *:min-w-300 *:flex-1 *:2xl:min-w-0">
             {!!Object.keys(libraryHours).length && (
-              <fieldset className="flex w-full items-center">
+              <fieldset className="mr-10 flex w-full items-center">
                 <legend className="sr-only">Show only open now or all locations</legend>
-                <label className="group w-1/2 cursor-pointer">
+                <label className="group w-1/2 min-w-[134px] cursor-pointer">
                   <input
                     className="peer sr-only"
                     type="radio"
@@ -112,7 +112,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
-                <label className="group w-1/2 cursor-pointer">
+                <label className="group w-1/2 min-w-[134px] cursor-pointer">
                   <input
                     className="peer sr-only"
                     type="radio"
@@ -120,7 +120,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-22 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}
