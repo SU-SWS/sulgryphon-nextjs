@@ -114,7 +114,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter.includes("subject specialist")}
                 onChange={() => updateTypeFilter("subject specialist")}
               />
-              <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">All specialists</span>
+              <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500 md:rounded-l-none">Subject specialists</span>
             </label>
             <label className="group cursor-pointer border-l border-cardinal-red">
               <input
