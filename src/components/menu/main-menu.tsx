@@ -11,6 +11,7 @@ import {usePathname} from "next/navigation"
 import {useBoolean} from "usehooks-ts"
 import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
 import {getActiveTrail} from "@/lib/drupal/utils"
+import {twMerge} from "tailwind-merge"
 
 const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false)
@@ -51,7 +52,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
           className={"absolute z-10 h-[calc(100vh-100px)] w-full -translate-y-full overflow-y-scroll border-t-4 border-cardinal-red bg-black-true py-20 lg:relative lg:block lg:h-auto lg:transform-none lg:animate-none lg:overflow-visible lg:border-0 lg:bg-transparent lg:py-0 lg:pb-0" + (menuOpen ? " animate-slide-down" : addCloseAnimation ? " animate-slide-up" : "")}
         >
           <SearchForm
-            className={"px-20 pb-20 lg:hidden " + (!isDesktop && !menuOpen ? "hidden" : "block")}
+            className={twMerge("px-20 pb-20 lg:hidden", !isDesktop && !menuOpen ? "hidden" : "block")}
             action="/all"
             inputProps={{className: "p-10 w-full rounded-full lg:hidden"}}
           />
@@ -74,7 +75,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
             </ul>
           </nav>
 
-          <nav className={"mt-40 flex items-center justify-center gap-10 p-40 text-center text-white lg:hidden " + (!isDesktop && !menuOpen ? "hidden" : "block")}>
+          <nav className={twMerge("mt-40 flex items-center justify-center gap-10 p-40 text-center text-white lg:hidden", !isDesktop && !menuOpen ? "hidden" : "block")}>
             <div className="mr-20">Quick Links:</div>
             <ul className="list-unstyled flex flex-wrap items-center gap-10">
               <li className="m-0">
@@ -187,7 +188,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
         <Link
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : "#"}
-          className={"flex w-full items-center p-20 text-white no-underline hocus:text-white hocus:underline lg:text-black-true" + (menuLevel > 0 ? " lg:hocus:bg-black-10 lg:hocus:text-archway" : " lg:hocus:text-archway") + getLinkBorderClasses()}
+          className={twMerge("flex w-full items-center p-20 text-white no-underline hocus:text-white hocus:underline lg:text-black-true", menuLevel > 0 ? "lg:hocus:bg-black-10 lg:hocus:text-archway" : "lg:hocus:text-archway", getLinkBorderClasses())}
           aria-current={activeTrail.at(-1) === id ? "page" : undefined}
         >
           <div className={"ml-[ pl-30 lg:pl-0" + menuLevel * 30 + "px] lg:ml-[" + (menuLevel - 1) * 30 + "px]"}>{title}</div>
@@ -197,7 +198,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
       {(!url || url.length === 0) && (
         <button
           tabIndex={tabIndex}
-          className={"group flex w-full items-center p-20 text-left font-semibold text-white hocus:bg-black hocus:text-white lg:text-black-true lg:hocus:bg-transparent lg:hocus:text-archway " + getLinkBorderClasses()}
+          className={twMerge("group flex w-full items-center p-20 text-left font-semibold text-white hocus:bg-black hocus:text-white lg:text-black-true lg:hocus:bg-transparent lg:hocus:text-archway", getLinkBorderClasses())}
           onClick={toggleSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
@@ -220,7 +221,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
           <ul
             aria-hidden={!submenuOpen}
             data-attribute-menu-level={menuLevel}
-            className={"list-unstyled m-0 w-full p-0 lg:top-full lg:w-[200%] lg:bg-white" + (submenuOpen ? " block" : " hidden") + (menuLevel == 0 ? " lg:absolute lg:shadow-lg xl:right-auto" : "")}
+            className={twMerge("list-unstyled m-0 w-full p-0 lg:top-full lg:w-[200%] lg:bg-white", submenuOpen ? "block" : "hidden", menuLevel == 0 && "lg:absolute lg:shadow-lg xl:right-auto")}
           >
             {belowItems.map(item => (
               <MenuItem
@@ -241,9 +242,9 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}: {open: boolean; addCloseAnimation: boolean}) => {
   return (
     <span className="mx-auto block w-[30px]">
-      <span className={"mb-[5px] block h-[5px] w-full rounded-full bg-black" + (open ? " animate-menu-x-morph-a" : addCloseAnimation ? " animate-menu-x-morph-r-a" : "")} />
-      <span className={"mb-[5px] block h-[5px] w-full rounded-full bg-black" + (open ? " animate-menu-x-morph-b" : addCloseAnimation ? " animate-menu-x-morph-r-b" : "")} />
-      <span className={"mb-[5px] block h-[5px] w-full rounded-full bg-black" + (open ? " animate-menu-x-morph-c" : addCloseAnimation ? " animate-menu-x-morph-r-c" : "")} />
+      <span className={twMerge("mb-[5px] block h-[5px] w-full rounded-full bg-black", open ? "animate-menu-x-morph-a" : addCloseAnimation ? "animate-menu-x-morph-r-a" : "")} />
+      <span className={twMerge("mb-[5px] block h-[5px] w-full rounded-full bg-black", open ? "animate-menu-x-morph-b" : addCloseAnimation ? "animate-menu-x-morph-r-b" : "")} />
+      <span className={twMerge("mb-[5px] block h-[5px] w-full rounded-full bg-black", open ? "animate-menu-x-morph-c" : addCloseAnimation ? "animate-menu-x-morph-r-c" : "")} />
     </span>
   )
 }
@@ -251,13 +252,13 @@ const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}: {open: boolean; add
 const DropDownButton = ({isOpen, onButtonClick, menuLevel, title, ...props}: {isOpen: boolean; onButtonClick: () => void; menuLevel: number; title: string; tabIndex: number}) => {
   return (
     <button
-      className={"after:z-5 group absolute right-0 top-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] lg:relative lg:h-auto " + (menuLevel >= 1 ? " lg:bg-fog-light" : " lg:w-[40px] lg:bg-transparent")}
+      className={twMerge("after:z-5 group absolute right-0 top-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] lg:relative lg:h-auto", menuLevel >= 1 ? "lg:bg-fog-light" : "lg:w-[40px] lg:bg-transparent")}
       onClick={onButtonClick}
       {...props}
     >
       <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus:border-white lg:group-hocus:border-archway">
         <ChevronDownIcon
-          className={"mx-auto text-white transition-all lg:text-black-true lg:group-hocus:text-archway" + (isOpen ? " scale-y-[-1]" : "")}
+          className={twMerge("mx-auto text-white transition-all lg:text-black-true lg:group-hocus:text-archway", isOpen && "scale-y-[-1]")}
           height={40}
         />
       </span>
