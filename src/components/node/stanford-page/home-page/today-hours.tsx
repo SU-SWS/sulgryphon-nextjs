@@ -72,7 +72,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
           )
         }
         footer={
-          <div className="relative pb-100 md:rs-pb-6">
+          <div className="relative pb-100 md:rs-pb-7">
             <div className="absolute w-full">
               <h3
                 id={formId}
