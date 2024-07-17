@@ -3,7 +3,6 @@ import {ConfigPagesQuery, ConfigPagesUnion, MenuAvailable, MenuItem, NodeUnion, 
 import {GraphQLClient} from "graphql-request"
 import type {RequestConfig} from "graphql-request/src/types"
 import {cache} from "react"
-import {cache as nodeCache} from "@/lib/drupal/get-cache"
 import {buildHeaders} from "@/lib/drupal/utils"
 
 export const graphqlClient = (requestConfig: RequestConfig = {}, isPreviewMode?: boolean) => {
@@ -53,7 +52,7 @@ export const getConfigPage = async <T extends ConfigPagesUnion>(configPageType: 
 
   let query: ConfigPagesQuery
   try {
-    query = await getConfigPagesData()
+    query = await graphqlClient({next: {tags: ["config-pages"]}}).ConfigPages()
   } catch (e) {
     console.error("Unable to fetch config pages")
     return
@@ -66,22 +65,10 @@ export const getConfigPage = async <T extends ConfigPagesUnion>(configPageType: 
   if (query.lockupSettings.nodes[0]?.__typename === configPageType) return query.lockupSettings.nodes[0] as T
 }
 
-const getConfigPagesData = cache(async (): Promise<ConfigPagesQuery> => {
-  // Config page data doesn't change if a user is in "Draft" mode or not, so the data can be cached for both situations.
-  const cachedData = nodeCache.get<ConfigPagesQuery>("config-pages")
-  if (cachedData) return cachedData
-
-  const headers = await buildHeaders()
-  const query = await graphqlClient({headers, next: {tags: ["config-pages"]}}).ConfigPages()
-
-  nodeCache.set("config-pages", query)
-  return query
-})
-
 export const getMenu = cache(async (name?: MenuAvailable, previewMode?: boolean): Promise<MenuItem[]> => {
   "use server"
 
-  const menu = await graphqlClient({next: {tags: ["menus", `menu:${name || "main"}`]}}, previewMode).Menu({name})
+  const menu = await graphqlClient({next: {tags: ["menus", `menu:${name?.toLowerCase() || "main"}`]}}, previewMode).Menu({name})
   const menuItems = (menu.menu?.items || []) as MenuItem[]
 
   const filterInaccessible = (items: MenuItem[]): MenuItem[] => {

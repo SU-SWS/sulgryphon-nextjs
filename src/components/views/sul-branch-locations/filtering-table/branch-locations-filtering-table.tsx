@@ -57,9 +57,9 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   return (
     <div className="pb-[32px]">
       <form>
-        <fieldset className="rs-mb-1 mx-auto flex w-fit items-center rounded-full border border-cardinal-red">
+        <fieldset className="rs-mb-1 mx-auto flex w-fit items-center rounded-full border border-black-80">
           <legend className="sr-only">Filter by speciality</legend>
-          <label className="group cursor-pointer border-r border-cardinal-red">
+          <label className="group cursor-pointer border-r-0 border-black-80">
             <input
               type="radio"
               name="open"
@@ -67,9 +67,9 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={!onlyOpenNow}
               onChange={showOpenAndClosed}
             />
-            <span className="block rounded-l-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">All locations</span>
+            <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
           </label>
-          <label className="group cursor-pointer border-l border-cardinal-red">
+          <label className="group cursor-pointer border-l border-black-80">
             <input
               type="checkbox"
               name="open"
@@ -77,11 +77,11 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={onlyOpenNow}
               onChange={showOnlyOpenNow}
             />
-            <span className="flex items-center rounded-r-full border-2 border-transparent p-10 underline group-hover:no-underline peer-checked:border-cardinal-red peer-checked:bg-red-200 peer-focus:no-underline peer-focus:outline-2 peer-focus:outline-blue-500">
+            <span className="flex items-center rounded-r-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
               <ClockIcon
                 title="Hours"
                 width={15}
-                className="mr-8 inline-block flex-shrink-0 text-digital-red"
+                className="mr-8 inline-block flex-shrink-0 text-black-80"
               />
               Open Now
             </span>
