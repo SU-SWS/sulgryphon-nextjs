@@ -128,7 +128,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           </fieldset>
         </div>
       </form>
-      <Table className="responsive-table text-center md:text-left">
+      <Table className="responsive-table responsive-table-study text-center md:text-left">
         <caption
           className="sr-only"
           aria-live="polite"
@@ -175,10 +175,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           {displayedItems.map(item => (
             <Tr
               key={item.id}
-              className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[400px] md:text-left lg:!table-row lg:max-h-none"
+              className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
             >
               {item.photoUrl && (
-                <Td className="m-auto block px-0 py-16 text-center sm:mr-25 sm:text-left md:min-h-[325px] md:w-1/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   <Link
                     href={item.path}
                     className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
@@ -195,7 +195,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
               )}
               {item.title && (
-                <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/4">
+                <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
                   <Link
                     href={item.path}
                     className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
@@ -211,7 +211,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
               )}
               {!!item.researchAreas?.length && (
-                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-2/5">
+                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
                   <div className="bg-black-10 px-1em py-1em text-16 md:bg-transparent md:p-0">
                     <span className="font-bold md:hidden">Expertise: </span>
                     {item.researchAreas.join(", ")}
@@ -219,7 +219,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
               )}
               {item.email && (
-                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/5">
+                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
                   <>
                     <EnvelopeIcon
                       title="Email"
@@ -235,7 +235,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
               )}
               {item.libCalId && (
-                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/5">
+                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
                   <LibCal
                     libcalId={item.libCalId}
                     srText={item.title}
