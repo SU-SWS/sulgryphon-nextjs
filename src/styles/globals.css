@@ -45,11 +45,9 @@
     display: none;
   }
   
-  /* @media screen and (max-width: 40em) {
-    .responsive-table-study td.branch-hours,
-    .responsive-table-study td.branch-image {
+  @media screen and (max-width: 40em) {
+    .responsiveTable.responsive-table-study td.table-image {
        display: block;
-       justify-content: center;
     }
-   } */
+   }
 }
