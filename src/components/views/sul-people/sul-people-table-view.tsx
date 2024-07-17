@@ -8,7 +8,8 @@ import EmailLink from "@/components/patterns/elements/email-link"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {useState} from "react"
+import {useId, useRef, useState} from "react"
+import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
 
 export type TablePerson = {
   id: NodeStanfordPerson["id"]
@@ -29,8 +30,12 @@ type Props = {
 
 const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const HeadingElement = hasHeading ? "h3" : "h2"
+  const id = useId()
+  const keywordRef = useRef<HTMLInputElement>(null)
 
   const [typeFilter, setTypeFilter] = useState<string[]>([])
+  const [keywordFilter, setKeywordFilter] = useState("")
+
   let displayedItems = items
 
   if (typeFilter.length >= 1) {
@@ -53,41 +58,77 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
     })
   }
 
+  if (keywordFilter) {
+    displayedItems = displayedItems.filter(item => item.title.toLowerCase().includes(keywordFilter.toLowerCase()) || item.fullTitle?.toLowerCase().includes(keywordFilter.toLowerCase()) || item.researchAreas?.join(" ").toLowerCase().includes(keywordFilter.toLowerCase()))
+  }
+
   return (
     <div>
-      <form className="mb-32">
-        <fieldset className="mx-auto flex w-fit items-center rounded-full border border-black-80">
-          <legend className="sr-only">Filter by speciality</legend>
-          <label className="group hidden cursor-pointer border-r border-black-80 md:block">
-            <input
-              type="checkbox"
-              className="peer sr-only"
-              checked={!typeFilter.length}
-              onChange={() => updateTypeFilter()}
-            />
-            <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
+      <form
+        className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
+        onSubmit={e => e.preventDefault()}
+      >
+        <div className="relative max-w-[350px] md:w-[435px]">
+          <label
+            className="pl-15 text-22 font-semibold"
+            htmlFor={id}
+          >
+            Search by name, title, or subject
           </label>
-          <label className="group cursor-pointer">
-            <input
-              type="checkbox"
-              className="peer sr-only"
-              checked={typeFilter.includes("subject specialist")}
-              onChange={() => updateTypeFilter("subject specialist")}
+
+          <input
+            className="type-0 block h-40 w-full rounded-full pl-15"
+            ref={keywordRef}
+            type="text"
+            id={id}
+          />
+
+          <button
+            type="submit"
+            className="absolute bottom-6 right-10 z-10"
+            onClick={() => setKeywordFilter(keywordRef.current?.value || "")}
+          >
+            <MagnifyingGlassIcon
+              className="text-digital-red-dark"
+              width={25}
             />
-            <span className="block items-center rounded-l-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
-          </label>
-          <label className="group cursor-pointer border-l border-black-80">
-            <input
-              type="checkbox"
-              className="peer sr-only"
-              checked={typeFilter.includes("technical specialist")}
-              onChange={() => updateTypeFilter("technical specialist")}
-            />
-            <span className="block items-center rounded-r-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
-          </label>
-        </fieldset>
+            <span className="sr-only">Search</span>
+          </button>
+        </div>
+        <div className="self-end">
+          <fieldset className="mx-auto flex w-fit items-center rounded-full border border-black-80">
+            <legend className="sr-only">Filter by speciality</legend>
+            <label className="group hidden cursor-pointer border-r-0 border-black-80 md:block">
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={!typeFilter.length}
+                onChange={() => updateTypeFilter()}
+              />
+              <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
+            </label>
+            <label className="group cursor-pointer border-l border-black-80">
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={typeFilter.includes("subject specialist")}
+                onChange={() => updateTypeFilter("subject specialist")}
+              />
+              <span className="block items-center rounded-l-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
+            </label>
+            <label className="group cursor-pointer border-l border-black-80">
+              <input
+                type="checkbox"
+                className="peer sr-only"
+                checked={typeFilter.includes("technical specialist")}
+                onChange={() => updateTypeFilter("technical specialist")}
+              />
+              <span className="block items-center rounded-r-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
+            </label>
+          </fieldset>
+        </div>
       </form>
-      <Table className="responsive-table text-center md:text-left">
+      <Table className="responsive-table responsive-table-study text-center md:text-left">
         <caption
           className="sr-only"
           aria-live="polite"
@@ -134,9 +175,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           {displayedItems.map(item => (
             <Tr
               key={item.id}
-              className="block sm:flex-col sm:flex-wrap sm:text-center md:flex md:max-h-[400px] md:text-left lg:!table-row lg:max-h-none"
+              className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
             >
-              <Td className="m-auto block px-0 py-16 text-center sm:mr-25 sm:text-left md:min-h-[325px] md:w-1/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:min-h-fit lg:w-[125px]">
+              <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                 {item.photoUrl && (
                   <Link
                     href={item.path}
@@ -153,8 +194,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   </Link>
                 )}
               </Td>
-
-              <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/4">
+              <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
                 {item.title && (
                   <Link
                     href={item.path}
@@ -170,8 +210,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 )}
                 {item.fullTitle && <div className="text-16">{item.fullTitle}</div>}
               </Td>
-
-              <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-2/5">
+              <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
                 {!!item.researchAreas?.length && (
                   <div className="bg-black-10 px-1em py-1em text-16 md:bg-transparent md:p-0">
                     <span className="font-bold md:hidden">Expertise: </span>
@@ -179,8 +218,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   </div>
                 )}
               </Td>
-
-              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/5">
+              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
                 {item.email && (
                   <>
                     <EnvelopeIcon
@@ -196,8 +234,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   </>
                 )}
               </Td>
-
-              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:w-2/3 md:border-b md:border-black-40 md:px-9 md:py-16 lg:table-cell lg:w-1/5">
+              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
                 {item.libCalId && (
                   <LibCal
                     libcalId={item.libCalId}
