@@ -22,7 +22,7 @@
   /* Added to get center alignment on branches table. */
   @media screen and (max-width: 40em) {
      .responsiveTable td.branch-hours,
-     .responsiveTable td.branch-image {
+     .responsiveTable td.table-image {
         display: flex;
         justify-content: center;
      }
@@ -44,8 +44,12 @@
   .responsive-table ul li:last-child span {
     display: none;
   }
-  .responsive-table-study tr td.pivoted:first-of-type {
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
+  
+  /* @media screen and (max-width: 40em) {
+    .responsive-table-study td.branch-hours,
+    .responsive-table-study td.branch-image {
+       display: block;
+       justify-content: center;
+    }
+   } */
 }
