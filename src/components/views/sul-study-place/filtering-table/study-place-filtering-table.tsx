@@ -11,7 +11,6 @@ import SelectList from "@/components/patterns/elements/select-list"
 import {ClockIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean} from "usehooks-ts"
-import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
