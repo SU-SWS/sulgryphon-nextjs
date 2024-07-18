@@ -11,7 +11,6 @@ import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulLibrary, Maybe} from "@/lib/gql/__generated__/drupal.d"
-import Link from "next/link"
 
 export type TrimmedLibrary = {
   id: string
@@ -73,7 +72,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
           )
         }
         footer={
-          <div className="relative pb-100 md:rs-pb-6">
+          <div className="relative pb-100 md:rs-pb-7">
             <div className="absolute w-full">
               <h3
                 id={formId}
@@ -89,20 +88,28 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                   onChange={(e, value) => setSelectedLibrary(value as string)}
                 />
               </div>
-              {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
-              {library?.map && (
-                <span className="float-right inline w-auto">
-                  <Link href={library?.map}>
-                    <span className="sr-only">{library.title}&nbsp;</span>
-                    <MapPinIcon
-                      title="Map"
-                      width={25}
-                      className="mr-5 inline"
-                    />
-                    Location
-                  </Link>
-                </span>
-              )}
+              <div className="">
+                {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
+
+                <div className="flex justify-between">
+                  <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+
+                  {library?.map && (
+                    <a
+                      href={library?.map}
+                      className="flex items-center"
+                    >
+                      <span className="sr-only">{library.title}&nbsp;</span>
+                      <MapPinIcon
+                        title="Map"
+                        width={25}
+                        className="mr-5"
+                      />
+                      Location
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         }
@@ -114,39 +121,25 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
 const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
   const libraryHours = useTodayLibraryHours(branchId || "")
 
-  if (!libraryHours) {
-    return (
-      <div className="flex text-black">
-        <ClockIcon
-          title="Hours"
-          width={15}
-          className="mr-5"
-        />
-        <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
-      </div>
-    )
-  }
-  const {closedAllDay, isOpen, openingTime, closingTime, afterClose} = libraryHours
-  const hoursDisplay = !closedAllDay && (isOpen ? "Closes at " + closingTime : afterClose ? "Closed at " + closingTime : "Opens at " + openingTime)
+  if (!libraryHours) return
+
+  const {closedAllDay, isOpen, closingTime, nextOpeningTime} = libraryHours
+  const hoursDisplay = !closedAllDay && isOpen ? "Open until " + closingTime : "Closed" + (nextOpeningTime ? ` until ${nextOpeningTime}` : "")
+  if (!hoursDisplay) return
 
   return (
-    <>
-      <div
-        className="mb-4 flex justify-between text-black"
-        aria-live="polite"
-      >
-        <div className="flex">
-          <ClockIcon
-            title="Hours"
-            width={15}
-            className="mr-5"
-          />{" "}
-          {isOpen ? "Open" : "Closed"}
-        </div>
-        <div>{hoursDisplay}</div>
-      </div>
-      <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
-    </>
+    <div
+      className="mb-4 flex items-center text-black"
+      aria-live="polite"
+      aria-atomic
+    >
+      <ClockIcon
+        title="Hours"
+        width={15}
+        className="mr-5"
+      />
+      <div>{hoursDisplay}</div>
+    </div>
   )
 }
 
