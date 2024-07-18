@@ -184,7 +184,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             />
             <Address
               {...address}
-              className="text-center md:text-left"
+              className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
             />
           </a>
         )}
