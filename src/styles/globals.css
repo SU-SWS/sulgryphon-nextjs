@@ -55,7 +55,8 @@
   }
   
   @media screen and (max-width: 40em) {
-    .responsiveTable.responsive-table-study td.table-image {
+    .responsiveTable.responsive-table-study td.table-image,
+    .responsiveTable.responsive-table-branches td.table-image {
        display: block;
     }
    }
