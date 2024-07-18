@@ -124,7 +124,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <ClockIcon
                       title="Hours"
                       width={15}
-                      className="mr-8 flex-shrink-0 text-black-80"
+                      className="mr-8 flex-shrink-0 text-black-80 group-hover:text-cardinal-red-dark"
                     />
                     Open Now
                   </span>
