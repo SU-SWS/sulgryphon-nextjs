@@ -11,6 +11,7 @@ import SelectList from "@/components/patterns/elements/select-list"
 import {ClockIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean} from "usehooks-ts"
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
@@ -190,7 +191,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 Library
               </Th>
               <Th
-                className="type-1 block pl-[0px] text-center md:table-cell md:text-left"
+                className="type-1 block pl-[0px] text-center md:table-cell md:text-left lg:text-center"
                 scope="col"
               >
                 Open/Closed
@@ -220,7 +221,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.branchImageUrl && (
                     <Link
                       href={item.branchPath}
-                      className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:min-w-[125px]"
+                      className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]"
                       aria-labelledby={item.id}
                     >
                       <Image

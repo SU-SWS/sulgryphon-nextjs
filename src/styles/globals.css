@@ -41,6 +41,15 @@
     padding-left: 0 !important;
     text-align: unset !important;
   }
+  @media screen and (max-width: 55.29em) {
+    .responsive-table tr td.pivoted {
+      padding-top: 0 !important;
+      padding-bottom: 16px !important;
+    }
+    .responsive-table tr td.pivoted:first-of-type { 
+      padding-top: 16px !important;
+    }
+  }
   .responsive-table ul li:last-child span {
     display: none;
   }

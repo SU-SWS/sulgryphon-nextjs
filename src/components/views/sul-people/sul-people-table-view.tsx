@@ -107,7 +107,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
               />
               <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
             </label>
-            <label className="group cursor-pointer border-l border-black-80">
+            <label className="group cursor-pointer border-black-80 lg:border-l">
               <input
                 type="checkbox"
                 className="peer sr-only"
