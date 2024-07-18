@@ -57,9 +57,9 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   return (
     <div className="pb-[32px]">
       <form>
-        <fieldset className="rs-mb-1 mx-auto flex w-fit items-center rounded-full border border-black-80">
+        <fieldset className="rs-mb-1 mx-auto flex w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
-          <label className="group cursor-pointer border-r-0 border-black-80">
+          <label className="group cursor-pointer">
             <input
               type="radio"
               name="open"
@@ -67,9 +67,9 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={!onlyOpenNow}
               onChange={showOpenAndClosed}
             />
-            <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
+            <span className="block rounded-l-full border border-r-0 border-black-80 p-10 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
           </label>
-          <label className="group cursor-pointer border-l border-black-80">
+          <label className="group cursor-pointer">
             <input
               type="checkbox"
               name="open"
@@ -77,7 +77,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={onlyOpenNow}
               onChange={showOnlyOpenNow}
             />
-            <span className="flex items-center rounded-r-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+            <span className="flex items-center rounded-r-full border border-black-80 p-10 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
               <ClockIcon
                 title="Hours"
                 width={15}
@@ -139,7 +139,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       <Td className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:align-middle">
         <Link
           href={path}
-          className="inline-block w-full text-center md:w-auto md:text-left"
+          className="inline-block w-full text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:w-auto md:text-left"
         >
           {title}
         </Link>
@@ -149,7 +149,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="flex items-center justify-center gap-4 md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
           >
             <PhoneIcon
               title="Phone Number"
@@ -161,7 +161,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="flex items-center justify-center gap-4 md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
           >
             <EnvelopeIcon
               title="Email"
