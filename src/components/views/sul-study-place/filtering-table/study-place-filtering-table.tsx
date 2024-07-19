@@ -1,16 +1,17 @@
 "use client"
-
-import StudyPlaceTodayHoursTable from "@/components/views/sul-study-place/filtering-table/study-place-today-hours-table"
+import useOutsideClick from "@/lib/hooks/useOutsideClick"
+import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import Link from "next/link"
 import Image from "next/image"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
-import {useCallback, useState} from "react"
+import {useCallback, useState, useId, useRef} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ClockIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
-import {useBoolean} from "usehooks-ts"
+import {useBoolean, useEventListener} from "usehooks-ts"
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
@@ -23,10 +24,7 @@ export type StudyPlaces = {
   studyType?: NodeSulStudyPlace["sulStudyType"]["name"]
   roomNumber?: NodeSulStudyPlace["sulStudyRoomNumber"]
   capacity?: TermUnion["name"]
-  libCalId?: NodeSulStudyPlace["sulStudyLibcalId"]
-  libHours?: NodeSulStudyPlace["sulStudyBranch"]["suLibraryHours"]
 }
-
 interface Props {
   items: StudyPlaces[]
 }
@@ -43,26 +41,26 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
   const [filters, setFilters] = useState<FiltersType>({types: [], capacities: [], libraries: [], features: []})
   const libraryHours = useLibraryHours<Record<string, LocationHours>>()
 
-  const filterLocations = useCallback(
-    (showingItems: StudyPlaces[]) => {
-      const rightNow = new Date()
-      const openBranches: string[] = []
+  // const filterLocations = useCallback(
+  //   (showingItems: StudyPlaces[]) => {
+  //     const rightNow = new Date()
+  //     const openBranches: string[] = []
 
-      Object.keys(libraryHours).map(hourId => {
-        const todayHours = libraryHours[hourId].primaryHours.find(day => {
-          const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
-            weekday: "long",
-            timeZone: "America/Los_Angeles",
-          })
-          return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
-        }) as DayHours
+  //     // Object.keys(libraryHours).map(hourId => {
+  //     //   const todayHours = libraryHours[hourId].primaryHours.find(day => {
+  //     //     const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
+  //     //       weekday: "long",
+  //     //       timeZone: "America/Los_Angeles",
+  //     //     })
+  //     //     return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
+  //     //   }) as DayHours
 
-        if (todayHours.opens_at && todayHours.closes_at && rightNow > new Date(todayHours.opens_at) && rightNow < new Date(todayHours.closes_at)) openBranches.push(hourId)
-      })
-      return showingItems.filter(item => item.libHours && openBranches.includes(item.libHours))
-    },
-    [libraryHours]
-  )
+  //     //   if (todayHours.opens_at && todayHours.closes_at && rightNow > new Date(todayHours.opens_at) && rightNow < new Date(todayHours.closes_at)) openBranches.push(hourId)
+  //     // })
+  //     // return showingItems.filter(item => item.libHours && openBranches.includes(item.libHours))
+  //   },
+  //   [libraryHours]
+  // )
 
   const types: string[] = []
   const capacities: string[] = []
@@ -248,7 +246,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{hoursId && <StudyHours hoursId={libHours} />}.</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5">
                   {item.features && (
                     <div className="bg-black-10 px-16 py-8 text-19 lg:bg-transparent lg:p-0">
@@ -280,4 +278,111 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
     </div>
   )
 }
+
+const StudyHours = ({hoursId}: {hoursId: string}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
+  const outsideClickProps = useOutsideClick(collapseHours)
+  const id = useId()
+  const libraryHours = useLibraryHours<LocationHours>(hoursId)
+  const todayLibraryHours = useTodayLibraryHours(hoursId)
+
+  // If the user presses escape on the keyboard, close the submenus.
+  const handleEscape = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !expandedHours) return
+
+      collapseHours()
+      buttonRef.current?.focus()
+    },
+    [collapseHours, expandedHours]
+  )
+
+  useEventListener("keydown", handleEscape, containerRef)
+
+  if (!libraryHours.primaryHours || !todayLibraryHours) {
+    return
+  }
+
+  const {isOpen, closingTime, nextOpeningTime} = todayLibraryHours
+  const rightNow = new Date()
+  const sunday = new Date()
+  sunday.setDate(sunday.getDate() - rightNow.getDay())
+  const saturday = new Date()
+  saturday.setDate(saturday.getDate() + (7 - rightNow.getDay()))
+
+  const thisWeekHours = libraryHours.primaryHours.filter(dayHours => {
+    const day = new Date(dayHours.day + " 20:00:00")
+    return day >= sunday && day <= saturday
+  })
+
+  return (
+    <div
+      {...outsideClickProps}
+      ref={containerRef}
+      className="relative flex text-16 md:flex lg:block"
+    >
+      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
+
+      {!isOpen && <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Closed</span>}
+
+      <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
+        {isOpen && closingTime && `Until ${closingTime}`}
+        {!isOpen && nextOpeningTime && `Until ${nextOpeningTime}`}
+        {!closingTime && !nextOpeningTime && "Hours this week"}
+
+        <button
+          ref={buttonRef}
+          onClick={toggleExpandedHours}
+          aria-controls={id}
+          aria-expanded={expandedHours}
+        >
+          <span className="sr-only">Show this weeks hours</span>
+          <ChevronDownIcon
+            width={20}
+            className={expandedHours ? "rotate-180 transition" : "transition"}
+          />
+        </button>
+      </div>
+      <div
+        id={id}
+        className={expandedHours ? "absolute top-full z-10 block" : "hidden"}
+        role="region"
+      >
+        <div className="w-300 border border-black-60 bg-white p-20 text-left">
+          <div className="mb-10 font-bold">Hours this week</div>
+          {thisWeekHours.map(dayHours => (
+            <div
+              key={`${hoursId}-${dayHours.weekday}`}
+              className="grid grid-cols-2 gap-5"
+            >
+              <div>{dayHours.weekday}</div>
+              <div>
+                {dayHours.closed && "Closed"}
+
+                {!dayHours.closed && (
+                  <>
+                    {dayHours.opens_at &&
+                      new Date(dayHours.opens_at).toLocaleTimeString("en-us", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                    -
+                    {dayHours.closes_at &&
+                      new Date(dayHours.closes_at).toLocaleTimeString("en-us", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default StudyPlaceFilteringTable
