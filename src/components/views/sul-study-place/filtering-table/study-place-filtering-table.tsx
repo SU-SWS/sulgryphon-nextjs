@@ -1,16 +1,17 @@
 "use client"
 
-import StudyPlaceTodayHoursTable from "@/components/views/sul-study-place/filtering-table/study-place-today-hours-table"
 import Link from "next/link"
 import Image from "next/image"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
-import {useCallback, useState} from "react"
+import {useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
-import {ClockIcon} from "@heroicons/react/24/outline"
+import {ClockIcon, ChevronDownIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
-import {useBoolean} from "usehooks-ts"
+import {useBoolean, useEventListener} from "usehooks-ts"
+import useOutsideClick from "@/lib/hooks/useOutsideClick"
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
@@ -248,7 +249,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <StudyPlaceTodayHoursTable hoursId={item.libHours} />}</Td>
+                <Td className="justify-left flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5">
                   {item.features && (
                     <div className="bg-black-10 px-16 py-8 text-19 lg:bg-transparent lg:p-0">
@@ -280,4 +281,111 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
     </div>
   )
 }
+
+const BranchHours = ({hoursId}: {hoursId: string}) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
+  const outsideClickProps = useOutsideClick(collapseHours)
+  const id = useId()
+  const libraryHours = useLibraryHours<LocationHours>(hoursId)
+  const todayLibraryHours = useTodayLibraryHours(hoursId)
+
+  // If the user presses escape on the keyboard, close the submenus.
+  const handleEscape = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !expandedHours) return
+
+      collapseHours()
+      buttonRef.current?.focus()
+    },
+    [collapseHours, expandedHours]
+  )
+
+  useEventListener("keydown", handleEscape, containerRef)
+
+  if (!libraryHours.primaryHours || !todayLibraryHours) {
+    return
+  }
+
+  const {isOpen, closingTime, nextOpeningTime} = todayLibraryHours
+  const rightNow = new Date()
+  const sunday = new Date()
+  sunday.setDate(sunday.getDate() - rightNow.getDay())
+  const saturday = new Date()
+  saturday.setDate(saturday.getDate() + (7 - rightNow.getDay()))
+
+  const thisWeekHours = libraryHours.primaryHours.filter(dayHours => {
+    const day = new Date(dayHours.day + " 20:00:00")
+    return day >= sunday && day <= saturday
+  })
+
+  return (
+    <div
+      {...outsideClickProps}
+      ref={containerRef}
+      className="relative flex text-16 lg:block"
+    >
+      {isOpen && <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
+
+      {!isOpen && <span className="mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Closed</span>}
+
+      <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
+        {isOpen && closingTime && `Until ${closingTime}`}
+        {!isOpen && nextOpeningTime && `Until ${nextOpeningTime}`}
+        {!closingTime && !nextOpeningTime && "Hours this week"}
+
+        <button
+          ref={buttonRef}
+          onClick={toggleExpandedHours}
+          aria-controls={id}
+          aria-expanded={expandedHours}
+        >
+          <span className="sr-only">Show this weeks hours</span>
+          <ChevronDownIcon
+            width={20}
+            className={expandedHours ? "rotate-180 transition" : "transition"}
+          />
+        </button>
+      </div>
+      <div
+        id={id}
+        className={expandedHours ? "absolute top-full z-10 block" : "hidden"}
+        role="region"
+      >
+        <div className="w-300 border border-black-60 bg-white p-20 text-left">
+          <div className="mb-10 font-bold">Hours this week</div>
+          {thisWeekHours.map(dayHours => (
+            <div
+              key={`${hoursId}-${dayHours.weekday}`}
+              className="grid grid-cols-2 gap-5"
+            >
+              <div>{dayHours.weekday}</div>
+              <div>
+                {dayHours.closed && "Closed"}
+
+                {!dayHours.closed && (
+                  <>
+                    {dayHours.opens_at &&
+                      new Date(dayHours.opens_at).toLocaleTimeString("en-us", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                    -
+                    {dayHours.closes_at &&
+                      new Date(dayHours.closes_at).toLocaleTimeString("en-us", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default StudyPlaceFilteringTable
