@@ -128,7 +128,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           </fieldset>
         </div>
       </form>
-      <Table className="responsive-table responsive-table-study text-center md:text-left">
+      <Table className="responsive-table text-center md:text-left">
         <caption
           className="sr-only"
           aria-live="polite"
