@@ -26,7 +26,7 @@ const StudyPlaceHoursComponent = ({hoursId}: {hoursId: string}) => {
   const hoursDisplay = closedAllDay ? "Closed" : isOpen ? closingTime : afterClose ? closingTime : openingTime
 
   return (
-    <div className="type-0 centered mb-20 text-black-true">
+    <div className="type-0 centered text-black-true">
       <div
         aria-live="polite"
         className="text-left lg:text-center"

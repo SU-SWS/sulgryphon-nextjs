@@ -124,7 +124,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
     >
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:align-middle">
-        <div className="relative block aspect-[3/2] w-[338px] overflow-hidden lg:w-[125px]">
+        <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
           {imageUrl && (
             <Image
               className="object-contain"
