@@ -222,7 +222,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <Link
                       href={item.branchPath}
                       className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]"
-                      aria-labelledby={item.id}
+                      aria-hidden="true"
+                      tabIndex="-1"
                     >
                       <Image
                         className="object-contain"
