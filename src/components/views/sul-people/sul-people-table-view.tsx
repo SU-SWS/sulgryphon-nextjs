@@ -28,10 +28,6 @@ type Props = {
   hasHeading: boolean
 }
 
-type Link = {
-  tabIndex?: number
-}
-
 const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const HeadingElement = hasHeading ? "h3" : "h2"
   const id = useId()
@@ -187,7 +183,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     href={item.path}
                     className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
                     aria-hidden="true"
-                    tabIndex="-1"
+                    tabIndex={-1}
                   >
                     <Image
                       className="object-cover"
