@@ -126,13 +126,20 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:align-middle">
         <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
           {imageUrl && (
-            <Image
-              className="object-contain"
-              src={imageUrl}
-              alt=""
-              fill
-              sizes="300px"
-            />
+            <Link
+              href={path}
+              className="inline-block w-full text-center md:w-auto md:text-left"
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <Image
+                className="object-contain"
+                src={imageUrl}
+                alt=""
+                fill
+                sizes="300px"
+              />
+            </Link>
           )}
         </div>
       </Td>
