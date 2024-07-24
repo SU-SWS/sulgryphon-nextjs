@@ -182,7 +182,8 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   <Link
                     href={item.path}
                     className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
-                    aria-labelledby={item.id}
+                    aria-hidden="true"
+                    tabIndex={-1}
                   >
                     <Image
                       className="object-cover"

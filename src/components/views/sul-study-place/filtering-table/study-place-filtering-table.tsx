@@ -219,11 +219,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.branchImageUrl && (
-                    <Link
-                      href={item.branchPath}
-                      className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]"
-                      aria-labelledby={item.id}
-                    >
+                    <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
                       <Image
                         className="object-contain"
                         src={item.branchImageUrl}
@@ -231,7 +227,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                         fill
                         sizes="(max-width: 992px) 300px, 150px"
                       />
-                    </Link>
+                    </div>
                   )}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
