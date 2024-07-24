@@ -77,7 +77,7 @@ const getLibraryHours = nextCache(
 
     return locations
   },
-  [],
+  ["library-hours"],
   {
     tags: ["library-hours"],
     // Revalidate at 1 second after midnight. Calculate how many seconds since midnight, and subtract from total seconds
