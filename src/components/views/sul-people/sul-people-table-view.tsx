@@ -96,34 +96,34 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           </button>
         </div>
         <div className="self-end">
-          <fieldset className="mx-auto flex w-fit items-center rounded-full border border-black-80">
+          <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
-            <label className="group hidden cursor-pointer border-r-0 border-black-80 md:block">
+            <label className="group hidden cursor-pointer border-r-0 md:block">
               <input
                 type="checkbox"
                 className="peer sr-only"
                 checked={!typeFilter.length}
                 onChange={() => updateTypeFilter()}
               />
-              <span className="block rounded-l-full border-r-0 border-transparent p-10 px-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
+              <span className="block rounded-l-full border border-r-0 border-black-80 p-10 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
             </label>
-            <label className="group cursor-pointer border-black-80 lg:border-l">
+            <label className="group cursor-pointer">
               <input
                 type="checkbox"
                 className="peer sr-only"
                 checked={typeFilter.includes("subject specialist")}
                 onChange={() => updateTypeFilter("subject specialist")}
               />
-              <span className="block items-center rounded-l-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
+              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-10 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
             </label>
-            <label className="group cursor-pointer border-l border-black-80">
+            <label className="group cursor-pointer">
               <input
                 type="checkbox"
                 className="peer sr-only"
                 checked={typeFilter.includes("technical specialist")}
                 onChange={() => updateTypeFilter("technical specialist")}
               />
-              <span className="block items-center rounded-r-full border border-transparent p-10 pr-20 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
+              <span className="block items-center rounded-r-full border border-black-80 p-10 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
             </label>
           </fieldset>
         </div>
@@ -201,7 +201,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                   >
                     <HeadingElement
-                      className="font-sans text-20"
+                      className="font-sans text-20 font-semibold"
                       id={item.id}
                     >
                       {item.title}

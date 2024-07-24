@@ -96,7 +96,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
   return (
     <div className="@container">
       <form onSubmit={e => e.preventDefault()}>
-        <fieldset>
+        <fieldset className="text-18">
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-10 *:min-w-300 *:flex-1 *:2xl:min-w-0">
             {!!Object.keys(libraryHours).length && (
@@ -110,7 +110,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
                 <label className="group w-1/2 min-w-[134px] cursor-pointer">
@@ -121,11 +121,11 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-22 py-8 text-19 underline group-hover:no-underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-22 py-8 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}
-                      className="mr-8 flex-shrink-0 text-black-80"
+                      className="mr-8 flex-shrink-0 text-black-80 group-hover:text-cardinal-red-dark"
                     />
                     Open Now
                   </span>
@@ -235,8 +235,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   )}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
-                  <div className="pt-0 text-18 font-normal leading-display">
-                    <h2 className="mb-[0px] font-sans text-20">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
+                  <div className="pt-0 text-16 font-normal leading-display">
+                    <h2 className="mb-[0px] font-sans text-20 font-semibold">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>
@@ -244,15 +244,15 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
                   <Link
                     href={item.branchPath}
-                    className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                    className="text-16 transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                   >
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="justify-left flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
+                <Td className="justify-left flex w-auto text-16 sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 px-16 py-8 text-19 lg:bg-transparent lg:p-0">
+                    <div className="bg-black-10 px-16 py-8 text-16 lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
