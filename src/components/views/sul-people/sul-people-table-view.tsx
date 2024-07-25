@@ -70,7 +70,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
       >
         <div className="relative max-w-[350px] md:w-[435px]">
           <label
-            className="pl-15 text-22 font-semibold"
+            className="pl-15 text-18 font-semibold"
             htmlFor={id}
           >
             Search by name, title, or subject
