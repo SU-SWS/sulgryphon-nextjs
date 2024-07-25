@@ -178,7 +178,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           </a>
         )}
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
+      <Td className="block w-auto text-16 sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
           <a
             href={mapUrl}
