@@ -132,7 +132,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
   const active = activeTrail.includes(id)
 
   // Helper for tailwind JIT to add the classes.
-  const _titleSpacing: string[] = ["lg:ml-[0px]", "lg:ml-[30px]", "lg:ml-[60px]", "lg:ml-[90px]", "lg:ml-[120px]", "ml-[0px]", "ml-[30px]", "ml-[60px]", "ml-[90px]", "ml-[120px]"]
+  const titleSpacing: string[] = ["ml-[0px]", "ml-[30px]", "ml-[60px]", "ml-[90px]", "ml-[120px]"]
   const belowItems = children && children?.length > 0 ? children : []
 
   useEffect(() => closeSubmenu(), [browserUrl, closeSubmenu])
@@ -170,6 +170,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
     // Treatment to child items.
     if (menuLevel >= 1) {
       classes.push("lg:border-b-fog-light")
+      classes.push("lg:pl-0")
 
       if (active) {
         classes.push("lg:border-l-4")
@@ -191,7 +192,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
           className={twMerge("flex w-full items-center p-20 text-white no-underline hocus:text-white hocus:underline lg:text-black-true", menuLevel > 0 ? "lg:hocus:bg-black-10 lg:hocus:text-archway" : "lg:hocus:text-archway", getLinkBorderClasses())}
           aria-current={activeTrail.at(-1) === id ? "page" : undefined}
         >
-          <div className={"ml-[ pl-30 lg:pl-0" + menuLevel * 30 + "px] lg:ml-[" + (menuLevel - 1) * 30 + "px]"}>{title}</div>
+          <div className={twMerge("pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
         </Link>
       )}
 
@@ -202,7 +203,7 @@ const MenuItem = ({id, title, url, children, expanded, tabIndex = 0, activeTrail
           onClick={toggleSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
-          <span className={"ml-[ flex items-center pl-30 lg:pl-0" + menuLevel * 30 + "px] lg:ml-[" + (menuLevel - 1) * 30 + "px]"}>{title}</span>
+          <span className={twMerge("pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</span>
         </button>
       )}
 
