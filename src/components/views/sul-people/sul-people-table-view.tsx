@@ -96,7 +96,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 setKeywordFilter("")
               }}
             >
-              <XMarkIcon width={25} />
+              <XMarkIcon
+                className="pr-5 text-black-50"
+                width={30}
+              />
             </button>
           )}
 
