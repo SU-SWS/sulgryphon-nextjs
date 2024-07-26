@@ -175,7 +175,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           {displayedItems.map(item => (
             <Tr
               key={item.id}
-              className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+              className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:!table-row lg:max-h-none"
             >
               <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                 {item.photoUrl && (

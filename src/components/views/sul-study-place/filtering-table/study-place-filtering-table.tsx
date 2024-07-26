@@ -215,7 +215,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.id}
-                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:!table-row lg:max-h-none"
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.branchImageUrl && (
@@ -258,12 +258,12 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full md:text-18 lg:w-fit"
+                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white px-[12px] py-[4px] text-16 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
                         <div className="relative no-underline">
-                          Reserve Space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
+                          Reserve space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
                         </div>
                       </div>
                     </a>
