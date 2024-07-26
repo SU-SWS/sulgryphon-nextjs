@@ -84,7 +84,6 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                 <SelectList
                   ariaLabelledby={formId}
                   options={libraryOptions}
-                  rounded
                   defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
                   onChange={(e, value) => setSelectedLibrary(value as string)}
                 />

@@ -16,7 +16,6 @@ interface Props {
   multiple?: boolean
   disabled?: boolean
   value?: SelectValue<string, boolean>
-  rounded?: boolean
 }
 
 interface OptionProps {
@@ -81,7 +80,7 @@ function CustomOption(props: OptionProps) {
   )
 }
 
-const SelectList = ({options, label, multiple, ariaLabelledby, rounded = false, ...props}: Props) => {
+const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props) => {
   const labelId = useId()
   const labeledBy = ariaLabelledby ?? labelId
   const listboxRef = useRef<HTMLUListElement>(null)
@@ -117,7 +116,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, rounded = false, 
     >
       <button
         {...getButtonProps()}
-        className={"w-full border border-black-40 px-5 py-9 pl-15 text-left " + (optionChosen ? "rounded-3xl" : "rounded-full")}
+        className={"w-full border border-black-40 px-5 py-9 pl-15 text-left " + (optionChosen ? "rounded-3xl" : " rounded-full")}
         aria-labelledby={labeledBy}
       >
         <div className="flex flex-wrap justify-between">
