@@ -116,7 +116,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
     >
       <button
         {...getButtonProps()}
-        className="w-full rounded-3xl border border-black-40 p-5 pl-15 text-left"
+        className="w-full rounded-3xl border border-black-40 px-5 py-9 pl-15 text-left"
         aria-labelledby={labeledBy}
       >
         <div className="flex flex-wrap justify-between">

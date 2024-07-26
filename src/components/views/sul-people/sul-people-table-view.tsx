@@ -105,7 +105,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={!typeFilter.length}
                 onChange={() => updateTypeFilter()}
               />
-              <span className="block rounded-l-full border border-r-0 border-black-80 p-10 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
+              <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
             </label>
             <label className="group cursor-pointer">
               <input
@@ -114,7 +114,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter.includes("subject specialist")}
                 onChange={() => updateTypeFilter("subject specialist")}
               />
-              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-10 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
+              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
             </label>
             <label className="group cursor-pointer">
               <input
@@ -123,7 +123,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter.includes("technical specialist")}
                 onChange={() => updateTypeFilter("technical specialist")}
               />
-              <span className="block items-center rounded-r-full border border-black-80 p-10 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
+              <span className="block items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
             </label>
           </fieldset>
         </div>
