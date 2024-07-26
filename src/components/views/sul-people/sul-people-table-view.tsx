@@ -209,11 +209,11 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     </HeadingElement>
                   </Link>
                 )}
-                {item.fullTitle && <div className="text-16">{item.fullTitle}</div>}
+                {item.fullTitle && <div className="text-16 leading-[23px]">{item.fullTitle}</div>}
               </Td>
               <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
                 {!!item.researchAreas?.length && (
-                  <div className="bg-black-10 px-1em py-1em text-16 md:bg-transparent md:p-0">
+                  <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
                     <span className="font-bold md:hidden">Expertise: </span>
                     {item.researchAreas.join(", ")}
                   </div>
@@ -230,7 +230,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
 
                     <EmailLink
                       email={item.email}
-                      className="break-words text-16 text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                      className="break-words text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                     />
                   </>
                 )}
