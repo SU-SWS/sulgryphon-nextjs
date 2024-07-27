@@ -230,13 +230,16 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
+                <Th
+                  scope="row"
+                  className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5"
+                >
                   <div className="pt-0 text-16 font-normal leading-display">
                     <h2 className="mb-[0px] font-sans text-20 font-semibold">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>
-                </Td>
+                </Th>
                 <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
                   <Link
                     href={item.branchPath}

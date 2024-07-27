@@ -195,7 +195,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   </Link>
                 )}
               </Td>
-              <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
+              <Th
+                scope="row"
+                className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4"
+              >
                 {item.title && (
                   <Link
                     href={item.path}
@@ -210,7 +213,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   </Link>
                 )}
                 {item.fullTitle && <div className="text-16">{item.fullTitle}</div>}
-              </Td>
+              </Th>
               <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
                 {!!item.researchAreas?.length && (
                   <div className="bg-black-10 px-1em py-1em text-16 md:bg-transparent md:p-0">
