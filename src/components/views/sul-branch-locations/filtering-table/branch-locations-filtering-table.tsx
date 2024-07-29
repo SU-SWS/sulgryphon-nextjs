@@ -156,7 +156,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="flex items-center justify-center gap-4 text-16 font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
           >
             <PhoneIcon
               title="Phone Number"
@@ -168,7 +168,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="flex items-center justify-center gap-4 text-16 font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
           >
             <EnvelopeIcon
               title="Email"
@@ -178,7 +178,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           </a>
         )}
       </Td>
-      <Td className="block w-auto text-16 sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
+      <Td className="block w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
           <a
             href={mapUrl}
@@ -242,7 +242,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     <div
       {...outsideClickProps}
       ref={containerRef}
-      className="relative flex text-16 md:flex lg:block"
+      className="relative flex text-16 leading-[23px] md:flex lg:block"
     >
       {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
 

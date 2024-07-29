@@ -230,8 +230,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
-                  <div className="pt-0 text-16 font-normal leading-display">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
+                  <div className="pt-0 text-16 font-normal leading-[23px]">
                     <h2 className="mb-[0px] font-sans text-20 font-semibold">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
@@ -240,15 +240,15 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
                     href={item.branchPath}
-                    className="text-16 transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                    className="text-16 font-normal leading-[23px] transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                   >
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="justify-left flex w-auto text-16 sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-20">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
+                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 px-16 py-8 text-16 lg:bg-transparent lg:p-0">
+                    <div className="bg-black-10 px-16 py-8 text-16 leading-[23px] lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
@@ -320,7 +320,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     <div
       {...outsideClickProps}
       ref={containerRef}
-      className="relative flex text-16 lg:block"
+      className="relative flex text-16 leading-[23px] lg:block"
     >
       {isOpen && <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
 
