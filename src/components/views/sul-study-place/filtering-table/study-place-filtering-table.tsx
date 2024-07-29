@@ -100,7 +100,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-10 *:min-w-300 *:flex-1 *:2xl:min-w-0">
             {!!Object.keys(libraryHours).length && (
-              <fieldset className="mr-10 flex w-full items-center">
+              <fieldset className="mr-10 flex h-25 w-full items-center">
                 <legend className="sr-only">Show only open now or all locations</legend>
                 <label className="group w-1/2 min-w-[134px] cursor-pointer">
                   <input
@@ -110,7 +110,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-8 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All Locations</span>
                 </label>
 
                 <label className="group w-1/2 min-w-[134px] cursor-pointer">
@@ -121,7 +121,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-22 py-8 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 px-22 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}
@@ -173,31 +173,31 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           <Thead className="sr-only lg:not-sr-only">
             <Tr className="block sm:hidden lg:!table-row">
               <Th
-                className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
+                className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-32"
                 scope="col"
               >
                 <span className="sr-only">Photo</span>
               </Th>
               <Th
-                className="type-1 block pl-[0px] md:table-cell"
+                className="type-1 block pl-[0px] md:table-cell lg:pr-32"
                 scope="col"
               >
                 Place
               </Th>
               <Th
-                className="type-1 block pl-[0px] md:table-cell"
+                className="type-1 block pl-[0px] md:table-cell lg:pr-32"
                 scope="col"
               >
                 Library
               </Th>
               <Th
-                className="type-1 block pl-[0px] text-center md:table-cell md:text-left lg:text-center"
+                className="type-1 block pl-[0px] text-center md:table-cell md:text-left lg:pr-32 lg:text-center"
                 scope="col"
               >
                 Open/Closed
               </Th>
               <Th
-                className="type-1 block pl-[0px] md:table-cell"
+                className="type-1 block pl-[0px] md:table-cell lg:pr-32"
                 scope="col"
               >
                 Features
@@ -215,9 +215,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.id}
-                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:!table-row lg:max-h-none"
               >
-                <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">
                   {item.branchImageUrl && (
                     <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
                       <Image
@@ -234,39 +234,39 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   scope="row"
                   className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5"
                 >
-                  <div className="pt-0 text-16 font-normal leading-display">
+                  <div className="pt-0 text-16 font-normal leading-[23px]">
                     <h2 className="mb-[0px] font-sans text-20 font-semibold">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>
                 </Th>
-                <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
+                <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
                     href={item.branchPath}
-                    className="text-16 transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                    className="text-16 font-normal leading-[23px] transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                   >
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="justify-left flex w-auto text-16 sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
+                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5">
                   {item.features && (
-                    <div className="bg-black-10 px-16 py-8 text-16 lg:bg-transparent lg:p-0">
+                    <div className="bg-black-10 px-16 py-8 text-16 leading-[23px] lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white text-18 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full md:text-18 lg:w-fit"
+                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white px-[12px] py-[4px] text-16 text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
                         <div className="relative no-underline">
-                          Reserve Space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
+                          Reserve space<span className="sr-only">&nbsp;at {item.branchTitle}</span>
                         </div>
                       </div>
                     </a>
@@ -323,7 +323,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     <div
       {...outsideClickProps}
       ref={containerRef}
-      className="relative flex text-16 lg:block"
+      className="relative flex text-16 leading-[23px] lg:block"
     >
       {isOpen && <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
 

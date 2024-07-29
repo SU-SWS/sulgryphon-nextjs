@@ -57,7 +57,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   return (
     <div className="pb-[32px]">
       <form>
-        <fieldset className="rs-mb-1 mx-auto flex w-fit items-center rounded-full">
+        <fieldset className="rs-mb-1 mx-auto flex h-25 w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
           <label className="group cursor-pointer">
             <input
@@ -67,7 +67,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={!onlyOpenNow}
               onChange={showOpenAndClosed}
             />
-            <span className="block rounded-l-full border border-r-0 border-black-80 p-10 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
+            <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
           </label>
           <label className="group cursor-pointer">
             <input
@@ -77,7 +77,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={onlyOpenNow}
               onChange={showOnlyOpenNow}
             />
-            <span className="flex items-center rounded-r-full border border-black-80 p-10 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+            <span className="flex items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
               <ClockIcon
                 title="Hours"
                 width={15}
@@ -93,14 +93,14 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         <Thead className="sr-only lg:not-sr-only">
           <Tr className="block sm:hidden lg:!table-row">
             <Th
-              className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
+              className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-16"
               scope="col"
             >
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Library</Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell">Open/Closed</Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Contact</Th>
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">Library</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell lg:pr-80">Open/Closed</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">Contact</Th>
             <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
           </Tr>
         </Thead>
@@ -123,7 +123,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       key={id}
       className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
     >
-      <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:align-middle">
+      <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:pr-16 lg:align-middle">
         <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
           {imageUrl && (
             <Link
@@ -145,7 +145,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:align-middle"
+        className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle"
       >
         <Link
           href={path}
@@ -154,12 +154,12 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           {title}
         </Link>
       </Th>
-      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:align-middle">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="flex items-center justify-center gap-4 text-16 font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
           >
             <PhoneIcon
               title="Phone Number"
@@ -171,7 +171,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="flex items-center justify-center gap-4 text-16 font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
           >
             <EnvelopeIcon
               title="Email"
@@ -181,7 +181,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           </a>
         )}
       </Td>
-      <Td className="block w-auto text-16 sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
+      <Td className="block w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
           <a
             href={mapUrl}
@@ -245,7 +245,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     <div
       {...outsideClickProps}
       ref={containerRef}
-      className="relative flex text-16 md:flex lg:block"
+      className="relative flex text-16 leading-[23px] md:flex lg:block"
     >
       {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
 
