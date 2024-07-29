@@ -194,83 +194,82 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             </Tr>
           </Thead>
 
-          <Tbody>
-            {displayedItems.map(item => (
-              <Tr
-                key={item.id}
-                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
-              >
-                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
-                  {item.photoUrl && (
-                    <Link
-                      href={item.path}
-                      className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
-                      aria-hidden="true"
-                      tabIndex={-1}
-                    >
-                      <Image
-                        className="object-cover"
-                        src={item.photoUrl}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 300px, 150px"
-                      />
-                    </Link>
-                  )}
-                </Td>
-                <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
-                  {item.title && (
-                    <Link
-                      href={item.path}
-                      className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
-                    >
-                      <HeadingElement
-                        className="font-sans text-20 font-semibold"
-                        id={item.id}
-                      >
-                        {item.title}
-                      </HeadingElement>
-                    </Link>
-                  )}
-                  {item.fullTitle && <div className="text-16">{item.fullTitle}</div>}
-                </Td>
-                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
-                  {!!item.researchAreas?.length && (
-                    <div className="bg-black-10 px-1em py-1em text-16 md:bg-transparent md:p-0">
-                      <span className="font-bold md:hidden">Expertise: </span>
-                      {item.researchAreas.join(", ")}
-                    </div>
-                  )}
-                </Td>
-                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                  {item.email && (
-                    <>
-                      <EnvelopeIcon
-                        title="Email"
-                        width={20}
-                        className="mr-6 inline-block text-digital-blue"
-                      />
-
-                      <EmailLink
-                        email={item.email}
-                        className="break-words text-16 text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
-                      />
-                    </>
-                  )}
-                </Td>
-                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                  {item.libCalId && (
-                    <LibCal
-                      libcalId={item.libCalId}
-                      srText={item.title}
+        <Tbody>
+          {displayedItems.map(item => (
+            <Tr
+              key={item.id}
+              className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+            >
+              <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                {item.photoUrl && (
+                  <Link
+                    href={item.path}
+                    className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
+                    aria-hidden="true"
+                    tabIndex={-1}
+                  >
+                    <Image
+                      className="object-cover"
+                      src={item.photoUrl}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 300px, 150px"
                     />
-                  )}
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      )}
+                  </Link>
+                )}
+              </Td>
+              <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
+                {item.title && (
+                  <Link
+                    href={item.path}
+                    className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
+                  >
+                    <HeadingElement
+                      className="font-sans text-20 font-semibold"
+                      id={item.id}
+                    >
+                      {item.title}
+                    </HeadingElement>
+                  </Link>
+                )}
+                {item.fullTitle && <div className="text-16 leading-[23px]">{item.fullTitle}</div>}
+              </Td>
+              <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
+                {!!item.researchAreas?.length && (
+                  <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
+                    <span className="font-bold md:hidden">Expertise: </span>
+                    {item.researchAreas.join(", ")}
+                  </div>
+                )}
+              </Td>
+              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                {item.email && (
+                  <>
+                    <EnvelopeIcon
+                      title="Email"
+                      width={20}
+                      className="mr-6 inline-block text-digital-blue"
+                    />
+
+                    <EmailLink
+                      email={item.email}
+                      className="break-words text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                    />
+                  </>
+                )}
+              </Td>
+              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                {item.libCalId && (
+                  <LibCal
+                    libcalId={item.libCalId}
+                    srText={item.title}
+                  />
+                )}
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     </div>
   )
 }
