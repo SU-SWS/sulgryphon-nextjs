@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import LibCal from "./libcal"
-import {EnvelopeIcon} from "@heroicons/react/20/solid"
+import {EnvelopeIcon, XMarkIcon} from "@heroicons/react/20/solid"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
@@ -83,6 +83,26 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             id={id}
           />
 
+          {keywordFilter && (
+            <button
+              type="reset"
+              className="absolute bottom-6 right-32 z-10"
+              aria-label="Clear keyword search"
+              onClick={() => {
+                if (keywordRef.current) {
+                  keywordRef.current.value = ""
+                  keywordRef.current.focus()
+                }
+                setKeywordFilter("")
+              }}
+            >
+              <XMarkIcon
+                className="pr-5 text-black-50"
+                width={30}
+              />
+            </button>
+          )}
+
           <button
             type="submit"
             className="absolute bottom-6 right-10 z-10"
@@ -128,125 +148,129 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           </fieldset>
         </div>
       </form>
-      <Table className="responsive-table text-center md:text-left">
-        <caption
-          className="sr-only"
-          aria-live="polite"
-          aria-atomic
-        >
-          Showing {displayedItems.length} of {items.length}
-        </caption>
-        <Thead className="sr-only lg:not-sr-only">
-          <Tr className="block sm:hidden lg:!table-row">
-            <Th
-              className="block min-w-[100px] pl-[0px] lg:table-cell"
-              scope="col"
-            >
-              <span className="sr-only">Photo</span>
-            </Th>
-            <Th
-              className="block pl-[0px] text-24 lg:table-cell"
-              scope="col"
-            >
-              Name/Title
-            </Th>
-            <Th
-              className="block pl-[0px] text-24 lg:table-cell"
-              scope="col"
-            >
-              Expertise
-            </Th>
-            <Th
-              className="block pl-[0px] text-24 lg:table-cell"
-              scope="col"
-            >
-              Contact
-            </Th>
-            <Th
-              className="block pl-[0px] text-24 lg:table-cell"
-              scope="col"
-            >
-              Schedule
-            </Th>
-          </Tr>
-        </Thead>
+      {!displayedItems.length && <p>No results matching your search terms were found.</p>}
 
-        <Tbody>
-          {displayedItems.map(item => (
-            <Tr
-              key={item.id}
-              className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
-            >
-              <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
-                {item.photoUrl && (
-                  <Link
-                    href={item.path}
-                    className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
-                    aria-hidden="true"
-                    tabIndex={-1}
-                  >
-                    <Image
-                      className="object-cover"
-                      src={item.photoUrl}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 300px, 150px"
-                    />
-                  </Link>
-                )}
-              </Td>
-              <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
-                {item.title && (
-                  <Link
-                    href={item.path}
-                    className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
-                  >
-                    <HeadingElement
-                      className="font-sans text-20 font-semibold"
-                      id={item.id}
-                    >
-                      {item.title}
-                    </HeadingElement>
-                  </Link>
-                )}
-                {item.fullTitle && <div className="text-16 leading-[23px]">{item.fullTitle}</div>}
-              </Td>
-              <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
-                {!!item.researchAreas?.length && (
-                  <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
-                    <span className="font-bold md:hidden">Expertise: </span>
-                    {item.researchAreas.join(", ")}
-                  </div>
-                )}
-              </Td>
-              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                {item.email && (
-                  <>
-                    <EnvelopeIcon
-                      title="Email"
-                      width={20}
-                      className="mr-6 inline-block text-digital-blue"
-                    />
-
-                    <EmailLink
-                      email={item.email}
-                      className="break-words text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
-                    />
-                  </>
-                )}
-              </Td>
-              <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                {item.libCalId && (
-                  <LibCal
-                    libcalId={item.libCalId}
-                    srText={item.title}
-                  />
-                )}
-              </Td>
+      {!!displayedItems.length && (
+        <Table className="responsive-table text-center md:text-left">
+          <caption
+            className="sr-only"
+            aria-live="polite"
+            aria-atomic
+          >
+            Showing {displayedItems.length} of {items.length}
+          </caption>
+          <Thead className="sr-only lg:not-sr-only">
+            <Tr className="block sm:hidden lg:!table-row">
+              <Th
+                className="block min-w-[100px] pl-[0px] lg:table-cell"
+                scope="col"
+              >
+                <span className="sr-only">Photo</span>
+              </Th>
+              <Th
+                className="block pl-[0px] text-24 lg:table-cell"
+                scope="col"
+              >
+                Name/Title
+              </Th>
+              <Th
+                className="block pl-[0px] text-24 lg:table-cell"
+                scope="col"
+              >
+                Expertise
+              </Th>
+              <Th
+                className="block pl-[0px] text-24 lg:table-cell"
+                scope="col"
+              >
+                Contact
+              </Th>
+              <Th
+                className="block pl-[0px] text-24 lg:table-cell"
+                scope="col"
+              >
+                Schedule
+              </Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
+          </Thead>
+
+          <Tbody>
+            {displayedItems.map(item => (
+              <Tr
+                key={item.id}
+                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+              >
+                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                  {item.photoUrl && (
+                    <Link
+                      href={item.path}
+                      className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
+                      aria-hidden="true"
+                      tabIndex={-1}
+                    >
+                      <Image
+                        className="object-cover"
+                        src={item.photoUrl}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 300px, 150px"
+                      />
+                    </Link>
+                  )}
+                </Td>
+                <Td className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4">
+                  {item.title && (
+                    <Link
+                      href={item.path}
+                      className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
+                    >
+                      <HeadingElement
+                        className="font-sans text-20 font-semibold"
+                        id={item.id}
+                      >
+                        {item.title}
+                      </HeadingElement>
+                    </Link>
+                  )}
+                  {item.fullTitle && <div className="text-16 leading-[23px]">{item.fullTitle}</div>}
+                </Td>
+                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
+                  {!!item.researchAreas?.length && (
+                    <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
+                      <span className="font-bold md:hidden">Expertise: </span>
+                      {item.researchAreas.join(", ")}
+                    </div>
+                  )}
+                </Td>
+                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                  {item.email && (
+                    <>
+                      <EnvelopeIcon
+                        title="Email"
+                        width={20}
+                        className="mr-6 inline-block text-digital-blue"
+                      />
+
+                      <EmailLink
+                        email={item.email}
+                        className="break-words text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                      />
+                    </>
+                  )}
+                </Td>
+                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                  {item.libCalId && (
+                    <LibCal
+                      libcalId={item.libCalId}
+                      srText={item.title}
+                    />
+                  )}
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      )}
     </div>
   )
 }
