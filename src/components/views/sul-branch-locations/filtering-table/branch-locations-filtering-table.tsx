@@ -143,14 +143,17 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           )}
         </div>
       </Td>
-      <Td className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
+      <Th
+        scope="row"
+        className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle"
+      >
         <Link
           href={path}
           className="inline-block w-full text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:w-auto md:text-left"
         >
           {title}
         </Link>
-      </Td>
+      </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
         {phone && (
