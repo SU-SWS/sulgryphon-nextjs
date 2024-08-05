@@ -232,7 +232,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 </Td>
                 <Th
                   scope="row"
-                  className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5"
+                  className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
                   <div className="pt-0 text-16 font-normal leading-[23px]">
                     <h2 className="mb-[0px] font-sans text-20 font-semibold">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
@@ -248,8 +248,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5">
+                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
                     <div className="bg-black-10 px-16 py-8 text-16 leading-[23px] lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
@@ -257,7 +257,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}

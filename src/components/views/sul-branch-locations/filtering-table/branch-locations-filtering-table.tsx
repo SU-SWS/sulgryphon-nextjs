@@ -133,7 +133,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
               tabIndex={-1}
             >
               <Image
-                className="object-contain"
+                className="!relative object-contain"
                 src={imageUrl}
                 alt=""
                 fill
@@ -145,13 +145,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle"
+        className="flex w-auto md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
       >
         <Link
           href={path}
           className="inline-block w-full text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:w-auto md:text-left"
         >
-          {title}
+          <h2 className="font-sans text-20 font-semibold">{title}</h2>
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
