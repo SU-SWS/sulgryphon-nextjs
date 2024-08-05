@@ -127,7 +127,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       width={15}
                       className="mr-8 flex-shrink-0 text-black-80 group-hover:text-cardinal-red-dark"
                     />
-                    Open Now
+                    Open now
                   </span>
                 </label>
               </fieldset>
