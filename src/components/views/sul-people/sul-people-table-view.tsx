@@ -220,7 +220,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
                 <Th
                   scope="row"
-                  className="block w-auto px-0 py-16 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4"
+                  className="block w-auto px-0 py-16 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4 lg:pr-72"
                 >
                   {item.title && (
                     <Link
@@ -237,7 +237,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   )}
                   {item.fullTitle && <div className="text-16 font-normal leading-[23px]">{item.fullTitle}</div>}
                 </Th>
-                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
+                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5 lg:pr-72">
                   {!!item.researchAreas?.length && (
                     <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
                       <span className="font-bold md:hidden">Expertise: </span>
@@ -245,7 +245,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5 lg:pr-72">
                   {item.email && (
                     <>
                       <EnvelopeIcon
