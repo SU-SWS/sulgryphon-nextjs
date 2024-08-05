@@ -74,12 +74,12 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
         footer={
           <div className="relative pb-100 md:rs-pb-7">
             <div className="absolute w-full">
-              <h3
+              <h2
                 id={formId}
                 className="type-2 mb-03em font-bold leading-tight text-black"
               >
                 Today&apos;s Hours
-              </h3>
+              </h2>
               <div className="mb-10">
                 <SelectList
                   ariaLabelledby={formId}
