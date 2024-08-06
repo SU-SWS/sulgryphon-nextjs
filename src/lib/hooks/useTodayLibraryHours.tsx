@@ -38,17 +38,21 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     isOpen = rightNow > openTime && rightNow < closeTime
   }
 
-  const closingTime = closeTime?.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: "America/Los_Angeles",
-  })
+  const closingTime = closeTime
+    ?.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: "America/Los_Angeles",
+    })
+    .toLowerCase()
 
-  const openingTime = openTime?.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: "America/Los_Angeles",
-  })
+  const openingTime = openTime
+    ?.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: "America/Los_Angeles",
+    })
+    .toLowerCase()
 
   const selectOptions = getLibrarySelectOptions(libraryHours.primaryHours)
 
@@ -70,7 +74,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     }
 
     if (nextOpenDateTime) {
-      const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
+      const format: Intl.DateTimeFormatOptions = {hour: "numeric", minute: "numeric"}
 
       if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "Today"
       if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "Tomorrow"
@@ -79,7 +83,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
       if (nextOpenDateTime.getMinutes() !== 0) {
         format.minute = "2-digit"
       }
-      nextOpeningTime += " " + nextOpenDateTime.toLocaleString("en-us", format)
+      nextOpeningTime += " " + nextOpenDateTime.toLocaleString("en-us", format).toLowerCase()
     }
   }
 

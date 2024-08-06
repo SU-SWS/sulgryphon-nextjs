@@ -247,13 +247,13 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       ref={containerRef}
       className="relative flex text-16 leading-[23px] md:flex lg:block"
     >
-      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
+      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">Open</span>}
 
       {!isOpen && <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
-        {isOpen && closingTime && `Until ${closingTime}`}
-        {!isOpen && nextOpeningTime && `Until ${nextOpeningTime}`}
+        {isOpen && closingTime && `until ${closingTime}`}
+        {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
         {!closingTime && !nextOpeningTime && "Hours this week"}
 
         <button
