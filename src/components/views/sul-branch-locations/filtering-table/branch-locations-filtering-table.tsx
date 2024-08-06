@@ -159,7 +159,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="inline-flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start lg:inline-flex"
           >
             <PhoneIcon
               title="Phone Number"
@@ -171,7 +171,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="inline-flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start lg:inline-flex"
           >
             <EnvelopeIcon
               title="Email"
