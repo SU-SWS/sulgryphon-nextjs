@@ -78,7 +78,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                 id={formId}
                 className="type-2 mb-03em font-bold leading-tight text-black"
               >
-                Today&apos;s Hours
+                Today&apos;s hours
               </h2>
               <div className="mb-10">
                 <SelectList
