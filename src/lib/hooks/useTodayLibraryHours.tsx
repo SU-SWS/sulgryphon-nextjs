@@ -70,7 +70,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     }
 
     if (nextOpenDateTime) {
-      const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
+      const format: Intl.DateTimeFormatOptions = {hour: "numeric", minute: "numeric"}
 
       if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "Today"
       if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "Tomorrow"
