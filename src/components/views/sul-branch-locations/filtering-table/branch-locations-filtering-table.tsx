@@ -83,7 +83,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
                 width={15}
                 className="mr-8 inline-block flex-shrink-0 text-black-80"
               />
-              Open Now
+              Open now
             </span>
           </label>
         </fieldset>
