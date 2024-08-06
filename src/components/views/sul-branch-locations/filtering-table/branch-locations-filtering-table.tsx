@@ -128,13 +128,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           {imageUrl && (
             <Link
               href={path}
-              className="inline-block w-full text-center md:w-auto md:text-left"
+              className="relative block aspect-[3/2] w-[300px] overflow-hidden md:w-[290px] lg:max-w-[125px]"
               aria-hidden="true"
               tabIndex={-1}
             >
               <Image
-                className="!relative object-contain"
                 src={imageUrl}
+                className="object-contain"
                 alt=""
                 fill
                 sizes="300px"
