@@ -3,7 +3,8 @@
 import Link from "next/link"
 import Image from "next/image"
 import LibCal from "./libcal"
-import {EnvelopeIcon, XMarkIcon} from "@heroicons/react/20/solid"
+import {XMarkIcon} from "@heroicons/react/20/solid"
+import {EnvelopeIcon} from "@heroicons/react/24/outline"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
@@ -220,7 +221,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
                 <Th
                   scope="row"
-                  className="block w-auto px-0 py-16 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4 lg:pr-72"
+                  className="block w-auto px-0 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4 lg:py-16 lg:pr-72"
                 >
                   {item.title && (
                     <Link
@@ -248,16 +249,17 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5 lg:pr-72">
                   {item.email && (
                     <>
-                      <EnvelopeIcon
-                        title="Email"
-                        width={20}
-                        className="mr-6 inline-block text-digital-blue"
-                      />
-
-                      <EmailLink
-                        email={item.email}
-                        className="break-words text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
-                      />
+                      <Link
+                        href={`mailto:${item.email}`}
+                        className="whitespace-nowrap text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                      >
+                        <EnvelopeIcon
+                          title="Email"
+                          width={20}
+                          className="mr-6 inline-block"
+                        />
+                        {item.email}
+                      </Link>
                     </>
                   )}
                 </Td>
