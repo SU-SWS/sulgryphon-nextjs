@@ -128,13 +128,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           {imageUrl && (
             <Link
               href={path}
-              className="inline-block w-full text-center md:w-auto md:text-left"
+              className="relative block aspect-[3/2] w-[300px] overflow-hidden md:w-[290px] lg:max-w-[125px]"
               aria-hidden="true"
               tabIndex={-1}
             >
               <Image
-                className="object-contain"
                 src={imageUrl}
+                className="object-contain"
                 alt=""
                 fill
                 sizes="300px"
@@ -145,13 +145,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle"
+        className="flex w-auto md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
       >
         <Link
           href={path}
           className="inline-block w-full text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:w-auto md:text-left"
         >
-          {title}
+          <h2 className="font-sans text-20 font-semibold">{title}</h2>
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
@@ -159,7 +159,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start lg:inline-flex"
           >
             <PhoneIcon
               title="Phone Number"
@@ -171,7 +171,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start"
+            className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start lg:inline-flex"
           >
             <EnvelopeIcon
               title="Email"
@@ -247,13 +247,13 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       ref={containerRef}
       className="relative flex text-16 leading-[23px] md:flex lg:block"
     >
-      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Open</span>}
+      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">Open</span>}
 
       {!isOpen && <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Closed</span>}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
-        {isOpen && closingTime && `Until ${closingTime}`}
-        {!isOpen && nextOpeningTime && `Until ${nextOpeningTime}`}
+        {isOpen && closingTime && `until ${closingTime}`}
+        {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
         {!closingTime && !nextOpeningTime && "Hours this week"}
 
         <button

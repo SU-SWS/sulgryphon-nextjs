@@ -29,7 +29,7 @@ type Props = {
 }
 
 const SulPeopleTableView = ({items, hasHeading}: Props) => {
-  const HeadingElement = hasHeading ? "h3" : "h2"
+  const HeadingElement = hasHeading ? "h2" : "h3"
   const id = useId()
   const keywordRef = useRef<HTMLInputElement>(null)
 
@@ -151,7 +151,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
       {!displayedItems.length && <p>No results matching your search terms were found.</p>}
 
       {!!displayedItems.length && (
-        <Table className="responsive-table text-center md:text-left">
+        <Table className="responsive-table sul-people-table text-center md:text-left">
           <caption
             className="sr-only"
             aria-live="polite"
@@ -159,7 +159,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           >
             Showing {displayedItems.length} of {items.length}
           </caption>
-          <Thead className="sr-only lg:not-sr-only">
+          <Thead className="sr-only lg:not-sr-only lg:border-b lg:border-black-40">
             <Tr className="block sm:hidden lg:!table-row">
               <Th
                 className="block min-w-[100px] pl-[0px] lg:table-cell"
@@ -198,9 +198,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.id}
-                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:pt-16 md:text-left md:first:pt-0 lg:!table-row lg:max-h-none"
               >
-                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.photoUrl && (
                     <Link
                       href={item.path}
@@ -220,7 +220,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
                 <Th
                   scope="row"
-                  className="block w-auto px-0 py-16 text-center sm:p-0 sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/4"
+                  className="block w-auto px-0 py-16 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4 lg:pr-72"
                 >
                   {item.title && (
                     <Link
@@ -235,9 +235,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                       </HeadingElement>
                     </Link>
                   )}
-                  {item.fullTitle && <div className="text-16 leading-[23px]">{item.fullTitle}</div>}
+                  {item.fullTitle && <div className="text-16 font-normal leading-[23px]">{item.fullTitle}</div>}
                 </Th>
-                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5">
+                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5 lg:pr-72">
                   {!!item.researchAreas?.length && (
                     <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
                       <span className="font-bold md:hidden">Expertise: </span>
@@ -245,7 +245,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     </div>
                   )}
                 </Td>
-                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5 lg:pr-72">
                   {item.email && (
                     <>
                       <EnvelopeIcon
@@ -261,7 +261,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     </>
                   )}
                 </Td>
-                <Td className="block w-auto px-0 py-16 text-center sm:text-left md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
+                <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
                   {item.libCalId && (
                     <LibCal
                       libcalId={item.libCalId}
