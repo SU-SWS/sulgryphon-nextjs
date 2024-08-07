@@ -250,6 +250,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                     <>
                       <Link
                         href={`mailto:${item.email}`}
+                        prefetch={false}
                         className="whitespace-nowrap text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                       >
                         <EnvelopeIcon
