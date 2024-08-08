@@ -47,7 +47,13 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
       }) as DayHours
 
-      if (todayHours.opens_at && todayHours.closes_at && rightNow > new Date(todayHours.opens_at) && rightNow < new Date(todayHours.closes_at)) openBranches.push(hourId)
+      if (
+        todayHours.opens_at &&
+        todayHours.closes_at &&
+        rightNow > new Date(todayHours.opens_at) &&
+        rightNow < new Date(todayHours.closes_at)
+      )
+        openBranches.push(hourId)
     })
     return items.filter(item => item.hoursId && openBranches.includes(item.hoursId))
   }
@@ -67,7 +73,9 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={!onlyOpenNow}
               onChange={showOpenAndClosed}
             />
-            <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
+            <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+              All locations
+            </span>
           </label>
           <label className="group cursor-pointer">
             <input
@@ -78,11 +86,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               onChange={showOnlyOpenNow}
             />
             <span className="flex items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-              <ClockIcon
-                title="Hours"
-                width={15}
-                className="mr-8 inline-block flex-shrink-0 text-black-80"
-              />
+              <ClockIcon title="Hours" width={15} className="mr-8 inline-block flex-shrink-0 text-black-80" />
               Open now
             </span>
           </label>
@@ -92,24 +96,22 @@ const BranchLocationFilteringTable = ({items}: Props) => {
       <Table className="responsive-table responsive-table-branches ml-[-20px] sm:ml-0">
         <Thead className="sr-only lg:not-sr-only">
           <Tr className="block sm:hidden lg:!table-row">
-            <Th
-              className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-16"
-              scope="col"
-            >
+            <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-16" scope="col">
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">Library</Th>
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">
+              Library
+            </Th>
             <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell lg:pr-80">Open/Closed</Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">Contact</Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">
+              Contact
+            </Th>
             <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
           </Tr>
         </Thead>
         <Tbody>
           {displayedItems.map(item => (
-            <TableRow
-              key={item.id}
-              {...item}
-            />
+            <TableRow key={item.id} {...item} />
           ))}
         </Tbody>
       </Table>
@@ -132,13 +134,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
               aria-hidden="true"
               tabIndex={-1}
             >
-              <Image
-                src={imageUrl}
-                className="object-contain"
-                alt=""
-                fill
-                sizes="300px"
-              />
+              <Image src={imageUrl} className="object-contain" alt="" fill sizes="300px" />
             </Link>
           )}
         </div>
@@ -154,17 +150,16 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           <h2 className="font-sans text-20 font-semibold">{title}</h2>
         </Link>
       </Th>
-      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">{hoursId && <BranchHours hoursId={hoursId} />}</Td>
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
+        {hoursId && <BranchHours hoursId={hoursId} />}
+      </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
             className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start lg:inline-flex"
           >
-            <PhoneIcon
-              title="Phone Number"
-              width={20}
-            />
+            <PhoneIcon title="Phone Number" width={20} />
             {phone}
           </a>
         )}
@@ -173,25 +168,15 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             href={`mailto:${email}`}
             className="flex items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:justify-start lg:inline-flex"
           >
-            <EnvelopeIcon
-              title="Email"
-              width={20}
-            />
+            <EnvelopeIcon title="Email" width={20} />
             {email}
           </a>
         )}
       </Td>
       <Td className="block w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
-          <a
-            href={mapUrl}
-            className="flex items-center justify-center gap-4 md:justify-start"
-          >
-            <MapPinIcon
-              title="Map"
-              width={20}
-              className="min-w-20"
-            />
+          <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
+            <MapPinIcon title="Map" width={20} className="min-w-20" />
             <Address
               {...address}
               className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
@@ -207,7 +192,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
-  const outsideClickProps = useOutsideClick(collapseHours)
+  useOutsideClick(containerRef, collapseHours)
   const id = useId()
   const libraryHours = useLibraryHours<LocationHours>(hoursId)
   const todayLibraryHours = useTodayLibraryHours(hoursId)
@@ -242,45 +227,34 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   })
 
   return (
-    <div
-      {...outsideClickProps}
-      ref={containerRef}
-      className="relative flex text-16 leading-[23px] md:flex lg:block"
-    >
-      {isOpen && <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">Open</span>}
+    <div ref={containerRef} className="relative flex text-16 leading-[23px] md:flex lg:block">
+      {isOpen && (
+        <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
+          Open
+        </span>
+      )}
 
-      {!isOpen && <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Closed</span>}
+      {!isOpen && (
+        <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">
+          Closed
+        </span>
+      )}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {isOpen && closingTime && `until ${closingTime}`}
         {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
         {!closingTime && !nextOpeningTime && "Hours this week"}
 
-        <button
-          ref={buttonRef}
-          onClick={toggleExpandedHours}
-          aria-controls={id}
-          aria-expanded={expandedHours}
-        >
+        <button ref={buttonRef} onClick={toggleExpandedHours} aria-controls={id} aria-expanded={expandedHours}>
           <span className="sr-only">Show this weeks hours</span>
-          <ChevronDownIcon
-            width={20}
-            className={expandedHours ? "rotate-180 transition" : "transition"}
-          />
+          <ChevronDownIcon width={20} className={expandedHours ? "rotate-180 transition" : "transition"} />
         </button>
       </div>
-      <div
-        id={id}
-        className={expandedHours ? "absolute top-full z-10 block" : "hidden"}
-        role="region"
-      >
+      <div id={id} className={expandedHours ? "absolute top-full z-10 block" : "hidden"} role="region">
         <div className="w-300 border border-black-60 bg-white p-20 text-left">
           <div className="mb-10 font-bold">Hours this week</div>
           {thisWeekHours.map(dayHours => (
-            <div
-              key={`${hoursId}-${dayHours.weekday}`}
-              className="grid grid-cols-2 gap-5"
-            >
+            <div key={`${hoursId}-${dayHours.weekday}`} className="grid grid-cols-2 gap-5">
               <div>{dayHours.weekday}</div>
               <div>
                 {dayHours.closed && "Closed"}

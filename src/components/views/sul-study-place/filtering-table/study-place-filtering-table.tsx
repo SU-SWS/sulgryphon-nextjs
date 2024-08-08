@@ -58,7 +58,13 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
         }) as DayHours
 
-        if (todayHours.opens_at && todayHours.closes_at && rightNow > new Date(todayHours.opens_at) && rightNow < new Date(todayHours.closes_at)) openBranches.push(hourId)
+        if (
+          todayHours.opens_at &&
+          todayHours.closes_at &&
+          rightNow > new Date(todayHours.opens_at) &&
+          rightNow < new Date(todayHours.closes_at)
+        )
+          openBranches.push(hourId)
       })
       return showingItems.filter(item => item.libHours && openBranches.includes(item.libHours))
     },
@@ -85,9 +91,12 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
   let displayedItems = items.filter(item => {
     let displayItem = true
     if (displayItem && filters.types.length) displayItem = !!(item.studyType && filters.types.includes(item.studyType))
-    if (displayItem && filters.libraries.length) displayItem = !!(item.branchTitle && filters.libraries.includes(item.branchTitle))
-    if (displayItem && filters.capacities.length) displayItem = !!(item.capacity && filters.capacities.includes(item.capacity))
-    if (displayItem && filters.features.length) displayItem = !!(item.features && filters.features.filter(value => item.features?.includes(value)).length)
+    if (displayItem && filters.libraries.length)
+      displayItem = !!(item.branchTitle && filters.libraries.includes(item.branchTitle))
+    if (displayItem && filters.capacities.length)
+      displayItem = !!(item.capacity && filters.capacities.includes(item.capacity))
+    if (displayItem && filters.features.length)
+      displayItem = !!(item.features && filters.features.filter(value => item.features?.includes(value)).length)
     return displayItem
   })
 
@@ -110,7 +119,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All locations</span>
+                  <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                    All locations
+                  </span>
                 </label>
 
                 <label className="group w-1/2 min-w-[134px] cursor-pointer">
@@ -163,31 +174,18 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
       {!displayedItems.length && <p>No results match your search.</p>}
       {!!displayedItems.length && (
         <Table className="responsive-table responsive-table-study">
-          <caption
-            className="sr-only"
-            aria-live="polite"
-            aria-atomic
-          >
+          <caption className="sr-only" aria-live="polite" aria-atomic>
             Showing {displayedItems.length} of {items.length}
           </caption>
           <Thead className="sr-only lg:not-sr-only">
             <Tr className="block sm:hidden lg:!table-row">
-              <Th
-                className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-32"
-                scope="col"
-              >
+              <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-32" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
-              <Th
-                className="type-1 block pl-[0px] md:table-cell lg:pr-32"
-                scope="col"
-              >
+              <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
                 Place
               </Th>
-              <Th
-                className="type-1 block pl-[0px] md:table-cell lg:pr-32"
-                scope="col"
-              >
+              <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
                 Library
               </Th>
               <Th
@@ -196,16 +194,10 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               >
                 Open/Closed
               </Th>
-              <Th
-                className="type-1 block pl-[0px] md:table-cell lg:pr-32"
-                scope="col"
-              >
+              <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
                 Features
               </Th>
-              <Th
-                className="type-1 block min-w-[100px] pl-[0px] md:table-cell"
-                scope="col"
-              >
+              <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell" scope="col">
                 <span className="sr-only">Reserve this space</span>
               </Th>
             </Tr>
@@ -235,7 +227,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
                   <div className="pt-0 text-16 font-normal leading-[23px]">
-                    <h2 className="mb-[0px] font-sans text-20 font-semibold">{[item.donorName, item.studyType].filter(item => !!item).join(" ")}</h2>
+                    <h2 className="mb-[0px] font-sans text-20 font-semibold">
+                      {[item.donorName, item.studyType].filter(item => !!item).join(" ")}
+                    </h2>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>
@@ -248,7 +242,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">{item.libHours && <BranchHours hoursId={item.libHours} />}</Td>
+                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
+                  {item.libHours && <BranchHours hoursId={item.libHours} />}
+                </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
                     <div className="bg-black-10 px-16 py-8 text-16 leading-[23px] lg:bg-transparent lg:p-0">
@@ -285,7 +281,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
-  const outsideClickProps = useOutsideClick(collapseHours)
+  useOutsideClick(containerRef, collapseHours)
   const id = useId()
   const libraryHours = useLibraryHours<LocationHours>(hoursId)
   const todayLibraryHours = useTodayLibraryHours(hoursId)
@@ -320,45 +316,34 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   })
 
   return (
-    <div
-      {...outsideClickProps}
-      ref={containerRef}
-      className="relative flex text-16 leading-[23px] lg:block"
-    >
-      {isOpen && <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">Open</span>}
+    <div ref={containerRef} className="relative flex text-16 leading-[23px] lg:block">
+      {isOpen && (
+        <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
+          Open
+        </span>
+      )}
 
-      {!isOpen && <span className="mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">Closed</span>}
+      {!isOpen && (
+        <span className="mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">
+          Closed
+        </span>
+      )}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {isOpen && closingTime && `until ${closingTime}`}
         {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
         {!closingTime && !nextOpeningTime && "Hours this week"}
 
-        <button
-          ref={buttonRef}
-          onClick={toggleExpandedHours}
-          aria-controls={id}
-          aria-expanded={expandedHours}
-        >
+        <button ref={buttonRef} onClick={toggleExpandedHours} aria-controls={id} aria-expanded={expandedHours}>
           <span className="sr-only">Show this weeks hours</span>
-          <ChevronDownIcon
-            width={20}
-            className={expandedHours ? "rotate-180 transition" : "transition"}
-          />
+          <ChevronDownIcon width={20} className={expandedHours ? "rotate-180 transition" : "transition"} />
         </button>
       </div>
-      <div
-        id={id}
-        className={expandedHours ? "absolute top-full z-10 block" : "hidden"}
-        role="region"
-      >
+      <div id={id} className={expandedHours ? "absolute top-full z-10 block" : "hidden"} role="region">
         <div className="w-300 border border-black-60 bg-white p-20 text-left">
           <div className="mb-10 font-bold">Hours this week</div>
           {thisWeekHours.map(dayHours => (
-            <div
-              key={`${hoursId}-${dayHours.weekday}`}
-              className="grid grid-cols-2 gap-5"
-            >
+            <div key={`${hoursId}-${dayHours.weekday}`} className="grid grid-cols-2 gap-5">
               <div>{dayHours.weekday}</div>
               <div>
                 {dayHours.closed && "Closed"}

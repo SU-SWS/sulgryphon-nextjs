@@ -1,5 +1,5 @@
-import formatHtml from "@/lib/format-html";
-import {HTMLAttributes} from "react";
+import formatHtml from "@/lib/format-html"
+import {HTMLAttributes} from "react"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   text?: string
@@ -7,7 +7,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 
 const StanfordWysiwyg = ({text, ...props}: Props) => {
   return (
-    <div className="relative centered lg:max-w-[980px]" {...props}>
+    <div className="centered relative lg:max-w-[980px]" {...props}>
       {text && <>{formatHtml(text)}</>}
     </div>
   )

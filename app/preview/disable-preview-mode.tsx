@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import {useLayoutEffect} from "react";
+import {useLayoutEffect} from "react"
 
 const DisablePreviewMode = () => {
   useLayoutEffect(() => {
     setTimeout(() => {
-      fetch('/api/draft/disable', {cache: 'no-cache'})
+      fetch("/api/draft/disable", {cache: "no-cache"})
     }, 1000)
   }, [])
-  return null;
+  return null
 }
-export default DisablePreviewMode;
+export default DisablePreviewMode

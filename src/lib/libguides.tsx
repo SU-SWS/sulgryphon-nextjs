@@ -1,7 +1,13 @@
 import axios from "axios"
 import {LibGuide} from "@/lib/drupal/drupal"
 
-const fetchLibGuides = async ({accountId, subjectId}: {accountId?: number; subjectId?: number}): Promise<LibGuide[]> => {
+const fetchLibGuides = async ({
+  accountId,
+  subjectId,
+}: {
+  accountId?: number
+  subjectId?: number
+}): Promise<LibGuide[]> => {
   if (!accountId && !subjectId) return []
 
   try {

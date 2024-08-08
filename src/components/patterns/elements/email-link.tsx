@@ -6,10 +6,7 @@ import {HTMLProps} from "react"
 
 const EmailLink = ({email, ...props}: {email: string} & HTMLProps<HTMLAnchorElement>) => {
   return (
-    <Email
-      email={email}
-      {...props}
-    >
+    <Email email={email} {...props}>
       {email}
     </Email>
   )

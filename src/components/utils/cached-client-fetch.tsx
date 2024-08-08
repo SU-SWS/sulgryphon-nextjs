@@ -1,16 +1,12 @@
-"use client";
+"use client"
 
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactNode} from "react";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
+import {ReactNode} from "react"
 
 const queryClient = new QueryClient()
 
-const CachedClientFetch = ({children}: { children: ReactNode }) => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
-  )
+const CachedClientFetch = ({children}: {children: ReactNode}) => {
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 }
 
-export default CachedClientFetch;
+export default CachedClientFetch

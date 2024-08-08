@@ -1,10 +1,5 @@
 const SulStudyPlace = () => {
-
-  return (
-    <div>
-      Place of Study
-    </div>
-  )
+  return <div>Place of Study</div>
 }
 
-export default SulStudyPlace;
+export default SulStudyPlace

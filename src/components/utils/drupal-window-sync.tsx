@@ -1,26 +1,29 @@
-"use client";
+"use client"
 
-import {usePathname} from "next/navigation";
-import {useIsClient} from "usehooks-ts";
+import {usePathname} from "next/navigation"
+import {useIsClient} from "usehooks-ts"
 
 const DrupalWindowSync = () => {
-  const pathname = usePathname();
-  if (!useIsClient()) return;
+  const pathname = usePathname()
+  if (!useIsClient()) return
 
   if (
     pathname &&
-    !pathname?.startsWith('/calendar/') &&
-    !pathname?.startsWith('/study-place/') &&
-    !pathname?.startsWith('/preview/') &&
+    !pathname?.startsWith("/calendar/") &&
+    !pathname?.startsWith("/study-place/") &&
+    !pathname?.startsWith("/preview/") &&
     window &&
     window.top !== window.self
   ) {
-    window.parent.postMessage({
-      type: "NEXT_DRUPAL_ROUTE_SYNC",
-      path: pathname
-    }, process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string)
+    window.parent.postMessage(
+      {
+        type: "NEXT_DRUPAL_ROUTE_SYNC",
+        path: pathname,
+      },
+      process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string
+    )
   }
-  return null;
+  return null
 }
 
 export default DrupalWindowSync

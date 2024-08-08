@@ -1,7 +1,7 @@
-import Image from "next/image";
-import Link from "@/components/patterns/elements/drupal-link";
-import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
+import Image from "next/image"
+import Link from "@/components/patterns/elements/drupal-link"
+import {buildUrl} from "@/lib/drupal/utils"
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
 
 interface Props {
   node: NodeStanfordPage
@@ -9,14 +9,14 @@ interface Props {
 }
 
 const StanfordPageCard = ({node, h3Heading, ...props}: Props) => {
-  const HeadingElement = h3Heading ? 'h3' : 'h2';
+  const HeadingElement = h3Heading ? "h3" : "h2"
 
   const imageUrl = node.suPageImage?.mediaImage.url || node.suPageBanner?.suBannerImage?.mediaImage.url
 
   return (
     <article {...props}>
-      {imageUrl &&
-        <div className="overflow-hidden aspect-[16/9] relative mb-30" aria-hidden="true">
+      {imageUrl && (
+        <div className="relative mb-30 aspect-[16/9] overflow-hidden" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
@@ -25,13 +25,13 @@ const StanfordPageCard = ({node, h3Heading, ...props}: Props) => {
             sizes="(max-width: 1700px) 100vw, 1500px"
           />
         </div>
-      }
+      )}
 
-
-      <HeadingElement className="text-m2 mb-20">
+      <HeadingElement className="type-2 mb-20">
         <Link
-          className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red"
-          href={node.path}>
+          className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
+          href={node.path}
+        >
           {node.title}
         </Link>
       </HeadingElement>
@@ -41,4 +41,4 @@ const StanfordPageCard = ({node, h3Heading, ...props}: Props) => {
   )
 }
 
-export default StanfordPageCard;
+export default StanfordPageCard

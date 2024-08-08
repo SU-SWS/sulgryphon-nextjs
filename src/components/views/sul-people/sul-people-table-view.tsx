@@ -39,7 +39,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   let displayedItems = items
 
   if (typeFilter.length >= 1) {
-    displayedItems = items.filter(item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter.includes(value)).length)
+    displayedItems = items.filter(
+      item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter.includes(value)).length
+    )
   }
 
   const updateTypeFilter = (type?: string) => {
@@ -59,7 +61,12 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   }
 
   if (keywordFilter) {
-    displayedItems = displayedItems.filter(item => item.title.toLowerCase().includes(keywordFilter.toLowerCase()) || item.fullTitle?.toLowerCase().includes(keywordFilter.toLowerCase()) || item.researchAreas?.join(" ").toLowerCase().includes(keywordFilter.toLowerCase()))
+    displayedItems = displayedItems.filter(
+      item =>
+        item.title.toLowerCase().includes(keywordFilter.toLowerCase()) ||
+        item.fullTitle?.toLowerCase().includes(keywordFilter.toLowerCase()) ||
+        item.researchAreas?.join(" ").toLowerCase().includes(keywordFilter.toLowerCase())
+    )
   }
 
   return (
@@ -69,19 +76,11 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         onSubmit={e => e.preventDefault()}
       >
         <div className="relative max-w-[350px] md:w-[435px]">
-          <label
-            className="pl-15 text-18 font-semibold"
-            htmlFor={id}
-          >
+          <label className="pl-15 text-18 font-semibold" htmlFor={id}>
             Search by name, title, or subject
           </label>
 
-          <input
-            className="type-0 block h-40 w-full rounded-full pl-15"
-            ref={keywordRef}
-            type="text"
-            id={id}
-          />
+          <input className="type-0 block h-40 w-full rounded-full pl-15" ref={keywordRef} type="text" id={id} />
 
           {keywordFilter && (
             <button
@@ -96,10 +95,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 setKeywordFilter("")
               }}
             >
-              <XMarkIcon
-                className="pr-5 text-black-50"
-                width={30}
-              />
+              <XMarkIcon className="pr-5 text-black-50" width={30} />
             </button>
           )}
 
@@ -108,10 +104,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             className="absolute bottom-6 right-10 z-10"
             onClick={() => setKeywordFilter(keywordRef.current?.value || "")}
           >
-            <MagnifyingGlassIcon
-              className="text-digital-red-dark"
-              width={25}
-            />
+            <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
             <span className="sr-only">Search</span>
           </button>
         </div>
@@ -125,7 +118,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={!typeFilter.length}
                 onChange={() => updateTypeFilter()}
               />
-              <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">All specialists</span>
+              <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                All specialists
+              </span>
             </label>
             <label className="group cursor-pointer">
               <input
@@ -134,7 +129,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter.includes("subject specialist")}
                 onChange={() => updateTypeFilter("subject specialist")}
               />
-              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">Subject specialists</span>
+              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">
+                Subject specialists
+              </span>
             </label>
             <label className="group cursor-pointer">
               <input
@@ -143,7 +140,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter.includes("technical specialist")}
                 onChange={() => updateTypeFilter("technical specialist")}
               />
-              <span className="block items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">Technical specialists</span>
+              <span className="block items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                Technical specialists
+              </span>
             </label>
           </fieldset>
         </div>
@@ -152,43 +151,24 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
 
       {!!displayedItems.length && (
         <Table className="responsive-table sul-people-table text-center md:text-left">
-          <caption
-            className="sr-only"
-            aria-live="polite"
-            aria-atomic
-          >
+          <caption className="sr-only" aria-live="polite" aria-atomic>
             Showing {displayedItems.length} of {items.length}
           </caption>
           <Thead className="sr-only lg:not-sr-only lg:border-b lg:border-black-40">
             <Tr className="block sm:hidden lg:!table-row">
-              <Th
-                className="block min-w-[100px] pl-[0px] lg:table-cell"
-                scope="col"
-              >
+              <Th className="block min-w-[100px] pl-[0px] lg:table-cell" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
-              <Th
-                className="block pl-[0px] text-24 lg:table-cell"
-                scope="col"
-              >
+              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
                 Name/Title
               </Th>
-              <Th
-                className="block pl-[0px] text-24 lg:table-cell"
-                scope="col"
-              >
+              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
                 Expertise
               </Th>
-              <Th
-                className="block pl-[0px] text-24 lg:table-cell"
-                scope="col"
-              >
+              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
                 Contact
               </Th>
-              <Th
-                className="block pl-[0px] text-24 lg:table-cell"
-                scope="col"
-              >
+              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
                 Schedule
               </Th>
             </Tr>
@@ -227,10 +207,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                       href={item.path}
                       className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                     >
-                      <HeadingElement
-                        className="font-sans text-20 font-semibold"
-                        id={item.id}
-                      >
+                      <HeadingElement className="font-sans text-20 font-semibold" id={item.id}>
                         {item.title}
                       </HeadingElement>
                     </Link>
@@ -253,23 +230,14 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                         prefetch={false}
                         className="whitespace-nowrap text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                       >
-                        <EnvelopeIcon
-                          title="Email"
-                          width={20}
-                          className="mr-6 inline-block"
-                        />
+                        <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block" />
                         {item.email}
                       </Link>
                     </>
                   )}
                 </Td>
                 <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                  {item.libCalId && (
-                    <LibCal
-                      libcalId={item.libCalId}
-                      srText={item.title}
-                    />
-                  )}
+                  {item.libCalId && <LibCal libcalId={item.libCalId} srText={item.title} />}
                 </Td>
               </Tr>
             ))}

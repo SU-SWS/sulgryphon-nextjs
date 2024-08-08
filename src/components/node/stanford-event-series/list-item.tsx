@@ -1,7 +1,7 @@
-import Link from "@/components/patterns/elements/drupal-link";
-import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d";
+import Link from "@/components/patterns/elements/drupal-link"
+import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d"
 
-const StanfordEventSeriesListItem = ({node, ...props}: { node: NodeStanfordEventSeries }) => {
+const StanfordEventSeriesListItem = ({node, ...props}: {node: NodeStanfordEventSeries}) => {
   // Not being utilized anywhere currently
   return (
     <article {...props}>
@@ -11,4 +11,4 @@ const StanfordEventSeriesListItem = ({node, ...props}: { node: NodeStanfordEvent
     </article>
   )
 }
-export default StanfordEventSeriesListItem;
+export default StanfordEventSeriesListItem

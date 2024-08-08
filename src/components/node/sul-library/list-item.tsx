@@ -1,5 +1,5 @@
-import Link from "@/components/patterns/elements/drupal-link";
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d";
+import Link from "@/components/patterns/elements/drupal-link"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 
 const SulLibraryListItem = ({node, ...props}: {node: NodeSulLibrary}) => {
   return (
@@ -11,4 +11,4 @@ const SulLibraryListItem = ({node, ...props}: {node: NodeSulLibrary}) => {
   )
 }
 
-export default SulLibraryListItem;
+export default SulLibraryListItem

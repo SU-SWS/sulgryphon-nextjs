@@ -1,103 +1,103 @@
+import Link from "@/components/patterns/elements/drupal-link"
+import Image from "next/image"
+import {MapPinIcon, BuildingLibraryIcon} from "@heroicons/react/24/outline"
+import StudyPlaceHours from "./study-place-today-hours"
+import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid"
+import {buildUrl} from "@/lib/drupal/utils"
+import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
 
-import Link from "@/components/patterns/elements/drupal-link";
-import Image from "next/image";
-import {MapPinIcon, BuildingLibraryIcon} from "@heroicons/react/24/outline";
-import StudyPlaceHours from "./study-place-today-hours";
-import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid";
-import {buildUrl} from "@/lib/drupal/utils";
-import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d";
-
-const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
-
+const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
   // Filter out empty terms and deduplicate terms by their ID.
-  const features: TermUnion[] = node.sulStudyFeatures?.filter((term, index, self) =>
-      term.name?.length > 0 && index === self.findIndex((t) => (
-        t.id === term.id
-      ))
-  ) || [];
+  const features: TermUnion[] =
+    node.sulStudyFeatures?.filter(
+      (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
+    ) || []
 
   const imageUrl = node.sulStudyImage?.mediaImage.url || node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
-  const imageAlt = node.sulStudyImage?.mediaImage.alt || node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt|| '';
+  const imageAlt = node.sulStudyImage?.mediaImage.alt || node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt || ""
   return (
     <>
-      <div className="@container flex w-full leading-display shadow-md border-0 rounded flex-col">
-        {(imageUrl) &&
-          <div className={"overflow-hidden aspect-[16/9] relative "}>
+      <div className="flex w-full flex-col rounded border-0 leading-display shadow-md @container">
+        {imageUrl && (
+          <div className={"relative aspect-[16/9] overflow-hidden"}>
             <Image
-              className="object-cover object-center static"
+              className="static object-cover object-center"
               src={buildUrl(imageUrl).toString()}
               alt={imageAlt}
               fill
               sizes="(max-width: 1700px) 100vw, 1500px"
             />
           </div>
-        }
+        )}
 
-        {(node.sulStudyLibcalId) &&
+        {node.sulStudyLibcalId && (
           <a
             href={`https://appointments.library.stanford.edu/space/${node.sulStudyLibcalId}`}
-            className="bg-black-true text-white hocus:text-illuminating-dark w-full rs-p-neg1 no-underline hocus:underline"
+            className="rs-p-neg1 w-full bg-black-true text-white no-underline hocus:text-illuminating-dark hocus:underline"
           >
-            <div className="flex justify-end items-center gap-xs">
-              <div className="w-0 @md:w-[87px] h-[3px] bg-illuminating-dark"></div>
-              <CalendarDaysIcon title="Date" className="inline-block flex-shrink-0 w-[24px]"/>
+            <div className="flex items-center justify-end gap-xs">
+              <div className="h-[3px] w-0 bg-illuminating-dark @md:w-[87px]"></div>
+              <CalendarDaysIcon title="Date" className="inline-block w-[24px] flex-shrink-0" />
               <div className="relative pr-30 font-bold no-underline">
                 Reserve Space <span className="sr-only">at {node.sulStudyBranch.title}</span>
-                <ChevronRightIcon className="inline absolute top-0 right-0 h-full"/>
+                <ChevronRightIcon className="absolute right-0 top-0 inline h-full" />
               </div>
             </div>
           </a>
-        }
+        )}
 
-        <div className={"card-body items-start rs-px-2 rs-py-2"}>
-          <div className="leading-display text-18 pt-0 font-normal">
-            <h2 className="type-2 rs-mb-1">{[node.sulStudyRoomDonorName, node.sulStudyType.name].filter(item => !!item).join(" ")}</h2>
+        <div className={"card-body rs-py-2 rs-px-2 items-start"}>
+          <div className="pt-0 text-18 font-normal leading-display">
+            <h2 className="rs-mb-1 type-2">
+              {[node.sulStudyRoomDonorName, node.sulStudyType.name].filter(item => !!item).join(" ")}
+            </h2>
 
             <div className="leading-tight">
-              {node.sulStudyBranch?.suLibraryHours &&
-                <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours}/>
-              }
-              <div className="relative flex flex-row items-start type-0 mb-20">
-                <MapPinIcon title="Location" width={19} className="mt-01em md:mt-0 mr-12 flex-shrink-0"/>
-                <Link href={node.sulStudyBranch.path}
-                      className="transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red">
+              {node.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours} />}
+              <div className="type-0 relative mb-20 flex flex-row items-start">
+                <MapPinIcon title="Location" width={19} className="mr-12 mt-01em flex-shrink-0 md:mt-0" />
+                <Link
+                  href={node.sulStudyBranch.path}
+                  className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                >
                   <div>{node.sulStudyBranch.title}</div>
                 </Link>
               </div>
 
-              {node.sulStudyRoomNumber &&
-                <div className="relative flex flex-row items-start type-0 rs-mb-2">
-                  <BuildingLibraryIcon title="Library" className="w-24 h-24 mr-12 flex-shrink-0 "/>
+              {node.sulStudyRoomNumber && (
+                <div className="rs-mb-2 type-0 relative flex flex-row items-start">
+                  <BuildingLibraryIcon title="Library" className="mr-12 h-24 w-24 flex-shrink-0" />
                   <div>Room-{node.sulStudyRoomNumber}</div>
                 </div>
-              }
+              )}
 
-              {(node.sulStudyCapacity || features) &&
-                <ul className="ml-10 rs-mb-1">
-                  {node.sulStudyCapacity &&
-                    <li className="type-0 leading-display">{node.sulStudyCapacity.name}</li>
-                  }
+              {(node.sulStudyCapacity || features) && (
+                <ul className="rs-mb-1 ml-10">
+                  {node.sulStudyCapacity && <li className="type-0 leading-display">{node.sulStudyCapacity.name}</li>}
 
-                  {features && features.slice(0, 4).map(feature =>
-                    <li key={`feature-${node.id}-${feature.id}`} data-foo={`feature-${node.id}-${feature.id}`}
-                        className="type-0 leading-display">
-                      {feature.name}
-                    </li>
-                  )}
+                  {features &&
+                    features.slice(0, 4).map(feature => (
+                      <li
+                        key={`feature-${node.id}-${feature.id}`}
+                        data-foo={`feature-${node.id}-${feature.id}`}
+                        className="type-0 leading-display"
+                      >
+                        {feature.name}
+                      </li>
+                    ))}
                 </ul>
-              }
+              )}
 
-              {(features && features.length > 4) &&
+              {features && features.length > 4 && (
                 <Link
                   href={`/study-place/features/${node.id}`}
-                  className="type-0 transition-colors hover:text-brick-dark hover:bg-black-10 hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                  className="type-0 transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                   aria-haspopup="dialog"
                 >
                   Show all&nbsp;<span className="sr-only">{node.sulStudyBranch.title}&nbsp;</span>features
-                  <ChevronRightIcon height={30} className="inline top-0 right-0 h-full"/>
+                  <ChevronRightIcon height={30} className="right-0 top-0 inline h-full" />
                 </Link>
-              }
-
+              )}
             </div>
           </div>
         </div>
@@ -105,4 +105,4 @@ const SulStudyPlaceCard = ({node}: { node: NodeSulStudyPlace }) => {
     </>
   )
 }
-export default SulStudyPlaceCard;
+export default SulStudyPlaceCard

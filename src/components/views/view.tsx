@@ -8,33 +8,48 @@ import EventsListView from "@/components/views/stanford-events/events-list-view"
 import PageCardView from "@/components/views/stanford-page/page-card-view"
 import StudyPlacesFilteredCards from "@/components/views/sul-study-place/study-places-filtered-cards"
 import SulBranchLocationTableView from "@/components/views/sul-branch-locations/filtering-table/branch-locations-table"
-import {NodeStanfordEvent, NodeStanfordNews, NodeStanfordPage, NodeStanfordPerson, NodeSulLibrary, NodeSulStudyPlace, NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {
+  NodeStanfordEvent,
+  NodeStanfordNews,
+  NodeStanfordPage,
+  NodeStanfordPerson,
+  NodeSulLibrary,
+  NodeSulStudyPlace,
+  NodeUnion,
+} from "@/lib/gql/__generated__/drupal.d"
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view"
 import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
+import {JSX} from "react"
 
 interface Props {
   items: NodeUnion[]
   viewId: string
   displayId: string
   hasHeading: boolean
+  /**
+   * Total number of items to build the pager.
+   */
+  totalItems: number
+  /**
+   * Server action to load a page.
+   */
+  loadPage?: (_page: number) => Promise<JSX.Element>
 }
 
-const View = async ({viewId, displayId, items, hasHeading}: Props) => {
+const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}: Props) => {
   const component = `${viewId}--${displayId}`
+
   switch (component) {
     case "stanford_basic_pages--basic_page_type_list":
-      return (
-        <PageListView
-          items={items as NodeStanfordPage[]}
-          hasHeading={hasHeading}
-        />
-      )
+      return <PageListView items={items as NodeStanfordPage[]} hasHeading={hasHeading} />
 
     case "stanford_news--vertical_cards":
       return (
         <NewsCardView
           items={items as NodeStanfordNews[]}
           hasHeading={hasHeading}
+          totalItems={totalItems}
+          loadPage={loadPage}
         />
       )
 
@@ -43,22 +58,21 @@ const View = async ({viewId, displayId, items, hasHeading}: Props) => {
         <NewsListView
           items={items as NodeStanfordNews[]}
           hasHeading={hasHeading}
+          totalItems={totalItems}
+          loadPage={loadPage}
         />
       )
 
     case "stanford_person--grid_list_all":
-      return (
-        <PersonCardView
-          items={items as NodeStanfordPerson[]}
-          hasHeading={hasHeading}
-        />
-      )
+      return <PersonCardView items={items as NodeStanfordPerson[]} hasHeading={hasHeading} />
 
     case "stanford_events--cards":
       return (
         <EventsCardView
           items={items as NodeStanfordEvent[]}
           hasHeading={hasHeading}
+          totalItems={totalItems}
+          loadPage={loadPage}
         />
       )
 
@@ -68,32 +82,19 @@ const View = async ({viewId, displayId, items, hasHeading}: Props) => {
         <EventsListView
           items={items as NodeStanfordEvent[]}
           hasHeading={hasHeading}
+          totalItems={totalItems}
+          loadPage={loadPage}
         />
       )
 
     case "stanford_basic_pages--viewfield_block_1":
-      return (
-        <PageCardView
-          items={items as NodeStanfordPage[]}
-          hasHeading={hasHeading}
-        />
-      )
+      return <PageCardView items={items as NodeStanfordPage[]} hasHeading={hasHeading} />
 
     case "stanford_shared_tags--card_grid":
-      return (
-        <SharedTagsCardView
-          items={items as NodeStanfordNews[]}
-          hasHeading={hasHeading}
-        />
-      )
+      return <SharedTagsCardView items={items as NodeStanfordNews[]} hasHeading={hasHeading} />
 
     case "sul_shared_tag_events--card_grid":
-      return (
-        <SharedTagsCardView
-          items={items as NodeStanfordEvent[]}
-          hasHeading={hasHeading}
-        />
-      )
+      return <SharedTagsCardView items={items as NodeStanfordEvent[]} hasHeading={hasHeading} />
 
     case "sul_study_places--study_places":
       return <StudyPlacesFilteredCards items={items as NodeSulStudyPlace[]} />

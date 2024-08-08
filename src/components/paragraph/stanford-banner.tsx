@@ -1,9 +1,9 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import Banner from "@/components/patterns/banner";
-import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
-import {ElementType, HTMLAttributes} from "react";
+import Banner from "@/components/patterns/banner"
+import {buildUrl} from "@/lib/drupal/utils"
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {ElementType, HTMLAttributes} from "react"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   header?: Maybe<string>
@@ -29,18 +29,21 @@ const StanfordBanner = ({
   hideHeading,
   ...props
 }: Props) => {
-
-  const imageUrl = image?.mediaImage.url;
+  const imageUrl = image?.mediaImage.url
 
   return (
     <Banner
-      image={imageUrl && <Image
-        className="object-cover object-center"
-        src={buildUrl(imageUrl).toString()}
-        alt={image?.mediaImage.alt || ''}
-        fill
-        sizes="100vw"
-      />}
+      image={
+        imageUrl && (
+          <Image
+            className="object-cover object-center"
+            src={buildUrl(imageUrl).toString()}
+            alt={image?.mediaImage.alt || ""}
+            fill
+            sizes="100vw"
+          />
+        )
+      }
       header={header}
       superHeader={superHeader}
       body={body}
@@ -52,4 +55,4 @@ const StanfordBanner = ({
     />
   )
 }
-export default StanfordBanner;
+export default StanfordBanner

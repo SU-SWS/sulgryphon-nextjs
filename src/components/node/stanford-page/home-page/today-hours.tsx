@@ -10,19 +10,11 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeSulLibrary, Maybe} from "@/lib/gql/__generated__/drupal.d"
-
-export type TrimmedLibrary = {
-  id: string
-  title: string
-  suLibraryHours?: NodeSulLibrary["suLibraryHours"]
-  suLibraryContactImg?: NodeSulLibrary["suLibraryContactImg"]
-  suLibraryBanner: NodeSulLibrary["suLibraryBanner"]
-  map?: Maybe<string>
-}
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import Link from "next/link"
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
-  libraries: TrimmedLibrary[]
+  libraries: NodeSulLibrary[]
 }
 
 const TodayHours = ({libraries, ...props}: HoursProps) => {
@@ -30,10 +22,7 @@ const TodayHours = ({libraries, ...props}: HoursProps) => {
   return (
     <ErrorBoundary fallback={<></>}>
       <CachedClientFetch>
-        <LibrariesTodayHours
-          libraries={libraries}
-          {...props}
-        />
+        <LibrariesTodayHours libraries={libraries} {...props} />
       </CachedClientFetch>
     </ErrorBoundary>
   )
@@ -46,7 +35,9 @@ interface option {
 
 const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libraries"]}) => {
   const formId = useId()
-  const [selectedLibrary, setSelectedLibrary] = useState(libraries.find(library => library.suLibraryHours === "green")?.id ?? libraries[0].id)
+  const [selectedLibrary, setSelectedLibrary] = useState(
+    libraries.find(library => library.suLibraryHours === "green")?.id ?? libraries[0].id
+  )
   const library = libraries.find((item, index) => (selectedLibrary ? item.id === selectedLibrary : index === 0))
 
   const libraryOptions: option[] = []
@@ -74,10 +65,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
         footer={
           <div className="relative pb-100 md:rs-pb-7">
             <div className="absolute w-full">
-              <h2
-                id={formId}
-                className="type-2 mb-03em font-bold leading-tight text-black"
-              >
+              <h2 id={formId} className="type-2 mb-03em font-bold leading-tight text-black">
                 Today&apos;s hours
               </h2>
               <div className="mb-10">
@@ -94,19 +82,12 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                 <div className="flex justify-between">
                   <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
 
-                  {library?.map && (
-                    <a
-                      href={library?.map}
-                      className="flex items-center"
-                    >
+                  {library?.suLibraryMapLink?.url && (
+                    <Link href={library.suLibraryMapLink.url} prefetch={false} className="flex items-center">
                       <span className="sr-only">{library.title}&nbsp;</span>
-                      <MapPinIcon
-                        title="Map"
-                        width={25}
-                        className="mr-5"
-                      />
+                      <MapPinIcon title="Map" width={25} className="mr-5" />
                       Location
-                    </a>
+                    </Link>
                   )}
                 </div>
               </div>
@@ -124,20 +105,15 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
   if (!libraryHours) return
 
   const {closedAllDay, isOpen, closingTime, nextOpeningTime} = libraryHours
-  const hoursDisplay = !closedAllDay && isOpen ? "Open until " + closingTime : "Closed" + (nextOpeningTime ? ` until ${nextOpeningTime}` : "")
+  const hoursDisplay =
+    !closedAllDay && isOpen
+      ? "Open until " + closingTime
+      : "Closed" + (nextOpeningTime ? ` until ${nextOpeningTime}` : "")
   if (!hoursDisplay) return
 
   return (
-    <div
-      className="mb-4 flex items-center text-black"
-      aria-live="polite"
-      aria-atomic
-    >
-      <ClockIcon
-        title="Hours"
-        width={15}
-        className="mr-5"
-      />
+    <div className="mb-4 flex items-center text-black" aria-live="polite" aria-atomic>
+      <ClockIcon title="Hours" width={15} className="mr-5" />
       <div>{hoursDisplay}</div>
     </div>
   )

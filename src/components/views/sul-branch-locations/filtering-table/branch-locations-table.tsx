@@ -1,5 +1,7 @@
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
-import BranchLocationFilteringTable, {BranchLocation} from "@/components/views/sul-branch-locations/filtering-table/branch-locations-filtering-table"
+import BranchLocationFilteringTable, {
+  BranchLocation,
+} from "@/components/views/sul-branch-locations/filtering-table/branch-locations-filtering-table"
 import CachedClientFetch from "@/components/utils/cached-client-fetch"
 
 interface Props {

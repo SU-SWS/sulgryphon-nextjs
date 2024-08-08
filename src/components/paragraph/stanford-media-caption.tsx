@@ -1,12 +1,12 @@
-import Image from "next/image";
-import formatHtml from "@/lib/format-html";
-import Oembed from "@/components/patterns/elements/oembed";
-import Link from "@/components/patterns/elements/drupal-link";
-import {HTMLAttributes} from "react";
-import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import Image from "next/image"
+import formatHtml from "@/lib/format-html"
+import Oembed from "@/components/patterns/elements/oembed"
+import Link from "@/components/patterns/elements/drupal-link"
+import {HTMLAttributes} from "react"
+import {buildUrl} from "@/lib/drupal/utils"
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 
-interface Props extends HTMLAttributes<HTMLElement>{
+interface Props extends HTMLAttributes<HTMLElement> {
   image?: Maybe<MediaImage>
   videoUrl?: Maybe<string>
   caption?: Maybe<string>
@@ -14,17 +14,16 @@ interface Props extends HTMLAttributes<HTMLElement>{
 }
 
 const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props) => {
+  const imageUrl = image?.mediaImage.url
+  const imageAlt = image?.mediaImage.alt || ""
 
-  const imageUrl = image?.mediaImage.url;
-  const imageAlt = image?.mediaImage.alt || '';
-
-  const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
+  const linkAttributes: Record<string, string> = {}
+  if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
 
   return (
-    <figure className="relative centered" {...props}>
-      {imageUrl &&
-        <div className="overflow-hidden aspect-[16/9] relative mb-10">
+    <figure className="centered relative" {...props}>
+      {imageUrl && (
+        <div className="relative mb-10 aspect-[16/9] overflow-hidden">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
@@ -33,30 +32,28 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
             sizes="(max-width: 900px) 100vw, 1500px"
           />
         </div>
-      }
+      )}
 
-      {videoUrl &&
-        <div className="overflow-hidden aspect-[16/9] relative">
-          <Oembed url={videoUrl} className="h-full"/>
+      {videoUrl && (
+        <div className="relative aspect-[16/9] overflow-hidden">
+          <Oembed url={videoUrl} className="h-full" />
         </div>
-      }
+      )}
 
-      {link?.url &&
-        <div className='text-right'>
-          <Link href={link.url}
-                className="hocus:underline transition-colors hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
-                {...linkAttributes}>
+      {link?.url && (
+        <div className="text-right">
+          <Link
+            href={link.url}
+            className="transition-colors hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
+            {...linkAttributes}
+          >
             {link.title}
           </Link>
         </div>
-      }
+      )}
 
-      {caption &&
-        <figcaption className="text-right float-right text-19 leading">
-          {formatHtml(caption)}
-        </figcaption>
-      }
+      {caption && <figcaption className="float-right text-right text-19 leading">{formatHtml(caption)}</figcaption>}
     </figure>
   )
 }
-export default StanfordMediaCaption;
+export default StanfordMediaCaption

@@ -1,5 +1,5 @@
-import PageCardView from "@/components/views/stanford-page/page-card-view";
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d";
+import PageCardView from "@/components/views/stanford-page/page-card-view"
+import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
 
 interface Props {
   items: NodeStanfordPage[]
@@ -7,6 +7,6 @@ interface Props {
 }
 
 const PageListView = async ({items, hasHeading}: Props) => {
-  return <PageCardView items={items} hasHeading={hasHeading}/>
+  return <PageCardView items={items} hasHeading={hasHeading} />
 }
-export default PageListView;
+export default PageListView

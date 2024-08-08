@@ -30,7 +30,9 @@ const getLibraryHours = nextCache(
     params.set("from", from.toISOString().replace(/T.*/, ""))
     params.set("to", to.toISOString().replace(/T.*/, ""))
 
-    const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {cache: "no-cache"})
+    const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
+      cache: "no-cache",
+    })
       .then(res => res.json())
       .catch(e => {
         console.error(e)

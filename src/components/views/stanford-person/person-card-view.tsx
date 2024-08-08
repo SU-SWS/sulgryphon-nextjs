@@ -1,5 +1,5 @@
-import CardList from "@/components/views/card-list";
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
+import CardList from "@/components/views/card-list"
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 
 interface Props {
   items: NodeStanfordPerson[]
@@ -7,8 +7,6 @@ interface Props {
 }
 
 const PersonCardView = async ({items, hasHeading}: Props) => {
-  return (
-    <CardList items={items} h3Heading={hasHeading}/>
-  )
+  return <CardList items={items} h3Heading={hasHeading} />
 }
-export default PersonCardView;
+export default PersonCardView

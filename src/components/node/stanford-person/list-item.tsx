@@ -1,18 +1,19 @@
-import Image from "next/image";
-import Link from "@/components/patterns/elements/drupal-link";
-import LibCal from "./libcal";
-import {buildUrl} from "@/lib/drupal/utils";
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d";
+import Image from "next/image"
+import Link from "@/components/patterns/elements/drupal-link"
+import LibCal from "./libcal"
+import {buildUrl} from "@/lib/drupal/utils"
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 
-const StanfordPersonListItem = ({node, ...props}: { node: NodeStanfordPerson }) => {
-  const imageUrl = node.suPersonPhoto?.mediaImage.url;
+const StanfordPersonListItem = ({node, ...props}: {node: NodeStanfordPerson}) => {
+  const imageUrl = node.suPersonPhoto?.mediaImage.url
 
   return (
     <article
-      className="@container flex flex-col gap-lg w-full basefont-20 leading-display bg-white text-black" {...props}>
-      {imageUrl &&
-        <div
-          className="relative rounded-full overflow-hidden aspect-[1/1] w-[130px] @lg:w-[215px] mx-auto">
+      className="basefont-20 flex w-full flex-col gap-lg bg-white leading-display text-black @container"
+      {...props}
+    >
+      {imageUrl && (
+        <div className="relative mx-auto aspect-[1/1] w-[130px] overflow-hidden rounded-full @lg:w-[215px]">
           <Image
             src={buildUrl(imageUrl).toString()}
             alt=""
@@ -21,20 +22,19 @@ const StanfordPersonListItem = ({node, ...props}: { node: NodeStanfordPerson }) 
             className="object-cover"
           />
         </div>
-      }
+      )}
       <div>
-        <Link href={node.path}
-              className="no-underline text-digital-red hocus:underline hocus:text-black">
-          <h2 className="type-1 font-semibold mb-[0.2em]">{node.title}</h2>
+        <Link href={node.path} className="text-digital-red no-underline hocus:text-black hocus:underline">
+          <h2 className="type-1 mb-[0.2em] font-semibold">{node.title}</h2>
         </Link>
         <div className="type-0 leading-snug">{node.suPersonShortTitle}</div>
       </div>
-      {node.sulPersonLibcalId &&
+      {node.sulPersonLibcalId && (
         <div>
-          <LibCal libcalId={node.sulPersonLibcalId} srText={node.title}/>
+          <LibCal libcalId={node.sulPersonLibcalId} srText={node.title} />
         </div>
-      }
+      )}
     </article>
   )
 }
-export default StanfordPersonListItem;
+export default StanfordPersonListItem

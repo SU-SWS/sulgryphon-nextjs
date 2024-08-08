@@ -23,19 +23,11 @@ type ParagraphProps = HTMLAttributes<HTMLDivElement> & {
 }
 const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
   if (paragraph.status) {
-    return (
-      <ParagraphComponent
-        paragraph={paragraph}
-        {...props}
-      />
-    )
+    return <ParagraphComponent paragraph={paragraph} {...props} />
   }
   return (
     <EditorAlertBanner message="Unpublished Content">
-      <ParagraphComponent
-        paragraph={paragraph}
-        {...props}
-      />
+      <ParagraphComponent paragraph={paragraph} {...props} />
     </EditorAlertBanner>
   )
 }
@@ -56,7 +48,9 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           linkStyle={paragraphBehaviors?.sul_card_styles?.link_display_style}
           sprinklePosition={paragraphBehaviors?.sul_card_styles?.background_sprinkles}
           image={paragraph.suCardMedia?.__typename === "MediaImage" ? paragraph.suCardMedia : undefined}
-          videoUrl={paragraph.suCardMedia?.__typename === "MediaVideo" ? paragraph.suCardMedia.mediaOembedVideo : undefined}
+          videoUrl={
+            paragraph.suCardMedia?.__typename === "MediaVideo" ? paragraph.suCardMedia.mediaOembedVideo : undefined
+          }
           orientation={paragraphBehaviors?.sul_card_styles?.orientation}
           singleRow={singleRow}
           headerId={headerId}
@@ -82,43 +76,29 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
         />
       )}
 
-      {paragraph.__typename === "ParagraphStanfordGallery" && (
-        <StanfordImageGallery
-          paragraph={paragraph}
-          {...props}
-        />
-      )}
+      {paragraph.__typename === "ParagraphStanfordGallery" && <StanfordImageGallery paragraph={paragraph} {...props} />}
 
       {paragraph.__typename === "ParagraphStanfordMediaCaption" && (
         <StanfordMediaCaption
           caption={paragraph.suMediaCaptionCaption?.processed}
           link={paragraph.suMediaCaptionLink}
           image={paragraph.suMediaCaptionMedia?.__typename === "MediaImage" ? paragraph.suMediaCaptionMedia : undefined}
-          videoUrl={paragraph.suMediaCaptionMedia?.__typename === "MediaVideo" ? paragraph.suMediaCaptionMedia.mediaOembedVideo : undefined}
+          videoUrl={
+            paragraph.suMediaCaptionMedia?.__typename === "MediaVideo"
+              ? paragraph.suMediaCaptionMedia.mediaOembedVideo
+              : undefined
+          }
           {...props}
         />
       )}
 
       {paragraph.__typename === "ParagraphStanfordWysiwyg" && (
-        <StanfordWysiwyg
-          text={paragraph.suWysiwygText?.processed}
-          {...props}
-        />
+        <StanfordWysiwyg text={paragraph.suWysiwygText?.processed} {...props} />
       )}
 
       {paragraph.__typename === "ParagraphStanfordList" && (
         <Suspense>
-          <StanfordLists
-            headline={paragraph.suListHeadline}
-            description={paragraph.suListDescription?.processed}
-            link={paragraph.suListButton}
-            view={paragraph.suListView}
-            behaviors={paragraphBehaviors}
-            headerId={headerId}
-            uuid={paragraph.id}
-            headingBehavior={paragraphBehaviors.list_paragraph?.heading_behavior}
-            {...props}
-          />
+          <StanfordLists paragraph={paragraph} />
         </Suspense>
       )}
 
@@ -138,11 +118,7 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
       {paragraph.__typename === "ParagraphStanfordSpacer" && <StanfordSpacer size={paragraph.suSpacerSize} />}
 
       {paragraph.__typename === "ParagraphCollection" && (
-        <SulCollection
-          cards={paragraph.sulCollectionCard}
-          heading={paragraph.sulCollectionHeading}
-          {...props}
-        />
+        <SulCollection cards={paragraph.sulCollectionCard} heading={paragraph.sulCollectionHeading} {...props} />
       )}
 
       {paragraph.__typename === "ParagraphSulFeatCollection" && (
@@ -157,12 +133,7 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
         />
       )}
 
-      {paragraph.__typename === "ParagraphSulContactCard" && (
-        <SulContactCard
-          paragraph={paragraph}
-          {...props}
-        />
-      )}
+      {paragraph.__typename === "ParagraphSulContactCard" && <SulContactCard paragraph={paragraph} {...props} />}
 
       {paragraph.__typename === "ParagraphSulButton" && (
         <SulButton

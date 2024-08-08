@@ -1,5 +1,5 @@
-import CardList from "@/components/views/card-list";
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d";
+import CardList from "@/components/views/card-list"
+import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 
 interface Props {
   items: NodeUnion[]
@@ -7,8 +7,6 @@ interface Props {
 }
 
 const SharedTagsCardView = async ({items, hasHeading}: Props) => {
-  return (
-    <CardList items={items} h3Heading={hasHeading}/>
-  )
+  return <CardList items={items} h3Heading={hasHeading} />
 }
-export default SharedTagsCardView;
+export default SharedTagsCardView

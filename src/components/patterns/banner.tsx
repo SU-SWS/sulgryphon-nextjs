@@ -1,10 +1,10 @@
-import {ReactNodeLike} from "prop-types";
-import Card from "@/components/patterns/card";
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
-import {ElementType, HTMLAttributes} from "react";
+import {ReactNodeLike} from "prop-types"
+import Card from "@/components/patterns/card"
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {ElementType, HTMLAttributes} from "react"
 
 type BannerProps = HTMLAttributes<HTMLDivElement> & {
-  image?: Maybe<ReactNodeLike>;
+  image?: Maybe<ReactNodeLike>
   superHeader?: Maybe<string>
   header?: Maybe<string>
   body?: Maybe<string>
@@ -27,21 +27,17 @@ const Banner = ({
   hideHeading,
   ...props
 }: BannerProps) => {
-
-  const hasCardText = header || superHeader || body || link;
+  const hasCardText = header || superHeader || body || link
 
   return (
-    <div className="hero basefont-20 relative h-full mx-auto w-full lg:max-h-500" {...props}>
-      <div
-        className="w-full overflow-hidden relative max-h-500 min-h-[30rem] lg:min-h-[50rem] bg-[grey]">
-        {image}
-      </div>
+    <div className="hero basefont-20 relative mx-auto h-full w-full lg:max-h-500" {...props}>
+      <div className="relative max-h-500 min-h-[30rem] w-full overflow-hidden bg-[grey] lg:min-h-[50rem]">{image}</div>
 
-      {(hasCardText) &&
+      {hasCardText && (
         <div
-          className={`mx-auto block lg:absolute lg:top-auto lg:bottom-36 ${overlayPosition === 'right' ? 'lg:right-36' : 'lg:left-36'}`}>
-          <div
-            className="card basefont-20 leading-display bg-white text-black border border-solid border-black-10 shadow relative lg:max-w-[50%]">
+          className={`mx-auto block lg:absolute lg:bottom-36 lg:top-auto ${overlayPosition === "right" ? "lg:right-36" : "lg:left-36"}`}
+        >
+          <div className="card basefont-20 relative border border-solid border-black-10 bg-white leading-display text-black shadow lg:max-w-[50%]">
             <Card
               header={header}
               superHeader={superHeader}
@@ -53,8 +49,8 @@ const Banner = ({
             />
           </div>
         </div>
-      }
+      )}
     </div>
   )
 }
-export default Banner;
+export default Banner

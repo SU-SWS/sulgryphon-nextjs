@@ -2,7 +2,10 @@ import {AccessToken, JsonApiResource, JsonApiWithLocaleOptions} from "next-drupa
 import {buildUrl} from "@/lib/drupal/utils"
 import {deserialize} from "@/lib/drupal/deserialize"
 
-export const getSearchIndex = async <T = JsonApiResource[],>(name: string, options?: {deserialize?: boolean; accessToken?: AccessToken} & JsonApiWithLocaleOptions): Promise<T> => {
+export const getSearchIndex = async <T = JsonApiResource[],>(
+  name: string,
+  options?: {deserialize?: boolean; accessToken?: AccessToken} & JsonApiWithLocaleOptions
+): Promise<T> => {
   options = {deserialize: true, ...options}
 
   const url = buildUrl(`/jsonapi/index/${name}`, options.params)

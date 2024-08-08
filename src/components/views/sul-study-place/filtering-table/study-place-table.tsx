@@ -1,5 +1,7 @@
 import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal"
-import StudyPlaceFilteringTable, {StudyPlaces} from "@/components/views/sul-study-place/filtering-table/study-place-filtering-table"
+import StudyPlaceFilteringTable, {
+  StudyPlaces,
+} from "@/components/views/sul-study-place/filtering-table/study-place-filtering-table"
 import CachedClientFetch from "@/components/utils/cached-client-fetch"
 
 type Props = {
@@ -10,7 +12,11 @@ const StudyPlaceTable = ({items}: Props) => {
 
   const filterFeatures = (features: TermUnion[]) => {
     // Filter out empty terms and deduplicate terms by their ID.
-    return features.filter((term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)) || []
+    return (
+      features.filter(
+        (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
+      ) || []
+    )
   }
 
   items.map(item => {

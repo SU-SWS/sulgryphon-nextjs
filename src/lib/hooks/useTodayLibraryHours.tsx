@@ -21,7 +21,10 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   const todayHours = libraryHours.primaryHours.find(day => {
     // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
+    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
+      weekday: "long",
+      timeZone: "America/Los_Angeles",
+    })
     return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
   }) as DayHours
 
@@ -62,7 +65,9 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   // If the location is open, no need to return the next open time.
   if (!isOpen) {
-    const futureHours = libraryHours.primaryHours.filter(dayHours => dayHours.opens_at && new Date(dayHours.opens_at) > rightNow)
+    const futureHours = libraryHours.primaryHours.filter(
+      dayHours => dayHours.opens_at && new Date(dayHours.opens_at) > rightNow
+    )
     const futureHourDateTime = new Date()
 
     for (let i = 0; i < futureHours.length; i++) {
@@ -78,7 +83,8 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
       if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "Today"
       if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "Tomorrow"
-      if (rightNow.getDay() + 2 <= nextOpenDateTime.getDate()) nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {weekday: "long"})
+      if (rightNow.getDay() + 2 <= nextOpenDateTime.getDate())
+        nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {weekday: "long"})
 
       if (nextOpenDateTime.getMinutes() !== 0) {
         format.minute = "2-digit"

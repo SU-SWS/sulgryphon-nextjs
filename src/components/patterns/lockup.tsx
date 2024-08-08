@@ -11,10 +11,7 @@ type LockupProps = HTMLAttributes<HTMLDivElement> & {
 const Lockup = ({whiteText, ...props}: LockupProps) => {
   return (
     <div {...props}>
-      <Link
-        href="/"
-        className="no-underline"
-      >
+      <Link href="/" className="no-underline">
         <div className="basefont-19 flex items-center">
           <Logo />
 
@@ -28,7 +25,9 @@ const Lockup = ({whiteText, ...props}: LockupProps) => {
               />
             </div>
 
-            <div className={"semibold text-m2 uppercase text-black lg:font-regular" + (whiteText ? " text-white" : "")}>{process.env.NEXT_PUBLIC_SITE_NAME}</div>
+            <div className={"semibold type-2 uppercase text-black lg:font-regular" + (whiteText ? " text-white" : "")}>
+              {process.env.NEXT_PUBLIC_SITE_NAME}
+            </div>
           </div>
         </div>
       </Link>

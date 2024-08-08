@@ -1,17 +1,17 @@
-import Link from "@/components/patterns/elements/drupal-link";
-import SearchModal from "@/components/search/search-modal";
-import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d";
+import Link from "@/components/patterns/elements/drupal-link"
+import SearchModal from "@/components/search/search-modal"
+import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
 
-const FallbackMainMenu = ({menuItems}: { menuItems: MenuItemType[] }) => {
+const FallbackMainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   return (
     <nav className="centered">
-      <ul className="m-0 p-0 list-unstyled lg:flex lg:justify-end">
-        {menuItems.map(item =>
-          <MenuItem key={item.id} {...item}/>
-        )}
+      <ul className="list-unstyled m-0 p-0 lg:flex lg:justify-end">
+        {menuItems.map(item => (
+          <MenuItem key={item.id} {...item} />
+        ))}
 
-        <li className="hidden lg:flex items-center ml-20">
-          <SearchModal/>
+        <li className="ml-20 hidden items-center lg:flex">
+          <SearchModal />
         </li>
       </ul>
     </nav>
@@ -19,19 +19,17 @@ const FallbackMainMenu = ({menuItems}: { menuItems: MenuItemType[] }) => {
 }
 
 const MenuItem = ({url, title}: MenuItemType) => {
-  const linkUrl = (url && url.length >= 1) ? url : '#';
+  const linkUrl = url && url.length >= 1 ? url : "#"
 
   return (
-    <li className="p-0 m-0 relative lg:flex lg:flex-wrap">
+    <li className="relative m-0 p-0 lg:flex lg:flex-wrap">
       <Link
         href={linkUrl}
-        className="flex items-center text-white lg:text-black-true hover:text-white focus:text-white lg:focus:text-black-true hover:bg-black focus:bg-black lg:focus:bg-transparent lg:hover:text-black-true lg:hover:bg-transparent no-underline hover:underline lg:focus:underline w-full p-20"
+        className="flex w-full items-center p-20 text-white no-underline hover:bg-black hover:text-white hover:underline focus:bg-black focus:text-white lg:text-black-true lg:hover:bg-transparent lg:hover:text-black-true lg:focus:bg-transparent lg:focus:text-black-true lg:focus:underline"
       >
-        <div className="pl-30 lg:pl-0">
-          {title}
-        </div>
+        <div className="pl-30 lg:pl-0">{title}</div>
       </Link>
     </li>
   )
 }
-export default FallbackMainMenu;
+export default FallbackMainMenu

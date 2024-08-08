@@ -1,11 +1,11 @@
-import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal";
-import {JsonApiResource} from "next-drupal";
-import {DayHours} from "@/lib/hooks/useLibraryHours";
-import {Maybe} from "@/lib/gql/__generated__/drupal.d";
+import {DrupalFile, DrupalMedia, DrupalNode, DrupalParagraph, DrupalTaxonomyTerm} from "next-drupal"
+import {JsonApiResource} from "next-drupal"
+import {DayHours} from "@/lib/hooks/useLibraryHours"
+import {Maybe} from "@/lib/gql/__generated__/drupal.d"
 
 export type ParagraphBehaviors = {
   layout_paragraphs?: {
-    layout?: 'sul_helper_1_column' | 'sul_helper_2_column' | 'sul_helper_3_column'
+    layout?: "sul_helper_1_column" | "sul_helper_2_column" | "sul_helper_3_column"
     parent_uuid?: string
     region?: string
     config?: {}
@@ -15,11 +15,11 @@ export type ParagraphBehaviors = {
   sul_teaser_styles?: {}
   hero_pattern?: {
     overlay_position?: string
-    heading?: "h2" | "h3"| "h4"| "div.su-font-splash"
+    heading?: "h2" | "h3" | "h4" | "div.su-font-splash"
     hide_heading?: boolean
   }
   su_card_styles?: {
-    heading?: "h2" | "h3"| "h4"| "div.su-font-splash"
+    heading?: "h2" | "h3" | "h4" | "div.su-font-splash"
     hide_heading?: boolean
   }
   sul_card_styles?: {
@@ -28,26 +28,19 @@ export type ParagraphBehaviors = {
     link_display_style?: string
   }
   list_paragraph?: {
-    hide_empty?: Maybe<boolean>,
-    empty_message?: Maybe<string>,
-    heading_behavior?: Maybe<'show' | 'hide' | 'remove'>
+    hide_empty?: Maybe<boolean>
+    empty_message?: Maybe<string>
+    heading_behavior?: Maybe<"show" | "hide" | "remove">
   }
-  sul_list_styles?: { link_display_style?: Maybe<string> }
-  stanford_teaser?: { heading_behavior?: Maybe<'show' | 'hide' | 'remove'> }
+  sul_list_styles?: {link_display_style?: Maybe<string>}
+  stanford_teaser?: {heading_behavior?: Maybe<"show" | "hide" | "remove">}
 }
 
-export type StanfordNode = BasicPage |
-  Course |
-  Event |
-  EventSeries |
-  News |
-  Person |
-  Library |
-  StudyPlace;
+export type StanfordNode = BasicPage | Course | Event | EventSeries | News | Person | Library | StudyPlace
 
 // Node Types.
 export type BasicPage = DrupalNode & {
-  type: 'node--stanford_page'
+  type: "node--stanford_page"
   su_basic_page_type?: DrupalTaxonomyTerm[]
   su_page_banner?: BannerParagraph
   su_page_components?: StanfordParagraph[]
@@ -58,7 +51,7 @@ export type BasicPage = DrupalNode & {
 }
 
 export type Course = DrupalNode & {
-  type: 'node--stanford_course'
+  type: "node--stanford_course"
   body?: string
   su_course_academic_year?: string
   su_course_code?: string
@@ -73,7 +66,7 @@ export type Course = DrupalNode & {
 }
 
 export type Event = DrupalNode & {
-  type: 'node--stanford_event'
+  type: "node--stanford_event"
   body?: string
   su_event_alt_loc?: string
   su_event_audience?: DrupalTaxonomyTerm[]
@@ -98,7 +91,7 @@ export type Event = DrupalNode & {
 }
 
 export type EventSeries = DrupalNode & {
-  type: 'node--stanford_event_series'
+  type: "node--stanford_event_series"
   su_event_series_components: StanfordParagraph[]
   su_event_series_dek: string
   su_event_series_event: DrupalNode[]
@@ -109,7 +102,7 @@ export type EventSeries = DrupalNode & {
 }
 
 export type News = DrupalNode & {
-  type: 'node--stanford_news'
+  type: "node--stanford_news"
   su_news_banner?: DrupalImageMedia | DrupalVideoMedia
   su_news_banner_media_caption?: string
   su_news_byline?: string
@@ -124,7 +117,7 @@ export type News = DrupalNode & {
 }
 
 export type Person = DrupalNode & {
-  type: 'node--stanford_person'
+  type: "node--stanford_person"
   body?: string
   su_person_academic_appt?: string
   su_person_address?: string
@@ -165,7 +158,7 @@ export type LibGuide = {
 }
 
 export type Publication = DrupalNode & {
-  type: 'node--stanford_publication'
+  type: "node--stanford_publication"
   su_publication_author_ref: DrupalNode[]
   su_publication_citation: DrupalPublicationCitation
   su_publication_components?: StanfordParagraph[]
@@ -176,7 +169,7 @@ export type Publication = DrupalNode & {
 }
 
 export type Library = DrupalNode & {
-  type: 'node--sul_library'
+  type: "node--sul_library"
   su_library__address?: DrupalAddress
   su_library__banner?: DrupalImageMedia
   su_library__contact_img?: DrupalImageMedia
@@ -190,7 +183,7 @@ export type Library = DrupalNode & {
 }
 
 export type StudyPlace = DrupalNode & {
-  type: 'node--sul_study_place'
+  type: "node--sul_study_place"
   sul_study__branch: Library
   sul_study__capacity: DrupalTaxonomyTerm
   sul_study__features?: DrupalTaxonomyTerm[]
@@ -198,19 +191,20 @@ export type StudyPlace = DrupalNode & {
 }
 
 // Paragraph Types.
-export type StanfordParagraph = LayoutParagraph |
-  BannerParagraph |
-  CardParagraph |
-  ImageGalleryParagraph |
-  ListParagraph |
-  EntityTeaserParagraph |
-  MediaCaptionParagraph |
-  WysiwygParagraph |
-  CollectionParagraph |
-  FeaturedCollectionParagraph |
-  ContactCardParagraph |
-  ButtonParagraph |
-  LibGuideParagraph
+export type StanfordParagraph =
+  | LayoutParagraph
+  | BannerParagraph
+  | CardParagraph
+  | ImageGalleryParagraph
+  | ListParagraph
+  | EntityTeaserParagraph
+  | MediaCaptionParagraph
+  | WysiwygParagraph
+  | CollectionParagraph
+  | FeaturedCollectionParagraph
+  | ContactCardParagraph
+  | ButtonParagraph
+  | LibGuideParagraph
 
 export type LayoutParagraphsBehaviors = {
   layout_paragraphs: {
@@ -220,11 +214,11 @@ export type LayoutParagraphsBehaviors = {
 }
 
 export type LayoutParagraph = DrupalParagraph & {
-  type: 'paragraph--layout'
+  type: "paragraph--layout"
 }
 
 export type BannerParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_banner'
+  type: "paragraph--stanford_banner"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     hero_pattern?: {
@@ -238,9 +232,8 @@ export type BannerParagraph = DrupalParagraph & {
   su_banner_sup_header?: string
 }
 
-
 export type CardParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_card'
+  type: "paragraph--stanford_card"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_card_styles?: {
@@ -258,7 +251,7 @@ export type CardParagraph = DrupalParagraph & {
 }
 
 export type ImageGalleryParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_gallery'
+  type: "paragraph--stanford_gallery"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -269,7 +262,7 @@ export type ImageGalleryParagraph = DrupalParagraph & {
 }
 
 export type ListParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_lists'
+  type: "paragraph--stanford_lists"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_list_styles?: {
@@ -287,7 +280,7 @@ export type ListParagraph = DrupalParagraph & {
 }
 
 export type EntityTeaserParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_entity'
+  type: "paragraph--stanford_entity"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_teaser_styles?: {
@@ -302,7 +295,7 @@ export type EntityTeaserParagraph = DrupalParagraph & {
 }
 
 export type MediaCaptionParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_media_caption'
+  type: "paragraph--stanford_media_caption"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -312,7 +305,7 @@ export type MediaCaptionParagraph = DrupalParagraph & {
 }
 
 export type WysiwygParagraph = DrupalParagraph & {
-  type: 'paragraph--stanford_wysiwyg'
+  type: "paragraph--stanford_wysiwyg"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -320,7 +313,7 @@ export type WysiwygParagraph = DrupalParagraph & {
 }
 
 export type CollectionParagraph = DrupalParagraph & {
-  type: 'paragraph--collection'
+  type: "paragraph--collection"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -329,13 +322,13 @@ export type CollectionParagraph = DrupalParagraph & {
 }
 
 export type CollectionCardParagraph = DrupalParagraph & {
-  type: 'paragraph--collection_card'
+  type: "paragraph--collection_card"
   sul_card_info: string
   sul_card: CardParagraph
 }
 
 export type FeaturedCollectionParagraph = DrupalParagraph & {
-  type: 'paragraph--sul_feat_collection'
+  type: "paragraph--sul_feat_collection"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_feat_collections_styles?: {
@@ -348,7 +341,7 @@ export type FeaturedCollectionParagraph = DrupalParagraph & {
 }
 
 export type ContactCardParagraph = DrupalParagraph & {
-  type: 'paragraph--sul_contact_card'
+  type: "paragraph--sul_contact_card"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
   }
@@ -362,7 +355,7 @@ export type ContactCardParagraph = DrupalParagraph & {
 }
 
 export type ButtonParagraph = DrupalParagraph & {
-  type: 'paragraph--sul_button'
+  type: "paragraph--sul_button"
   behavior_settings?: {
     layout_paragraphs?: LayoutParagraphsBehaviors
     sul_button_styles?: {
@@ -374,14 +367,14 @@ export type ButtonParagraph = DrupalParagraph & {
 }
 
 export type LibGuideParagraph = DrupalParagraph & {
-  type: 'paragraph--sul_libguide'
+  type: "paragraph--sul_libguide"
   sul_libguide__headline: string
   sul_libguide__desc?: string
   sul_libguide_id: number
 }
 
 export type DrupalImageFile = DrupalFile & {
-  image_style_uri: { [key: string]: string }
+  image_style_uri: {[key: string]: string}
   uri: {
     value: string
     url: string
@@ -391,35 +384,35 @@ export type DrupalImageFile = DrupalFile & {
 
 // Media Types.
 export type DrupalImageMedia = DrupalMedia & {
-  type: 'media--image'
+  type: "media--image"
   field_media_image: DrupalImageFile
 }
 
 export type DrupalVideoMedia = DrupalMedia & {
-  type: 'media--video'
+  type: "media--video"
   field_media_oembed_video: string
 }
 
 export type DrupalFileMedia = DrupalMedia & {
-  type: 'media--file'
+  type: "media--file"
   field_media_file: DrupalFile
 }
 
 export type DrupalGalleryImageMedia = DrupalMedia & {
-  type: 'media--stanford_gallery_images'
+  type: "media--stanford_gallery_images"
   su_gallery_caption?: string
   su_gallery_image: DrupalImageFile
 }
 
 export type DrupalEmbeddableMedia = DrupalMedia & {
-  type: 'media--embeddable'
+  type: "media--embeddable"
   field_media_embeddable_code?: string
   field_media_embeddable_oembed?: string
 }
 
 // Config Pages
 export type GlobalMessageType = JsonApiResource & {
-  su_global_msg_type: 'plain' | 'success' | 'info' | 'warning' | 'error'
+  su_global_msg_type: "plain" | "success" | "info" | "warning" | "error"
   su_global_msg_enabled: boolean
   su_global_msg_link?: DrupalLinkType
   su_global_msg_header?: string
@@ -437,9 +430,9 @@ export type DrupalLayoutSelection = {
 
 export type DrupalWysiwyg = {
   format: string
-  processed: string;
-  summary?: string;
-  value: string;
+  processed: string
+  summary?: string
+  value: string
 }
 
 export type DrupalLinkType = {
@@ -449,7 +442,7 @@ export type DrupalLinkType = {
     }
   }
   title: string
-  uri: string;
+  uri: string
   url: string
 }
 
@@ -521,7 +514,6 @@ export type Breadcrumb = {
   text: string
 }
 
-
 export type LibraryHours = {
   type: string
   id: string
@@ -559,15 +551,15 @@ export type PageProps = {
 
 export type DrupalRedirect = JsonApiResource & {
   redirect_source: {
-    path: string,
+    path: string
     query: []
-  },
+  }
   redirect_redirect: {
-    uri: string,
-    title: string,
-    options: [],
-    target_uuid: string,
+    uri: string
+    title: string
+    options: []
+    target_uuid: string
     url: string
-  },
+  }
   status_code: number
 }
