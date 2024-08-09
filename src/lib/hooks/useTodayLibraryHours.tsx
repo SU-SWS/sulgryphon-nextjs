@@ -79,16 +79,15 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     }
 
     if (nextOpenDateTime) {
-      const format: Intl.DateTimeFormatOptions = {hour: "numeric", minute: "numeric"}
+      const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
 
-      if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "Today"
-      if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "Tomorrow"
       if (rightNow.getDay() + 2 <= nextOpenDateTime.getDate())
         nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {weekday: "long"})
+      if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "tomorrow"
+      if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "today"
 
-      if (nextOpenDateTime.getMinutes() !== 0) {
-        format.minute = "2-digit"
-      }
+      if (nextOpenDateTime.getMinutes() !== 0) format.minute = "2-digit"
+
       nextOpeningTime += " " + nextOpenDateTime.toLocaleString("en-us", format).toLowerCase()
     }
   }
