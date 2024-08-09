@@ -427,6 +427,15 @@ fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     }
     suPersonFullTitle
     suPersonShortTitle
+    suPersonEmail
+    sulPersonLibguideId
+    sulPersonLibcalId
+    suPersonResearch {
+        processed
+    }
+    suPersonTypeGroup {
+        ...FragmentTermInterface
+    }
 }
 
 fragment FragmentNodeStanfordPolicyTeaser on NodeStanfordPolicy {

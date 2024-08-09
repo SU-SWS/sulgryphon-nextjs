@@ -772,9 +772,19 @@ export const FragmentNodeStanfordPersonTeaserFragmentDoc = gql`
   }
   suPersonFullTitle
   suPersonShortTitle
+  suPersonEmail
+  sulPersonLibguideId
+  sulPersonLibcalId
+  suPersonResearch {
+    processed
+  }
+  suPersonTypeGroup {
+    ...FragmentTermInterface
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
-${FragmentMediaImageFragmentDoc}`;
+${FragmentMediaImageFragmentDoc}
+${FragmentTermInterfaceFragmentDoc}`;
 export const FragmentNodeStanfordPublicationFragmentDoc = gql`
     fragment FragmentNodeStanfordPublication on NodeStanfordPublication {
   ...FragmentNodeInterface
