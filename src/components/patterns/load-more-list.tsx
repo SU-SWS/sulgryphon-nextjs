@@ -97,7 +97,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
           className="cta-button group rs-mt-neg1 mx-auto block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18"
           onClick={showMoreItems}
         >
-          {buttonText ? buttonText : "Load More"}
+          {buttonText ? buttonText : "Load more"}
         </button>
       )}
     </div>
