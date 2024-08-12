@@ -100,7 +100,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
       if (nextOpenDateTime.getMinutes() !== 0) format.minute = "2-digit"
 
-      nextOpeningTime += " " + nextOpenDateTime.toLocaleString("en-us", format).toLowerCase()
+      nextOpeningTime += " at " + nextOpenDateTime.toLocaleString("en-us", format).toLowerCase()
     }
   }
 
