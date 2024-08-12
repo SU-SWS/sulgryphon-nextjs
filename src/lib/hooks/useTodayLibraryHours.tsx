@@ -87,13 +87,13 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
       // Next open date is tomorrow. Check for tomorrow date and if it's the last day of the month.
       if (
-        rightNow.getDate() + 1 === nextOpenDateTime.getDate() ||
-        (rightNow.getMonth() != nextOpenDateTime.getMonth() && nextOpenDateTime.getDate() === 1)
+        getDate(rightNow) + 1 === getDate(nextOpenDateTime) ||
+        (getMonth(rightNow) != getMonth(nextOpenDateTime) && getDate(nextOpenDateTime) === 1)
       )
         nextOpeningTime = "tomorrow"
 
       // Next open date is today.
-      if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "today"
+      if (getDate(rightNow) === getDate(nextOpenDateTime)) nextOpeningTime = "today"
 
       if (nextOpenDateTime.getMinutes() !== 0) format.minute = "2-digit"
 
@@ -102,6 +102,13 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
   }
 
   return {closedAllDay, isOpen, openingTime, closingTime, selectOptions, afterClose, nextOpeningTime}
+}
+
+const getDate = (dateTime: Date) => {
+  return parseInt(dateTime.toLocaleDateString("en-us", {day: "numeric", timeZone: "America/Los_Angeles"}))
+}
+const getMonth = (dateTime: Date) => {
+  return parseInt(dateTime.toLocaleDateString("en-us", {month: "numeric", timeZone: "America/Los_Angeles"}))
 }
 
 export default useTodayLibraryHours
