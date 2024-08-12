@@ -265,12 +265,14 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
                       new Date(dayHours.opens_at).toLocaleTimeString("en-us", {
                         hour: "numeric",
                         minute: "2-digit",
+                        timeZone: "America/Los_Angeles",
                       })}
                     -
                     {dayHours.closes_at &&
                       new Date(dayHours.closes_at).toLocaleTimeString("en-us", {
                         hour: "numeric",
                         minute: "2-digit",
+                        timeZone: "America/Los_Angeles",
                       })}
                   </>
                 )}

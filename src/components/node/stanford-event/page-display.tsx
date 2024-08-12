@@ -21,13 +21,14 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
     start.getDate() === end.getDate() &&
     start.getFullYear() === end.getFullYear()
   ) {
-    dateTimeString = start.toLocaleDateString("en-us", {weekday: "long"})
+    dateTimeString = start.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
     dateTimeString +=
       ", " +
       start.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
+        timeZone: "America/Los_Angeles",
       })
 
     if (start.getHours() !== 0 || start.getMinutes() !== 0 || end.getHours() !== 23 || end.getMinutes() !== 59) {
@@ -37,12 +38,14 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
           start.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
+            timeZone: "America/Los_Angeles",
           }) +
           " - " +
           end.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
             timeZoneName: "short",
+            timeZone: "America/Los_Angeles",
           })
       } else {
         dateTimeString +=
@@ -51,24 +54,27 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
             hour: "numeric",
             minute: "numeric",
             timeZoneName: "short",
+            timeZone: "America/Los_Angeles",
           })
       }
     }
   } else {
     // Multiple days
-    dateTimeString = start.toLocaleDateString("en-us", {weekday: "long"})
+    dateTimeString = start.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
     dateTimeString +=
       ", " +
       start.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
+        timeZone: "America/Los_Angeles",
       }) +
       " - " +
       end.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
+        timeZone: "America/Los_Angeles",
       })
   }
 

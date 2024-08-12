@@ -23,6 +23,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "America/Los_Angeles",
   })
 
   return (

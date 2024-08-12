@@ -19,6 +19,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "America/Los_Angeles",
   })
 
   return (
