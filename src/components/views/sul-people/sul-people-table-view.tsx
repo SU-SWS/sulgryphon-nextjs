@@ -76,11 +76,16 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         onSubmit={e => e.preventDefault()}
       >
         <div className="relative max-w-[350px] md:w-[435px]">
-          <label className="pl-15 text-18 font-semibold" htmlFor={id}>
+          <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
             Search by name, title, or subject
           </label>
 
-          <input className="type-0 block h-40 w-full rounded-full pl-15" ref={keywordRef} type="text" id={id} />
+          <input
+            className="block h-[40.69px] w-full rounded-full p-9 pl-15 text-18"
+            ref={keywordRef}
+            type="text"
+            id={id}
+          />
 
           {keywordFilter && (
             <button
