@@ -243,7 +243,6 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {isOpen && closingTime && `until ${closingTime}`}
         {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
-        {!closingTime && !nextOpeningTime && "Hours this week"}
 
         <button ref={buttonRef} onClick={toggleExpandedHours} aria-controls={id} aria-expanded={expandedHours}>
           <span className="sr-only">Show this weeks hours</span>
