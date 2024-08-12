@@ -10,6 +10,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "America/Los_Angeles",
   })
 
   return (

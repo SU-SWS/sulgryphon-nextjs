@@ -38,7 +38,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
   if (!todayHours.closed && todayHours.opens_at && todayHours.closes_at) {
     openTime = new Date(todayHours.opens_at)
     closeTime = new Date(todayHours.closes_at)
-    isOpen = rightNow > openTime && rightNow < closeTime
+    isOpen = rightNow >= openTime && rightNow < closeTime
   }
 
   const closingTime = closeTime
@@ -65,25 +65,34 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   // If the location is open, no need to return the next open time.
   if (!isOpen) {
-    const futureHours = libraryHours.primaryHours.filter(
+    const futureOpenHours = libraryHours.primaryHours.filter(
       dayHours => dayHours.opens_at && new Date(dayHours.opens_at) > rightNow
     )
-    const futureHourDateTime = new Date()
 
-    for (let i = 0; i < futureHours.length; i++) {
-      if (new Date(futureHours[i].opens_at as string).getDate() === rightNow.getDate()) {
-        nextOpenDateTime = new Date(futureHours[i].opens_at as string)
-        i = futureHours.length + 1
+    for (let i = 0; i < futureOpenHours.length; i++) {
+      if (futureOpenHours[i].opens_at) {
+        nextOpenDateTime = new Date(futureOpenHours[i].opens_at as string)
+        i = futureOpenHours.length + 1
       }
-      futureHourDateTime.setDate(futureHourDateTime.getDate() + 1)
     }
 
     if (nextOpenDateTime) {
       const format: Intl.DateTimeFormatOptions = {hour: "numeric", timeZone: "America/Los_Angeles"}
 
-      if (rightNow.getDay() + 2 <= nextOpenDateTime.getDate())
-        nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {weekday: "long"})
-      if (rightNow.getDate() + 1 === nextOpenDateTime.getDate()) nextOpeningTime = "tomorrow"
+      // Default to the show the day of the week.
+      nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {
+        weekday: "long",
+        timeZone: "America/Los_Angeles",
+      })
+
+      // Next open date is tomorrow. Check for tomorrow date and if it's the last day of the month.
+      if (
+        rightNow.getDate() + 1 === nextOpenDateTime.getDate() ||
+        (rightNow.getMonth() != nextOpenDateTime.getMonth() && nextOpenDateTime.getDate() === 1)
+      )
+        nextOpeningTime = "tomorrow"
+
+      // Next open date is today.
       if (rightNow.getDate() === nextOpenDateTime.getDate()) nextOpeningTime = "today"
 
       if (nextOpenDateTime.getMinutes() !== 0) format.minute = "2-digit"
