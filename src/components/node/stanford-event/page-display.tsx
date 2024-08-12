@@ -37,12 +37,14 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
           start.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
+            timeZone: "America/Los_Angeles",
           }) +
           " - " +
           end.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
             timeZoneName: "short",
+            timeZone: "America/Los_Angeles",
           })
       } else {
         dateTimeString +=
@@ -51,6 +53,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
             hour: "numeric",
             minute: "numeric",
             timeZoneName: "short",
+            timeZone: "America/Los_Angeles",
           })
       }
     }

@@ -79,7 +79,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     }
 
     if (nextOpenDateTime) {
-      const format: Intl.DateTimeFormatOptions = {hour: "numeric"}
+      const format: Intl.DateTimeFormatOptions = {hour: "numeric", timeZone: "America/Los_Angeles"}
 
       if (rightNow.getDay() + 2 <= nextOpenDateTime.getDate())
         nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {weekday: "long"})
