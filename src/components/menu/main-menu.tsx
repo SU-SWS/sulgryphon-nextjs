@@ -72,7 +72,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               !isDesktop && !menuOpen ? "hidden" : "block"
             )}
           >
-            <div className="mr-20">Quick Links:</div>
+            <div className="mr-20">Quick links:</div>
             <ul className="list-unstyled flex flex-wrap items-center gap-10">
               <li className="m-0">
                 <Link
@@ -100,8 +100,16 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 </Link>
               </li>
               <li className="m-0">
-                <Link className="text-white no-underline hocus:text-white hocus:underline" href="/contact-us">
+                <Link className="mr-20 text-white no-underline hocus:text-white hocus:underline" href="/contact-us">
                   Contact Us
+                </Link>
+              </li>
+              <li className="m-0">
+                <Link
+                  className="text-white no-underline hocus:text-white hocus:underline"
+                  href="/support-stanford-libraries"
+                >
+                  Donate now
                 </Link>
               </li>
             </ul>
