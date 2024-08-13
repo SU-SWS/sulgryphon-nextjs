@@ -1,4 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link"
+import {DrupalLinkButton} from "@/components/patterns/link"
 import Lockup from "@/components/patterns/lockup"
 import MainMenu from "@/components/menu/main-menu"
 import GlobalMessage from "@/components/layout/global-message"
@@ -32,6 +33,9 @@ const Header = async () => {
               <HeaderLink href="/library-accessibility" text="Library Accessibility" />
               <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
               <HeaderLink href="/contact-us" text="Contact Us" />
+              <DrupalLinkButton href="/support-stanford-libraries" className="mt-0">
+                Donate
+              </DrupalLinkButton>
             </ul>
           </nav>
         </div>
