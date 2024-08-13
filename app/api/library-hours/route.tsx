@@ -2,7 +2,7 @@ import {deserialize} from "@/lib/drupal/deserialize"
 import {NextResponse} from "next/server"
 import {DayHours} from "@/lib/hooks/useLibraryHours"
 import {LibraryHours} from "@/lib/drupal/drupal"
-import {unstable_cache as nextCache} from "next/cache"
+import {revalidateTag, unstable_cache as nextCache} from "next/cache"
 
 type FetchedData = {
   data: []
@@ -102,5 +102,8 @@ const getLibraryHours = nextCache(
 )
 
 export const GET = async () => {
-  return NextResponse.json(await getLibraryHours())
+  const hours = await getLibraryHours()
+  // If no data, try to invalidate the cached data so we can re-try fetching the data.
+  if (!hours) revalidateTag("library-hours")
+  return NextResponse.json(hours)
 }

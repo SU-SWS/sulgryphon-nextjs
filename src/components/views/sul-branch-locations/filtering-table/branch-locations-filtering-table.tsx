@@ -210,7 +210,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
 
   useEventListener("keydown", handleEscape, containerRef)
 
-  if (!libraryHours.primaryHours || !todayLibraryHours) {
+  if (!libraryHours?.primaryHours || !todayLibraryHours) {
     return
   }
 
