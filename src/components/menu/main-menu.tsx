@@ -100,8 +100,16 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 </Link>
               </li>
               <li className="m-0">
-                <Link className="text-white no-underline hocus:text-white hocus:underline" href="/contact-us">
+                <Link className="mr-20 text-white no-underline hocus:text-white hocus:underline" href="/contact-us">
                   Contact Us
+                </Link>
+              </li>
+              <li className="m-0">
+                <Link
+                  className="text-white no-underline hocus:text-white hocus:underline"
+                  href="/support-stanford-libraries"
+                >
+                  Donate now
                 </Link>
               </li>
             </ul>
