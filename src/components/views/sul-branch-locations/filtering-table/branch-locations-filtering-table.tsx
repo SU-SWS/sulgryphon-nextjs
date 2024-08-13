@@ -141,7 +141,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
+        className="flex w-auto px-0 md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
       >
         <Link
           href={path}
@@ -151,7 +151,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
-        {hoursId && <BranchHours hoursId={hoursId} />}
+        {hoursId ? <BranchHours hoursId={hoursId} /> : ""}
       </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
         {phone && (
