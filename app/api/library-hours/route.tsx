@@ -3,6 +3,7 @@ import {NextResponse} from "next/server"
 import {DayHours} from "@/lib/hooks/useLibraryHours"
 import {LibraryHours} from "@/lib/drupal/drupal"
 import {revalidateTag, unstable_cache as nextCache} from "next/cache"
+import {fetchLibraryHours} from "./fetch-library-hours"
 
 type FetchedData = {
   data: []
@@ -17,28 +18,16 @@ type FetchedData = {
   }[]
 }
 
-export const revalidate = 3600
+export const revalidate = false
 
 const getLibraryHours = nextCache(
   async () => {
-    const from = new Date()
-    from.setDate(from.getDate() - from.getDay())
-    const to = new Date()
-    to.setDate(to.getDate() + 6)
-
-    const params = new URLSearchParams()
-    params.set("from", from.toISOString().replace(/T.*/, ""))
-    params.set("to", to.toISOString().replace(/T.*/, ""))
-
-    const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
-      cache: "no-cache",
-    })
+    const data: FetchedData = await fetchLibraryHours()
       .then(res => res.json())
       .catch(e => {
         console.error(e)
         return NextResponse.json([])
       })
-
     const deserializedData = deserialize(data) as LibraryHours[]
     if (!deserializedData) {
       return NextResponse.json([])
@@ -82,28 +71,12 @@ const getLibraryHours = nextCache(
   ["library-hours"],
   {
     tags: ["library-hours"],
-    // Revalidate at 1 second after midnight. Calculate how many seconds since midnight, and subtract from total seconds
-    // in a day.
-    revalidate:
-      60 * 60 * 24 +
-      1 -
-      (parseInt(
-        new Date().toLocaleTimeString("en-us", {
-          hour12: false,
-          hour: "numeric",
-          timeZone: "America/Los_Angeles",
-        })
-      ) *
-        60 *
-        60 +
-        new Date().getMinutes() * 60 +
-        new Date().getSeconds()),
   }
 )
 
 export const GET = async () => {
   const hours = await getLibraryHours()
-  // If no data, try to invalidate the cached data so we can re-try fetching the data.
+  // If no data, try to invalidate the cached data, so we can re-try fetching the data.
   if (!hours) revalidateTag("library-hours")
   return NextResponse.json(hours)
 }

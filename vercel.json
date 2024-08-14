@@ -52,5 +52,11 @@
       "source": "/assets/:path*",
       "destination": "https://discover.stanford.edu/assets/:path*"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/library-hours/cron",
+      "schedule": "0 * * * *"
+    }
   ]
 }
