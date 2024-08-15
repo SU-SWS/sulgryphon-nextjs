@@ -1122,7 +1122,7 @@ export const NodesDocument = gql`
     ${FragmentNodeInterfaceFragmentDoc}`;
 export const LibrariesDocument = gql`
     query Libraries {
-  nodeSulLibraries(first: 1000, sortKey: CREATED_AT) {
+  nodeSulLibraries(first: 1000, sortKey: TITLE) {
     nodes {
       id
       title
