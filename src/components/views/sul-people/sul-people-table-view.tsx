@@ -75,7 +75,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={e => e.preventDefault()}
       >
-        <div className="relative max-w-[350px] md:w-[435px]">
+        <div className="relative w-full md:w-[435px]">
           <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
             Search by name, title, or subject
           </label>
@@ -113,7 +113,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             <span className="sr-only">Search</span>
           </button>
         </div>
-        <div className="self-end">
+        <div className="w-full self-end md:w-[435px]">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
             <label className="group hidden cursor-pointer border-r-0 md:block">
@@ -124,7 +124,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 onChange={() => updateTypeFilter()}
               />
               <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-                All specialists
+                All
               </span>
             </label>
             <label className="group cursor-pointer">
