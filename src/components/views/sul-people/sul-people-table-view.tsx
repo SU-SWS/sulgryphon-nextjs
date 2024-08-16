@@ -116,36 +116,36 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         <div className="w-full self-end md:w-[435px]">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
-            <label className="group hidden cursor-pointer border-r-0 md:block">
+            <label className="group cursor-pointer border-r-0 md:block">
               <input
-                type="checkbox"
+                type="radio"
                 className="peer sr-only"
                 checked={!typeFilter.length}
                 onChange={() => updateTypeFilter()}
               />
-              <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+              <span className="block whitespace-nowrap rounded-l-full border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
                 All
               </span>
             </label>
             <label className="group cursor-pointer">
               <input
-                type="checkbox"
+                type="radio"
                 className="peer sr-only"
                 checked={typeFilter.includes("subject specialist")}
                 onChange={() => updateTypeFilter("subject specialist")}
               />
-              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">
+              <span className="block items-center whitespace-nowrap border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none md:text-16">
                 Subject specialists
               </span>
             </label>
             <label className="group cursor-pointer">
               <input
-                type="checkbox"
+                type="radio"
                 className="peer sr-only"
                 checked={typeFilter.includes("technical specialist")}
                 onChange={() => updateTypeFilter("technical specialist")}
               />
-              <span className="block items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+              <span className="block items-center whitespace-nowrap rounded-r-full border border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
                 Technical specialists
               </span>
             </label>
