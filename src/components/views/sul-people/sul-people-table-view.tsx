@@ -33,33 +33,15 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const id = useId()
   const keywordRef = useRef<HTMLInputElement>(null)
 
-  const [typeFilter, setTypeFilter] = useState<string[]>([])
+  const [typeFilter, setTypeFilter] = useState<string>("")
   const [keywordFilter, setKeywordFilter] = useState("")
 
   let displayedItems = items
 
-  if (typeFilter.length >= 1) {
+  if (typeFilter) {
     displayedItems = items.filter(
-      item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter.includes(value)).length
+      item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter === value).length
     )
-  }
-
-  const updateTypeFilter = (type?: string) => {
-    if (!type) {
-      return setTypeFilter([])
-    }
-    setTypeFilter(prevState => {
-      const newState = [...prevState]
-      const existingIndex = newState.indexOf(type)
-      if (existingIndex >= 0) {
-        newState.splice(existingIndex, 1)
-        console.log("newState splice line")
-      } else {
-        newState.push(type)
-        console.log("newState push (type) line")
-      }
-      return newState
-    })
   }
 
   if (keywordFilter) {
@@ -121,9 +103,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             <label className="group cursor-pointer border-r-0 md:block">
               <input
                 type="radio"
+                name="specialist"
                 className="peer sr-only"
-                checked={!typeFilter.length}
-                onChange={() => updateTypeFilter()}
+                checked={!typeFilter}
+                onChange={() => setTypeFilter("")}
               />
               <span className="block whitespace-nowrap rounded-l-full border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
                 All
@@ -132,9 +115,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             <label className="group cursor-pointer">
               <input
                 type="radio"
+                name="specialist"
                 className="peer sr-only"
-                checked={typeFilter.includes("subject specialist")}
-                onChange={() => updateTypeFilter("subject specialist")}
+                checked={typeFilter === "subject specialist"}
+                onChange={() => setTypeFilter("subject specialist")}
               />
               <span className="block items-center whitespace-nowrap border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none md:text-16">
                 Subject specialists
@@ -143,9 +127,10 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             <label className="group cursor-pointer">
               <input
                 type="radio"
+                name="specialist"
                 className="peer sr-only"
-                checked={typeFilter.includes("technical specialist")}
-                onChange={() => updateTypeFilter("technical specialist")}
+                checked={typeFilter === "technical specialist"}
+                onChange={() => setTypeFilter("technical specialist")}
               />
               <span className="block items-center whitespace-nowrap rounded-r-full border border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
                 Technical specialists
