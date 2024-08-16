@@ -141,7 +141,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
+        className="flex w-auto pl-0 md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
       >
         <Link
           href={path}
