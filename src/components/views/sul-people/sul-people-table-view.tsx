@@ -108,7 +108,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={!typeFilter}
                 onChange={() => setTypeFilter("")}
               />
-              <span className="block whitespace-nowrap rounded-l-full border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
+              <span className="block whitespace-nowrap rounded-l-full border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
                 All
               </span>
             </label>
@@ -120,7 +120,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter === "subject specialist"}
                 onChange={() => setTypeFilter("subject specialist")}
               />
-              <span className="block items-center whitespace-nowrap border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none md:text-16">
+              <span className="block items-center whitespace-nowrap border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none md:text-16">
                 Subject specialists
               </span>
             </label>
@@ -132,7 +132,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 checked={typeFilter === "technical specialist"}
                 onChange={() => setTypeFilter("technical specialist")}
               />
-              <span className="block items-center whitespace-nowrap rounded-r-full border border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
+              <span className="block items-center whitespace-nowrap rounded-r-full border border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:text-16">
                 Technical specialists
               </span>
             </label>
