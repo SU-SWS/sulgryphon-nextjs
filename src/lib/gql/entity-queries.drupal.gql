@@ -55,7 +55,7 @@ query Nodes {
 }
 
 query Libraries {
-    nodeSulLibraries(first: 1000, sortKey: CREATED_AT) {
+    nodeSulLibraries(first: 1000, sortKey: TITLE) {
         nodes {
             id
             title

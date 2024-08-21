@@ -93,7 +93,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         </fieldset>
       </form>
 
-      <Table className="responsive-table responsive-table-branches ml-[-20px] sm:ml-0">
+      <Table className="responsive-table responsive-table-branches sm:ml-0">
         <Thead className="sr-only lg:not-sr-only">
           <Tr className="block sm:hidden lg:!table-row">
             <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-16" scope="col">
@@ -243,6 +243,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
         {isOpen && closingTime && `until ${closingTime}`}
         {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
+        {!isOpen && !nextOpeningTime && `Hours this week`}
 
         <button ref={buttonRef} onClick={toggleExpandedHours} aria-controls={id} aria-expanded={expandedHours}>
           <span className="sr-only">Show this weeks hours</span>

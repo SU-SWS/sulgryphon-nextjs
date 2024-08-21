@@ -72,7 +72,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               !isDesktop && !menuOpen ? "hidden" : "block"
             )}
           >
-            <div className="mr-20">Quick links:</div>
+            <div className="mb-10 mr-20 text-left">Quick links:</div>
             <ul className="list-unstyled flex flex-wrap items-center gap-10">
               <li className="m-0">
                 <Link

@@ -44,13 +44,9 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     isOpen = rightNow >= openTime && rightNow < closeTime
   }
 
-  const closingTime = closeTime
-    ?.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      timeZone: "America/Los_Angeles",
-    })
-    .toLowerCase()
+  const closingTimeFormat: Intl.DateTimeFormatOptions = {hour: "numeric", timeZone: "America/Los_Angeles"}
+  if (closeTime?.getMinutes() !== 0) closingTimeFormat.minute = "2-digit"
+  const closingTime = closeTime?.toLocaleTimeString("en-US", closingTimeFormat).toLowerCase()
 
   const openingTime = openTime
     ?.toLocaleTimeString("en-US", {
