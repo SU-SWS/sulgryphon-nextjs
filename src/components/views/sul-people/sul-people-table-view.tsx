@@ -183,13 +183,13 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.id}
-                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:pt-16 md:text-left md:first:pt-0 lg:!table-row lg:max-h-none"
+                className="block pt-16 sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:first:pt-0 lg:!table-row lg:max-h-none"
               >
                 <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.photoUrl && (
                     <Link
                       href={item.path}
-                      className="relative block aspect-[1/1] w-[200px] overflow-hidden rounded-full lg:w-[68px]"
+                      className="relative mb-16 block aspect-[1/1] w-[200px] overflow-hidden rounded-full md:mb-32 lg:mb-0 lg:w-[68px]"
                       aria-hidden="true"
                       tabIndex={-1}
                     >
@@ -217,11 +217,13 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                       </HeadingElement>
                     </Link>
                   )}
-                  {item.fullTitle && <div className="text-16 font-normal leading-[23px]">{item.fullTitle}</div>}
+                  {item.fullTitle && (
+                    <div className="pb-16 text-16 font-normal leading-[23px] lg:pb-0">{item.fullTitle}</div>
+                  )}
                 </Th>
                 <Td className="min-w-1/5 block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5 lg:pr-72">
                   {!!item.researchAreas?.length && (
-                    <div className="bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0">
+                    <div className="mb-16 bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0 lg:mb-0">
                       <span className="font-bold md:hidden">Expertise: </span>
                       {item.researchAreas.join(", ")}
                     </div>
@@ -229,7 +231,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                 </Td>
                 <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5 lg:pr-72">
                   {item.email && (
-                    <>
+                    <div className="pb-16 lg:pb-0">
                       <Link
                         href={`mailto:${item.email}`}
                         prefetch={false}
@@ -238,11 +240,17 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                         <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block" />
                         {item.email}
                       </Link>
-                    </>
+                    </div>
                   )}
                 </Td>
                 <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                  {item.libCalId && <LibCal libcalId={item.libCalId} srText={item.title} />}
+                  {item.libCalId ? (
+                    <div className="pb-16 lg:pb-0">
+                      <LibCal libcalId={item.libCalId} srText={item.title} />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Td>
               </Tr>
             ))}

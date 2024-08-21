@@ -126,22 +126,22 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
     >
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:pr-16 lg:align-middle">
-        <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
-          {imageUrl && (
+        {imageUrl && (
+          <div className="relative my-16 block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
             <Link
               href={path}
-              className="relative block aspect-[3/2] w-[300px] overflow-hidden md:w-[290px] lg:max-w-[125px]"
+              className="relative block aspect-[3/2] w-[300px] overflow-hidden md:w-[360px] lg:max-w-[125px]"
               aria-hidden="true"
               tabIndex={-1}
             >
               <Image src={imageUrl} className="object-contain" alt="" fill sizes="300px" />
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </Td>
       <Th
         scope="row"
-        className="flex w-auto px-0 md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
+        className="flex w-auto px-0 text-center md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
       >
         <Link
           href={path}
@@ -151,7 +151,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
-        {hoursId ? <BranchHours hoursId={hoursId} /> : ""}
+        {hoursId ? (
+          <div className="pb-16 lg:pb-0">
+            <BranchHours hoursId={hoursId} />
+          </div>
+        ) : (
+          ""
+        )}
       </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
         {phone && (
@@ -163,25 +169,31 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             {phone}
           </a>
         )}
-        {email && (
+        {email ? (
           <a
             href={`mailto:${email}`}
-            className="m-auto flex w-fit items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:m-[unset] md:justify-start"
+            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start lg:mb-0"
           >
             <EnvelopeIcon title="Email" width={20} />
             {email}
           </a>
+        ) : (
+          ""
         )}
       </Td>
       <Td className="block w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
-          <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
-            <MapPinIcon title="Map" width={20} className="min-w-20" />
-            <Address
-              {...address}
-              className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
-            />
-          </a>
+          <>
+            <div className="pb-16 lg:pb-0">
+              <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
+                <MapPinIcon title="Map" width={20} className="min-w-20" />
+                <Address
+                  {...address}
+                  className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
+                />
+              </a>
+            </div>
+          </>
         )}
       </Td>
     </Tr>
