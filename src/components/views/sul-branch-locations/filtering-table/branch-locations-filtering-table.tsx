@@ -145,7 +145,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       >
         <Link
           href={path}
-          className="inline-block w-full text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:w-auto md:text-left"
+          className="m-auto inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
         >
           <h2 className="font-sans text-20 font-semibold">{title}</h2>
         </Link>
