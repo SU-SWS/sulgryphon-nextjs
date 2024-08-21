@@ -145,9 +145,9 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       >
         <Link
           href={path}
-          className="m-auto inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
+          className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
         >
-          <h2 className="font-sans text-20 font-semibold">{title}</h2>
+          <h2 className="mb-0 font-sans text-20 font-semibold">{title}</h2>
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">

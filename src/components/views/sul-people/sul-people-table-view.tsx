@@ -210,9 +210,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   {item.title && (
                     <Link
                       href={item.path}
-                      className="inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
+                      className="mb-16 inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                     >
-                      <HeadingElement className="font-sans text-20 font-semibold" id={item.id}>
+                      <HeadingElement className="mb-0 font-sans text-20 font-semibold" id={item.id}>
                         {item.title}
                       </HeadingElement>
                     </Link>
