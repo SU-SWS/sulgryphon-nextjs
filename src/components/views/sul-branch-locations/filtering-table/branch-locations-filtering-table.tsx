@@ -99,11 +99,13 @@ const BranchLocationFilteringTable = ({items}: Props) => {
             <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-16" scope="col">
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-20 xl:pr-80">
               Library
             </Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell lg:pr-80">Open/Closed</Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-80">
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell lg:pr-20 xl:pr-80">
+              Open/Closed
+            </Th>
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-20 xl:pr-80">
               Contact
             </Th>
             <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
@@ -141,7 +143,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto px-0 text-center md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-80 lg:align-middle"
+        className="flex w-auto px-0 text-center md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-20 lg:align-middle xl:pr-80"
       >
         <Link
           href={path}
@@ -150,7 +152,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           <h2 className="mb-0 font-sans text-20 font-semibold">{title}</h2>
         </Link>
       </Th>
-      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">
         {hoursId ? (
           <div className="pb-16 lg:pb-0">
             <BranchHours hoursId={hoursId} />
@@ -159,7 +161,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           ""
         )}
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-80 lg:align-middle">
+      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
