@@ -244,13 +244,13 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                   )}
                 </Td>
                 <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-1/5">
-                  {item.libCalId ? (
+                  {item.libCalId && (
                     <div className="pb-16 lg:pb-0">
                       <LibCal libcalId={item.libCalId} srText={item.title} />
                     </div>
-                  ) : (
-                    ""
                   )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
               </Tr>
             ))}

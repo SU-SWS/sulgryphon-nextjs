@@ -210,7 +210,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:!table-row lg:max-h-none"
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">
-                  {item.branchImageUrl ? (
+                  {item.branchImageUrl && (
                     <div className="relative my-16 block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
                       <Image
                         className="object-contain"
@@ -220,9 +220,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                         sizes="(max-width: 992px) 300px, 150px"
                       />
                     </div>
-                  ) : (
-                    ""
                   )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
                 <Th
                   scope="row"
@@ -245,13 +245,13 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   </Link>
                 </Td>
                 <Td className="justify-left flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
-                  {item.libHours ? (
+                  {item.libHours && (
                     <div className="pb-16 text-16 leading-[23px] lg:pb-0">
                       {item.libHours && <BranchHours hoursId={item.libHours} />}
                     </div>
-                  ) : (
-                    ""
                   )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
@@ -262,7 +262,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   )}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
-                  {item.libCalId ? (
+                  {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
                       className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:mb-0 lg:w-fit"
@@ -274,9 +274,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                         </div>
                       </div>
                     </a>
-                  ) : (
-                    ""
                   )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
               </Tr>
             ))}

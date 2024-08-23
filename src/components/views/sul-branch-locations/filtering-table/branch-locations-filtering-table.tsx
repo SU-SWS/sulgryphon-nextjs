@@ -153,13 +153,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">
-        {hoursId ? (
+        {hoursId && (
           <div className="pb-16 lg:pb-0">
             <BranchHours hoursId={hoursId} />
           </div>
-        ) : (
-          ""
         )}
+        {/* Without this, the responsive table library injects a "&nbsp;". */}
+        {""}
       </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">
         {phone && (
@@ -171,7 +171,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             {phone}
           </a>
         )}
-        {email ? (
+        {email && (
           <a
             href={`mailto:${email}`}
             className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-16 font-normal leading-[23px] no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start lg:mb-0"
@@ -179,9 +179,9 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
             <EnvelopeIcon title="Email" width={20} />
             {email}
           </a>
-        ) : (
-          ""
         )}
+        {/* Without this, the responsive table library injects a "&nbsp;". */}
+        {""}
       </Td>
       <Td className="block w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
