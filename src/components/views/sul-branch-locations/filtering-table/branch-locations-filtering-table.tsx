@@ -129,16 +129,14 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
     >
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:pr-16 lg:align-middle">
         {imageUrl && (
-          <div className="relative my-16 block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
-            <Link
-              href={path}
-              className="relative block aspect-[3/2] w-[300px] overflow-hidden md:w-[360px] lg:max-w-[125px]"
-              aria-hidden="true"
-              tabIndex={-1}
-            >
-              <Image src={imageUrl} className="object-contain" alt="" fill sizes="300px" />
-            </Link>
-          </div>
+          <Link
+            href={path}
+            className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]"
+            aria-hidden="true"
+            tabIndex={-1}
+          >
+            <Image src={imageUrl} className="object-contain" alt="" fill sizes="300px" />
+          </Link>
         )}
       </Td>
       <Th
@@ -185,17 +183,15 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Td className="block w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
         {address && mapUrl && (
-          <>
-            <div className="pb-16 lg:pb-0">
-              <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
-                <MapPinIcon title="Map" width={20} className="min-w-20" />
-                <Address
-                  {...address}
-                  className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
-                />
-              </a>
-            </div>
-          </>
+          <div className="pb-16 lg:pb-0">
+            <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
+              <MapPinIcon title="Map" width={20} className="min-w-20" />
+              <Address
+                {...address}
+                className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
+              />
+            </a>
+          </div>
         )}
       </Td>
     </Tr>
