@@ -211,7 +211,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">
                   {item.branchImageUrl && (
-                    <div className="relative block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[290px] lg:max-w-[125px]">
+                    <div className="relative my-16 block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
                       <Image
                         className="object-contain"
                         src={item.branchImageUrl}
@@ -221,6 +221,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       />
                     </div>
                   )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
                 <Th
                   scope="row"
@@ -237,17 +239,23 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
                     href={item.branchPath}
-                    className="block w-fit text-16 font-normal leading-[23px] underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                    className="mb-16 block w-fit text-16 font-normal leading-[23px] underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
                   >
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
-                <Td className="justify-left flex w-auto text-16 leading-[23px] sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
-                  {item.libHours && <BranchHours hoursId={item.libHours} />}
+                <Td className="justify-left flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
+                  {item.libHours && (
+                    <div className="pb-16 text-16 leading-[23px] lg:pb-0">
+                      {item.libHours && <BranchHours hoursId={item.libHours} />}
+                    </div>
+                  )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
-                    <div className="bg-black-10 px-16 py-8 text-16 leading-[23px] lg:bg-transparent lg:p-0">
+                    <div className="mb-16 bg-black-10 px-16 py-8 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
@@ -257,7 +265,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
+                      className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:mb-0 lg:w-fit"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
@@ -267,6 +275,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       </div>
                     </a>
                   )}
+                  {/* Without this, the responsive table library injects a "&nbsp;". */}
+                  {""}
                 </Td>
               </Tr>
             ))}
