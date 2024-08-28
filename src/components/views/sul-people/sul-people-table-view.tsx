@@ -8,8 +8,11 @@ import {EnvelopeIcon} from "@heroicons/react/24/outline"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {useId, useRef, useState} from "react"
+import {HTMLAttributes, useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
+import {CheckIcon} from "@heroicons/react/16/solid"
+import {twMerge} from "tailwind-merge"
+import {clsx} from "clsx"
 
 export type TablePerson = {
   id: NodeStanfordPerson["id"]
@@ -33,31 +36,15 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const id = useId()
   const keywordRef = useRef<HTMLInputElement>(null)
 
-  const [typeFilter, setTypeFilter] = useState<string[]>([])
+  const [typeFilter, setTypeFilter] = useState<string>("")
   const [keywordFilter, setKeywordFilter] = useState("")
 
   let displayedItems = items
 
-  if (typeFilter.length >= 1) {
+  if (typeFilter) {
     displayedItems = items.filter(
-      item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter.includes(value)).length
+      item => !!item.types?.map(type => type.toLowerCase()).filter(value => typeFilter === value).length
     )
-  }
-
-  const updateTypeFilter = (type?: string) => {
-    if (!type) {
-      return setTypeFilter([])
-    }
-    setTypeFilter(prevState => {
-      const newState = [...prevState]
-      const existingIndex = newState.indexOf(type)
-      if (existingIndex >= 0) {
-        newState.splice(existingIndex, 1)
-      } else {
-        newState.push(type)
-      }
-      return newState
-    })
   }
 
   if (keywordFilter) {
@@ -75,7 +62,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={e => e.preventDefault()}
       >
-        <div className="relative max-w-[350px] md:w-[435px]">
+        <div className="relative w-full md:w-[435px]">
           <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
             Search by name, title, or subject
           </label>
@@ -113,42 +100,19 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
             <span className="sr-only">Search</span>
           </button>
         </div>
-        <div className="self-end">
+        <div className="w-full self-end md:w-[435px]">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
-            <label className="group hidden cursor-pointer border-r-0 md:block">
-              <input
-                type="checkbox"
-                className="peer sr-only"
-                checked={!typeFilter.length}
-                onChange={() => updateTypeFilter()}
-              />
-              <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-                All specialists
-              </span>
-            </label>
-            <label className="group cursor-pointer">
-              <input
-                type="checkbox"
-                className="peer sr-only"
-                checked={typeFilter.includes("subject specialist")}
-                onChange={() => updateTypeFilter("subject specialist")}
-              />
-              <span className="block items-center rounded-l-full border border-r-0 border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 md:rounded-l-none">
-                Subject specialists
-              </span>
-            </label>
-            <label className="group cursor-pointer">
-              <input
-                type="checkbox"
-                className="peer sr-only"
-                checked={typeFilter.includes("technical specialist")}
-                onChange={() => updateTypeFilter("technical specialist")}
-              />
-              <span className="block items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-                Technical specialists
-              </span>
-            </label>
+            <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first>
+              All
+            </ToggleOption>
+            <ToggleOption
+              checked={typeFilter === "subject specialist"}
+              onChange={() => setTypeFilter("subject specialist")}
+              last
+            >
+              Subject specialists
+            </ToggleOption>
           </fieldset>
         </div>
       </form>
@@ -260,4 +224,39 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
     </div>
   )
 }
+
+const ToggleOption = ({
+  checked,
+  onChange,
+  first,
+  last,
+  children,
+  ...props
+}: HTMLAttributes<HTMLLabelElement> & {
+  checked: boolean
+  onChange: () => void
+  first?: boolean
+  last?: boolean
+}) => {
+  return (
+    <label {...props} className="group cursor-pointer">
+      <input type="radio" name="specialist" className="peer sr-only" checked={checked} onChange={onChange} />
+
+      <span
+        className={twMerge(
+          "flex items-center whitespace-nowrap border border-black-80 p-4 pl-16 pr-32 text-14 leading-[30px] no-underline hover:border-cardinal-red-dark hover:bg-[#979694] hover:bg-opacity-10 hover:text-cardinal-red-dark hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-cardinal-red-dark peer-focus:underline md:text-16 peer-checked:[&_svg]:text-black",
+          clsx({
+            "rounded-l-full": first,
+            "rounded-r-full": last,
+            "border-r-0": !last,
+          })
+        )}
+      >
+        <CheckIcon width={20} className="text-transparent" />
+        {children}
+      </span>
+    </label>
+  )
+}
+
 export default SulPeopleTableView
