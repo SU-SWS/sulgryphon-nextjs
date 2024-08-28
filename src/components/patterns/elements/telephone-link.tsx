@@ -2,9 +2,9 @@
 
 // @ts-ignore
 import Obfuscate from "react-obfuscate"
-import {HTMLProps} from "react"
+import {HTMLAttributes} from "react"
 
-const TelephoneLink = ({tel, ...props}: {tel: string} & HTMLProps<HTMLLinkElement>) => {
+const TelephoneLink = ({tel, ...props}: {tel: string} & Omit<HTMLAttributes<HTMLLinkElement>, "onClick">) => {
   return <Obfuscate tel={tel} {...props} />
 }
 export default TelephoneLink

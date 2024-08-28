@@ -8,8 +8,11 @@ import {EnvelopeIcon} from "@heroicons/react/24/outline"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {useId, useRef, useState} from "react"
+import {HTMLAttributes, useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
+import {CheckIcon} from "@heroicons/react/16/solid"
+import {twMerge} from "tailwind-merge"
+import {clsx} from "clsx"
 
 export type TablePerson = {
   id: NodeStanfordPerson["id"]
@@ -100,42 +103,16 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         <div className="w-full self-end md:w-[435px]">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
-            <label className="group cursor-pointer border-r-0 md:block">
-              <input
-                type="radio"
-                name="specialist"
-                className="peer sr-only"
-                checked={!typeFilter}
-                onChange={() => setTypeFilter("")}
-              />
-              <span className="block whitespace-nowrap rounded-l-full border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-hover:bg-[#979694] peer-hover:bg-opacity-10 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-active:bg-[#979694] peer-active:bg-opacity-10 md:text-16">
-                All
-              </span>
-            </label>
-            <label className="group cursor-pointer">
-              <input
-                type="radio"
-                name="specialist"
-                className="peer sr-only"
-                checked={typeFilter === "subject specialist"}
-                onChange={() => setTypeFilter("subject specialist")}
-              />
-              <span className="block items-center whitespace-nowrap border border-r-0 border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-hover:bg-[#979694] peer-hover:bg-opacity-10 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-active:bg-[#979694] peer-active:bg-opacity-10 md:rounded-l-none md:text-16">
-                Subject specialists
-              </span>
-            </label>
-            <label className="group cursor-pointer">
-              <input
-                type="radio"
-                name="specialist"
-                className="peer sr-only"
-                checked={typeFilter === "technical specialist"}
-                onChange={() => setTypeFilter("technical specialist")}
-              />
-              <span className="block items-center whitespace-nowrap rounded-r-full border border-black-80 p-4 px-16 text-14 leading-[30px] no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-hover:bg-[#979694] peer-hover:bg-opacity-10 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-active:bg-[#979694] peer-active:bg-opacity-10 md:text-16">
-                Technical specialists
-              </span>
-            </label>
+            <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first>
+              All
+            </ToggleOption>
+            <ToggleOption
+              checked={typeFilter === "subject specialist"}
+              onChange={() => setTypeFilter("subject specialist")}
+              last
+            >
+              Subject specialists
+            </ToggleOption>
           </fieldset>
         </div>
       </form>
@@ -239,4 +216,39 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
     </div>
   )
 }
+
+const ToggleOption = ({
+  checked,
+  onChange,
+  first,
+  last,
+  children,
+  ...props
+}: HTMLAttributes<HTMLLabelElement> & {
+  checked: boolean
+  onChange: () => void
+  first?: boolean
+  last?: boolean
+}) => {
+  return (
+    <label {...props} className="group cursor-pointer">
+      <input type="radio" name="specialist" className="peer sr-only" checked={checked} onChange={onChange} />
+
+      <span
+        className={twMerge(
+          "flex items-center whitespace-nowrap border border-black-80 p-4 pl-16 pr-32 text-14 leading-[30px] no-underline hover:border-cardinal-red-dark hover:bg-[#979694] hover:bg-opacity-10 hover:text-cardinal-red-dark hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-cardinal-red-dark peer-focus:underline md:text-16 peer-checked:[&_svg]:text-black",
+          clsx({
+            "rounded-l-full": first,
+            "rounded-r-full": last,
+            "border-r-0": !last,
+          })
+        )}
+      >
+        <CheckIcon width={20} className="text-transparent" />
+        {children}
+      </span>
+    </label>
+  )
+}
+
 export default SulPeopleTableView
