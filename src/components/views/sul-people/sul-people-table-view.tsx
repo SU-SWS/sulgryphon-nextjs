@@ -104,7 +104,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
             <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first>
-              All
+              All specialists
             </ToggleOption>
             <ToggleOption
               checked={typeFilter === "subject specialist"}
