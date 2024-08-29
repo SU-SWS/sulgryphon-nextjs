@@ -104,7 +104,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
             <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first>
-              All
+              All specialists
             </ToggleOption>
             <ToggleOption
               checked={typeFilter === "subject specialist"}
@@ -244,7 +244,7 @@ const ToggleOption = ({
 
       <span
         className={twMerge(
-          "flex items-center whitespace-nowrap border border-black-80 p-4 pl-16 pr-32 text-14 leading-[30px] no-underline hover:border-cardinal-red-dark hover:bg-[#979694] hover:bg-opacity-10 hover:text-cardinal-red-dark hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-cardinal-red-dark peer-focus:underline md:text-16 peer-checked:[&_svg]:text-black",
+          "peer-focus:nounderline flex items-center whitespace-nowrap border border-black-80 p-4 pl-16 pr-32 text-14 leading-[30px] no-underline hover:border-cardinal-red-dark hover:bg-[#979694] hover:bg-opacity-10 hover:text-cardinal-red-dark hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-black-80 peer-focus:underline md:text-16 peer-checked:[&_svg]:text-black",
           clsx({
             "rounded-l-full": first,
             "rounded-r-full": last,
