@@ -119,7 +119,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOpenAndClosed}
                     checked={!onlyOpenNow}
                   />
-                  <span className="flex items-center justify-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center justify-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-9 text-18 no-underline group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     All locations
                   </span>
                 </label>
@@ -132,7 +132,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     onChange={showOnlyOpenNow}
                     checked={onlyOpenNow}
                   />
-                  <span className="flex items-center justify-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+                  <span className="flex items-center justify-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-9 text-18 no-underline group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
                     <ClockIcon
                       title="Hours"
                       width={15}

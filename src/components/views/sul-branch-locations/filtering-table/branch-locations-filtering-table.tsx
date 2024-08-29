@@ -85,7 +85,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
               checked={onlyOpenNow}
               onChange={showOnlyOpenNow}
             />
-            <span className="flex items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
+            <span className="flex items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
               <ClockIcon title="Hours" width={15} className="mr-8 inline-block flex-shrink-0 text-black-80" />
               Open now
             </span>
