@@ -7,7 +7,6 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
 import {useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
-import {CheckIcon} from "@heroicons/react/16/solid"
 import {ChevronDownIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean, useEventListener} from "usehooks-ts"
@@ -113,11 +112,11 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {!!Object.keys(libraryHours).length && (
               <fieldset className="mb-10 mr-0 flex h-25 w-full items-center md:mb-0 md:mr-10">
                 <legend className="sr-only">Show only open now or all locations</legend>
-                <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="open">
+                <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="study-place-open">
                   All locations
                 </ToggleOption>
 
-                <ToggleOption checked={onlyOpenNow} onChange={showOnlyOpenNow} last name="open">
+                <ToggleOption checked={onlyOpenNow} onChange={showOnlyOpenNow} last name="study-place-open">
                   Open now
                 </ToggleOption>
               </fieldset>
