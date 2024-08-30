@@ -36,7 +36,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
   const id = useId()
   const keywordRef = useRef<HTMLInputElement>(null)
 
-  const [typeFilter, setTypeFilter] = useState<string>("")
+  const [typeFilter, setTypeFilter] = useState<string>("subject specialist")
   const [keywordFilter, setKeywordFilter] = useState("")
 
   let displayedItems = items
@@ -110,6 +110,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
               checked={typeFilter === "subject specialist"}
               onChange={() => setTypeFilter("subject specialist")}
               last
+              defaultChecked
             >
               Subject specialists
             </ToggleOption>
@@ -231,16 +232,25 @@ const ToggleOption = ({
   first,
   last,
   children,
+  defaultChecked,
   ...props
 }: HTMLAttributes<HTMLLabelElement> & {
   checked: boolean
   onChange: () => void
   first?: boolean
   last?: boolean
+  defaultChecked?: boolean
 }) => {
   return (
     <label {...props} className="group cursor-pointer">
-      <input type="radio" name="specialist" className="peer sr-only" checked={checked} onChange={onChange} />
+      <input
+        type="radio"
+        name="specialist"
+        className="peer sr-only"
+        checked={checked}
+        onChange={onChange}
+        defaultChecked={defaultChecked}
+      />
 
       <span
         className={twMerge(
