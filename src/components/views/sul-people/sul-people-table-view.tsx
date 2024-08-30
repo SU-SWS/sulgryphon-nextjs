@@ -254,7 +254,7 @@ const ToggleOption = ({
 
       <span
         className={twMerge(
-          "peer-focus:nounderline flex items-center whitespace-nowrap border border-black-80 p-4 pr-32 text-14 leading-[30px] no-underline hover:text-cardinal-red-dark hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-checked:pl-16 peer-checked:transition-all peer-checked:ease-in-out peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-black-80 peer-focus:underline md:text-16 peer-checked:[&_svg]:text-black",
+          "peer-focus:nounderline flex items-center border border-black-80 p-4 pr-32 text-18 leading-[30px] no-underline hover:text-cardinal-red-dark hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-checked:pl-16 peer-checked:transition-all peer-checked:ease-in-out peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-black-80 peer-focus:underline sm:whitespace-nowrap peer-checked:[&_svg]:text-black",
           clsx({
             "rounded-l-full": first,
             "rounded-r-full": last,
