@@ -7,11 +7,12 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
 import {useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
-import {ClockIcon, ChevronDownIcon} from "@heroicons/react/24/outline"
+import {ChevronDownIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
+import ToggleOption from "@/components/patterns/toggle-option"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
@@ -111,36 +112,13 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {!!Object.keys(libraryHours).length && (
               <fieldset className="mb-10 mr-0 flex h-25 w-full items-center md:mb-0 md:mr-10">
                 <legend className="sr-only">Show only open now or all locations</legend>
-                <label className="group w-1/2 min-w-[134px] cursor-pointer">
-                  <input
-                    className="peer sr-only"
-                    type="radio"
-                    name="open"
-                    onChange={showOpenAndClosed}
-                    checked={!onlyOpenNow}
-                  />
-                  <span className="flex items-center justify-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-                    All locations
-                  </span>
-                </label>
+                <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="study-place-open">
+                  All locations
+                </ToggleOption>
 
-                <label className="group w-1/2 min-w-[134px] cursor-pointer">
-                  <input
-                    className="peer sr-only"
-                    type="radio"
-                    name="open"
-                    onChange={showOnlyOpenNow}
-                    checked={onlyOpenNow}
-                  />
-                  <span className="flex items-center justify-center whitespace-nowrap rounded-r-full border border-black-80 px-24 py-9 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-                    <ClockIcon
-                      title="Hours"
-                      width={15}
-                      className="mr-8 flex-shrink-0 text-black-80 group-hover:text-cardinal-red-dark"
-                    />
-                    Open now
-                  </span>
-                </label>
+                <ToggleOption checked={onlyOpenNow} onChange={showOnlyOpenNow} last name="study-place-open">
+                  Open now
+                </ToggleOption>
               </fieldset>
             )}
 

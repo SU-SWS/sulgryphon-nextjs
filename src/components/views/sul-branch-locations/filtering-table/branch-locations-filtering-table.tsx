@@ -1,6 +1,6 @@
 "use client"
 
-import {ClockIcon, MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
+import {MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
@@ -13,6 +13,7 @@ import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHo
 import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
+import ToggleOption from "@/components/patterns/toggle-option"
 
 export type BranchLocation = {
   id: NodeSulLibrary["id"]
@@ -65,31 +66,14 @@ const BranchLocationFilteringTable = ({items}: Props) => {
       <form>
         <fieldset className="rs-mb-1 mx-auto flex h-25 w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
-          <label className="group cursor-pointer">
-            <input
-              type="radio"
-              name="open"
-              className="peer sr-only"
-              checked={!onlyOpenNow}
-              onChange={showOpenAndClosed}
-            />
-            <span className="block rounded-l-full border border-r-0 border-black-80 p-9 px-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-              All locations
-            </span>
-          </label>
-          <label className="group cursor-pointer">
-            <input
-              type="checkbox"
-              name="open"
-              className="peer sr-only"
-              checked={onlyOpenNow}
-              onChange={showOnlyOpenNow}
-            />
-            <span className="flex items-center rounded-r-full border border-black-80 p-9 pr-20 text-18 no-underline group-hover:border-cardinal-red-dark group-hover:text-cardinal-red-dark group-hover:underline peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10">
-              <ClockIcon title="Hours" width={15} className="mr-8 inline-block flex-shrink-0 text-black-80" />
-              Open now
-            </span>
-          </label>
+
+          <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="branch-open">
+            All locations
+          </ToggleOption>
+
+          <ToggleOption checked={onlyOpenNow} onChange={showOnlyOpenNow} last name="branch-open">
+            Open now
+          </ToggleOption>
         </fieldset>
       </form>
 
