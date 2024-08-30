@@ -8,11 +8,9 @@ import {EnvelopeIcon} from "@heroicons/react/24/outline"
 import {Maybe, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {HTMLAttributes, useId, useRef, useState} from "react"
+import {useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
-import {CheckIcon} from "@heroicons/react/16/solid"
-import {twMerge} from "tailwind-merge"
-import {clsx} from "clsx"
+import ToggleOption from "@/components/patterns/toggle-option"
 
 export type TablePerson = {
   id: NodeStanfordPerson["id"]
@@ -103,14 +101,14 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         <div className="w-full self-end md:w-[435px]">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
-            <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first>
+            <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first name="people-specialist">
               All specialists
             </ToggleOption>
             <ToggleOption
               checked={typeFilter === "subject specialist"}
               onChange={() => setTypeFilter("subject specialist")}
               last
-              defaultChecked
+              name="people-specialist"
             >
               Subject specialists
             </ToggleOption>
@@ -223,49 +221,6 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
         </Table>
       )}
     </div>
-  )
-}
-
-const ToggleOption = ({
-  checked,
-  onChange,
-  first,
-  last,
-  children,
-  defaultChecked,
-  ...props
-}: HTMLAttributes<HTMLLabelElement> & {
-  checked: boolean
-  onChange: () => void
-  first?: boolean
-  last?: boolean
-  defaultChecked?: boolean
-}) => {
-  return (
-    <label {...props} className="group cursor-pointer text-black-80">
-      <input
-        type="radio"
-        name="specialist"
-        className="peer sr-only"
-        checked={checked}
-        onChange={onChange}
-        defaultChecked={defaultChecked}
-      />
-
-      <span
-        className={twMerge(
-          "peer-focus:nounderline flex items-center border border-black-80 p-4 pr-32 text-18 leading-[30px] no-underline hover:text-cardinal-red-dark hover:underline peer-checked:border-2 peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-checked:pl-16 peer-checked:text-black peer-checked:underline peer-checked:transition-all peer-checked:ease-in-out peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-black peer-focus:underline peer-focus:outline peer-focus:outline-blue-500 peer-focus:ring sm:whitespace-nowrap peer-checked:[&_svg]:text-black",
-          clsx({
-            "rounded-l-full": first,
-            "rounded-r-full": last,
-            "border-r-0": !last,
-          })
-        )}
-      >
-        <CheckIcon width={20} className="text-transparent" />
-        {children}
-      </span>
-    </label>
   )
 }
 

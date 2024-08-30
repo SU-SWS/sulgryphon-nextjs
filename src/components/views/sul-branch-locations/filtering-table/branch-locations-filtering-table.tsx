@@ -1,7 +1,6 @@
 "use client"
 
 import {MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
-import {CheckIcon} from "@heroicons/react/16/solid"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
@@ -14,6 +13,7 @@ import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHo
 import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
+import ToggleOption from "@/components/patterns/toggle-option"
 
 export type BranchLocation = {
   id: NodeSulLibrary["id"]
@@ -66,32 +66,14 @@ const BranchLocationFilteringTable = ({items}: Props) => {
       <form>
         <fieldset className="rs-mb-1 mx-auto flex h-25 w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
-          <label className="group cursor-pointer">
-            <input
-              type="radio"
-              name="open"
-              className="peer sr-only"
-              checked={!onlyOpenNow}
-              onChange={showOpenAndClosed}
-            />
-            <span className="flex items-center whitespace-nowrap rounded-l-full border border-r-0 border-black-80 p-9 pl-0 pr-20 text-18 text-black-80 no-underline group-hover:text-cardinal-red-dark group-hover:underline peer-checked:border-2 peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-checked:pl-16 peer-checked:text-black peer-checked:underline peer-checked:transition-all peer-checked:ease-in-out peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-black peer-focus:underline peer-focus:outline peer-focus:outline-blue-500 peer-focus:ring peer-checked:[&_svg]:text-black">
-              <CheckIcon width={20} className="text-transparent" />
-              All locations
-            </span>
-          </label>
-          <label className="group cursor-pointer">
-            <input
-              type="checkbox"
-              name="open"
-              className="peer sr-only"
-              checked={onlyOpenNow}
-              onChange={showOnlyOpenNow}
-            />
-            <span className="flex items-center whitespace-nowrap rounded-r-full border border-black-80 p-9 pr-20 text-18 text-black-80 no-underline group-hover:underline peer-checked:border-2 peer-checked:bg-[#979694] peer-checked:bg-opacity-20 peer-checked:pl-16 peer-checked:text-black peer-checked:underline peer-checked:transition-all peer-checked:ease-in-out peer-focus:border-2 peer-focus:border-black-80 peer-focus:bg-[#979694] peer-focus:bg-opacity-10 peer-focus:text-black peer-focus:underline peer-focus:outline peer-focus:outline-blue-500 peer-focus:ring peer-checked:[&_svg]:text-black">
-              <CheckIcon width={20} className="text-transparent" />
-              Open now
-            </span>
-          </label>
+
+          <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="branch-open">
+            All locations
+          </ToggleOption>
+
+          <ToggleOption checked={onlyOpenNow} onChange={showOnlyOpenNow} last name="branch-open">
+            Open now
+          </ToggleOption>
         </fieldset>
       </form>
 
