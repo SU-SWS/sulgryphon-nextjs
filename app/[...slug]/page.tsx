@@ -9,6 +9,7 @@ import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
+import FlushCache from "@/components/patterns/elements/flush-cache"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -28,6 +29,8 @@ const NodePage = async ({params, previewMode}: PageProps) => {
 
   return (
     <main id="main-content" className="mb-50">
+      {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={path} />}
+
       {!entity.status && <EditorAlertBanner message="Unpublished Content" />}
       {entity.__typename === "NodeSulLibrary" && <LibraryHeader node={entity} />}
 
