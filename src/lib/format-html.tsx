@@ -63,6 +63,7 @@ const options: HTMLReactParserOptions = {
             nodeProps.className
           )
           return <a {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</a>
+        case "div":
         case "article":
           return cleanMediaMarkup(domNode)
 
@@ -101,7 +102,6 @@ const options: HTMLReactParserOptions = {
         case "h3":
         case "h4":
         case "span":
-        case "div":
         case "tr":
         case "th":
         case "td":
@@ -146,6 +146,27 @@ const fixClasses = (classes: string | boolean): string => {
 }
 
 const cleanMediaMarkup = (node: Element) => {
+  const getOembedUrl = (node: Element): string | undefined => {
+    const src = node.attribs?.src || node.attribs["data-src"]
+    if (src?.includes("/media/oembed")) {
+      return decodeURIComponent(src.replace(/^.*url=(.*)$/, "$1")).replace(/&.*$/, "")
+    }
+    if (node.children.length > 0) {
+      for (let child of node.children) {
+        if (child instanceof Element) {
+          const url: string | undefined = getOembedUrl(child)
+          if (url) return url
+        }
+      }
+    }
+  }
+
+  // Special handling of Oembeds
+  const oembedUrl = getOembedUrl(node)
+  if (oembedUrl) {
+    return <Oembed url={oembedUrl} />
+  }
+
   const findIframeInMedia = (item: Element): Element | undefined => {
     const iframe = item.children?.find(child => child instanceof Element && child.name === "iframe")
     if (iframe) return iframe as Element
