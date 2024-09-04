@@ -33,7 +33,7 @@ const ToggleOption = ({
           })
         )}
       >
-        <CheckIcon width={20} className="text-transparent" />
+        <CheckIcon width={20} className="mr-3 text-transparent" />
         {children}
       </span>
     </label>
