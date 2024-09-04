@@ -108,9 +108,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
       <form onSubmit={e => e.preventDefault()}>
         <fieldset className="text-18">
           <legend className="sr-only">Filter places to study</legend>
-          <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-10 *:min-w-300 *:flex-1 *:2xl:min-w-0">
+          <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-15 *:min-w-[300px] *:flex-1 *:3xl:min-w-0">
             {!!Object.keys(libraryHours).length && (
-              <fieldset className="mb-10 mr-0 flex h-25 w-full items-center md:mb-0 md:mr-10">
+              <fieldset className="mb-10 mr-0 flex h-25 w-full items-center md:mb-0 md:mr-0 3xl:mr-19">
                 <legend className="sr-only">Show only open now or all locations</legend>
                 <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="study-place-open">
                   All locations
