@@ -3787,21 +3787,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.53.1":
-  version: 5.53.1
-  resolution: "@tanstack/query-core@npm:5.53.1"
-  checksum: 10c0/9014bdf5a21f9ba9830cdd1289deeb29e4b881872b86a2dc60cd2ca06a194284437f371b77ec210897c8500429b4f41371d959cecfddfcc73f067ef09fc77a20
+"@tanstack/query-core@npm:5.53.3":
+  version: 5.53.3
+  resolution: "@tanstack/query-core@npm:5.53.3"
+  checksum: 10c0/bf1cee5aa69bca4e3caada664d3cf699031d513e56b206e853fa34ab867482018a1cf8caddcf175bde4c4eedc03378cb628f1b0d5338b1cffcd0c0b56b2ef339
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.53.1":
-  version: 5.53.1
-  resolution: "@tanstack/react-query@npm:5.53.1"
+"@tanstack/react-query@npm:^5.53.3":
+  version: 5.53.3
+  resolution: "@tanstack/react-query@npm:5.53.3"
   dependencies:
-    "@tanstack/query-core": "npm:5.53.1"
+    "@tanstack/query-core": "npm:5.53.3"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/2506360d2dc1b57fedaa42b1a01d2f561a672643bc728f36261ff16764c6f0159a0950be8190b52cfabb8911d96c09f2cd124dc41fd1fbca514a0482db3bd813
+  checksum: 10c0/c14e8e2cfe1c46437c513dcfcdfcac211368a29967d0256fa1320484861f14ca5c34dd117a7cd850732759fcc9faa7454b042d812c027fda8e128113b2616dcb
   languageName: node
   linkType: hard
 
@@ -3835,12 +3835,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.5.1":
-  version: 22.5.1
-  resolution: "@types/node@npm:22.5.1"
+"@types/node@npm:^22.5.2":
+  version: 22.5.2
+  resolution: "@types/node@npm:22.5.2"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/35373176d8a1d4e16004a1ed303e68d39e4c6341024dc056f2577982df98c1a045a6b677f12ed557796f09bbf7d621f428f6874cc37ed28f7b336fa604b5f6a6
+  checksum: 10c0/624a7fd76229eacc6c158eb3b9afd55b811d7f01976c5f92c630d5b9d47047cc218928c343988484a165ac400e5eb6fe70ea300fc7242deeb0e920c7724290f6
   languageName: node
   linkType: hard
 
@@ -4425,14 +4425,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.6":
-  version: 1.7.6
-  resolution: "axios@npm:1.7.6"
+"axios@npm:^1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/8b4be67056f8f3895ebadbfce0708e5aa9c537a5a68e2da03bec49d35695e29b57f14ce38f20f55bb19946bd89787a839a7c3afa9e58e1152696c208046f8417
+  checksum: 10c0/4499efc89e86b0b49ffddc018798de05fab26e3bf57913818266be73279a6418c3ce8f9e934c7d2d707ab8c095e837fc6c90608fb7715b94d357720b5f568af7
   languageName: node
   linkType: hard
 
@@ -4517,12 +4517,12 @@ __metadata:
     "@next/third-parties": "npm:^14.2.7"
     "@tailwindcss/container-queries": "npm:^0.1.1"
     "@tailwindcss/typography": "npm:^0.5.15"
-    "@tanstack/react-query": "npm:^5.53.1"
-    "@types/node": "npm:^22.5.1"
+    "@tanstack/react-query": "npm:^5.53.3"
+    "@types/node": "npm:^22.5.2"
     "@types/qs": "npm:^6.9.15"
     "@types/react": "npm:^18.3.5"
     autoprefixer: "npm:^10.4.20"
-    axios: "npm:^1.7.6"
+    axios: "npm:^1.7.7"
     critters: "npm:^0.0.24"
     decanter: "npm:^7.3.0"
     eslint: "npm:^8.57.0"
@@ -4538,7 +4538,7 @@ __metadata:
     jsona: "npm:^1.12.1"
     next: "npm:^14.2.7"
     next-drupal: "npm:^1.6.0"
-    postcss: "npm:^8.4.41"
+    postcss: "npm:^8.4.44"
     prettier: "npm:^3.3.3"
     prettier-plugin-tailwindcss: "npm:^0.6.6"
     react: "npm:^18.3.1"
@@ -8620,14 +8620,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.41":
-  version: 8.4.41
-  resolution: "postcss@npm:8.4.41"
+"postcss@npm:^8.4.44":
+  version: 8.4.44
+  resolution: "postcss@npm:8.4.44"
   dependencies:
     nanoid: "npm:^3.3.7"
     picocolors: "npm:^1.0.1"
     source-map-js: "npm:^1.2.0"
-  checksum: 10c0/c1828fc59e7ec1a3bf52b3a42f615dba53c67960ed82a81df6441b485fe43c20aba7f4e7c55425762fd99c594ecabbaaba8cf5b30fd79dfec5b52a9f63a2d690
+  checksum: 10c0/53c33338261a3d4f4198f8893e9dfe8b828d8d9186142ee85f02d228f04245c5bbe31239411a357a556ad20ed96f28db24d0921d63edc428fdc9133289371a1d
   languageName: node
   linkType: hard
 
