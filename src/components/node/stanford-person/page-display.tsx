@@ -75,7 +75,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
 
           {node.suPersonResearch && (
             <div className="rs-mb-7">
-              <h2 className="type-1">Research</h2>
+              <h2 className="type-1">Expertise</h2>
               <div className="grid-cols-2 md:grid">
                 {node.suPersonResearch.map((interest, index) => (
                   <div key={`research-${index}`} className="rs-mb-1">
