@@ -63,7 +63,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
 
   return (
     <div className="pb-[32px]">
-      <form>
+      <form action="javascript:void(0);">
         <fieldset className="rs-mb-1 mx-auto flex h-25 w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
 
@@ -131,7 +131,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           href={path}
           className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
         >
-          <h2 className="mb-0 font-sans text-20 font-semibold">{title}</h2>
+          <span className="mb-0 font-sans text-20 font-semibold">{title}</span>
         </Link>
       </Th>
       <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">

@@ -113,7 +113,6 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
             email: item.suPersonEmail,
             libCalId: item.sulPersonLibcalId,
           }))}
-          hasHeading={hasHeading}
         />
       )
 
@@ -136,7 +135,6 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
             email: item.suPersonEmail,
             libCalId: item.sulPersonLibcalId,
           }))}
-          hasHeading={hasHeading}
         />
       )
   }
