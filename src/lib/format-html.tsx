@@ -26,7 +26,7 @@ const options: HTMLReactParserOptions = {
           }
           nodeProps.href = nodeProps.href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "", "")
 
-          if (nodeProps.className.indexOf("button--big") > -1) {
+          if (nodeProps.className?.includes("button--big")) {
             return (
               <DrupalLinkBigButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -34,7 +34,7 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if (nodeProps.className.indexOf("button--secondary") > -1) {
+          if (nodeProps.className?.includes("button--secondary")) {
             return (
               <DrupalLinkSecondaryButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -42,7 +42,7 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if (nodeProps.className.indexOf("button") > -1) {
+          if (nodeProps.className?.includes("button")) {
             return (
               <DrupalLinkButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -50,7 +50,7 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if (nodeProps.className.indexOf("link--action") > -1) {
+          if (nodeProps.className?.includes("link--action")) {
             return (
               <DrupalActionLink href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -185,7 +185,7 @@ const cleanMediaMarkup = (node: Element) => {
     wrapperDiv.children?.find(child => child instanceof Element && child.name === "img")
 
   // Special handling of video media type.
-  if (node.attribs.class.indexOf("media--type-video") >= 0) {
+  if (node.attribs.className?.includes("media--type-video")) {
     // const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
     const iframe = findIframeInMedia(node)
 
