@@ -105,7 +105,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
 
   return (
     <div className="@container">
-      <form onSubmit={e => e.preventDefault()}>
+      <form onSubmit={e => e.preventDefault()} action="javascript:void(0);">
         <fieldset className="text-18">
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-15 *:min-w-300 *:flex-1 *:3xl:min-w-0">
@@ -207,9 +207,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
                   <div className="pt-0 text-16 font-normal leading-[23px]">
-                    <h2 className="mb-[0px] font-sans text-20 font-semibold">
+                    <span className="mb-[0px] font-sans text-20 font-semibold">
                       {[item.donorName, item.studyType].filter(item => !!item).join(" ")}
-                    </h2>
+                    </span>
                     {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
                     {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
                   </div>

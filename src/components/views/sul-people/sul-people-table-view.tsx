@@ -26,11 +26,9 @@ export type TablePerson = {
 
 type Props = {
   items: TablePerson[]
-  hasHeading: boolean
 }
 
-const SulPeopleTableView = ({items, hasHeading}: Props) => {
-  const HeadingElement = hasHeading ? "h2" : "h3"
+const SulPeopleTableView = ({items}: Props) => {
   const id = useId()
   const keywordRef = useRef<HTMLInputElement>(null)
 
@@ -59,6 +57,7 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
       <form
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={e => e.preventDefault()}
+        action="javascript:void(0);"
       >
         <div className="relative w-full md:w-[435px]">
           <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
@@ -175,9 +174,9 @@ const SulPeopleTableView = ({items, hasHeading}: Props) => {
                       href={item.path}
                       className="mb-16 inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                     >
-                      <HeadingElement className="mb-0 font-sans text-20 font-semibold" id={item.id}>
+                      <span className="mb-0 font-sans text-20 font-semibold" id={item.id}>
                         {item.title}
-                      </HeadingElement>
+                      </span>
                     </Link>
                   )}
                   {item.fullTitle && (
