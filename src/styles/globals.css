@@ -21,7 +21,8 @@
 @layer utilities {
   /* Added to get center alignment on branches table. */
   @media screen and (max-width: 40em) {
-     .responsiveTable td.branch-hours {
+     .responsiveTable td.branch-hours,
+     .responsiveTable td.table-image {
         display: flex;
         justify-content: center;
      }
@@ -37,19 +38,20 @@
     border-bottom: 1px #ABABA9 solid !important;
   }
   .responsive-table tr td.pivoted {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     padding-left: 0 !important;
     text-align: unset !important;
   }
-  .responsive-table tr td.pivoted:first-of-type {
-    display: flex !important;
-    justify-content: center;
-    align-items: flex-start;
+  table.sul-people-table thead + tbody {
+    border-top: 0;
   }
   .responsive-table ul li:last-child span {
     display: none;
   }
-  .responsive-table-study tr td.pivoted:first-of-type {
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
+  @media screen and (max-width: 40em) {
+    .responsiveTable.responsive-table-study td.table-image {
+       display: block;
+    }
+   }
 }

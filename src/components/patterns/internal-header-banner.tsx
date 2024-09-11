@@ -1,26 +1,24 @@
-import Wave from "@/components/patterns/wave";
-import {PropsWithChildren} from "react";
+import Wave from "@/components/patterns/wave"
+import {PropsWithChildren} from "react"
 
 const InternalHeaderBanner = ({children}: PropsWithChildren) => {
   return (
-    <header className="bg-black-true mb-50 relative overflow-hidden">
-      <div className="relative z-[1]">
-        {children}
-      </div>
+    <header className="relative mb-50 overflow-hidden bg-black-true">
+      <div className="relative z-[1]">{children}</div>
 
-      <div className="bg-right-bottom lg:bg-interior-header-sprinkles absolute h-2/3 w-1/2 bottom-0 right-0">
-        <div className="bg-gradient-to-b from-black-true to-transparent absolute w-full h-full">
-          <div className="bg-gradient-to-r from-black-true to-transparent absolute w-full h-full">
+      <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-right-bottom lg:bg-interior-header-sprinkles">
+        <div className="absolute h-full w-full bg-gradient-to-b from-black-true to-transparent">
+          <div className="absolute h-full w-full bg-gradient-to-r from-black-true to-transparent">
             {/*Empty elements. They are absolute positioned to provide visual affects only.*/}
           </div>
         </div>
       </div>
 
       <div className="relative">
-        <Wave/>
+        <Wave />
       </div>
     </header>
   )
 }
 
-export default InternalHeaderBanner;
+export default InternalHeaderBanner

@@ -55,9 +55,21 @@ query Nodes {
 }
 
 query Libraries {
-    nodeSulLibraries(first: 1000, sortKey: CREATED_AT) {
+    nodeSulLibraries(first: 1000, sortKey: TITLE) {
         nodes {
-            ...FragmentNodeSulLibrary
+            id
+            title
+            path
+            suLibraryHours
+            suLibraryContactImg {
+                ...FragmentMediaImage
+            }
+            suLibraryBanner {
+                ...FragmentMediaImage
+            }
+            suLibraryMapLink {
+                ...FragmentLink
+            }
         }
     }
 }

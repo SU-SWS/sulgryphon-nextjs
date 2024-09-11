@@ -1,20 +1,25 @@
 import {getSdk} from "@/lib/gql/__generated__/queries"
-import {ConfigPagesQuery, ConfigPagesUnion, MenuAvailable, MenuItem, NodeUnion, RouteQuery, RouteRedirect, TermUnion} from "@/lib/gql/__generated__/drupal.d"
+import {
+  ConfigPagesQuery,
+  ConfigPagesUnion,
+  MenuAvailable,
+  MenuItem,
+  NodeUnion,
+  RouteQuery,
+  RouteRedirect,
+  TermUnion,
+} from "@/lib/gql/__generated__/drupal.d"
 import {GraphQLClient} from "graphql-request"
-import type {RequestConfig} from "graphql-request/src/types"
 import {cache} from "react"
-import {cache as nodeCache} from "@/lib/drupal/get-cache"
 import {buildHeaders} from "@/lib/drupal/utils"
+import {unstable_cache as nextCache} from "next/cache"
 
-export const graphqlClient = (requestConfig: RequestConfig = {}, isPreviewMode?: boolean) => {
+export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, isPreviewMode?: boolean) => {
   requestConfig.headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
 
   const client = new GraphQLClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + "/graphql", {
     ...requestConfig,
-    next: {
-      revalidate: 60 * 60 * 24 * 365,
-      ...requestConfig.next,
-    },
+    next: requestConfig.cache ? {...requestConfig.next} : {revalidate: 60 * 60 * 24 * 365, ...requestConfig.next},
     // Use fetch function so Next.js will be able to cache it normally.
     fetch: async (input: URL | RequestInfo, init?: RequestInit) => fetch(input, init),
   })
@@ -32,6 +37,8 @@ export const getEntityFromPath = cache(
   }> => {
     "use server"
 
+    if (path.startsWith("/node/")) return {}
+
     let entity: T | undefined
     let query: RouteQuery
 
@@ -48,48 +55,56 @@ export const getEntityFromPath = cache(
   }
 )
 
-export const getConfigPage = async <T extends ConfigPagesUnion>(configPageType: ConfigPagesUnion["__typename"]): Promise<T | undefined> => {
+export const getConfigPage = async <T extends ConfigPagesUnion>(
+  configPageType: ConfigPagesUnion["__typename"]
+): Promise<T | undefined> => {
   "use server"
 
-  let query: ConfigPagesQuery
-  try {
-    query = await getConfigPagesData()
-  } catch (e) {
-    console.error("Unable to fetch config pages")
-    return
-  }
+  const getConfigPageInner = nextCache(
+    async () => {
+      let query: ConfigPagesQuery
+      try {
+        query = await graphqlClient({next: {tags: ["config-pages"]}}).ConfigPages()
+      } catch (e) {
+        console.error("Unable to fetch config pages")
+        return
+      }
 
-  if (query.stanfordBasicSiteSettings.nodes[0]?.__typename === configPageType) return query.stanfordBasicSiteSettings.nodes[0] as T
-  if (query.stanfordGlobalMessages.nodes[0]?.__typename === configPageType) return query.stanfordGlobalMessages.nodes[0] as T
-  if (query.stanfordLocalFooters.nodes[0]?.__typename === configPageType) return query.stanfordLocalFooters.nodes[0] as T
-  if (query.stanfordSuperFooters.nodes[0]?.__typename === configPageType) return query.stanfordSuperFooters.nodes[0] as T
-  if (query.lockupSettings.nodes[0]?.__typename === configPageType) return query.lockupSettings.nodes[0] as T
+      if (query.stanfordBasicSiteSettings.nodes[0]?.__typename === configPageType)
+        return query.stanfordBasicSiteSettings.nodes[0] as T
+      if (query.stanfordGlobalMessages.nodes[0]?.__typename === configPageType)
+        return query.stanfordGlobalMessages.nodes[0] as T
+      if (query.stanfordLocalFooters.nodes[0]?.__typename === configPageType)
+        return query.stanfordLocalFooters.nodes[0] as T
+      if (query.stanfordSuperFooters.nodes[0]?.__typename === configPageType)
+        return query.stanfordSuperFooters.nodes[0] as T
+      if (query.lockupSettings.nodes[0]?.__typename === configPageType) return query.lockupSettings.nodes[0] as T
+    },
+    [configPageType || "all"],
+    {tags: ["config-pages"]}
+  )
+  return getConfigPageInner()
 }
 
-const getConfigPagesData = cache(async (): Promise<ConfigPagesQuery> => {
-  // Config page data doesn't change if a user is in "Draft" mode or not, so the data can be cached for both situations.
-  const cachedData = nodeCache.get<ConfigPagesQuery>("config-pages")
-  if (cachedData) return cachedData
-
-  const headers = await buildHeaders()
-  const query = await graphqlClient({headers, next: {tags: ["config-pages"]}}).ConfigPages()
-
-  nodeCache.set("config-pages", query)
-  return query
-})
-
-export const getMenu = cache(async (name?: MenuAvailable, previewMode?: boolean): Promise<MenuItem[]> => {
+export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> => {
   "use server"
 
-  const menu = await graphqlClient({next: {tags: ["menus", `menu:${name || "main"}`]}}, previewMode).Menu({name})
-  const menuItems = (menu.menu?.items || []) as MenuItem[]
+  const getMenuInner = nextCache(
+    async () => {
+      const menu = await graphqlClient({cache: "no-cache"}).Menu({name})
+      const menuItems = (menu.menu?.items || []) as MenuItem[]
 
-  const filterInaccessible = (items: MenuItem[]): MenuItem[] => {
-    items = items.filter(item => item.title !== "Inaccessible")
-    items.map(item => (item.children = filterInaccessible(item.children)))
-    return items
-  }
-  return filterInaccessible(menuItems)
+      const filterInaccessible = (items: MenuItem[]): MenuItem[] => {
+        items = items.filter(item => item.title !== "Inaccessible")
+        items.map(item => (item.children = filterInaccessible(item.children)))
+        return items
+      }
+      return filterInaccessible(menuItems)
+    },
+    [name || "main"],
+    {tags: ["menus", `menu:${name?.toLowerCase() || "main"}`]}
+  )
+  return getMenuInner()
 })
 
 export const getAllNodePaths = cache(async () => {

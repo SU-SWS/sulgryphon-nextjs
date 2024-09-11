@@ -1,10 +1,13 @@
-import {cache} from "@/lib/drupal/get-cache"
 import axios from "axios"
 import {LibGuide} from "@/lib/drupal/drupal"
 
-const CACHE_KEY = "LIBGUIDE_TOKEN"
-
-const fetchLibGuides = async ({accountId, subjectId}: {accountId?: number; subjectId?: number}): Promise<LibGuide[]> => {
+const fetchLibGuides = async ({
+  accountId,
+  subjectId,
+}: {
+  accountId?: number
+  subjectId?: number
+}): Promise<LibGuide[]> => {
   if (!accountId && !subjectId) return []
 
   try {
@@ -67,11 +70,6 @@ interface AccessToken {
 }
 
 const getAccessToken = async () => {
-  const cached = cache.get<AccessToken>(CACHE_KEY)
-  if (cached?.access_token) {
-    return cached.access_token
-  }
-
   const token: AccessToken = await axios
     .post(`https://lgapi-us.libapps.com/1.2/oauth/token`, {
       client_id: process.env.LIBGUIDE_CLIENT_ID,
@@ -79,8 +77,6 @@ const getAccessToken = async () => {
       grant_type: "client_credentials",
     })
     .then(response => response.data)
-
-  cache.set(CACHE_KEY, token, token.expires_in)
   return token.access_token
 }
 

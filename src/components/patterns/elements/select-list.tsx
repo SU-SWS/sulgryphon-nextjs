@@ -2,7 +2,17 @@
 
 import {useSelect, SelectOptionDefinition, SelectProvider, SelectValue} from "@mui/base/useSelect"
 import {useOption} from "@mui/base/useOption"
-import {KeyboardEvent, MouseEvent, FocusEvent, ReactNode, RefObject, useEffect, useId, useLayoutEffect, useRef} from "react"
+import {
+  KeyboardEvent,
+  MouseEvent,
+  FocusEvent,
+  ReactNode,
+  RefObject,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {useBoolean, useIsClient} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
@@ -12,7 +22,10 @@ interface Props {
   label?: string
   ariaLabelledby?: string
   defaultValue?: any
-  onChange?: (_event: MouseEvent | KeyboardEvent | FocusEvent | null, _value: SelectValue<string, boolean>) => void | null
+  onChange?: (
+    _event: MouseEvent | KeyboardEvent | FocusEvent | null,
+    _value: SelectValue<string, boolean>
+  ) => void | null
   multiple?: boolean
   disabled?: boolean
   value?: SelectValue<string, boolean>
@@ -73,7 +86,10 @@ function CustomOption(props: OptionProps) {
     <li
       {...otherProps}
       id={id}
-      className={"m-0 mb-2 cursor-pointer overflow-hidden px-10 py-2 hocus:underline " + (selected ? selectedStyles : highlighted ? highlightedStyles : "hocus:bg-black-10 hocus:text-black")}
+      className={
+        "m-0 mb-2 cursor-pointer overflow-hidden px-10 py-2 hocus:underline " +
+        (selected ? selectedStyles : highlighted ? highlightedStyles : "hocus:bg-black-10 hocus:text-black")
+      }
     >
       {children}
     </li>
@@ -83,9 +99,10 @@ function CustomOption(props: OptionProps) {
 const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props) => {
   const labelId = useId()
   const labeledBy = ariaLabelledby ?? labelId
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const listboxRef = useRef<HTMLUListElement>(null)
   const {value: listboxVisible, setFalse: hideListbox, setValue: setListBoxVisible} = useBoolean(false)
-  const outsideClickProps = useOutsideClick(hideListbox)
+  useOutsideClick(wrapperRef, hideListbox)
   const isClient = useIsClient()
 
   const {getButtonProps, getListboxProps, contextValue, value} = useSelect<string, boolean>({
@@ -110,36 +127,36 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
   if (!isClient) return null
 
   return (
-    <div
-      className="relative h-fit"
-      {...outsideClickProps}
-    >
+    <div ref={wrapperRef} className="relative h-fit">
       <button
         {...getButtonProps()}
-        className="w-full rounded-full border border-black-40 p-5 pl-15 text-left"
+        className={
+          "w-full border border-black-40 px-5 py-9 pl-15 text-left " + (optionChosen ? "rounded-3xl" : " rounded-full")
+        }
         aria-labelledby={labeledBy}
       >
         <div className="flex flex-wrap justify-between">
           {label && (
-            <div className={"relative " + (optionChosen ? "top-[-15px] w-full text-m0" : "text-m0")}>
-              <div
-                id={labelId}
-                className="w-fit bg-white px-5"
-              >
+            <div className={"relative " + (optionChosen ? "type-0 top-[-15px] w-full" : "type-0")}>
+              <div id={labelId} className="w-fit bg-white px-5">
                 {label}
               </div>
             </div>
           )}
-          {optionChosen && <div className="max-w-[calc(100%-30px)] overflow-hidden">{renderSelectedValue(value, options)}</div>}
+          {optionChosen && (
+            <div className="max-w-[calc(100%-30px)] overflow-hidden">{renderSelectedValue(value, options)}</div>
+          )}
 
-          <ChevronDownIcon
-            width={20}
-            className="flex-shrink-0"
-          />
+          <ChevronDownIcon width={20} className="flex-shrink-0" />
         </div>
       </button>
 
-      <div className={"absolute left-0 top-full z-[10] max-h-[300px] w-full overflow-y-scroll border border-black-20 bg-white pb-5 shadow-lg " + (listboxVisible ? "" : "hidden")}>
+      <div
+        className={
+          "absolute left-0 top-full z-[10] max-h-[300px] w-full overflow-y-scroll border border-black-20 bg-white pb-5 shadow-lg " +
+          (listboxVisible ? "" : "hidden")
+        }
+      >
         <ul
           {...getListboxProps()}
           className={"list-unstyled " + (listboxVisible ? "" : "hidden")}
@@ -149,11 +166,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
           <SelectProvider value={contextValue}>
             {options.map(option => {
               return (
-                <CustomOption
-                  key={option.value}
-                  value={option.value}
-                  rootRef={listboxRef}
-                >
+                <CustomOption key={option.value} value={option.value} rootRef={listboxRef}>
                   {option.label}
                 </CustomOption>
               )

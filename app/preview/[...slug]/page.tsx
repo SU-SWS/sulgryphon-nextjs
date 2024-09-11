@@ -1,22 +1,21 @@
-import {notFound} from "next/navigation";
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode";
-import NodePage from "../../[...slug]/page";
-import DisablePreviewMode from "../disable-preview-mode";
+import {notFound} from "next/navigation"
+import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
+import NodePage from "../../[...slug]/page"
+import DisablePreviewMode from "../disable-preview-mode"
 
 const PreviewNodePage = async ({params}: PageProps) => {
-  if (!isPreviewMode()) notFound();
+  if (!isPreviewMode()) notFound()
   return (
     <>
-      <NodePage params={params} previewMode={true}/>
-      <DisablePreviewMode/>
+      <NodePage params={params} previewMode={true} />
+      <DisablePreviewMode />
     </>
   )
 }
 
 type PageProps = {
-  params: { slug: string | string[] }
+  params: {slug: string | string[]}
   searchParams?: Record<string, string | string[] | undefined>
 }
 
-
-export default PreviewNodePage;
+export default PreviewNodePage

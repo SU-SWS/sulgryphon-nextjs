@@ -1,33 +1,32 @@
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
-import Image from "next/image";
+import Image from "next/image"
 import {
   DrupalActionLink,
   DrupalLinkBigButton,
   DrupalLinkButton,
-  DrupalLinkSecondaryButton
-} from "@/components/patterns/link";
-import Oembed from "@/components/patterns/elements/oembed";
-import {twMerge} from "tailwind-merge";
-import {ElementType} from "react";
-import type {DOMNode} from "html-dom-parser";
+  DrupalLinkSecondaryButton,
+} from "@/components/patterns/link"
+import Oembed from "@/components/patterns/elements/oembed"
+import {twMerge} from "tailwind-merge"
+import {ElementType} from "react"
+import type {DOMNode} from "html-dom-parser"
 
 const options: HTMLReactParserOptions = {
-  replace: (domNode) => {
-
+  replace: domNode => {
     if (domNode instanceof Element) {
-      const nodeProps = attributesToProps(domNode.attribs);
-      nodeProps.className = fixClasses(nodeProps.className ?? '');
+      const nodeProps = attributesToProps(domNode.attribs)
+      nodeProps.className = fixClasses(nodeProps.className ?? "")
       let NodeName: ElementType = domNode.name as ElementType
 
       switch (domNode.name) {
         case "a":
           // Error handle for <a> tags without a href.
           if (!nodeProps.href || nodeProps.href === true) {
-            nodeProps.href = '#';
+            nodeProps.href = "#"
           }
-          nodeProps.href = nodeProps.href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? '', '');
+          nodeProps.href = nodeProps.href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "", "")
 
-          if (nodeProps.className.indexOf('button--big') > -1) {
+          if (nodeProps.className?.includes("button--big")) {
             return (
               <DrupalLinkBigButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -35,7 +34,7 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if (nodeProps.className.indexOf('button--secondary') > -1) {
+          if (nodeProps.className?.includes("button--secondary")) {
             return (
               <DrupalLinkSecondaryButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -43,7 +42,7 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if (nodeProps.className.indexOf('button') > -1) {
+          if (nodeProps.className?.includes("button")) {
             return (
               <DrupalLinkButton href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -51,7 +50,7 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          if (nodeProps.className.indexOf('link--action') > -1) {
+          if (nodeProps.className?.includes("link--action")) {
             return (
               <DrupalActionLink href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
@@ -59,135 +58,162 @@ const options: HTMLReactParserOptions = {
             )
           }
 
-          nodeProps.className = twMerge('hocus:underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red', nodeProps.className);
-          return (
-            <a {...nodeProps}>
-              {domToReact(domNode.children as DOMNode[], options)}
-            </a>
+          nodeProps.className = twMerge(
+            "hocus:underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red",
+            nodeProps.className
           )
-        case 'article':
-          return cleanMediaMarkup(domNode);
+          return <a {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</a>
+        case "div":
+        case "article":
+          return cleanMediaMarkup(domNode)
 
-        case 'pre':
-          nodeProps.className += ' whitespace-normal';
+        case "pre":
+          nodeProps.className += " whitespace-normal"
           return <pre {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</pre>
 
-        case 'figure':
-          nodeProps.className += ' table mb-20';
-          delete nodeProps.role;
+        case "figure":
+          nodeProps.className += " table mb-20"
+          delete nodeProps.role
+          return <figure {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</figure>
+        case "figcaption":
+          nodeProps.className += " table-caption caption-bottom text-center leading text-19"
           return (
-            <figure {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</figure>
+            <figcaption {...nodeProps} style={{captionSide: "bottom"}}>
+              {domToReact(domNode.children as DOMNode[], options)}
+            </figcaption>
           )
-        case 'figcaption':
-          nodeProps.className += ' table-caption caption-bottom text-center leading text-19';
-          return <figcaption {...nodeProps}
-                             style={{captionSide: 'bottom'}}>{domToReact(domNode.children as DOMNode[], options)}</figcaption>
-        case 'iframe':
-          nodeProps.className += ' w-full';
-          return <iframe {...nodeProps}/>
+        case "iframe":
+          nodeProps.className += " w-full"
+          return <iframe {...nodeProps} />
 
-        case 'blockquote':
-          nodeProps.className += ' pl-40 relative before:block before:absolute before:left-0 before:top-0 before:content-[\'\'] before:h-full before:w-5 before:bg-black-20';
+        case "blockquote":
+          nodeProps.className +=
+            " pl-40 relative before:block before:absolute before:left-0 before:top-0 before:content-[''] before:h-full before:w-5 before:bg-black-20"
           return <blockquote {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</blockquote>
 
-        case 'table':
-          nodeProps.className += ' mb-20 ';
+        case "table":
+          nodeProps.className += " mb-20 "
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
-        case 'p':
-          nodeProps.className += ' max-w-[100ch]';
-        case 'h1':
-        case 'h2':
-        case 'h3':
-        case 'h4':
-        case 'span':
-        case 'div':
-        case 'tr':
-        case 'th':
-        case 'td':
-        case 'ul':
-        case 'ol':
-        case 'li':
+        case "p":
+          nodeProps.className += " max-w-[100ch]"
+        case "h1":
+        case "h2":
+        case "h3":
+        case "h4":
+        case "span":
+        case "tr":
+        case "th":
+        case "td":
+        case "ul":
+        case "ol":
+        case "li":
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
       }
     }
-  }
+  },
 }
 
 const fixClasses = (classes: string | boolean): string => {
-  classes = !classes || classes === true ? '' : classes
-  classes = ` ${classes} `;
-  classes = classes.replaceAll(' align-center ', ' center ')
-    .replaceAll(' align-left ', ' block float-left mr-20 mb-20 ')
-    .replaceAll(' align-right ', ' block float-right ml-20 mb-20 ')
-    .replaceAll(' text-align-center ', ' text-center ')
-    .replaceAll(' text-align-right ', ' text-right ')
-    .replaceAll(' su-intro-text ', ' text-m2 ')
-    .replaceAll(' su-drop-cap ', ' first-letter:text-m2 first-letter:font-bold ')
-    .replaceAll(' su-font-splash ', ' text-m4 font-bold ')
-    .replaceAll(' su-quote-text ', ` before:content-['"'] after:content-['"'] text-m3 italic `)
-    .replaceAll(' su-related-text ', ' shadow-lg p-30 ')
-    .replaceAll(' su-subheading ', ' text-m1 ')
-    .replaceAll(' su-callout-text ', ' font-bold ')
-    .replaceAll(' visually-hidden ', ' sr-only ')
-    .replace(/ plain-text | caption /g, ' ')
-    .replaceAll(' media-entity-wrapper ', ' block mb-20 ')
-    .replace(/tablesaw.*? /g, ' ')
-    .replace(/ +/g, ' ')
-    .trim();
+  classes = !classes || classes === true ? "" : classes
+  classes = ` ${classes} `
+  classes = classes
+    .replaceAll(" align-center ", " center ")
+    .replaceAll(" align-left ", " block float-left mr-20 mb-20 ")
+    .replaceAll(" align-right ", " block float-right ml-20 mb-20 ")
+    .replaceAll(" text-align-center ", " text-center ")
+    .replaceAll(" text-align-right ", " text-right ")
+    .replaceAll(" su-intro-text ", " type-2 ")
+    .replaceAll(" su-drop-cap ", " first-letter:type-2 first-letter:font-bold ")
+    .replaceAll(" su-font-splash ", " type-4 font-bold ")
+    .replaceAll(" su-quote-text ", ` before:content-['"'] after:content-['"'] type-3 italic `)
+    .replaceAll(" su-related-text ", " shadow-lg p-30 ")
+    .replaceAll(" su-subheading ", " type-1 ")
+    .replaceAll(" su-callout-text ", " font-bold ")
+    .replaceAll(" visually-hidden ", " sr-only ")
+    .replace(/ plain-text | caption /g, " ")
+    .replaceAll(" media-entity-wrapper ", " block mb-20 ")
+    .replace(/tablesaw.*? /g, " ")
+    .replace(/ +/g, " ")
+    .trim()
 
-  classes = classes.split(' ')
+  classes = classes
+    .split(" ")
     .filter(className => className.length >= 1)
     .filter((value, index, self) => self.indexOf(value) === index)
-    .join(' ');
-  return classes;
+    .join(" ")
+  return classes
 }
 
 const cleanMediaMarkup = (node: Element) => {
-
-  const findIframeInMedia = (item: Element): Element | undefined => {
-    const iframe = item.children?.find(child => child instanceof Element && child.name === 'iframe')
-    if (iframe) return iframe as Element;
-    for (let i = 0; i <= item.children?.length; i++) {
-      const childIframe = findIframeInMedia(item.children[i] as Element)
-      if (childIframe) return childIframe;
+  const getOembedUrl = (node: Element): string | undefined => {
+    const src = node.attribs?.src || node.attribs["data-src"]
+    if (src?.includes("/media/oembed")) {
+      return decodeURIComponent(src.replace(/^.*url=(.*)$/, "$1")).replace(/&.*$/, "")
+    }
+    if (node.children.length > 0) {
+      for (let child of node.children) {
+        if (child instanceof Element) {
+          const url: string | undefined = getOembedUrl(child)
+          if (url) return url
+        }
+      }
     }
   }
 
-  const wrapperDiv = node.children?.find(child => child instanceof Element && child.name === 'div')
-  const picture = wrapperDiv instanceof Element && wrapperDiv.children?.find(child => child instanceof Element && child.name === 'picture')
-  let image = wrapperDiv instanceof Element && wrapperDiv.children?.find(child => child instanceof Element && child.name === 'img')
+  // Special handling of Oembeds
+  const oembedUrl = getOembedUrl(node)
+  if (oembedUrl) {
+    return <Oembed url={oembedUrl} />
+  }
+
+  const findIframeInMedia = (item: Element): Element | undefined => {
+    const iframe = item.children?.find(child => child instanceof Element && child.name === "iframe")
+    if (iframe) return iframe as Element
+    for (let i = 0; i <= item.children?.length; i++) {
+      const childIframe = findIframeInMedia(item.children[i] as Element)
+      if (childIframe) return childIframe
+    }
+  }
+
+  const wrapperDiv = node.children?.find(child => child instanceof Element && child.name === "div")
+  const picture =
+    wrapperDiv instanceof Element &&
+    wrapperDiv.children?.find(child => child instanceof Element && child.name === "picture")
+  let image =
+    wrapperDiv instanceof Element &&
+    wrapperDiv.children?.find(child => child instanceof Element && child.name === "img")
 
   // Special handling of video media type.
-  if (node.attribs.class.indexOf('media--type-video') >= 0) {
+  if (node.attribs.className?.includes("media--type-video")) {
     // const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
-    const iframe = findIframeInMedia(node);
+    const iframe = findIframeInMedia(node)
 
     // @ts-ignore Ignore this because it's a special attribute for lazy loading oembed videos.
-    let {"data-src": iframeSrc} = iframe && iframe.attribs;
-    iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, '$1');
+    let {"data-src": iframeSrc} = iframe && iframe.attribs
+    iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, "$1")
     return (
-      <div className="clear-both overflow-hidden aspect-[16/9] relative">
-        <Oembed className="h-full w-full" url={iframeSrc}/>
+      <div className="relative clear-both aspect-[16/9] overflow-hidden">
+        <Oembed className="h-full w-full" url={iframeSrc} />
       </div>
-    );
+    )
   }
 
   if (picture instanceof Element) {
-    image = picture.children?.find(child => child instanceof Element && child.name === 'img')
+    image = picture.children?.find(child => child instanceof Element && child.name === "img")
   }
 
   if (image instanceof Element) {
-    let {src, alt, width, height} = image.attribs;
-    let {class: classes} = node.attribs;
+    let {src, alt, width, height} = image.attribs
+    let {class: classes} = node.attribs
 
-    if (src.substring(0, 1) === '/') {
-      src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src;
+    if (src.substring(0, 1) === "/") {
+      src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src
     }
 
     return (
       <>
-        {(width && height) &&
+        {width && height && (
           <Image
             className={fixClasses(classes)}
             src={src.trim()}
@@ -195,10 +221,10 @@ const cleanMediaMarkup = (node: Element) => {
             height={parseInt(height)}
             width={parseInt(width)}
           />
-        }
+        )}
 
-        {(!width || !height) &&
-          <div className="overflow-hidden aspect-[16/9] relative">
+        {(!width || !height) && (
+          <div className="relative aspect-[16/9] overflow-hidden">
             <Image
               className="object-cover object-center"
               src={src.trim()}
@@ -207,7 +233,7 @@ const cleanMediaMarkup = (node: Element) => {
               sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
             />
           </div>
-        }
+        )}
       </>
     )
   }
@@ -215,5 +241,5 @@ const cleanMediaMarkup = (node: Element) => {
   return <>{domToReact(node.children as DOMNode[], options)}</>
 }
 
-const formatHtml = (html?: string) => parse(html ?? '', options);
-export default formatHtml;
+const formatHtml = (html?: string) => parse(html ?? "", options)
+export default formatHtml

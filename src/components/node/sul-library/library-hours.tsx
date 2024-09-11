@@ -1,57 +1,51 @@
-"use client";
+"use client"
 
-import {ClockIcon} from "@heroicons/react/24/outline";
-import {ErrorBoundary} from "react-error-boundary";
-import CachedClientFetch from "@/components/utils/cached-client-fetch";
-import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours";
-import {useId} from "react";
-import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import useOutsideClick from "@/lib/hooks/useOutsideClick";
-import {useBoolean} from "usehooks-ts";
+import {ClockIcon} from "@heroicons/react/24/outline"
+import {ErrorBoundary} from "react-error-boundary"
+import CachedClientFetch from "@/components/utils/cached-client-fetch"
+import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
+import {useId, useRef} from "react"
+import {ChevronDownIcon} from "@heroicons/react/20/solid"
+import useOutsideClick from "@/lib/hooks/useOutsideClick"
+import {useBoolean} from "usehooks-ts"
 
-const LibraryHeaderHours = ({hoursId}: { hoursId: string }) => {
+const LibraryHeaderHours = ({hoursId}: {hoursId: string}) => {
   return (
-    <ErrorBoundary
-      fallback={<></>}
-      onError={e => console.error(e.message)}
-    >
+    <ErrorBoundary fallback={<></>} onError={e => console.error(e.message)}>
       <CachedClientFetch>
-        <LibraryHeaderHoursComponent hoursId={hoursId}/>
+        <LibraryHeaderHoursComponent hoursId={hoursId} />
       </CachedClientFetch>
     </ErrorBoundary>
   )
 }
 
-const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
-  const elementId = useId();
-
+const LibraryHeaderHoursComponent = ({hoursId}: {hoursId: string}) => {
+  const elementId = useId()
+  const ref = useRef<HTMLDivElement>(null)
   const {value: expandedHours, setFalse: closeExpandedHours, toggle: toggleExpandedHours} = useBoolean(false)
-  const outsideClickProps = useOutsideClick(closeExpandedHours)
-  const hours = useTodayLibraryHours(hoursId);
+  useOutsideClick(ref, closeExpandedHours)
+  const hours = useTodayLibraryHours(hoursId)
   if (!hoursId || !hours) {
-    return;
+    return
   }
-  const {isOpen, selectOptions, closingTime, openingTime, closedAllDay} = hours;
-  const hoursDisplay = closedAllDay ? 'Closed' : (isOpen ? `Open until ${closingTime}` : `Closed until ${openingTime}`);
+  const {isOpen, selectOptions, closingTime, openingTime, closedAllDay} = hours
+  const hoursDisplay = closedAllDay ? "Closed" : isOpen ? `Open until ${closingTime}` : `Closed until ${openingTime}`
 
   return (
     <>
-      <div className="flex text-black-true mb-20 type-1">
-        <ClockIcon title="Hours" width={19} className="inline mr-10"/>
+      <div className="type-1 mb-20 flex text-black-true">
+        <ClockIcon title="Hours" width={19} className="mr-10 inline" />
         {hoursDisplay}
       </div>
 
-      <div
-        className="relative"
-        {...outsideClickProps}
-      >
+      <div ref={ref} className="relative">
         <button
-          className="rounded group shadow-md border border-black-10 w-full px-15 py-5 mb-5"
+          className="group mb-5 w-full rounded border border-black-10 px-15 py-5 shadow-md"
           aria-expanded={expandedHours}
           onClick={toggleExpandedHours}
           aria-controls={elementId}
         >
-          <div className="flex justify-between items-center text-21">
+          <div className="flex items-center justify-between text-21">
             See hours for this week
             <span className="w-fit border-b-2 border-transparent group-hocus:border-archway">
               <ChevronDownIcon
@@ -63,16 +57,19 @@ const LibraryHeaderHoursComponent = ({hoursId}: { hoursId: string }) => {
         </button>
         <ul
           id={elementId}
-          className={(expandedHours ? "block" : "hidden") + " list-unstyled absolute z-10 top-full left-0 shadow-md border border-black-10 bg-white w-full px-20 py-15"}
+          className={
+            (expandedHours ? "block" : "hidden") +
+            " list-unstyled absolute left-0 top-full z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md"
+          }
         >
-          {selectOptions.map(day =>
-            <li key={day.value} className="flex items-center mb-10 text-21">
+          {selectOptions.map(day => (
+            <li key={day.value} className="mb-10 flex items-center text-21">
               {day.label}
             </li>
-          )}
+          ))}
         </ul>
       </div>
     </>
   )
 }
-export default LibraryHeaderHours;
+export default LibraryHeaderHours

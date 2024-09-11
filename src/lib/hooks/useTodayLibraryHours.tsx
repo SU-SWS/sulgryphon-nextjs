@@ -1,5 +1,8 @@
+"use client"
+
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {getLibrarySelectOptions, HoursSelectOption} from "@/components/node/sul-library/library-select-options"
+import {useIsClient} from "usehooks-ts"
 
 type HoursProps = {
   closedAllDay: boolean
@@ -13,7 +16,7 @@ type HoursProps = {
 
 const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
   const libraryHours = useLibraryHours<LocationHours>(branchId)
-  if (!libraryHours || !libraryHours?.primaryHours) {
+  if (!useIsClient() || !libraryHours || !libraryHours?.primaryHours) {
     return
   }
 
@@ -21,9 +24,14 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   const todayHours = libraryHours.primaryHours.find(day => {
     // Set the time so that it works with UTC time.
-    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
+    const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
+      weekday: "long",
+      timeZone: "America/Los_Angeles",
+    })
     return dayDate === rightNow.toLocaleDateString("en-us", {weekday: "long", timeZone: "America/Los_Angeles"})
   }) as DayHours
+
+  if (!todayHours) return
 
   let openTime,
     closeTime,
@@ -33,49 +41,73 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
   if (!todayHours.closed && todayHours.opens_at && todayHours.closes_at) {
     openTime = new Date(todayHours.opens_at)
     closeTime = new Date(todayHours.closes_at)
-    isOpen = rightNow > openTime && rightNow < closeTime
+    isOpen = rightNow >= openTime && rightNow < closeTime
   }
 
-  const closingTime = closeTime?.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: "America/Los_Angeles",
-  })
+  const closingTimeFormat: Intl.DateTimeFormatOptions = {hour: "numeric", timeZone: "America/Los_Angeles"}
+  if (closeTime?.getMinutes() !== 0) closingTimeFormat.minute = "2-digit"
+  const closingTime = closeTime?.toLocaleTimeString("en-US", closingTimeFormat).toLowerCase()
 
-  const openingTime = openTime?.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: "America/Los_Angeles",
-  })
+  const openingTime = openTime
+    ?.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: "America/Los_Angeles",
+    })
+    .toLowerCase()
 
   const selectOptions = getLibrarySelectOptions(libraryHours.primaryHours)
 
   const afterClose = (closeTime && closeTime <= rightNow) || false
   let nextOpeningTime = undefined
+  let nextOpenDateTime = undefined
 
   // If the location is open, no need to return the next open time.
   if (!isOpen) {
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    let dayHours
-    // Start with tomorrow and find the next day that has a time that is open.
-    for (let i = rightNow.getDay(); i < 7; i++) {
-      dayHours = libraryHours.primaryHours.find(day => day.weekday === weekdays[i])
-      if (dayHours?.opens_at) {
-        const format: Intl.DateTimeFormatOptions = {weekday: "short", hour: "numeric"}
-        const openDateTime = new Date(dayHours.opens_at)
+    const futureOpenHours = libraryHours.primaryHours.filter(
+      dayHours => dayHours.opens_at && new Date(dayHours.opens_at) > rightNow
+    )
 
-        if (openDateTime < rightNow) continue
-
-        if (openDateTime.getMinutes() !== 0) {
-          format.minute = "2-digit"
-        }
-        nextOpeningTime = openDateTime.toLocaleString("en-us", format)
-        i += 6
+    for (let i = 0; i < futureOpenHours.length; i++) {
+      if (futureOpenHours[i].opens_at) {
+        nextOpenDateTime = new Date(futureOpenHours[i].opens_at as string)
+        i = futureOpenHours.length + 1
       }
+    }
+
+    if (nextOpenDateTime) {
+      const format: Intl.DateTimeFormatOptions = {hour: "numeric", timeZone: "America/Los_Angeles"}
+
+      // Default to the show the day of the week.
+      nextOpeningTime = nextOpenDateTime.toLocaleDateString("en-us", {
+        weekday: "long",
+        timeZone: "America/Los_Angeles",
+      })
+
+      // Next open date is tomorrow. Check for tomorrow date and if it's the last day of the month.
+      if (
+        getDate(rightNow) + 1 === getDate(nextOpenDateTime) ||
+        (getMonth(rightNow) != getMonth(nextOpenDateTime) && getDate(nextOpenDateTime) === 1)
+      )
+        nextOpeningTime = "tomorrow"
+
+      // Next open date is today.
+      if (getDate(rightNow) === getDate(nextOpenDateTime)) nextOpeningTime = "today"
+
+      if (nextOpenDateTime.getMinutes() !== 0) format.minute = "2-digit"
+
+      nextOpeningTime += " at " + nextOpenDateTime.toLocaleString("en-us", format).toLowerCase()
     }
   }
 
   return {closedAllDay, isOpen, openingTime, closingTime, selectOptions, afterClose, nextOpeningTime}
+}
+
+const getDate = (dateTime: Date) => {
+  return parseInt(dateTime.toLocaleDateString("en-us", {day: "numeric", timeZone: "America/Los_Angeles"}))
+}
+const getMonth = (dateTime: Date) => {
+  return parseInt(dateTime.toLocaleDateString("en-us", {month: "numeric", timeZone: "America/Los_Angeles"}))
 }
 
 export default useTodayLibraryHours

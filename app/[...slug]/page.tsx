@@ -9,6 +9,7 @@ import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
+import FlushCache from "@/components/patterns/elements/flush-cache"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -22,13 +23,14 @@ const NodePage = async ({params, previewMode}: PageProps) => {
 
   const menuItems = await getMenu()
 
-  const fullWidth = (entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "stanford_basic_page_full") || (entity.__typename === "NodeSulLibrary" && entity.layoutSelection?.id === "sul_library_full_width")
+  const fullWidth =
+    (entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "stanford_basic_page_full") ||
+    (entity.__typename === "NodeSulLibrary" && entity.layoutSelection?.id === "sul_library_full_width")
 
   return (
-    <main
-      id="main-content"
-      className="mb-50"
-    >
+    <main id="main-content" className="mb-50">
+      {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={path} />}
+
       {!entity.status && <EditorAlertBanner message="Unpublished Content" />}
       {entity.__typename === "NodeSulLibrary" && <LibraryHeader node={entity} />}
 
@@ -40,10 +42,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             {entity.suNewsTopics && (
               <div className="order-1 mb-20">
                 {entity.suNewsTopics.slice(0, 1).map(topic => (
-                  <span
-                    key={topic.id}
-                    className="font-semibold text-illuminating-dark"
-                  >
+                  <span key={topic.id} className="font-semibold text-illuminating-dark">
                     {topic.name}
                   </span>
                 ))}
@@ -55,7 +54,9 @@ const NodePage = async ({params, previewMode}: PageProps) => {
 
       {!(entity.__typename === "NodeSulLibrary" || entity.__typename === "NodeStanfordNews") && (
         <InternalHeaderBanner>
-          <h1 className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">{entity.title}</h1>
+          <h1 className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+            {entity.title}
+          </h1>
         </InternalHeaderBanner>
       )}
 
@@ -71,10 +72,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
-          <SecondaryMenu
-            menuItems={menuItems}
-            currentPath={entity.path}
-          />
+          <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />
         </div>
       )}
     </main>

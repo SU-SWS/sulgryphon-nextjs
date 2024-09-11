@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image from "next/image"
 
-import Card from "@/components/patterns/card";
-import HorizontalCard from "@/components/patterns/horizontal-card";
-import Oembed from "@/components/patterns/elements/oembed";
-import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
-import {ElementType, HTMLAttributes} from "react";
+import Card from "@/components/patterns/card"
+import HorizontalCard from "@/components/patterns/horizontal-card"
+import Oembed from "@/components/patterns/elements/oembed"
+import {buildUrl} from "@/lib/drupal/utils"
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {ElementType, HTMLAttributes} from "react"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   header?: Maybe<string>
@@ -41,28 +41,32 @@ const StanfordCard = ({
   hideHeading,
   ...props
 }: Props) => {
-  const isHorizontal = orientation === 'horizontal';
+  const isHorizontal = orientation === "horizontal"
 
-  const imageUrl = image?.mediaImage.url;
-  const imageAlt = image?.mediaImage.alt || '';
+  const imageUrl = image?.mediaImage.url
+  const imageAlt = image?.mediaImage.alt || ""
 
   if (headerId && link?.attributes?.ariaLabel && link?.attributes?.ariaLabel === header) {
-    link.attributes.ariaLabelledBy = headerId;
+    link.attributes.ariaLabelledBy = headerId
     delete link.attributes.ariaLabel
   }
 
   return (
-    <div className={"relative" + (!isHorizontal ? " centered lg:max-w-[980px] w-full mx-auto" : "")} {...props}>
-      {isHorizontal &&
+    <div className={"relative" + (!isHorizontal ? " centered mx-auto w-full lg:max-w-[980px]" : "")} {...props}>
+      {isHorizontal && (
         <HorizontalCard
-          video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
-          image={imageUrl && <Image
-            className="object-cover object-center"
-            src={buildUrl(imageUrl).toString()}
-            alt={imageAlt}
-            fill
-            sizes="(max-width: 1700px) 100vw, 1500px"
-          />}
+          video={videoUrl && <Oembed url={videoUrl} className="h-full" />}
+          image={
+            imageUrl && (
+              <Image
+                className="object-cover object-center"
+                src={buildUrl(imageUrl).toString()}
+                alt={imageAlt}
+                fill
+                sizes="(max-width: 1700px) 100vw, 1500px"
+              />
+            )
+          }
           header={header}
           superHeader={superHeader}
           body={body}
@@ -73,18 +77,22 @@ const StanfordCard = ({
           headingLevel={headingTag}
           hideHeading={hideHeading}
         />
-      }
+      )}
 
-      {!isHorizontal &&
+      {!isHorizontal && (
         <Card
-          video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
-          image={imageUrl && <Image
-            className="object-cover object-center"
-            src={buildUrl(imageUrl).toString()}
-            alt={imageAlt}
-            fill
-            sizes="(max-width: 1700px) 100vw, 1500px"
-          />}
+          video={videoUrl && <Oembed url={videoUrl} className="h-full" />}
+          image={
+            imageUrl && (
+              <Image
+                className="object-cover object-center"
+                src={buildUrl(imageUrl).toString()}
+                alt={imageAlt}
+                fill
+                sizes="(max-width: 1700px) 100vw, 1500px"
+              />
+            )
+          }
           header={header}
           superHeader={superHeader}
           body={body}
@@ -94,9 +102,8 @@ const StanfordCard = ({
           headingLevel={headingTag}
           hideHeading={hideHeading}
         />
-      }
+      )}
     </div>
   )
-
 }
-export default StanfordCard;
+export default StanfordCard

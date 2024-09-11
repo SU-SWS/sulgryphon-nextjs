@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import AboveHeaderBorder from "@/components/patterns/above-header-border";
-import Wave from "@/components/patterns/wave";
-import {DrupalLink} from "@/components/patterns/link";
-import {HTMLAttributes, useRef} from "react";
-import OnlyIfCentered from "@/components/utils/only-if-centered";
-import Card from "@/components/patterns/card";
-import Oembed from "@/components/patterns/elements/oembed";
-import Image from "next/image";
-import {buildUrl} from "@/lib/drupal/utils";
-import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
+import AboveHeaderBorder from "@/components/patterns/above-header-border"
+import Wave from "@/components/patterns/wave"
+import {DrupalLink} from "@/components/patterns/link"
+import {HTMLAttributes, useRef} from "react"
+import OnlyIfCentered from "@/components/utils/only-if-centered"
+import Card from "@/components/patterns/card"
+import Oembed from "@/components/patterns/elements/oembed"
+import Image from "next/image"
+import {buildUrl} from "@/lib/drupal/utils"
+import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
   headline?: Maybe<string>
@@ -23,33 +23,29 @@ type Props = HTMLAttributes<HTMLTableSectionElement> & {
 }
 
 const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWidth = true, ...props}: Props) => {
-  const ref = useRef(null);
+  const ref = useRef(null)
 
-  const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
+  const linkAttributes: Record<string, string> = {}
+  if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
 
   if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === headline) {
-    linkAttributes['aria-labelledby'] = headerId;
-    delete linkAttributes['aria-label'];
+    linkAttributes["aria-labelledby"] = headerId
+    delete linkAttributes["aria-label"]
   }
 
-
   return (
-    <section
-      className="relative centered"
-      ref={ref}
-      {...props}
-    >
-      {(headline || link?.url) &&
+    <section className="centered relative" ref={ref} {...props}>
+      {(headline || link?.url) && (
         <>
-          <AboveHeaderBorder/>
-          <header className="md:flex gap-2xl mb-40">
+          <AboveHeaderBorder />
+          <header className="mb-40 gap-2xl md:flex">
+            {headline && (
+              <h2 id={headerId} className="mb-0 flex-grow">
+                {headline}
+              </h2>
+            )}
 
-            {(headline) &&
-              <h2 id={headerId} className="mb-0 flex-grow">{headline}</h2>
-            }
-
-            {link?.url &&
+            {link?.url && (
               <div>
                 <DrupalLink
                   url={link?.url}
@@ -58,57 +54,61 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
                   {...linkAttributes}
                 />
               </div>
-            }
+            )}
           </header>
         </>
-      }
+      )}
 
-      <div className="@container relative">
+      <div className="relative @container">
         <ul className="list-unstyled grid gap-xl @7xl:grid-cols-3">
-          {cards.map(card =>
+          {cards.map(card => (
             <li key={card.id}>
               <CollectionCard
                 header={card.suCardHeader}
                 superHeader={card.suCardSuperHeader}
                 body={card.suCardBody?.processed}
                 link={card.suCardLink}
-                image={card.suCardMedia?.__typename === 'MediaImage' ? card.suCardMedia : undefined}
-                videoUrl={card.suCardMedia?.__typename === 'MediaVideo' ? card.suCardMedia.mediaOembedVideo : undefined}
+                image={card.suCardMedia?.__typename === "MediaImage" ? card.suCardMedia : undefined}
+                videoUrl={card.suCardMedia?.__typename === "MediaVideo" ? card.suCardMedia.mediaOembedVideo : undefined}
               />
             </li>
-          )}
-
+          ))}
         </ul>
 
-        {fullWidth &&
-          <div
-            className="absolute z-[-10] w-screen h-[calc(100%-260px)] top-[130px] left-0 ml-[calc(-50vw+50%)] bg-black-10">
-            <div className="relative w-full h-full flex flex-col">
-              <Wave className="rotate-180 transform -scale-x-100"/>
-              <div className="flex-grow"/>
-              <Wave className="transform -scale-x-100"/>
+        {fullWidth && (
+          <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+            <div className="relative flex h-full w-full flex-col">
+              <Wave className="rotate-180 -scale-x-100 transform" />
+              <div className="flex-grow" />
+              <Wave className="-scale-x-100 transform" />
             </div>
           </div>
-        }
+        )}
 
-        {!fullWidth &&
+        {!fullWidth && (
           <OnlyIfCentered elem={ref}>
-            <div
-              className="absolute z-[-10] w-screen h-[calc(100%-260px)] top-[130px] left-0 ml-[calc(-50vw+50%)] bg-black-10">
-              <div className="relative w-full h-full flex flex-col">
-                <Wave className="rotate-180 transform -scale-x-100"/>
-                <div className="flex-grow"/>
-                <Wave className="transform -scale-x-100"/>
+            <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+              <div className="relative flex h-full w-full flex-col">
+                <Wave className="rotate-180 -scale-x-100 transform" />
+                <div className="flex-grow" />
+                <Wave className="-scale-x-100 transform" />
               </div>
             </div>
           </OnlyIfCentered>
-        }
+        )}
       </div>
     </section>
   )
 }
 
-const CollectionCard = ({header, superHeader, body, link, image, videoUrl}: {
+const CollectionCard = ({
+  header,
+  superHeader,
+  body,
+  link,
+  image,
+  videoUrl,
+}: {
   header?: Maybe<string>
   superHeader?: Maybe<string>
   body?: Maybe<string>
@@ -117,18 +117,22 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl}: {
   videoUrl?: Maybe<string>
 }) => {
   const imageUrl = image?.mediaImage.url
-  const imageAlt = image?.mediaImage.alt || '';
+  const imageAlt = image?.mediaImage.alt || ""
 
   return (
     <Card
-      video={videoUrl && <Oembed url={videoUrl} className="h-full"/>}
-      image={imageUrl && <Image
-        className="object-cover object-center"
-        src={buildUrl(imageUrl).toString()}
-        alt={imageAlt}
-        fill
-        sizes="(max-width: 1700px) 100vw, 1500px"
-      />}
+      video={videoUrl && <Oembed url={videoUrl} className="h-full" />}
+      image={
+        imageUrl && (
+          <Image
+            className="object-cover object-center"
+            src={buildUrl(imageUrl).toString()}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 1700px) 100vw, 1500px"
+          />
+        )
+      }
       header={header}
       superHeader={superHeader}
       body={body}
@@ -137,4 +141,4 @@ const CollectionCard = ({header, superHeader, body, link, image, videoUrl}: {
   )
 }
 
-export default SulFeaturedCollection;
+export default SulFeaturedCollection

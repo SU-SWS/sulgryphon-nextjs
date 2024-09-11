@@ -1,10 +1,10 @@
-import {ReactNodeLike} from "prop-types";
+import {ReactNodeLike} from "prop-types"
 
-import formatHtml from "@/lib/format-html";
-import {DrupalLink} from "@/components/patterns/link";
-import {ElementType} from "react";
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d";
-import {twMerge} from "tailwind-merge";
+import formatHtml from "@/lib/format-html"
+import {DrupalLink} from "@/components/patterns/link"
+import {ElementType} from "react"
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {twMerge} from "tailwind-merge"
 
 interface CardProps {
   video?: Maybe<ReactNodeLike>
@@ -32,69 +32,46 @@ const Card = ({
   link,
   linkStyle,
   headingLevel,
-  hideHeading
+  hideHeading,
 }: CardProps) => {
-  const Heading: ElementType = headingLevel || "h2";
+  const Heading: ElementType = headingLevel || "h2"
 
-  const linkAttributes: Record<string, string> = {};
-  if (link?.attributes?.ariaLabel) linkAttributes['aria-label'] = link.attributes.ariaLabel;
+  const linkAttributes: Record<string, string> = {}
+  if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
 
   if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === header) {
-    linkAttributes['aria-labelledby'] = headerId;
-    delete linkAttributes['aria-label'];
+    linkAttributes["aria-labelledby"] = headerId
+    delete linkAttributes["aria-label"]
   }
   return (
-    <div
-      className="card block w-full basefont-20 leading-display bg-white text-black border border-solid border-black-10 shadow-md">
-
-      {(image) &&
-        <div className="overflow-hidden aspect-[16/9] relative" aria-hidden="true">
+    <div className="card basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md">
+      {image && (
+        <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
           {image}
         </div>
-      }
+      )}
 
-      {(video) &&
-        <div className="overflow-hidden aspect-[16/9] relative">
-          {video}
-        </div>
-      }
+      {video && <div className="relative aspect-[16/9] overflow-hidden">{video}</div>}
 
-      <div className="card-body items-start rs-px-2 rs-pt-2 rs-pb-4">
-        {(superHeader) &&
-          <span className="type-0 mb-0 leading-display font-bold">
-              {superHeader}
-            </span>
-        }
+      <div className="card-body rs-pt-2 rs-px-2 rs-pb-4 items-start">
+        {superHeader && <span className="type-0 mb-0 font-bold leading-display">{superHeader}</span>}
 
-        {(header) &&
-          <Heading id={headerId} className={twMerge("leading-tight font-bold type-1 mb-03em", hideHeading && "sr-only")}>
+        {header && (
+          <Heading
+            id={headerId}
+            className={twMerge("type-1 mb-03em font-bold leading-tight", hideHeading && "sr-only")}
+          >
             {header}
           </Heading>
-        }
+        )}
 
-        {(body) &&
-          <div>
-            {formatHtml(body)}
-          </div>
-        }
+        {body && <div>{formatHtml(body)}</div>}
 
-        {(footer) &&
-          <div className="leading-display text-18 rs-pt-0 font-normal">
-            {footer}
-          </div>
-        }
+        {footer && <div className="rs-pt-0 text-18 font-normal leading-display">{footer}</div>}
 
-        {link?.url &&
-          <DrupalLink
-            url={link.url}
-            title={link.title}
-            style={linkStyle}
-            {...linkAttributes}
-          />
-        }
+        {link?.url && <DrupalLink url={link.url} title={link.title} style={linkStyle} {...linkAttributes} />}
       </div>
     </div>
   )
-
 }
-export default Card;
+export default Card

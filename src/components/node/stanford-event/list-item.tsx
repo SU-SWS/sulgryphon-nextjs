@@ -1,7 +1,5 @@
-
-import StanfordEventCard from "@/components/node/stanford-event/card";
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d";
-
+import StanfordEventCard from "@/components/node/stanford-event/card"
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
 
 interface Props {
   node: NodeStanfordEvent
@@ -10,6 +8,6 @@ interface Props {
 
 const StanfordEventListItem = ({node, ...props}: Props) => {
   // For now, just return the card. Change this if designs come through.
-  return <StanfordEventCard node={node} {...props}/>
+  return <StanfordEventCard node={node} {...props} />
 }
-export default StanfordEventListItem;
+export default StanfordEventListItem

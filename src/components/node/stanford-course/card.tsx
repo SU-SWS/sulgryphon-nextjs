@@ -1,6 +1,5 @@
-import Link from "@/components/patterns/elements/drupal-link";
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d";
-
+import Link from "@/components/patterns/elements/drupal-link"
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
 
 interface Props {
   node: NodeStanfordCourse
@@ -8,25 +7,28 @@ interface Props {
 }
 
 const StanfordCourseCard = ({node, h3Heading, ...props}: Props) => {
-  const HeadingElement = h3Heading ? 'h3' : 'h2';
+  const HeadingElement = h3Heading ? "h3" : "h2"
   return (
     <article
-      className="block w-full basefont-20 leading-display bg-white text-black border border-solid border-black-10 shadow-md rs-pt-2 rs-px-2 rs-pb-3" {...props}>
+      className="rs-pt-2 rs-px-2 rs-pb-3 basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md"
+      {...props}
+    >
       <div className="rs-pb-0">
         <span className="font-bold leading-cozy">
           {node.suCourseSubject?.name}
           {node.suCourseCode}
 
-          {(node.suCourseAcademicYear) &&
+          {node.suCourseAcademicYear && (
             <span className="font-normal">
-              {' | '}{node.suCourseAcademicYear}
+              {" | "}
+              {node.suCourseAcademicYear}
             </span>
-          }
+          )}
         </span>
       </div>
       <Link
         href={node.path}
-        className="underline hocus:no-underline active:no-underline text-black hocus:text-brick-dark active:text-digital-red"
+        className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
       >
         <HeadingElement className="type-1">{node.title}</HeadingElement>
       </Link>
@@ -34,4 +36,4 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: Props) => {
   )
 }
 
-export default StanfordCourseCard;
+export default StanfordCourseCard

@@ -1,8 +1,8 @@
-import Link from "@/components/patterns/elements/drupal-link";
-import {HTMLAttributes} from "react";
+import Link from "@/components/patterns/elements/drupal-link"
+import {HTMLAttributes} from "react"
 
-import Logo from "@/components/patterns/logo";
-import StanfordWordMark from "@/components/patterns/icons/stanford-wordmark";
+import Logo from "@/components/patterns/logo"
+import StanfordWordMark from "@/components/patterns/icons/stanford-wordmark"
 
 type LockupProps = HTMLAttributes<HTMLDivElement> & {
   whiteText?: boolean
@@ -12,16 +12,20 @@ const Lockup = ({whiteText, ...props}: LockupProps) => {
   return (
     <div {...props}>
       <Link href="/" className="no-underline">
-        <div className="flex items-center basefont-19">
-          <Logo/>
+        <div className="basefont-19 flex items-center">
+          <Logo />
 
-          <div className="flex flex-col lg:flex-row items-baseline ml-10">
-            <div className="lg:border-r-3 border-black pr-10 mr-10 mb-5">
-              <span className="sr-only">Stanford</span>
-              <StanfordWordMark className={whiteText ? " text-white" : "text-cardinal-red-dark"} height={35} aria-hidden/>
+          <div className="ml-10 flex flex-col items-baseline lg:flex-row">
+            <div className="mb-5 mr-10 border-black pr-10 lg:border-r-3">
+              <span className="sr-only">Stanford&nbsp;</span>
+              <StanfordWordMark
+                className={whiteText ? "text-white" : "text-cardinal-red-dark"}
+                height={35}
+                aria-hidden
+              />
             </div>
 
-            <div className={"text-m2 semibold lg:font-regular text-black uppercase" + (whiteText ? " text-white" : "")}>
+            <div className={"semibold type-2 uppercase text-black lg:font-regular" + (whiteText ? " text-white" : "")}>
               {process.env.NEXT_PUBLIC_SITE_NAME}
             </div>
           </div>
@@ -30,4 +34,4 @@ const Lockup = ({whiteText, ...props}: LockupProps) => {
     </div>
   )
 }
-export default Lockup;
+export default Lockup
