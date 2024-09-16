@@ -1369,9 +1369,9 @@ export const SulBranchLocationsDocument = gql`
 }
     ${FragmentNodeSulLibraryTeaserFragmentDoc}`;
 export const SulSharedTagEventsCardGridGraphqlDocument = gql`
-    query sulSharedTagEventsCardGridGraphql($filters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
+    query sulSharedTagEventsCardGridGraphql($contextualFilters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
   sulSharedTagEventsCardGridGraphql(
-    contextualFilter: $filters
+    contextualFilter: $contextualFilters
     pageSize: $pageSize
     page: $page
     offset: $offset
