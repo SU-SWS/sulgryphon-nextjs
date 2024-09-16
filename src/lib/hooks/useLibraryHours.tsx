@@ -22,11 +22,8 @@ export type LocationHours = {
 }
 
 const useLibraryHours = <T extends Record<string, LocationHours> | LocationHours>(branchId?: string): T => {
-  const {isLoading, error, data} = useDataFetch<Record<string, LocationHours>>("/api/library-hours")
-
-  if (isLoading || !data) return {} as T
-  if (error) return {} as T
-
+  const {isLoading, isError, data} = useDataFetch<Record<string, LocationHours>>("/api/library-hours")
+  if (isError || isLoading || !data) return {} as T
   return (branchId ? data[branchId] : data) as T
 }
 export default useLibraryHours

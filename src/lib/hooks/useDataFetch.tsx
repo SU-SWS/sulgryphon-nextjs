@@ -7,6 +7,7 @@ const useDataFetch = <T,>(url: string, queryKeys: string[] = [], options = {}): 
   return useQuery({
     queryKey: queryKeys,
     queryFn: () => axios.get(url).then(res => res.data),
+    retry: false,
     ...options,
   })
 }
