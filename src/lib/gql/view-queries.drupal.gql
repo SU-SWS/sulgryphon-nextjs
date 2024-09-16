@@ -22,8 +22,8 @@ query sulBranchLocations {
     }
 }
 
-query sulSharedTagEventsCardGridGraphql($filters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
-    sulSharedTagEventsCardGridGraphql(contextualFilter: $filters, pageSize: $pageSize, page: $page, offset: $offset) {
+query sulSharedTagEventsCardGridGraphql($contextualFilters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
+    sulSharedTagEventsCardGridGraphql(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
         results {
             ...FragmentNodeTeaserUnion
         }
