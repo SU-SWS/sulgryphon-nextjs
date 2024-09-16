@@ -64,6 +64,7 @@ fragment FragmentMediaGoogleForm on MediaGoogleForm {
 
 fragment FragmentMediaImage on MediaImage {
     ...FragmentMediaInterface
+    sulImageCredit
     mediaImage {
         url
         alt

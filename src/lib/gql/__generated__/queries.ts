@@ -89,6 +89,7 @@ export const FragmentMediaInterfaceFragmentDoc = gql`
 export const FragmentMediaImageFragmentDoc = gql`
     fragment FragmentMediaImage on MediaImage {
   ...FragmentMediaInterface
+  sulImageCredit
   mediaImage {
     url
     alt
