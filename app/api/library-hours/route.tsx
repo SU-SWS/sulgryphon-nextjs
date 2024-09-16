@@ -17,8 +17,7 @@ type FetchedData = {
 }
 
 export const dynamic = "force-static"
-export const revalidate = 30
-// export const revalidate = 28800
+export const revalidate = 28800
 
 const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
   const from = new Date()
@@ -30,12 +29,6 @@ const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
   params.set("from", from.toISOString().replace(/T.*/, ""))
   params.set("to", to.toISOString().replace(/T.*/, ""))
 
-  if (new Date().getMinutes() >= 45) {
-    console.log("fail")
-    return {}
-  }
-
-  console.log("fetch")
   const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
     cache: "no-store",
   })
