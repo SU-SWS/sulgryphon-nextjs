@@ -1,8 +1,7 @@
 import {deserialize} from "@/lib/drupal/deserialize"
 import {NextResponse} from "next/server"
-import {DayHours} from "@/lib/hooks/useLibraryHours"
+import {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {LibraryHours} from "@/lib/drupal/drupal"
-import {revalidateTag, unstable_cache as nextCache} from "next/cache"
 
 type FetchedData = {
   data: []
@@ -17,93 +16,78 @@ type FetchedData = {
   }[]
 }
 
-export const revalidate = 3600
+export const dynamic = "force-static"
+export const revalidate = 30
+// export const revalidate = 28800
 
-const getLibraryHours = nextCache(
-  async () => {
-    const from = new Date()
-    from.setDate(from.getDate() - from.getDay())
-    const to = new Date()
-    to.setDate(to.getDate() + 6)
+const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
+  const from = new Date()
+  from.setDate(from.getDate() - from.getDay())
+  const to = new Date()
+  to.setDate(to.getDate() + 6)
 
-    const params = new URLSearchParams()
-    params.set("from", from.toISOString().replace(/T.*/, ""))
-    params.set("to", to.toISOString().replace(/T.*/, ""))
+  const params = new URLSearchParams()
+  params.set("from", from.toISOString().replace(/T.*/, ""))
+  params.set("to", to.toISOString().replace(/T.*/, ""))
 
-    const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
-      cache: "no-cache",
+  if (new Date().getMinutes() >= 45) {
+    console.log("fail")
+    return {}
+  }
+
+  console.log("fetch")
+  const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
+    cache: "no-store",
+  })
+    .then(res => res.json())
+    .catch(e => {
+      console.error(e)
+      return {}
     })
-      .then(res => res.json())
-      .catch(e => {
-        console.error(e)
-        return NextResponse.json([])
-      })
 
-    const deserializedData = deserialize(data) as LibraryHours[]
-    if (!deserializedData) {
-      return NextResponse.json([])
+  const deserializedData = deserialize(data) as LibraryHours[]
+  if (!deserializedData) {
+    return {}
+  }
+
+  const locations: Record<
+    string,
+    {
+      name: string
+      type: string
+      primaryHours: DayHours[]
+      additionalLocations: {id: string; name: string; hours: DayHours[]}[]
+    }
+  > = {}
+
+  deserializedData.map(place => {
+    locations[place.id.toLowerCase()] = {
+      name: place.name,
+      type: place.type,
+      primaryHours: place.hours,
+      additionalLocations: [],
     }
 
-    const locations: Record<
-      string,
-      {
-        name: string
-        type: string
-        primaryHours: DayHours[]
-        additionalLocations: {id: string; name: string; hours: DayHours[]}[]
+    place.locations.map(additionalPlace => {
+      const location = data.included.find(a => a.id == additionalPlace.id)
+      if (!location) return
+
+      if (location.attributes.primary) {
+        return
       }
-    > = {}
-
-    deserializedData.map(place => {
-      locations[place.id.toLowerCase()] = {
-        name: place.name,
-        type: place.type,
-        primaryHours: place.hours,
-        additionalLocations: [],
-      }
-
-      place.locations.map(additionalPlace => {
-        const location = data.included.find(a => a.id == additionalPlace.id)
-        if (!location) return
-
-        if (location.attributes.primary) {
-          return
-        }
-        locations[place.id.toLowerCase()].additionalLocations.push({
-          id: additionalPlace.id.toLowerCase(),
-          name: additionalPlace.name,
-          hours: location.attributes.hours,
-        })
+      locations[place.id.toLowerCase()].additionalLocations.push({
+        id: additionalPlace.id.toLowerCase(),
+        name: additionalPlace.name,
+        hours: location.attributes.hours,
       })
     })
+  })
 
-    return locations
-  },
-  ["library-hours"],
-  {
-    tags: ["library-hours"],
-    // Revalidate at 1 second after midnight. Calculate how many seconds since midnight, and subtract from total seconds
-    // in a day.
-    revalidate:
-      60 * 60 * 24 +
-      1 -
-      (parseInt(
-        new Date().toLocaleTimeString("en-us", {
-          hour12: false,
-          hour: "numeric",
-          timeZone: "America/Los_Angeles",
-        })
-      ) *
-        60 *
-        60 +
-        new Date().getMinutes() * 60 +
-        new Date().getSeconds()),
-  }
-)
-
+  return locations
+}
 export const GET = async () => {
   const hours = await getLibraryHours()
-  // If no data, try to invalidate the cached data so we can re-try fetching the data.
-  if (!hours) revalidateTag("library-hours")
+  // If no data, throw an error so the next request can try again.
+  if (Object.keys(hours).length === 0) throw new Error("Failed to fetch data")
   return NextResponse.json(hours)
 }
