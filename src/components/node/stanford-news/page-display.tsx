@@ -89,7 +89,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
       {imageUrl && (
         <figure className="relative mx-auto mb-100 aspect-[16/9] lg:w-10/12">
-          <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
+          <Image className="!relative object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
 
           {node.suNewsBannerMediaCaption && (
             <figcaption className="caption text-center">{node.suNewsBannerMediaCaption}</figcaption>
