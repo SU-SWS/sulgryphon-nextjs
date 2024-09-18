@@ -88,20 +88,27 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <hr className="mx-auto mb-100 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="relative mx-auto mb-100 aspect-[16/9] lg:w-10/12">
-          <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
-
+        <figure className="mb-100 table w-full">
+          <span className="relative mx-auto block aspect-[16/9] lg:w-10/12">
+            <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
+          </span>
           {node.suNewsBannerMediaCaption && (
-            <figcaption className="caption text-center">{node.suNewsBannerMediaCaption}</figcaption>
+            <figcaption className="table-caption caption-bottom text-center">
+              {node.suNewsBannerMediaCaption}
+            </figcaption>
           )}
         </figure>
       )}
 
       {node.suNewsBanner?.__typename === "MediaVideo" && (
-        <figure className="relative mx-auto mb-100 aspect-[16/9] w-10/12">
-          <Oembed url={node.suNewsBanner.mediaOembedVideo} />
+        <figure className="mb-100 table w-full">
+          <span className="relative mx-auto block aspect-[16/9] w-10/12">
+            <Oembed url={node.suNewsBanner.mediaOembedVideo} />
+          </span>
           {node.suNewsBannerMediaCaption && (
-            <figcaption className="caption text-center">{node.suNewsBannerMediaCaption}</figcaption>
+            <figcaption className="table-caption caption-bottom text-center">
+              {node.suNewsBannerMediaCaption}
+            </figcaption>
           )}
         </figure>
       )}
