@@ -12,12 +12,7 @@ import {StanfordGlobalMessage} from "@/lib/gql/__generated__/drupal.d"
 import {JSX} from "react"
 
 const GlobalMessage = async () => {
-  let configPage: StanfordGlobalMessage | undefined
-  try {
-    configPage = await getConfigPage<StanfordGlobalMessage>("StanfordGlobalMessage")
-  } catch (e) {
-    return null
-  }
+  const configPage = await getConfigPage<StanfordGlobalMessage>("StanfordGlobalMessage")
 
   if (!configPage || !configPage.suGlobalMsgEnabled) {
     return null
