@@ -96,6 +96,7 @@ const CollectionCard = ({
       superHeader={superHeader}
       body={body}
       link={link}
+      headingLevel="h3"
     />
   )
 }
