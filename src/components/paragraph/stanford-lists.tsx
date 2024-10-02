@@ -60,7 +60,12 @@ const ListParagraph = async ({paragraph}: Props) => {
       </div>
 
       {paragraph.suListDescription?.processed && <div>{formatHtml(paragraph.suListDescription.processed)}</div>}
-      {viewItems && viewId && displayId && (
+
+      {viewItems.length === 0 && behaviors.list_paragraph?.empty_message && (
+        <p>{behaviors.list_paragraph.empty_message}</p>
+      )}
+
+      {viewItems.length > 0 && viewId && displayId && (
         <View
           items={viewItems}
           viewId={viewId}
@@ -108,7 +113,7 @@ const getViewItems = cache(
     if (viewId === "sul_people" && displayId === "table_list_all") limit = 0
     const {items, totalItems} = await getViewPagedItems(viewId, displayId, contextualFilter, 30, page)
     if (limit) {
-      return {items: items.slice(0, limit), totalItems}
+      return {items: items?.slice(0, limit), totalItems}
     }
     return {items, totalItems}
   }
