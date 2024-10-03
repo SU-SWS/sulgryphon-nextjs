@@ -40,6 +40,10 @@ fragment FragmentNodeSulLibrary on NodeSulLibrary {
         processed
     }
     sulLibraryType
+    sulRelLinksHeading
+    sulRelLinks {
+        ... FragmentLink
+    }
 }
 
 fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
@@ -81,6 +85,10 @@ fragment FragmentNodeStanfordPage on NodeStanfordPage {
     suPageDescription
     suPageImage {
         ...FragmentMediaUnion
+    }
+    sulRelLinksHeading
+    sulRelLinks {
+        ... FragmentLink
     }
 }
 

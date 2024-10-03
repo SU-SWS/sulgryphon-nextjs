@@ -654,12 +654,17 @@ export const FragmentNodeStanfordPageFragmentDoc = gql`
   suPageImage {
     ...FragmentMediaUnion
   }
+  sulRelLinksHeading
+  sulRelLinks {
+    ...FragmentLink
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
 ${FragmentParagraphStanfordBannerFragmentDoc}
 ${FragmentParagraphUnionFragmentDoc}
-${FragmentMediaUnionFragmentDoc}`;
+${FragmentMediaUnionFragmentDoc}
+${FragmentLinkFragmentDoc}`;
 export const FragmentNodeStanfordPersonFragmentDoc = gql`
     fragment FragmentNodeStanfordPerson on NodeStanfordPerson {
   ...FragmentNodeInterface
@@ -839,6 +844,10 @@ export const FragmentNodeSulLibraryFragmentDoc = gql`
     processed
   }
   sulLibraryType
+  sulRelLinksHeading
+  sulRelLinks {
+    ...FragmentLink
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentAddressTypeFragmentDoc}
