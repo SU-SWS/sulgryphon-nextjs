@@ -10,6 +10,7 @@ import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import FlushCache from "@/components/patterns/elements/flush-cache"
+import OnThePageLink from "@/components/patterns/on-the-page"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -72,6 +73,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
+          {entity.__typename === "NodeStanfordPage" && <OnThePageLink content={entity.suPageComponents} />}
           <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />
         </div>
       )}
