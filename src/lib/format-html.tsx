@@ -96,7 +96,7 @@ const options: HTMLReactParserOptions = {
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
         case "h2":
-          if (domNode.children[0] instanceof Text) {
+          if (typeof Text !== "undefined" && domNode.children[0] instanceof Text) {
             const text = domNode.children[0].data
             const id = text.toLowerCase().replace(/\s+/g, "-")
             return (
