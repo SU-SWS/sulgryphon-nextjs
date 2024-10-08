@@ -3,7 +3,9 @@
 import React, {useState, useEffect, useMemo} from "react"
 import parse from "html-react-parser"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphStanfordWysiwyg} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
+import DrupalLink from "./elements/drupal-link"
 
 interface Heading {
   text: string
@@ -19,18 +21,22 @@ const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
     const content =
       node?.suPageComponents &&
       node?.suPageComponents
-        .filter(item => item.__typename === "ParagraphStanfordWysiwyg")
-        .map(item => item.suWysiwygText.processed)
+        .filter((item): item is ParagraphStanfordWysiwyg => item.__typename === "ParagraphStanfordWysiwyg")
+        .map(item => item.suWysiwygText && item.suWysiwygText.processed)
         .join(" ")
 
-    const parsedContent = parse(content)
+    const parsedContent = parse(content ?? "")
     const headingsArr: Heading[] = []
 
     React.Children.forEach(parsedContent, child => {
       if (React.isValidElement(child) && child.type === "h2") {
-        const text = child.props.children
-        const id = text.toLowerCase().replace(/\s+/g, "-")
-        headingsArr.push({text, id})
+        const element = child as React.ReactElement
+        const text = element.props.children
+
+        if (typeof text === "string") {
+          const id = text.toLowerCase().replace(/\s+/g, "-")
+          headingsArr.push({text, id})
+        }
       }
     })
 
@@ -65,7 +71,7 @@ const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
   }, [headings])
 
   return (
-    <div className="sticky top-0 h-fit bg-fog-light px-24 pb-40 pt-16">
+    <div className="sticky top-0 h-fit max-w-300 bg-fog-light px-24 pb-40 pt-16">
       <nav>
         <h3 className="font-sans font-semibold">On this page</h3>
         <ul className="list-none p-0">
@@ -74,7 +80,7 @@ const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
               <a
                 href={`#${heading.id}`}
                 className={twMerge(
-                  "type-1 border-l-4 pl-16 font-sans font-normal leading-[36px] text-black no-underline",
+                  "type-1 block border-l-4 pl-16 font-sans font-normal leading-[36px] text-black no-underline",
                   activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
                 )}
               >
@@ -90,9 +96,11 @@ const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
           <ul className="list-none p-0">
             {relLinks.map((link, index) => (
               <li key={index}>
-                <a href={link.url} className={twMerge("type-1 font-sans font-normal leading-[36px]")}>
-                  {link.title}
-                </a>
+                {link.url && (
+                  <DrupalLink href={link.url} className={twMerge("type-1 font-sans font-normal leading-[36px]")}>
+                    {link.title}
+                  </DrupalLink>
+                )}
               </li>
             ))}
           </ul>
