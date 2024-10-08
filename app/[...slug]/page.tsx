@@ -73,7 +73,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
-          {entity.__typename === "NodeStanfordPage" && <OnThePageLink content={entity.suPageComponents} />}
+          {entity.__typename === "NodeStanfordPage" && <OnThePageLink node={entity} />}
           <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />
         </div>
       )}
