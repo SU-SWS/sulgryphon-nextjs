@@ -28,6 +28,8 @@ const NodePage = async ({params, previewMode}: PageProps) => {
     (entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "stanford_basic_page_full") ||
     (entity.__typename === "NodeSulLibrary" && entity.layoutSelection?.id === "sul_library_full_width")
 
+  const sulSidebar = entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "sul_side_nav"
+
   return (
     <main id="main-content" className="mb-50">
       {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={path} />}
@@ -73,7 +75,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
-          {entity.__typename === "NodeStanfordPage" && <OnThePageLink node={entity} />}
+          {sulSidebar && <OnThePageLink node={entity} />}
           <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />
         </div>
       )}
