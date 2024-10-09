@@ -240,7 +240,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   )}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
-                  {item.libCalId ? (
+                  {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
                       className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:mb-0 lg:w-fit"
@@ -252,9 +252,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                         </div>
                       </div>
                     </a>
-                  ) : (
-                    <p>Reservation not required</p>
                   )}
+                  {!item.libCalId && <p>Reservation not required</p>}
                 </Td>
               </Tr>
             ))}
