@@ -95,20 +95,10 @@ const options: HTMLReactParserOptions = {
           nodeProps.className += " mb-20 "
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
-        case "h2":
-          if (typeof Text !== "undefined" && domNode.children[0] instanceof Text) {
-            const text = domNode.children[0].data
-            const id = text.toLowerCase().replace(/\s+/g, "-")
-            return (
-              <NodeName {...nodeProps} id={id} className={twMerge("scroll-smooth", nodeProps.className)}>
-                {domToReact(domNode.children as DOMNode[], options)}
-              </NodeName>
-            )
-          }
-          return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
         case "p":
           nodeProps.className += " max-w-[100ch]"
         case "h1":
+        case "h2":
         case "h3":
         case "h4":
         case "span":
