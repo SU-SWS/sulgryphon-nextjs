@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState, useEffect} from "react"
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews, NodeStanfordPage, NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import DrupalLink from "./elements/drupal-link"
 
@@ -10,11 +10,12 @@ interface Heading {
   id: string
 }
 
-const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
+const OnThePageLink = ({node}: {node: NodeStanfordPage | NodeStanfordNews | NodeSulLibrary}) => {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
-  const relLinkHeading = node.sulRelLinksHeading
-  const relLinks = node.sulRelLinks
+
+  const relLinkHeading = "sulRelLinksHeading" in node ? node.sulRelLinksHeading : undefined
+  const relLinks = "sulRelLinks" in node ? node.sulRelLinks : undefined
 
   useEffect(() => {
     const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll(".wysiwyg")
@@ -57,7 +58,7 @@ const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
   }, [])
 
   return (
-    <div className="sticky top-0 h-fit max-w-300 bg-fog-light px-24 pb-40 pt-16">
+    <div className="sticky top-0 h-fit w-300 bg-fog-light px-24 pb-40 pt-16">
       <nav>
         <h3 className="font-sans font-semibold">On this page</h3>
         <ul className="list-none p-0">

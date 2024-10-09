@@ -211,6 +211,10 @@ fragment FragmentNodeStanfordNews on NodeStanfordNews {
     suNewsTopics {
         ...FragmentTermInterface
     }
+    sulRelLinksHeading
+    sulRelLinks {
+        ... FragmentLink
+    }
 }
 
 fragment FragmentNodeStanfordPerson on NodeStanfordPerson {
