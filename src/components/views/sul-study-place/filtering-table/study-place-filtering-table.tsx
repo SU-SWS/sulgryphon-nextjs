@@ -253,8 +253,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       </div>
                     </a>
                   )}
-                  {/* Without this, the responsive table library injects a "&nbsp;". */}
-                  {""}
+                  {!item.libCalId && <p>Reservation not required</p>}
                 </Td>
               </Tr>
             ))}
