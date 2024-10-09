@@ -1,9 +1,7 @@
 "use client"
 
-import React, {useState, useEffect, useMemo} from "react"
-import parse from "html-react-parser"
+import React, {useState, useEffect} from "react"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
-import {ParagraphStanfordWysiwyg} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import DrupalLink from "./elements/drupal-link"
 
@@ -13,62 +11,50 @@ interface Heading {
 }
 
 const OnThePageLink = ({node}: {node: NodeStanfordPage}) => {
+  const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
   const relLinkHeading = node.sulRelLinksHeading
   const relLinks = node.sulRelLinks
 
-  const headings = useMemo(() => {
-    const content =
-      node?.suPageComponents &&
-      node?.suPageComponents
-        .filter((item): item is ParagraphStanfordWysiwyg => item.__typename === "ParagraphStanfordWysiwyg")
-        .map(item => item.suWysiwygText && item.suWysiwygText.processed)
-        .join(" ")
+  useEffect(() => {
+    const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll(".wysiwyg")
 
-    const parsedContent = parse(content ?? "")
-    const headingsArr: Heading[] = []
+    const allHeadings: Heading[] = []
 
-    React.Children.forEach(parsedContent, child => {
-      if (React.isValidElement(child) && child.type === "h2") {
-        const element = child as React.ReactElement
-        const text = element.props.children
+    wysiwygContainers.forEach((container, containerIndex) => {
+      const h2Elements: HTMLHeadingElement[] = Array.from(container.querySelectorAll("h2"))
 
-        if (typeof text === "string") {
-          const id = text.toLowerCase().replace(/\s+/g, "-")
-          headingsArr.push({text, id})
-        }
-      }
+      h2Elements.forEach((heading, headingIndex) => {
+        const id = `${heading.textContent?.trim().toLowerCase().replace(/\s+/g, "-")}-${containerIndex}-${headingIndex}`
+        heading.setAttribute("id", id)
+        allHeadings.push({text: heading.textContent || "", id})
+      })
     })
 
-    return headingsArr
-  }, [node])
+    setHeadings(allHeadings)
 
-  useEffect(() => {
-    const options: IntersectionObserverInit = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.5,
-    }
-
-    const observer = new IntersectionObserver(entries => {
+    const observerCallback: IntersectionObserverCallback = entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0) {
           setActiveHeading(entry.target.id)
         }
       })
-    }, options)
+    }
 
-    headings.forEach(({id}) => {
-      const headingElement = document.getElementById(id)
-      if (headingElement) {
-        observer.observe(headingElement)
-      }
+    const observer = new IntersectionObserver(observerCallback, {
+      rootMargin: "-10px 0px 0px 0px",
+      threshold: 0,
+    })
+
+    wysiwygContainers.forEach(container => {
+      const h2Elements = container.querySelectorAll("h2")
+      h2Elements.forEach(heading => observer.observe(heading))
     })
 
     return () => {
       observer.disconnect()
     }
-  }, [headings])
+  }, [])
 
   return (
     <div className="sticky top-0 h-fit max-w-300 bg-fog-light px-24 pb-40 pt-16">
