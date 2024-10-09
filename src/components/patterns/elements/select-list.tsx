@@ -16,6 +16,7 @@ import {
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {useBoolean, useIsClient} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
+import {twMerge} from "tailwind-merge"
 
 interface Props {
   options: SelectOptionDefinition<string>[]
@@ -86,10 +87,16 @@ function CustomOption(props: OptionProps) {
     <li
       {...otherProps}
       id={id}
-      className={
-        "m-0 mb-2 cursor-pointer overflow-hidden px-10 py-2 hocus:underline " +
-        (selected ? selectedStyles : highlighted ? highlightedStyles : "hocus:bg-black-10 hocus:text-black")
-      }
+      className={twMerge(
+        "m-0 mb-2 cursor-pointer overflow-hidden px-10 py-2 hocus:underline",
+        selected
+          ? selectedStyles
+          : highlighted
+            ? highlightedStyles
+            : disabled
+              ? "cursor-default font-semibold text-cardinal-red hocus:no-underline"
+              : "hocus:bg-black-10 hocus:text-black"
+      )}
     >
       {children}
     </li>
@@ -166,7 +173,7 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
           <SelectProvider value={contextValue}>
             {options.map(option => {
               return (
-                <CustomOption key={option.value} value={option.value} rootRef={listboxRef}>
+                <CustomOption {...option} key={option.value} value={option.value} rootRef={listboxRef}>
                   {option.label}
                 </CustomOption>
               )
