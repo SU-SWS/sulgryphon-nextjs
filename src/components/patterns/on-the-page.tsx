@@ -78,7 +78,7 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
   ]
 
   return (
-    <>
+    <div>
       <div className="block w-full md:w-500 lg:hidden">
         <SelectList
           label="On the page"
@@ -87,7 +87,7 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
             if (value) {
               const selectedHeading = document.getElementById(value as string)
               if (selectedHeading) {
-                selectedHeading.scrollIntoView({behavior: "smooth"})
+                selectedHeading.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
               } else {
                 window.location.href = value as string
               }
@@ -96,7 +96,7 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
         />
       </div>
       <div className="sticky top-0 hidden h-fit w-300 bg-fog-light px-24 pb-40 pt-16 lg:block">
-        <nav>
+        <nav aria-label="on the page menu">
           <h3 className="font-sans font-semibold">On this page</h3>
           <ul className="list-none p-0">
             {headings.map(heading => (
@@ -131,7 +131,7 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }
 
