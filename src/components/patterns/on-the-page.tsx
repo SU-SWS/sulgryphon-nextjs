@@ -42,14 +42,20 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
 
     const observerCallback: IntersectionObserverCallback = entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0) {
+        const top = entry.boundingClientRect.top
+
+        console.log(
+          `Observer | Target: ${entry.target.id} | isIntersecting: ${entry.isIntersecting} | intersectionRatio: ${entry.intersectionRatio}`
+        )
+
+        if (entry.isIntersecting) {
           setActiveHeading(entry.target.id)
         }
       })
     }
 
     const observer = new IntersectionObserver(observerCallback, {
-      rootMargin: "-10px 0px 0px 0px",
+      rootMargin: "0px 0px -80% 0px",
       threshold: 0,
     })
 
