@@ -29,7 +29,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   return (
     <article {...props} className="centered mt-50">
       <div className="centered mb-100 2xl:w-2/3">
-        {node.suNewsDek && <div className="">{node.suNewsDek}</div>}
+        {node.suNewsDek && <div className="mb-28">{node.suNewsDek}</div>}
         <div className="md:flex">
           <div className="flex md:order-last">
             {!node.suNewsHideSocial && (
