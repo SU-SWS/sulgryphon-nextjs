@@ -1,23 +1,25 @@
 "use client"
 
 import React, {useState, useEffect} from "react"
-import {NodeStanfordNews, NodeStanfordPage, NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {Link, Maybe} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import DrupalLink from "./elements/drupal-link"
 import SelectList from "./elements/select-list"
 import {SelectOptionDefinition} from "@mui/base/useSelect"
+
+interface OnThePageProps {
+  relLinkHeading?: Maybe<string>
+  relLinks?: Maybe<Link[]>
+}
 
 interface Heading {
   text: string
   id: string
 }
 
-const OnThePageLink = ({node}: {node: NodeStanfordPage | NodeStanfordNews | NodeSulLibrary}) => {
+const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
-
-  const relLinkHeading = "sulRelLinksHeading" in node ? node.sulRelLinksHeading : undefined
-  const relLinks = "sulRelLinks" in node ? node.sulRelLinks : undefined
 
   useEffect(() => {
     const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll(".wysiwyg")
@@ -66,10 +68,10 @@ const OnThePageLink = ({node}: {node: NodeStanfordPage | NodeStanfordNews | Node
     })),
     {
       value: "related-links-header",
-      label: node.sulRelLinksHeading || "Related content",
+      label: relLinkHeading || "Related content",
       disabled: true,
     },
-    ...(node.sulRelLinks?.map(link => ({
+    ...(relLinks?.map(link => ({
       value: String(link.url),
       label: String(link.title),
     })) || []),

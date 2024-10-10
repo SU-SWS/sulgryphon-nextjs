@@ -78,7 +78,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
-          {sulSidebar && <OnThePageLink node={entity} />}
+          {sulSidebar && <OnThePageLink relLinks={entity.sulRelLinks} relLinkHeading={entity.sulRelLinksHeading} />}
           {!sulSidebar && <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />}
         </div>
       )}
