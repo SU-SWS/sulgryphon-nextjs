@@ -6,6 +6,7 @@ import {twMerge} from "tailwind-merge"
 import DrupalLink from "./elements/drupal-link"
 import SelectList from "./elements/select-list"
 import {SelectOptionDefinition} from "@mui/base/useSelect"
+import {useRouter} from "next/navigation"
 
 interface OnThePageProps {
   relLinkHeading?: Maybe<string>
@@ -18,6 +19,7 @@ interface Heading {
 }
 
 const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
+  const router = useRouter()
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
 
@@ -89,7 +91,7 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
               if (selectedHeading) {
                 selectedHeading.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
               } else {
-                window.location.href = value as string
+                router.push(value as string)
               }
             }
           }}
