@@ -10,6 +10,7 @@ import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import FlushCache from "@/components/patterns/elements/flush-cache"
+import OnThePageLink from "@/components/patterns/on-the-page"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -26,6 +27,11 @@ const NodePage = async ({params, previewMode}: PageProps) => {
   const fullWidth =
     (entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "stanford_basic_page_full") ||
     (entity.__typename === "NodeSulLibrary" && entity.layoutSelection?.id === "sul_library_full_width")
+
+  const sulSidebar =
+    (entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "sul_side_nav") ||
+    entity.__typename === "NodeStanfordNews" ||
+    entity.__typename === "NodeSulLibrary"
 
   return (
     <main id="main-content" className="mb-50">
@@ -72,7 +78,8 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
-          <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />
+          {sulSidebar && <OnThePageLink relLinks={entity.sulRelLinks} relLinkHeading={entity.sulRelLinksHeading} />}
+          {!sulSidebar && <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />}
         </div>
       )}
     </main>

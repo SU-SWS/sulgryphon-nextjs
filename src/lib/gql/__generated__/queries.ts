@@ -628,6 +628,10 @@ export const FragmentNodeStanfordNewsFragmentDoc = gql`
   suNewsTopics {
     ...FragmentTermInterface
   }
+  sulRelLinksHeading
+  sulRelLinks {
+    ...FragmentLink
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaUnionFragmentDoc}
