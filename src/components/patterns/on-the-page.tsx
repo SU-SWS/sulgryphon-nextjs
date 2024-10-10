@@ -105,14 +105,14 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
       </div>
       <div className="sticky top-0 hidden h-fit w-300 bg-fog-light px-24 pb-40 pt-16 lg:block">
         <nav aria-label="on the page menu">
-          <h3 className="font-sans font-semibold">On this page</h3>
+          <h3 className="type-1 font-sans font-semibold">On this page</h3>
           <ul className="list-none p-0">
             {headings.map(heading => (
-              <li key={heading.id}>
+              <li key={heading.id} className="mb-12">
                 <a
                   href={`#${heading.id}`}
                   className={twMerge(
-                    "type-1 block border-l-4 pl-16 font-sans font-normal leading-[36px] text-black no-underline",
+                    "type-0 block border-l-4 pl-16 font-sans font-normal leading-[30px] text-black no-underline",
                     activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
                   )}
                 >
@@ -124,12 +124,12 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
         </nav>
         {relLinks && (
           <div className="mt-40">
-            <h3 className="font-sans font-semibold">{relLinkHeading || "Related content"}</h3>
+            <h3 className="type-1 font-sans font-semibold">{relLinkHeading || "Related content"}</h3>
             <ul className="list-none p-0">
               {relLinks.map((link, index) => (
-                <li key={index}>
+                <li key={index} className="mb-12">
                   {link.url && (
-                    <DrupalLink href={link.url} className={twMerge("type-1 font-sans font-normal leading-[36px]")}>
+                    <DrupalLink href={link.url} className="type-0 font-sans font-normal leading-[30px]">
                       {link.title}
                     </DrupalLink>
                   )}
