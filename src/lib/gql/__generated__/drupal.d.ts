@@ -129,6 +129,31 @@ export type BlockPlugin = BlockInterface & {
 /** Block types that can exist in the system. */
 export type BlockUnion = BlockContent | BlockPlugin;
 
+/** A menu item defined in the CMS. */
+export type BookLink = {
+  __typename?: 'BookLink';
+  /** Attributes of this menu item. */
+  attributes: MenuItemAttributes;
+  /** Child menu items of this menu item. */
+  children: Array<BookLink>;
+  /** The description of the menu item. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Whether this menu item is intended to be expanded. */
+  expanded: Scalars['Boolean']['output'];
+  /** The Universally Unique Identifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** Whether this menu item links to an internal route. */
+  internal: Scalars['Boolean']['output'];
+  /** The language of the menu item. */
+  langcode: Language;
+  /** The route this menu item uses. Route loading can be disabled per menu type. */
+  route?: Maybe<RouteUnion>;
+  /** The title of the menu item. */
+  title: Scalars['String']['output'];
+  /** The URL of the menu item. */
+  url?: Maybe<Scalars['String']['output']>;
+};
+
 /** Entity type citation. */
 export type CitationInterface = {
   /** The Universally Unique IDentifier (UUID). */
@@ -1162,6 +1187,8 @@ export type NodeStanfordNews = EdgeNode & MetaTagInterface & NodeInterface & {
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
+  /** Layout */
+  layoutSelection?: Maybe<LayoutLibrary>;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
   /** URL alias */
@@ -1215,6 +1242,10 @@ export type NodeStanfordNews = EdgeNode & MetaTagInterface & NodeInterface & {
    * to add, edit and delete news terms.</a>
    */
   suNewsTopics?: Maybe<Array<TermStanfordNewsTopic>>;
+  /** Related Links */
+  sulRelLinks?: Maybe<Array<Link>>;
+  /** Related Links Heading */
+  sulRelLinksHeading?: Maybe<Scalars['String']['output']>;
   /** Title */
   title: Scalars['String']['output'];
 };
@@ -1254,7 +1285,14 @@ export type NodeStanfordPage = EdgeNode & MetaTagInterface & NodeInterface & {
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
-  /** Layout */
+  /**
+   * <ul><li><strong>Main navigation sidebar</strong> appears by default when this
+   * page is added to a menu.</li><li><strong>Full width</strong> will display page
+   * contents only, removing all types of sidebar menus.</li><li><strong>On this
+   * page sidebar</strong> to display a menu of H2s automatically populated from
+   * this page. You can also add a section for links that appear on the
+   * page.</li></ul>
+   */
   layoutSelection?: Maybe<LayoutLibrary>;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
@@ -1425,6 +1463,7 @@ export type NodeStanfordPolicy = EdgeNode & MetaTagInterface & NodeInterface & {
    * title - in smaller font - on the list and teaser display.</em>
    */
   body?: Maybe<TextSummary>;
+  book?: Maybe<BookLink>;
   /** The time that the node was last edited. */
   changed: DateTime;
   /** The date and time that the content was created. */
@@ -1573,7 +1612,14 @@ export type NodeSulLibrary = EdgeNode & MetaTagInterface & NodeInterface & {
   id: Scalars['ID']['output'];
   /** Language */
   langcode: Language;
-  /** Layout */
+  /**
+   * <ul><li><strong>Main navigation sidebar</strong> appears by default when this
+   * page is added to a menu.</li><li><strong>Full width</strong> will display page
+   * contents only, removing all types of sidebar menus.</li><li><strong>On this
+   * page sidebar</strong> to display a menu of H2s automatically populated from
+   * this page. You can also add a section for links that appear on the
+   * page.</li></ul>
+   */
   layoutSelection?: Maybe<LayoutLibrary>;
   /** The computed meta tags for the entity. */
   metatag: Array<MetaTagUnion>;
@@ -2235,12 +2281,6 @@ export type Query = {
   stanfordBasicPages?: Maybe<StanfordBasicPagesResult>;
   /** List of all StanfordBasicSiteSetting on the platform. */
   stanfordBasicSiteSettings: StanfordBasicSiteSettingConnection;
-  /** Query for view stanford_courses display default_list_viewfield_block_graphql. */
-  stanfordCourses?: Maybe<StanfordCoursesResult>;
-  /** Query for view stanford_events display list_page_graphql. */
-  stanfordEvents?: Maybe<StanfordEventsResult>;
-  /** Query for view stanford_events display past_events_list_block_graphql. */
-  stanfordEventsPastEvents?: Maybe<StanfordEventsPastEventsResult>;
   /** List of all StanfordGlobalMessage on the platform. */
   stanfordGlobalMessages: StanfordGlobalMessageConnection;
   /** List of all StanfordLocalFooter on the platform. */
@@ -2249,16 +2289,16 @@ export type Query = {
   stanfordNews?: Maybe<StanfordNewsResult>;
   /** A list of people in a grid with node as the base table */
   stanfordPerson?: Maybe<StanfordPersonResult>;
-  /** Query for view stanford_publications display list_graphql. */
-  stanfordPublications?: Maybe<StanfordPublicationsResult>;
   /** Query for view stanford_shared_tags display card_grid_graphql. */
   stanfordSharedTags?: Maybe<StanfordSharedTagsResult>;
   /** List of all StanfordSuperFooter on the platform. */
   stanfordSuperFooters: StanfordSuperFooterConnection;
   /** Query for view sul_branch_locations display branch_locations_graphql. */
   sulBranchLocations?: Maybe<SulBranchLocationsResult>;
-  /** Query for view sul_shared_tag_events display card_grid_graphql. */
-  sulSharedTagEventsCardGridGraphql?: Maybe<SulSharedTagEventsCardGridGraphqlResult>;
+  /** Query for view sul_events display list_page_graphql. */
+  sulEvents?: Maybe<SulEventsResult>;
+  /** Query for view sul_events display graphql_shared_tags. */
+  sulEventsSharedTags?: Maybe<SulEventsSharedTagsResult>;
   /** Query for view sul_study_places display study_spaces_graphql. */
   sulStudyPlaces?: Maybe<SulStudyPlacesResult>;
   /** Load a Term entity by id. */
@@ -2479,38 +2519,6 @@ export type QueryStanfordBasicSiteSettingsArgs = {
 
 
 /** The schema's entry-point for queries. */
-export type QueryStanfordCoursesArgs = {
-  contextualFilter?: InputMaybe<StanfordCoursesContextualFilterInput>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  sortDir?: InputMaybe<SortDirection>;
-  sortKey?: InputMaybe<StanfordCoursesSortKeys>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryStanfordEventsArgs = {
-  contextualFilter?: InputMaybe<StanfordEventsContextualFilterInput>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  sortDir?: InputMaybe<SortDirection>;
-  sortKey?: InputMaybe<StanfordEventsSortKeys>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryStanfordEventsPastEventsArgs = {
-  contextualFilter?: InputMaybe<StanfordEventsPastEventsContextualFilterInput>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  sortKey?: InputMaybe<StanfordEventsPastEventsSortKeys>;
-};
-
-
-/** The schema's entry-point for queries. */
 export type QueryStanfordGlobalMessagesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -2555,17 +2563,6 @@ export type QueryStanfordPersonArgs = {
 
 
 /** The schema's entry-point for queries. */
-export type QueryStanfordPublicationsArgs = {
-  contextualFilter?: InputMaybe<StanfordPublicationsContextualFilterInput>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  sortDir?: InputMaybe<SortDirection>;
-  sortKey?: InputMaybe<StanfordPublicationsSortKeys>;
-};
-
-
-/** The schema's entry-point for queries. */
 export type QueryStanfordSharedTagsArgs = {
   contextualFilter?: InputMaybe<StanfordSharedTagsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2588,11 +2585,24 @@ export type QueryStanfordSuperFootersArgs = {
 
 
 /** The schema's entry-point for queries. */
-export type QuerySulSharedTagEventsCardGridGraphqlArgs = {
-  contextualFilter?: InputMaybe<SulSharedTagEventsCardGridGraphqlContextualFilterInput>;
+export type QuerySulEventsArgs = {
+  contextualFilter?: InputMaybe<SulEventsContextualFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
+  sortDir?: InputMaybe<SortDirection>;
+  sortKey?: InputMaybe<SulEventsSortKeys>;
+};
+
+
+/** The schema's entry-point for queries. */
+export type QuerySulEventsSharedTagsArgs = {
+  contextualFilter?: InputMaybe<SulEventsSharedTagsContextualFilterInput>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  sortDir?: InputMaybe<SortDirection>;
+  sortKey?: InputMaybe<SulEventsSharedTagsSortKeys>;
 };
 
 
@@ -2854,121 +2864,6 @@ export type StanfordBasicSiteSettingEdge = Edge & {
   node: StanfordBasicSiteSetting;
 };
 
-export type StanfordCoursesContextualFilterInput = {
-  term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Result for view stanford_courses display default_list_viewfield_block_graphql. */
-export type StanfordCoursesResult = View & {
-  __typename?: 'StanfordCoursesResult';
-  /** The description of the view. */
-  description?: Maybe<Scalars['String']['output']>;
-  /** The machine name of the display. */
-  display: Scalars['String']['output'];
-  /** Exposed filters for the view. */
-  filters: Array<Maybe<ViewFilter>>;
-  /** The ID of the view. */
-  id: Scalars['ID']['output'];
-  /** The human friendly label of the view. */
-  label?: Maybe<Scalars['String']['output']>;
-  /** The language code of the view. */
-  langcode?: Maybe<Scalars['String']['output']>;
-  /** Information about the page in the view. */
-  pageInfo: ViewPageInfo;
-  /** The results of the view. */
-  results: Array<NodeUnion>;
-  /** The machine name of the view. */
-  view: Scalars['String']['output'];
-};
-
-export enum StanfordCoursesSortKeys {
-  /** Changed */
-  Changed = 'CHANGED',
-  /** Authored on */
-  Created = 'CREATED',
-  /** Title */
-  Title = 'TITLE'
-}
-
-export type StanfordEventsContextualFilterInput = {
-  term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
-  term_node_taxonomy_name_depth_1?: InputMaybe<Scalars['String']['input']>;
-  term_node_taxonomy_name_depth_2?: InputMaybe<Scalars['String']['input']>;
-  term_node_taxonomy_name_depth_3?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type StanfordEventsPastEventsContextualFilterInput = {
-  term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Result for view stanford_events display past_events_list_block_graphql. */
-export type StanfordEventsPastEventsResult = View & {
-  __typename?: 'StanfordEventsPastEventsResult';
-  /** The description of the view. */
-  description?: Maybe<Scalars['String']['output']>;
-  /** The machine name of the display. */
-  display: Scalars['String']['output'];
-  /** Exposed filters for the view. */
-  filters: Array<Maybe<ViewFilter>>;
-  /** The ID of the view. */
-  id: Scalars['ID']['output'];
-  /** The human friendly label of the view. */
-  label?: Maybe<Scalars['String']['output']>;
-  /** The language code of the view. */
-  langcode?: Maybe<Scalars['String']['output']>;
-  /** Information about the page in the view. */
-  pageInfo: ViewPageInfo;
-  /** The results of the view. */
-  results: Array<NodeUnion>;
-  /** The machine name of the view. */
-  view: Scalars['String']['output'];
-};
-
-export enum StanfordEventsPastEventsSortKeys {
-  /** Changed */
-  Changed = 'CHANGED',
-  /** Authored on */
-  Created = 'CREATED',
-  /** Date & Time - Start */
-  StartTime = 'START_TIME',
-  /** Title */
-  Title = 'TITLE'
-}
-
-/** Result for view stanford_events display list_page_graphql. */
-export type StanfordEventsResult = View & {
-  __typename?: 'StanfordEventsResult';
-  /** The description of the view. */
-  description?: Maybe<Scalars['String']['output']>;
-  /** The machine name of the display. */
-  display: Scalars['String']['output'];
-  /** Exposed filters for the view. */
-  filters: Array<Maybe<ViewFilter>>;
-  /** The ID of the view. */
-  id: Scalars['ID']['output'];
-  /** The human friendly label of the view. */
-  label?: Maybe<Scalars['String']['output']>;
-  /** The language code of the view. */
-  langcode?: Maybe<Scalars['String']['output']>;
-  /** Information about the page in the view. */
-  pageInfo: ViewPageInfo;
-  /** The results of the view. */
-  results: Array<NodeUnion>;
-  /** The machine name of the view. */
-  view: Scalars['String']['output'];
-};
-
-export enum StanfordEventsSortKeys {
-  /** Changed */
-  Changed = 'CHANGED',
-  /** Authored on */
-  Created = 'CREATED',
-  /** Date & Time - Start */
-  StartTime = 'START_TIME',
-  /** Title */
-  Title = 'TITLE'
-}
-
 /** Entity type config_pages. */
 export type StanfordGlobalMessage = ConfigPagesInterface & EdgeNode & MetaTagInterface & {
   __typename?: 'StanfordGlobalMessage';
@@ -3178,48 +3073,6 @@ export enum StanfordPersonSortKeys {
   LastName = 'LAST_NAME',
   /** Title */
   Title = 'TITLE'
-}
-
-export type StanfordPublicationsContextualFilterInput = {
-  term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Result for view stanford_publications display list_graphql. */
-export type StanfordPublicationsResult = View & {
-  __typename?: 'StanfordPublicationsResult';
-  /** The description of the view. */
-  description?: Maybe<Scalars['String']['output']>;
-  /** The machine name of the display. */
-  display: Scalars['String']['output'];
-  /** Exposed filters for the view. */
-  filters: Array<Maybe<ViewFilter>>;
-  /** The ID of the view. */
-  id: Scalars['ID']['output'];
-  /** The human friendly label of the view. */
-  label?: Maybe<Scalars['String']['output']>;
-  /** The language code of the view. */
-  langcode?: Maybe<Scalars['String']['output']>;
-  /** Information about the page in the view. */
-  pageInfo: ViewPageInfo;
-  /** The results of the view. */
-  results: Array<NodeUnion>;
-  /** The machine name of the view. */
-  view: Scalars['String']['output'];
-};
-
-export enum StanfordPublicationsSortKeys {
-  /** Changed */
-  Changed = 'CHANGED',
-  /** Authored on */
-  Created = 'CREATED',
-  /** Day (su_day) */
-  Day = 'DAY',
-  /** Month (su_month) */
-  Month = 'MONTH',
-  /** Title */
-  Title = 'TITLE',
-  /** Year (su_year) */
-  Year = 'YEAR'
 }
 
 export type StanfordSharedTagsContextualFilterInput = {
@@ -3497,13 +3350,16 @@ export type SulBranchLocationsResult = View & {
   view: Scalars['String']['output'];
 };
 
-export type SulSharedTagEventsCardGridGraphqlContextualFilterInput = {
+export type SulEventsContextualFilterInput = {
   term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
+  term_node_taxonomy_name_depth_1?: InputMaybe<Scalars['String']['input']>;
+  term_node_taxonomy_name_depth_2?: InputMaybe<Scalars['String']['input']>;
+  term_node_taxonomy_name_depth_3?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Result for view sul_shared_tag_events display card_grid_graphql. */
-export type SulSharedTagEventsCardGridGraphqlResult = View & {
-  __typename?: 'SulSharedTagEventsCardGridGraphqlResult';
+/** Result for view sul_events display list_page_graphql. */
+export type SulEventsResult = View & {
+  __typename?: 'SulEventsResult';
   /** The description of the view. */
   description?: Maybe<Scalars['String']['output']>;
   /** The machine name of the display. */
@@ -3523,6 +3379,55 @@ export type SulSharedTagEventsCardGridGraphqlResult = View & {
   /** The machine name of the view. */
   view: Scalars['String']['output'];
 };
+
+export type SulEventsSharedTagsContextualFilterInput = {
+  term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Result for view sul_events display graphql_shared_tags. */
+export type SulEventsSharedTagsResult = View & {
+  __typename?: 'SulEventsSharedTagsResult';
+  /** The description of the view. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The machine name of the display. */
+  display: Scalars['String']['output'];
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>;
+  /** The ID of the view. */
+  id: Scalars['ID']['output'];
+  /** The human friendly label of the view. */
+  label?: Maybe<Scalars['String']['output']>;
+  /** The language code of the view. */
+  langcode?: Maybe<Scalars['String']['output']>;
+  /** Information about the page in the view. */
+  pageInfo: ViewPageInfo;
+  /** The results of the view. */
+  results: Array<NodeUnion>;
+  /** The machine name of the view. */
+  view: Scalars['String']['output'];
+};
+
+export enum SulEventsSharedTagsSortKeys {
+  /** Changed */
+  Changed = 'CHANGED',
+  /** Authored on */
+  Created = 'CREATED',
+  /** Date & Time - Start */
+  StartTime = 'START_TIME',
+  /** Title */
+  Title = 'TITLE'
+}
+
+export enum SulEventsSortKeys {
+  /** Changed */
+  Changed = 'CHANGED',
+  /** Authored on */
+  Created = 'CREATED',
+  /** Date & Time - Start */
+  StartTime = 'START_TIME',
+  /** Title */
+  Title = 'TITLE'
+}
 
 /** Result for view sul_study_places display study_spaces_graphql. */
 export type SulStudyPlacesResult = View & {
@@ -4078,7 +3983,7 @@ export type ViewReference = {
 };
 
 /** All available view result types. */
-export type ViewResultUnion = StanfordBasicPagesResult | StanfordCoursesResult | StanfordEventsPastEventsResult | StanfordEventsResult | StanfordNewsResult | StanfordPersonResult | StanfordPublicationsResult | StanfordSharedTagsResult | SulBranchLocationsResult | SulSharedTagEventsCardGridGraphqlResult | SulStudyPlacesResult;
+export type ViewResultUnion = StanfordBasicPagesResult | StanfordNewsResult | StanfordPersonResult | StanfordSharedTagsResult | SulBranchLocationsResult | SulEventsResult | SulEventsSharedTagsResult | SulStudyPlacesResult;
 
 export type NodeQueryVariables = Exact<{
   uuid: Scalars['ID']['input'];
@@ -4456,15 +4361,27 @@ export type SulBranchLocationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SulBranchLocationsQuery = { __typename?: 'Query', sulBranchLocations?: { __typename?: 'SulBranchLocationsResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename?: 'NodeStanfordEvent' } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename: 'NodeSulLibrary', suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, id: string, title: string, status: boolean, path: string, suLibraryContactImg?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null, suLibraryMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeSulStudyPlace' }> } | null };
 
-export type SulSharedTagEventsCardGridGraphqlQueryVariables = Exact<{
-  contextualFilters?: InputMaybe<SulSharedTagEventsCardGridGraphqlContextualFilterInput>;
+export type SulEventsQueryVariables = Exact<{
+  contextualFilters?: InputMaybe<SulEventsContextualFilterInput>;
+  sortDir?: InputMaybe<SortDirection>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type SulSharedTagEventsCardGridGraphqlQuery = { __typename?: 'Query', sulSharedTagEventsCardGridGraphql?: { __typename?: 'SulSharedTagEventsCardGridGraphqlResult', results: Array<{ __typename: 'NodeStanfordCourse', id: string, title: string, status: boolean, path: string, suCourseAcademicYear?: string | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, suCourseSubject?: { __typename: 'TermSuCourseSubject', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, sulEventImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suEventSource?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null } | { __typename: 'NodeStanfordEventSeries', id: string, title: string, status: boolean, path: string, suEventSeriesDek?: string | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename: 'NodeStanfordNews', id: string, title: string, status: boolean, path: string, suNewsDek?: string | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, suNewsBanner?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | { __typename?: 'MediaVideo' } | null, suNewsFeaturedMedia?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suNewsTopics?: Array<{ __typename: 'TermStanfordNewsTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suNewsPublishingDate?: { __typename?: 'DateTime', timezone: any, time: any } | null, suNewsSource?: { __typename?: 'Link', url?: string | null, title?: string | null } | null } | { __typename: 'NodeStanfordPage', id: string, title: string, status: boolean, path: string, suPageDescription?: string | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, suPageImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suPageBanner?: { __typename: 'ParagraphStanfordBanner', suBannerHeader?: string | null, suBannerSupHeader?: string | null, id: string, behaviors?: string | null, status: boolean, suBannerBody?: { __typename?: 'Text', processed?: any | null } | null, suBannerButton?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suBannerImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | null } | { __typename: 'NodeStanfordPerson', id: string, title: string, status: boolean, path: string, suPersonFullTitle?: string | null, suPersonShortTitle?: string | null, suPersonEmail?: any | null, sulPersonLibguideId?: number | null, sulPersonLibcalId?: number | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, suPersonPhoto?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suPersonResearch?: Array<{ __typename?: 'Text', processed?: any | null }> | null, suPersonTypeGroup?: Array<{ __typename: 'TermStanfordPersonType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null } | { __typename: 'NodeStanfordPolicy', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, body?: { __typename?: 'TextSummary', processed?: any | null, summary?: any | null } | null } | { __typename: 'NodeStanfordPublication', id: string, title: string, status: boolean, path: string, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, suPublicationTopics?: Array<{ __typename: 'TermStanfordPublicationTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null } | { __typename: 'NodeSulLibrary', id: string, title: string, status: boolean, path: string, suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, suLibraryContactImg?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null, suLibraryMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null } | { __typename: 'NodeSulStudyPlace', id: string, title: string, status: boolean, path: string, sulStudyLibcalId?: number | null, sulStudyRoomNumber?: string | null, sulStudyRoomDonorName?: string | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any }, sulStudyFeatures?: Array<{ __typename: 'TermSulStudyPlaceFeature', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, sulStudyCapacity?: { __typename: 'TermStudyPlaceCapacity', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null, sulStudyType: { __typename: 'TermSulStudyPlaceType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }, sulStudyBranch: { __typename: 'NodeSulLibrary', suLibraryHours?: string | null, suLibraryPhone?: any | null, suLibraryEmail?: any | null, id: string, title: string, status: boolean, path: string, suLibraryContactImg?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suLibraryAddress?: { __typename?: 'Address', langcode?: string | null, givenName?: string | null, additionalName?: string | null, familyName?: string | null, organization?: string | null, addressLine1?: string | null, addressLine2?: string | null, postalCode?: string | null, sortingCode?: string | null, dependentLocality?: string | null, locality?: string | null, administrativeArea?: string | null, country?: { __typename?: 'AddressCountry', name?: string | null, code?: string | null } | null } | null, suLibraryMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } }, sulStudyImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
+export type SulEventsQuery = { __typename?: 'Query', sulEvents?: { __typename?: 'SulEventsResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, sulEventImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suEventSource?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
+
+export type SulEventsSharedTagsQueryVariables = Exact<{
+  contextualFilters?: InputMaybe<SulEventsSharedTagsContextualFilterInput>;
+  sortDir?: InputMaybe<SortDirection>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SulEventsSharedTagsQuery = { __typename?: 'Query', sulEventsSharedTags?: { __typename?: 'SulEventsSharedTagsResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, sulEventImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suEventSource?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
 
 export type StanfordBasicPagesQueryVariables = Exact<{
   contextualFilters?: InputMaybe<StanfordBasicPagesContextualFilterInput>;
@@ -4477,36 +4394,6 @@ export type StanfordBasicPagesQueryVariables = Exact<{
 
 
 export type StanfordBasicPagesQuery = { __typename?: 'Query', stanfordBasicPages?: { __typename?: 'StanfordBasicPagesResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename?: 'NodeStanfordEvent' } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename: 'NodeStanfordPage', suPageDescription?: string | null, id: string, title: string, status: boolean, path: string, suPageImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suPageBanner?: { __typename: 'ParagraphStanfordBanner', suBannerHeader?: string | null, suBannerSupHeader?: string | null, id: string, behaviors?: string | null, status: boolean, suBannerBody?: { __typename?: 'Text', processed?: any | null } | null, suBannerButton?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suBannerImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
-
-export type StanfordCoursesQueryVariables = Exact<{
-  contextualFilters?: InputMaybe<StanfordCoursesContextualFilterInput>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type StanfordCoursesQuery = { __typename?: 'Query', stanfordCourses?: { __typename?: 'StanfordCoursesResult', results: Array<{ __typename: 'NodeStanfordCourse', suCourseAcademicYear?: string | null, suCourseCode?: string | null, suCourseId?: number | null, suCourseInstructors?: Array<string> | null, suCourseSectionUnits?: string | null, id: string, title: string, status: boolean, path: string, body?: { __typename?: 'TextSummary', processed?: any | null, summary?: any | null } | null, suCourseLink: { __typename?: 'Link', url?: string | null, title?: string | null }, suCourseQuarters?: Array<{ __typename: 'TermSuCourseQuarter', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suCourseSubject?: { __typename: 'TermSuCourseSubject', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null } | null, suCourseTags?: Array<{ __typename: 'TermSuCourseTag', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordEvent' } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
-
-export type StanfordEventsQueryVariables = Exact<{
-  contextualFilters?: InputMaybe<StanfordEventsContextualFilterInput>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type StanfordEventsQuery = { __typename?: 'Query', stanfordEvents?: { __typename?: 'StanfordEventsResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, sulEventImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suEventSource?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
-
-export type StanfordEventsPastEventsQueryVariables = Exact<{
-  contextualFilters?: InputMaybe<StanfordEventsPastEventsContextualFilterInput>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type StanfordEventsPastEventsQuery = { __typename?: 'Query', stanfordEventsPastEvents?: { __typename?: 'StanfordEventsPastEventsResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename: 'NodeStanfordEvent', id: string, title: string, status: boolean, path: string, sulEventImage?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suEventDateTime: { __typename?: 'SmartDateType', value: any, end_value: any, timezone?: string | null, rrule_index?: number | null, rrule?: number | null }, suEventType?: Array<{ __typename: 'TermStanfordEventType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, suEventSource?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suEventMapLink?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
 
 export type StanfordNewsQueryVariables = Exact<{
   contextualFilters?: InputMaybe<StanfordNewsContextualFilterInput>;
@@ -4527,16 +4414,6 @@ export type StanfordPersonQueryVariables = Exact<{
 
 
 export type StanfordPersonQuery = { __typename?: 'Query', stanfordPerson?: { __typename?: 'StanfordPersonResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename?: 'NodeStanfordEvent' } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename: 'NodeStanfordPerson', suPersonFullTitle?: string | null, suPersonShortTitle?: string | null, suPersonEmail?: any | null, sulPersonLibguideId?: number | null, sulPersonLibcalId?: number | null, id: string, title: string, status: boolean, path: string, suPersonPhoto?: { __typename: 'MediaImage', sulImageCredit?: string | null, id: string, name: string, mediaImage: { __typename?: 'Image', url: string, alt?: string | null, height: number, width: number } } | null, suPersonResearch?: Array<{ __typename?: 'Text', processed?: any | null }> | null, suPersonTypeGroup?: Array<{ __typename: 'TermStanfordPersonType', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeStanfordPolicy' } | { __typename?: 'NodeStanfordPublication' } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
-
-export type StanfordPublicationsQueryVariables = Exact<{
-  contextualFilters?: InputMaybe<StanfordPublicationsContextualFilterInput>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type StanfordPublicationsQuery = { __typename?: 'Query', stanfordPublications?: { __typename?: 'StanfordPublicationsResult', results: Array<{ __typename?: 'NodeStanfordCourse' } | { __typename?: 'NodeStanfordEvent' } | { __typename?: 'NodeStanfordEventSeries' } | { __typename?: 'NodeStanfordNews' } | { __typename?: 'NodeStanfordPage' } | { __typename?: 'NodeStanfordPerson' } | { __typename?: 'NodeStanfordPolicy' } | { __typename: 'NodeStanfordPublication', id: string, title: string, status: boolean, path: string, suPublicationTopics?: Array<{ __typename: 'TermStanfordPublicationTopic', id: string, name: string, path: string, weight: number, parent?: { __typename?: 'TermBasicPageType', id: string } | { __typename?: 'TermEventAudience', id: string } | { __typename?: 'TermStanfordEventGroup', id: string } | { __typename?: 'TermStanfordEventKeyword', id: string } | { __typename?: 'TermStanfordEventSubject', id: string } | { __typename?: 'TermStanfordEventType', id: string } | { __typename?: 'TermStanfordNewsTopic', id: string } | { __typename?: 'TermStanfordPersonType', id: string } | { __typename?: 'TermStanfordPublicationTopic', id: string } | { __typename?: 'TermStudyPlaceCapacity', id: string } | { __typename?: 'TermSuCourseQuarter', id: string } | { __typename?: 'TermSuCourseSubject', id: string } | { __typename?: 'TermSuCourseTag', id: string } | { __typename?: 'TermSuSharedTag', id: string } | { __typename?: 'TermSulStudyPlaceFeature', id: string } | { __typename?: 'TermSulStudyPlaceType', id: string } | null }> | null, changed: { __typename?: 'DateTime', timezone: any, time: any }, created: { __typename?: 'DateTime', timezone: any, time: any } } | { __typename?: 'NodeSulLibrary' } | { __typename?: 'NodeSulStudyPlace' }>, pageInfo: { __typename?: 'ViewPageInfo', page: number, total: number } } | null };
 
 export type StanfordSharedTagsQueryVariables = Exact<{
   contextualFilters?: InputMaybe<StanfordSharedTagsContextualFilterInput>;
