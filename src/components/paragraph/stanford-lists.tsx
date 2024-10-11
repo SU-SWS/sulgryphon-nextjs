@@ -4,15 +4,14 @@ import {cache, HTMLAttributes, JSX} from "react"
 import {
   Maybe,
   NodeUnion,
-  NodeStanfordPublication,
   NodeStanfordPerson,
   NodeStanfordNews,
   NodeStanfordEvent,
-  NodeStanfordCourse,
   NodeStanfordPage,
   StanfordBasicPagesSortKeys,
   StanfordBasicPagesQueryVariables,
   ParagraphStanfordList,
+  SortDirection,
 } from "@/lib/gql/__generated__/drupal.d"
 import {graphqlClient} from "@/lib/gql/fetcher"
 import View from "@/components/views/view"
@@ -136,10 +135,6 @@ const getViewPagedItems = cache(
 
     const tags = ["views"]
     switch (`${viewId}--${displayId}`) {
-      case "sul_shared_tag_events--card_grid":
-        tags.push("views:stanford_event")
-        break
-
       case "sul_study_places--study_places":
       case "sul_study_places--study_places_table":
         tags.push("views:sul_study_place")
@@ -164,9 +159,12 @@ const getViewPagedItems = cache(
         tags.push("views:stanford_course")
         break
 
-      case "stanford_events--cards":
-      case "stanford_events--list_page":
-      case "stanford_events--past_events_list_block":
+      case "sul_events--cards":
+      case "sul_events--list_page":
+      case "sul_events--past_events_list_block":
+      case "sul_events--shared_tags_cards":
+      case "sul_events--cards_desc":
+      case "sul_events--shared_tags_cards_desc":
         tags.push("views:stanford_event")
         break
 
@@ -190,14 +188,10 @@ const getViewPagedItems = cache(
     let contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
     let graphqlResponse
 
+    const sortDir = displayId.includes("desc") ? SortDirection.Desc : SortDirection.Asc
+
     try {
       switch (`${viewId}--${displayId}`) {
-        case "sul_shared_tag_events--card_grid":
-          contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
-          graphqlResponse = await client.sulSharedTagEventsCardGridGraphql({contextualFilters, ...queryVariables})
-          items = graphqlResponse.sulSharedTagEventsCardGridGraphql?.results as unknown as NodeUnion[]
-          break
-
         case "sul_study_places--study_places":
         case "sul_study_places--study_places_table":
           graphqlResponse = await client.sulStudyPlaces()
@@ -223,18 +217,26 @@ const getViewPagedItems = cache(
           totalItems = graphqlResponse.stanfordBasicPages?.pageInfo.total || 0
           break
 
-        case "stanford_courses--default_list_viewfield_block":
-        case "stanford_courses--vertical_teaser_viewfield_block":
-          graphqlResponse = await client.stanfordCourses({
-            contextualFilters,
-            ...queryVariables,
-          })
-          items = graphqlResponse.stanfordCourses?.results as unknown as NodeStanfordCourse[]
-          totalItems = graphqlResponse.stanfordCourses?.pageInfo.total || 0
+        // case "stanford_courses--default_list_viewfield_block":
+        // case "stanford_courses--vertical_teaser_viewfield_block":
+        //   graphqlResponse = await client.stanfordCourses({
+        //     contextualFilters,
+        //     ...queryVariables,
+        //   })
+        //   items = graphqlResponse.stanfordCourses?.results as unknown as NodeStanfordCourse[]
+        //   totalItems = graphqlResponse.stanfordCourses?.pageInfo.total || 0
+        //   break
+
+        case "sul_events--shared_tags_cards":
+        case "sul_events--shared_tags_cards_desc":
+          contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
+          graphqlResponse = await client.sulEventsSharedTags({contextualFilters, sortDir, ...queryVariables})
+          items = graphqlResponse.sulEventsSharedTags?.results as unknown as NodeUnion[]
           break
 
-        case "stanford_events--cards":
-        case "stanford_events--list_page":
+        case "sul_events--cards_desc":
+        case "sul_events--cards":
+        case "sul_events--list_page":
           contextualFilters = getContextualFilters(
             [
               "term_node_taxonomy_name_depth",
@@ -244,21 +246,22 @@ const getViewPagedItems = cache(
             ],
             contextualFilter
           )
-          graphqlResponse = await client.stanfordEvents({
+          graphqlResponse = await client.sulEvents({
             contextualFilters,
+            sortDir,
             ...queryVariables,
           })
-          items = graphqlResponse.stanfordEvents?.results as unknown as NodeStanfordEvent[]
-          totalItems = graphqlResponse.stanfordEvents?.pageInfo.total || 0
+          items = graphqlResponse.sulEvents?.results as unknown as NodeStanfordEvent[]
+          totalItems = graphqlResponse.sulEvents?.pageInfo.total || 0
           break
 
-        case "stanford_events--past_events_list_block":
-          graphqlResponse = await client.stanfordEventsPastEvents({
+        case "sul_events--past_events_list_block":
+          graphqlResponse = await client.sulEvents({
             contextualFilters,
             ...queryVariables,
           })
-          items = graphqlResponse.stanfordEventsPastEvents?.results as unknown as NodeStanfordEvent[]
-          totalItems = graphqlResponse.stanfordEventsPastEvents?.pageInfo.total || 0
+          items = graphqlResponse.sulEvents?.results as unknown as NodeStanfordEvent[]
+          totalItems = graphqlResponse.sulEvents?.pageInfo.total || 0
           break
 
         case "stanford_news--block_1":
@@ -282,15 +285,15 @@ const getViewPagedItems = cache(
           totalItems = graphqlResponse.stanfordPerson?.pageInfo.total || 0
           break
 
-        case "stanford_publications--apa_list":
-        case "stanford_publications--chicago_list":
-          graphqlResponse = await client.stanfordPublications({
-            contextualFilters,
-            ...queryVariables,
-          })
-          items = graphqlResponse.stanfordPublications?.results as unknown as NodeStanfordPublication[]
-          totalItems = graphqlResponse.stanfordPublications?.pageInfo.total || 0
-          break
+        // case "stanford_publications--apa_list":
+        // case "stanford_publications--chicago_list":
+        //   graphqlResponse = await client.stanfordPublications({
+        //     contextualFilters,
+        //     ...queryVariables,
+        //   })
+        //   items = graphqlResponse.stanfordPublications?.results as unknown as NodeStanfordPublication[]
+        //   totalItems = graphqlResponse.stanfordPublications?.pageInfo.total || 0
+        //   break
 
         case "stanford_shared_tags--card_grid":
           contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth", "type"], contextualFilter)
