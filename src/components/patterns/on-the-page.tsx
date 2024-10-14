@@ -3,10 +3,9 @@
 import React, {useState, useEffect} from "react"
 import {Link, Maybe} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
-import DrupalLink from "./elements/drupal-link"
+import DrupalLink from "@/components/patterns/elements/drupal-link"
+import Accordion from "./accordion"
 import SelectList from "./elements/select-list"
-import {SelectOptionDefinition} from "@mui/base/useSelect"
-import {useRouter} from "next/navigation"
 
 interface OnThePageProps {
   relLinkHeading?: Maybe<string>
@@ -19,7 +18,6 @@ interface Heading {
 }
 
 const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
-  const router = useRouter()
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
 
@@ -42,12 +40,6 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
 
     const observerCallback: IntersectionObserverCallback = entries => {
       entries.forEach(entry => {
-        const top = entry.boundingClientRect.top
-
-        console.log(
-          `Observer | Target: ${entry.target.id} | isIntersecting: ${entry.isIntersecting} | intersectionRatio: ${entry.intersectionRatio}`
-        )
-
         if (entry.isIntersecting) {
           setActiveHeading(entry.target.id)
         }
@@ -69,39 +61,53 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
     }
   }, [])
 
-  const options: SelectOptionDefinition<string>[] = [
-    ...headings.map(heading => ({
-      value: heading.id,
-      label: heading.text,
-    })),
-    {
-      value: "related-links-header",
-      label: relLinkHeading || "Related content",
-      disabled: true,
-    },
-    ...(relLinks?.map(link => ({
-      value: String(link.url),
-      label: String(link.title),
-    })) || []),
-  ]
-
   return (
     <div>
       <div className="block w-full md:w-500 lg:hidden">
         <SelectList
           label="On the page"
-          options={options}
-          onChange={(event, value) => {
-            if (value) {
-              const selectedHeading = document.getElementById(value as string)
-              if (selectedHeading) {
-                selectedHeading.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
-              } else {
-                router.push(value as string)
-              }
-            }
-          }}
+          options={[
+            {value: "option1", label: "option1"},
+            {value: "option2", label: "option2"},
+          ]}
         />
+        <Accordion button="On the page" headingLevel="h3">
+          <nav aria-label="on the page menu">
+            <ul className="list-none p-0">
+              {headings.map(heading => (
+                <li key={heading.id} className="m-0 mb-2 cursor-pointer overflow-hidden text-black">
+                  <a
+                    href={`#${heading.id}`}
+                    className="type-0 block px-10 py-2 font-sans font-normal leading-[30px] text-black no-underline hocus:bg-black-10 hocus:underline"
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          {relLinks && (
+            <div>
+              <h3 className="type-0 m-0 block px-10 py-2 font-sans font-semibold leading-[30px] text-cardinal-red">
+                {relLinkHeading || "Related content"}
+              </h3>
+              <ul className="list-none p-0">
+                {relLinks.map((link, index) => (
+                  <li key={index} className="m-0 mb-2 cursor-pointer overflow-hidden text-black">
+                    {link.url && (
+                      <DrupalLink
+                        href={link.url}
+                        className="type-0 block px-10 py-2 font-sans font-normal leading-[30px] text-black no-underline hocus:bg-black-10 hocus:underline"
+                      >
+                        {link.title}
+                      </DrupalLink>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </Accordion>
       </div>
       <div className="sticky top-0 hidden h-fit w-300 bg-fog-light px-24 pb-40 pt-16 lg:block">
         <nav aria-label="on the page menu">
