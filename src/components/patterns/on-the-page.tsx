@@ -5,7 +5,6 @@ import {Link, Maybe} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import DrupalLink from "@/components/patterns/elements/drupal-link"
 import Accordion from "./accordion"
-import SelectList from "./elements/select-list"
 
 interface OnThePageProps {
   relLinkHeading?: Maybe<string>
@@ -64,13 +63,6 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
   return (
     <div>
       <div className="block w-full md:w-500 lg:hidden">
-        <SelectList
-          label="On the page"
-          options={[
-            {value: "option1", label: "option1"},
-            {value: "option2", label: "option2"},
-          ]}
-        />
         <Accordion button="On the page" headingLevel="h3">
           <nav aria-label="on the page menu">
             <ul className="list-none p-0">
