@@ -30,8 +30,8 @@ const NodePage = async ({params, previewMode}: PageProps) => {
 
   const sulSidebar =
     (entity.__typename === "NodeStanfordPage" && entity.layoutSelection?.id === "sul_side_nav") ||
-    entity.__typename === "NodeStanfordNews" ||
-    entity.__typename === "NodeSulLibrary"
+    (entity.__typename === "NodeStanfordNews" && entity.layoutSelection?.id === "sul_side_nav") ||
+    (entity.__typename === "NodeSulLibrary" && entity.layoutSelection?.id === "sul_side_nav")
 
   return (
     <main id="main-content" className="mb-50">
