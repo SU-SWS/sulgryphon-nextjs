@@ -59,8 +59,17 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
       h2Elements.forEach(heading => observer.observe(heading))
     })
 
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setActiveHeading("")
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
     return () => {
       observer.disconnect()
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [])
 
