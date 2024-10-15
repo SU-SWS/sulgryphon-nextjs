@@ -253,7 +253,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       </div>
                     </a>
                   )}
-                  {!item.libCalId && <p>Reservation not required</p>}
+                  {!item.libCalId && <p className="m-0">Reservation not required</p>}
                 </Td>
               </Tr>
             ))}
