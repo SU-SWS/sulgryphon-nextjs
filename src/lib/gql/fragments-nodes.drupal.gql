@@ -189,6 +189,9 @@ fragment FragmentNodeStanfordEventSeries on NodeStanfordEventSeries {
 
 fragment FragmentNodeStanfordNews on NodeStanfordNews {
     ...FragmentNodeInterface
+    layoutSelection {
+        id
+    }
     suNewsBanner {
         ...FragmentMediaUnion
     }
