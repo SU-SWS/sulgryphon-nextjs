@@ -10,7 +10,8 @@ import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import FlushCache from "@/components/patterns/elements/flush-cache"
-import OnThePageLink from "@/components/patterns/on-the-page"
+import OnThePage from "@/components/patterns/on-the-page"
+import DrupalLink from "@/components/patterns/elements/drupal-link"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -78,7 +79,31 @@ const NodePage = async ({params, previewMode}: PageProps) => {
             <NodePageDisplay node={entity} />
           </div>
 
-          {sulSidebar && <OnThePageLink relLinks={entity.sulRelLinks} relLinkHeading={entity.sulRelLinksHeading} />}
+          {sulSidebar && (
+            <OnThePage>
+              {entity.sulRelLinks && (
+                <div className="lg:mt-40">
+                  <h3 className="type-0 m-0 block px-10 py-2 font-sans font-semibold leading-[30px] text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black">
+                    {entity.sulRelLinksHeading || "Related content"}
+                  </h3>
+                  <ul className="list-none p-0">
+                    {entity.sulRelLinks.map((link, index) => (
+                      <li key={index} className="mb-0 lg:mb-12">
+                        {link.url && (
+                          <DrupalLink
+                            href={link.url}
+                            className="type-0 block break-words px-10 py-2 font-sans font-normal leading-[30px] text-black no-underline hocus:bg-black-10 hocus:underline lg:p-0 lg:text-digital-blue lg:underline lg:hocus:bg-transparent"
+                          >
+                            {link.title}
+                          </DrupalLink>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </OnThePage>
+          )}
           {!sulSidebar && <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />}
         </div>
       )}
