@@ -110,7 +110,7 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
                 <a
                   href={`#${heading.id}`}
                   className={twMerge(
-                    "type-0 block break-words border-l-4 pl-16 font-sans font-normal leading-[30px] text-black no-underline",
+                    "type-0 block break-words border-l-4 pl-16 font-sans font-normal leading-[30px] text-black no-underline hocus:underline",
                     activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
                   )}
                 >
