@@ -29,8 +29,12 @@ const OnThePageLink = ({relLinkHeading, relLinks}: OnThePageProps) => {
       const h2Elements: HTMLHeadingElement[] = Array.from(container.querySelectorAll("h2"))
 
       h2Elements.forEach((heading, headingIndex) => {
-        const id = `${heading.textContent?.trim().toLowerCase().replace(/\s+/g, "-")}-${containerIndex}-${headingIndex}`
-        heading.setAttribute("id", id)
+        let id = heading.getAttribute("id")
+        if (!id) {
+          id = `${heading.textContent?.trim().toLowerCase().replace(/\s+/g, "-")}-${containerIndex}-${headingIndex}`
+          heading.setAttribute("id", id)
+        }
+
         allHeadings.push({text: heading.textContent || "", id})
       })
     })
