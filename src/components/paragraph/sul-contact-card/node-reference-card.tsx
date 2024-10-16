@@ -14,7 +14,8 @@ interface Props {
 
 const NodeReferenceCard = async ({paragraph}: Props) => {
   const contactBranchQuery =
-    paragraph.sulContactBranch?.path && (await getEntityFromPath<NodeSulLibrary>(paragraph.sulContactBranch.path))
+    paragraph.sulContactBranch?.path &&
+    (await getEntityFromPath<NodeSulLibrary>(paragraph.sulContactBranch.path, false, true))
   const contactBranch = contactBranchQuery ? contactBranchQuery?.entity : undefined
 
   const imageUrl = contactBranch?.suLibraryContactImg?.mediaImage.url

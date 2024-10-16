@@ -44,7 +44,9 @@ const NodePage = async ({params, previewMode}: PageProps) => {
       {entity.__typename === "NodeStanfordNews" && (
         <InternalHeaderBanner>
           <div className="mx-auto mb-50 mt-80 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
-            <h1 className="order-2 text-white">{entity.title}</h1>
+            <h1 id={entity.id} className="order-2 text-white">
+              {entity.title}
+            </h1>
 
             {entity.suNewsTopics && (
               <div className="order-1 mb-20">
@@ -61,7 +63,10 @@ const NodePage = async ({params, previewMode}: PageProps) => {
 
       {!(entity.__typename === "NodeSulLibrary" || entity.__typename === "NodeStanfordNews") && (
         <InternalHeaderBanner>
-          <h1 className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+          <h1
+            id={entity.id}
+            className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+          >
             {entity.title}
           </h1>
         </InternalHeaderBanner>
@@ -76,7 +81,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
       {!fullWidth && (
         <div className="centered flex flex-col justify-between gap-[8rem] lg:flex-row">
           <div className="order-last flex-1">
-            <NodePageDisplay node={entity} />
+            <NodePageDisplay node={entity} aria-labelledby={entity.id} />
           </div>
 
           {sulSidebar && (

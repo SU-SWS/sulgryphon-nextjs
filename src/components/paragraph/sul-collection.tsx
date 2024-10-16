@@ -1,14 +1,11 @@
-"use client"
-
 import {HTMLAttributes, useId} from "react"
 import AboveHeaderBorder from "@/components/patterns/above-header-border"
 import Card from "@/components/patterns/card"
 import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
-import {Tabs} from "@/components/patterns/elements/tabs"
-import {Item} from "react-stately"
 import {buildUrl} from "@/lib/drupal/utils"
 import {Maybe, MediaImage, ParagraphCollectionCard, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {Tab, TabPanel, Tabs, TabsList} from "@/components/patterns/elements/tabs"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   cards?: Maybe<ParagraphCollectionCard[]>
@@ -19,39 +16,44 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
   const elementId = useId()
 
   return (
-    <section className="centered relative @container" aria-labelledby={`${elementId}-heading`} {...props}>
+    <section className="centered relative" aria-labelledby={`${elementId}-heading`} {...props}>
       {heading && (
         <>
           <AboveHeaderBorder />
           <h2 id={`${elementId}-heading`}>{heading}</h2>
         </>
       )}
+      <Tabs orientation="vertical" className="flex flex-col gap-lg md:flex-row">
+        <TabsList className="md:w-1/3">
+          {cards?.map(card => (
+            <Tab
+              key={card.id + "-tab"}
+              className="mb-2 w-full cursor-pointer py-20 pl-10 text-left aria-selected:bg-archway aria-selected:text-white hocus:underline"
+            >
+              {card.sulCardInfo}
+            </Tab>
+          ))}
+        </TabsList>
 
-      <Tabs
-        className="flex gap-lg"
-        aria-labelledby={`${elementId}-heading`}
-        orientation="vertical"
-        tabListClass="@5xl:w-1/3"
-        tabClass="py-20 pl-10 mb-2 w-full text-left hocus:underline cursor-pointer aria-selected:bg-archway aria-selected:text-white"
-        tabPanelClass="@5xl:w-2/3"
-      >
-        {cards?.map(card => (
-          <Item key={"button-" + card.id} title={card.sulCardInfo}>
-            <CollectionCard
-              header={card.sulCard?.suCardHeader}
-              superHeader={card.sulCard?.suCardSuperHeader}
-              body={card.sulCard?.suCardBody?.processed}
-              link={card.sulCard?.suCardLink}
-              image={card.sulCard?.suCardMedia?.__typename === "MediaImage" ? card.sulCard.suCardMedia : undefined}
-              videoUrl={
-                card.sulCard?.suCardMedia?.__typename === "MediaVideo"
-                  ? card.sulCard.suCardMedia.mediaOembedVideo
-                  : undefined
-              }
-              headerId={`${elementId}-card-${card.id}-header`}
-            />
-          </Item>
-        ))}
+        <div className="md:w-2/3">
+          {cards?.map(card => (
+            <TabPanel key={card.id + "-panel"}>
+              <CollectionCard
+                header={card.sulCard?.suCardHeader}
+                superHeader={card.sulCard?.suCardSuperHeader}
+                body={card.sulCard?.suCardBody?.processed}
+                link={card.sulCard?.suCardLink}
+                image={card.sulCard?.suCardMedia?.__typename === "MediaImage" ? card.sulCard.suCardMedia : undefined}
+                videoUrl={
+                  card.sulCard?.suCardMedia?.__typename === "MediaVideo"
+                    ? card.sulCard.suCardMedia.mediaOembedVideo
+                    : undefined
+                }
+                headerId={card.sulCard?.id}
+              />
+            </TabPanel>
+          ))}
+        </div>
       </Tabs>
     </section>
   )

@@ -74,7 +74,7 @@ const StanfordEntity = async ({
 }
 
 const EntityCard = async ({path, h3Heading}: {path: string; h3Heading: boolean}) => {
-  const queryResponse = await getEntityFromPath<NodeUnion>(path)
+  const queryResponse = await getEntityFromPath<NodeUnion>(path, false, true)
   if (!queryResponse.entity) return
   return <NodeCardDisplay node={queryResponse.entity} h3Heading={h3Heading} />
 }
