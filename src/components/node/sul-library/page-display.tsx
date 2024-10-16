@@ -2,8 +2,10 @@ import {ParagraphRows} from "@/components/paragraph/rows/rows"
 import LibraryAdditionalHours from "@/components/node/sul-library/library-additional-hours"
 import formatHtml from "@/lib/format-html"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {redirect} from "next/navigation"
 
 const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
+  if (node.sulLibraryExtUrl?.url) redirect(node.sulLibraryExtUrl.url)
   const fullWidth = node.layoutSelection?.id === "sul_library_full_width"
 
   const lastUpdated = new Date(node.changed.time as string).toLocaleDateString("en-us", {

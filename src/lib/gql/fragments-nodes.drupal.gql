@@ -18,6 +18,9 @@ fragment FragmentNodeSulLibrary on NodeSulLibrary {
     layoutSelection {
         id
     }
+    sulLibraryExtUrl {
+        url
+    }
     suLibraryAddress {
         ...FragmentAddressType
     }

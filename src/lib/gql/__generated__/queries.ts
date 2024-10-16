@@ -822,6 +822,9 @@ export const FragmentNodeSulLibraryFragmentDoc = gql`
   layoutSelection {
     id
   }
+  sulLibraryExtUrl {
+    url
+  }
   suLibraryAddress {
     ...FragmentAddressType
   }
