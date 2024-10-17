@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {twMerge} from "tailwind-merge"
+import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
 interface Heading {
   text: string
@@ -9,6 +10,22 @@ interface Heading {
 const HeadingList = () => {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
+
+  const debouncedHandleScroll = useDebounceCallback(() => {
+    const firstHeading = document.querySelector(".wysiwyg h2")
+
+    if (firstHeading) {
+      const isAtTop = window.scrollY === 0
+      const headingRect = firstHeading.getBoundingClientRect()
+      const isHeadingInBottom80 = headingRect.bottom <= window.innerHeight * 0.8
+
+      if (isAtTop && !isHeadingInBottom80) {
+        setActiveHeading("")
+      }
+    }
+  }, 100)
+
+  useEventListener("scroll", debouncedHandleScroll)
 
   useEffect(() => {
     const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll(".wysiwyg")
@@ -49,17 +66,8 @@ const HeadingList = () => {
       h2Elements.forEach(heading => observer.observe(heading))
     })
 
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setActiveHeading("")
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-
     return () => {
       observer.disconnect()
-      window.removeEventListener("scroll", handleScroll)
     }
   }, [])
 
