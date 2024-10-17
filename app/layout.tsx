@@ -46,7 +46,7 @@ export const revalidate = false
 const RootLayout = ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
   const previewMode = isPreviewMode()
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <DrupalWindowSync />
       <body>
         <nav aria-label="Skip link">
