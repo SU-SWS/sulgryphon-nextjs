@@ -29,7 +29,8 @@ export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, i
 export const getEntityFromPath = cache(
   async <T extends NodeUnion | TermUnion>(
     path: string,
-    previewMode: boolean = false
+    previewMode: boolean = false,
+    teaser: boolean = false
   ): Promise<{
     entity?: T
     redirect?: RouteRedirect
@@ -43,15 +44,15 @@ export const getEntityFromPath = cache(
     let query: RouteQuery
 
     try {
-      query = await graphqlClient({next: {tags: [`paths:${path}`]}}, previewMode).Route({path})
+      query = await graphqlClient({next: {tags: [`paths:${path}`]}}, previewMode).Route({path, teaser})
     } catch (e) {
       console.error(e instanceof Error ? e.message : "An error occurred")
-      return {entity: undefined, redirect: undefined, error: e instanceof Error ? e.message : "An error occurred"}
+      return {error: e instanceof Error ? e.message : "An error occurred"}
     }
 
-    if (query.route?.__typename === "RouteRedirect") return {redirect: query.route, entity: undefined}
+    if (query.route?.__typename === "RouteRedirect") return {redirect: query.route}
     entity = query.route?.__typename === "RouteInternal" && query.route.entity ? (query.route.entity as T) : undefined
-    return {entity, redirect: undefined, error: undefined}
+    return {entity}
   }
 )
 
