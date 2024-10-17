@@ -1,8 +1,6 @@
-"use client"
-
 import React from "react"
-import Accordion from "./accordion"
-import HeadingList from "./headingList"
+import Accordion from "@/components/patterns/accordion"
+import HeadingList from "@/components/patterns/headingList"
 
 interface OnThePageProps {
   children: React.ReactNode

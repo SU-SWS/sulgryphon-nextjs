@@ -1,25 +1,30 @@
-import React, {useEffect, useState} from "react"
+"use client"
+
+import React, {useEffect, useId, useState} from "react"
 import {twMerge} from "tailwind-merge"
 import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
-interface Heading {
+type Heading = {
   text: string
   id: string
 }
 
 const HeadingList = () => {
-  const [headings, setHeadings] = useState<Heading[]>([])
+  const uuid = useId()
+  const [headings, setHeadings] = useState<Array<Heading>>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
 
   const debouncedHandleScroll = useDebounceCallback(() => {
     const firstHeading = document.querySelector("#main-content h2")
 
     if (firstHeading) {
-      const isAtTop = window.scrollY === 0
       const headingRect = firstHeading.getBoundingClientRect()
-      const isHeadingInBottom80 = headingRect.bottom <= window.innerHeight * 0.8
 
-      if (isAtTop && !isHeadingInBottom80) {
+      const isHeadingInBottom80 = headingRect.bottom > 0 && headingRect.bottom <= window.innerHeight * 0.8
+
+      // The headingRect.bottom is negative if the element is above the current
+      // window position. We only want to check when the user scrolls up.
+      if (activeHeading && headingRect.bottom > 0 && (window.scrollY === 0 || !isHeadingInBottom80)) {
         setActiveHeading("")
       }
     }
@@ -28,22 +33,30 @@ const HeadingList = () => {
   useEventListener("scroll", debouncedHandleScroll)
 
   useEffect(() => {
-    const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll("#main-content")
+    const h2Elements: NodeListOf<HTMLHeadingElement> = document.querySelectorAll("#main-content h2")
 
     const allHeadings: Heading[] = []
 
-    wysiwygContainers.forEach((container, containerIndex) => {
-      const h2Elements: HTMLHeadingElement[] = Array.from(container.querySelectorAll("h2"))
+    h2Elements.forEach(heading => {
+      const headingText = heading.textContent
+      // Make sure the heading has text.
+      if (!headingText) return
 
-      h2Elements.forEach((heading, headingIndex) => {
-        let id = heading.getAttribute("id")
-        if (!id) {
-          id = `${heading.textContent?.trim().toLowerCase().replace(/\s+/g, "-")}-${containerIndex}-${headingIndex}`
-          heading.setAttribute("id", id)
+      let id = heading.getAttribute("id")
+      if (!id) {
+        id = headingText.trim().toLowerCase().replace(/\s+/g, "-") || uuid
+        let newId = id
+        let headingIndex = 0
+
+        // Make sure the new id attribute is unique on the page.
+        while (document.getElementById(newId)) {
+          newId = `${id}-${headingIndex}`
+          headingIndex++
         }
+        heading.setAttribute("id", id)
+      }
 
-        allHeadings.push({text: heading.textContent || "", id})
-      })
+      allHeadings.push({text: headingText || "", id})
     })
 
     setHeadings(allHeadings)
@@ -57,19 +70,15 @@ const HeadingList = () => {
     }
 
     const observer = new IntersectionObserver(observerCallback, {
-      rootMargin: "0px 0px -80% 0px",
-      threshold: 0,
+      threshold: 1.0,
     })
 
-    wysiwygContainers.forEach(container => {
-      const h2Elements = container.querySelectorAll("h2")
-      h2Elements.forEach(heading => observer.observe(heading))
-    })
+    h2Elements.forEach(heading => observer.observe(heading))
 
     return () => {
       observer.disconnect()
     }
-  }, [])
+  }, [uuid])
 
   return (
     <nav aria-label="on the page menu">
