@@ -12,7 +12,7 @@ const HeadingList = () => {
   const [activeHeading, setActiveHeading] = useState<string>("")
 
   const debouncedHandleScroll = useDebounceCallback(() => {
-    const firstHeading = document.querySelector(".wysiwyg h2")
+    const firstHeading = document.querySelector("#main-content h2")
 
     if (firstHeading) {
       const isAtTop = window.scrollY === 0
@@ -28,7 +28,7 @@ const HeadingList = () => {
   useEventListener("scroll", debouncedHandleScroll)
 
   useEffect(() => {
-    const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll(".wysiwyg")
+    const wysiwygContainers: NodeListOf<Element> = document.querySelectorAll("#main-content")
 
     const allHeadings: Heading[] = []
 
