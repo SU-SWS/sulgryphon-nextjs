@@ -18,7 +18,12 @@ interface Props {
 
 const NewsListView = async ({items, hasHeading, totalItems, loadPage}: Props) => {
   return (
-    <LoadMoreList loadPage={loadPage} totalItems={totalItems}>
+    <LoadMoreList
+      className="@container"
+      ulProps={{className: "list-unstyled mb-50"}}
+      loadPage={loadPage}
+      totalItems={totalItems}
+    >
       {items.map(item => (
         <StanfordNewsListItem key={item.id} node={item} h3Heading={hasHeading} />
       ))}

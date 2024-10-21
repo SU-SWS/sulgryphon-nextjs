@@ -3815,12 +3815,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.7.5":
-  version: 22.7.5
-  resolution: "@types/node@npm:22.7.5"
+"@types/node@npm:^22.7.7":
+  version: 22.7.7
+  resolution: "@types/node@npm:22.7.7"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/cf11f74f1a26053ec58066616e3a8685b6bcd7259bc569738b8f752009f9f0f7f85a1b2d24908e5b0f752482d1e8b6babdf1fbb25758711ec7bb9500bfcd6e60
+  checksum: 10c0/07268a1e990ad9d9b1865092881317ea679a46eb6706d83a8874eec75fdddae6cfd6452e4e68b651561183e2a8f8548276f3155744bc402c2545978c19b70d65
   languageName: node
   linkType: hard
 
@@ -4528,7 +4528,7 @@ __metadata:
     "@tailwindcss/container-queries": "npm:^0.1.1"
     "@tailwindcss/typography": "npm:^0.5.15"
     "@tanstack/react-query": "npm:^5.59.15"
-    "@types/node": "npm:^22.7.5"
+    "@types/node": "npm:^22.7.7"
     "@types/qs": "npm:^6.9.16"
     "@types/react": "npm:^18.3.11"
     autoprefixer: "npm:^10.4.20"
@@ -4554,7 +4554,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-aria: "npm:^3.35.1"
     react-dom: "npm:^18.3.1"
-    react-error-boundary: "npm:^4.1.0"
+    react-error-boundary: "npm:^4.1.2"
     react-focus-lock: "npm:^2.13.2"
     react-obfuscate: "npm:^3.7.0"
     react-obfuscate-email: "npm:^1.1.5"
@@ -8890,14 +8890,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-error-boundary@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "react-error-boundary@npm:4.1.0"
+"react-error-boundary@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "react-error-boundary@npm:4.1.2"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
   peerDependencies:
     react: ">=16.13.1"
-  checksum: 10c0/97eb114503ec2e88fb7d5cea02df43f38a7d9cec95497fd9ddd342750fd7ea01ca4b83ac92db9842d2a7b61e813e33440eb48d1901317c5d77584134ab90c788
+  checksum: 10c0/0737e5259bed40ce14eb0823b3c7b152171921f2179e604f48f3913490cdc594d6c22d43d7abb4ffb1512c832850228db07aa69d3b941db324953a5e393cb399
   languageName: node
   linkType: hard
 

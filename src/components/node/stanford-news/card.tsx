@@ -2,6 +2,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {formatDate} from "@/lib/format-date"
 
 interface Props {
   node: NodeStanfordNews
@@ -16,7 +17,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
 
   const HeadingElement = h3Heading ? "h3" : "h2"
   return (
-    <article {...props} className="flex flex-col">
+    <article {...props}>
       {imageUrl && (
         <div className="relative mb-10 aspect-[16/9] overflow-hidden" aria-hidden="true">
           <Image
@@ -29,13 +30,19 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
         </div>
       )}
 
-      <HeadingElement className="type-0 order-last leading-cozy">
-        <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
-          {node.title}
-        </Link>
-      </HeadingElement>
+      <div className="flex flex-col">
+        <HeadingElement className="type-0 leading-cozy">
+          <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
+            {node.title}
+          </Link>
+        </HeadingElement>
 
-      {node.suNewsTopics?.[0]?.name && <div className="mb-10 font-semibold">{node.suNewsTopics[0].name}</div>}
+        {node.suNewsTopics?.[0]?.name && (
+          <div className="order-first mb-10 font-semibold">{node.suNewsTopics[0].name}</div>
+        )}
+      </div>
+
+      {node.suNewsPublishingDate && <div>{formatDate(node.suNewsPublishingDate.time)}</div>}
     </article>
   )
 }

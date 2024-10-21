@@ -19,6 +19,7 @@ import {
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view"
 import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
 import {JSX} from "react"
+import FilteringNewsCardView from "@/components/views/stanford-news/filtering-news-card-view"
 
 interface Props {
   items: NodeUnion[]
@@ -42,7 +43,17 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
     case "stanford_basic_pages--basic_page_type_list":
       return <PageListView items={items as NodeStanfordPage[]} hasHeading={hasHeading} />
 
-    case "stanford_news--vertical_cards":
+    case "sul_news--filtering_cards":
+      return (
+        <FilteringNewsCardView
+          items={items as NodeStanfordNews[]}
+          hasHeading={hasHeading}
+          totalItems={totalItems}
+          loadPage={loadPage}
+        />
+      )
+
+    case "sul_news--vertical_cards":
       return (
         <NewsCardView
           items={items as NodeStanfordNews[]}
@@ -52,7 +63,7 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
         />
       )
 
-    case "stanford_news--block_1":
+    case "sul_news--block_1":
       return (
         <NewsListView
           items={items as NodeStanfordNews[]}
@@ -120,23 +131,6 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
       return <SulBranchLocationTableView items={items as NodeSulLibrary[]} />
     case "sul_study_places--study_places_table":
       return <StudyPlaceTable items={items as NodeSulStudyPlace[]} />
-
-    case "sul_people--table_list_all":
-      return (
-        <SulPeopleTableView
-          items={(items as NodeStanfordPerson[]).map(item => ({
-            id: item.id,
-            title: item.title,
-            path: item.path,
-            types: item.suPersonTypeGroup?.map(typeGroup => typeGroup.name) || [],
-            photoUrl: item.suPersonPhoto?.mediaImage.url,
-            fullTitle: item.suPersonFullTitle,
-            researchAreas: item.suPersonResearch?.map(research => research.processed),
-            email: item.suPersonEmail,
-            libCalId: item.sulPersonLibcalId,
-          }))}
-        />
-      )
   }
 
   return (

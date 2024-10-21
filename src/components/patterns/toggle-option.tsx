@@ -1,4 +1,4 @@
-import {HTMLAttributes} from "react"
+import {FormEvent, HTMLAttributes} from "react"
 import {twMerge} from "tailwind-merge"
 import {clsx} from "clsx"
 import {CheckIcon} from "@heroicons/react/16/solid"
@@ -14,7 +14,7 @@ const ToggleOption = ({
 }: HTMLAttributes<HTMLLabelElement> & {
   name: string
   checked: boolean
-  onChange: () => void
+  onChange: (_e: FormEvent<HTMLInputElement>) => void
   first?: boolean
   last?: boolean
   defaultChecked?: boolean
