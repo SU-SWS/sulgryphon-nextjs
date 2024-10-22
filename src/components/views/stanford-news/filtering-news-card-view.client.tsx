@@ -6,9 +6,8 @@ import {useCounter} from "usehooks-ts"
 import useServerAction from "@/lib/hooks/useServerAction"
 import ToggleOption from "@/components/patterns/toggle-option"
 import SelectList from "@/components/patterns/elements/select-list"
-import {ArrowPathIcon, XMarkIcon} from "@heroicons/react/20/solid"
-import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
-import {SelectOptionDefinition, SelectValue} from "@mui/base/useSelect"
+import {ArrowPathIcon, XMarkIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid"
+import {SelectOptionDefinition} from "@mui/base/useSelect"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   /**
@@ -74,69 +73,75 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
         </div>
       )}
       <form onSubmit={e => e.preventDefault()}>
-        <div className="relative w-full md:w-[435px]">
-          <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
-            Search by title
-          </label>
+        <legend className="sr-only">Filter news</legend>
+        <div className="mb-50 flex w-full flex-col flex-wrap items-end justify-center gap-50 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
+          <div className="relative w-full md:w-[435px]">
+            <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
+              Search by title
+            </label>
 
-          <input
-            className="block h-[40.69px] w-full rounded-full p-9 pl-15 text-18"
-            ref={titleFilterRef}
-            type="text"
-            id={id}
-          />
+            <div className="relative h-40 w-full">
+              <input
+                className="g-full block h-full w-full rounded-full p-9 pl-15 text-18"
+                ref={titleFilterRef}
+                type="text"
+                id={id}
+              />
 
-          {titleFilter && (
-            <button
-              type="reset"
-              className="absolute bottom-6 right-32 z-10"
-              aria-label="Clear keyword search"
-              onClick={() => {
-                if (titleFilterRef.current) {
-                  titleFilterRef.current.value = ""
-                  titleFilterRef.current.focus()
-                }
-                setTitleFilter("")
-              }}
+              {titleFilter && (
+                <button
+                  type="reset"
+                  className="absolute right-0 top-0 z-10 mr-32 flex h-full items-center"
+                  aria-label="Clear keyword search"
+                  onClick={() => {
+                    if (titleFilterRef.current) {
+                      titleFilterRef.current.value = ""
+                      titleFilterRef.current.focus()
+                    }
+                    setTitleFilter("")
+                  }}
+                >
+                  <XMarkIcon className="pr-5 text-black-50" width={30} />
+                </button>
+              )}
+
+              <button
+                type="submit"
+                className="absolute right-0 top-0 z-10 mr-10 flex h-full items-center"
+                onClick={onFilterTitle}
+              >
+                <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
+                <span className="sr-only">Search</span>
+              </button>
+            </div>
+          </div>
+
+          <fieldset className="flex h-fit w-full items-center md:mb-0">
+            <legend className="sr-only">Filter by speciality</legend>
+            <ToggleOption
+              name="now - 30 days"
+              checked={dateFilter === "now - 30 days"}
+              onChange={() => onDateChange("now - 30 days")}
+              first
             >
-              <XMarkIcon className="pr-5 text-black-50" width={30} />
-            </button>
-          )}
+              Last 30 days
+            </ToggleOption>
+            <ToggleOption
+              name="now - 12 years"
+              checked={dateFilter === "now - 12 months"}
+              onChange={() => onDateChange("now - 12 months")}
+            >
+              Last 12 months
+            </ToggleOption>
+            <ToggleOption name="all" checked={!dateFilter} onChange={() => onDateChange(undefined)} last>
+              All News
+            </ToggleOption>
+          </fieldset>
 
-          <button type="submit" className="absolute bottom-6 right-10 z-10" onClick={onFilterTitle}>
-            <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
-            <span className="sr-only">Search</span>
-          </button>
-        </div>
-
-        <fieldset className="rs-mb-1 mx-auto flex h-25 w-fit items-center rounded-full">
-          <legend className="sr-only">Filter by speciality</legend>
-          <ToggleOption
-            name="now - 30 days"
-            checked={dateFilter === "now - 30 days"}
-            onChange={() => onDateChange("now - 30 days")}
-            first
-          >
-            Last 30 days
-          </ToggleOption>
-          <ToggleOption
-            name="now - 12 years"
-            checked={dateFilter === "now - 12 months"}
-            onChange={() => onDateChange("now - 12 months")}
-          >
-            Last 12 months
-          </ToggleOption>
-          <ToggleOption name="all" checked={!dateFilter} onChange={() => onDateChange(undefined)} last>
-            All News
-          </ToggleOption>
-        </fieldset>
-
-        <div>
-          <label id={`${id}-type`}>Type</label>
           <SelectList
+            label="Type of news"
             options={[{value: "all", label: "All"}, ...typeOptions]}
             ariaLabelledby={`${id}-type`}
-            defaultValue="all"
             onChange={(_e, value) => onTypeChange(value as string)}
           />
         </div>
