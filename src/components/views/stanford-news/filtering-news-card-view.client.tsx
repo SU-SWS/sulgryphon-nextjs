@@ -151,7 +151,7 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
         <LoadMoreList
           key={`${dateFilter}-${typeFilter}-${titleFilter}`}
           className="@container"
-          ulProps={{className: "list-unstyled grid gap-[90px] @4xl:grid-cols-2 @7xl:grid-cols-3 mb-50"}}
+          ulProps={{className: "list-unstyled grid gap-50 @4xl:grid-cols-2 @7xl:grid-cols-3 mb-50"}}
           liProps={{className: "w-full max-w-[500px] mx-auto"}}
           loadPage={loadPage}
           totalItems={totalResults}
