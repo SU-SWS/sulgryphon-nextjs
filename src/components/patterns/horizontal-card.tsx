@@ -53,7 +53,7 @@ const HorizontalCard = ({
   return (
     <div className="relative" {...props} ref={ref}>
       {fullWidth && (
-        <div className={"absolute left-0 top-0 z-[-10] ml-[calc(-50vw+50%)] h-full w-screen"}>
+        <div className="absolute left-0 top-0 z-[-10] ml-[calc(-50vw+50%)] h-full w-screen">
           <div className="relative h-full w-full bg-black-true" {...props}>
             <CardSprinkles position={backgroundSprinkles} />
           </div>
