@@ -10,7 +10,7 @@ import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import FlushCache from "@/components/patterns/elements/flush-cache"
-import OnThePage from "@/components/patterns/on-the-page"
+import OnThisPage from "@/components/patterns/on-this-page"
 import DrupalLink from "@/components/patterns/elements/drupal-link"
 
 export const revalidate = false
@@ -85,7 +85,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
           </div>
 
           {sulSidebar && (
-            <OnThePage>
+            <OnThisPage>
               {entity.sulRelLinks && (
                 <div className="lg:mt-40">
                   <h3 className="type-0 m-0 block px-10 py-2 font-sans font-semibold leading-[30px] text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black">
@@ -107,7 +107,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
                   </ul>
                 </div>
               )}
-            </OnThePage>
+            </OnThisPage>
           )}
           {!sulSidebar && <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />}
         </div>

@@ -2,15 +2,15 @@ import React from "react"
 import Accordion from "@/components/patterns/accordion"
 import HeadingList from "@/components/patterns/headingList"
 
-interface OnThePageProps {
+interface OnThisPageProps {
   children: React.ReactNode
 }
 
-const OnThePage = ({children}: OnThePageProps) => {
+const OnThisPage = ({children}: OnThisPageProps) => {
   return (
     <div>
       <div className="block w-full md:w-500 lg:hidden">
-        <Accordion button="On the page" headingLevel="h3">
+        <Accordion button="On this page" headingLevel="h3">
           <HeadingList />
           {children}
         </Accordion>
@@ -23,4 +23,4 @@ const OnThePage = ({children}: OnThePageProps) => {
   )
 }
 
-export default OnThePage
+export default OnThisPage
