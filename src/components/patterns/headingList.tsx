@@ -48,7 +48,7 @@ const HeadingList = () => {
         let newId = id
         let headingIndex = 0
 
-        // Make sure the new id attribute is unique on the page.
+        // Make sure the new id attribute is unique on this page.
         while (document.getElementById(newId)) {
           newId = `${id}-${headingIndex}`
           headingIndex++
@@ -81,7 +81,7 @@ const HeadingList = () => {
   }, [uuid])
 
   return (
-    <nav aria-label="on the page menu">
+    <nav aria-label="on this page menu">
       <h3 className="type-1 hidden font-sans font-semibold lg:mb-8 lg:block">On this page</h3>
       <ul className="list-none p-0">
         {headings.map(heading => (
