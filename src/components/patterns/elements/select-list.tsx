@@ -30,6 +30,7 @@ interface Props {
   multiple?: boolean
   disabled?: boolean
   value?: SelectValue<string, boolean>
+  emptyLabel?: string
 }
 
 interface OptionProps {
@@ -103,7 +104,7 @@ function CustomOption(props: OptionProps) {
   )
 }
 
-const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props) => {
+const SelectList = ({options, label, multiple, ariaLabelledby, emptyLabel, ...props}: Props) => {
   const labelId = useId()
   const labeledBy = ariaLabelledby ?? labelId
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -171,6 +172,12 @@ const SelectList = ({options, label, multiple, ariaLabelledby, ...props}: Props)
           aria-labelledby={labeledBy}
         >
           <SelectProvider value={contextValue}>
+            {emptyLabel && !multiple && (
+              <CustomOption value="" rootRef={listboxRef}>
+                {emptyLabel}
+              </CustomOption>
+            )}
+
             {options.map(option => {
               return (
                 <CustomOption {...option} key={option.value} value={option.value} rootRef={listboxRef}>

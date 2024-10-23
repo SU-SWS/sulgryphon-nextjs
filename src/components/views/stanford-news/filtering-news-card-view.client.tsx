@@ -140,7 +140,8 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
 
           <SelectList
             label="Type of news"
-            options={[{value: "all", label: "All"}, ...typeOptions]}
+            options={typeOptions}
+            emptyLabel="All"
             ariaLabelledby={`${id}-type`}
             onChange={(_e, value) => onTypeChange(value as string)}
           />
