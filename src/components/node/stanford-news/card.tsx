@@ -31,14 +31,14 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
       )}
 
       <div className="flex flex-col">
-        <HeadingElement className="type-0 leading-cozy">
+        <HeadingElement className="type-0 mb-0 leading-cozy">
           <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
             {node.title}
           </Link>
         </HeadingElement>
 
         {node.suNewsTopics?.[0]?.name && (
-          <div className="order-first mb-10 font-semibold">{node.suNewsTopics[0].name}</div>
+          <div className="order-first mb-0 font-semibold">{node.suNewsTopics[0].name}</div>
         )}
       </div>
 
