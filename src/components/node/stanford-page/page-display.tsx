@@ -12,10 +12,10 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   })
 
   return (
-    <article {...props}>
+    <div {...props}>
       {node.suPageComponents && <ParagraphRows items={node.suPageComponents} fullWidth={fullWidth} />}
       <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
-    </article>
+    </div>
   )
 }
 
