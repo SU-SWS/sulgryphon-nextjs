@@ -70,7 +70,8 @@ const HeadingList = () => {
     }
 
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 1.0,
+      rootMargin: "0px 0px -80% 0px",
+      threshold: 0,
     })
 
     h2Elements.forEach(heading => observer.observe(heading))
