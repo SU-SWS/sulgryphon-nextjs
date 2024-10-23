@@ -36,7 +36,7 @@ const NodePage = async ({params, previewMode}: PageProps) => {
 
   return (
     <main id="main-content" className="mb-50">
-      <article>
+      <article aria-labelledby={entity.id}>
         {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={path} />}
 
         {!entity.status && <EditorAlertBanner message="Unpublished Content" />}
