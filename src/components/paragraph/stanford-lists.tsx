@@ -12,6 +12,8 @@ import {
   StanfordBasicPagesQueryVariables,
   ParagraphStanfordList,
   SortDirection,
+  InputMaybe,
+  StanfordNewsFilterInput,
 } from "@/lib/gql/__generated__/drupal.d"
 import {graphqlClient} from "@/lib/gql/fetcher"
 import View from "@/components/views/view"
@@ -93,11 +95,12 @@ const loadPage = async (
   displayId: string,
   contextualFilter: string[],
   hasHeadline: boolean,
-  page: number
+  page: number,
+  filter?: InputMaybe<StanfordNewsFilterInput>
 ): Promise<JSX.Element> => {
   "use server"
 
-  const {items, totalItems} = await getViewItems(viewId, displayId, contextualFilter, page)
+  const {items, totalItems} = await getViewItems(viewId, displayId, contextualFilter, page, undefined, filter)
   return <View viewId={viewId} displayId={displayId} items={items} hasHeading={hasHeadline} totalItems={totalItems} />
 }
 
@@ -107,10 +110,19 @@ const getViewItems = cache(
     displayId: string,
     contextualFilter?: Maybe<string[]>,
     page: Maybe<number> = 0,
-    limit?: Maybe<number>
+    limit?: Maybe<number>,
+    filter?: InputMaybe<StanfordNewsFilterInput>
   ): Promise<{items: NodeUnion[]; totalItems: number}> => {
     if (viewId === "sul_people" && displayId === "table_list_all") limit = 0
-    const {items, totalItems} = await getViewPagedItems(viewId, displayId, contextualFilter, 30, page)
+    const {items, totalItems} = await getViewPagedItems(
+      viewId,
+      displayId,
+      contextualFilter,
+      30,
+      page,
+      undefined,
+      filter
+    )
     if (limit) {
       return {items: items?.slice(0, limit), totalItems}
     }
@@ -125,7 +137,8 @@ const getViewPagedItems = cache(
     contextualFilter?: Maybe<string[]>,
     pageSize?: Maybe<number>,
     page?: Maybe<number>,
-    offset?: Maybe<number>
+    offset?: Maybe<number>,
+    filter?: InputMaybe<StanfordNewsFilterInput>
   ): Promise<{items: NodeUnion[]; totalItems: number}> => {
     let items: NodeUnion[] = []
     let totalItems = 0
@@ -168,8 +181,9 @@ const getViewPagedItems = cache(
         tags.push("views:stanford_event")
         break
 
-      case "stanford_news--block_1":
-      case "stanford_news--vertical_cards":
+      case "sul_news--block_1":
+      case "sul_news--vertical_cards":
+      case "sul_news--filtering_cards":
         tags.push("views:stanford_news")
         break
 
@@ -264,10 +278,12 @@ const getViewPagedItems = cache(
           totalItems = graphqlResponse.sulEvents?.pageInfo.total || 0
           break
 
-        case "stanford_news--block_1":
-        case "stanford_news--vertical_cards":
+        case "sul_news--filtering_cards":
+        case "sul_news--block_1":
+        case "sul_news--vertical_cards":
           graphqlResponse = await client.stanfordNews({
             contextualFilters,
+            filter,
             ...queryVariables,
           })
           items = graphqlResponse.stanfordNews?.results as unknown as NodeStanfordNews[]

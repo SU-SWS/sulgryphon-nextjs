@@ -1329,6 +1329,16 @@ export const ConfigPagesDocument = gql`
   }
 }
     `;
+export const NewsTypesDocument = gql`
+    query NewsTypes {
+  termStanfordNewsTopics(first: 1000, sortKey: TITLE) {
+    nodes {
+      id
+      name
+    }
+  }
+}
+    `;
 export const MenuDocument = gql`
     query Menu($name: MenuAvailable = MAIN) {
   menu(name: $name) {
@@ -1449,9 +1459,10 @@ export const StanfordBasicPagesDocument = gql`
     ${FragmentNodeStanfordPageTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const StanfordNewsDocument = gql`
-    query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
+    query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $filter: StanfordNewsFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
   stanfordNews(
     contextualFilter: $contextualFilters
+    filter: $filter
     pageSize: $pageSize
     page: $page
     offset: $offset
@@ -1527,6 +1538,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     ConfigPages(variables?: DrupalTypes.ConfigPagesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.ConfigPagesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.ConfigPagesQuery>(ConfigPagesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'ConfigPages', 'query', variables);
+    },
+    NewsTypes(variables?: DrupalTypes.NewsTypesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.NewsTypesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.NewsTypesQuery>(NewsTypesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'NewsTypes', 'query', variables);
     },
     Menu(variables?: DrupalTypes.MenuQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.MenuQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.MenuQuery>(MenuDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Menu', 'query', variables);

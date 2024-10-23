@@ -1650,8 +1650,9 @@ export type NodeSulLibrary = EdgeNode & MetaTagInterface & NodeInterface & {
   /** Accessibility Statement */
   sulLibraryA11y?: Maybe<Text>;
   /**
-   * Provide an external URL that the branch page will redirect to. Leave this
-   * empty to display the branch page on the Library site.
+   * Provide an external URL for branch links to redirect users to this page. Leave
+   * this field empty for default behavior - branch links will open the branch page
+   * on the Library site.
    */
   sulLibraryExtUrl?: Maybe<Link>;
   /** Type of Location */
@@ -2308,6 +2309,8 @@ export type Query = {
   sulStudyPlaces?: Maybe<SulStudyPlacesResult>;
   /** Load a Term entity by id. */
   term?: Maybe<TermUnion>;
+  /** List of all TermStanfordNewsTopic on the platform. */
+  termStanfordNewsTopics: TermStanfordNewsTopicConnection;
 };
 
 
@@ -2548,6 +2551,7 @@ export type QueryStanfordLocalFootersArgs = {
 /** The schema's entry-point for queries. */
 export type QueryStanfordNewsArgs = {
   contextualFilter?: InputMaybe<StanfordNewsContextualFilterInput>;
+  filter?: InputMaybe<StanfordNewsFilterInput>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
@@ -2615,6 +2619,17 @@ export type QuerySulEventsSharedTagsArgs = {
 export type QueryTermArgs = {
   id: Scalars['ID']['input'];
   revision?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+/** The schema's entry-point for queries. */
+export type QueryTermStanfordNewsTopicsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  reverse?: InputMaybe<Scalars['Boolean']['input']>;
+  sortKey?: InputMaybe<ConnectionSortKeys>;
 };
 
 /** Entity type redirect. */
@@ -3004,6 +3019,15 @@ export type StanfordLocalFooterEdge = Edge & {
 
 export type StanfordNewsContextualFilterInput = {
   term_node_taxonomy_name_depth?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type StanfordNewsFilterInput = {
+  /** Publishing Date  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** Title  */
+  title?: InputMaybe<Scalars['String']['input']>;
+  /** News Type  */
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** News Views */
@@ -3630,7 +3654,7 @@ export type TermStanfordEventType = MetaTagInterface & TermInterface & {
 };
 
 /** Broad categories that specify a type of News article. (i.e. Blog) */
-export type TermStanfordNewsTopic = MetaTagInterface & TermInterface & {
+export type TermStanfordNewsTopic = EdgeNode & MetaTagInterface & TermInterface & {
   __typename?: 'TermStanfordNewsTopic';
   /** The time that the term was last edited. */
   changed: DateTime;
@@ -3652,6 +3676,21 @@ export type TermStanfordNewsTopic = MetaTagInterface & TermInterface & {
   status: Scalars['Boolean']['output'];
   /** The weight of this term in relation to other terms. */
   weight: Scalars['Int']['output'];
+};
+
+/** A paginated set of results for TermStanfordNewsTopic. */
+export type TermStanfordNewsTopicConnection = Connection & {
+  __typename?: 'TermStanfordNewsTopicConnection';
+  edges: Array<TermStanfordNewsTopicEdge>;
+  nodes: Array<TermStanfordNewsTopic>;
+  pageInfo: ConnectionPageInfo;
+};
+
+/** Edge for TermStanfordNewsTopic. */
+export type TermStanfordNewsTopicEdge = Edge & {
+  __typename?: 'TermStanfordNewsTopicEdge';
+  cursor: Scalars['Cursor']['output'];
+  node: TermStanfordNewsTopic;
 };
 
 /** Terms to support grouping of People. */
@@ -4025,6 +4064,11 @@ export type ConfigPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ConfigPagesQuery = { __typename?: 'Query', stanfordBasicSiteSettings: { __typename?: 'StanfordBasicSiteSettingConnection', nodes: Array<{ __typename: 'StanfordBasicSiteSetting', suGoogleAnalytics?: string | null, suSiteAlgolia?: boolean | null, suSiteAlgoliaId?: string | null, suSiteAlgoliaIndex?: string | null, suSiteAlgoliaSearch?: string | null, suSiteDropdowns?: boolean | null, suSiteMenuLevels?: number | null, suSiteName?: string | null, suSiteNobots?: boolean | null }> }, stanfordGlobalMessages: { __typename?: 'StanfordGlobalMessageConnection', nodes: Array<{ __typename: 'StanfordGlobalMessage', suGlobalMsgEnabled?: boolean | null, suGlobalMsgHeader?: string | null, suGlobalMsgLabel?: string | null, suGlobalMsgType: string, suGlobalMsgLink?: { __typename?: 'Link', title?: string | null, url?: string | null } | null, suGlobalMsgMessage?: { __typename?: 'Text', processed?: any | null } | null }> }, stanfordLocalFooters: { __typename?: 'StanfordLocalFooterConnection', nodes: Array<{ __typename: 'StanfordLocalFooter', suFooterEnabled?: boolean | null, suLocalFootFButton?: string | null, suLocalFootFMethod: string, suLocalFootLine1?: string | null, suLocalFootLine4?: string | null, suLocalFootLine2?: string | null, suLocalFootLine3?: string | null, suLocalFootLine5?: string | null, suLocalFootLocOp?: string | null, suLocalFootPrimeH?: string | null, suLocalFootSecondH?: string | null, suLocalFootSunetT?: string | null, suLocalFootUseLoc?: boolean | null, suLocalFootUseLogo?: boolean | null, suLocalFootAction?: Array<{ __typename?: 'Link', title?: string | null, url?: string | null }> | null, suLocalFootAddress?: { __typename?: 'Address', additionalName?: string | null, addressLine1?: string | null, addressLine2?: string | null, administrativeArea?: string | null, dependentLocality?: string | null, familyName?: string | null, givenName?: string | null, langcode?: string | null, locality?: string | null, organization?: string | null, postalCode?: string | null, sortingCode?: string | null, country?: { __typename?: 'AddressCountry', code?: string | null, name?: string | null } | null } | null, suLocalFootFIntro?: { __typename?: 'Text', processed?: any | null } | null, suLocalFootFUrl?: { __typename?: 'Link', url?: string | null, title?: string | null } | null, suLocalFootLocImg?: { __typename?: 'Image', alt?: string | null, height: number, url: string, width: number } | null, suLocalFootLocLink?: { __typename?: 'Link', title?: string | null, url?: string | null } | null, suLocalFootPrCo?: { __typename?: 'Text', processed?: any | null } | null, suLocalFootPrimary?: Array<{ __typename?: 'Link', title?: string | null, url?: string | null }> | null, suLocalFootSeCo?: { __typename?: 'Text', processed?: any | null } | null, suLocalFootSecond?: Array<{ __typename?: 'Link', title?: string | null, url?: string | null }> | null, suLocalFootSocial?: Array<{ __typename?: 'Link', title?: string | null, url?: string | null }> | null, suLocalFootTr2Co?: { __typename?: 'Text', processed?: any | null } | null, suLocalFootTrCo?: { __typename?: 'Text', processed?: any | null } | null }> }, stanfordSuperFooters: { __typename?: 'StanfordSuperFooterConnection', nodes: Array<{ __typename: 'StanfordSuperFooter', suSuperFootEnabled?: boolean | null, suSuperFootTitle?: string | null, suSuperFootIntranet?: { __typename?: 'Link', title?: string | null, url?: string | null } | null, suSuperFootLink?: Array<{ __typename?: 'Link', title?: string | null, url?: string | null }> | null, suSuperFootText?: { __typename?: 'Text', processed?: any | null } | null }> }, lockupSettings: { __typename?: 'LockupSettingConnection', nodes: Array<{ __typename: 'LockupSetting', suLine1?: string | null, suLine2?: string | null, suLine3?: string | null, suLine4?: string | null, suLine5?: string | null, suLockupEnabled?: boolean | null, suLockupOptions?: string | null, suUseThemeLogo?: boolean | null, suUploadLogoImage?: { __typename?: 'Image', alt?: string | null, height: number, url: string, width: number } | null }> } };
+
+export type NewsTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewsTypesQuery = { __typename?: 'Query', termStanfordNewsTopics: { __typename?: 'TermStanfordNewsTopicConnection', nodes: Array<{ __typename?: 'TermStanfordNewsTopic', id: string, name: string }> } };
 
 export type FragmentLinkFragment = { __typename?: 'Link', url?: string | null, title?: string | null };
 
@@ -4403,6 +4447,7 @@ export type StanfordBasicPagesQuery = { __typename?: 'Query', stanfordBasicPages
 
 export type StanfordNewsQueryVariables = Exact<{
   contextualFilters?: InputMaybe<StanfordNewsContextualFilterInput>;
+  filter?: InputMaybe<StanfordNewsFilterInput>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;

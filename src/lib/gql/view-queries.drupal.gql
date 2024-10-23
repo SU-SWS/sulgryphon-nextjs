@@ -100,8 +100,8 @@ query stanfordBasicPages($contextualFilters: StanfordBasicPagesContextualFilterI
 #    }
 #}
 
-query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
-    stanfordNews(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
+query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $filter: StanfordNewsFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
+    stanfordNews(contextualFilter: $contextualFilters, filter: $filter, pageSize: $pageSize, page: $page, offset: $offset) {
         results {
             ...FragmentNodeStanfordNewsTeaser
         }
