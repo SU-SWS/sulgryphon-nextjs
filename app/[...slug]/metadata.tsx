@@ -35,7 +35,7 @@ export const getNodeMetadata = (node: NodeUnion): Record<string, any> => {
   return {
     ...metadata,
     metadataBase: new URL("https://library.stanford.edu"),
-    title: node.title + " | " + `Stanford ${process.env.NEXT_PUBLIC_SITE_NAME}`,
+    title: node.title + " | Stanford Libraries",
     other: {
       changed: node.changed.time,
       path: node.path,
