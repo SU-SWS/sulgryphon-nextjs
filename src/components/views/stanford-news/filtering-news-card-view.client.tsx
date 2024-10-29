@@ -99,27 +99,26 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
 
               <div className="relative h-40 w-full">
                 <input
-                  className="g-full block h-full w-full rounded-full p-9 pl-15 text-18"
+                  className="peer block h-full w-full rounded-full p-9 pl-15 text-18"
                   ref={titleFilterRef}
                   type="text"
                   id={id}
+                  placeholder=""
                 />
 
-                {titleFilter && (
-                  <button
-                    type="reset"
-                    className="absolute right-0 top-0 z-10 mr-32 flex h-full items-center"
-                    aria-label="Clear keyword search"
-                    onClick={() => {
-                      if (titleFilterRef.current) {
-                        titleFilterRef.current.value = ""
-                        titleFilterRef.current.focus()
-                      }
-                    }}
-                  >
-                    <XMarkIcon className="pr-5 text-black-50" width={30} />
-                  </button>
-                )}
+                <button
+                  type="reset"
+                  className="absolute right-0 top-0 z-10 mr-32 flex h-full items-center peer-placeholder-shown:hidden"
+                  aria-label="Clear keyword search"
+                  onClick={() => {
+                    if (titleFilterRef.current) {
+                      titleFilterRef.current.value = ""
+                      titleFilterRef.current.focus()
+                    }
+                  }}
+                >
+                  <XMarkIcon className="pr-5 text-black-50" width={30} />
+                </button>
 
                 <button
                   type="submit"
