@@ -16,7 +16,7 @@ const options: HTMLReactParserOptions = {
     if (domNode instanceof Element) {
       const nodeProps = attributesToProps(domNode.attribs)
       nodeProps.className = fixClasses(nodeProps.className ?? "")
-      let NodeName: ElementType = domNode.name as ElementType
+      const NodeName: ElementType = domNode.name as ElementType
 
       switch (domNode.name) {
         case "a":
@@ -152,7 +152,8 @@ const cleanMediaMarkup = (node: Element) => {
       return decodeURIComponent(src.replace(/^.*url=(.*)$/, "$1")).replace(/&.*$/, "")
     }
     if (node.children.length > 0) {
-      for (let child of node.children) {
+      let child
+      for (child of node.children) {
         if (child instanceof Element) {
           const url: string | undefined = getOembedUrl(child)
           if (url) return url
@@ -189,7 +190,7 @@ const cleanMediaMarkup = (node: Element) => {
     // const iframe = wrapperDiv instanceof Element && wrapperDiv.children.find(child => child instanceof Element && child.name === 'iframe')
     const iframe = findIframeInMedia(node)
 
-    // @ts-ignore Ignore this because it's a special attribute for lazy loading oembed videos.
+    // @ts-expect-error Ignore this because it's a special attribute for lazy loading oembed videos.
     let {"data-src": iframeSrc} = iframe && iframe.attribs
     iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, "$1")
     return (
@@ -204,8 +205,9 @@ const cleanMediaMarkup = (node: Element) => {
   }
 
   if (image instanceof Element) {
-    let {src, alt, width, height} = image.attribs
-    let {class: classes} = node.attribs
+    let {src} = image.attribs
+    const {alt, width, height} = image.attribs
+    const {class: classes} = node.attribs
 
     if (src.substring(0, 1) === "/") {
       src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src

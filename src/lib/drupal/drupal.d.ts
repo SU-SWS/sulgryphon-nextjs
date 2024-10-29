@@ -8,11 +8,18 @@ export type ParagraphBehaviors = {
     layout?: "sul_helper_1_column" | "sul_helper_2_column" | "sul_helper_3_column"
     parent_uuid?: string
     region?: string
-    config?: {}
+    config?: Record<string, string>
   }
-  sul_button_styles?: {}
-  sul_feat_collections_styles?: {}
-  sul_teaser_styles?: {}
+  sul_button_styles?: {
+    background?: Maybe<string>
+  }
+  sul_feat_collections_styles?: {
+    link_display_style?: Maybe<string>
+  }
+  sul_teaser_styles?: {
+    orientation?: Maybe<string>
+    background?: Maybe<string>
+  }
   hero_pattern?: {
     overlay_position?: string
     heading?: "h2" | "h3" | "h4" | "div.su-font-splash"
@@ -497,7 +504,7 @@ export type DrupalPublicationCitation = JsonApiResource & {
   su_day?: number
   su_doi?: string
   su_edition?: number
-  su_genre?: any
+  su_genre?: string
   su_issue?: string
   su_month?: number
   su_page?: string
@@ -534,32 +541,9 @@ export type LibraryHours = {
       name: string
       primary_location: string
       hours: DayHours[]
-      links: [Object]
+      links: [object]
       locations: []
     }
   }[]
   hours: DayHours[]
-}
-export type Params = {
-  slug: string | string[]
-}
-
-export type PageProps = {
-  params: Params
-  searchParams?: Record<string, string | string[] | undefined>
-}
-
-export type DrupalRedirect = JsonApiResource & {
-  redirect_source: {
-    path: string
-    query: []
-  }
-  redirect_redirect: {
-    uri: string
-    title: string
-    options: []
-    target_uuid: string
-    url: string
-  }
-  status_code: number
 }

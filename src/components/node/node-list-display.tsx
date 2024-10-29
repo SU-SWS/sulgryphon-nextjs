@@ -12,6 +12,7 @@ import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 interface NodeProps {
   node: NodeUnion
 }
+
 const NodeListDisplay = ({node, ...props}: NodeProps) => {
   return (
     <>

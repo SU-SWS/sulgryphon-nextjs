@@ -1,6 +1,5 @@
 "use client"
 
-// @ts-ignore
 import Obfuscate from "react-obfuscate"
 import {HTMLAttributes} from "react"
 

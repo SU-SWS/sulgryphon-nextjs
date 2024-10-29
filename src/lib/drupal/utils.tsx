@@ -1,5 +1,5 @@
 import {stringify} from "qs"
-import {MenuItem} from "@/lib/gql/__generated__/drupal"
+import {MenuItem} from "@/lib/gql/__generated__/drupal.d"
 
 export const buildUrl = (path: string, params?: string | Record<string, string> | URLSearchParams): URL => {
   const url = new URL(path.charAt(0) === "/" ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}` : path)
@@ -41,4 +41,17 @@ export const getActiveTrail = (menuItems: MenuItem[], currentPath: string) => {
     return []
   }
   return getActiveTrailInner(menuItems)
+}
+
+export type Slug = {slug: string[]}
+
+export type PageProps = {
+  params: Promise<Slug>
+  searchParams?: Promise<Record<string, string | string[] | undefined>>
+}
+
+export const getPathFromContext = (slug: string | string[], prefix = ""): string => {
+  let slugString = Array.isArray(slug) ? slug.map(s => encodeURIComponent(s)).join("/") : slug
+  slugString = slugString.replace(/^\//, "")
+  return prefix ? `${prefix}/${slugString}` : `/${slugString}`
 }

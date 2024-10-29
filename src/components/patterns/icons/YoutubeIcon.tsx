@@ -1,6 +1,6 @@
-import {PropsWithoutRef} from "react"
+import {SVGProps} from "react"
 
-const YoutubeIcon = (props: PropsWithoutRef<any>) => {
+const YoutubeIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg viewBox="0 0 16 16" {...props}>
       <path

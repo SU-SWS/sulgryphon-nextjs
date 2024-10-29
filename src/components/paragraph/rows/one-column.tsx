@@ -4,7 +4,7 @@ import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 interface LayoutProps {
   items: ParagraphUnion[]
   fullWidth?: boolean
-  config?: {}
+  config?: Record<string, string>
 }
 
 const OneColumn = ({items, fullWidth = true}: LayoutProps) => {

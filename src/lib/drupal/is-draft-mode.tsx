@@ -3,8 +3,9 @@
  */
 import {cookies} from "next/headers"
 
-export const isPreviewMode = (): boolean => {
+export const isPreviewMode = async (): Promise<boolean> => {
+  const cookieValues = await cookies()
   return (
-    process.env.NODE_ENV === "development" || cookies()?.get("preview")?.value === process.env.DRUPAL_PREVIEW_SECRET
+    process.env.NODE_ENV === "development" || cookieValues.get("preview")?.value === process.env.DRUPAL_PREVIEW_SECRET
   )
 }

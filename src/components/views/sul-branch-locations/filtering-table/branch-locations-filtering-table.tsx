@@ -4,8 +4,8 @@ import {MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
-import {useCallback, useId, useRef} from "react"
+import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {RefObject, useCallback, useId, useRef} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Address from "@/components/patterns/elements/address"
@@ -202,7 +202,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     [collapseHours, expandedHours]
   )
 
-  useEventListener("keydown", handleEscape, containerRef)
+  useEventListener("keydown", handleEscape, containerRef as RefObject<HTMLDivElement>)
 
   if (!libraryHours?.primaryHours || !todayLibraryHours) {
     return

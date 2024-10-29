@@ -1,13 +1,12 @@
 "use client"
 
 import Link from "@/components/patterns/elements/drupal-link"
-import {PropsWithoutRef, ReactNode, useEffect, useState} from "react"
+import {HTMLAttributes, useEffect, useState} from "react"
 import {ErrorBoundary} from "react-error-boundary"
 
-interface Props extends PropsWithoutRef<any> {
+type Props = HTMLAttributes<HTMLAnchorElement> & {
   prefix: string
   suffix?: string
-  children?: ReactNode
 }
 
 const NewsSocialLink = ({prefix, suffix = "", children, ...props}: Props) => {
@@ -19,7 +18,7 @@ const NewsSocialLink = ({prefix, suffix = "", children, ...props}: Props) => {
 
   return (
     <ErrorBoundary fallback={<></>} onError={e => console.error(e.message)}>
-      <Link href={`${prefix}${currentUrl}${suffix}`} {...props}>
+      <Link href={`${prefix}${currentUrl}${suffix}`} prefetch={false} {...props}>
         {children}
       </Link>
     </ErrorBoundary>

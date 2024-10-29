@@ -35,8 +35,8 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   let openTime,
     closeTime,
-    isOpen = false,
-    closedAllDay = todayHours?.closed
+    isOpen = false
+  const closedAllDay = todayHours?.closed
 
   if (!todayHours.closed && todayHours.opens_at && todayHours.closes_at) {
     openTime = new Date(todayHours.opens_at)

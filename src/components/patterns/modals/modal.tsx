@@ -30,7 +30,11 @@ const Modal = ({children, isOpen, onClose, labelledBy}: ModalProps) => {
   useEventListener("keydown", onKeyDown)
 
   useEffect(() => {
-    isOpen ? lock() : unlock()
+    if (isOpen) {
+      lock()
+    } else {
+      unlock()
+    }
     // Disabling eslint because adding lock and unlock as dependencies prevents the unlock from firing when it needs to.
     // eslint-disable-next-line
   }, [isOpen])

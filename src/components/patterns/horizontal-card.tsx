@@ -12,8 +12,8 @@ import {twMerge} from "tailwind-merge"
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
-  superHeader?: Maybe<any>
-  header?: Maybe<any>
+  superHeader?: Maybe<string>
+  header?: Maybe<string>
   footer?: Maybe<ReactNodeLike>
   body?: Maybe<string>
   link?: Maybe<LinkType>

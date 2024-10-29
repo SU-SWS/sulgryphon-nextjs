@@ -120,7 +120,7 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
             types: item.suPersonTypeGroup?.map(typeGroup => typeGroup.name) || [],
             photoUrl: item.suPersonPhoto?.mediaImage.url,
             fullTitle: item.suPersonFullTitle,
-            researchAreas: item.suPersonResearch?.map(research => research.processed),
+            researchAreas: item.suPersonResearch?.map(research => research.processed as string),
             email: item.suPersonEmail,
             libCalId: item.sulPersonLibcalId,
           }))}

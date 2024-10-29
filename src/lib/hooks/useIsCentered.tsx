@@ -1,7 +1,7 @@
-import {MutableRefObject, useLayoutEffect, useState} from "react"
+import {RefObject, useLayoutEffect, useState} from "react"
 import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
-const useIsCentered = (ref: MutableRefObject<any>) => {
+const useIsCentered = (ref: RefObject<HTMLElement | null>) => {
   const [isCentered, setIsCentered] = useState<boolean>(false)
 
   const resizeHandler = () => {

@@ -3,7 +3,7 @@ import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import Page from "../../page"
 
 const PreviewHomePage = async () => {
-  if (!isPreviewMode()) notFound()
+  if (!(await isPreviewMode())) notFound()
   return <Page />
 }
 

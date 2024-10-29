@@ -16,5 +16,5 @@ export const getSearchIndex = async <T = JsonApiResource[],>(
 
   const json = await response.json()
 
-  return options.deserialize ? deserialize(json) : json
+  return (options.deserialize ? deserialize(json) : json) as T
 }

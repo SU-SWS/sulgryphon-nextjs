@@ -1,26 +1,26 @@
 import NodePageDisplay from "@/components/node"
 import {notFound, redirect} from "next/navigation"
-import {Metadata} from "next"
-import {getNodeMetadata} from "./metadata"
 import LibraryHeader from "@/components/node/sul-library/library-header"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import SecondaryMenu from "@/components/menu/secondary-menu"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {getAllNodePaths, getEntityFromPath, getMenu} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import FlushCache from "@/components/patterns/elements/flush-cache"
 import OnThisPage from "@/components/patterns/on-this-page"
 import DrupalLink from "@/components/patterns/elements/drupal-link"
+import {getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
 
 export const revalidate = false
 export const dynamic = "force-static"
 
-const NodePage = async ({params, previewMode}: PageProps) => {
-  const path = getPathFromContext({params})
-  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path, previewMode)
+const NodePage = async (props: PageProps & {previewMode?: true}) => {
+  const params = await props.params
+  const path = getPathFromContext(params.slug)
 
-  if (routeRedirect) redirect(routeRedirect.url)
+  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path, props.previewMode)
+
+  if (routeRedirect) redirect(routeRedirect)
   if (!entity) notFound()
 
   const menuItems = await getMenu()
@@ -118,31 +118,10 @@ const NodePage = async ({params, previewMode}: PageProps) => {
   )
 }
 
-export const generateMetadata = async ({params}: PageProps): Promise<Metadata> => {
-  if (isPreviewMode()) return {}
-  const path = getPathFromContext({params})
-  const {entity} = await getEntityFromPath<NodeUnion>(path)
-  return entity ? getNodeMetadata(entity) : {}
-}
-
-export const generateStaticParams = async (): Promise<PageProps["params"][]> => {
+export const generateStaticParams = async (): Promise<Array<Slug>> => {
   if (process.env.BUILD_COMPLETE !== "true") return []
   const nodePaths = await getAllNodePaths()
   return nodePaths.map(path => ({slug: path.split("/").filter(part => !!part)}))
-}
-
-const getPathFromContext = (context: PageProps, prefix = ""): string => {
-  let {slug} = context.params
-
-  slug = Array.isArray(slug) ? slug.map(s => encodeURIComponent(s)).join("/") : slug
-  slug = slug.replace(/^\//, "")
-  return prefix ? `${prefix}/${slug}` : `/${slug}`
-}
-
-type PageProps = {
-  params: {slug: string | string[]}
-  searchParams?: Record<string, string | string[] | undefined>
-  previewMode?: boolean
 }
 
 export default NodePage

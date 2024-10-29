@@ -7,12 +7,13 @@ import {
   NodeUnion,
   RouteQuery,
   RouteRedirect,
-  TermUnion,
 } from "@/lib/gql/__generated__/drupal.d"
 import {GraphQLClient} from "graphql-request"
 import {cache} from "react"
 import {buildHeaders} from "@/lib/drupal/utils"
 import {unstable_cache as nextCache} from "next/cache"
+import {ClientError} from "graphql-request"
+import {GraphQLError} from "graphql/error"
 
 export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, isPreviewMode?: boolean) => {
   requestConfig.headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
@@ -26,35 +27,50 @@ export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, i
   return getSdk(client)
 }
 
-export const getEntityFromPath = cache(
-  async <T extends NodeUnion | TermUnion>(
-    path: string,
-    previewMode: boolean = false,
-    teaser: boolean = false
-  ): Promise<{
-    entity?: T
-    redirect?: RouteRedirect
-    error?: string
-  }> => {
-    "use server"
+type DrupalGraphqlError = GraphQLError & {debugMessage: string}
 
-    if (path.startsWith("/node/")) return {}
+export const getEntityFromPath = async <T extends NodeUnion>(
+  path: string,
+  previewMode?: boolean,
+  teaser?: boolean
+): Promise<{
+  entity?: T
+  redirect?: RouteRedirect["url"]
+}> => {
+  const getData = nextCache(
+    async () => {
+      // Paths that start with /node/ should not be used.
+      if (path.startsWith("/node/")) return {}
 
-    let entity: T | undefined
-    let query: RouteQuery
+      let query: RouteQuery
 
-    try {
-      query = await graphqlClient({next: {tags: [`paths:${path}`]}}, previewMode).Route({path, teaser})
-    } catch (e) {
-      console.error(e instanceof Error ? e.message : "An error occurred")
-      return {error: e instanceof Error ? e.message : "An error occurred"}
-    }
+      try {
+        query = await graphqlClient(undefined, previewMode).Route({
+          path,
+          teaser: !!teaser,
+        })
+      } catch (e) {
+        if (e instanceof ClientError) {
+          // @ts-expect-error Client error type doesn't define the debugMessage, but it's there.
+          const messages = e.response.errors?.map((error: DrupalGraphqlError) => error.debugMessage || error.message)
+          console.warn([...new Set(messages)].join(" "))
+        } else {
+          console.warn(e instanceof Error ? e.message : "An error occurred")
+        }
+        return {}
+      }
 
-    if (query.route?.__typename === "RouteRedirect") return {redirect: query.route}
-    entity = query.route?.__typename === "RouteInternal" && query.route.entity ? (query.route.entity as T) : undefined
-    return {entity}
-  }
-)
+      if (query.route?.__typename === "RouteRedirect") return {redirect: query.route.url}
+      const entity: T | undefined =
+        query.route?.__typename === "RouteInternal" && query.route.entity ? (query.route.entity as T) : undefined
+      return {entity}
+    },
+    [path, previewMode ? "preview" : "anonymous", teaser ? "teaser" : "full"],
+    {tags: ["all-entities", `paths:${path}`]}
+  )
+
+  return getData()
+}
 
 export const getConfigPage = async <T extends ConfigPagesUnion>(
   configPageType: ConfigPagesUnion["__typename"]
@@ -92,7 +108,7 @@ export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> =
 
   const getMenuInner = nextCache(
     async () => {
-      const menu = await graphqlClient({cache: "no-cache"}).Menu({name})
+      const menu = await graphqlClient().Menu({name})
       const menuItems = (menu.menu?.items || []) as MenuItem[]
 
       const filterInaccessible = (items: MenuItem[]): MenuItem[] => {
