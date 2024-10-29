@@ -144,11 +144,11 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
                 Last 30 days
               </ToggleOption>
               <ToggleOption
-                name="now - 12 years"
-                checked={dateFilter === "now - 12 months"}
-                onChange={() => onDateChange("now - 12 months")}
+                name="now - 90 days"
+                checked={dateFilter === "now - 90 days"}
+                onChange={() => onDateChange("now - 90 days")}
               >
-                Last 12 months
+                Last 90 days
               </ToggleOption>
               <ToggleOption name="all" checked={!dateFilter} onChange={() => onDateChange(undefined)} last>
                 All News
