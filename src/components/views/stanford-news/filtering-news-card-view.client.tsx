@@ -115,7 +115,6 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
                         titleFilterRef.current.value = ""
                         titleFilterRef.current.focus()
                       }
-                      setTitleFilter("")
                     }}
                   >
                     <XMarkIcon className="pr-5 text-black-50" width={30} />
