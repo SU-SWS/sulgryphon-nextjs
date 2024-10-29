@@ -73,79 +73,81 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
         </div>
       )}
       <form onSubmit={e => e.preventDefault()}>
-        <legend className="sr-only">Filter news</legend>
-        <div className="mb-50 flex w-full flex-col flex-wrap items-end justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
-          <div className="relative w-full md:w-[435px]">
-            <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
-              Search by title
-            </label>
+        <fieldset className="text-18">
+          <legend className="sr-only">Filter news</legend>
+          <div className="mb-50 flex w-full flex-col flex-wrap items-end justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
+            <div className="relative w-full md:w-[435px]">
+              <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
+                Search by title
+              </label>
 
-            <div className="relative h-40 w-full">
-              <input
-                className="g-full block h-full w-full rounded-full p-9 pl-15 text-18"
-                ref={titleFilterRef}
-                type="text"
-                id={id}
-              />
+              <div className="relative h-40 w-full">
+                <input
+                  className="g-full block h-full w-full rounded-full p-9 pl-15 text-18"
+                  ref={titleFilterRef}
+                  type="text"
+                  id={id}
+                />
 
-              {titleFilter && (
+                {titleFilter && (
+                  <button
+                    type="reset"
+                    className="absolute right-0 top-0 z-10 mr-32 flex h-full items-center"
+                    aria-label="Clear keyword search"
+                    onClick={() => {
+                      if (titleFilterRef.current) {
+                        titleFilterRef.current.value = ""
+                        titleFilterRef.current.focus()
+                      }
+                      setTitleFilter("")
+                    }}
+                  >
+                    <XMarkIcon className="pr-5 text-black-50" width={30} />
+                  </button>
+                )}
+
                 <button
-                  type="reset"
-                  className="absolute right-0 top-0 z-10 mr-32 flex h-full items-center"
-                  aria-label="Clear keyword search"
-                  onClick={() => {
-                    if (titleFilterRef.current) {
-                      titleFilterRef.current.value = ""
-                      titleFilterRef.current.focus()
-                    }
-                    setTitleFilter("")
-                  }}
+                  type="submit"
+                  className="absolute right-0 top-0 z-10 mr-10 flex h-full items-center"
+                  onClick={onFilterTitle}
                 >
-                  <XMarkIcon className="pr-5 text-black-50" width={30} />
+                  <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
+                  <span className="sr-only">Search</span>
                 </button>
-              )}
-
-              <button
-                type="submit"
-                className="absolute right-0 top-0 z-10 mr-10 flex h-full items-center"
-                onClick={onFilterTitle}
-              >
-                <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
-                <span className="sr-only">Search</span>
-              </button>
+              </div>
             </div>
+
+            <fieldset className="flex h-fit w-full items-center md:mb-0">
+              <legend className="sr-only">Filter by speciality</legend>
+              <ToggleOption
+                name="now - 30 days"
+                checked={dateFilter === "now - 30 days"}
+                onChange={() => onDateChange("now - 30 days")}
+                first
+              >
+                Last 30 days
+              </ToggleOption>
+              <ToggleOption
+                name="now - 12 years"
+                checked={dateFilter === "now - 12 months"}
+                onChange={() => onDateChange("now - 12 months")}
+              >
+                Last 12 months
+              </ToggleOption>
+              <ToggleOption name="all" checked={!dateFilter} onChange={() => onDateChange(undefined)} last>
+                All News
+              </ToggleOption>
+            </fieldset>
+
+            <SelectList
+              label="Type of news"
+              options={typeOptions}
+              emptyLabel="All"
+              ariaLabelledby={`${id}-type`}
+              onChange={(_e, value) => onTypeChange(value as string)}
+            />
           </div>
-
-          <fieldset className="flex h-fit w-full items-center md:mb-0">
-            <legend className="sr-only">Filter by speciality</legend>
-            <ToggleOption
-              name="now - 30 days"
-              checked={dateFilter === "now - 30 days"}
-              onChange={() => onDateChange("now - 30 days")}
-              first
-            >
-              Last 30 days
-            </ToggleOption>
-            <ToggleOption
-              name="now - 12 years"
-              checked={dateFilter === "now - 12 months"}
-              onChange={() => onDateChange("now - 12 months")}
-            >
-              Last 12 months
-            </ToggleOption>
-            <ToggleOption name="all" checked={!dateFilter} onChange={() => onDateChange(undefined)} last>
-              All News
-            </ToggleOption>
-          </fieldset>
-
-          <SelectList
-            label="Type of news"
-            options={typeOptions}
-            emptyLabel="All"
-            ariaLabelledby={`${id}-type`}
-            onChange={(_e, value) => onTypeChange(value as string)}
-          />
-        </div>
+        </fieldset>
       </form>
       {items.length === 0 && <p>No news items match your queries. Please try a new search.</p>}
       {items.length > 0 && (
