@@ -1,13 +1,13 @@
 import formatHtml from "@/lib/format-html"
 import NodeCardDisplay from "@/components/node/node-card"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import {PropsWithoutRef} from "react"
 import AboveHeaderBorder from "@/components/patterns/above-header-border"
 import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import {getEntityFromPath} from "@/lib/gql/fetcher"
+import {HTMLAttributes} from "react"
 
-interface EntityProps extends PropsWithoutRef<any> {
+type EntityProps = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>
   description?: Maybe<string>
   link?: Maybe<LinkType>

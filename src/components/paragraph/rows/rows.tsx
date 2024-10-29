@@ -14,7 +14,7 @@ type Layout = Record<
   {
     item: ParagraphLayout
     layout: string
-    config?: Record<string, any>
+    config?: Record<string, string>
     children: ParagraphUnion[]
   }
 >
@@ -67,7 +67,7 @@ const Row = ({
   fullWidth,
 }: {
   layout: string
-  layoutSettings?: Record<string, any>
+  layoutSettings?: Record<string, string>
   items: ParagraphUnion[]
   fullWidth?: boolean
 }) => {

@@ -69,7 +69,6 @@ const SecondaryMenu = ({menuItems, currentPath}: {menuItems: MenuItem[]; current
 }
 
 type SideMenuItemProps = MenuItem & {
-  parentItemProps?: any
   menuLevel?: number
   activeTrail: string[]
 }

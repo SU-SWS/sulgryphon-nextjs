@@ -3,7 +3,7 @@ import SearchForm from "@/components/search/search-form"
 import TodayHours from "./today-hours"
 import Link from "@/components/patterns/elements/drupal-link"
 import {graphqlClient} from "@/lib/gql/fetcher"
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 
 const HomePageBanner = async () => {
   const librariesQuery = await graphqlClient({next: {tags: ["node:sul_library"]}}).Libraries()

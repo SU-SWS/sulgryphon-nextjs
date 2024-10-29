@@ -5,6 +5,7 @@ interface Props {
   node: NodeStanfordPage
   h3Heading?: boolean
 }
+
 const StanfordPageListItem = ({node, ...props}: Props) => {
   // Without designs, use the card.
   return <StanfordPageCard node={node} {...props} />

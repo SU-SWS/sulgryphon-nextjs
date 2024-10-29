@@ -1,4 +1,4 @@
-import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal"
+import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
 import StudyPlaceFilteringTable, {
   StudyPlaces,
 } from "@/components/views/sul-study-place/filtering-table/study-place-filtering-table"

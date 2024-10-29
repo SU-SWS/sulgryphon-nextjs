@@ -1,6 +1,6 @@
 "use client"
 
-import {HTMLAttributes, useId, useRef} from "react"
+import {HTMLAttributes, RefObject, useId, useRef} from "react"
 import {useBoolean, useOnClickOutside} from "usehooks-ts"
 
 type Props = {
@@ -19,7 +19,7 @@ const useAccordion = ({initiallyVisible, panelId, buttonId}: Props = {}) => {
   const id = useId()
   const ref = useRef<HTMLDivElement>(null)
 
-  useOnClickOutside(ref, collapseAccordion)
+  useOnClickOutside(ref as RefObject<HTMLDivElement>, collapseAccordion)
 
   const buttonProps: HTMLAttributes<HTMLButtonElement> = {
     "aria-controls": panelId || `${id}--panel`,

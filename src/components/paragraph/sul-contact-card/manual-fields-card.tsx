@@ -1,12 +1,12 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/24/outline"
-import {PropsWithoutRef} from "react"
+import {HTMLAttributes} from "react"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
 import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal.d"
 
-interface Props extends PropsWithoutRef<any> {
+type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphSulContactCard
 }
 

@@ -3,6 +3,7 @@ import LibraryAdditionalHours from "@/components/node/sul-library/library-additi
 import formatHtml from "@/lib/format-html"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 import {redirect} from "next/navigation"
+import SulLibraryMetadata from "@/components/node/sul-library/sul-library-metadata"
 
 const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
   if (node.sulLibraryExtUrl?.url) redirect(node.sulLibraryExtUrl.url)
@@ -17,6 +18,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
 
   return (
     <article className="mb-50 @container" {...props}>
+      <SulLibraryMetadata node={node} />
       {node.suLibraryHours && (
         <div className="centered mx-auto mb-50 w-full lg:max-w-[980px]">
           <LibraryAdditionalHours hoursId={node.suLibraryHours} />

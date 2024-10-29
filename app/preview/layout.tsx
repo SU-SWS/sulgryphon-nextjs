@@ -3,8 +3,8 @@ import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import Editori11y from "@/components/editori11y"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 
-const RootLayout = ({children}: {children: ReactNode}) => {
-  const previewMode = isPreviewMode()
+const RootLayout = async ({children}: {children: ReactNode}) => {
+  const previewMode = await isPreviewMode()
   return (
     <>
       {previewMode && (

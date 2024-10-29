@@ -22,7 +22,7 @@ interface Props {
   options: SelectOptionDefinition<string>[]
   label?: string
   ariaLabelledby?: string
-  defaultValue?: any
+  defaultValue?: string
   onChange?: (
     _event: MouseEvent | KeyboardEvent | FocusEvent | null,
     _value: SelectValue<string, boolean>
@@ -34,7 +34,7 @@ interface Props {
 }
 
 interface OptionProps {
-  rootRef: RefObject<HTMLUListElement>
+  rootRef: RefObject<HTMLUListElement | null>
   children?: ReactNode
   value: string
   disabled?: boolean

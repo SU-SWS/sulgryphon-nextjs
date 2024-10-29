@@ -5,7 +5,7 @@ import Image from "next/image"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
-import {useCallback, useId, useRef, useState} from "react"
+import {RefObject, useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ChevronDownIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
@@ -284,7 +284,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     [collapseHours, expandedHours]
   )
 
-  useEventListener("keydown", handleEscape, containerRef)
+  useEventListener("keydown", handleEscape, containerRef as RefObject<HTMLDivElement>)
 
   if (!libraryHours?.primaryHours || !todayLibraryHours) {
     return

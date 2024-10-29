@@ -10,7 +10,10 @@ export const metadata = {
 export const revalidate = false
 export const dynamic = "force-static"
 
-const Calendar = ({params: {id}}: {params: {id: string}}) => {
+const Calendar = async (props: {params: Promise<{id: string}>}) => {
+  const params = await props.params
+  const {id} = params
+
   return (
     <main id="main-content">
       <InternalHeaderBanner>

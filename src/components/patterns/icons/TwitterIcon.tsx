@@ -1,6 +1,6 @@
-import {PropsWithoutRef} from "react"
+import {SVGProps} from "react"
 
-const TwitterIcon = (props: PropsWithoutRef<any>) => (
+const TwitterIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg width={28} viewBox="0 0 512 512" {...props}>
     <path
       fill="currentColor"

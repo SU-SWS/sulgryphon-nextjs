@@ -1,15 +1,15 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
-import {PropsWithChildren} from "react"
+import {HTMLAttributes, JSX} from "react"
 import {twJoin, twMerge} from "tailwind-merge"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 
 export const DrupalLinkButton = ({
   href,
   children,
   className = "",
   ...props
-}: PropsWithChildren<{href: string; className?: string}>) => {
+}: HTMLAttributes<HTMLAnchorElement> & {href: string; className?: string}) => {
   return (
     <Link
       href={href}
@@ -29,7 +29,10 @@ export const DrupalLinkSecondaryButton = ({
   children,
   className = "",
   ...props
-}: PropsWithChildren<{href: string; className?: string}>) => {
+}: HTMLAttributes<HTMLAnchorElement> & {
+  href: string
+  className?: string
+}) => {
   return (
     <Link
       href={href}
@@ -49,7 +52,7 @@ export const DrupalLinkBigButton = ({
   children,
   className = "",
   ...props
-}: PropsWithChildren<{href: string; className?: string}>) => {
+}: HTMLAttributes<HTMLAnchorElement> & {href: string; className?: string}) => {
   return (
     <Link
       href={href}
@@ -64,7 +67,14 @@ export const DrupalLinkBigButton = ({
   )
 }
 
-export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{href: string; className?: string}>) => {
+export const DrupalActionLink = ({
+  href,
+  children,
+  ...props
+}: HTMLAttributes<HTMLAnchorElement> & {
+  href: string
+  className?: string
+}) => {
   return (
     <Link
       href={href}
@@ -80,20 +90,21 @@ export const DrupalActionLink = ({href, children, ...props}: PropsWithChildren<{
   )
 }
 
-interface DrupalLinkProps extends PropsWithChildren<any> {
-  url?: Maybe<string>
-  title?: Maybe<string>
-  style?: Maybe<string>
+type DrupalLinkProps = {
+  url: string
+  title: LinkType["title"]
+  linkStyle?: "secondary_button" | "cta_button" | string | null
+  children?: JSX.Element | JSX.Element[]
 }
 
-export const DrupalLink = ({url, title, style, children, ...props}: DrupalLinkProps) => {
+export const DrupalLink = ({url, title, linkStyle, children, ...props}: DrupalLinkProps) => {
   if (!url) {
     return null
   }
   const LinkComponent =
-    style === "secondary_button"
+    linkStyle === "secondary_button"
       ? DrupalLinkSecondaryButton
-      : style === "cta_button"
+      : linkStyle === "cta_button"
         ? DrupalActionLink
         : DrupalLinkButton
   return (

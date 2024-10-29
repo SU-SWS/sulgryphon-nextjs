@@ -17,7 +17,10 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   /**
    * Server action to load a page.
    */
-  loadPage?: (_page: number, _filters?: Record<string, any>) => Promise<JSX.Element>
+  loadPage?: (
+    _page: number,
+    _filters?: Record<string, string | number | Array<string | number> | undefined>
+  ) => Promise<JSX.Element>
 
   typeOptions: SelectOptionDefinition<string>[]
 }
@@ -41,10 +44,19 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
     [setTotalResults, setItems]
   )
 
-  const [runAction, isPending] = useServerAction<[number, Record<string, any>], JSX.Element>(loadPage, onActionFinished)
+  const [runAction, isPending] = useServerAction<
+    [number, Record<string, string | number | Array<string | number> | undefined>],
+    JSX.Element
+  >(loadPage, onActionFinished)
 
   const onDateChange = (date?: string) => {
-    runAction(0, {date, title: titleFilterRef.current?.value, type: typeFilter}).then(() => setDateFilter(date))
+    runAction(0, {
+      date,
+      title: titleFilterRef.current?.value,
+      type: typeFilter,
+    })
+      .then(() => setDateFilter(date))
+      .catch(_e => console.warn("Failed to filter news list"))
   }
 
   const onFilterTitle = () => {
@@ -52,7 +64,9 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
       title: titleFilterRef.current?.value,
       date: dateFilter,
       type: typeFilter,
-    }).then(() => setTitleFilter(titleFilterRef.current?.value || ""))
+    })
+      .then(() => setTitleFilter(titleFilterRef.current?.value || ""))
+      .catch(_e => console.warn("Failed to filter news list"))
   }
 
   const onTypeChange = (typeValue: string) => {
@@ -60,7 +74,9 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
       title: titleFilterRef.current?.value,
       date: dateFilter,
       type: typeValue === "all" ? undefined : typeValue,
-    }).then(() => setTypeFilter(typeValue === "all" ? undefined : typeValue))
+    })
+      .then(() => setTypeFilter(typeValue === "all" ? undefined : typeValue))
+      .catch(_e => console.warn("Failed to filter news list"))
   }
 
   return (

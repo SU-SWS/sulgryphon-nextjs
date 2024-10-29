@@ -14,7 +14,10 @@ interface Props {
   /**
    * Server action to load a page.
    */
-  loadPage?: (_page: number, _filters?: Record<string, any>) => Promise<JSX.Element>
+  loadPage?: (
+    _page: number,
+    _filters?: Record<string, string | number | Array<string | number> | undefined>
+  ) => Promise<JSX.Element>
 }
 
 const FilteringNewsCardView = async ({items, hasHeading, totalItems, loadPage}: Props) => {

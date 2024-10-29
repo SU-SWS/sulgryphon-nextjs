@@ -2,10 +2,10 @@
 
 import {ArrowPathIcon} from "@heroicons/react/20/solid"
 import Embed, {defaultProviders} from "react-tiny-oembed"
-import {PropsWithoutRef} from "react"
+import {HTMLAttributes} from "react"
 import {useIntersectionObserver} from "usehooks-ts"
 
-interface Props extends PropsWithoutRef<any> {
+type Props = HTMLAttributes<HTMLDivElement> & {
   url: string
 }
 

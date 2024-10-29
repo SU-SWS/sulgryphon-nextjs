@@ -36,7 +36,7 @@ export const Tabs = ({paramId = "tab", orientation, defaultTab, children, ...pro
   const onChange = (_e: SyntheticEvent | null, value: number | string | null) => {
     const params = new URLSearchParams(searchParams)
     params.delete(paramId)
-    value && params.set(paramId, `${value}`)
+    if (value) params.set(paramId, `${value}`)
     router.replace(`?${params.toString()}${window.location.hash || ""}`, {scroll: false})
   }
   const paramValue = searchParams.get(paramId)

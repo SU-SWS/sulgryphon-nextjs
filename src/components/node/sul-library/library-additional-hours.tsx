@@ -21,7 +21,7 @@ const LibraryAdditionalHours = ({hoursId}: {hoursId: string}) => {
 
 const LibraryAdditionalHoursComponent = ({hoursId}: {hoursId: string}) => {
   const id = useId()
-  const libraryHours = useLibraryHours(hoursId) as LocationHours
+  const libraryHours = useLibraryHours<LocationHours>(hoursId)
   const additionalLocations = libraryHours && libraryHours.additionalLocations
   const today = new Date().toLocaleString("en-us", {weekday: "short", timeZone: "America/Los_Angeles"})
 

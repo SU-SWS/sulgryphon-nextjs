@@ -1,11 +1,11 @@
 "use client"
 
-import {FormEvent, Suspense, useId, useRef} from "react"
+import {FormEvent, HTMLAttributes, Suspense, useId, useRef} from "react"
 import {useRouter, useSearchParams} from "next/navigation"
 
-interface FormProps extends Record<string, any> {
+type FormProps = HTMLAttributes<HTMLDivElement> & {
   action: string
-  inputProps?: Record<string, any>
+  inputProps?: HTMLAttributes<HTMLInputElement>
 }
 
 const SearchForm = ({...props}: FormProps) => {
@@ -18,14 +18,15 @@ const SearchForm = ({...props}: FormProps) => {
 
 const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: FormProps) => {
   const params = useSearchParams()
+  const inputRef = useRef<HTMLInputElement>(null)
   const inputId = useId()
-
   inputProps = {
     id: inputId + "-search",
     className: "input w-full p-10 rounded",
+    // @ts-expect-error Placeholder does exist on an input element.
     placeholder: "Search",
     name: "q",
-    ref: useRef(),
+    ref: useRef(undefined),
     defaultValue: (params ? params.get("q") : "") as string,
     ...inputProps,
   }
@@ -35,7 +36,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
   const formSubmit = (e: FormEvent) => {
     if (action === "/search") {
       e.preventDefault()
-      const newSearch = inputProps.ref.current.value
+      const newSearch = inputRef.current?.value
       router.push(`/search?q=${newSearch}`)
     }
   }
@@ -51,7 +52,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
           <label className="mb-2 text-white" htmlFor={inputProps.id}>
             Keyword Search
           </label>
-          <input {...inputProps} />
+          <input {...inputProps} ref={inputRef} />
         </div>
         <button
           type="submit"

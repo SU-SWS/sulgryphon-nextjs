@@ -1,12 +1,14 @@
 import InterceptionModal from "@/components/patterns/modals/interception-modal"
-import {useId} from "react"
 
-const Calendar = ({params: {id}}: {params: {id: string}}) => {
-  const headingId = useId()
+const Calendar = async (props: {params: Promise<{id: string}>}) => {
+  const params = await props.params
+
+  const {id} = params
+
   return (
-    <InterceptionModal aria-labelledby={headingId}>
+    <InterceptionModal aria-labelledby={`calendar-${id}`}>
       <div className="bg-[#fbfbf9]">
-        <h2 id={headingId} className="p-40">
+        <h2 id={`calendar-${id}`} className="p-40">
           Schedule an appointment
         </h2>
         <iframe

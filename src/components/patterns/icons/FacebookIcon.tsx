@@ -1,6 +1,6 @@
-import {PropsWithoutRef} from "react"
+import {SVGProps} from "react"
 
-const FacebookIcon = (props: PropsWithoutRef<any>) => (
+const FacebookIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg width={17.5} viewBox="0 0 340 512" {...props}>
     <path
       fill="currentColor"

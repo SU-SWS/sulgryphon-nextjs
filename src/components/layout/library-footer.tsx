@@ -8,7 +8,6 @@ import TwitterIcon from "@/components/patterns/icons/TwitterIcon"
 import InstagramIcon from "@/components/patterns/icons/InstagramIcon"
 import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon"
 import {ReactNode} from "react"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 
 const LibraryFooter = () => {
   return (
@@ -125,12 +124,6 @@ const _SocialLinks = () => {
         <YoutubeIcon className="text-white transition-all hocus:text-cool-grey" height={30} />
         <span className="sr-only">Youtube</span>
       </FooterLink>
-
-      {isPreviewMode() && (
-        <Link className="sr-only" href="/api/draft/disable" prefetch>
-          Disable Draft Mode
-        </Link>
-      )}
     </div>
   )
 }
