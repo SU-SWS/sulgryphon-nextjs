@@ -9,6 +9,7 @@ import StanfordPageMetadata from "@/components/node/stanford-page/stanford-page-
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const revalidate = false
 export const dynamic = "force-static"
+export const maxDuration = 60
 
 const Page = async () => {
   const {entity} = await getEntityFromPath<NodeStanfordPage>("/")

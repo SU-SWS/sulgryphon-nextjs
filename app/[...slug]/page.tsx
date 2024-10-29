@@ -13,6 +13,7 @@ import {getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
 
 export const revalidate = false
 export const dynamic = "force-static"
+export const maxDuration = 60
 
 const NodePage = async (props: PageProps & {previewMode?: true}) => {
   const params = await props.params

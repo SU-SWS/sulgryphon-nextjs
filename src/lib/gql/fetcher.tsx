@@ -72,36 +72,36 @@ export const getEntityFromPath = async <T extends NodeUnion>(
   return getData()
 }
 
-export const getConfigPage = async <T extends ConfigPagesUnion>(
-  configPageType: ConfigPagesUnion["__typename"]
-): Promise<T | undefined> => {
-  "use server"
+export const getConfigPage = cache(
+  async <T extends ConfigPagesUnion>(configPageType: ConfigPagesUnion["__typename"]): Promise<T | undefined> => {
+    "use server"
 
-  const getConfigPageInner = nextCache(
-    async () => {
-      let query: ConfigPagesQuery
-      try {
-        query = await graphqlClient({next: {tags: ["config-pages"]}}).ConfigPages()
-      } catch (e) {
-        console.error("Unable to fetch config pages", e instanceof Error ? e.message : undefined)
-        return
-      }
+    const getConfigPageInner = nextCache(
+      async () => {
+        let query: ConfigPagesQuery
+        try {
+          query = await graphqlClient({next: {tags: ["config-pages"]}}).ConfigPages()
+        } catch (e) {
+          console.error("Unable to fetch config pages", e instanceof Error ? e.message : undefined)
+          return
+        }
 
-      if (query.stanfordBasicSiteSettings.nodes[0]?.__typename === configPageType)
-        return query.stanfordBasicSiteSettings.nodes[0] as T
-      if (query.stanfordGlobalMessages.nodes[0]?.__typename === configPageType)
-        return query.stanfordGlobalMessages.nodes[0] as T
-      if (query.stanfordLocalFooters.nodes[0]?.__typename === configPageType)
-        return query.stanfordLocalFooters.nodes[0] as T
-      if (query.stanfordSuperFooters.nodes[0]?.__typename === configPageType)
-        return query.stanfordSuperFooters.nodes[0] as T
-      if (query.lockupSettings.nodes[0]?.__typename === configPageType) return query.lockupSettings.nodes[0] as T
-    },
-    [configPageType || "all"],
-    {tags: ["config-pages"]}
-  )
-  return getConfigPageInner()
-}
+        if (query.stanfordBasicSiteSettings.nodes[0]?.__typename === configPageType)
+          return query.stanfordBasicSiteSettings.nodes[0] as T
+        if (query.stanfordGlobalMessages.nodes[0]?.__typename === configPageType)
+          return query.stanfordGlobalMessages.nodes[0] as T
+        if (query.stanfordLocalFooters.nodes[0]?.__typename === configPageType)
+          return query.stanfordLocalFooters.nodes[0] as T
+        if (query.stanfordSuperFooters.nodes[0]?.__typename === configPageType)
+          return query.stanfordSuperFooters.nodes[0] as T
+        if (query.lockupSettings.nodes[0]?.__typename === configPageType) return query.lockupSettings.nodes[0] as T
+      },
+      [configPageType || "all"],
+      {tags: ["config-pages"]}
+    )
+    return getConfigPageInner()
+  }
+)
 
 export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> => {
   "use server"
