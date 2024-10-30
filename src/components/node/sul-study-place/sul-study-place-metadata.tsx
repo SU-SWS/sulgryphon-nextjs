@@ -12,7 +12,7 @@ const SulStudyPlaceMetadata = async ({node}: Props) => {
   return (
     <>
       <title>{pageTitle}</title>
-      <meta property="og:title" content="Stanford Sites User Guide" />
+      <meta property="og:title" content="Stanford Libraries" />
 
       {image && (
         <>
