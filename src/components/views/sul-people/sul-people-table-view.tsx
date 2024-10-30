@@ -65,28 +65,27 @@ const SulPeopleTableView = ({items}: Props) => {
           </label>
 
           <input
-            className="block h-[40.69px] w-full rounded-full p-9 pl-15 text-18"
+            className="peer block h-[40.69px] w-full rounded-full p-9 pl-15 text-18"
             ref={keywordRef}
             type="text"
             id={id}
+            placeholder=""
           />
 
-          {keywordFilter && (
-            <button
-              type="reset"
-              className="absolute bottom-6 right-32 z-10"
-              aria-label="Clear keyword search"
-              onClick={() => {
-                if (keywordRef.current) {
-                  keywordRef.current.value = ""
-                  keywordRef.current.focus()
-                }
-                setKeywordFilter("")
-              }}
-            >
-              <XMarkIcon className="pr-5 text-black-50" width={30} />
-            </button>
-          )}
+          <button
+            type="reset"
+            className="absolute bottom-6 right-32 z-10 peer-placeholder-shown:hidden"
+            aria-label="Clear keyword search"
+            onClick={() => {
+              if (keywordRef.current) {
+                keywordRef.current.value = ""
+                keywordRef.current.focus()
+              }
+              setKeywordFilter("")
+            }}
+          >
+            <XMarkIcon className="pr-5 text-black-50" width={30} />
+          </button>
 
           <button
             type="submit"
