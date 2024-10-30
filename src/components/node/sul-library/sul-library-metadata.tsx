@@ -15,7 +15,7 @@ const SulLibraryMetadata = async ({node}: Props) => {
     <>
       <title>{pageTitle}</title>
       <meta name="description" content={description} />
-      <meta property="og:title" content="Stanford Sites User Guide" />
+      <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
 
       {image && (
