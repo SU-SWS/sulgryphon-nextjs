@@ -72,7 +72,11 @@ const options: HTMLReactParserOptions = {
           return <pre {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</pre>
 
         case "figure":
-          nodeProps.className += " table mb-20"
+          nodeProps.className = twMerge(
+            "table mb-20",
+            nodeProps.className,
+            !nodeProps.className.includes("float") && "w-full"
+          )
           delete nodeProps.role
           return <figure {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</figure>
         case "figcaption":
