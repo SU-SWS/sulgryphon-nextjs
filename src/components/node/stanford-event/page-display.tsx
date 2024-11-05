@@ -7,6 +7,7 @@ import EmailLink from "@/components/patterns/elements/email-link"
 import TelephoneLink from "@/components/patterns/elements/telephone-link"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
+import StanfordEventMetadata from "@/components/node/stanford-event/stanford-event-metadata"
 
 const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   if (node.suEventSource?.url) redirect(node.suEventSource.url)
@@ -80,6 +81,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
 
   return (
     <article {...props} className="mt-50">
+      <StanfordEventMetadata node={node} />
       {inPast && <div className="uppercase text-black-70">Past Event</div>}
 
       {node.suEventType && node.suEventType.length > 0 && (

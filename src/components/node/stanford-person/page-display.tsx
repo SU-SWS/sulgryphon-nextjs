@@ -10,9 +10,15 @@ import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
+import StanfordPersonMetadata from "@/components/node/stanford-person/stanford-person-metadata"
 
 const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
-  const libGuides = node.sulPersonLibguideId ? await fetchLibGuides({accountId: node.sulPersonLibguideId}) : []
+  const libGuides = node.sulPersonLibguideId
+    ? await fetchLibGuides({
+        accountId: node.sulPersonLibguideId,
+        cacheTags: [`paths:${node.path}`],
+      })
+    : []
   const imageUrl = node.suPersonPhoto?.mediaImage.url
 
   const lastUpdated = new Date(node.changed.time as string).toLocaleDateString("en-us", {
@@ -24,6 +30,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
 
   return (
     <article {...props}>
+      <StanfordPersonMetadata node={node} />
       <div className="no-wrap rs-mb-5 mt-50 sm:flex">
         {imageUrl && (
           <div className="rs-mb-1 rs-mr-4 sm:mb-[0rem]">

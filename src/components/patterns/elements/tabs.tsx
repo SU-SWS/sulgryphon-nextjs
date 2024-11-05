@@ -1,57 +1,94 @@
-import {useTab, useTabList, useTabPanel} from "react-aria"
-import {Orientation, TabListState, useTabListState} from "react-stately"
-import {PropsWithChildren, useRef} from "react"
-import {Node} from "@react-types/shared/src/collections"
-import {TabListStateOptions} from "@react-stately/tabs"
+"use client"
 
-type TabsProps = {
-  className?: string
-  tabListClass?: string
-  tabClass?: string
-  tabPanelClass?: string
-  orientation?: Orientation
+import {TabsProvider, useTabs} from "@mui/base/useTabs"
+import {useTab} from "@mui/base/useTab"
+import {useTabPanel} from "@mui/base/useTabPanel"
+import {TabsListProvider, useTabsList} from "@mui/base/useTabsList"
+import {HTMLAttributes, SyntheticEvent, useRef} from "react"
+import {clsx} from "clsx"
+import {twMerge} from "tailwind-merge"
+import {UseTabsParameters} from "@mui/base/useTabs/useTabs.types"
+import {useRouter, useSearchParams} from "next/navigation"
+import {useScreen} from "usehooks-ts"
+
+// View the API for all the tab components here: https://mui.com/base-ui/react-tabs/hooks-api/.
+type TabsProps = HTMLAttributes<HTMLDivElement> & {
+  /**
+   * The query parameter in the URL for sharing or reloading.
+   */
+  paramId?: string
+  /**
+   * Default tab for initial rendering.
+   */
+  defaultTab?: UseTabsParameters["defaultValue"]
+  /**
+   * Which direction the tabs are displayed.
+   */
+  orientation?: UseTabsParameters["orientation"]
 }
 
-export const Tabs = ({
-  className,
-  tabListClass,
-  tabClass,
-  tabPanelClass,
-  ...props
-}: PropsWithChildren<TabsProps> & TabListStateOptions<any>) => {
-  let state = useTabListState(props)
-  let ref = useRef<HTMLDivElement>(null)
-  let {tabListProps} = useTabList(props, state, ref)
+export const Tabs = ({paramId = "tab", orientation, defaultTab, children, ...props}: TabsProps) => {
+  const screen = useScreen({initializeWithValue: false})
+  const isVertical = (screen && screen.width < 768) || orientation === "vertical"
+
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const onChange = (_e: SyntheticEvent | null, value: number | string | null) => {
+    const params = new URLSearchParams(searchParams)
+    params.delete(paramId)
+    if (value) params.set(paramId, `${value}`)
+    router.replace(`?${params.toString()}${window.location.hash || ""}`, {scroll: false})
+  }
+  const paramValue = searchParams.get(paramId)
+  const initialTab = (paramValue && parseInt(paramValue)) || defaultTab
+
+  const {contextValue} = useTabs({
+    orientation: isVertical ? "vertical" : "horizontal",
+    defaultValue: initialTab || 0,
+    onChange,
+    selectionFollowsFocus: true,
+  })
 
   return (
-    <div className={className}>
-      <div className={tabListClass} {...tabListProps} ref={ref}>
-        {[...state.collection].map(item => (
-          <Tab key={item.key} item={item} state={state} className={tabClass} />
-        ))}
-      </div>
-      <TabPanel key={state.selectedItem?.key} state={state} className={tabPanelClass} />
-    </div>
+    <TabsProvider value={contextValue}>
+      <div {...props}>{children}</div>
+    </TabsProvider>
   )
 }
 
-export const Tab = ({item, state, className}: {item: Node<any>; state: TabListState<any>; className?: string}) => {
-  let {key, rendered} = item
-  let ref = useRef(null)
-  let {tabProps} = useTab({key}, state, ref)
+export const TabsList = ({children, ...props}: HTMLAttributes<HTMLDivElement>) => {
+  const screen = useScreen({initializeWithValue: false})
+  const rootRef = useRef<HTMLDivElement>(null)
+  const {contextValue, orientation, getRootProps} = useTabsList({rootRef})
+  const isVertical = (screen && screen.width < 768) || orientation === "vertical"
+
   return (
-    <button type="button" className={className} {...tabProps} ref={ref}>
-      {rendered}
+    <TabsListProvider value={contextValue}>
+      <div {...props} {...getRootProps()} className={twMerge("flex", clsx({"flex-col": isVertical}), props.className)}>
+        {children}
+      </div>
+    </TabsListProvider>
+  )
+}
+
+export const Tab = ({children, ...props}: HTMLAttributes<HTMLButtonElement>) => {
+  const rootRef = useRef<HTMLButtonElement>(null)
+  const {getRootProps} = useTab({rootRef})
+
+  return (
+    <button {...props} {...getRootProps()}>
+      {children}
     </button>
   )
 }
 
-export const TabPanel = ({state, className, ...props}: {state: TabListState<any>; className?: string}) => {
-  let ref = useRef(null)
-  let {tabPanelProps} = useTabPanel(props, state, ref)
+export const TabPanel = ({children, ...props}: HTMLAttributes<HTMLElement>) => {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const {getRootProps} = useTabPanel({rootRef})
+
   return (
-    <div className={className} {...tabPanelProps} ref={ref}>
-      {state.selectedItem?.props.children}
-    </div>
+    <section {...props} {...getRootProps()} role="tabpanel">
+      {children}
+    </section>
   )
 }

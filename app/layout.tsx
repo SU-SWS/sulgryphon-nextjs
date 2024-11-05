@@ -25,7 +25,6 @@ const icons: Icon[] = [16, 32, 96, 128, 192, 196].map(size => ({
 
 export const metadata = {
   metadataBase: new URL("https://library.stanford.edu"),
-  title: process.env.NEXT_PUBLIC_SITE_NAME,
   openGraph: {
     type: "website",
     locale: "en_IE",
@@ -43,10 +42,10 @@ export const metadata = {
 
 export const revalidate = false
 
-const RootLayout = ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
-  const previewMode = isPreviewMode()
+const RootLayout = async ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
+  const previewMode = await isPreviewMode()
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <DrupalWindowSync />
       <body>
         <nav aria-label="Skip link">

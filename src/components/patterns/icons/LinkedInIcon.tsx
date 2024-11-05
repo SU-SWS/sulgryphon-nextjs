@@ -1,6 +1,6 @@
-import {PropsWithoutRef} from "react"
+import {SVGProps} from "react"
 
-const LinkedInIcon = (props: PropsWithoutRef<any>) => (
+const LinkedInIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg width={24.5} viewBox="0 0 448 512" {...props}>
     <path
       fill="currentColor"

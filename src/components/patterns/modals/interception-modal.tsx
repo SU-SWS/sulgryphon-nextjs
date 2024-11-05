@@ -1,27 +1,22 @@
 "use client"
 
-import {PropsWithChildren, useCallback, useEffect, useRef} from "react"
+import {HTMLAttributes, useCallback, useRef} from "react"
 import {useRouter} from "next/navigation"
 import ReactFocusLock from "react-focus-lock"
 import {XMarkIcon} from "@heroicons/react/20/solid"
-import {useScrollLock} from "usehooks-ts"
+import {useEventListener, useScrollLock} from "usehooks-ts"
 
-const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
-  const overlay = useRef(null)
-  const wrapper = useRef(null)
+const InterceptionModal = ({children, ...props}: HTMLAttributes<HTMLDialogElement>) => {
+  const overlay = useRef<HTMLDialogElement>(null)
+  const wrapper = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
   useScrollLock()
 
-  const onDismiss = useCallback(() => {
-    router.back()
-  }, [router])
+  const onDismiss = useCallback(() => router.back(), [router])
 
   const onClick = useCallback(
-    (e: MouseEvent) => {
-      if (e.target === overlay.current || e.target === wrapper.current) {
-        if (onDismiss) onDismiss()
-      }
+    (e: React.MouseEvent) => {
+      if (e.target === overlay.current || e.target === wrapper.current) onDismiss()
     },
     [onDismiss, overlay, wrapper]
   )
@@ -33,12 +28,7 @@ const InterceptionModal = ({children, ...props}: PropsWithChildren<any>) => {
     [onDismiss]
   )
 
-  useEffect(() => {
-    document.addEventListener("keydown", onKeyDown)
-    return () => {
-      document.removeEventListener("keydown", onKeyDown)
-    }
-  }, [onKeyDown])
+  useEventListener("keydown", onKeyDown)
 
   return (
     <dialog

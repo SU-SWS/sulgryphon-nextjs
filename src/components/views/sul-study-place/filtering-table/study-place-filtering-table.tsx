@@ -5,7 +5,7 @@ import Image from "next/image"
 import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
 import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
-import {useCallback, useId, useRef, useState} from "react"
+import {RefObject, useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ChevronDownIcon} from "@heroicons/react/24/outline"
 import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
@@ -108,9 +108,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
       <form onSubmit={e => e.preventDefault()} action="javascript:void(0);">
         <fieldset className="text-18">
           <legend className="sr-only">Filter places to study</legend>
-          <div className="mb-30 flex w-full flex-wrap items-center justify-around gap-15 *:min-w-300 *:flex-1 *:3xl:min-w-0">
+          <div className="mb-30 flex w-full flex-col flex-wrap items-center justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
             {!!Object.keys(libraryHours).length && (
-              <fieldset className="mb-10 mr-0 flex h-25 w-full items-center md:mb-0 3xl:mr-19">
+              <fieldset className="mb-10 mr-0 flex h-fit w-full items-center sm:mb-0">
                 <legend className="sr-only">Show only open now or all locations</legend>
                 <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="study-place-open">
                   All locations
@@ -253,8 +253,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       </div>
                     </a>
                   )}
-                  {/* Without this, the responsive table library injects a "&nbsp;". */}
-                  {""}
+                  {!item.libCalId && <p className="m-0 text-16">Reservation not required</p>}
                 </Td>
               </Tr>
             ))}
@@ -285,7 +284,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     [collapseHours, expandedHours]
   )
 
-  useEventListener("keydown", handleEscape, containerRef)
+  useEventListener("keydown", handleEscape, containerRef as RefObject<HTMLDivElement>)
 
   if (!libraryHours?.primaryHours || !todayLibraryHours) {
     return

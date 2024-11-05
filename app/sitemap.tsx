@@ -3,11 +3,12 @@ import {graphqlClient} from "@/lib/gql/fetcher"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
-export const revalidate = false
+export const revalidate = 604800
 export const dynamic = "force-static"
+export const maxDuration = 60
 
 const Sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const nodeQuery = await graphqlClient({next: {tags: ["paths"]}}).Nodes()
+  const nodeQuery = await graphqlClient({cache: "no-cache"}).Nodes()
   const nodes: NodeUnion[] = []
 
   nodeQuery.nodeStanfordCourses.nodes.map(node => nodes.push(node as NodeUnion))

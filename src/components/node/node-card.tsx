@@ -1,4 +1,4 @@
-import {PropsWithRef} from "react"
+import {HTMLAttributes} from "react"
 import StanfordCourseCard from "@/components/node/stanford-course/card"
 import StanfordEventCard from "@/components/node/stanford-event/card"
 import StanfordEventSeriesCard from "@/components/node/stanford-event-series/card"
@@ -10,8 +10,9 @@ import SulLibraryCard from "@/components/node/sul-library/card"
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card"
 import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
 
-interface NodeProps extends PropsWithRef<any> {
+type NodeProps = HTMLAttributes<HTMLDivElement> & {
   node: NodeUnion
+  h3Heading?: boolean
 }
 
 const NodeCardDisplay = ({node, ...props}: NodeProps) => {

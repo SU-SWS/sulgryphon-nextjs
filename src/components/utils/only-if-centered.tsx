@@ -1,7 +1,7 @@
 import useIsCentered from "@/lib/hooks/useIsCentered"
-import {MutableRefObject, PropsWithChildren} from "react"
+import {PropsWithChildren, RefObject} from "react"
 
-const OnlyIfCentered = ({elem, children}: PropsWithChildren<{elem: MutableRefObject<any>}>) => {
+const OnlyIfCentered = ({elem, children}: PropsWithChildren<{elem: RefObject<HTMLElement | null>}>) => {
   const isCentered = useIsCentered(elem)
   if (!isCentered) return null
   return <>{children}</>

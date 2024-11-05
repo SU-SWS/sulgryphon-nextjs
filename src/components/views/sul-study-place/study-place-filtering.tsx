@@ -18,7 +18,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
   const [selectedLibraries, setSelectedLibraries] = useState<string[]>([])
   const [selectedCapacity, setSelectedCapacity] = useState<string[]>([])
   const [selectedFeatures, setSelectedFeatured] = useState<string[]>([])
-  const parent: RefObject<HTMLUListElement> = useRef(null)
+  const parent: RefObject<HTMLUListElement | null> = useRef(null)
 
   const [itemsToDisplay, setItemsToDisplay] = useState(items)
 
@@ -79,7 +79,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
   }
 
   useEffect(() => {
-    parent.current && autoAnimate(parent.current, {duration: 300})
+    if (parent.current) autoAnimate(parent.current, {duration: 300})
   }, [parent])
 
   return (
@@ -96,7 +96,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={typeOfStudies.length == 0}
             value={selectedTypes}
-            onChange={(event, value: SelectValue<string, boolean>) => setSelectedTypes(value as string[])}
+            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedTypes(value as string[])}
           />
 
           <SelectList
@@ -105,7 +105,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={libraryOptions.length == 0}
             value={selectedLibraries}
-            onChange={(event, value: SelectValue<string, boolean>) => setSelectedLibraries(value as string[])}
+            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedLibraries(value as string[])}
           />
 
           <SelectList
@@ -114,7 +114,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={capacityOptions.length == 0}
             value={selectedCapacity}
-            onChange={(event, value: SelectValue<string, boolean>) => setSelectedCapacity(value as string[])}
+            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedCapacity(value as string[])}
           />
 
           <SelectList
@@ -123,7 +123,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={featureOptions.length == 0}
             value={selectedFeatures}
-            onChange={(event, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
+            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
           />
         </fieldset>
 

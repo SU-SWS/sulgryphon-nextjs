@@ -8,9 +8,9 @@ export const GET = async (request: NextRequest) => {
   if (secret !== process.env.DRUPAL_REVALIDATE_SECRET)
     return NextResponse.json({message: "Invalid token"}, {status: 403})
 
-  let path = request.nextUrl.searchParams.get("slug")
+  const path = request.nextUrl.searchParams.get("slug")
   if (!path || path.startsWith("/node/")) return NextResponse.json({message: "Invalid slug"}, {status: 400})
-
   revalidatePath(path)
+
   return NextResponse.json({revalidated: true, path})
 }

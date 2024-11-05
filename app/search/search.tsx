@@ -21,7 +21,9 @@ const Search = ({search}: {search: (_search: string) => Promise<SearchResult[]>}
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    search(params?.get("q") || "").then(nodes => setResults(nodes))
+    search(params?.get("q") || "")
+      .then(nodes => setResults(nodes))
+      .catch(_e => console.warn("Failed to search"))
   }, [params, search])
 
   const onSubmit = (e: FormEvent) => {
@@ -29,11 +31,13 @@ const Search = ({search}: {search: (_search: string) => Promise<SearchResult[]>}
     setIsLoading(true)
 
     const searchString = inputRef.current?.value || ""
-    search(searchString).then(results => {
-      setResults(results)
-      setSearchString(searchString)
-      setIsLoading(false)
-    })
+    search(searchString)
+      .then(results => {
+        setResults(results)
+        setSearchString(searchString)
+        setIsLoading(false)
+      })
+      .catch(_e => console.warn("Failed to search"))
   }
 
   return (
@@ -79,14 +83,14 @@ const Search = ({search}: {search: (_search: string) => Promise<SearchResult[]>}
 }
 
 const SearchResultItem = ({item}: {item: SearchResult}) => {
-  const lastUpdated = new Date(item.changed as string).toLocaleDateString("en-us", {
+  const lastUpdated = new Date(item.changed).toLocaleDateString("en-us", {
     month: "long",
     day: "numeric",
     year: "numeric",
   })
   return (
     <>
-      <Link href={(item.path as string) ?? "#"} className="no-underline hocus:underline">
+      <Link href={item.path ?? "#"} className="no-underline hocus:underline">
         <h2 className="type-2">{item.title}</h2>
       </Link>
       {item?.description && <p>{item.description}</p>}

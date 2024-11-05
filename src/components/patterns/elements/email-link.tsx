@@ -1,6 +1,5 @@
 "use client"
 
-// @ts-ignore
 import {Email} from "react-obfuscate-email"
 import {HTMLProps} from "react"
 

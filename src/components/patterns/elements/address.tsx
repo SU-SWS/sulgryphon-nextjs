@@ -1,4 +1,4 @@
-import {Address as AddressType} from "@/lib/gql/__generated__/drupal"
+import {Address as AddressType} from "@/lib/gql/__generated__/drupal.d"
 import {HTMLAttributes} from "react"
 
 type Props = AddressType &

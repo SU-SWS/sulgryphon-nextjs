@@ -1,4 +1,5 @@
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import Link from "next/link"
 
 const NotFound = () => {
   return (
@@ -10,8 +11,11 @@ const NotFound = () => {
       </InternalHeaderBanner>
 
       <div className="centered mb-50">
-        Unable to find the content you are looking for. Please try the <a href="/all">search</a> to find what you were
-        looking for.
+        Unable to find the content you are looking for. Please try the{" "}
+        <Link prefetch={false} href="/all">
+          search
+        </Link>{" "}
+        to find what you were looking for.
       </div>
     </main>
   )

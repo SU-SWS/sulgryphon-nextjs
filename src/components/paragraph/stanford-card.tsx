@@ -6,6 +6,7 @@ import Oembed from "@/components/patterns/elements/oembed"
 import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {ElementType, HTMLAttributes} from "react"
+import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   header?: Maybe<string>
@@ -52,7 +53,10 @@ const StanfordCard = ({
   }
 
   return (
-    <div className={"relative" + (!isHorizontal ? " centered mx-auto w-full lg:max-w-[980px]" : "")} {...props}>
+    <div
+      className={twMerge("relative", !isHorizontal ? "centered mx-auto w-full lg:max-w-[980px]" : "p-0 md:rs-pt-5")}
+      {...props}
+    >
       {isHorizontal && (
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="h-full" />}

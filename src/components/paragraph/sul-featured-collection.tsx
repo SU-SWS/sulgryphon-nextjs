@@ -50,7 +50,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
                 <DrupalLink
                   url={link?.url}
                   title={link?.title}
-                  style={styles?.link_display_style}
+                  linkStyle={styles?.link_display_style}
                   {...linkAttributes}
                 />
               </div>

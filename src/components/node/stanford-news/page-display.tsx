@@ -11,6 +11,7 @@ import {redirect} from "next/navigation"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
+import StanfordNewsMetadata from "@/components/node/stanford-news/stanford-news-metadata"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   // Redirect the user to the external source.
@@ -28,8 +29,9 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
   return (
     <article {...props} className="centered mt-50">
+      <StanfordNewsMetadata node={node} />
       <div className="centered mb-100 2xl:w-2/3">
-        {node.suNewsDek && <div className="">{node.suNewsDek}</div>}
+        {node.suNewsDek && <div className="rs-mb-1">{node.suNewsDek}</div>}
         <div className="md:flex">
           <div className="flex md:order-last">
             {!node.suNewsHideSocial && (

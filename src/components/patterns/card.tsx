@@ -2,15 +2,15 @@ import {ReactNodeLike} from "prop-types"
 
 import formatHtml from "@/lib/format-html"
 import {DrupalLink} from "@/components/patterns/link"
-import {ElementType} from "react"
+import {ElementType, JSX} from "react"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 
 interface CardProps {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
-  superHeader?: Maybe<any>
-  header?: Maybe<any>
+  superHeader?: Maybe<string> | JSX.Element
+  header?: Maybe<string> | JSX.Element
   footer?: Maybe<ReactNodeLike>
   body?: Maybe<string>
   link?: Maybe<LinkType>
@@ -69,7 +69,7 @@ const Card = ({
 
         {footer && <div className="rs-pt-0 text-18 font-normal leading-display">{footer}</div>}
 
-        {link?.url && <DrupalLink url={link.url} title={link.title} style={linkStyle} {...linkAttributes} />}
+        {link?.url && <DrupalLink url={link.url} title={link.title} linkStyle={linkStyle} {...linkAttributes} />}
       </div>
     </div>
   )

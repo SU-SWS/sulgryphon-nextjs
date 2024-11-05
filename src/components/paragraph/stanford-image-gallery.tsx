@@ -89,7 +89,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
         <DrupalLinkButton
           href={paragraph.suGalleryButton.url}
           className="mx-auto block"
-          aria-label={paragraph.suGalleryButton.attributes?.ariaLabel}
+          aria-label={paragraph.suGalleryButton.attributes?.ariaLabel || undefined}
         >
           {paragraph.suGalleryButton.title}
         </DrupalLinkButton>

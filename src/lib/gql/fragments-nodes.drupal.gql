@@ -18,6 +18,9 @@ fragment FragmentNodeSulLibrary on NodeSulLibrary {
     layoutSelection {
         id
     }
+    sulLibraryExtUrl {
+        url
+    }
     suLibraryAddress {
         ...FragmentAddressType
     }
@@ -40,6 +43,10 @@ fragment FragmentNodeSulLibrary on NodeSulLibrary {
         processed
     }
     sulLibraryType
+    sulRelLinksHeading
+    sulRelLinks {
+        ... FragmentLink
+    }
 }
 
 fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
@@ -81,6 +88,10 @@ fragment FragmentNodeStanfordPage on NodeStanfordPage {
     suPageDescription
     suPageImage {
         ...FragmentMediaUnion
+    }
+    sulRelLinksHeading
+    sulRelLinks {
+        ... FragmentLink
     }
 }
 
@@ -178,6 +189,9 @@ fragment FragmentNodeStanfordEventSeries on NodeStanfordEventSeries {
 
 fragment FragmentNodeStanfordNews on NodeStanfordNews {
     ...FragmentNodeInterface
+    layoutSelection {
+        id
+    }
     suNewsBanner {
         ...FragmentMediaUnion
     }
@@ -199,6 +213,10 @@ fragment FragmentNodeStanfordNews on NodeStanfordNews {
     }
     suNewsTopics {
         ...FragmentTermInterface
+    }
+    sulRelLinksHeading
+    sulRelLinks {
+        ... FragmentLink
     }
 }
 

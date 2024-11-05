@@ -12,8 +12,8 @@ import {twMerge} from "tailwind-merge"
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
-  superHeader?: Maybe<any>
-  header?: Maybe<any>
+  superHeader?: Maybe<string>
+  header?: Maybe<string>
   footer?: Maybe<ReactNodeLike>
   body?: Maybe<string>
   link?: Maybe<LinkType>
@@ -53,7 +53,7 @@ const HorizontalCard = ({
   return (
     <div className="relative" {...props} ref={ref}>
       {fullWidth && (
-        <div className={"absolute left-0 top-0 z-[-10] ml-[calc(-50vw+50%)] h-full w-screen"}>
+        <div className="absolute left-0 top-0 z-[-10] ml-[calc(-50vw+50%)] h-full w-screen">
           <div className="relative h-full w-full bg-black-true" {...props}>
             <CardSprinkles position={backgroundSprinkles} />
           </div>
