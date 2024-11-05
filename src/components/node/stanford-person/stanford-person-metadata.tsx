@@ -13,9 +13,9 @@ const StanfordPersonMetadata = async ({node}: Props) => {
   return (
     <>
       <title>{pageTitle}</title>
-      <meta name="description" content={description} />
+      {description && <meta name="description" content={description} />}
       <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={description} />
+      {description && <meta property="og:description" content={description} />}
       <meta property="og:type" content="profile" />
       <meta property="profile:first_name" content={node.suPersonFirstName} />
       <meta property="profile:last_name" content={node.suPersonLastName} />
@@ -37,7 +37,7 @@ const StanfordPersonMetadata = async ({node}: Props) => {
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={description} />
+      {description && <meta name="twitter:description" content={description} />}
     </>
   )
 }
