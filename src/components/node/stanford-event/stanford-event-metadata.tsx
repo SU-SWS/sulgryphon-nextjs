@@ -13,9 +13,9 @@ const SulStudyPlaceMetadata = async ({node}: Props) => {
   return (
     <>
       <title>{pageTitle}</title>
-      <meta name="description" content={description} />
+      {description && <meta name="description" content={description} />}
       <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={description} />
+      {description && <meta property="og:description" content={description} />}
 
       {image && (
         <>
@@ -34,7 +34,7 @@ const SulStudyPlaceMetadata = async ({node}: Props) => {
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
-      <meta name="twitter:description" content={description} />
+      {description && <meta name="twitter:description" content={description} />}
     </>
   )
 }
