@@ -1,15 +1,17 @@
-@import 'decanter/fonts.css';
+@import "decanter/fonts.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Styles for react-tiny-oembed containers */
+div .__embed_column,
 .aspect-\[16\/9\] .__embed_column {
   width: 100%;
   max-width: 100%;
   height: 100%;
   display: block;
+  margin-bottom: 1.6em;
 }
 
 .aspect-\[16\/9\] .__embed_column iframe {
@@ -21,12 +23,12 @@
 @layer utilities {
   /* Added to get center alignment on branches table. */
   @media screen and (max-width: 40em) {
-     .responsiveTable td.branch-hours,
-     .responsiveTable td.table-image {
-        display: flex;
-        justify-content: center;
-     }
+    .responsiveTable td.branch-hours,
+    .responsiveTable td.table-image {
+      display: flex;
+      justify-content: center;
     }
+  }
   .responsive-table .tdBefore {
     display: none !important;
   }
@@ -35,7 +37,7 @@
     border: none !important;
   }
   .responsive-table tbody tr {
-    border-bottom: 1px #ABABA9 solid !important;
+    border-bottom: 1px #ababa9 solid !important;
   }
   .responsive-table tr td.pivoted {
     padding-top: 0 !important;
@@ -51,7 +53,7 @@
   }
   @media screen and (max-width: 40em) {
     .responsiveTable.responsive-table-study td.table-image {
-       display: block;
+      display: block;
     }
-   }
+  }
 }
