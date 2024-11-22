@@ -10,7 +10,9 @@
     "export": "next build && next export",
     "lint": "next lint && tsc",
     "graphql": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config codegen.ts -r dotenv/config",
-    "postinstall": "git config --local core.hooksPath .githooks/; exit 0"
+    "postinstall": "git config --local core.hooksPath .githooks/; exit 0",
+    "backstop:test": "backstop test",
+    "backstop:approve": "backstop approve"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
@@ -56,7 +58,9 @@
     "@graphql-codegen/import-types-preset": "^3.0.0",
     "@graphql-codegen/typescript-graphql-request": "^6.2.0",
     "@graphql-codegen/typescript-operations": "4.3.1",
+    "@types/backstopjs": "^6",
     "@types/qs": "^6.9.16",
+    "backstopjs": "^6.3.25",
     "eslint": "^9.13.0",
     "eslint-config-next": "15.0.2",
     "eslint-config-prettier": "^9.1.0",
