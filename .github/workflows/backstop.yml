@@ -1,0 +1,39 @@
+name: BackstopJS Visual Regression
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  backstop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Yarn
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Next.js project
+        run: yarn build
+
+      - name: Start Next.js server
+        run: yarn start &
+        env:
+          NODE_ENV: production
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3000
+
+      - name: Run BackstopJS tests
+        run: npx backstop test
