@@ -72,9 +72,9 @@ const options: HTMLReactParserOptions = {
           return <pre {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</pre>
 
         case "figure":
-          nodeProps.className = twMerge(
-            "table mb-20",
+          nodeProps.className = clsx(
             nodeProps.className,
+            "table mb-20",
             !nodeProps.className.includes("float") && "w-full"
           )
           delete nodeProps.role
@@ -249,3 +249,6 @@ const cleanMediaMarkup = (node: Element) => {
 
 const formatHtml = (html?: string) => parse(html ?? "", options)
 export default formatHtml
+function clsx(arg0: string, className: string, arg2: string | boolean): string | boolean {
+  throw new Error("Function not implemented.")
+}
