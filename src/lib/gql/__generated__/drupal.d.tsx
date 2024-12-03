@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: {input: boolean; output: boolean}
   Int: {input: number; output: number}
   Float: {input: number; output: number}
+  Bibliography: {input: any; output: any}
   Cursor: {input: any; output: any}
   Email: {input: any; output: any}
   Html: {input: any; output: any}
@@ -162,12 +163,215 @@ export type BookLink = {
 
 /** Entity type citation. */
 export type CitationInterface = {
+  /** The time that the entity was last edited. */
+  changed: DateTime
+  /** The time that the entity was created. */
+  created: DateTime
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars["ID"]["output"]
+  /** The title of the Citation. */
+  title: Scalars["String"]["output"]
 }
 
 /** Entity type citation. */
-export type CitationUnion = SuArticleJournal | SuArticleNewspaper | SuBook | SuOther | SuThesi
+export type CitationSuArticleJournal = CitationInterface & {
+  __typename?: "CitationSuArticleJournal"
+  apa?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was last edited. */
+  changed: DateTime
+  chicago?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was created. */
+  created: DateTime
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars["ID"]["output"]
+  /** Author(s) */
+  suAuthor?: Maybe<Array<NameType>>
+  /** Day */
+  suDay?: Maybe<Scalars["Int"]["output"]>
+  /**
+   * DOI id to the journal web page without the “https://doi.org/”. For example
+   * enter only for a link that is https://doi.org/12.345/123123 enter only
+   * <strong>12.345/123123</strong>.
+   */
+  suDoi?: Maybe<Scalars["String"]["output"]>
+  /** Issue */
+  suIssue?: Maybe<Scalars["Int"]["output"]>
+  /** The publisher of the journal. E.g. IEEE, Elsevier, etc. */
+  suJournalPublisher?: Maybe<Scalars["String"]["output"]>
+  /** Month */
+  suMonth?: Maybe<Scalars["Int"]["output"]>
+  /** Page(s) */
+  suPage?: Maybe<Scalars["String"]["output"]>
+  /** The name of the Journal in which the article was published. */
+  suPublisher?: Maybe<Scalars["String"]["output"]>
+  /**
+   * Add a URL to an external source for this publication item such as https://example.com/.
+   * This can be the same url as the DOI link.
+   * By adding an external source URL, all listings of this publication will link
+   * to the external source instead of a page on this website.
+   */
+  suUrl?: Maybe<Link>
+  /** Volume */
+  suVolume?: Maybe<Scalars["String"]["output"]>
+  /** Year */
+  suYear?: Maybe<Scalars["Int"]["output"]>
+  /** The title of the Citation. */
+  title: Scalars["String"]["output"]
+}
+
+/** Entity type citation. */
+export type CitationSuArticleNewspaper = CitationInterface & {
+  __typename?: "CitationSuArticleNewspaper"
+  apa?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was last edited. */
+  changed: DateTime
+  chicago?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was created. */
+  created: DateTime
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars["ID"]["output"]
+  /** Author(s) */
+  suAuthor?: Maybe<Array<NameType>>
+  /** Day */
+  suDay?: Maybe<Scalars["Int"]["output"]>
+  /** Month */
+  suMonth?: Maybe<Scalars["Int"]["output"]>
+  /** Publisher */
+  suPublisher?: Maybe<Scalars["String"]["output"]>
+  /**
+   * Add a URL to an external source for this publication item such as https://example.com/.
+   * This can be the same url as the DOI link.
+   * By adding an external source URL, all listings of this publication will link
+   * to the external source instead of a page on this website.
+   */
+  suUrl?: Maybe<Link>
+  /** Year */
+  suYear?: Maybe<Scalars["Int"]["output"]>
+  /** The title of the Citation. */
+  title: Scalars["String"]["output"]
+}
+
+/** Entity type citation. */
+export type CitationSuBook = CitationInterface & {
+  __typename?: "CitationSuBook"
+  apa?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was last edited. */
+  changed: DateTime
+  chicago?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was created. */
+  created: DateTime
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars["ID"]["output"]
+  /** Author(s) */
+  suAuthor?: Maybe<Array<NameType>>
+  /**
+   * DOI id to the journal web page without the “https://doi.org/”. For example
+   * enter only for a link that is https://doi.org/12.345/123123 enter only
+   * <strong>12.345/123123</strong>.
+   */
+  suDoi?: Maybe<Scalars["String"]["output"]>
+  /** Edition */
+  suEdition?: Maybe<Scalars["Int"]["output"]>
+  /**
+   * Page numbers may vary based on the e-book viewer used. In these cases it is
+   * preferred to use chapter or paragraph numbers if they are provided (eg. chap.
+   */
+  suPage?: Maybe<Scalars["String"]["output"]>
+  /** Publisher */
+  suPublisher?: Maybe<Scalars["String"]["output"]>
+  /** Publication Place */
+  suPublisherPlace?: Maybe<Scalars["String"]["output"]>
+  /** Subtitle */
+  suSubtitle?: Maybe<Scalars["String"]["output"]>
+  /**
+   * Add a URL to an external source for this publication item such as https://example.com/.
+   * This can be the same url as the DOI link.
+   * By adding an external source URL, all listings of this publication will link
+   * to the external source instead of a page on this website.
+   */
+  suUrl?: Maybe<Link>
+  /** Year */
+  suYear?: Maybe<Scalars["Int"]["output"]>
+  /** The title of the Citation. */
+  title: Scalars["String"]["output"]
+}
+
+/** Entity type citation. */
+export type CitationSuOther = CitationInterface & {
+  __typename?: "CitationSuOther"
+  apa?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was last edited. */
+  changed: DateTime
+  chicago?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was created. */
+  created: DateTime
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars["ID"]["output"]
+  /** Author(s) */
+  suAuthor?: Maybe<Array<NameType>>
+  /** Day */
+  suDay?: Maybe<Scalars["Int"]["output"]>
+  /** Month */
+  suMonth?: Maybe<Scalars["Int"]["output"]>
+  /** Publisher */
+  suPublisher?: Maybe<Scalars["String"]["output"]>
+  /** Subtitle */
+  suSubtitle?: Maybe<Scalars["String"]["output"]>
+  /** External Source */
+  suUrl?: Maybe<Link>
+  /** Year */
+  suYear?: Maybe<Scalars["Int"]["output"]>
+  /** The title of the Citation. */
+  title: Scalars["String"]["output"]
+}
+
+/** Entity type citation. */
+export type CitationSuThesi = CitationInterface & {
+  __typename?: "CitationSuThesi"
+  apa?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was last edited. */
+  changed: DateTime
+  chicago?: Maybe<Scalars["Bibliography"]["output"]>
+  /** The time that the entity was created. */
+  created: DateTime
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars["ID"]["output"]
+  /** Author(s) */
+  suAuthor?: Maybe<Array<NameType>>
+  /** Day */
+  suDay?: Maybe<Scalars["Int"]["output"]>
+  /**
+   * DOI id to the journal web page without the “https://doi.org/”. For example
+   * enter only for a link that is https://doi.org/12.345/123123 enter only
+   * <strong>12.345/123123</strong>.
+   */
+  suDoi?: Maybe<Scalars["String"]["output"]>
+  /** Type of Dissertation */
+  suGenre?: Maybe<Scalars["String"]["output"]>
+  /** Month */
+  suMonth?: Maybe<Scalars["Int"]["output"]>
+  /** This can also be the university for the thesis. */
+  suPublisher?: Maybe<Scalars["String"]["output"]>
+  /**
+   * Add a URL to an external source for this publication item such as https://example.com/.
+   * This can be the same url as the DOI link.
+   * By adding an external source URL, all listings of this publication will link
+   * to the external source instead of a page on this website.
+   */
+  suUrl?: Maybe<Link>
+  /** To display the year in the citation style for Chicago format, the publisher field must be populated. */
+  suYear?: Maybe<Scalars["Int"]["output"]>
+  /** The title of the Citation. */
+  title: Scalars["String"]["output"]
+}
+
+/** Entity type citation. */
+export type CitationUnion =
+  | CitationSuArticleJournal
+  | CitationSuArticleNewspaper
+  | CitationSuBook
+  | CitationSuOther
+  | CitationSuThesi
 
 /** Entity type config_pages. */
 export type ConfigPagesInterface = {
@@ -1205,6 +1409,7 @@ export type NodeStanfordEventSeriesSuEventSeriesComponentsUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -1217,6 +1422,7 @@ export type NodeStanfordEventSuEventComponentsUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -1330,6 +1536,7 @@ export type NodeStanfordNewsSuNewsComponentsUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -1423,6 +1630,7 @@ export type NodeStanfordPageSuPageComponentsUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -1541,6 +1749,7 @@ export type NodeStanfordPersonSuPersonComponentsUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -1697,17 +1906,18 @@ export type NodeStanfordPublicationEdge = Edge & {
 
 /** Choose a type of publication item to display. */
 export type NodeStanfordPublicationSuPublicationCitationUnion =
-  | SuArticleJournal
-  | SuArticleNewspaper
-  | SuBook
-  | SuOther
-  | SuThesi
+  | CitationSuArticleJournal
+  | CitationSuArticleNewspaper
+  | CitationSuBook
+  | CitationSuOther
+  | CitationSuThesi
 
 /** Paragraphs */
 export type NodeStanfordPublicationSuPublicationComponentsUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -2086,6 +2296,30 @@ export type ParagraphStanfordEntitySuEntityItemUnion =
   | NodeStanfordPublication
 
 /** Entity type paragraph. */
+export type ParagraphStanfordFaq = LayoutParagraphsInterface &
+  ParagraphInterface & {
+    __typename?: "ParagraphStanfordFaq"
+    /** Paragraph Behavior Settings. */
+    behaviors?: Maybe<Scalars["String"]["output"]>
+    /** The layout information for this paragraph. */
+    composition: LayoutParagraphs
+    /** The time that the Paragraph was created. */
+    created: DateTime
+    /** The Universally Unique IDentifier (UUID). */
+    id: Scalars["ID"]["output"]
+    /** The paragraphs entity language code. */
+    langcode: Language
+    /** Published */
+    status: Scalars["Boolean"]["output"]
+    /** Description */
+    suFaqDescription?: Maybe<Text>
+    /** Headline */
+    suFaqHeadline?: Maybe<Scalars["String"]["output"]>
+    /** Questions/Answers */
+    suFaqQuestions?: Maybe<Array<ParagraphStanfordAccordion>>
+  }
+
+/** Entity type paragraph. */
 export type ParagraphStanfordGallery = LayoutParagraphsInterface &
   ParagraphInterface & {
     __typename?: "ParagraphStanfordGallery"
@@ -2410,6 +2644,7 @@ export type ParagraphUnion =
   | ParagraphStanfordBanner
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
+  | ParagraphStanfordFaq
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -2470,6 +2705,8 @@ export type Query = {
   redirects: RedirectConnection
   /** Load a Route by path. */
   route?: Maybe<RouteUnion>
+  /** Query for view search display graphql_search. */
+  search?: Maybe<SearchResult>
   /** Query for view stanford_basic_pages display basic_page_type_list_graphql. */
   stanfordBasicPages?: Maybe<StanfordBasicPagesResult>
   /** List of all StanfordBasicSiteSetting on the platform. */
@@ -2480,6 +2717,8 @@ export type Query = {
   stanfordLocalFooters: StanfordLocalFooterConnection
   /** News Views */
   stanfordNews?: Maybe<StanfordNewsResult>
+  /** Query for view stanford_opportunities display graphql. */
+  stanfordOpportunities?: Maybe<StanfordOpportunitiesResult>
   /** A list of people in a grid with node as the base table */
   stanfordPerson?: Maybe<StanfordPersonResult>
   /** Query for view stanford_shared_tags display card_grid_graphql. */
@@ -2670,6 +2909,14 @@ export type QueryRouteArgs = {
 }
 
 /** The schema's entry-point for queries. */
+export type QuerySearchArgs = {
+  filter: SearchFilterInput
+  offset?: InputMaybe<Scalars["Int"]["input"]>
+  page?: InputMaybe<Scalars["Int"]["input"]>
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>
+}
+
+/** The schema's entry-point for queries. */
 export type QueryStanfordBasicPagesArgs = {
   contextualFilter?: InputMaybe<StanfordBasicPagesContextualFilterInput>
   offset?: InputMaybe<Scalars["Int"]["input"]>
@@ -2718,6 +2965,14 @@ export type QueryStanfordNewsArgs = {
   pageSize?: InputMaybe<Scalars["Int"]["input"]>
   sortDir?: InputMaybe<SortDirection>
   sortKey?: InputMaybe<StanfordNewsSortKeys>
+}
+
+/** The schema's entry-point for queries. */
+export type QueryStanfordOpportunitiesArgs = {
+  filter?: InputMaybe<StanfordOpportunitiesFilterInput>
+  offset?: InputMaybe<Scalars["Int"]["input"]>
+  page?: InputMaybe<Scalars["Int"]["input"]>
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>
 }
 
 /** The schema's entry-point for queries. */
@@ -2929,6 +3184,46 @@ export type SchemaInformation = {
   version?: Maybe<Scalars["String"]["output"]>
 }
 
+export type SearchFilterInput = {
+  /** Keyword Search  */
+  key: Scalars["String"]["input"]
+}
+
+/** Result for view search display graphql_search. */
+export type SearchResult = View & {
+  __typename?: "SearchResult"
+  /** The description of the view. */
+  description?: Maybe<Scalars["String"]["output"]>
+  /** The machine name of the display. */
+  display: Scalars["String"]["output"]
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>
+  /** The ID of the view. */
+  id: Scalars["ID"]["output"]
+  /** The human friendly label of the view. */
+  label?: Maybe<Scalars["String"]["output"]>
+  /** The language code of the view. */
+  langcode?: Maybe<Scalars["String"]["output"]>
+  /** Information about the page in the view. */
+  pageInfo: ViewPageInfo
+  /** The results of the view. */
+  results: Array<SearchRow>
+  /** The machine name of the view. */
+  view: Scalars["String"]["output"]
+}
+
+/** All available types for view result row. */
+export type SearchRow =
+  | NodeStanfordCourse
+  | NodeStanfordEvent
+  | NodeStanfordEventSeries
+  | NodeStanfordNews
+  | NodeStanfordPage
+  | NodeStanfordPerson
+  | NodeStanfordPolicy
+  | NodeStanfordPublication
+  | NodeSulLibrary
+
 /** Smart Date data. */
 export type SmartDateType = {
   __typename?: "SmartDateType"
@@ -3028,6 +3323,8 @@ export type StanfordBasicSiteSetting = ConfigPagesInterface &
      * in <a href="https://dashboard.algolia.com/account/api-keys/all>Algolia
      */
     suSiteAlgoliaSearch?: Maybe<Scalars["String"]["output"]>
+    /** Enable Algolia searching on the <a href="/search">search page</a>. */
+    suSiteAlgoliaUi?: Maybe<Scalars["Boolean"]["output"]>
     /** Check this box to enable the split-button drop down menu feature. */
     suSiteDropdowns?: Maybe<Scalars["Boolean"]["output"]>
     /** Maximum Menu Levels */
@@ -3241,6 +3538,34 @@ export enum StanfordNewsSortKeys {
   Title = "TITLE",
 }
 
+export type StanfordOpportunitiesFilterInput = {
+  /** Filter  */
+  tags?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+/** Result for view stanford_opportunities display graphql. */
+export type StanfordOpportunitiesResult = View & {
+  __typename?: "StanfordOpportunitiesResult"
+  /** The description of the view. */
+  description?: Maybe<Scalars["String"]["output"]>
+  /** The machine name of the display. */
+  display: Scalars["String"]["output"]
+  /** Exposed filters for the view. */
+  filters: Array<Maybe<ViewFilter>>
+  /** The ID of the view. */
+  id: Scalars["ID"]["output"]
+  /** The human friendly label of the view. */
+  label?: Maybe<Scalars["String"]["output"]>
+  /** The language code of the view. */
+  langcode?: Maybe<Scalars["String"]["output"]>
+  /** Information about the page in the view. */
+  pageInfo: ViewPageInfo
+  /** The results of the view. */
+  results: Array<UnsupportedType>
+  /** The machine name of the view. */
+  view: Scalars["String"]["output"]
+}
+
 export type StanfordPersonContextualFilterInput = {
   term_node_taxonomy_name_depth?: InputMaybe<Scalars["String"]["input"]>
 }
@@ -3354,126 +3679,6 @@ export type StanfordSuperFooterEdge = Edge & {
   node: StanfordSuperFooter
 }
 
-/** Entity type citation. */
-export type SuArticleJournal = CitationInterface & {
-  __typename?: "SuArticleJournal"
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars["ID"]["output"]
-  /** Author(s) */
-  suAuthor?: Maybe<Array<NameType>>
-  /** Day */
-  suDay?: Maybe<Scalars["Int"]["output"]>
-  /**
-   * DOI id to the journal web page without the “https://doi.org/”. For example
-   * enter only for a link that is https://doi.org/12.345/123123 enter only
-   * <strong>12.345/123123</strong>.
-   */
-  suDoi?: Maybe<Scalars["String"]["output"]>
-  /** Issue */
-  suIssue?: Maybe<Scalars["Int"]["output"]>
-  /** The publisher of the journal. E.g. IEEE, Elsevier, etc. */
-  suJournalPublisher?: Maybe<Scalars["String"]["output"]>
-  /** Month */
-  suMonth?: Maybe<Scalars["Int"]["output"]>
-  /** Page(s) */
-  suPage?: Maybe<Scalars["String"]["output"]>
-  /** The name of the Journal in which the article was published. */
-  suPublisher?: Maybe<Scalars["String"]["output"]>
-  /**
-   * Add a URL to an external source for this publication item such as https://example.com/.
-   * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of this publication will link
-   * to the external source instead of a page on this website.
-   */
-  suUrl?: Maybe<Link>
-  /** Volume */
-  suVolume?: Maybe<Scalars["String"]["output"]>
-  /** Year */
-  suYear?: Maybe<Scalars["Int"]["output"]>
-}
-
-/** Entity type citation. */
-export type SuArticleNewspaper = CitationInterface & {
-  __typename?: "SuArticleNewspaper"
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars["ID"]["output"]
-  /** Author(s) */
-  suAuthor?: Maybe<Array<NameType>>
-  /** Day */
-  suDay?: Maybe<Scalars["Int"]["output"]>
-  /** Month */
-  suMonth?: Maybe<Scalars["Int"]["output"]>
-  /** Publisher */
-  suPublisher?: Maybe<Scalars["String"]["output"]>
-  /**
-   * Add a URL to an external source for this publication item such as https://example.com/.
-   * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of this publication will link
-   * to the external source instead of a page on this website.
-   */
-  suUrl?: Maybe<Link>
-  /** Year */
-  suYear?: Maybe<Scalars["Int"]["output"]>
-}
-
-/** Entity type citation. */
-export type SuBook = CitationInterface & {
-  __typename?: "SuBook"
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars["ID"]["output"]
-  /** Author(s) */
-  suAuthor?: Maybe<Array<NameType>>
-  /**
-   * DOI id to the journal web page without the “https://doi.org/”. For example
-   * enter only for a link that is https://doi.org/12.345/123123 enter only
-   * <strong>12.345/123123</strong>.
-   */
-  suDoi?: Maybe<Scalars["String"]["output"]>
-  /** Edition */
-  suEdition?: Maybe<Scalars["Int"]["output"]>
-  /**
-   * Page numbers may vary based on the e-book viewer used. In these cases it is
-   * preferred to use chapter or paragraph numbers if they are provided (eg. chap.
-   */
-  suPage?: Maybe<Scalars["String"]["output"]>
-  /** Publisher */
-  suPublisher?: Maybe<Scalars["String"]["output"]>
-  /** Publication Place */
-  suPublisherPlace?: Maybe<Scalars["String"]["output"]>
-  /** Subtitle */
-  suSubtitle?: Maybe<Scalars["String"]["output"]>
-  /**
-   * Add a URL to an external source for this publication item such as https://example.com/.
-   * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of this publication will link
-   * to the external source instead of a page on this website.
-   */
-  suUrl?: Maybe<Link>
-  /** Year */
-  suYear?: Maybe<Scalars["Int"]["output"]>
-}
-
-/** Entity type citation. */
-export type SuOther = CitationInterface & {
-  __typename?: "SuOther"
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars["ID"]["output"]
-  /** Author(s) */
-  suAuthor?: Maybe<Array<NameType>>
-  /** Day */
-  suDay?: Maybe<Scalars["Int"]["output"]>
-  /** Month */
-  suMonth?: Maybe<Scalars["Int"]["output"]>
-  /** Publisher */
-  suPublisher?: Maybe<Scalars["String"]["output"]>
-  /** Subtitle */
-  suSubtitle?: Maybe<Scalars["String"]["output"]>
-  /** External Source */
-  suUrl?: Maybe<Link>
-  /** Year */
-  suYear?: Maybe<Scalars["Int"]["output"]>
-}
-
 /** Entity type su_policy_log. */
 export type SuPolicyLog = SuPolicyLogInterface & {
   __typename?: "SuPolicyLog"
@@ -3497,38 +3702,6 @@ export type SuPolicyLogInterface = {
 
 /** Entity type su_policy_log. */
 export type SuPolicyLogUnion = SuPolicyLog
-
-/** Entity type citation. */
-export type SuThesi = CitationInterface & {
-  __typename?: "SuThesi"
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars["ID"]["output"]
-  /** Author(s) */
-  suAuthor?: Maybe<Array<NameType>>
-  /** Day */
-  suDay?: Maybe<Scalars["Int"]["output"]>
-  /**
-   * DOI id to the journal web page without the “https://doi.org/”. For example
-   * enter only for a link that is https://doi.org/12.345/123123 enter only
-   * <strong>12.345/123123</strong>.
-   */
-  suDoi?: Maybe<Scalars["String"]["output"]>
-  /** Type of Dissertation */
-  suGenre?: Maybe<Scalars["String"]["output"]>
-  /** Month */
-  suMonth?: Maybe<Scalars["Int"]["output"]>
-  /** This can also be the university for the thesis. */
-  suPublisher?: Maybe<Scalars["String"]["output"]>
-  /**
-   * Add a URL to an external source for this publication item such as https://example.com/.
-   * This can be the same url as the DOI link.
-   * By adding an external source URL, all listings of this publication will link
-   * to the external source instead of a page on this website.
-   */
-  suUrl?: Maybe<Link>
-  /** To display the year in the citation style for Chicago format, the publisher field must be populated. */
-  suYear?: Maybe<Scalars["Int"]["output"]>
-}
 
 /** The schema's entry-point for subscriptions. */
 export type Subscription = {
@@ -4240,8 +4413,10 @@ export type ViewReference = {
 
 /** All available view result types. */
 export type ViewResultUnion =
+  | SearchResult
   | StanfordBasicPagesResult
   | StanfordNewsResult
+  | StanfordOpportunitiesResult
   | StanfordPersonResult
   | StanfordSharedTagsResult
   | SulBranchLocationsResult
@@ -4491,6 +4666,23 @@ export type NodeQuery = {
                 | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                 | {__typename?: "NodeStanfordPublication"; id: string; path: string}
               > | null
+            }
+          | {
+              __typename: "ParagraphStanfordFaq"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suFaqHeadline?: string | null
+              created: {__typename?: "DateTime"; timezone: any; time: any}
+              suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+              suFaqQuestions?: Array<{
+                __typename: "ParagraphStanfordAccordion"
+                suAccordionTitle: string
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suAccordionBody: {__typename?: "Text"; processed?: any | null}
+              }> | null
             }
           | {
               __typename: "ParagraphStanfordGallery"
@@ -4888,6 +5080,23 @@ export type NodeQuery = {
               > | null
             }
           | {
+              __typename: "ParagraphStanfordFaq"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suFaqHeadline?: string | null
+              created: {__typename?: "DateTime"; timezone: any; time: any}
+              suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+              suFaqQuestions?: Array<{
+                __typename: "ParagraphStanfordAccordion"
+                suAccordionTitle: string
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suAccordionBody: {__typename?: "Text"; processed?: any | null}
+              }> | null
+            }
+          | {
               __typename: "ParagraphStanfordGallery"
               id: string
               behaviors?: string | null
@@ -5156,6 +5365,23 @@ export type NodeQuery = {
                 | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                 | {__typename?: "NodeStanfordPublication"; id: string; path: string}
               > | null
+            }
+          | {
+              __typename: "ParagraphStanfordFaq"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suFaqHeadline?: string | null
+              created: {__typename?: "DateTime"; timezone: any; time: any}
+              suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+              suFaqQuestions?: Array<{
+                __typename: "ParagraphStanfordAccordion"
+                suAccordionTitle: string
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suAccordionBody: {__typename?: "Text"; processed?: any | null}
+              }> | null
             }
           | {
               __typename: "ParagraphStanfordGallery"
@@ -5496,6 +5722,23 @@ export type NodeQuery = {
               > | null
             }
           | {
+              __typename: "ParagraphStanfordFaq"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suFaqHeadline?: string | null
+              created: {__typename?: "DateTime"; timezone: any; time: any}
+              suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+              suFaqQuestions?: Array<{
+                __typename: "ParagraphStanfordAccordion"
+                suAccordionTitle: string
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suAccordionBody: {__typename?: "Text"; processed?: any | null}
+              }> | null
+            }
+          | {
               __typename: "ParagraphStanfordGallery"
               id: string
               behaviors?: string | null
@@ -5786,6 +6029,23 @@ export type NodeQuery = {
                 | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                 | {__typename?: "NodeStanfordPublication"; id: string; path: string}
               > | null
+            }
+          | {
+              __typename: "ParagraphStanfordFaq"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suFaqHeadline?: string | null
+              created: {__typename?: "DateTime"; timezone: any; time: any}
+              suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+              suFaqQuestions?: Array<{
+                __typename: "ParagraphStanfordAccordion"
+                suAccordionTitle: string
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suAccordionBody: {__typename?: "Text"; processed?: any | null}
+              }> | null
             }
           | {
               __typename: "ParagraphStanfordGallery"
@@ -6115,6 +6375,23 @@ export type NodeQuery = {
                 | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                 | {__typename?: "NodeStanfordPublication"; id: string; path: string}
               > | null
+            }
+          | {
+              __typename: "ParagraphStanfordFaq"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suFaqHeadline?: string | null
+              created: {__typename?: "DateTime"; timezone: any; time: any}
+              suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+              suFaqQuestions?: Array<{
+                __typename: "ParagraphStanfordAccordion"
+                suAccordionTitle: string
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suAccordionBody: {__typename?: "Text"; processed?: any | null}
+              }> | null
             }
           | {
               __typename: "ParagraphStanfordGallery"
@@ -9178,6 +9455,23 @@ export type FragmentNodeStanfordPageFragment = {
         > | null
       }
     | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
+      }
+    | {
         __typename: "ParagraphStanfordGallery"
         id: string
         behaviors?: string | null
@@ -9571,6 +9865,23 @@ export type FragmentNodeStanfordEventFragment = {
         > | null
       }
     | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
+      }
+    | {
         __typename: "ParagraphStanfordGallery"
         id: string
         behaviors?: string | null
@@ -9961,6 +10272,23 @@ export type FragmentNodeStanfordEventSeriesFragment = {
         > | null
       }
     | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
+      }
+    | {
         __typename: "ParagraphStanfordGallery"
         id: string
         behaviors?: string | null
@@ -10224,6 +10552,23 @@ export type FragmentNodeStanfordNewsFragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -10525,6 +10870,23 @@ export type FragmentNodeStanfordPersonFragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -10850,6 +11212,23 @@ export type FragmentNodeStanfordPublicationFragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -11189,6 +11568,23 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -11581,6 +11977,23 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
         > | null
       }
     | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
+      }
+    | {
         __typename: "ParagraphStanfordGallery"
         id: string
         behaviors?: string | null
@@ -11844,6 +12257,23 @@ type FragmentNodeUnion_NodeStanfordNews_Fragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -12173,6 +12603,23 @@ type FragmentNodeUnion_NodeStanfordPage_Fragment = {
         > | null
       }
     | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
+      }
+    | {
         __typename: "ParagraphStanfordGallery"
         id: string
         behaviors?: string | null
@@ -12452,6 +12899,23 @@ type FragmentNodeUnion_NodeStanfordPerson_Fragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -12777,6 +13241,23 @@ type FragmentNodeUnion_NodeStanfordPublication_Fragment = {
           | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
           | {__typename?: "NodeStanfordPublication"; id: string; path: string}
         > | null
+      }
+    | {
+        __typename: "ParagraphStanfordFaq"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suFaqHeadline?: string | null
+        created: {__typename?: "DateTime"; timezone: any; time: any}
+        suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+        suFaqQuestions?: Array<{
+          __typename: "ParagraphStanfordAccordion"
+          suAccordionTitle: string
+          id: string
+          behaviors?: string | null
+          status: boolean
+          suAccordionBody: {__typename?: "Text"; processed?: any | null}
+        }> | null
       }
     | {
         __typename: "ParagraphStanfordGallery"
@@ -14541,6 +15022,13 @@ type FragmentParagraphInterface_ParagraphStanfordEntity_Fragment = {
   status: boolean
 }
 
+type FragmentParagraphInterface_ParagraphStanfordFaq_Fragment = {
+  __typename: "ParagraphStanfordFaq"
+  id: string
+  behaviors?: string | null
+  status: boolean
+}
+
 type FragmentParagraphInterface_ParagraphStanfordGallery_Fragment = {
   __typename: "ParagraphStanfordGallery"
   id: string
@@ -14633,6 +15121,7 @@ export type FragmentParagraphInterfaceFragment =
   | FragmentParagraphInterface_ParagraphStanfordBanner_Fragment
   | FragmentParagraphInterface_ParagraphStanfordCard_Fragment
   | FragmentParagraphInterface_ParagraphStanfordEntity_Fragment
+  | FragmentParagraphInterface_ParagraphStanfordFaq_Fragment
   | FragmentParagraphInterface_ParagraphStanfordGallery_Fragment
   | FragmentParagraphInterface_ParagraphStanfordList_Fragment
   | FragmentParagraphInterface_ParagraphStanfordMediaCaption_Fragment
@@ -15019,6 +15508,24 @@ export type FragmentParagraphStanfordPageTitleBannerFragment = {
   }
 }
 
+export type FragmentParagraphStanfordFaqFragment = {
+  __typename: "ParagraphStanfordFaq"
+  suFaqHeadline?: string | null
+  id: string
+  behaviors?: string | null
+  status: boolean
+  created: {__typename?: "DateTime"; timezone: any; time: any}
+  suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+  suFaqQuestions?: Array<{
+    __typename: "ParagraphStanfordAccordion"
+    suAccordionTitle: string
+    id: string
+    behaviors?: string | null
+    status: boolean
+    suAccordionBody: {__typename?: "Text"; processed?: any | null}
+  }> | null
+}
+
 type FragmentParagraphUnion_ParagraphCollection_Fragment = {
   __typename: "ParagraphCollection"
   id: string
@@ -15155,6 +15662,24 @@ type FragmentParagraphUnion_ParagraphStanfordEntity_Fragment = {
     | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
     | {__typename?: "NodeStanfordPublication"; id: string; path: string}
   > | null
+}
+
+type FragmentParagraphUnion_ParagraphStanfordFaq_Fragment = {
+  __typename: "ParagraphStanfordFaq"
+  id: string
+  behaviors?: string | null
+  status: boolean
+  suFaqHeadline?: string | null
+  created: {__typename?: "DateTime"; timezone: any; time: any}
+  suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+  suFaqQuestions?: Array<{
+    __typename: "ParagraphStanfordAccordion"
+    suAccordionTitle: string
+    id: string
+    behaviors?: string | null
+    status: boolean
+    suAccordionBody: {__typename?: "Text"; processed?: any | null}
+  }> | null
 }
 
 type FragmentParagraphUnion_ParagraphStanfordGallery_Fragment = {
@@ -15340,6 +15865,7 @@ export type FragmentParagraphUnionFragment =
   | FragmentParagraphUnion_ParagraphStanfordBanner_Fragment
   | FragmentParagraphUnion_ParagraphStanfordCard_Fragment
   | FragmentParagraphUnion_ParagraphStanfordEntity_Fragment
+  | FragmentParagraphUnion_ParagraphStanfordFaq_Fragment
   | FragmentParagraphUnion_ParagraphStanfordGallery_Fragment
   | FragmentParagraphUnion_ParagraphStanfordList_Fragment
   | FragmentParagraphUnion_ParagraphStanfordMediaCaption_Fragment
@@ -15666,6 +16192,23 @@ export type RouteQuery = {
                       | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                       | {__typename?: "NodeStanfordPublication"; id: string; path: string}
                     > | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordFaq"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suFaqHeadline?: string | null
+                    created: {__typename?: "DateTime"; timezone: any; time: any}
+                    suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                    suFaqQuestions?: Array<{
+                      __typename: "ParagraphStanfordAccordion"
+                      suAccordionTitle: string
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                    }> | null
                   }
                 | {
                     __typename: "ParagraphStanfordGallery"
@@ -16087,6 +16630,23 @@ export type RouteQuery = {
                     > | null
                   }
                 | {
+                    __typename: "ParagraphStanfordFaq"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suFaqHeadline?: string | null
+                    created: {__typename?: "DateTime"; timezone: any; time: any}
+                    suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                    suFaqQuestions?: Array<{
+                      __typename: "ParagraphStanfordAccordion"
+                      suAccordionTitle: string
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                    }> | null
+                  }
+                | {
                     __typename: "ParagraphStanfordGallery"
                     id: string
                     behaviors?: string | null
@@ -16373,6 +16933,23 @@ export type RouteQuery = {
                       | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                       | {__typename?: "NodeStanfordPublication"; id: string; path: string}
                     > | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordFaq"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suFaqHeadline?: string | null
+                    created: {__typename?: "DateTime"; timezone: any; time: any}
+                    suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                    suFaqQuestions?: Array<{
+                      __typename: "ParagraphStanfordAccordion"
+                      suAccordionTitle: string
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                    }> | null
                   }
                 | {
                     __typename: "ParagraphStanfordGallery"
@@ -16737,6 +17314,23 @@ export type RouteQuery = {
                     > | null
                   }
                 | {
+                    __typename: "ParagraphStanfordFaq"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suFaqHeadline?: string | null
+                    created: {__typename?: "DateTime"; timezone: any; time: any}
+                    suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                    suFaqQuestions?: Array<{
+                      __typename: "ParagraphStanfordAccordion"
+                      suAccordionTitle: string
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                    }> | null
+                  }
+                | {
                     __typename: "ParagraphStanfordGallery"
                     id: string
                     behaviors?: string | null
@@ -17051,6 +17645,23 @@ export type RouteQuery = {
                       | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                       | {__typename?: "NodeStanfordPublication"; id: string; path: string}
                     > | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordFaq"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suFaqHeadline?: string | null
+                    created: {__typename?: "DateTime"; timezone: any; time: any}
+                    suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                    suFaqQuestions?: Array<{
+                      __typename: "ParagraphStanfordAccordion"
+                      suAccordionTitle: string
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                    }> | null
                   }
                 | {
                     __typename: "ParagraphStanfordGallery"
@@ -17404,6 +18015,23 @@ export type RouteQuery = {
                       | {__typename?: "NodeStanfordPolicy"; id: string; path: string}
                       | {__typename?: "NodeStanfordPublication"; id: string; path: string}
                     > | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordFaq"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suFaqHeadline?: string | null
+                    created: {__typename?: "DateTime"; timezone: any; time: any}
+                    suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                    suFaqQuestions?: Array<{
+                      __typename: "ParagraphStanfordAccordion"
+                      suAccordionTitle: string
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                    }> | null
                   }
                 | {
                     __typename: "ParagraphStanfordGallery"
