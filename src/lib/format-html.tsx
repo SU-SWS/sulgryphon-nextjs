@@ -10,7 +10,6 @@ import Oembed from "@/components/patterns/elements/oembed"
 import {twMerge} from "tailwind-merge"
 import {ElementType} from "react"
 import type {DOMNode} from "html-dom-parser"
-import clsx from "clsx"
 
 const options: HTMLReactParserOptions = {
   replace: domNode => {
@@ -73,7 +72,7 @@ const options: HTMLReactParserOptions = {
           return <pre {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</pre>
 
         case "figure":
-          nodeProps.className = clsx(
+          nodeProps.className = twMerge(
             nodeProps.className,
             "table mb-20",
             !nodeProps.className.includes("float") && "w-full"
