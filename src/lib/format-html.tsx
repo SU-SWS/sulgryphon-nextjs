@@ -73,8 +73,8 @@ const options: HTMLReactParserOptions = {
 
         case "figure":
           nodeProps.className = twMerge(
-            "table mb-20",
             nodeProps.className,
+            "table mb-20",
             !nodeProps.className.includes("float") && "w-full"
           )
           delete nodeProps.role
