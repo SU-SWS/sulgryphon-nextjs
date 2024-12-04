@@ -10,6 +10,7 @@ import Oembed from "@/components/patterns/elements/oembed"
 import {twMerge} from "tailwind-merge"
 import {ElementType} from "react"
 import type {DOMNode} from "html-dom-parser"
+import clsx from "clsx"
 
 const options: HTMLReactParserOptions = {
   replace: domNode => {
@@ -249,6 +250,3 @@ const cleanMediaMarkup = (node: Element) => {
 
 const formatHtml = (html?: string) => parse(html ?? "", options)
 export default formatHtml
-function clsx(arg0: string, className: string, arg2: string | boolean): string | boolean {
-  throw new Error("Function not implemented.")
-}
