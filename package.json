@@ -11,8 +11,8 @@
     "lint": "next lint && tsc",
     "graphql": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config codegen.ts -r dotenv/config",
     "postinstall": "git config --local core.hooksPath .githooks/; exit 0",
-    "backstop:test": "backstop test",
-    "backstop:approve": "backstop approve"
+    "backstop:test": "backstop test --config=backstop.config.js",
+    "backstop:approve": "backstop approve --config=backstop.config.js"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
@@ -48,10 +48,12 @@
     "react-super-responsive-table": "^5.2.3",
     "react-tiny-oembed": "^1.1.0",
     "sharp": "^0.33.5",
+    "sitemap": "^8.0.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3",
-    "usehooks-ts": "^3.1.0"
+    "usehooks-ts": "^3.1.0",
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.3",
@@ -60,6 +62,7 @@
     "@graphql-codegen/typescript-operations": "4.3.1",
     "@types/backstopjs": "^6",
     "@types/qs": "^6.9.16",
+    "@types/xmldom": "^0",
     "backstopjs": "^6.3.25",
     "eslint": "^9.13.0",
     "eslint-config-next": "15.0.2",

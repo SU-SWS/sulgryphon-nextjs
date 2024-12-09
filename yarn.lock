@@ -3976,6 +3976,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^17.0.5":
+  version: 17.0.45
+  resolution: "@types/node@npm:17.0.45"
+  checksum: 10c0/0db377133d709b33a47892581a21a41cd7958f22723a3cc6c71d55ac018121382de42fbfc7970d5ae3e7819dbe5f40e1c6a5174aedf7e7964e9cb8fa72b580b0
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^22.8.4":
   version: 22.8.4
   resolution: "@types/node@npm:22.8.4"
@@ -4008,12 +4015,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/sax@npm:^1.2.1":
+  version: 1.2.7
+  resolution: "@types/sax@npm:1.2.7"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/d077a761a0753b079bf8279b3993948030ca86ed9125437b9b29c1de40db9b2deb7fddc369f014b58861d450e8b8cc75f163aa29dc8cea81952efbfd859168cf
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:^8.0.0":
   version: 8.5.10
   resolution: "@types/ws@npm:8.5.10"
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/e9af279b984c4a04ab53295a40aa95c3e9685f04888df5c6920860d1dd073fcc57c7bd33578a04b285b2c655a0b52258d34bee0a20569dca8defb8393e1e5d29
+  languageName: node
+  linkType: hard
+
+"@types/xmldom@npm:^0":
+  version: 0.1.34
+  resolution: "@types/xmldom@npm:0.1.34"
+  checksum: 10c0/9cd8428f2fbdedb3003d48841b62000fc218a15d9ce2129f47a768f0d0ec840b942a4dcec0ce567a35d314feb86bfc1f86bca23e180bf87f8dd52ef982f06e45
   languageName: node
   linkType: hard
 
@@ -4462,7 +4485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arg@npm:^5.0.2":
+"arg@npm:^5.0.0, arg@npm:^5.0.2":
   version: 5.0.2
   resolution: "arg@npm:5.0.2"
   checksum: 10c0/ccaf86f4e05d342af6666c569f844bec426595c567d32a8289715087825c2ca7edd8a3d204e4d2fb2aa4602e09a57d0c13ea8c9eea75aac3dbb4af5514e6800e
@@ -4923,6 +4946,7 @@ __metadata:
     "@types/node": "npm:^22.8.4"
     "@types/qs": "npm:^6.9.16"
     "@types/react": "npm:^19.0.0-rc.1"
+    "@types/xmldom": "npm:^0"
     autoprefixer: "npm:^10.4.20"
     axios: "npm:^1.7.7"
     backstopjs: "npm:^6.3.25"
@@ -4954,11 +4978,13 @@ __metadata:
     react-super-responsive-table: "npm:^5.2.3"
     react-tiny-oembed: "npm:^1.1.0"
     sharp: "npm:^0.33.5"
+    sitemap: "npm:^8.0.0"
     tailwind-merge: "npm:^2.5.4"
     tailwindcss: "npm:^3.4.14"
     typescript: "npm:^5.6.3"
     typescript-eslint: "npm:^8.12.2"
     usehooks-ts: "npm:^3.1.0"
+    xmldom: "npm:^0.6.0"
   languageName: unknown
   linkType: soft
 
@@ -10901,6 +10927,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sax@npm:^1.2.4":
+  version: 1.4.1
+  resolution: "sax@npm:1.4.1"
+  checksum: 10c0/6bf86318a254c5d898ede6bd3ded15daf68ae08a5495a2739564eb265cd13bcc64a07ab466fb204f67ce472bb534eb8612dac587435515169593f4fffa11de7c
+  languageName: node
+  linkType: hard
+
 "scheduler@npm:0.25.0-rc-fb9a90fa48-20240614":
   version: 0.25.0-rc-fb9a90fa48-20240614
   resolution: "scheduler@npm:0.25.0-rc-fb9a90fa48-20240614"
@@ -11220,6 +11253,20 @@ __metadata:
   dependencies:
     is-arrayish: "npm:^0.3.1"
   checksum: 10c0/df5e4662a8c750bdba69af4e8263c5d96fe4cd0f9fe4bdfa3cbdeb45d2e869dff640beaaeb1ef0e99db4d8d2ec92f85508c269f50c972174851bc1ae5bd64308
+  languageName: node
+  linkType: hard
+
+"sitemap@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "sitemap@npm:8.0.0"
+  dependencies:
+    "@types/node": "npm:^17.0.5"
+    "@types/sax": "npm:^1.2.1"
+    arg: "npm:^5.0.0"
+    sax: "npm:^1.2.4"
+  bin:
+    sitemap: dist/cli.js
+  checksum: 10c0/adaabfb1f27e3c76ba25f9a16dcb02ff17dd2ecbd1b2dbe2608a6770eff37bd71f7d21c10df6824917453bc4da2c2790fd85ee6424d75699bd053e3422d2ef5c
   languageName: node
   linkType: hard
 
@@ -12605,6 +12652,13 @@ __metadata:
   version: 15.1.1
   resolution: "xmlbuilder@npm:15.1.1"
   checksum: 10c0/665266a8916498ff8d82b3d46d3993913477a254b98149ff7cff060d9b7cc0db7cf5a3dae99aed92355254a808c0e2e3ec74ad1b04aa1061bdb8dfbea26c18b8
+  languageName: node
+  linkType: hard
+
+"xmldom@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "xmldom@npm:0.6.0"
+  checksum: 10c0/93cbb4854f73f431a402e7942baa87a59e8445fd0b4ae6bf6af3a1007809e849da8ac70bbe1509242212bce5d19e30b55ea282cbd9d87281701d1bdc13b74623
   languageName: node
   linkType: hard
 
