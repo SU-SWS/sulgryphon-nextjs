@@ -12,6 +12,7 @@ import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 import Link from "next/link"
+import MoonStarsIcon from "@/components/patterns/icons/MoonStarsIcon"
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
   libraries: NodeSulLibrary[]
@@ -95,6 +96,17 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
           </div>
         }
       />
+      <div className="rs-px-1 w-full bg-cardinal-red py-9 text-16 text-white shadow-md">
+        <MoonStarsIcon className="mr-02em inline" />
+        <span className="font-bold">New!</span>{" "}
+        <Link
+          href="/extended-green-library-hours"
+          className="grow-0 font-normal text-white underline hocus:text-white hocus:no-underline"
+        >
+          Late night study space
+        </Link>{" "}
+        available at Green.
+      </div>
     </div>
   )
 }
