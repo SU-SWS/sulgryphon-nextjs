@@ -5,35 +5,67 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   backstop:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # Enable Yarn (via corepack)
       - name: Install Yarn
         run: corepack enable
 
+      # Install dependencies
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      # Build the Next.js project
       - name: Build Next.js project
         run: yarn build
 
+      # Start the Next.js server
       - name: Start Next.js server
         run: yarn start &
         env:
           NODE_ENV: production
 
+      # Wait for the server to be ready
       - name: Wait for server to be ready
         run: npx wait-on http://localhost:3000
 
+      # Run BackstopJS tests (comparing production and test URLs)
       - name: Run BackstopJS tests
         run: npx backstop test
+
+      # Upload BackstopJS test results as artifacts (optional)
+      - name: Upload BackstopJS Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: backstop-test-results
+          path: backstop_data/html_report/
+
+      # Approve/reject changes based on visual regressions
+      - name: Approve visual changes (on PR)
+        if: github.event_name == 'pull_request'
+        run: |
+          # Fetch the results of the BackstopJS test (mismatch percentage)
+          RESULT=$(cat backstop_data/ci_report/test_report.json | jq '.testResults[0].misMatchPercentage')
+          
+          # Set approval threshold (e.g., if mismatches are below 0.1%, approve automatically)
+          if (( $(echo "$RESULT < 0.1" | bc -l) )); then
+            echo "Visual changes are within acceptable range. Approving...";
+          else
+            echo "Visual mismatch is too high! Review required.";
+            exit 1;  # Fail the action if mismatches exceed the threshold
+          fi
