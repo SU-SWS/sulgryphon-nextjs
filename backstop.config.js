@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const productionBaseUrl = "https://su-library-git-test-stanford-libraries.vercel.app/";
-const testBaseUrl = process.env.TEST_URL;
+const productionBaseUrl = "https://su-library-git-test-stanford-libraries.vercel.app";
+const testBaseUrl = process.env.TEST_URL || "http://localhost:3000";
 
 // Read the pre-fetched pages from the JSON file
 const pages = JSON.parse(fs.readFileSync('pages.json', 'utf-8'));
@@ -20,27 +20,9 @@ module.exports = {
   onReadyScript: "puppet/onReady.js",
   scenarios: pages.flatMap((path) => [
     {
-      label: `Production - ${path}`,
-      url: productionBaseUrl + path,
-      referenceUrl: "",
-      readyEvent: "",
-      readySelector: "",
-      delay: 0,
-      hideSelectors: [],
-      removeSelectors: [],
-      hoverSelector: "",
-      clickSelector: "",
-      postInteractionWait: 0,
-      selectors: [],
-      selectorExpansion: true,
-      expect: 0,
-      misMatchThreshold: 0.1,
-      requireSameDimensions: true,
-    },
-    {
-      label: `Test - ${path}`,
+      label: `Library BackstopJS Test - ${path}`,
       url: testBaseUrl + path,
-      referenceUrl: "",
+      referenceUrl: productionBaseUrl + path,
       readyEvent: "",
       readySelector: "",
       delay: 0,

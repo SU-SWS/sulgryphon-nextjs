@@ -11,6 +11,8 @@
     "lint": "next lint && tsc",
     "graphql": "DOTENV_CONFIG_PATH=./.env.local graphql-codegen --config codegen.ts -r dotenv/config",
     "postinstall": "git config --local core.hooksPath .githooks/; exit 0",
+    "backstop:sitemap": "node fetchSitemap.js",
+    "backstop:reference": "backstop reference --config=backstop.config.js",
     "backstop:test": "backstop test --config=backstop.config.js",
     "backstop:approve": "backstop approve --config=backstop.config.js"
   },
