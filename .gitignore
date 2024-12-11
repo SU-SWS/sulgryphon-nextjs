@@ -50,3 +50,7 @@ lerna-debug.log*
 /certificates/*
 # Local Netlify folder
 .netlify
+
+# Backstopjs
+backstop_data/html_report/
+bitmaps_test/
