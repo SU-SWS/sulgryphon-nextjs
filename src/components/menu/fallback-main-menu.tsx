@@ -27,7 +27,7 @@ const MenuItem = ({url, title}: MenuItemType) => {
         href={linkUrl}
         className="flex w-full items-center p-20 text-white no-underline hover:bg-black hover:text-white hover:underline focus:bg-black focus:text-white lg:text-black-true lg:hover:bg-transparent lg:hover:text-black-true lg:focus:bg-transparent lg:focus:text-black-true lg:focus:underline"
       >
-        <div className="pl-30 lg:pl-0">{title}</div>
+        <div className="shrink-0 pl-30 lg:pl-0">{title}</div>
       </Link>
     </li>
   )
