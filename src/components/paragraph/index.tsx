@@ -15,6 +15,7 @@ import SulLibguides from "@/components/paragraph/sul-libguides"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
+import StanfordAccordionParagraph from "@/components/paragraph/stanford-accordion"
 
 type ParagraphProps = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphUnion
@@ -141,6 +142,9 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           libguideId={paragraph.sulLibguideId}
           {...props}
         />
+      )}
+      {paragraph.__typename === "ParagraphStanfordFaq" && (
+        <StanfordAccordionParagraph paragraph={paragraph} {...props} />
       )}
     </>
   )
