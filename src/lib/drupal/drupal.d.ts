@@ -41,6 +41,7 @@ export type ParagraphBehaviors = {
   }
   sul_list_styles?: {link_display_style?: Maybe<string>}
   stanford_teaser?: {heading_behavior?: Maybe<"show" | "hide" | "remove">}
+  faq_accordions?: {heading?: "h2" | "h3" | "h4"}
 }
 
 export type StanfordNode = BasicPage | Course | Event | EventSeries | News | Person | Library | StudyPlace
