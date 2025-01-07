@@ -40,7 +40,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
               </div>
             )}
 
-            {node.suPublicationCitation?.__typename === "SuArticleJournal" &&
+            {node.suPublicationCitation?.__typename === "CitationSuArticleJournal" &&
               node.suPublicationCitation.suJournalPublisher && (
                 <div className="rs-mb-2">
                   <h2 className="mb-01em text-16 md:text-18 2xl:text-19">Journal Name</h2>

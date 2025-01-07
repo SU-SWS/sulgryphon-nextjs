@@ -236,6 +236,20 @@ fragment FragmentParagraphStanfordPageTitleBanner on ParagraphStanfordPageTitleB
     }
 }
 
+fragment FragmentParagraphStanfordFaq on ParagraphStanfordFaq {
+    ...FragmentParagraphInterface
+    created {
+        ...FragmentDateTime
+    }
+    suFaqDescription {
+        ...FragmentText
+    }
+    suFaqHeadline
+    suFaqQuestions {
+        ...FragmentParagraphStanfordAccordion
+    }
+}
+
 fragment FragmentParagraphUnion on ParagraphUnion {
     ...FragmentParagraphInterface
     ...FragmentParagraphStanfordAccordion
@@ -254,4 +268,5 @@ fragment FragmentParagraphUnion on ParagraphUnion {
     ...FragmentParagraphSulContactCard
     ...FragmentParagraphSulFeatCollection
     ...FragmentParagraphSulLibguide
+    ...FragmentParagraphStanfordFaq
 }

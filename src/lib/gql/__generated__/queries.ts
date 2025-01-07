@@ -411,6 +411,24 @@ export const FragmentParagraphSulLibguideFragmentDoc = gql`
   sulLibguideId
 }
     ${FragmentParagraphInterfaceFragmentDoc}`;
+export const FragmentParagraphStanfordFaqFragmentDoc = gql`
+    fragment FragmentParagraphStanfordFaq on ParagraphStanfordFaq {
+  ...FragmentParagraphInterface
+  created {
+    ...FragmentDateTime
+  }
+  suFaqDescription {
+    ...FragmentText
+  }
+  suFaqHeadline
+  suFaqQuestions {
+    ...FragmentParagraphStanfordAccordion
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentDateTimeFragmentDoc}
+${FragmentTextFragmentDoc}
+${FragmentParagraphStanfordAccordionFragmentDoc}`;
 export const FragmentParagraphUnionFragmentDoc = gql`
     fragment FragmentParagraphUnion on ParagraphUnion {
   ...FragmentParagraphInterface
@@ -430,6 +448,7 @@ export const FragmentParagraphUnionFragmentDoc = gql`
   ...FragmentParagraphSulContactCard
   ...FragmentParagraphSulFeatCollection
   ...FragmentParagraphSulLibguide
+  ...FragmentParagraphStanfordFaq
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentParagraphStanfordAccordionFragmentDoc}
@@ -447,7 +466,8 @@ ${FragmentParagraphCollectionCardFragmentDoc}
 ${FragmentParagraphSulButtonFragmentDoc}
 ${FragmentParagraphSulContactCardFragmentDoc}
 ${FragmentParagraphSulFeatCollectionFragmentDoc}
-${FragmentParagraphSulLibguideFragmentDoc}`;
+${FragmentParagraphSulLibguideFragmentDoc}
+${FragmentParagraphStanfordFaqFragmentDoc}`;
 export const FragmentSmartDateTypeFragmentDoc = gql`
     fragment FragmentSmartDateType on SmartDateType {
   value
