@@ -27,6 +27,8 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
     timeZone: "America/Los_Angeles",
   })
 
+  const encodeTitle = encodeURIComponent(node.title)
+
   return (
     <article {...props} className="centered mt-50">
       <StanfordNewsMetadata node={node} />
@@ -50,7 +52,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
                     prefix="https://twitter.com/intent/tweet?url="
-                    suffix={`&text=${node.title}`}
+                    suffix={`&text=${encodeTitle}`}
                   >
                     <span className="sr-only">Stanford Twitter</span>
                     <TwitterIcon />
@@ -60,7 +62,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
                     prefix="https://www.linkedin.com/shareArticle?mini=true&url="
-                    suffix={`&title=${node.title}`}
+                    suffix={`&title=${encodeTitle}`}
                   >
                     <span className="sr-only">Stanford LinkedIn</span>
                     <LinkedInIcon />
@@ -69,7 +71,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                 <li className="mr-1em">
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
-                    prefix={`mailto:?subject=${node.title}&body=`}
+                    prefix={`mailto:?subject=${encodeTitle}&body=`}
                   >
                     <span className="sr-only">Forward Email</span>
                     <EnvelopeIcon title="Email" width={28} />
