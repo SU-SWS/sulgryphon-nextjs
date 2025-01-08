@@ -38,7 +38,9 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
       <div className="md::max-w-[calc(100vw-20rem)] relative top-50 z-10 mx-auto w-full max-w-[calc(100vw-10rem)] md:top-100 md:min-h-[300px] 3xl:max-w-[calc(1500px-20rem)]">
         <div className="justify-between md:flex">
           <div className="mb-40 flex items-center text-white md:w-1/3 lg:w-1/2">
-            <h1 className="type-4">{node.title}</h1>
+            <h1 className="type-4" id={node.id}>
+              {node.title}
+            </h1>
           </div>
 
           <div className="z-100 relative md:min-w-[300px] xl:min-w-[400px]">
