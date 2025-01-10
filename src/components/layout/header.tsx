@@ -1,5 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link"
-import Lockup from "@/components/patterns/lockup"
+import Lockup from "@/components/patterns/elements/lockup/lockup"
 import MainMenu from "@/components/menu/main-menu"
 import GlobalMessage from "@/components/layout/global-message"
 import FallbackMainMenu from "@/components/menu/fallback-main-menu"
