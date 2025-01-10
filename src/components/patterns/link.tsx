@@ -92,11 +92,9 @@ export const DrupalActionLink = ({
 
 type DrupalLinkProps = {
   url: string
-  href: string
   title: LinkType["title"]
   linkStyle?: "secondary_button" | "cta_button" | string | null
   children?: JSX.Element | JSX.Element[]
-  className: string
 }
 
 export const DrupalLink = ({url, title, linkStyle, children, ...props}: DrupalLinkProps) => {
@@ -110,7 +108,7 @@ export const DrupalLink = ({url, title, linkStyle, children, ...props}: DrupalLi
         ? DrupalActionLink
         : DrupalLinkButton
   return (
-    <LinkComponent {...props}>
+    <LinkComponent href={url} {...props}>
       {title}
       {children}
     </LinkComponent>

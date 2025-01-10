@@ -1,4 +1,4 @@
-import {DrupalLink as Link} from "@/components/patterns/link"
+import Link from "next/link"
 import LockupA from "@/components/patterns/elements/lockup/lockup-a"
 import LockupB from "@/components/patterns/elements/lockup/lockup-b"
 import LockupD from "@/components/patterns/elements/lockup/lockup-d"
@@ -35,12 +35,7 @@ export const Lockup = async () => {
 
   if (!lockupSettingsConfig?.suLockupEnabled) {
     return (
-      <Link
-        href="/"
-        className="flex flex-col text-black no-underline lg:flex-row lg:items-end"
-        url={""}
-        title={undefined}
-      >
+      <Link href="/" className="flex flex-col text-black no-underline lg:flex-row lg:items-end">
         <div className="border-black py-2 pr-4 lg:border-r">
           <LockupLogo {...lockupProps} />
         </div>
@@ -89,7 +84,7 @@ export const Lockup = async () => {
     case "none":
     default:
       return (
-        <Link href="/" className="flex flex-col gap-4 no-underline lg:flex-row" url={""} title={undefined}>
+        <Link href="/" className="flex flex-col gap-4 no-underline lg:flex-row">
           <LockupLogo {...lockupProps} />
         </Link>
       )
