@@ -1,4 +1,4 @@
-import Link from "@/components/patterns/link"
+import {DrupalLink as Link} from "@/components/patterns/link"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
 import {FooterLockupProps} from "@/components/config-pages/local-footer"
 

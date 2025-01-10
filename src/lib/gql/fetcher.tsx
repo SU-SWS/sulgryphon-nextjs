@@ -103,6 +103,21 @@ export const getConfigPage = cache(
   }
 )
 
+export const getConfigPageField = async <T extends ConfigPagesUnion, F>(
+  configPageType: ConfigPagesUnion["__typename"],
+  fieldName: keyof T
+): Promise<F | undefined> => {
+  const getData = nextCache(
+    async () => {
+      const configPage = await getConfigPage<T>(configPageType)
+      return configPage?.[fieldName] as F
+    },
+    [fieldName.toString()],
+    {tags: ["config-pages"]}
+  )
+  return getData()
+}
+
 export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> => {
   "use server"
 

@@ -1,4 +1,4 @@
-import Link from "@/components/patterns/link"
+import {DrupalLink as Link} from "@/components/patterns/link"
 import LockupA from "@/components/patterns/elements/lockup/lockup-a"
 import LockupB from "@/components/patterns/elements/lockup/lockup-b"
 import LockupD from "@/components/patterns/elements/lockup/lockup-d"
