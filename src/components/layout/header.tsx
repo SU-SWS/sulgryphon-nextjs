@@ -25,8 +25,9 @@ const Header = async () => {
 
       <header className="relative top-0 z-20 bg-white shadow-lg">
         <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-30 pt-20 md:px-40 lg:z-10 lg:flex 3xl:px-0">
-          <Lockup className="pb-20" />
-
+          <div className="pb-20">
+            <Lockup />
+          </div>
           <nav className="hidden lg:block" aria-label="User links">
             <ul className="list-unstyled flex items-baseline gap-[40px] xl:gap-[55px]">
               <HeaderLink href="/library-accessibility" text="Library Accessibility" />
