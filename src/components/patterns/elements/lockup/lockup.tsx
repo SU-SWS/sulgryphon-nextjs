@@ -12,8 +12,20 @@ import LockupR from "@/components/patterns/elements/lockup/lockup-r"
 import LockupS from "@/components/patterns/elements/lockup/lockup-s"
 import LockupT from "@/components/patterns/elements/lockup/lockup-t"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
-import {LockupSetting, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
+import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
 import {getConfigPage, getConfigPageField} from "@/lib/gql/fetcher"
+
+export interface LockupProps {
+  useDefault?: Maybe<boolean>
+  siteName?: Maybe<string>
+  lockupOption?: Maybe<string>
+  line1?: Maybe<string>
+  line2?: Maybe<string>
+  line3?: Maybe<string>
+  line4?: Maybe<string>
+  line5?: Maybe<string>
+  logoUrl?: Maybe<string>
+}
 
 export const Lockup = async () => {
   const siteName = await getConfigPageField<StanfordBasicSiteSetting, StanfordBasicSiteSetting["suSiteName"]>(
@@ -36,10 +48,12 @@ export const Lockup = async () => {
   if (!lockupSettingsConfig?.suLockupEnabled) {
     return (
       <Link href="/" className="flex flex-col text-black no-underline lg:flex-row lg:items-end">
-        <div className="border-black py-2 pr-4 lg:border-r">
+        <div className="border-black py-2 pr-9 lg:border-r-3">
           <LockupLogo {...lockupProps} />
         </div>
-        <div className="font-roboto text-28 font-light text-black lg:pl-4">{siteName || "University"}</div>
+        <div className="font-roboto text-nowrap text-28 font-light text-black lg:relative lg:top-[5px] lg:pl-9">
+          {siteName || "University Libraries"}
+        </div>
       </Link>
     )
   }

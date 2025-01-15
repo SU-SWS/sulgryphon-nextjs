@@ -1,8 +1,8 @@
-import Link from "@/components/patterns/elements/drupal-link"
+import Link from "next/link"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
-import {FooterLockupProps} from "@components/config-pages/local-footer"
+import {LockupProps} from "@/components/patterns/elements/lockup/lockup"
 
-const LockupA = ({line1, line5, siteName, logoUrl}: FooterLockupProps) => {
+const LockupA = ({line1, line5, siteName, logoUrl}: LockupProps) => {
   return (
     <div className="w-fit py-10">
       <Link href="/" className="text-black no-underline">

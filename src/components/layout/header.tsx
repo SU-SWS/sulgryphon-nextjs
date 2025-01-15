@@ -24,25 +24,27 @@ const Header = async () => {
       </div>
 
       <header className="relative top-0 z-20 bg-white shadow-lg">
-        <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-30 pt-20 md:px-40 lg:z-10 lg:flex 3xl:px-0">
-          <div className="pb-20">
-            <Lockup />
+        <div className="lg:centered">
+          <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-40 pt-20 lg:z-10 lg:flex lg:px-0">
+            <div className="pb-20">
+              <Lockup />
+            </div>
+            <nav className="hidden lg:block" aria-label="User links">
+              <ul className="list-unstyled flex items-baseline gap-[40px] xl:gap-[55px]">
+                <HeaderLink href="/library-accessibility" text="Library Accessibility" />
+                <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
+                <HeaderLink href="/contact-us" text="Contact Us" />
+                <li>
+                  <Link
+                    href="/support-stanford-libraries"
+                    className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-18 font-normal leading-[1.5] text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
+                  >
+                    Donate now
+                  </Link>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <nav className="hidden lg:block" aria-label="User links">
-            <ul className="list-unstyled flex items-baseline gap-[40px] xl:gap-[55px]">
-              <HeaderLink href="/library-accessibility" text="Library Accessibility" />
-              <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
-              <HeaderLink href="/contact-us" text="Contact Us" />
-              <li>
-                <Link
-                  href="/support-stanford-libraries"
-                  className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-18 font-normal leading-[1.5] text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
-                >
-                  Donate now
-                </Link>
-              </li>
-            </ul>
-          </nav>
         </div>
         <Suspense fallback={<FallbackMainMenu menuItems={menuItems} />}>
           <MainMenu menuItems={menuItems} />

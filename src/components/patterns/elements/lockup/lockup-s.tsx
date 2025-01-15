@@ -1,8 +1,8 @@
-import {DrupalLink as Link} from "@/components/patterns/link"
+import Link from "next/link"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
-import {FooterLockupProps} from "@/components/config-pages/local-footer"
+import {LockupProps} from "@/components/patterns/elements/lockup/lockup"
 
-const LockupS = ({line1, line2, line4, siteName, logoUrl}: FooterLockupProps) => {
+const LockupS = ({line1, line2, line4, siteName, logoUrl}: LockupProps) => {
   return (
     <div className="py-10">
       <Link href="/" className="text-black no-underline">
