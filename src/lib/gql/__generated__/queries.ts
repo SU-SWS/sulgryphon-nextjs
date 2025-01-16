@@ -429,6 +429,36 @@ export const FragmentParagraphStanfordFaqFragmentDoc = gql`
 ${FragmentDateTimeFragmentDoc}
 ${FragmentTextFragmentDoc}
 ${FragmentParagraphStanfordAccordionFragmentDoc}`;
+export const FragmentParagraphSulHomeImageFragmentDoc = gql`
+    fragment FragmentParagraphSulHomeImage on ParagraphSulHomeImage {
+  ...FragmentParagraphInterface
+  sulHomeImage {
+    ...FragmentMediaImage
+  }
+  sulHomeImageCredits {
+    ...FragmentText
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentMediaImageFragmentDoc}
+${FragmentTextFragmentDoc}`;
+export const FragmentParagraphSulHomeBannerFragmentDoc = gql`
+    fragment FragmentParagraphSulHomeBanner on ParagraphSulHomeBanner {
+  ...FragmentParagraphInterface
+  sulHomeImages {
+    ...FragmentParagraphSulHomeImage
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentParagraphSulHomeImageFragmentDoc}`;
+export const FragmentParagraphSulLocationHourFragmentDoc = gql`
+    fragment FragmentParagraphSulLocationHour on ParagraphSulLocationHour {
+  ...FragmentParagraphInterface
+  sulLocHoursAlert {
+    processed
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}`;
 export const FragmentParagraphUnionFragmentDoc = gql`
     fragment FragmentParagraphUnion on ParagraphUnion {
   ...FragmentParagraphInterface
@@ -449,6 +479,9 @@ export const FragmentParagraphUnionFragmentDoc = gql`
   ...FragmentParagraphSulFeatCollection
   ...FragmentParagraphSulLibguide
   ...FragmentParagraphStanfordFaq
+  ...FragmentParagraphSulHomeImage
+  ...FragmentParagraphSulHomeBanner
+  ...FragmentParagraphSulLocationHour
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentParagraphStanfordAccordionFragmentDoc}
@@ -467,7 +500,10 @@ ${FragmentParagraphSulButtonFragmentDoc}
 ${FragmentParagraphSulContactCardFragmentDoc}
 ${FragmentParagraphSulFeatCollectionFragmentDoc}
 ${FragmentParagraphSulLibguideFragmentDoc}
-${FragmentParagraphStanfordFaqFragmentDoc}`;
+${FragmentParagraphStanfordFaqFragmentDoc}
+${FragmentParagraphSulHomeImageFragmentDoc}
+${FragmentParagraphSulHomeBannerFragmentDoc}
+${FragmentParagraphSulLocationHourFragmentDoc}`;
 export const FragmentSmartDateTypeFragmentDoc = gql`
     fragment FragmentSmartDateType on SmartDateType {
   value
@@ -673,6 +709,7 @@ export const FragmentNodeStanfordPageFragmentDoc = gql`
   }
   suPageBanner {
     ...FragmentParagraphStanfordBanner
+    ...FragmentParagraphSulHomeBanner
   }
   suPageComponents {
     ...FragmentParagraphUnion
@@ -689,6 +726,7 @@ export const FragmentNodeStanfordPageFragmentDoc = gql`
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
 ${FragmentParagraphStanfordBannerFragmentDoc}
+${FragmentParagraphSulHomeBannerFragmentDoc}
 ${FragmentParagraphUnionFragmentDoc}
 ${FragmentMediaUnionFragmentDoc}
 ${FragmentLinkFragmentDoc}`;
