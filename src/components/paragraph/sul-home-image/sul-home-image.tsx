@@ -21,11 +21,11 @@ const SulHomeImage = ({paragraph, ...props}: Props) => {
         <Wave className="absolute bottom-0 translate-y-1 -scale-x-100" />
       </div>
       {paragraph.sulHomeImageCredits && (
-        <div className="bottom-50 w-full lg:absolute">
+        <div className="bottom-50 w-full md:absolute">
           <div className="centered">
-            <div className="p-20 lg:ml-auto lg:w-500 lg:bg-black lg:bg-opacity-50 lg:text-white">
+            <div className="p-32 md:ml-auto md:w-[633px] md:bg-black md:bg-opacity-50 md:text-white">
               {paragraph.sulHomeImageCredits?.processed && (
-                <div className="text-right font-sans [&_a]:text-white">
+                <div className="font-sans md:text-right [&_a]:md:text-white">
                   {formatHtml(paragraph.sulHomeImageCredits.processed)}
                 </div>
               )}

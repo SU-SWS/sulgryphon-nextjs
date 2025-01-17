@@ -50,60 +50,61 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
   const imageUrl = library?.suLibraryContactImg?.mediaImage.url || library?.suLibraryBanner?.mediaImage.url
 
   return (
-    <div {...props}>
-      <Card
-        className="rounded border-0"
-        image={
-          imageUrl && (
-            <span className="relative block h-full w-full">
-              <Image
-                className="object-cover object-center"
-                src={buildUrl(imageUrl).toString()}
-                alt=""
-                fill
-                sizes="500px"
-              />
-              <span className="absolute bottom-0 z-10 flex w-full items-center gap-10 bg-black bg-opacity-50 p-10 font-semibold text-white">
+    <Card
+      {...props}
+      className=""
+      image={
+        imageUrl && (
+          <span className="relative block h-full w-full">
+            <Image
+              className="object-cover object-center"
+              src={buildUrl(imageUrl).toString()}
+              alt=""
+              fill
+              sizes="500px"
+            />
+            <span className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10 font-semibold text-white">
+              <span className="mx-auto flex w-fit items-center gap-10">
                 <MoonStarsIcon className="ml-10" />
                 {alert}
               </span>
             </span>
-          )
-        }
-        footer={
-          <div className="relative pb-140 md:rs-pb-8">
-            <div className="absolute w-full">
-              <div className="flex items-center justify-between">
-                <h2 id={formId} className="type-2 mb-03em font-bold leading-tight text-black">
-                  Library hours
-                </h2>
-                <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
-              </div>
+          </span>
+        )
+      }
+      footer={
+        <div className="relative pb-140 md:rs-pb-8">
+          <div className="absolute w-full">
+            <div className="flex items-center justify-between">
+              <h2 id={formId} className="type-2 mb-03em font-sans font-bold leading-tight text-black">
+                Library hours
+              </h2>
+              <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+            </div>
 
-              <div className="mb-10">
-                <SelectList
-                  ariaLabelledby={formId}
-                  options={libraryOptions}
-                  defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
-                  onChange={(_e, value) => setSelectedLibrary(value as string)}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
+            <div className="mb-10">
+              <SelectList
+                ariaLabelledby={formId}
+                options={libraryOptions}
+                defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
+                onChange={(_e, value) => setSelectedLibrary(value as string)}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
 
-                {library?.suLibraryMapLink?.url && (
-                  <Link href={library.suLibraryMapLink.url} prefetch={false} className="flex items-center">
-                    <span className="sr-only">{library.title}&nbsp;</span>
-                    <MapPinIcon title="Map" width={25} className="mr-5" />
-                    Location
-                  </Link>
-                )}
-              </div>
+              {library?.suLibraryMapLink?.url && (
+                <Link href={library.suLibraryMapLink.url} prefetch={false} className="flex items-center">
+                  <span className="sr-only">{library.title}&nbsp;</span>
+                  <MapPinIcon title="Map" width={25} className="mr-5" />
+                  Location
+                </Link>
+              )}
             </div>
           </div>
-        }
-      />
-    </div>
+        </div>
+      }
+    />
   )
 }
 

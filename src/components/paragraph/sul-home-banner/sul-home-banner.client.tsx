@@ -22,28 +22,29 @@ export const SulHomeBannerFormClient = () => {
   return (
     <form
       action={formAction}
-      className="flex w-full flex-wrap items-center justify-between gap-15 rounded-2xl bg-white p-10 sm:flex-nowrap lg:w-fit lg:justify-start"
+      className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24 xs:flex-nowrap"
     >
-      <div className="flex w-full items-center border-black-40 sm:border-r md:w-1/2 lg:w-fit">
+      <div className="flex w-full items-center xs:w-fit">
         <label className="sr-only" htmlFor={inputId}>
           Search for books, articles, and more
         </label>
-        <MagnifyingGlassIcon width={50} className="hidden lg:block" />
+        <MagnifyingGlassIcon width={40} className="hidden sm:block" />
         <input
-          className="h-50 w-full min-w-150 border-0 text-2xl font-semibold lg:min-w-300"
+          className="h-40 w-full min-w-150 border-0 text-4xl md:min-w-300"
           name="q"
           id={inputId}
           placeholder="Search for books, articles, and more"
         />
       </div>
+      <div className="hidden h-50 w-[.5px] shrink-0 bg-black xs:block" />
 
-      <div className="relative w-2/3 sm:w-1/2 md:w-fit">
+      <div className="relative w-2/3 md:w-fit">
         <label className="sr-only" htmlFor={`${inputId}-action`}>
           Search all resources or only this site.
         </label>
         <select
           id={`${inputId}-action`}
-          className="h-50 w-full border-0 bg-none text-2xl font-semibold hover:cursor-pointer md:w-auto"
+          className="h-40 w-full border-0 bg-none text-2xl font-semibold hover:cursor-pointer md:w-auto md:min-w-[150px]"
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
@@ -53,14 +54,14 @@ export const SulHomeBannerFormClient = () => {
         <PlayIcon className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 rotate-90" width={20} />
       </div>
       <button
-        className="button relative m-0 block h-40 w-40 shrink-0 p-0 lg:h-auto lg:w-auto lg:px-20 lg:py-10"
+        className="button relative m-0 block h-40 w-40 shrink-0 p-0 md:h-auto md:w-auto md:px-20 md:py-10"
         type="submit"
       >
         <MagnifyingGlassIcon
           width={30}
-          className="absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 lg:hidden"
+          className="absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 md:hidden"
         />
-        <span aria-hidden className="hidden lg:block">
+        <span aria-hidden className="hidden md:block">
           Search
         </span>
         <span className="sr-only">Submit Search</span>

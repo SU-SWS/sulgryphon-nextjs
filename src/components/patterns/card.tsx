@@ -2,11 +2,11 @@ import {ReactNodeLike} from "prop-types"
 
 import formatHtml from "@/lib/format-html"
 import {DrupalLink} from "@/components/patterns/link"
-import {ElementType, JSX} from "react"
+import {ElementType, HTMLAttributes, JSX} from "react"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 
-interface CardProps {
+type Props = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
   caption?: string
@@ -35,7 +35,8 @@ const Card = ({
   linkStyle,
   headingLevel,
   hideHeading,
-}: CardProps) => {
+  ...props
+}: Props) => {
   const Heading: ElementType = headingLevel || "h2"
 
   const linkAttributes: Record<string, string> = {}
@@ -45,8 +46,17 @@ const Card = ({
     linkAttributes["aria-labelledby"] = headerId
     delete linkAttributes["aria-label"]
   }
+
+  const CardWrapper = header ? "article" : "div"
   return (
-    <div className="card basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md">
+    <CardWrapper
+      {...props}
+      aria-labelledby={header ? headerId : undefined}
+      className={twMerge(
+        "card basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
+        props.className
+      )}
+    >
       {image && (
         <div className="relative h-fit w-full">
           <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
@@ -80,7 +90,7 @@ const Card = ({
 
         {link?.url && <DrupalLink url={link.url} title={link.title} linkStyle={linkStyle} {...linkAttributes} />}
       </div>
-    </div>
+    </CardWrapper>
   )
 }
 export default Card
