@@ -46,6 +46,7 @@ const StanfordCard = ({
 
   const imageUrl = image?.mediaImage.url
   const imageAlt = image?.mediaImage.alt || ""
+  const imageCredit = image?.sulImageCredit || ""
 
   if (headerId && link?.attributes?.ariaLabel && link?.attributes?.ariaLabel === header) {
     link.attributes.ariaLabelledBy = headerId
@@ -97,6 +98,7 @@ const StanfordCard = ({
               />
             )
           }
+          caption={imageCredit}
           header={header}
           superHeader={superHeader}
           body={body}
