@@ -9,6 +9,7 @@ import {twMerge} from "tailwind-merge"
 interface CardProps {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
+  caption?: string
   superHeader?: Maybe<string> | JSX.Element
   header?: Maybe<string> | JSX.Element
   footer?: Maybe<ReactNodeLike>
@@ -25,6 +26,7 @@ const Card = ({
   headerId,
   video,
   image,
+  caption,
   superHeader,
   header,
   footer,
@@ -46,8 +48,15 @@ const Card = ({
   return (
     <div className="card basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md">
       {image && (
-        <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
-          {image}
+        <div className="relative h-fit w-full">
+          <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
+            {image}
+          </div>
+          <div className="absolute bottom-0 w-full bg-black bg-opacity-80">
+            <div className="mx-auto w-fit max-w-200 py-5 text-16 font-semibold leading-normal text-white md:max-w-350">
+              {caption}
+            </div>
+          </div>
         </div>
       )}
 
