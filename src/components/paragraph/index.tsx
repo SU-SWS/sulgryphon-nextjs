@@ -16,8 +16,8 @@ import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import StanfordAccordionParagraph from "@/components/paragraph/stanford-accordion"
-import SulHomeBanner from "@/components/paragraph/sul-home-banner/sul-home-banner";
-import SulLocationHour from "@/components/paragraph/sul-location-hour/sul-location-hour";
+import SulHomeBanner from "@/components/paragraph/sul-home-banner/sul-home-banner"
+import SulLocationHour from "@/components/paragraph/sul-location-hour/sul-location-hour"
 
 type ParagraphProps = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphUnion

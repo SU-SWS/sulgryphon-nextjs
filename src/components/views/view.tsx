@@ -20,12 +20,32 @@ import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-v
 import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
 import {JSX} from "react"
 import FilteringNewsCardView from "@/components/views/stanford-news/filtering-news-card-view"
+import SearchListView from "@/components/views/search-search/search-search-view"
+
+export type ViewDisplayProps<T extends NodeUnion = NodeUnion> = {
+  /**
+   * List of node entities.
+   */
+  items: T[]
+  /**
+   * If those nodes titles should display as <h2> or <h3>
+   */
+  headingLevel?: "h2" | "h3"
+  /**
+   * Total number of items to build the pager.
+   */
+  totalItems: number
+  /**
+   * Server action callback to fetch the next "page" contents.
+   */
+  loadPage?: (_page: number) => Promise<JSX.Element>
+}
 
 interface Props {
   items: NodeUnion[]
   viewId: string
   displayId: string
-  hasHeading: boolean
+  headingLevel?: "h2" | "h3"
   /**
    * Total number of items to build the pager.
    */
@@ -36,76 +56,42 @@ interface Props {
   loadPage?: (_page: number) => Promise<JSX.Element>
 }
 
-const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}: Props) => {
+const View = async ({viewId, displayId, items, totalItems, loadPage, headingLevel = "h2"}: Props) => {
   const component = `${viewId}--${displayId}`
 
+  const viewProps = {totalItems, hasHeading: headingLevel !== "h2", loadPage}
+
   switch (component) {
+    case "search--search":
+      return <SearchListView items={items} {...viewProps} />
+
     case "stanford_basic_pages--basic_page_type_list":
-      return <PageListView items={items as NodeStanfordPage[]} hasHeading={hasHeading} />
+      return <PageListView items={items as NodeStanfordPage[]} hasHeading={headingLevel !== "h2"} />
 
     case "sul_news--filtering_cards":
-      return (
-        <FilteringNewsCardView
-          items={items as NodeStanfordNews[]}
-          hasHeading={hasHeading}
-          totalItems={totalItems}
-          loadPage={loadPage}
-        />
-      )
+      return <FilteringNewsCardView items={items as NodeStanfordNews[]} {...viewProps} />
 
     case "sul_news--vertical_cards":
-      return (
-        <NewsCardView
-          items={items as NodeStanfordNews[]}
-          hasHeading={hasHeading}
-          totalItems={totalItems}
-          loadPage={loadPage}
-        />
-      )
+      return <NewsCardView items={items as NodeStanfordNews[]} {...viewProps} />
 
     case "sul_news--block_1":
-      return (
-        <NewsListView
-          items={items as NodeStanfordNews[]}
-          hasHeading={hasHeading}
-          totalItems={totalItems}
-          loadPage={loadPage}
-        />
-      )
+      return <NewsListView items={items as NodeStanfordNews[]} {...viewProps} />
 
     case "stanford_person--grid_list_all":
-      return <PersonCardView items={items as NodeStanfordPerson[]} hasHeading={hasHeading} />
+      return <PersonCardView items={items as NodeStanfordPerson[]} {...viewProps} />
 
     case "sul_events--cards":
     case "sul_events--cards_desc":
     case "sul_events--shared_tags_cards":
     case "sul_events--shared_tags_cards_desc":
     case "sul_events--list_page":
-      return (
-        <EventsCardView
-          items={items as NodeStanfordEvent[]}
-          hasHeading={hasHeading}
-          totalItems={totalItems}
-          loadPage={loadPage}
-        />
-      )
-
-    // case "sul_events--past_events_list_block":
-    // case "sul_events--list_page":
-    //   return (
-    //     <EventsListView
-    //       items={items as NodeStanfordEvent[]}
-    //       hasHeading={hasHeading}
-    //       totalItems={totalItems}
-    //       loadPage={loadPage}
-    //     />
-    //   )
+      return <EventsCardView items={items as NodeStanfordEvent[]} {...viewProps} />
 
     case "stanford_basic_pages--viewfield_block_1":
-      return <PageCardView items={items as NodeStanfordPage[]} hasHeading={hasHeading} />
+      return <PageCardView items={items as NodeStanfordPage[]} {...viewProps} />
 
     case "stanford_shared_tags--card_grid":
-      return <SharedTagsCardView items={items as NodeStanfordNews[]} hasHeading={hasHeading} />
+      return <SharedTagsCardView items={items as NodeStanfordNews[]} {...viewProps} />
 
     case "sul_study_places--study_places":
       return <StudyPlacesFilteredCards items={items as NodeSulStudyPlace[]} />
@@ -128,9 +114,9 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, hasHeading}
       )
 
     case "sul_branch_locations--branch_locations_table":
-      return <SulBranchLocationTableView items={items as NodeSulLibrary[]} />
+      return <SulBranchLocationTableView items={items as NodeSulLibrary[]} {...viewProps} />
     case "sul_study_places--study_places_table":
-      return <StudyPlaceTable items={items as NodeSulStudyPlace[]} />
+      return <StudyPlaceTable items={items as NodeSulStudyPlace[]} {...viewProps} />
   }
 
   return (

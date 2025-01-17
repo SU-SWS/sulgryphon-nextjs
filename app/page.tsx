@@ -5,7 +5,7 @@ import {getEntityFromPath} from "@/lib/gql/fetcher"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
 import FlushCache from "@/components/patterns/elements/flush-cache"
 import StanfordPageMetadata from "@/components/node/stanford-page/stanford-page-metadata"
-import Paragraph from "@/components/paragraph";
+import Paragraph from "@/components/paragraph"
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const revalidate = false
