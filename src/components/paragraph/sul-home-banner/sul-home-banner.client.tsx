@@ -1,6 +1,6 @@
 "use client"
 import {HTMLAttributes, useEffect, useId, useState} from "react"
-import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
+import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -38,10 +38,16 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <MagnifyingGlassIcon width={40} className="hidden sm:block" />
         <input
-          className="h-40 w-full min-w-150 border-0 text-3xl md:min-w-300"
+          className="hidden h-40 w-full min-w-[25rem] border-0 text-16 sm:block md:min-w-[32rem] md:text-20 xl:min-w-[35rem] xl:text-22"
           name="q"
           id={inputId}
           placeholder="Search for books, articles, and more"
+        />
+        <input
+          className="block h-40 w-full min-w-150 border-0 text-16 sm:hidden"
+          name="q"
+          id={inputId}
+          placeholder="Search by keyword"
         />
       </div>
       <div className="hidden h-50 w-[.5px] shrink-0 bg-black xs:block" />
@@ -52,7 +58,7 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <select
           id={`${inputId}-action`}
-          className="h-40 w-full border-0 bg-none text-2xl font-semibold hover:cursor-pointer md:w-auto md:min-w-[150px]"
+          className="h-40 w-full border-0 bg-none text-16 font-semibold hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
