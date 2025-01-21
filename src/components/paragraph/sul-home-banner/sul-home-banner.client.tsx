@@ -7,13 +7,21 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]
 }
 export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
-  const [displayedChild, setDisplayedChild] = useState(0)
+  const [displayedChild, setDisplayedChild] = useState(-1)
 
   useEffect(() => {
     setDisplayedChild(Math.floor(Math.random() * children.length))
   }, [children])
 
-  return <div {...props}>{children[displayedChild]}</div>
+  return (
+    <div {...props}>
+      {/* To avoid initial loading of an image and then switching to another, 
+      display an empty container and allow the children to display after 
+      the useEffect completes. */}
+      {displayedChild === -1 && <div className="relative h-400" />}
+      {displayedChild >= 0 && children[displayedChild]}
+    </div>
+  )
 }
 
 export const SulHomeBannerFormClient = () => {

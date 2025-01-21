@@ -17,6 +17,7 @@ const SulHomeImage = ({paragraph, ...props}: Props) => {
           fill
           sizes="100vw"
           className="object-cover"
+          loading="eager"
         />
         <Wave className="absolute bottom-0 translate-y-1 -scale-x-100" />
       </div>

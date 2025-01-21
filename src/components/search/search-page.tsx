@@ -15,9 +15,9 @@ const SiteSearch = async ({searchKey}: Props) => {
   }
 
   return (
-    <div className="space-y-24">
+    <div className="space-y-24 pb-40 2xl:w-2/3">
       <form
-        className="relative flex max-w-700 flex-col gap-xs @xl:flex-row @xl:items-end @3xl:gap-xl"
+        className="relative flex flex-col gap-xs @xl:flex-row @xl:items-end @3xl:gap-xl"
         aria-label="Site Search"
         action="/search"
       >
@@ -49,13 +49,15 @@ const SiteSearch = async ({searchKey}: Props) => {
 
       {viewItems.length === 0 && <p>No results found for the given search keywords. Please try again.</p>}
 
-      <View
-        items={viewItems}
-        viewId="search"
-        displayId="search"
-        loadPage={totalItems > viewItems.length ? loadSearchPage : undefined}
-        totalItems={totalItems}
-      />
+      {viewItems.length > 0 && (
+        <View
+          items={viewItems}
+          viewId="search"
+          displayId="search"
+          loadPage={totalItems > viewItems.length ? loadSearchPage : undefined}
+          totalItems={totalItems}
+        />
+      )}
     </div>
   )
 }
