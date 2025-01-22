@@ -64,7 +64,7 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
               sizes="500px"
             />
             <span className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
-              <span className="mx-auto flex w-fit items-center gap-10 text-16 font-semibold leading-normal text-white">
+              <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
                 <MoonStarsIcon className="ml-10" />
                 {alert}
               </span>

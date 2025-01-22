@@ -66,7 +66,7 @@ const Card = ({
           </div>
           {caption && (
             <div className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
-              <div className="mx-auto w-fit text-16 font-semibold leading-normal text-white">{caption}</div>
+              <div className="mx-auto w-fit text-12 font-semibold leading-normal text-white sm:text-16">{caption}</div>
             </div>
           )}
         </div>
@@ -89,7 +89,7 @@ const Card = ({
         {body && <div>{formatHtml(body)}</div>}
 
         {footer && (
-          <div className={(twMerge("rs-pt-0 text-18 font-normal leading-display"), footerClasses)}>{footer}</div>
+          <div className={twMerge("rs-pt-0 text-18 font-normal leading-display", footerClasses)}>{footer}</div>
         )}
 
         {link?.url && <DrupalLink url={link.url} title={link.title} linkStyle={linkStyle} {...linkAttributes} />}
