@@ -12,7 +12,7 @@ import SulContactCard from "@/components/paragraph/sul-contact-card"
 import SulButton from "@/components/paragraph/sul-button"
 import {ElementType, HTMLAttributes, Suspense, useId} from "react"
 import SulLibguides from "@/components/paragraph/sul-libguides"
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphUnion, ParagraphInterface} from "@/lib/gql/__generated__/drupal.d"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import StanfordAccordionParagraph from "@/components/paragraph/stanford-accordion"
@@ -24,25 +24,25 @@ type ParagraphProps = HTMLAttributes<HTMLDivElement> & {
   fullWidth?: boolean
   singleRow?: boolean
 }
+
 const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
   if (paragraph.status) {
     return <ParagraphComponent paragraph={paragraph} {...props} />
   }
   return (
     <EditorAlertBanner message="Unpublished Content">
-      <ParagraphComponent paragraph={paragraph} {...props} />
+      <ParagraphComponent paragraph={paragraph} {...props} />;
     </EditorAlertBanner>
   )
 }
 
 const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ...props}: ParagraphProps) => {
   const headerId = useId()
-
   const paragraphBehaviors = getParagraphBehaviors(paragraph)
 
-  return (
-    <>
-      {paragraph.__typename === "ParagraphStanfordCard" && (
+  switch (paragraph.__typename) {
+    case "ParagraphStanfordCard":
+      return (
         <StanfordCard
           header={paragraph.suCardHeader}
           superHeader={paragraph.suCardSuperHeader}
@@ -62,8 +62,10 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           hideHeading={paragraphBehaviors.su_card_styles?.hide_heading}
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphStanfordBanner" && (
+      )
+
+    case "ParagraphStanfordBanner":
+      return (
         <StanfordBanner
           header={paragraph.suBannerHeader}
           superHeader={paragraph.suBannerSupHeader}
@@ -76,9 +78,13 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           hideHeading={paragraphBehaviors.hero_pattern?.hide_heading}
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphStanfordGallery" && <StanfordImageGallery paragraph={paragraph} {...props} />}
-      {paragraph.__typename === "ParagraphStanfordMediaCaption" && (
+      )
+
+    case "ParagraphStanfordGallery":
+      return <StanfordImageGallery paragraph={paragraph} {...props} />
+
+    case "ParagraphStanfordMediaCaption":
+      return (
         <StanfordMediaCaption
           caption={paragraph.suMediaCaptionCaption?.processed}
           link={paragraph.suMediaCaptionLink}
@@ -90,16 +96,20 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           }
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphStanfordWysiwyg" && (
-        <StanfordWysiwyg text={paragraph.suWysiwygText?.processed} {...props} />
-      )}
-      {paragraph.__typename === "ParagraphStanfordList" && (
+      )
+
+    case "ParagraphStanfordWysiwyg":
+      return <StanfordWysiwyg text={paragraph.suWysiwygText?.processed} {...props} />
+
+    case "ParagraphStanfordList":
+      return (
         <Suspense>
           <StanfordLists paragraph={paragraph} />
         </Suspense>
-      )}
-      {paragraph.__typename === "ParagraphStanfordEntity" && (
+      )
+
+    case "ParagraphStanfordEntity":
+      return (
         <StanfordEntity
           headline={paragraph.suEntityHeadline}
           description={paragraph.suEntityDescription?.processed}
@@ -110,12 +120,16 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           headingBehavior={paragraphBehaviors.stanford_teaser?.heading_behavior}
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphStanfordSpacer" && <StanfordSpacer size={paragraph.suSpacerSize} />}
-      {paragraph.__typename === "ParagraphCollection" && (
-        <SulCollection cards={paragraph.sulCollectionCard} heading={paragraph.sulCollectionHeading} {...props} />
-      )}
-      {paragraph.__typename === "ParagraphSulFeatCollection" && (
+      )
+
+    case "ParagraphStanfordSpacer":
+      return <StanfordSpacer size={paragraph.suSpacerSize} />
+
+    case "ParagraphCollection":
+      return <SulCollection cards={paragraph.sulCollectionCard} heading={paragraph.sulCollectionHeading} {...props} />
+
+    case "ParagraphSulFeatCollection":
+      return (
         <SulFeaturedCollection
           headline={paragraph.sulCollectionHeadline}
           link={paragraph.sulCollectionLink}
@@ -125,9 +139,13 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           fullWidth={fullWidth}
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphSulContactCard" && <SulContactCard paragraph={paragraph} {...props} />}
-      {paragraph.__typename === "ParagraphSulButton" && (
+      )
+
+    case "ParagraphSulContactCard":
+      return <SulContactCard paragraph={paragraph} {...props} />
+
+    case "ParagraphSulButton":
+      return (
         <SulButton
           headline={paragraph.sulButtonHeadline}
           link={paragraph.sulButtonLink}
@@ -136,27 +154,36 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           fullWidth={fullWidth}
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphSulLibguide" && (
+      )
+
+    case "ParagraphSulLibguide":
+      return (
         <SulLibguides
           headline={paragraph.sulLibguideHeadline}
           description={paragraph.sulLibguideDesc?.processed}
           libguideId={paragraph.sulLibguideId}
           {...props}
         />
-      )}
-      {paragraph.__typename === "ParagraphStanfordFaq" && (
-        <StanfordAccordionParagraph paragraph={paragraph} {...props} />
-      )}
-      {paragraph.__typename === "ParagraphSulHomeBanner" && <SulHomeBanner paragraph={paragraph} {...props} />}
-      {paragraph.__typename === "ParagraphSulLocationHour" && <SulLocationHour paragraph={paragraph} {...props} />}
-    </>
-  )
+      )
+
+    case "ParagraphStanfordFaq":
+      return <StanfordAccordionParagraph paragraph={paragraph} {...props} />
+
+    case "ParagraphSulHomeBanner":
+      return <SulHomeBanner paragraph={paragraph} {...props} />
+
+    case "ParagraphSulLocationHour":
+      return <SulLocationHour paragraph={paragraph} {...props} />
+
+    default:
+      console.warn(`Unknown paragraph ${paragraph.__typename}.`)
+      return null
+  }
 }
 
-export const getParagraphBehaviors = (paragraph: ParagraphUnion): ParagraphBehaviors => {
-  if (paragraph.behaviors) return JSON.parse(paragraph.behaviors) as ParagraphBehaviors
-  return {}
+export const getParagraphBehaviors = <T extends ParagraphBehaviors>(paragraph: ParagraphInterface): T => {
+  if (paragraph.behaviors) return JSON.parse(paragraph.behaviors) as T
+  return {} as T
 }
 
 export default Paragraph

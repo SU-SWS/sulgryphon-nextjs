@@ -4,7 +4,7 @@ import Editori11y from "@/components/editori11y"
 import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 
 const RootLayout = async ({children}: {children: ReactNode}) => {
-  const previewMode = await isPreviewMode()
+  const previewMode = isPreviewMode()
   return (
     <>
       {previewMode && (

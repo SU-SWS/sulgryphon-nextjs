@@ -1,35 +1,36 @@
-import Paragraph, {getParagraphBehaviors} from "@/components/paragraph"
+import OneColumn from "@/components/paragraph/rows/one-column"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {getParagraphBehaviors} from "@/components/paragraph"
+import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
+import {twMerge} from "tailwind-merge"
 
-interface LayoutProps {
+export type TwoColumnConfig = Record<string, string>
+type Props = {
   items: ParagraphUnion[]
   fullWidth?: boolean
-  config?: Record<string, string>
+  config?: TwoColumnConfig
 }
 
-const TwoColumn = ({config, items}: LayoutProps) => {
-  const leftItems = items.filter(item => getParagraphBehaviors(item)?.layout_paragraphs?.region === "left")
-  const rightItems = items.filter(item => getParagraphBehaviors(item)?.layout_paragraphs?.region !== "left")
+const TwoColumn = ({items, fullWidth, config}: Props) => {
+  const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
+  const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region !== "left")
 
-  let gridClass = "lg:grid-cols-2"
+  let gridCols = "md:grid-cols-2"
   if (config?.column_widths === "33-67") {
-    gridClass = "lg:grid-cols-1-2"
+    gridCols = "@6xl:grid-cols-1-2"
   } else if (config?.column_widths === "67-33") {
-    gridClass = "lg:grid-cols-2-1"
+    gridCols = "@6xl:grid-cols-2-1"
+  }
+
+  const draftProps: Record<string, string> = {}
+  if (isPreviewMode()) {
+    draftProps["data-columns"] = "2"
   }
 
   return (
-    <div data-rows="two-column" className={`centered grid gap-[90px] ${gridClass}`}>
-      <div className="relative flex min-w-0 flex-col gap-2xl">
-        {leftItems.map(item => (
-          <Paragraph key={item.id} paragraph={item} fullWidth={false} />
-        ))}
-      </div>
-      <div className="relative flex min-w-0 flex-col gap-2xl">
-        {rightItems.map(item => (
-          <Paragraph key={item.id} paragraph={item} fullWidth={false} />
-        ))}
-      </div>
+    <div className={twMerge("gutters grid gap-10 @6xl:gap-20", gridCols)} {...draftProps}>
+      <OneColumn items={leftItems} fullWidth={fullWidth} />
+      <OneColumn items={rightItems} fullWidth={fullWidth} />
     </div>
   )
 }

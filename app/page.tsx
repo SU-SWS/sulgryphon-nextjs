@@ -1,5 +1,5 @@
 import HomePageBanner from "@/components/node/stanford-page/home-page/home-page-banner"
-import {ParagraphRows} from "@/components/paragraph/rows/rows"
+import Rows from "@/components/paragraph/rows/rows"
 import {notFound} from "next/navigation"
 import {getEntityFromPath} from "@/lib/gql/fetcher"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
@@ -32,7 +32,7 @@ const Page = async () => {
       {entity.suPageBanner?.__typename && <Paragraph paragraph={entity.suPageBanner} />}
       {!entity.suPageBanner?.__typename && <HomePageBanner />}
 
-      {entity.suPageComponents && <ParagraphRows items={entity.suPageComponents} fullWidth />}
+      {entity.suPageComponents && <Rows components={entity.suPageComponents} fullWidth />}
       <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
     </main>
   )

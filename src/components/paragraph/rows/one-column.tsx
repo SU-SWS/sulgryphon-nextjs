@@ -1,17 +1,24 @@
 import Paragraph from "@/components/paragraph"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
+import {twMerge} from "tailwind-merge"
 
 interface LayoutProps {
   items: ParagraphUnion[]
   fullWidth?: boolean
   config?: Record<string, string>
+  className?: string
 }
 
-const OneColumn = ({items, fullWidth = true}: LayoutProps) => {
+const OneColumn = ({items, fullWidth = true, className}: LayoutProps) => {
+  const draftProps: Record<string, string> = {}
+  if (isPreviewMode()) {
+    draftProps["data-columns"] = "1"
+  }
   return (
-    <div data-rows="one-column" className="relative flex flex-col gap-[90px]">
+    <div className={twMerge("space-y-16 @container", className)} {...draftProps}>
       {items.map(item => (
-        <Paragraph key={item.id} paragraph={item} fullWidth={fullWidth} singleRow />
+        <Paragraph paragraph={item} key={item.id} fullWidth={fullWidth} />
       ))}
     </div>
   )
