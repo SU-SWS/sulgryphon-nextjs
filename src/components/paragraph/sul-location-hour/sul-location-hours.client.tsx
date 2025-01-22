@@ -63,8 +63,8 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
               fill
               sizes="500px"
             />
-            <span className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10 font-semibold text-white">
-              <span className="mx-auto flex w-fit items-center gap-10">
+            <span className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
+              <span className="mx-auto flex w-fit items-center gap-10 text-16 font-semibold leading-normal text-white">
                 <MoonStarsIcon className="ml-10" />
                 {alert}
               </span>
@@ -72,35 +72,34 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
           </span>
         )
       }
+      footerClasses="p-0"
       footer={
-        <div className="relative pb-140 md:rs-pb-8">
-          <div className="absolute w-full">
-            <div className="flex items-center justify-between">
-              <h2 id={formId} className="type-2 mb-03em font-sans font-bold leading-tight text-black">
-                Library hours
-              </h2>
-              <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
-            </div>
+        <div className="relative">
+          <div className="mb-16 flex flex-col items-start justify-between xl:flex-row xl:items-center">
+            <h2 id={formId} className="type-2 mb-03em font-sans font-bold leading-tight text-black">
+              Library hours
+            </h2>
+            <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+          </div>
 
-            <div className="mb-10">
-              <SelectList
-                ariaLabelledby={formId}
-                options={libraryOptions}
-                defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
-                onChange={(_e, value) => setSelectedLibrary(value as string)}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
+          <div className="mb-10">
+            <SelectList
+              ariaLabelledby={formId}
+              options={libraryOptions}
+              defaultValue={libraryOptions.find(option => option.value === selectedLibrary)?.value}
+              onChange={(_e, value) => setSelectedLibrary(value as string)}
+            />
+          </div>
+          <div className="flex flex-col items-start justify-between xl:flex-row xl:items-center">
+            {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
 
-              {library?.suLibraryMapLink?.url && (
-                <Link href={library.suLibraryMapLink.url} prefetch={false} className="flex items-center">
-                  <span className="sr-only">{library.title}&nbsp;</span>
-                  <MapPinIcon title="Map" width={25} className="mr-5" />
-                  Location
-                </Link>
-              )}
-            </div>
+            {library?.suLibraryMapLink?.url && (
+              <Link href={library.suLibraryMapLink.url} prefetch={false} className="flex items-center">
+                <span className="sr-only">{library.title}&nbsp;</span>
+                <MapPinIcon title="Map" width={25} className="mr-5" />
+                Location
+              </Link>
+            )}
           </div>
         </div>
       }
@@ -122,7 +121,7 @@ const TodayLibraryHours = ({branchId}: {branchId?: string}) => {
 
   return (
     <div className="mb-4 flex items-center text-black" aria-live="polite" aria-atomic>
-      <ClockIcon title="Hours" width={15} className="mr-5" />
+      <ClockIcon title="Hours" width={25} className="mr-5" />
       <div>{hoursDisplay}</div>
     </div>
   )
