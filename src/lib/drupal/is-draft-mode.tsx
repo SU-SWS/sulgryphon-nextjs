@@ -1,11 +1,11 @@
-import {cookies, type UnsafeUnwrappedCookies} from "next/headers"
-
 /*
- * Draft mode works when in normal builds. Use environment variable during development.
+ Draft mode works only in normal builds, use environment variable during development.
  */
-export const isPreviewMode = (): boolean => {
+import {cookies} from "next/headers"
+
+export const isPreviewMode = async (): Promise<boolean> => {
+  const cookieValues = await cookies()
   return (
-    process.env.NODE_ENV === "development" ||
-    (cookies() as unknown as UnsafeUnwrappedCookies)?.get("preview")?.value === process.env.DRUPAL_PREVIEW_SECRET
+    process.env.NODE_ENV === "development" || cookieValues.get("preview")?.value === process.env.DRUPAL_PREVIEW_SECRET
   )
 }

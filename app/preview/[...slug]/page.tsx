@@ -5,7 +5,7 @@ import DisablePreviewMode from "../disable-preview-mode"
 import {PageProps} from "@/lib/drupal/utils"
 
 const PreviewNodePage = async (props: PageProps) => {
-  if (!isPreviewMode()) notFound()
+  if (!(await isPreviewMode())) notFound()
   return (
     <>
       <NodePage params={props.params} previewMode={true} />

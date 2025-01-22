@@ -43,7 +43,7 @@ export const metadata = {
 export const revalidate = false
 
 const RootLayout = async ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
-  const previewMode = isPreviewMode()
+  const previewMode = await isPreviewMode()
   return (
     <html lang="en" className="scroll-smooth">
       <DrupalWindowSync />
