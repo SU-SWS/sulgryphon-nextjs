@@ -23,24 +23,12 @@ const ThreeColumn = ({items, fullWidth = true}: LayoutProps) => {
 
   return (
     <div
-      className="centered flex flex-col justify-between gap-[9rem] md:flex-row md:flex-wrap xl:flex-nowrap"
+      className="centered flex flex-col justify-between gap-[9rem] *:mx-auto *:w-full md:flex-row md:flex-wrap *:md:w-[calc(50%_-_5rem)] lg:flex-nowrap *:lg:w-[calc(33.3%_-_5rem)]"
       {...draftProps}
     >
-      <OneColumn
-        className="w-full md:w-[calc(50%_-_5rem)] xl:w-[calc(33.3%_-_5rem)]"
-        items={leftItems}
-        fullWidth={fullWidth}
-      />
-      <OneColumn
-        className="w-full md:w-[calc(50%_-_5rem)] xl:w-[calc(33.3%_-_5rem)]"
-        items={mainItems}
-        fullWidth={fullWidth}
-      />
-      <OneColumn
-        className="mx-auto w-full md:w-[calc(50%_-_5rem)] xl:w-[calc(33.3%_-_5rem)]"
-        items={rightItems}
-        fullWidth={fullWidth}
-      />
+      <OneColumn items={leftItems} fullWidth={fullWidth} />
+      <OneColumn items={mainItems} fullWidth={fullWidth} />
+      <OneColumn items={rightItems} fullWidth={fullWidth} />
     </div>
   )
 }
