@@ -8,9 +8,9 @@ interface LayoutProps {
   config?: Record<string, string>
 }
 
-const OneColumn = ({items, fullWidth = true}: LayoutProps) => {
+const OneColumn = async ({items, fullWidth = true}: LayoutProps) => {
   const draftProps: Record<string, string> = {}
-  if (isPreviewMode()) {
+  if (await isPreviewMode()) {
     draftProps["data-columns"] = "1"
   }
   return (

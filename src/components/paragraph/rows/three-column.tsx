@@ -9,7 +9,7 @@ interface LayoutProps {
   config?: Record<string, string>
 }
 
-const ThreeColumn = ({items, fullWidth = true}: LayoutProps) => {
+const ThreeColumn = async ({items, fullWidth = true}: LayoutProps) => {
   const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
   const mainItems = items.filter(
     item => !["left", "right"].includes(getParagraphBehaviors(item).layout_paragraphs?.region || "main")
@@ -17,7 +17,7 @@ const ThreeColumn = ({items, fullWidth = true}: LayoutProps) => {
   const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "right")
 
   const draftProps: Record<string, string> = {}
-  if (isPreviewMode()) {
+  if (await isPreviewMode()) {
     draftProps["data-columns"] = "3"
   }
 

@@ -11,7 +11,7 @@ type Props = {
   config?: TwoColumnConfig
 }
 
-const TwoColumn = ({items, fullWidth, config}: Props) => {
+const TwoColumn = async ({items, fullWidth, config}: Props) => {
   const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
   const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region !== "left")
 
@@ -23,7 +23,7 @@ const TwoColumn = ({items, fullWidth, config}: Props) => {
   }
 
   const draftProps: Record<string, string> = {}
-  if (isPreviewMode()) {
+  if (await isPreviewMode()) {
     draftProps["data-columns"] = "2"
   }
 
