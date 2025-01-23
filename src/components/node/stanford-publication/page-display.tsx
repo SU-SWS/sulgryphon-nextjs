@@ -1,4 +1,4 @@
-import {ParagraphRows} from "@/components/paragraph/rows/rows"
+import Rows from "@/components/paragraph/rows/rows"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d"
 
@@ -13,7 +13,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
         {node.suPublicationComponents && (
           <div className="col-span-4">
             <div className="rs-mb-7 lg:w-11/12">
-              <ParagraphRows items={node.suPublicationComponents} />
+              <Rows components={node.suPublicationComponents} />
             </div>
           </div>
         )}

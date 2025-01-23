@@ -1,6 +1,6 @@
 "use client"
 import {HTMLAttributes, useEffect, useId, useState} from "react"
-import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
+import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -32,13 +32,13 @@ export const SulHomeBannerFormClient = () => {
       action={formAction}
       className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24 xs:flex-nowrap"
     >
-      <div className="flex w-full items-center xs:w-fit">
+      <div className="flex w-full items-center overflow-hidden xs:w-fit">
         <label className="sr-only" htmlFor={inputId}>
           Search for books, articles, and more
         </label>
         <MagnifyingGlassIcon width={40} className="hidden sm:block" />
         <input
-          className="h-40 w-full min-w-150 border-0 text-3xl md:min-w-300"
+          className="block h-40 w-full min-w-[25rem] border-0 text-16 md:min-w-[32rem] md:text-20 xl:min-w-[35rem] xl:text-22"
           name="q"
           id={inputId}
           placeholder="Search for books, articles, and more"
@@ -52,7 +52,7 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <select
           id={`${inputId}-action`}
-          className="h-40 w-full border-0 bg-none text-2xl font-semibold hover:cursor-pointer md:w-auto md:min-w-[150px]"
+          className="h-40 w-full border-0 bg-none text-16 font-semibold hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
