@@ -16,6 +16,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   linkStyle?: Maybe<string>
   sprinklePosition?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
   image?: Maybe<MediaImage>
+  caption?: Maybe<string>
   videoUrl?: Maybe<string>
   orientation?: Maybe<string>
   fullWidth?: Maybe<boolean>
@@ -32,6 +33,7 @@ const StanfordCard = ({
   body,
   link,
   image,
+  caption,
   videoUrl,
   linkStyle,
   sprinklePosition,
@@ -46,7 +48,6 @@ const StanfordCard = ({
 
   const imageUrl = image?.mediaImage.url
   const imageAlt = image?.mediaImage.alt || ""
-  const imageCredit = image?.sulImageCredit || ""
 
   if (headerId && link?.attributes?.ariaLabel && link?.attributes?.ariaLabel === header) {
     link.attributes.ariaLabelledBy = headerId
@@ -98,7 +99,7 @@ const StanfordCard = ({
               />
             )
           }
-          caption={imageCredit}
+          caption={caption}
           header={header}
           superHeader={superHeader}
           body={body}

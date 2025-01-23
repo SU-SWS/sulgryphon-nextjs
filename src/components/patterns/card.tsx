@@ -9,7 +9,7 @@ import {twMerge} from "tailwind-merge"
 type Props = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
-  caption?: string
+  caption?: Maybe<string>
   superHeader?: Maybe<string> | JSX.Element
   header?: Maybe<string> | JSX.Element
   footer?: Maybe<ReactNodeLike>

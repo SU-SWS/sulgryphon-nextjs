@@ -210,6 +210,7 @@ export const FragmentParagraphStanfordCardFragmentDoc = gql`
   suCardMedia {
     ...FragmentMediaUnion
   }
+  sulCardImageCaption
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentTextFragmentDoc}

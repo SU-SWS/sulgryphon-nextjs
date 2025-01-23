@@ -51,6 +51,7 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
           linkStyle={paragraphBehaviors?.sul_card_styles?.link_display_style}
           sprinklePosition={paragraphBehaviors?.sul_card_styles?.background_sprinkles}
           image={paragraph.suCardMedia?.__typename === "MediaImage" ? paragraph.suCardMedia : undefined}
+          caption={paragraph.sulCardImageCaption}
           videoUrl={
             paragraph.suCardMedia?.__typename === "MediaVideo" ? paragraph.suCardMedia.mediaOembedVideo : undefined
           }
