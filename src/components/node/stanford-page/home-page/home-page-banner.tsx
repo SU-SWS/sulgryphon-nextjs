@@ -11,6 +11,7 @@ const HomePageBanner = async () => {
 
   return (
     <header className="relative mb-50 bg-black-true">
+      <h1 className="sr-only">Stanford Libraries</h1>
       <div className="centered relative top-50 z-10 min-h-[350px] pb-20 md:top-100 md:min-h-[300px] md:px-50">
         <div className="justify-between md:flex xl:mx-20">
           <div className="mb-40 text-white md:w-1/3 lg:w-1/2">
