@@ -76,7 +76,7 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
       footer={
         <div className="relative">
           <div className="mb-16 flex flex-col items-start justify-between xl:flex-row xl:items-center">
-            <h2 id={formId} className="type-2 mb-03em font-sans font-bold leading-tight text-black">
+            <h2 id={formId} className="type-1 mb-03em font-serif font-bold leading-tight text-black">
               Library hours
             </h2>
             <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
