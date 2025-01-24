@@ -15,6 +15,8 @@ import {unstable_cache as nextCache} from "next/cache"
 import {ClientError} from "graphql-request"
 import {GraphQLError} from "graphql/error"
 
+const githubBranch = process.env.VERCEL_GIT_COMMIT_REF || "local"
+
 export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, isPreviewMode?: boolean) => {
   requestConfig.headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
 
@@ -65,7 +67,7 @@ export const getEntityFromPath = async <T extends NodeUnion>(
         query.route?.__typename === "RouteInternal" && query.route.entity ? (query.route.entity as T) : undefined
       return {entity}
     },
-    [path, previewMode ? "preview" : "anonymous", teaser ? "teaser" : "full"],
+    [githubBranch, path, previewMode ? "preview" : "anonymous", teaser ? "teaser" : "full"],
     {tags: ["all-entities", `paths:${path}`]}
   )
 
@@ -96,7 +98,7 @@ export const getConfigPage = cache(
           return query.stanfordSuperFooters.nodes[0] as T
         if (query.lockupSettings.nodes[0]?.__typename === configPageType) return query.lockupSettings.nodes[0] as T
       },
-      [configPageType || "all"],
+      [githubBranch, configPageType || "all"],
       {tags: ["config-pages"]}
     )
     return getConfigPageInner()
@@ -112,7 +114,7 @@ export const getConfigPageField = async <T extends ConfigPagesUnion, F>(
       const configPage = await getConfigPage<T>(configPageType)
       return configPage?.[fieldName] as F
     },
-    [fieldName.toString()],
+    [githubBranch, fieldName.toString()],
     {tags: ["config-pages"]}
   )
   return getData()
@@ -133,7 +135,7 @@ export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> =
       }
       return filterInaccessible(menuItems)
     },
-    [name || "main"],
+    [githubBranch, name || "main"],
     {tags: ["menus", `menu:${name?.toLowerCase() || "main"}`]}
   )
   return getMenuInner()

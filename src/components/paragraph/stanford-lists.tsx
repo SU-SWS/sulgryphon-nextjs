@@ -7,7 +7,6 @@ import {twMerge} from "tailwind-merge"
 import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
-import {Button} from "@mui/base"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
@@ -83,8 +82,6 @@ const ListParagraph = async ({paragraph}: Props) => {
           totalItems={addLoadMore ? totalItems : viewItems.length}
         />
       )}
-
-      {paragraph.suListButton?.url && <Button href={paragraph.suListButton.url}>{paragraph.suListButton.title}</Button>}
     </ListWrapper>
   )
 }
