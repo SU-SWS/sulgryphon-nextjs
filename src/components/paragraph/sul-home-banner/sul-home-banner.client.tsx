@@ -38,7 +38,7 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <MagnifyingGlassIcon width={40} className="hidden sm:block" />
         <input
-          className="block h-40 w-full min-w-[25rem] border-0 text-16 md:min-w-[32rem] md:text-20 xl:min-w-[35rem] xl:text-22"
+          className="block h-40 w-full min-w-[25rem] border-0 text-16 focus:border md:min-w-[32rem] md:text-20 xl:min-w-[35rem] xl:text-22"
           name="q"
           id={inputId}
           placeholder="Search for books, articles, and more"
