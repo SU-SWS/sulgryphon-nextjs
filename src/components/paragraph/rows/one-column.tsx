@@ -14,7 +14,7 @@ const OneColumn = async ({items, fullWidth = true}: LayoutProps) => {
     draftProps["data-columns"] = "1"
   }
   return (
-    <div className="space-y-16 @container" {...draftProps}>
+    <div className="flex flex-col space-y-90" {...draftProps}>
       {items.map(item => (
         <Paragraph paragraph={item} key={item.id} fullWidth={fullWidth} />
       ))}

@@ -50,7 +50,7 @@ const Rows = async ({components, className, fullWidth, ...props}: Props) => {
   })
 
   return (
-    <div className={twMerge("space-y-32 @container", className)} {...props}>
+    <div className={twMerge("mb-10 flex flex-col space-y-32", className)} {...props}>
       {Object.keys(layouts).map(layoutId => (
         <Row
           key={layoutId}
