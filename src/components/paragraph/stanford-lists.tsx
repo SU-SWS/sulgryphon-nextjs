@@ -83,8 +83,6 @@ const ListParagraph = async ({paragraph}: Props) => {
           totalItems={addLoadMore ? totalItems : viewItems.length}
         />
       )}
-
-      {paragraph.suListButton?.url && <Button href={paragraph.suListButton.url}>{paragraph.suListButton.title}</Button>}
     </ListWrapper>
   )
 }
