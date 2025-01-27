@@ -28,7 +28,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
   }
 
   return (
-    <div className={twMerge("gutters grid gap-10 @6xl:gap-20", gridCols)} {...draftProps}>
+    <div className={twMerge("gutters centered grid gap-90", gridCols)} {...draftProps}>
       <OneColumn items={leftItems} fullWidth={fullWidth} />
       <OneColumn items={rightItems} fullWidth={fullWidth} />
     </div>

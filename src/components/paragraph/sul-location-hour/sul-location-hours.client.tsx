@@ -63,7 +63,7 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
               fill
               sizes="500px"
             />
-            <span className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
+            <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">
               <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
                 <MoonStarsIcon className="ml-10" />
                 {alert}
@@ -76,7 +76,7 @@ const LibrariesTodayHours = ({libraries, alert, ...props}: {libraries: HoursProp
       footer={
         <div className="relative">
           <div className="mb-16 flex flex-col items-start justify-between xl:flex-row xl:items-center">
-            <h2 id={formId} className="type-2 mb-03em font-bold leading-tight text-black">
+            <h2 id={formId} className="type-1 mb-03em font-serif font-bold leading-tight text-black">
               Library hours
             </h2>
             <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
