@@ -23,7 +23,7 @@ const ThreeColumn = async ({items, fullWidth = true}: LayoutProps) => {
 
   return (
     <div
-      className="centered flex flex-col justify-between gap-[9rem] *:mx-auto *:w-full md:flex-row md:flex-wrap *:md:w-[calc(50%_-_5rem)] lg:flex-nowrap *:lg:w-[calc(33.3%_-_5rem)]"
+      className="centered flex flex-col justify-between gap-90 *:mx-auto *:w-full md:flex-row md:flex-wrap *:md:w-[calc(50%_-_5rem)] lg:flex-nowrap *:lg:w-[calc(33.3%_-_5rem)]"
       {...draftProps}
     >
       <OneColumn items={leftItems} fullWidth={fullWidth} />
