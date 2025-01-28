@@ -85,7 +85,7 @@ To release code to production, create a release branch from `1.x` and make a pul
 
    - Start from `1.x` (or a specific commit ref from `1.x`).
 
-   - Name your branch with the `release/` prefix and optionally include a semver tag (e.g., `release/refactor-everything[major]`).
+   - We suggest naming your branch with the `release/` prefix, optionally followed by a semver tag (e.g., `release/refactor-everything[major]`). Note: Commit messages are more important than branch names.
 
 2\. **Create a Pull Request**
 
