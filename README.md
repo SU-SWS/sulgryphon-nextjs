@@ -19,7 +19,7 @@ on Vercel for their respective Drupal environments.
 
 ### Development Workflows
 
-All general development work should be based off of the `1.x` branch. To maintain organization and consistency, branches must follow this naming convention:
+All general development work should be based off of the `1.x` branch. To maintain organization and consistency, we suggest the follow this naming convention for branches:
 
 ```markdown
 
@@ -41,7 +41,7 @@ This structure ensures proper labeling and integration with Jira.
 
    - Start your branch from `1.x`.
 
-   - Follow the naming conventions outlined above.
+   - Feel free to follow the suggested naming conventions outlined above.
 
 2\. **Complete Work**
 
@@ -99,15 +99,13 @@ To release code to production, create a release branch from `1.x` and make a pul
 
 ### Hotfix Workflow
 
-Use the hotfix workflow only for urgent production bug fixes when there are pending changes in `1.x` that are not ready for deployment.
+Use the hotfix workflow for urgent production bug fixes when there are pending changes in `1.x` that are not ready for deployment.
 
 #### Steps:
 
 1\. **Create a Hotfix Branch**
 
    - Start your branch from `main`.
-
-   - Name your branch with the `hotfix/` prefix.
 
 2\. **Complete the Fix**
 
@@ -126,7 +124,3 @@ Use the hotfix workflow only for urgent production bug fixes when there are pend
 #### Post-Merge Considerations:
 
 - Depending on the state of `1.x`, you may need to manually merge `main` back into `1.x` to resolve conflicts and sync changes.
-
----
-
-By adhering to these workflows, we ensure streamlined development, maintain clear versioning, and deliver reliable production releases.
