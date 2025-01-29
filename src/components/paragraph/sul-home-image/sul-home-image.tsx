@@ -23,7 +23,7 @@ const SulHomeImage = ({paragraph, ...props}: Props) => {
       </div>
       {paragraph.sulHomeImageCredits && (
         <div className="bottom-50 w-full md:absolute">
-          <div className="p-16 shadow-lg md:ml-auto md:w-[633px] md:bg-black md:bg-opacity-50 md:text-white md:shadow-none lg:p-24 xl:p-32">
+          <div className="p-16 shadow-lg md:ml-auto md:w-fit md:max-w-[633px] md:bg-black md:bg-opacity-50 md:text-white md:shadow-none lg:p-24 xl:p-32">
             {paragraph.sulHomeImageCredits?.processed && (
               <div className="font-sans *:mb-0 md:text-right [&_a]:md:text-white">
                 {formatHtml(paragraph.sulHomeImageCredits.processed)}

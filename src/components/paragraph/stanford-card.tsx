@@ -56,7 +56,10 @@ const StanfordCard = ({
 
   return (
     <div
-      className={twMerge("relative", !isHorizontal ? "centered mx-auto w-full lg:max-w-[980px]" : "p-0 md:rs-pt-5")}
+      className={twMerge(
+        "relative",
+        !isHorizontal ? "centered mx-auto w-full lg:max-w-[980px]" : "p-0 md:rs-pt-5 lg:p-0"
+      )}
       {...props}
     >
       {isHorizontal && (

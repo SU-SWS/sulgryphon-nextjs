@@ -25,12 +25,12 @@ const Header = async () => {
 
       <header className="relative top-0 z-20 bg-white shadow-lg">
         <div className="lg:centered">
-          <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-40 pt-20 lg:z-10 lg:flex lg:px-0">
+          <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-40 pt-20 lg:z-10 lg:flex lg:gap-32 lg:px-0">
             <div className="pb-20">
               <Lockup />
             </div>
             <nav className="hidden lg:block" aria-label="User links">
-              <ul className="list-unstyled flex items-baseline gap-[40px] xl:gap-[55px]">
+              <ul className="list-unstyled flex items-baseline gap-40 xl:gap-[55px]">
                 <HeaderLink href="/library-accessibility" text="Library Accessibility" />
                 <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
                 <HeaderLink href="/contact-us" text="Contact Us" />
