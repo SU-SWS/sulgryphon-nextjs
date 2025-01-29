@@ -14,6 +14,7 @@ import LockupT from "@/components/patterns/elements/lockup/lockup-t"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
 import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
 import {getConfigPage, getConfigPageField} from "@/lib/gql/fetcher"
+import {twMerge} from "tailwind-merge"
 
 export interface LockupProps {
   useDefault?: Maybe<boolean>
@@ -25,9 +26,10 @@ export interface LockupProps {
   line4?: Maybe<string>
   line5?: Maybe<string>
   logoUrl?: Maybe<string>
+  whiteText?: Maybe<boolean>
 }
 
-export const Lockup = async () => {
+export const Lockup = async ({whiteText}: {whiteText?: boolean}) => {
   const siteName = await getConfigPageField<StanfordBasicSiteSetting, StanfordBasicSiteSetting["suSiteName"]>(
     "StanfordBasicSiteSetting",
     "suSiteName"
@@ -43,15 +45,21 @@ export const Lockup = async () => {
     line5: lockupSettingsConfig?.suLine5,
     siteName: siteName || "Stanford",
     logoUrl: logoUrl,
+    whiteText: whiteText,
   }
 
   if (!lockupSettingsConfig?.suLockupEnabled) {
     return (
       <Link href="/" className="flex flex-col text-black no-underline lg:flex-row lg:items-end">
-        <div className="border-black py-2 pr-9 lg:border-r-2">
+        <div className={twMerge("py-2 pr-9 lg:border-r-2", whiteText ? "border-white" : "border-black")}>
           <LockupLogo {...lockupProps} />
         </div>
-        <div className="font-roboto text-nowrap text-28 font-light text-black lg:relative lg:top-[5px] lg:pl-9">
+        <div
+          className={twMerge(
+            "font-roboto type-1 text-nowrap font-light lg:relative lg:top-[5px] lg:pl-9",
+            whiteText ? "text-white" : "text-black"
+          )}
+        >
           {siteName || "University Libraries"}
         </div>
       </Link>
