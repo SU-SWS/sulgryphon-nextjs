@@ -23,7 +23,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
 
   const imageUrl = node.sulEventImage?.mediaImage.url
-  const goToUrl = node.suEventSource?.url || node.path
+  const goToUrl = (node.suEventSource?.url || node.path).replaceAll(" ", "%20")
 
   return (
     <article {...props} className="mx-auto @container">
@@ -81,7 +81,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
           {node.suEventMapLink?.url && (
             <div className="order-5 flex">
               <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
-              <Link href={node.suEventMapLink?.url}>{node.suEventMapLink?.title}</Link>
+              <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>{node.suEventMapLink?.title}</Link>
             </div>
           )}
         </div>

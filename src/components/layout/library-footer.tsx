@@ -1,6 +1,6 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import {ArrowRightIcon} from "@heroicons/react/20/solid"
-import Lockup from "@/components/patterns/lockup"
+import Lockup from "@/components/patterns/elements/lockup/lockup"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import FacebookIcon from "@/components/patterns/icons/FacebookIcon"
 import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon"

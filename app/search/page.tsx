@@ -1,71 +1,30 @@
-import {getSearchIndex} from "@/lib/drupal/get-search-index"
-import Search, {SearchResult} from "./search"
-import {StanfordNode, StanfordParagraph, WysiwygParagraph} from "@/lib/drupal/drupal"
+import SiteSearch from "@/components/search/search-page"
+import {redirect} from "next/navigation"
 
+// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const revalidate = false
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
+// https://vercel.com/docs/functions/runtimes#max-duration
+export const maxDuration = 60
 
-const Page = () => {
-  const search = async (searchString: string): Promise<SearchResult[]> => {
-    "use server"
+const Page = async (props: {searchParams?: Promise<Record<string, string>>}) => {
+  const searchParams = await props.searchParams
+  const searchTerms = searchParams?.q || ""
 
-    // This still uses JSON API because GraphQL doesn't have an easy way to search for content.
-    const searchResults: StanfordNode[] = await getSearchIndex("full_site_content", {
-      params: {"filter[fulltext]": searchString},
-    })
-
-    return searchResults
-      .map(node => ({
-        id: node.id,
-        title: node.title,
-        path: node.path.alias,
-        changed: node.changed,
-        description: getNodeDescription(node),
-      }))
-      .slice(0, 20)
+  if (searchParams) {
+    // Honeypot check.
+    if (searchParams?.search) redirect("/search")
+    // Bot actor adding unwanted parameters.
+    delete searchParams.search
+    delete searchParams.q
+    if (Object.keys(searchParams).length > 0) redirect("/search")
   }
-
   return (
-    <div className="2xl:w-2/3">
-      <Search search={search} />
+    <div className="centered mt-32">
+      <div className="mx-auto 3xl:w-10/12">
+        <SiteSearch searchKey={searchTerms} />
+      </div>
     </div>
   )
 }
-
-const getNodeDescription = (node: StanfordNode) => {
-  switch (node.type) {
-    case "node--stanford_page":
-      return node.su_page_description || getFirstTextFromParagraphs(node.su_page_components)
-
-    case "node--stanford_person":
-      return node.su_person_full_title
-
-    case "node--stanford_event":
-      return getTextSnippet(node.body) || getFirstTextFromParagraphs(node.su_event_components)
-
-    case "node--stanford_news":
-      return getFirstTextFromParagraphs(node.su_news_components)
-
-    case "node--sul_library":
-      return getFirstTextFromParagraphs(node.su_library__paragraphs)
-  }
-}
-
-const getTextSnippet = (html?: string) => {
-  const snippet = html
-    ?.replace(/(<([^>]+)>)/gi, "")
-    .replace(/ +/g, " ")
-    .split(" ")
-    .slice(0, 50)
-    .join(" ")
-  return snippet ? snippet + "..." : undefined
-}
-
-const getFirstTextFromParagraphs = (paragraphs?: StanfordParagraph[]) => {
-  const firstWysiwyg = paragraphs?.find(p => p.__typename === "paragraph--stanford_wysiwyg") as
-    | WysiwygParagraph
-    | undefined
-  return getTextSnippet(firstWysiwyg?.su_wysiwyg_text)
-}
-
 export default Page

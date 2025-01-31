@@ -36,7 +36,7 @@ type Props = HTMLAttributes<HTMLElement> & {
   panelProps?: HTMLAttributes<HTMLDivElement>
 }
 
-const Accordion = ({button, children, headingLevel = "h2", ...props}: Props) => {
+const SulAccordion = ({button, children, headingLevel = "h2", ...props}: Props) => {
   const id = useId()
   const {buttonProps, panelProps, expanded, ref} = useAccordion({buttonId: `${id}-button`})
 
@@ -77,4 +77,4 @@ const Accordion = ({button, children, headingLevel = "h2", ...props}: Props) => 
     </section>
   )
 }
-export default Accordion
+export default SulAccordion

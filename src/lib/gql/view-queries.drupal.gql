@@ -45,20 +45,10 @@ query sulEventsSharedTags($contextualFilters: SulEventsSharedTagsContextualFilte
 }
 
 
-#query sulSharedTagEventsCardGridGraphql($contextualFilters: SulSharedTagEventsCardGridGraphqlContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
-#    sulSharedTagEventsCardGridGraphql(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
-#        results {
-#            ...FragmentNodeTeaserUnion
-#        }
-#        pageInfo {
-#            ...FragmentViewPageInfo
-#        }
-#    }
-#}
-
 query stanfordBasicPages($contextualFilters: StanfordBasicPagesContextualFilterInput, $sortKey: StanfordBasicPagesSortKeys, $sortDir: SortDirection $pageSize: Int = 3, $page: Int, $offset: Int) {
     stanfordBasicPages(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset, sortKey: $sortKey, sortDir: $sortDir) {
         results {
+            ...FragmentNodeInterface
             ...FragmentNodeStanfordPageTeaser
         }
         pageInfo {
@@ -70,6 +60,7 @@ query stanfordBasicPages($contextualFilters: StanfordBasicPagesContextualFilterI
 #query stanfordCourses($contextualFilters: StanfordCoursesContextualFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
 #    stanfordCourses(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
 #        results {
+#            ...FragmentNodeInterface
 #            ...FragmentNodeStanfordCourse
 #        }
 #        pageInfo {
@@ -79,8 +70,9 @@ query stanfordBasicPages($contextualFilters: StanfordBasicPagesContextualFilterI
 #}
 #
 #query stanfordEvents($contextualFilters: StanfordEventsContextualFilterInput, $pageSize: Int, $page: Int = -1, $offset: Int) {
-#    stanfordEvents(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
+#    stanfordEvents(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset, sortKey: START_TIME) {
 #        results {
+#            ...FragmentNodeInterface
 #            ...FragmentNodeStanfordEventTeaser
 #        }
 #        pageInfo {
@@ -90,8 +82,9 @@ query stanfordBasicPages($contextualFilters: StanfordBasicPagesContextualFilterI
 #}
 #
 #query stanfordEventsPastEvents($contextualFilters: StanfordEventsPastEventsContextualFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
-#    stanfordEventsPastEvents(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
+#    stanfordEventsPastEvents(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset, sortKey: START_TIME) {
 #        results {
+#            ...FragmentNodeInterface
 #            ...FragmentNodeStanfordEventTeaser
 #        }
 #        pageInfo {
@@ -103,6 +96,7 @@ query stanfordBasicPages($contextualFilters: StanfordBasicPagesContextualFilterI
 query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $filter: StanfordNewsFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
     stanfordNews(contextualFilter: $contextualFilters, filter: $filter, pageSize: $pageSize, page: $page, offset: $offset) {
         results {
+            ...FragmentNodeInterface
             ...FragmentNodeStanfordNewsTeaser
         }
         pageInfo {
@@ -114,6 +108,7 @@ query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $filte
 query stanfordPerson($contextualFilters: StanfordPersonContextualFilterInput, $pageSize: Int, $page: Int = -1, $offset: Int) {
     stanfordPerson(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
         results {
+            ...FragmentNodeInterface
             ...FragmentNodeStanfordPersonTeaser
         }
         pageInfo {
@@ -125,6 +120,7 @@ query stanfordPerson($contextualFilters: StanfordPersonContextualFilterInput, $p
 #query stanfordPublications($contextualFilters: StanfordPublicationsContextualFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
 #    stanfordPublications(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
 #        results {
+#            ...FragmentNodeInterface
 #            ...FragmentNodeStanfordPublicationTeaser
 #        }
 #        pageInfo {
@@ -136,7 +132,20 @@ query stanfordPerson($contextualFilters: StanfordPersonContextualFilterInput, $p
 query stanfordSharedTags($contextualFilters: StanfordSharedTagsContextualFilterInput, $pageSize: Int = 3, $page: Int $offset: Int) {
     stanfordSharedTags(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
         results {
+            ...FragmentNodeInterface
             ...FragmentNodeTeaserUnion
+        }
+        pageInfo {
+            ...FragmentViewPageInfo
+        }
+    }
+}
+
+query search($filter: SearchFilterInput = {key: ""}, $pageSize: Int = 3, $page: Int $offset: Int) {
+    search(filter: $filter, pageSize: $pageSize, page: $page, offset: $offset) {
+        results {
+            ...FragmentNodeInterface
+            ...FragmentNodeUnion
         }
         pageInfo {
             ...FragmentViewPageInfo

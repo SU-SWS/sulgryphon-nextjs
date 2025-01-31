@@ -1,4 +1,4 @@
-import {ParagraphRows} from "@/components/paragraph/rows/rows"
+import Rows from "@/components/paragraph/rows/rows"
 import LibraryAdditionalHours from "@/components/node/sul-library/library-additional-hours"
 import formatHtml from "@/lib/format-html"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
@@ -25,7 +25,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
         </div>
       )}
 
-      {node.suLibraryParagraphs && <ParagraphRows items={node.suLibraryParagraphs} fullWidth={fullWidth} />}
+      {node.suLibraryParagraphs && <Rows components={node.suLibraryParagraphs} fullWidth={fullWidth} />}
 
       {node.sulLibraryA11y && (
         <div className="centered mx-auto mb-50 w-full py-20 lg:max-w-[980px]">

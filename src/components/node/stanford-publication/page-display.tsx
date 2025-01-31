@@ -1,4 +1,4 @@
-import {ParagraphRows} from "@/components/paragraph/rows/rows"
+import Rows from "@/components/paragraph/rows/rows"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d"
 
@@ -13,7 +13,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
         {node.suPublicationComponents && (
           <div className="col-span-4">
             <div className="rs-mb-7 lg:w-11/12">
-              <ParagraphRows items={node.suPublicationComponents} />
+              <Rows components={node.suPublicationComponents} />
             </div>
           </div>
         )}
@@ -40,7 +40,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
               </div>
             )}
 
-            {node.suPublicationCitation?.__typename === "SuArticleJournal" &&
+            {node.suPublicationCitation?.__typename === "CitationSuArticleJournal" &&
               node.suPublicationCitation.suJournalPublisher && (
                 <div className="rs-mb-2">
                   <h2 className="mb-01em text-16 md:text-18 2xl:text-19">Journal Name</h2>

@@ -81,6 +81,7 @@ fragment FragmentNodeStanfordPage on NodeStanfordPage {
     }
     suPageBanner {
         ...FragmentParagraphStanfordBanner
+        ...FragmentParagraphSulHomeBanner
     }
     suPageComponents {
         ...FragmentParagraphUnion
