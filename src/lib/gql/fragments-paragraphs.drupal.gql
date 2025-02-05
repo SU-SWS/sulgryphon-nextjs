@@ -6,6 +6,30 @@ fragment FragmentParagraphInterface on ParagraphInterface {
     status
 }
 
+fragment FragmentParagraphSulHomeImage on ParagraphSulHomeImage {
+    ...FragmentParagraphInterface
+    sulHomeImage {
+        ...FragmentMediaImage
+    }
+    sulHomeImageCredits {
+        ...FragmentText
+    }
+}
+
+fragment FragmentParagraphSulHomeBanner on ParagraphSulHomeBanner {
+    ...FragmentParagraphInterface
+    sulHomeImages {
+        ...FragmentParagraphSulHomeImage
+    }
+}
+
+fragment FragmentParagraphSulLocationHour on ParagraphSulLocationHour {
+    ...FragmentParagraphInterface
+    sulLocHoursAlert {
+        processed
+    }
+}
+
 fragment FragmentParagraphCollection on ParagraphCollection {
     ...FragmentParagraphInterface
     sulCollectionCard {
@@ -112,6 +136,7 @@ fragment FragmentParagraphStanfordCard on ParagraphStanfordCard {
     suCardMedia {
         ...FragmentMediaUnion
     }
+    sulCardImageCaption
 }
 
 fragment FragmentParagraphStanfordEntity on ParagraphStanfordEntity {
@@ -236,6 +261,20 @@ fragment FragmentParagraphStanfordPageTitleBanner on ParagraphStanfordPageTitleB
     }
 }
 
+fragment FragmentParagraphStanfordFaq on ParagraphStanfordFaq {
+    ...FragmentParagraphInterface
+    created {
+        ...FragmentDateTime
+    }
+    suFaqDescription {
+        ...FragmentText
+    }
+    suFaqHeadline
+    suFaqQuestions {
+        ...FragmentParagraphStanfordAccordion
+    }
+}
+
 fragment FragmentParagraphUnion on ParagraphUnion {
     ...FragmentParagraphInterface
     ...FragmentParagraphStanfordAccordion
@@ -254,4 +293,8 @@ fragment FragmentParagraphUnion on ParagraphUnion {
     ...FragmentParagraphSulContactCard
     ...FragmentParagraphSulFeatCollection
     ...FragmentParagraphSulLibguide
+    ...FragmentParagraphStanfordFaq
+    ...FragmentParagraphSulHomeImage
+    ...FragmentParagraphSulHomeBanner
+    ...FragmentParagraphSulLocationHour
 }

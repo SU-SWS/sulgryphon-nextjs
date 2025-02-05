@@ -11,7 +11,9 @@ interface Props {
 const StanfordPageCard = ({node, h3Heading, ...props}: Props) => {
   const HeadingElement = h3Heading ? "h3" : "h2"
 
-  const imageUrl = node.suPageImage?.mediaImage.url || node.suPageBanner?.suBannerImage?.mediaImage.url
+  const imageUrl =
+    node.suPageImage?.mediaImage.url ||
+    (node.suPageBanner?.__typename === "ParagraphStanfordBanner" && node.suPageBanner?.suBannerImage?.mediaImage.url)
 
   return (
     <article {...props}>

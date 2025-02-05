@@ -16,6 +16,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   linkStyle?: Maybe<string>
   sprinklePosition?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
   image?: Maybe<MediaImage>
+  caption?: Maybe<string>
   videoUrl?: Maybe<string>
   orientation?: Maybe<string>
   fullWidth?: Maybe<boolean>
@@ -32,6 +33,7 @@ const StanfordCard = ({
   body,
   link,
   image,
+  caption,
   videoUrl,
   linkStyle,
   sprinklePosition,
@@ -54,7 +56,10 @@ const StanfordCard = ({
 
   return (
     <div
-      className={twMerge("relative", !isHorizontal ? "centered mx-auto w-full lg:max-w-[980px]" : "p-0 md:rs-pt-5")}
+      className={twMerge(
+        "relative",
+        !isHorizontal ? "centered mx-auto w-full lg:max-w-[980px]" : "p-0 md:rs-pt-5 lg:p-0"
+      )}
       {...props}
     >
       {isHorizontal && (
@@ -97,6 +102,7 @@ const StanfordCard = ({
               />
             )
           }
+          caption={caption}
           header={header}
           superHeader={superHeader}
           body={body}

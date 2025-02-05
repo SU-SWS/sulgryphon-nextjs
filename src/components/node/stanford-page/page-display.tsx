@@ -1,4 +1,4 @@
-import {ParagraphRows} from "@/components/paragraph/rows/rows"
+import Rows from "@/components/paragraph/rows/rows"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
 import StanfordPageMetadata from "@/components/node/stanford-page/stanford-page-metadata"
 
@@ -15,7 +15,7 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   return (
     <div {...props}>
       <StanfordPageMetadata node={node} />
-      {node.suPageComponents && <ParagraphRows items={node.suPageComponents} fullWidth={fullWidth} />}
+      {node.suPageComponents && <Rows components={node.suPageComponents} fullWidth={fullWidth} />}
       <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
     </div>
   )

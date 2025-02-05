@@ -1,5 +1,6 @@
 import Paragraph from "@/components/paragraph"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 
 interface LayoutProps {
   items: ParagraphUnion[]
@@ -7,11 +8,15 @@ interface LayoutProps {
   config?: Record<string, string>
 }
 
-const OneColumn = ({items, fullWidth = true}: LayoutProps) => {
+const OneColumn = async ({items, fullWidth = true}: LayoutProps) => {
+  const draftProps: Record<string, string> = {}
+  if (await isPreviewMode()) {
+    draftProps["data-columns"] = "1"
+  }
   return (
-    <div data-rows="one-column" className="relative flex flex-col gap-[90px]">
+    <div className="flex flex-col gap-90" {...draftProps}>
       {items.map(item => (
-        <Paragraph key={item.id} paragraph={item} fullWidth={fullWidth} singleRow />
+        <Paragraph paragraph={item} key={item.id} fullWidth={fullWidth} />
       ))}
     </div>
   )

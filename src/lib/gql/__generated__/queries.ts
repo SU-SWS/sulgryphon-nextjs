@@ -210,6 +210,7 @@ export const FragmentParagraphStanfordCardFragmentDoc = gql`
   suCardMedia {
     ...FragmentMediaUnion
   }
+  sulCardImageCaption
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentTextFragmentDoc}
@@ -411,6 +412,54 @@ export const FragmentParagraphSulLibguideFragmentDoc = gql`
   sulLibguideId
 }
     ${FragmentParagraphInterfaceFragmentDoc}`;
+export const FragmentParagraphStanfordFaqFragmentDoc = gql`
+    fragment FragmentParagraphStanfordFaq on ParagraphStanfordFaq {
+  ...FragmentParagraphInterface
+  created {
+    ...FragmentDateTime
+  }
+  suFaqDescription {
+    ...FragmentText
+  }
+  suFaqHeadline
+  suFaqQuestions {
+    ...FragmentParagraphStanfordAccordion
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentDateTimeFragmentDoc}
+${FragmentTextFragmentDoc}
+${FragmentParagraphStanfordAccordionFragmentDoc}`;
+export const FragmentParagraphSulHomeImageFragmentDoc = gql`
+    fragment FragmentParagraphSulHomeImage on ParagraphSulHomeImage {
+  ...FragmentParagraphInterface
+  sulHomeImage {
+    ...FragmentMediaImage
+  }
+  sulHomeImageCredits {
+    ...FragmentText
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentMediaImageFragmentDoc}
+${FragmentTextFragmentDoc}`;
+export const FragmentParagraphSulHomeBannerFragmentDoc = gql`
+    fragment FragmentParagraphSulHomeBanner on ParagraphSulHomeBanner {
+  ...FragmentParagraphInterface
+  sulHomeImages {
+    ...FragmentParagraphSulHomeImage
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentParagraphSulHomeImageFragmentDoc}`;
+export const FragmentParagraphSulLocationHourFragmentDoc = gql`
+    fragment FragmentParagraphSulLocationHour on ParagraphSulLocationHour {
+  ...FragmentParagraphInterface
+  sulLocHoursAlert {
+    processed
+  }
+}
+    ${FragmentParagraphInterfaceFragmentDoc}`;
 export const FragmentParagraphUnionFragmentDoc = gql`
     fragment FragmentParagraphUnion on ParagraphUnion {
   ...FragmentParagraphInterface
@@ -430,6 +479,10 @@ export const FragmentParagraphUnionFragmentDoc = gql`
   ...FragmentParagraphSulContactCard
   ...FragmentParagraphSulFeatCollection
   ...FragmentParagraphSulLibguide
+  ...FragmentParagraphStanfordFaq
+  ...FragmentParagraphSulHomeImage
+  ...FragmentParagraphSulHomeBanner
+  ...FragmentParagraphSulLocationHour
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentParagraphStanfordAccordionFragmentDoc}
@@ -447,7 +500,11 @@ ${FragmentParagraphCollectionCardFragmentDoc}
 ${FragmentParagraphSulButtonFragmentDoc}
 ${FragmentParagraphSulContactCardFragmentDoc}
 ${FragmentParagraphSulFeatCollectionFragmentDoc}
-${FragmentParagraphSulLibguideFragmentDoc}`;
+${FragmentParagraphSulLibguideFragmentDoc}
+${FragmentParagraphStanfordFaqFragmentDoc}
+${FragmentParagraphSulHomeImageFragmentDoc}
+${FragmentParagraphSulHomeBannerFragmentDoc}
+${FragmentParagraphSulLocationHourFragmentDoc}`;
 export const FragmentSmartDateTypeFragmentDoc = gql`
     fragment FragmentSmartDateType on SmartDateType {
   value
@@ -653,6 +710,7 @@ export const FragmentNodeStanfordPageFragmentDoc = gql`
   }
   suPageBanner {
     ...FragmentParagraphStanfordBanner
+    ...FragmentParagraphSulHomeBanner
   }
   suPageComponents {
     ...FragmentParagraphUnion
@@ -669,6 +727,7 @@ export const FragmentNodeStanfordPageFragmentDoc = gql`
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
 ${FragmentParagraphStanfordBannerFragmentDoc}
+${FragmentParagraphSulHomeBannerFragmentDoc}
 ${FragmentParagraphUnionFragmentDoc}
 ${FragmentMediaUnionFragmentDoc}
 ${FragmentLinkFragmentDoc}`;
@@ -1449,6 +1508,7 @@ export const StanfordBasicPagesDocument = gql`
     sortDir: $sortDir
   ) {
     results {
+      ...FragmentNodeInterface
       ...FragmentNodeStanfordPageTeaser
     }
     pageInfo {
@@ -1456,7 +1516,8 @@ export const StanfordBasicPagesDocument = gql`
     }
   }
 }
-    ${FragmentNodeStanfordPageTeaserFragmentDoc}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentNodeStanfordPageTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const StanfordNewsDocument = gql`
     query stanfordNews($contextualFilters: StanfordNewsContextualFilterInput, $filter: StanfordNewsFilterInput, $pageSize: Int = -1, $page: Int, $offset: Int) {
@@ -1468,6 +1529,7 @@ export const StanfordNewsDocument = gql`
     offset: $offset
   ) {
     results {
+      ...FragmentNodeInterface
       ...FragmentNodeStanfordNewsTeaser
     }
     pageInfo {
@@ -1475,7 +1537,8 @@ export const StanfordNewsDocument = gql`
     }
   }
 }
-    ${FragmentNodeStanfordNewsTeaserFragmentDoc}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentNodeStanfordNewsTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const StanfordPersonDocument = gql`
     query stanfordPerson($contextualFilters: StanfordPersonContextualFilterInput, $pageSize: Int, $page: Int = -1, $offset: Int) {
@@ -1486,6 +1549,7 @@ export const StanfordPersonDocument = gql`
     offset: $offset
   ) {
     results {
+      ...FragmentNodeInterface
       ...FragmentNodeStanfordPersonTeaser
     }
     pageInfo {
@@ -1493,7 +1557,8 @@ export const StanfordPersonDocument = gql`
     }
   }
 }
-    ${FragmentNodeStanfordPersonTeaserFragmentDoc}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentNodeStanfordPersonTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const StanfordSharedTagsDocument = gql`
     query stanfordSharedTags($contextualFilters: StanfordSharedTagsContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {
@@ -1504,6 +1569,7 @@ export const StanfordSharedTagsDocument = gql`
     offset: $offset
   ) {
     results {
+      ...FragmentNodeInterface
       ...FragmentNodeTeaserUnion
     }
     pageInfo {
@@ -1511,7 +1577,23 @@ export const StanfordSharedTagsDocument = gql`
     }
   }
 }
-    ${FragmentNodeTeaserUnionFragmentDoc}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentNodeTeaserUnionFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
+export const SearchDocument = gql`
+    query search($filter: SearchFilterInput = {key: ""}, $pageSize: Int = 3, $page: Int, $offset: Int) {
+  search(filter: $filter, pageSize: $pageSize, page: $page, offset: $offset) {
+    results {
+      ...FragmentNodeInterface
+      ...FragmentNodeUnion
+    }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
+  }
+}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentNodeUnionFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
@@ -1571,6 +1653,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     stanfordSharedTags(variables?: DrupalTypes.StanfordSharedTagsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.StanfordSharedTagsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.StanfordSharedTagsQuery>(StanfordSharedTagsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'stanfordSharedTags', 'query', variables);
+    },
+    search(variables?: DrupalTypes.SearchQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DrupalTypes.SearchQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.SearchQuery>(SearchDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'search', 'query', variables);
     }
   };
 }

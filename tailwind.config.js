@@ -36,6 +36,7 @@ module.exports = {
         '15xl': '150rem',
       },
       screens: {
+        'xs': "440px",
         '3xl': "1600px"
       },
       scale: {

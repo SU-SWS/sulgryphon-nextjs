@@ -1,12 +1,11 @@
 "use client"
 
 import {useLayoutEffect, useRef, HtmlHTMLAttributes, JSX, useId, useState} from "react"
-import {useAutoAnimate} from "@formkit/auto-animate/react"
 import {useBoolean, useCounter} from "usehooks-ts"
-import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
-import useServerAction from "@/lib/hooks/useServerAction"
-import {twMerge} from "tailwind-merge"
 import {ArrowPathIcon} from "@heroicons/react/20/solid"
+import useServerAction from "@/lib/hooks/useServerAction"
+import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
+import {twMerge} from "tailwind-merge"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   /**
@@ -47,7 +46,6 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
   const [runLoadPage, isPending] = useServerAction(loadPage)
 
   const focusItemRef = useRef<HTMLLIElement>(null)
-  const [animationParent] = useAutoAnimate<HTMLUListElement>()
 
   const showMoreItems = () => {
     if (loadPage) {
@@ -78,7 +76,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
           </div>
         </div>
       )}
-      <ul {...ulProps} ref={animationParent}>
+      <ul {...ulProps}>
         {items.map((item, i) => (
           <li
             key={`${id}--${i}`}
@@ -95,7 +93,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
         Showing {items.length} items.
       </span>
 
-      {items.length < totalItems && (
+      {items.length < totalItems && loadPage && (
         <button
           type="button"
           className="cta-button group rs-mt-neg1 mx-auto block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18"
