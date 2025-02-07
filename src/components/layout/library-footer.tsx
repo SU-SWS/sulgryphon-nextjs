@@ -11,25 +11,25 @@ import Image from "next/image"
 
 const LibraryFooter = () => {
   return (
-    <div className="rs-mt-6 bg-fog-light pb-30 text-black xl:mt-0">
+    <div className="rs-mt-6 bg-fog-light pb-30 text-black @container @12xl:mt-0">
       <div>
         <svg viewBox="0 0 1500 100" aria-hidden={true} className="bg-gradient-to-t from-fog-light to-transparent">
           <path d="M1500,0 L1500,100 1200,100 1200,0" className="fill-fog-light"></path>
           <path d="M0,0 Q500,10 700,45 Q1200,130 1500,0" stroke="#fff" className="fill-white"></path>
         </svg>
       </div>
-      <div className="centered relative mb-50 mt-50 flex flex-row justify-between gap-2xl md:mt-0">
+      <div className="centered relative mb-50 mt-25 flex flex-row justify-between gap-2xl @3xl:mt-50 @5xl:mt-0">
         <div>
           <Lockup />
         </div>
-        <div className="absolute bottom-40 right-[-5rem] block sm:bottom-0 md:right-[2rem] lg:right-[8rem] xl:hidden">
-          <div className="relative h-[18.8rem] w-180 sm:h-[18.5rem] md:h-[20.5rem] md:w-200 lg:h-[28.4rem] lg:w-[27.7rem]">
+        <div className="absolute bottom-50 right-[-5rem] block @3xl:right-[-3rem] @5xl:bottom-0 @5xl:right-[2rem] @8xl:right-[8rem] @12xl:hidden">
+          <div className="relative h-[18.5rem] w-180 @5xl:h-[20.5rem] @5xl:w-200 @8xl:h-[28.4rem] @8xl:w-[27.7rem]">
             <Image src="/footer-nerd-squirrel.png" alt="" fill />
           </div>
         </div>
       </div>
 
-      <div className="centered relative grid w-full gap-2xl text-center md:grid-cols-3 md:text-left xl:grid-cols-4">
+      <div className="centered relative grid w-full gap-2xl text-center @8xl:grid-cols-3 @8xl:text-left @12xl:grid-cols-4">
         <div>
           <address className="mb-30">
             557 Escondido Mall
@@ -94,7 +94,7 @@ const LibraryFooter = () => {
             </li>
           </ul>
         </div>
-        <div className="hidden xl:block">
+        <div className="hidden @12xl:block">
           <div className="relative h-[28.4rem] w-[27.7rem]">
             <Image src="/footer-nerd-squirrel.png" alt="" fill />
           </div>
@@ -107,7 +107,7 @@ const LibraryFooter = () => {
 // Keep in case it decides to be added back.
 const _SocialLinks = () => {
   return (
-    <div className="mt-50 flex flex-wrap justify-around gap-lg md:flex-nowrap">
+    <div className="mt-50 flex flex-wrap justify-around gap-lg @5xl:flex-nowrap">
       <FooterLink href="#">
         <FacebookIcon className="text-black transition-all hocus:text-cool-grey" />
         <span className="sr-only">Facebook</span>
