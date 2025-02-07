@@ -15,7 +15,7 @@ const HeadingList = () => {
   const [activeHeading, setActiveHeading] = useState<string>("")
 
   const debouncedHandleScroll = useDebounceCallback(() => {
-    const firstHeading = document.querySelector("#main-content h2")
+    const firstHeading = document.querySelector("#main-content h2:not([data-skip-heading])")
 
     if (firstHeading) {
       const headingRect = firstHeading.getBoundingClientRect()
@@ -33,7 +33,9 @@ const HeadingList = () => {
   useEventListener("scroll", debouncedHandleScroll)
 
   useEffect(() => {
-    const h2Elements: NodeListOf<HTMLHeadingElement> = document.querySelectorAll("#main-content h2")
+    const h2Elements: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+      "#main-content h2:not([data-skip-heading])"
+    )
 
     const allHeadings: Heading[] = []
 
@@ -83,7 +85,9 @@ const HeadingList = () => {
 
   return (
     <nav aria-label="on this page menu">
-      <h3 className="type-1 hidden font-sans font-semibold lg:mb-8 lg:block">On this page</h3>
+      <h2 data-skip-heading="true" className="type-1 hidden font-sans font-semibold lg:mb-8 lg:block">
+        On this page
+      </h2>
       <ul className="list-none p-0">
         {headings.map(heading => (
           <li key={heading.id} className="m-0 mb-2 lg:mb-12">
