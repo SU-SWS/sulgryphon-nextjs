@@ -37,7 +37,7 @@ type Props = HTMLAttributes<HTMLElement> & {
   headingProps?: HTMLAttributes<HTMLHeadingElement> & {[_key: string]: string}
 }
 
-const SulAccordion = ({button, children, headingLevel = "h2", ...props}: Props) => {
+const SulAccordion = ({button, children, headingLevel = "h2", headingProps, ...props}: Props) => {
   const id = useId()
   const {buttonProps, panelProps, expanded, ref} = useAccordion({buttonId: `${id}-button`})
 
@@ -49,7 +49,7 @@ const SulAccordion = ({button, children, headingLevel = "h2", ...props}: Props) 
       aria-labelledby={`${id}-button`}
       className={twMerge("relative w-full", props.className)}
     >
-      <Heading className="type-0 mb-0 font-sans font-semibold" {...props.headingProps}>
+      <Heading className="type-0 mb-0 font-sans font-semibold" {...headingProps}>
         <button
           {...buttonProps}
           className={twMerge(
