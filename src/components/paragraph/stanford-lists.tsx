@@ -16,7 +16,11 @@ const ListParagraph = async ({paragraph}: Props) => {
   const behaviors = getParagraphBehaviors(paragraph)
   const viewId = paragraph.suListView?.view || ""
   const displayId = paragraph.suListView?.display || ""
-  const limit = paragraph.suListView?.pageSize || VIEW_PAGE_SIZE
+
+  const limit =
+    viewId === "sul_branch_locations" && displayId === "branch_locations_table"
+      ? 999
+      : paragraph.suListView?.pageSize || VIEW_PAGE_SIZE
 
   const pagedItems =
     viewId && displayId

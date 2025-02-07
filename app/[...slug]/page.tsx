@@ -82,17 +82,16 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
 
         {!fullWidth && (
           <div className="centered flex flex-col justify-between gap-[8rem] lg:flex-row">
-            <div className="order-last flex-1">
-              <NodePageDisplay node={entity} aria-labelledby={entity.id} />
-            </div>
-
             {sulSidebar && (
               <OnThisPage>
                 {entity.sulRelLinks && (
                   <div className="lg:mt-40">
-                    <h3 className="type-0 m-0 block px-10 py-2 font-sans font-semibold leading-[30px] text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black">
+                    <h2
+                      data-skip-heading="true"
+                      className="type-0 m-0 block px-10 py-2 font-sans font-semibold leading-[30px] text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black"
+                    >
                       {entity.sulRelLinksHeading || "Related content"}
-                    </h3>
+                    </h2>
                     <ul className="list-none p-0">
                       {entity.sulRelLinks.map((link, index) => (
                         <li key={index} className="mb-0 lg:mb-12">
@@ -112,6 +111,10 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
               </OnThisPage>
             )}
             {!sulSidebar && <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />}
+
+            <div className="flex-1">
+              <NodePageDisplay node={entity} aria-labelledby={entity.id} />
+            </div>
           </div>
         )}
       </article>
