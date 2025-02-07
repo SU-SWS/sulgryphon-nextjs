@@ -10,7 +10,7 @@ const OnThisPage = ({children}: OnThisPageProps) => {
   return (
     <div>
       <div className="block w-full md:w-500 lg:hidden">
-        <SulAccordion button="On this page" headingLevel="h3">
+        <SulAccordion button="On this page" headingLevel="h2" headingProps={{"data-skip-heading": "true"}}>
           <HeadingList />
           {children}
         </SulAccordion>
