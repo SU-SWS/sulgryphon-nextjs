@@ -58,7 +58,7 @@ const ResultItem = ({item}: {item: NodeUnion}) => {
         </h2>
       </Link>
       {description && <p>{description}</p>}
-      <div className="rs-py-4">Last updated {lastUpdated}</div>
+      <div className="mt-12 pb-10 text-right">Last updated {lastUpdated}</div>
     </article>
   )
 }

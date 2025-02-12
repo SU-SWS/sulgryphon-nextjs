@@ -1,5 +1,6 @@
 import {getViewPagedItems, loadViewPage} from "@/lib/gql/gql-views"
 import View from "@/components/views/view"
+import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 
 type Props = {
   searchKey: string
@@ -28,25 +29,25 @@ const SiteSearch = async ({searchKey}: Props) => {
           </label>
         </div>
         <div className="flex-grow">
-          <label className="mb-2 text-white" htmlFor="keyword-search">
-            Keyword Search
+          <label className="mb-8 text-28 font-semibold text-black" htmlFor="keyword-search">
+            Search this site
           </label>
-          <input
-            id="keyword-search"
-            name="q"
-            className="input w-full rounded border border-cool-grey p-10"
-            defaultValue={searchKey}
-          />
+          <div className="relative flex max-w-600 items-center justify-center">
+            <input
+              id="keyword-search"
+              name="q"
+              className="input w-full rounded-full border border-cool-grey p-10"
+              defaultValue={searchKey}
+            />
+            <button type="submit" className="absolute right-10">
+              <span className="sr-only">Search</span>
+              <MagnifyingGlassIcon width={25} className="text-cardinal-red" />
+            </button>
+          </div>
         </div>
-
-        <button
-          type="submit"
-          className="rounded-full bg-digital-red p-15 text-white transition hover:bg-cardinal-red-dark hocus:underline"
-        >
-          Search
-        </button>
       </form>
 
+      <h2 className="mb-36 mt-50">Results</h2>
       {viewItems.length === 0 && <p>No results found for the given search keywords. Please try again.</p>}
 
       {viewItems.length > 0 && (
