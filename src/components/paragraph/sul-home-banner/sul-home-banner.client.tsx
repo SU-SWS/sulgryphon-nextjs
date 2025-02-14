@@ -57,7 +57,7 @@ export const SulHomeBannerFormClient = () => {
           value={formAction}
         >
           <option value="/all">All library resources</option>
-          <option value="/?q=climate+change">Catalog</option>
+          <option value="/catalog">Catalog</option>
           <option value="/articles?q=climate+change&f[eds_search_limiters_facet][]=Direct+access+to+full+text">
             Articles+
           </option>
