@@ -27,8 +27,6 @@ export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
 export const SulHomeBannerFormClient = () => {
   const [formAction, setFormAction] = useState("/all")
   const inputId = useId()
-
-  console.log("form action:", formAction)
   return (
     <form
       action={formAction}
