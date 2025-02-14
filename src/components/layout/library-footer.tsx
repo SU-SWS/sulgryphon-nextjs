@@ -11,7 +11,7 @@ import Image from "next/image"
 
 const LibraryFooter = () => {
   return (
-    <div className="rs-mt-6 bg-fog-light pb-30 text-black @container @12xl:mt-0">
+    <div className="rs-mt-6 bg-fog-light pb-30 text-black @container">
       <div>
         <svg viewBox="0 0 1500 100" aria-hidden={true} className="bg-gradient-to-t from-fog-light to-transparent">
           <path d="M1500,0 L1500,100 1200,100 1200,0" className="fill-fog-light"></path>
