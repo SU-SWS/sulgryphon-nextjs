@@ -25,6 +25,7 @@ export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
 }
 
 export const SulHomeBannerFormClient = () => {
+  const [query, setQuery] = useState("")
   const [formAction, setFormAction] = useState("/all")
   const inputId = useId()
   return (
@@ -42,6 +43,7 @@ export const SulHomeBannerFormClient = () => {
           name="q"
           id={inputId}
           placeholder="Search for books, articles, and more"
+          onChange={e => setQuery(e.target.value)}
         />
       </div>
       <div className="hidden h-50 w-[.5px] shrink-0 bg-black xs:block" />
@@ -58,7 +60,9 @@ export const SulHomeBannerFormClient = () => {
         >
           <option value="/all">All library resources</option>
           <option value="https://searchworks.stanford.edu/">Catalog</option>
-          <option value="https://searchworks.stanford.edu/articles?q=climate+change&f[eds_search_limiters_facet][]=Direct+access+to+full+text">
+          <option
+            value={`https://searchworks.stanford.edu/articles?q={${encodeURIComponent(query)}}&f[eds_search_limiters_facet][]=Direct+access+to+full+text`}
+          >
             Articles+
           </option>
           <option value="/search">This site</option>
