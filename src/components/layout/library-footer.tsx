@@ -22,14 +22,14 @@ const LibraryFooter = () => {
         <div>
           <Lockup />
         </div>
-        <div className="absolute bottom-50 right-[-5rem] block @3xl:right-[-3rem] @5xl:bottom-0 @5xl:right-[2rem] @8xl:right-[8rem] @12xl:hidden">
+        <div className="absolute bottom-50 right-[-5rem] block @3xl:right-[-3rem] @5xl:bottom-0 @5xl:right-[2rem] @8xl:right-[8rem]">
           <div className="relative h-[18.5rem] w-180 @5xl:h-[20.5rem] @5xl:w-200 @8xl:h-[28.4rem] @8xl:w-[27.7rem]">
-            <Image src="/footer-nerd-squirrel.png" alt="" fill />
+            <Image src="/footer-nerd-squirrel.png" alt="" fill sizes="(max-width: 300px) 100vw, 300px" />
           </div>
         </div>
       </div>
 
-      <div className="centered relative grid w-full gap-2xl text-center @8xl:grid-cols-3 @8xl:text-left @12xl:grid-cols-4">
+      <div className="centered relative grid w-full gap-2xl text-center @8xl:grid-cols-2 @8xl:text-left @12xl:grid-cols-4">
         <div>
           <address className="mb-30">
             557 Escondido Mall
@@ -94,10 +94,26 @@ const LibraryFooter = () => {
             </li>
           </ul>
         </div>
-        <div className="hidden @12xl:block">
-          <div className="relative h-[28.4rem] w-[27.7rem]">
-            <Image src="/footer-nerd-squirrel.png" alt="" fill />
-          </div>
+        <div>
+          <h2 className="type-1 mb-20">Search</h2>
+          <ul className="list-unstyled">
+            <li>
+              <FooterLink href="https://searchworks.stanford.edu/">SearchWorks Catalog</FooterLink> |{" "}
+              <FooterLink href="https://searchworks.stanford.edu/articles">Articles+</FooterLink>
+            </li>
+            <li>
+              <FooterLink href="https://exhibits.stanford.edu/">Spotlight at Stanford</FooterLink>
+            </li>
+            <li>
+              <FooterLink href="https://archives.stanford.edu/">Archival Collections at Stanford </FooterLink>
+            </li>
+            <li>
+              <FooterLink href="https://earthworks.stanford.edu/">EarthWorks</FooterLink>
+            </li>
+            <li>
+              <FooterLink href="https://guides.library.stanford.edu/">Guides</FooterLink>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
