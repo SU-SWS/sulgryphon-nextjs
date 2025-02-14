@@ -51,22 +51,6 @@
     {
       "source": "/assets/:path*",
       "destination": "https://discover.stanford.edu/assets/:path*"
-    },
-    {
-      "source": "/catalog",
-      "destination": "https://searchworks.stanford.edu/"
-    },
-    {
-      "source": "/catalog/:path*",
-      "destination": "https://searchworks.stanford.edu/:path*"
-    },
-    {
-      "source": "/articles",
-      "destination": "https://searchworks.stanford.edu/articles"
-    },
-    {
-      "source": "/articles/:path*",
-      "destination": "https://searchworks.stanford.edu/articles/:path*"
     }
   ]
 }
