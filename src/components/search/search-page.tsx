@@ -1,5 +1,6 @@
 import {getViewPagedItems, loadViewPage} from "@/lib/gql/gql-views"
 import View from "@/components/views/view"
+import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 
 type Props = {
   searchKey: string
@@ -15,7 +16,7 @@ const SiteSearch = async ({searchKey}: Props) => {
   }
 
   return (
-    <div className="space-y-24 pb-40 2xl:w-2/3">
+    <div className="rs-pb-8 2xl:w-2/3">
       <form
         className="relative flex flex-col gap-xs @xl:flex-row @xl:items-end @3xl:gap-xl"
         aria-label="Site Search"
@@ -28,35 +29,37 @@ const SiteSearch = async ({searchKey}: Props) => {
           </label>
         </div>
         <div className="flex-grow">
-          <label className="mb-2 text-white" htmlFor="keyword-search">
-            Keyword Search
+          <label className="mb-8 text-28 font-semibold text-black" htmlFor="keyword-search">
+            Search this site
           </label>
-          <input
-            id="keyword-search"
-            name="q"
-            className="input w-full rounded border border-cool-grey p-10"
-            defaultValue={searchKey}
-          />
+          <div className="relative flex max-w-600 items-center justify-center">
+            <input
+              id="keyword-search"
+              name="q"
+              className="input w-full rounded-full border border-cool-grey p-10"
+              defaultValue={searchKey}
+            />
+            <button type="submit" className="absolute right-10">
+              <span className="sr-only">Search</span>
+              <MagnifyingGlassIcon width={25} className="text-cardinal-red" />
+            </button>
+          </div>
         </div>
-
-        <button
-          type="submit"
-          className="rounded-full bg-digital-red p-15 text-white transition hover:bg-cardinal-red-dark hocus:underline"
-        >
-          Search
-        </button>
       </form>
 
+      <h2 className="rs-pt-2 type-3 m-0 pb-36">Results</h2>
       {viewItems.length === 0 && <p>No results found for the given search keywords. Please try again.</p>}
 
       {viewItems.length > 0 && (
-        <View
-          items={viewItems}
-          viewId="search"
-          displayId="search"
-          loadPage={totalItems > viewItems.length ? loadSearchPage : undefined}
-          totalItems={totalItems}
-        />
+        <div className="space-y-24">
+          <View
+            items={viewItems}
+            viewId="search"
+            displayId="search"
+            loadPage={totalItems > viewItems.length ? loadSearchPage : undefined}
+            totalItems={totalItems}
+          />
+        </div>
       )}
     </div>
   )

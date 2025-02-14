@@ -53,12 +53,12 @@ const ResultItem = ({item}: {item: NodeUnion}) => {
   return (
     <article key={item.id} aria-labelledby={item.id}>
       <Link href={item.path ?? "#"} className="no-underline hocus:underline">
-        <h2 className="type-2" id={item.id}>
+        <h3 className="type-2" id={item.id}>
           {item.title}
-        </h2>
+        </h3>
       </Link>
       {description && <p>{description}</p>}
-      <div className="rs-py-4">Last updated {lastUpdated}</div>
+      <div className="mt-12 pb-10 text-right">Last updated {lastUpdated}</div>
     </article>
   )
 }
