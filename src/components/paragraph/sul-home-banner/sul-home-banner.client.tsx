@@ -52,11 +52,15 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <select
           id={`${inputId}-action`}
-          className="h-40 w-full border-0 bg-none text-16 font-semibold hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
+          className="h-40 w-full border-0 bg-none text-16 font-semibold leading-normal hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
-          <option value="/all">All resources</option>
+          <option value="/all">All library resources</option>
+          <option value="/?q=climate+change">Catalog</option>
+          <option value="/articles?q=climate+change&f[eds_search_limiters_facet][]=Direct+access+to+full+text">
+            Articles+
+          </option>
           <option value="/search">This site</option>
         </select>
         <PlayIcon className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 rotate-90" width={20} />
