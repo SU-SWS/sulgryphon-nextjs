@@ -62,11 +62,11 @@
     },
     {
       "source": "/articles",
-      "destination": "https://searchworks.stanford.edu/"
+      "destination": "https://searchworks.stanford.edu/articles"
     },
     {
       "source": "/articles/:path*",
-      "destination": "https://searchworks.stanford.edu/articles:path*"
+      "destination": "https://searchworks.stanford.edu/articles/:path*"
     }
   ]
 }
