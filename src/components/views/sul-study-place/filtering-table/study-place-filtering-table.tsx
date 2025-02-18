@@ -27,6 +27,7 @@ export type StudyPlaces = {
   capacity?: TermUnion["name"]
   libCalId?: NodeSulStudyPlace["sulStudyLibcalId"]
   libHours?: NodeSulStudyPlace["sulStudyBranch"]["suLibraryHours"]
+  additionalInfo?: NodeSulStudyPlace["sulAdditionalInfo"]
 }
 
 interface Props {
