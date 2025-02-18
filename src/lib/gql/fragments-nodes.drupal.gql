@@ -69,7 +69,7 @@ fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
     sulStudyImage {
         ...FragmentMediaImage
     }
-    sulAdditionalInfo {
+    sulStudyAdditionalInfo {
       ... FragmentText
     }
 }
@@ -374,7 +374,7 @@ fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
     }
     sulStudyRoomNumber
     sulStudyRoomDonorName
-    sulAdditionalInfo {
+    sulStudyAdditionalInfo {
       ... FragmentText
     }
     sulStudyImage {

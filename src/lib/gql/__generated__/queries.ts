@@ -944,7 +944,7 @@ export const FragmentNodeSulStudyPlaceFragmentDoc = gql`
   sulStudyImage {
     ...FragmentMediaImage
   }
-  sulAdditionalInfo {
+  sulStudyAdditionalInfo {
     ...FragmentText
   }
 }
@@ -1091,7 +1091,7 @@ export const FragmentNodeSulStudyPlaceTeaserFragmentDoc = gql`
   }
   sulStudyRoomNumber
   sulStudyRoomDonorName
-  sulAdditionalInfo {
+  sulStudyAdditionalInfo {
     ...FragmentText
   }
   sulStudyImage {
