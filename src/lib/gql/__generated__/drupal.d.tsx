@@ -1910,6 +1910,8 @@ export type NodeSulStudyPlace = EdgeNode & MetaTagInterface & NodeInterface & {
   status: Scalars['Boolean']['output'];
   /** Sticky at top of lists */
   sticky: Scalars['Boolean']['output'];
+  /** Additional Information */
+  sulAdditionalInfo?: Maybe<Text>;
   /** Branch Location */
   sulStudyBranch: NodeSulLibrary;
   /** Capacity */
@@ -3321,7 +3323,11 @@ export type StanfordLocalFooter = ConfigPagesInterface & EdgeNode & MetaTagInter
   suLocalFootSecond?: Maybe<Array<Link>>;
   /** Secondary Links Header */
   suLocalFootSecondH?: Maybe<Scalars['String']['output']>;
-  /** Social Links */
+  /**
+   * Links added in this section will automatically create icons that will appear
+   * in your footer. Supported social links include: Bluesky, Facebook, Flickr,
+   * Github, Google Scholar, Instagram, LinkedIn, Mastodon.social, Threads, X, and
+   */
   suLocalFootSocial?: Maybe<Array<Link>>;
   /** The link text for a user to log into this site. */
   suLocalFootSunetT?: Maybe<Scalars['String']['output']>;
