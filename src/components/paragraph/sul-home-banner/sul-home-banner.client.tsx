@@ -58,7 +58,7 @@ export const SulHomeBannerFormClient = () => {
         >
           <option value="/all">All library resources</option>
           <option value="https://searchworks.stanford.edu/">Catalog</option>
-          <option value={`https://searchworks.stanford.edu/articles`}>Articles+</option>
+          <option value="https://searchworks.stanford.edu/articles">Articles+</option>
           <option value="/search">This site</option>
         </select>
         <PlayIcon className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 rotate-90" width={20} />
