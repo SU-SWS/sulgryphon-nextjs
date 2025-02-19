@@ -14,7 +14,6 @@ import LockupT from "@/components/patterns/elements/lockup/lockup-t"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
 import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
 import {getConfigPage, getConfigPageField} from "@/lib/gql/fetcher"
-import {twMerge} from "tailwind-merge"
 
 export interface LockupProps {
   useDefault?: Maybe<boolean>
@@ -29,7 +28,7 @@ export interface LockupProps {
   whiteText?: Maybe<boolean>
 }
 
-export const Lockup = async ({whiteText}: {whiteText?: boolean}) => {
+export const Lockup = async () => {
   const siteName = await getConfigPageField<StanfordBasicSiteSetting, StanfordBasicSiteSetting["suSiteName"]>(
     "StanfordBasicSiteSetting",
     "suSiteName"
@@ -45,21 +44,15 @@ export const Lockup = async ({whiteText}: {whiteText?: boolean}) => {
     line5: lockupSettingsConfig?.suLine5,
     siteName: siteName || "Stanford",
     logoUrl: logoUrl,
-    whiteText: whiteText,
   }
 
   if (!lockupSettingsConfig?.suLockupEnabled) {
     return (
-      <Link href="/" className="flex flex-col text-black no-underline lg:flex-row lg:items-end">
-        <div className={twMerge("py-2 pr-9 lg:border-r-2", whiteText ? "border-white" : "border-black")}>
+      <Link href="/" className="flex flex-col text-black no-underline sm:flex-row sm:items-end">
+        <div className="border-black py-2 pr-9 sm:border-r-2">
           <LockupLogo {...lockupProps} />
         </div>
-        <div
-          className={twMerge(
-            "font-roboto type-1 text-nowrap font-light lg:relative lg:top-[5px] lg:pl-9",
-            whiteText ? "text-white" : "text-black"
-          )}
-        >
+        <div className="font-roboto type-1 text-nowrap font-light text-black sm:relative sm:top-[5px] sm:pl-9">
           {siteName || "University Libraries"}
         </div>
       </Link>
@@ -106,7 +99,7 @@ export const Lockup = async ({whiteText}: {whiteText?: boolean}) => {
     case "none":
     default:
       return (
-        <Link href="/" className="flex flex-col gap-4 no-underline lg:flex-row">
+        <Link href="/" className="flex flex-col gap-4 no-underline sm:flex-row">
           <LockupLogo {...lockupProps} />
         </Link>
       )

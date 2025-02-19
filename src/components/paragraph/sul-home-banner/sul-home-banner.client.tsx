@@ -52,14 +52,19 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <select
           id={`${inputId}-action`}
-          className="h-40 w-full border-0 bg-none text-16 font-semibold hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
+          className="h-40 w-full border-0 bg-none text-16 font-semibold leading-normal hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
-          <option value="/all">All resources</option>
+          <option value="/all">All library resources</option>
+          <option value="https://searchworks.stanford.edu/">Catalog</option>
+          <option value="https://searchworks.stanford.edu/articles">Articles+</option>
           <option value="/search">This site</option>
         </select>
         <PlayIcon className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 rotate-90" width={20} />
+        {formAction === "https://searchworks.stanford.edu/articles" && (
+          <input type="hidden" name="f[eds_search_limiters_facet][]" value="Direct access to full text" />
+        )}
       </div>
       <button
         className="button relative m-0 block h-40 w-40 shrink-0 p-0 md:h-auto md:w-auto md:px-20 md:py-10"
