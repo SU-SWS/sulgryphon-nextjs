@@ -240,7 +240,11 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       {item.features.join(", ")}
                     </div>
                   )}
-                  {item.additionalInfo && <div>{formatHtml(item.additionalInfo.processed)}</div>}
+                  {item.additionalInfo && (
+                    <div className="mb-16 bg-black-10 px-16 py-8 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
+                      {formatHtml(item.additionalInfo.processed)}
+                    </div>
+                  )}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
                   {item.libCalId && (
