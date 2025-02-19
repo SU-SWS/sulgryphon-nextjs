@@ -13,6 +13,7 @@ import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import ToggleOption from "@/components/patterns/toggle-option"
+import formatHtml from "@/lib/format-html"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
@@ -237,6 +238,11 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                     <div className="mb-16 bg-black-10 px-16 py-8 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:p-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
+                    </div>
+                  )}
+                  {item.additionalInfo && (
+                    <div className="mb-16 bg-black-10 px-16 py-8 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
+                      {formatHtml(item.additionalInfo.processed)}
                     </div>
                   )}
                 </Td>
