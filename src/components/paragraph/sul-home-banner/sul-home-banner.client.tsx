@@ -56,7 +56,7 @@ export const SulHomeBannerFormClient = () => {
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
-          <option value="/all">All library resources</option>
+          <option value="/all">All resources</option>
           <option value="https://searchworks.stanford.edu/">Catalog</option>
           <option value="https://searchworks.stanford.edu/articles">Articles+</option>
           <option value="/search">This site</option>
