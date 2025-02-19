@@ -33,54 +33,53 @@ const HeadingList = () => {
   useEventListener("scroll", debouncedHandleScroll)
 
   useEffect(() => {
-    const h2Elements: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
-      "#main-content h2:not([data-skip-heading])"
-    )
+    const timeoutId = setTimeout(() => {
+      const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
 
-    const allHeadings: Heading[] = []
+      const allHeadings: Heading[] = []
 
-    h2Elements.forEach(heading => {
-      const headingText = heading.textContent
-      // Make sure the heading has text.
-      if (!headingText) return
+      h2Elements.forEach(heading => {
+        const headingText = heading.textContent
+        if (!headingText) return
 
-      let id = heading.getAttribute("id")
-      if (!id) {
-        id = headingText.trim().toLowerCase().replace(/\s+/g, "-") || uuid
-        let newId = id
-        let headingIndex = 0
+        let id = heading.getAttribute("id")
+        if (!id) {
+          id = headingText.trim().toLowerCase().replace(/\s+/g, "-")
+          let newId = id
+          let headingIndex = 0
 
-        // Make sure the new id attribute is unique on this page.
-        while (document.getElementById(newId)) {
-          newId = `${id}-${headingIndex}`
-          headingIndex++
+          while (document.getElementById(newId)) {
+            newId = `${id}-${headingIndex}`
+            headingIndex++
+          }
+          heading.setAttribute("id", newId)
         }
-        heading.setAttribute("id", id)
+
+        allHeadings.push({text: headingText, id})
+      })
+
+      setHeadings(allHeadings)
+
+      const observerCallback: IntersectionObserverCallback = entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveHeading(entry.target.id)
+          }
+        })
       }
 
-      allHeadings.push({text: headingText || "", id})
-    })
-
-    setHeadings(allHeadings)
-
-    const observerCallback: IntersectionObserverCallback = entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveHeading(entry.target.id)
-        }
+      const observer = new IntersectionObserver(observerCallback, {
+        rootMargin: "0px 0px -80% 0px",
+        threshold: 0,
       })
-    }
 
-    const observer = new IntersectionObserver(observerCallback, {
-      rootMargin: "0px 0px -80% 0px",
-      threshold: 0,
-    })
+      h2Elements.forEach(heading => observer.observe(heading))
 
-    h2Elements.forEach(heading => observer.observe(heading))
-
-    return () => {
-      observer.disconnect()
-    }
+      return () => {
+        clearTimeout(timeoutId)
+        observer.disconnect()
+      }
+    }, 250)
   }, [uuid])
 
   return (
