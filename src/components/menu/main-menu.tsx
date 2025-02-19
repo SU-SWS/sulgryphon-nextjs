@@ -74,21 +74,22 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
           >
             <div className="mb-10 mr-20 text-left">Quick links:</div>
             <ul className="list-unstyled flex flex-wrap items-center gap-10 @container">
-              <div className="flex flex-wrap gap-10 @sm:gap-5">
+              <li className="m-0">
                 <Link
-                  className="text-white no-underline hocus:text-white hocus:underline"
+                  className="text-white no-underline hocus:text-white hocus:underline @sm:border-r @sm:border-white @sm:pr-10"
                   href="https://searchworks.stanford.edu/"
                 >
                   Searchworks Catalog
                 </Link>
-                <span className="hidden @sm:block"> | </span>
+              </li>
+              <li className="m-0">
                 <Link
                   className="mr-20 text-white no-underline hocus:text-white hocus:underline"
                   href="https://searchworks.stanford.edu/articles"
                 >
                   Articles+
                 </Link>
-              </div>
+              </li>
               <li className="m-0">
                 <Link
                   className="mr-20 text-white no-underline hocus:text-white hocus:underline"
