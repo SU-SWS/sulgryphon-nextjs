@@ -13,6 +13,7 @@ import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import ToggleOption from "@/components/patterns/toggle-option"
+import formatHtml from "@/lib/format-html"
 
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
@@ -77,14 +78,12 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
   const capacities: string[] = []
   const libraries: string[] = []
   const features: string[] = []
-  const additionalInfo: string[] = []
 
   items.map(item => {
     if (item.studyType) types.push(item.studyType)
     if (item.capacity) capacities.push(item.capacity)
     libraries.push(item.branchTitle)
     item.features?.map(feat => features.push(feat))
-    if (item.additionalInfo) additionalInfo.push(item.additionalInfo.processed)
   })
 
   const typeOptions = [...new Set(types)].sort().map(opt => ({label: opt, value: opt}))
@@ -241,7 +240,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       {item.features.join(", ")}
                     </div>
                   )}
-                  {item.additionalInfo && <div>{item.additionalInfo.processed}</div>}
+                  {item.additionalInfo && <div>{formatHtml(item.additionalInfo.processed)}</div>}
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
                   {item.libCalId && (
