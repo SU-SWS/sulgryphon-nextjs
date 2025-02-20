@@ -18,6 +18,7 @@ import formatHtml from "@/lib/format-html"
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
   title: NodeSulStudyPlace["id"]
+  sticky: NodeSulStudyPlace["sticky"]
   branchPath: NodeSulStudyPlace["sulStudyBranch"]["path"]
   branchTitle: NodeSulStudyPlace["sulStudyBranch"]["title"]
   features?: TermUnion["name"][]
