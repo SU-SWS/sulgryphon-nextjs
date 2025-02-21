@@ -5,6 +5,7 @@ fragment FragmentNodeInterface on NodeInterface {
     title
     status
     path
+    sticky
     changed {
         ...FragmentDateTime
     }
@@ -68,6 +69,9 @@ fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
     sulStudyRoomDonorName
     sulStudyImage {
         ...FragmentMediaImage
+    }
+    sulStudyAdditionalInfo {
+      ... FragmentText
     }
 }
 
@@ -371,6 +375,9 @@ fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
     }
     sulStudyRoomNumber
     sulStudyRoomDonorName
+    sulStudyAdditionalInfo {
+      ... FragmentText
+    }
     sulStudyImage {
         ...FragmentMediaImage
     }

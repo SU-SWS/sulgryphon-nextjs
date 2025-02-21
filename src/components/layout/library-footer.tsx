@@ -98,6 +98,9 @@ const LibraryFooter = () => {
             <li>
               <FooterLink href="https://library-status.stanford.edu/">System status</FooterLink>
             </li>
+            <li>
+              <FooterLink href="/library-accessibility">Library accessibility</FooterLink>
+            </li>
           </ul>
         </div>
         <div>
