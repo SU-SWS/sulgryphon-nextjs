@@ -17,6 +17,7 @@ export const FragmentNodeInterfaceFragmentDoc = gql`
   title
   status
   path
+  sticky
   changed {
     ...FragmentDateTime
   }
