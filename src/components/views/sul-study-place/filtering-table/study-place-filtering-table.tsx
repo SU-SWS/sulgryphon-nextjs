@@ -257,7 +257,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {!item.libCalId && <p className="m-0 mb-16 text-16 text-cardinal-red">Reservation not required</p>}
 
                   {item.additionalInfo && (
-                    <div className="mb-16 bg-black-10 px-16 py-12 text-16 leading-[23px] lg:bg-transparent lg:p-0">
+                    <div className="mb-16 py-12 text-16 leading-[23px] lg:bg-transparent lg:p-0">
                       {formatHtml(item.additionalInfo.processed)}
                     </div>
                   )}
