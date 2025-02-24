@@ -5,6 +5,7 @@ fragment FragmentNodeInterface on NodeInterface {
     title
     status
     path
+    sticky
     changed {
         ...FragmentDateTime
     }

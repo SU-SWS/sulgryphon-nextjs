@@ -34,6 +34,7 @@ const StudyPlaceTable = ({items}: Props) => {
       libCalId: item.sulStudyLibcalId,
       libHours: item.sulStudyBranch.suLibraryHours,
       additionalInfo: item.sulStudyAdditionalInfo,
+      sticky: item.sticky,
     })
   })
   return (

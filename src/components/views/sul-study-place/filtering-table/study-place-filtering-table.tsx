@@ -18,6 +18,7 @@ import formatHtml from "@/lib/format-html"
 export type StudyPlaces = {
   id: NodeSulStudyPlace["id"]
   title: NodeSulStudyPlace["id"]
+  sticky: NodeSulStudyPlace["sticky"]
   branchPath: NodeSulStudyPlace["sulStudyBranch"]["path"]
   branchTitle: NodeSulStudyPlace["sulStudyBranch"]["title"]
   features?: TermUnion["name"][]
@@ -46,7 +47,6 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
   const {value: onlyOpenNow, setTrue: showOnlyOpenNow, setFalse: showOpenAndClosed} = useBoolean(false)
   const [filters, setFilters] = useState<FiltersType>({types: [], capacities: [], libraries: [], features: []})
   const libraryHours = useLibraryHours<Record<string, LocationHours>>()
-
   const filterLocations = useCallback(
     (showingItems: StudyPlaces[]) => {
       const rightNow = new Date()
@@ -91,17 +91,20 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
   const libraryOptions = [...new Set(libraries)].sort().map(opt => ({label: opt, value: opt}))
   const featureOptions = [...new Set(features)].sort().map(opt => ({label: opt, value: opt}))
 
-  let displayedItems = items.filter(item => {
-    let displayItem = true
-    if (displayItem && filters.types.length) displayItem = !!(item.studyType && filters.types.includes(item.studyType))
-    if (displayItem && filters.libraries.length)
-      displayItem = !!(item.branchTitle && filters.libraries.includes(item.branchTitle))
-    if (displayItem && filters.capacities.length)
-      displayItem = !!(item.capacity && filters.capacities.includes(item.capacity))
-    if (displayItem && filters.features.length)
-      displayItem = !!(item.features && filters.features.filter(value => item.features?.includes(value)).length)
-    return displayItem
-  })
+  let displayedItems = items
+    .filter(item => {
+      let displayItem = true
+      if (displayItem && filters.types.length)
+        displayItem = !!(item.studyType && filters.types.includes(item.studyType))
+      if (displayItem && filters.libraries.length)
+        displayItem = !!(item.branchTitle && filters.libraries.includes(item.branchTitle))
+      if (displayItem && filters.capacities.length)
+        displayItem = !!(item.capacity && filters.capacities.includes(item.capacity))
+      if (displayItem && filters.features.length)
+        displayItem = !!(item.features && filters.features.filter(value => item.features?.includes(value)).length)
+      return displayItem
+    })
+    .sort((a, b) => Number(b.sticky) - Number(a.sticky))
 
   if (onlyOpenNow) displayedItems = filterLocations(displayedItems)
 
