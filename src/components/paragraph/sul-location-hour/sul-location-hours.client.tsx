@@ -73,7 +73,7 @@ const LibrariesTodayHours = ({
             <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">
               <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
                 <MoonStarsIcon className="ml-10" />
-                <span className="[&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black [&_a]:text-white">
+                <span className="[&_a:active]:text-white [&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black [&_a]:text-white">
                   {alert}
                 </span>
               </span>
