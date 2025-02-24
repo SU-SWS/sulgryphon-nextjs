@@ -33,6 +33,13 @@ const HeadingList = () => {
   useEventListener("scroll", debouncedHandleScroll)
 
   useEffect(() => {
+    /**
+     * Delays execution to ensure that all dynamically rendered <h2> elements
+     * are present in the DOM before assigning IDs. This is necessary because
+     * at certain breakpoints, people cards are swapped out conditionally,
+     * causing IDs to be removed. The timeout ensures the effect apply after
+     * the DOM updates, preventing missing IDs that break anchor links.
+     */
     const timeoutId = setTimeout(() => {
       const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
 
