@@ -235,7 +235,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
-                    <div className="mb-16 bg-black-10 px-16 pb-12 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
+                    <div className="mb-16 bg-black-10 px-16 py-12 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
@@ -257,7 +257,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {!item.libCalId && <p className="m-0 mb-16 text-16 text-cardinal-red">Reservation not required</p>}
 
                   {item.additionalInfo && (
-                    <div className="mb-16 bg-black-10 px-16 text-16 leading-[23px] lg:bg-transparent lg:px-0">
+                    <div className="mb-16 bg-black-10 px-16 py-12 text-16 leading-[23px] lg:bg-transparent lg:p-0">
                       {formatHtml(item.additionalInfo.processed)}
                     </div>
                   )}
