@@ -180,9 +180,6 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
                 Features
               </Th>
-              <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell" scope="col">
-                <span className="sr-only">Reserve this space</span>
-              </Th>
             </Tr>
           </Thead>
 
@@ -238,22 +235,16 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
-                    <div className="mb-16 bg-black-10 px-16 py-8 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:p-0">
+                    <div className="mb-16 bg-black-10 px-16 py-12 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
                   )}
-                  {item.additionalInfo && (
-                    <div className="mb-16 bg-black-10 px-16 py-8 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
-                      {formatHtml(item.additionalInfo.processed)}
-                    </div>
-                  )}
-                </Td>
-                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5">
+
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:mb-0 lg:w-fit"
+                      className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
@@ -263,7 +254,13 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                       </div>
                     </a>
                   )}
-                  {!item.libCalId && <p className="m-0 text-16">Reservation not required</p>}
+                  {!item.libCalId && <p className="m-0 mb-16 text-16 text-cardinal-red">Reservation not required</p>}
+
+                  {item.additionalInfo && (
+                    <div className="mb-16 py-12 text-16 leading-[23px] lg:bg-transparent lg:p-0">
+                      {formatHtml(item.additionalInfo.processed)}
+                    </div>
+                  )}
                 </Td>
               </Tr>
             ))}
