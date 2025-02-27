@@ -167,13 +167,13 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                 <LinkIcon title="Link" width={26} className="mr-3 md:absolute md:left-[-32px] md:mr-0" />
                 <h2 className="type-0">Links</h2>
               </div>
-              <ul className="list-none p-0">
+              <ul>
                 {node.suPersonLinks.map((link, index) => {
                   if (!link.url) return
                   return (
                     <li key={`person-link-${index}`} className="m-0">
                       <Link href={link.url} className={"leading text-blue-600 no-underline hocus:text-black"}>
-                        * {link.title}
+                        {link.title}
                       </Link>
                     </li>
                   )
