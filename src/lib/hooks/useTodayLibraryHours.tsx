@@ -12,6 +12,7 @@ type HoursProps = {
   afterClose: boolean
   selectOptions: HoursSelectOption[]
   nextOpeningTime?: string
+  open24Hours?: boolean
 }
 
 const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
@@ -20,9 +21,14 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     return
   }
 
+  const locationHours =
+    (branchId?.includes("/")
+      ? libraryHours.additionalLocations.find(location => location.id === branchId)?.hours
+      : libraryHours.primaryHours) || libraryHours.primaryHours
+
   const rightNow = new Date()
 
-  const todayHours = libraryHours.primaryHours.find(day => {
+  let todayHours = locationHours.find(day => {
     // Set the time so that it works with UTC time.
     const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
       weekday: "long",
@@ -35,13 +41,16 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   let openTime,
     closeTime,
-    isOpen = false
+    isOpen = false,
+    open24Hours = false
   const closedAllDay = todayHours?.closed
 
   if (!todayHours.closed && todayHours.opens_at && todayHours.closes_at) {
     openTime = new Date(todayHours.opens_at)
     closeTime = new Date(todayHours.closes_at)
     isOpen = rightNow >= openTime && rightNow < closeTime
+
+    open24Hours = openTime.toLocaleTimeString() === "12:00:00 AM" && closeTime.toLocaleTimeString() === "11:59:59 PM"
   }
 
   const closingTimeFormat: Intl.DateTimeFormatOptions = {hour: "numeric", timeZone: "America/Los_Angeles"}
@@ -56,7 +65,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     })
     .toLowerCase()
 
-  const selectOptions = getLibrarySelectOptions(libraryHours.primaryHours)
+  const selectOptions = getLibrarySelectOptions(locationHours)
 
   const afterClose = (closeTime && closeTime <= rightNow) || false
   let nextOpeningTime = undefined
@@ -64,7 +73,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   // If the location is open, no need to return the next open time.
   if (!isOpen) {
-    const futureOpenHours = libraryHours.primaryHours.filter(
+    const futureOpenHours = locationHours.filter(
       dayHours => dayHours.opens_at && new Date(dayHours.opens_at) > rightNow
     )
 
@@ -100,7 +109,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
     }
   }
 
-  return {closedAllDay, isOpen, openingTime, closingTime, selectOptions, afterClose, nextOpeningTime}
+  return {closedAllDay, isOpen, openingTime, closingTime, selectOptions, afterClose, nextOpeningTime, open24Hours}
 }
 
 const getDate = (dateTime: Date) => {

@@ -13,7 +13,7 @@ const StanfordPublicationCard = ({node, ...props}: {node: NodeStanfordPublicatio
         header={
           <Link
             className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
-            href={node.path}
+            href={node.path || "#"}
           >
             {node.title}
           </Link>

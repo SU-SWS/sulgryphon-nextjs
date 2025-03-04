@@ -4,7 +4,7 @@ import {CitationUnion, NodeStanfordPublication} from "@/lib/gql/__generated__/dr
 const StanfordPublicationListItem = ({node, ...props}: {node: NodeStanfordPublication}) => {
   return (
     <article {...props}>
-      <Link href={node.path}>
+      <Link href={node.path || "#"}>
         <h2 className="text-cardinal-red">{node.title}</h2>
       </Link>
       {node.suPublicationCitation && <Citation citation={node.suPublicationCitation} />}

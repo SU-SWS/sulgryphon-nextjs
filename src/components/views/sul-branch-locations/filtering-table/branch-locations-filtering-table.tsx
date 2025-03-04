@@ -114,7 +114,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:pr-16 lg:align-middle">
         {imageUrl && (
           <Link
-            href={path}
+            href={path || "#"}
             className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]"
             aria-hidden="true"
             tabIndex={-1}
@@ -128,7 +128,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         className="flex w-auto px-0 text-center md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-20 lg:align-middle xl:pr-80"
       >
         <Link
-          href={path}
+          href={path || "#"}
           className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
         >
           <span className="mb-0 font-sans text-20 font-semibold">{title}</span>

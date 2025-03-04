@@ -1,5 +1,5 @@
 import {stringify} from "qs"
-import {MenuItem} from "@/lib/gql/__generated__/drupal.d"
+import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
 
 export const buildUrl = (path: string, params?: string | Record<string, string> | URLSearchParams): URL => {
   const url = new URL(path.charAt(0) === "/" ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}` : path)
@@ -20,7 +20,7 @@ export const buildHeaders = (headers?: HeadersInit, isPreviewMode?: boolean): He
   return requestHeaders
 }
 
-export const getActiveTrail = (menuItems: MenuItem[], currentPath: string) => {
+export const getActiveTrail = (menuItems: MenuItem[], currentPath: NodeInterface["path"]) => {
   const getActiveTrailInner = (menuItems: MenuItem[], trail: string[] = []): string[] => {
     let childTrail, currentTrail
     for (let i = 0; i < menuItems.length; i++) {

@@ -4,6 +4,7 @@ import {
   ConfigPagesUnion,
   MenuAvailable,
   MenuItem,
+  NodeInterface,
   NodeUnion,
   RouteQuery,
   RouteRedirect,
@@ -141,18 +142,18 @@ export const getMenu = cache(async (name?: MenuAvailable): Promise<MenuItem[]> =
   return getMenuInner()
 })
 
-export const getAllNodePaths = cache(async () => {
+export const getAllNodePaths = cache(async (): Promise<Array<string>> => {
   "use server"
 
   const nodeQuery = await graphqlClient({next: {tags: ["paths"]}}).Nodes()
-  const nodePaths: string[] = []
+  const nodePaths: Array<NodeInterface["path"]> = []
+  nodeQuery.nodeStanfordPages.nodes.map(node => nodePaths.push(node.path))
+  nodeQuery.nodeSulLibraries.nodes.map(node => nodePaths.push(node.path))
+  nodeQuery.nodeStanfordNewsItems.nodes.map(node => nodePaths.push(node.path))
+  nodeQuery.nodeStanfordEvents.nodes.map(node => nodePaths.push(node.path))
   nodeQuery.nodeStanfordCourses.nodes.map(node => nodePaths.push(node.path))
   nodeQuery.nodeStanfordEventSeriesItems.nodes.map(node => nodePaths.push(node.path))
-  nodeQuery.nodeStanfordEvents.nodes.map(node => nodePaths.push(node.path))
-  nodeQuery.nodeStanfordNewsItems.nodes.map(node => nodePaths.push(node.path))
-  nodeQuery.nodeStanfordPages.nodes.map(node => nodePaths.push(node.path))
   nodeQuery.nodeStanfordPeople.nodes.map(node => nodePaths.push(node.path))
   nodeQuery.nodeStanfordPolicies.nodes.map(node => nodePaths.push(node.path))
-  nodeQuery.nodeSulLibraries.nodes.map(node => nodePaths.push(node.path))
-  return nodePaths
+  return nodePaths.filter(path => !!path) as Array<string>
 })

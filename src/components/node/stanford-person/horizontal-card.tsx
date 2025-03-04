@@ -37,7 +37,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: Props) => {
       <div className="flex flex-col gap-[4rem]">
         <div className="flex flex-col gap-[1rem]">
           <Link
-            href={node.path}
+            href={node.path || "#"}
             className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
           >
             <HeadingElement className="type-1">{node.title}</HeadingElement>

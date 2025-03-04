@@ -3,8 +3,16 @@ import {NextResponse} from "next/server"
 import {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {LibraryHours} from "@/lib/drupal/drupal"
 
-type FetchedData = {
-  data: []
+export type FetchedApiData = {
+  data: {
+    type: string
+    id: string
+    attributes: {
+      name: string
+      primary: boolean
+      hours: Array<DayHours>
+    }
+  }
   included: {
     type: string
     id: string
@@ -29,7 +37,7 @@ const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
   params.set("from", from.toISOString().replace(/T.*/, ""))
   params.set("to", to.toISOString().replace(/T.*/, ""))
 
-  const data: FetchedData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
+  const data: FetchedApiData = await fetch(`https://library-hours.stanford.edu/libraries.json?${params.toString()}`, {
     cache: "no-store",
   })
     .then(res => res.json())

@@ -948,6 +948,7 @@ export const FragmentNodeSulStudyPlaceFragmentDoc = gql`
   sulStudyAdditionalInfo {
     ...FragmentText
   }
+  sulStudyHours
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentNodeSulLibraryFragmentDoc}
@@ -1098,6 +1099,7 @@ export const FragmentNodeSulStudyPlaceTeaserFragmentDoc = gql`
   sulStudyImage {
     ...FragmentMediaImage
   }
+  sulStudyHours
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
@@ -1454,18 +1456,26 @@ export const SulStudyPlacesDocument = gql`
     results {
       ...FragmentNodeSulStudyPlaceTeaser
     }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
   }
 }
-    ${FragmentNodeSulStudyPlaceTeaserFragmentDoc}`;
+    ${FragmentNodeSulStudyPlaceTeaserFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
 export const SulBranchLocationsDocument = gql`
     query sulBranchLocations {
   sulBranchLocations {
     results {
       ...FragmentNodeSulLibraryTeaser
     }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
   }
 }
-    ${FragmentNodeSulLibraryTeaserFragmentDoc}`;
+    ${FragmentNodeSulLibraryTeaserFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
 export const SulEventsDocument = gql`
     query sulEvents($contextualFilters: SulEventsContextualFilterInput, $sortDir: SortDirection = ASC, $pageSize: Int, $page: Int = -1, $offset: Int) {
   sulEvents(
