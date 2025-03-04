@@ -3,12 +3,12 @@ import Image from "next/image"
 import {BuildingLibraryIcon, MapPinIcon} from "@heroicons/react/24/outline"
 import StudyPlaceHours from "./study-place-today-hours"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d"
 
 interface ModalProps {
   branchHours?: Maybe<string>
   branchTitle: string
-  branchUrl: string
+  branchUrl?: NodeSulStudyPlace["sulStudyBranch"]["path"]
   capacity?: string
   contactImageAlt?: string
   contactImageUrl?: string
@@ -70,7 +70,7 @@ const StudyPlaceFeatures = ({
             <div className={`type-1 relative flex flex-row items-start ${roomNumber ? "mb-20" : "rs-mb-2"}`}>
               <MapPinIcon title="Location" width={19} className="mr-12 mt-01em flex-shrink-0 md:mt-0" />
               <Link
-                href={branchUrl}
+                href={branchUrl || "#"}
                 className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
               >
                 <div>{branchTitle}</div>

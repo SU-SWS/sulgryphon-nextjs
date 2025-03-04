@@ -16,7 +16,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   const libGuides = node.sulPersonLibguideId
     ? await fetchLibGuides({
         accountId: node.sulPersonLibguideId,
-        cacheTags: [`paths:${node.path}`],
+        cacheTags: [`paths:${node.path || "#"}`],
       })
     : []
   const imageUrl = node.suPersonPhoto?.mediaImage.url

@@ -16,7 +16,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
   const bannerImageUrl = node.suNewsBanner?.__typename === "MediaImage" && node.suNewsBanner.mediaImage.url
   const imageUrl = featuredImageUrl || bannerImageUrl
 
-  const goToUrl = node.suNewsSource?.url || node.path
+  const goToUrl = node.suNewsSource?.url || node.path || "#"
   return (
     <article {...props}>
       <div className="mb-14 text-18">

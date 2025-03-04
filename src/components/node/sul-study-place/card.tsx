@@ -57,7 +57,7 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
               <div className="type-0 relative mb-20 flex flex-row items-start">
                 <MapPinIcon title="Location" width={19} className="mr-12 mt-01em flex-shrink-0 md:mt-0" />
                 <Link
-                  href={node.sulStudyBranch.path}
+                  href={node.sulStudyBranch.path || "#"}
                   className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                 >
                   <div>{node.sulStudyBranch.title}</div>

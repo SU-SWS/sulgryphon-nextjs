@@ -23,7 +23,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
   const dateTimeString = getTimeString(start, end).replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
 
   const imageUrl = node.sulEventImage?.mediaImage.url
-  const goToUrl = (node.suEventSource?.url || node.path).replaceAll(" ", "%20")
+  const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
 
   return (
     <article {...props} className="mx-auto @container">

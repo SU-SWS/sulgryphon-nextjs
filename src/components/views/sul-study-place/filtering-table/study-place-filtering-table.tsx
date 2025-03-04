@@ -30,6 +30,7 @@ export type StudyPlaces = {
   libCalId?: NodeSulStudyPlace["sulStudyLibcalId"]
   libHours?: NodeSulStudyPlace["sulStudyBranch"]["suLibraryHours"]
   additionalInfo?: NodeSulStudyPlace["sulStudyAdditionalInfo"]
+  hoursId?: NodeSulStudyPlace["sulStudyHours"]
 }
 
 interface Props {
@@ -218,7 +219,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 </Th>
                 <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
-                    href={item.branchPath}
+                    href={item.branchPath || "#"}
                     className="mb-16 block w-fit text-16 font-normal leading-[23px] underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
                   >
                     <div>{item.branchTitle}</div>
@@ -227,7 +228,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="justify-left flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   {item.libHours && (
                     <div className="pb-16 text-16 leading-[23px] lg:pb-0">
-                      {item.libHours && <BranchHours hoursId={item.libHours} />}
+                      {(item.hoursId || item.libHours) && <BranchHours hoursId={item.hoursId || item.libHours} />}
                     </div>
                   )}
                   {/* Without this, the responsive table library injects a "&nbsp;". */}
@@ -297,14 +298,19 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
     return
   }
 
-  const {isOpen, closingTime, nextOpeningTime} = todayLibraryHours
+  const {isOpen, closingTime, nextOpeningTime, open24Hours} = todayLibraryHours
   const rightNow = new Date()
   const sunday = new Date()
   sunday.setDate(sunday.getDate() - rightNow.getDay())
   const saturday = new Date()
   saturday.setDate(saturday.getDate() + (7 - rightNow.getDay()))
 
-  const thisWeekHours = libraryHours.primaryHours.filter(dayHours => {
+  const locationHours =
+    (hoursId?.includes("/")
+      ? libraryHours.additionalLocations.find(location => location.id === hoursId)?.hours
+      : libraryHours.primaryHours) || libraryHours.primaryHours
+
+  const thisWeekHours = locationHours.filter(dayHours => {
     const day = new Date(dayHours.day + " 20:00:00")
     return day >= sunday && day <= saturday
   })
@@ -324,8 +330,9 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
       )}
 
       <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
-        {isOpen && closingTime && `until ${closingTime}`}
-        {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
+        {!open24Hours && isOpen && closingTime && `until ${closingTime}`}
+        {!open24Hours && !isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
+        {open24Hours && "24 Hours"}
 
         <button ref={buttonRef} onClick={toggleExpandedHours} aria-controls={id} aria-expanded={expandedHours}>
           <span className="sr-only">Show this weeks hours</span>

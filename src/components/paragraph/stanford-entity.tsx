@@ -2,7 +2,7 @@ import formatHtml from "@/lib/format-html"
 import NodeCardDisplay from "@/components/node/node-card"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import AboveHeaderBorder from "@/components/patterns/above-header-border"
-import {NodeUnion, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import {getEntityFromPath} from "@/lib/gql/fetcher"
 import {HTMLAttributes} from "react"
@@ -73,7 +73,8 @@ const StanfordEntity = async ({
   )
 }
 
-const EntityCard = async ({path, h3Heading}: {path: string; h3Heading: boolean}) => {
+const EntityCard = async ({path, h3Heading}: {path?: NodeInterface["path"]; h3Heading: boolean}) => {
+  if (!path) return
   const queryResponse = await getEntityFromPath<NodeUnion>(path, false, true)
   if (!queryResponse.entity) return
   return <NodeCardDisplay node={queryResponse.entity} h3Heading={h3Heading} />

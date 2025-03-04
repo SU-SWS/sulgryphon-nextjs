@@ -149,7 +149,7 @@ const SulPeopleTableView = ({items}: Props) => {
                 <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.photoUrl && (
                     <Link
-                      href={item.path}
+                      href={item.path || "#"}
                       className="relative mb-16 block aspect-[1/1] w-[200px] overflow-hidden rounded-full md:mb-32 lg:mb-0 lg:w-[68px]"
                       aria-hidden="true"
                       tabIndex={-1}
@@ -170,7 +170,7 @@ const SulPeopleTableView = ({items}: Props) => {
                 >
                   {item.title && (
                     <Link
-                      href={item.path}
+                      href={item.path || "#"}
                       className="mb-16 inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                     >
                       <span className="mb-0 font-sans text-20 font-semibold" id={item.id}>

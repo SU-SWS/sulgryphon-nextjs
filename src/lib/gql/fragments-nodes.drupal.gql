@@ -73,6 +73,7 @@ fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
     sulStudyAdditionalInfo {
       ... FragmentText
     }
+    sulStudyHours
 }
 
 fragment FragmentNodeStanfordPage on NodeStanfordPage {
@@ -381,6 +382,7 @@ fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
     sulStudyImage {
         ...FragmentMediaImage
     }
+    sulStudyHours
 }
 
 fragment FragmentNodeStanfordCourseTeaser on NodeStanfordCourse {
