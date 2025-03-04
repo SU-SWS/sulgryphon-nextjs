@@ -28,7 +28,7 @@ const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
 
   const rightNow = new Date()
 
-  let todayHours = locationHours.find(day => {
+  const todayHours = locationHours.find(day => {
     // Set the time so that it works with UTC time.
     const dayDate = new Date(day.day + " 20:00:00").toLocaleDateString("en-us", {
       weekday: "long",
