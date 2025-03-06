@@ -31,10 +31,15 @@ const Header = async () => {
             </div>
             <nav className="hidden lg:block" aria-label="User links">
               <ul className="list-unstyled flex items-baseline gap-40 xl:gap-[55px]">
-                <span className="flex gap-5">
-                  <HeaderLink href="https://searchworks.stanford.edu/" text="Searchworks Catalog" /> |{" "}
-                  <HeaderLink href="https://searchworks.stanford.edu/articles" text="Articles+" />
-                </span>
+                <li className="flex gap-5">
+                  <Link className="text-18 font-normal text-black" href="https://searchworks.stanford.edu/">
+                    Searchworks Catalog
+                  </Link>
+                  |{" "}
+                  <Link className="text-18 font-normal text-black" href="https://searchworks.stanford.edu/articles">
+                    Articles+
+                  </Link>
+                </li>
                 <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
                 <HeaderLink href="/contact-us" text="Contact Us" />
                 <li>
