@@ -35,8 +35,10 @@ const Header = async () => {
                   <Link className="text-18 font-normal text-black" href="https://searchworks.stanford.edu/">
                     Searchworks Catalog
                   </Link>
-                  |{" "}
-                  <Link className="text-18 font-normal text-black" href="https://searchworks.stanford.edu/articles">
+                  <Link
+                    className="ml-10 border-l border-black pl-10 text-18 font-normal text-black"
+                    href="https://searchworks.stanford.edu/articles"
+                  >
                     Articles+
                   </Link>
                 </li>
