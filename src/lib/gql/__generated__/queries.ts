@@ -32,12 +32,22 @@ export const FragmentTextSummaryFragmentDoc = gql`
   summary
 }
     `;
+export const FragmentLinkAttributesFragmentDoc = gql`
+    fragment FragmentLinkAttributes on LinkAttributes {
+  ariaLabel
+  ariaLabelledBy
+}
+    `;
 export const FragmentLinkFragmentDoc = gql`
     fragment FragmentLink on Link {
   url
   title
+  internal
+  attributes {
+    ...FragmentLinkAttributes
+  }
 }
-    `;
+    ${FragmentLinkAttributesFragmentDoc}`;
 export const FragmentTermInterfaceFragmentDoc = gql`
     fragment FragmentTermInterface on TermInterface {
   __typename
@@ -205,8 +215,7 @@ export const FragmentParagraphStanfordCardFragmentDoc = gql`
     ...FragmentText
   }
   suCardLink {
-    url
-    title
+    ...FragmentLink
   }
   suCardMedia {
     ...FragmentMediaUnion
@@ -215,6 +224,7 @@ export const FragmentParagraphStanfordCardFragmentDoc = gql`
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentTextFragmentDoc}
+${FragmentLinkFragmentDoc}
 ${FragmentMediaUnionFragmentDoc}`;
 export const FragmentParagraphStanfordEntityFragmentDoc = gql`
     fragment FragmentParagraphStanfordEntity on ParagraphStanfordEntity {
