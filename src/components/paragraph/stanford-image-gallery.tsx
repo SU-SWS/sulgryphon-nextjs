@@ -47,7 +47,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                 </div>
 
                 {image.suGalleryCaption && (
-                  <figcaption className="table-caption caption-bottom text-right text-19 italic leading">
+                  <figcaption className="table-caption caption-bottom text-right text-16 italic leading">
                     {formatHtml(image.suGalleryCaption)}
                   </figcaption>
                 )}

@@ -55,7 +55,7 @@ const Card = ({
       {...props}
       aria-labelledby={header ? headerId : undefined}
       className={twMerge(
-        "card basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
+        "card block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
         props.className
       )}
     >

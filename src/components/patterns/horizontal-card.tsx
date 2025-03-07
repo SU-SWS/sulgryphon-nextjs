@@ -66,7 +66,7 @@ const HorizontalCard = ({
         </FullScreenBackground>
       )}
 
-      <div className="basefont-20 centered relative mt-[77px] pb-[7.2rem] pt-[5.8rem] leading-display text-white @container @6xl:mt-0 lg:px-80">
+      <div className="centered relative mt-[77px] pb-[7.2rem] pt-[5.8rem] leading-display text-white @container @6xl:mt-0 lg:px-80">
         <div className="grid items-center gap-2xl @6xl:grid-cols-2">
           {(image || video) && (
             <div className="relative mt-[-135px] aspect-[16/9] w-full overflow-hidden @6xl:mt-0">
