@@ -2,7 +2,6 @@
 fragment FragmentLink on Link {
     url
     title
-    internal
     attributes {
         ...FragmentLinkAttributes
     }

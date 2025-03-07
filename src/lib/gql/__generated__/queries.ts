@@ -42,7 +42,6 @@ export const FragmentLinkFragmentDoc = gql`
     fragment FragmentLink on Link {
   url
   title
-  internal
   attributes {
     ...FragmentLinkAttributes
   }
