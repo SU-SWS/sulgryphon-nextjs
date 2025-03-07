@@ -130,8 +130,7 @@ fragment FragmentParagraphStanfordCard on ParagraphStanfordCard {
         ...FragmentText
     }
     suCardLink {
-        url
-        title
+        ...FragmentLink
     }
     suCardMedia {
         ...FragmentMediaUnion
