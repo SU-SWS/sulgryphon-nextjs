@@ -66,7 +66,7 @@ const Card = ({
           </div>
           {caption && (
             <div className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
-              <div className="mx-auto w-fit text-12 font-semibold leading-normal text-white sm:text-16">{caption}</div>
+              <div className="mx-auto w-fit text-16 font-medium leading-normal text-white">{caption}</div>
             </div>
           )}
         </div>
