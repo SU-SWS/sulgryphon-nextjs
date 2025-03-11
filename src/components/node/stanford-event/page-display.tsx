@@ -95,7 +95,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       )}
 
       {node.suEventSubheadline && <h2 className="rs-mb-1 type-3">{node.suEventSubheadline}</h2>}
-      {node.suEventDek && <div className="rs-mb-4 text-16 md:text-21">{node.suEventDek}</div>}
+      {node.suEventDek && <div className="rs-mb-4 text-22 leading-[2.75rem]">{node.suEventDek}</div>}
 
       {node.suEventSponsor && (
         <div className="rs-pb-3">
