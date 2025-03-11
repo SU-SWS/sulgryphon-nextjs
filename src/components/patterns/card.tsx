@@ -80,7 +80,7 @@ const Card = ({
         {header && (
           <Heading
             id={headerId}
-            className={twMerge("type-1 mb-03em font-bold leading-tight", hideHeading && "sr-only")}
+            className={twMerge("mb-03em text-24 font-bold leading-[3rem]", hideHeading && "sr-only")}
           >
             {header}
           </Heading>
