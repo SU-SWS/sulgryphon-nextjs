@@ -52,7 +52,9 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
         </div>
       )}
 
-      {caption && <figcaption className="float-right text-right text-16 leading">{formatHtml(caption)}</figcaption>}
+      {caption && (
+        <figcaption className="float-right text-right text-16 font-normal leading">{formatHtml(caption)}</figcaption>
+      )}
     </figure>
   )
 }

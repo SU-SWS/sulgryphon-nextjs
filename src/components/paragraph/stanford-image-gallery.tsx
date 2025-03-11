@@ -47,7 +47,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                 </div>
 
                 {image.suGalleryCaption && (
-                  <figcaption className="table-caption caption-bottom text-right text-16 italic leading">
+                  <figcaption className="text-righ table-caption caption-bottom text-16 font-normal italic leading">
                     {formatHtml(image.suGalleryCaption)}
                   </figcaption>
                 )}
@@ -72,7 +72,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                     {image.suGalleryCaption && (
                       <figcaption
                         id={image.id}
-                        className="mt-10 table-caption w-full caption-bottom bg-white p-10 text-right text-19 leading"
+                        className="mt-10 table-caption w-full caption-bottom bg-white p-10 text-right text-16 font-normal leading"
                       >
                         {image.suGalleryCaption}
                       </figcaption>
