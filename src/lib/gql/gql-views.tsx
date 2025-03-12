@@ -84,11 +84,13 @@ export const getViewPagedItems = async (
       case "sul_study_places--study_places_table":
         graphqlResponse = await client.sulStudyPlaces()
         items = graphqlResponse.sulStudyPlaces?.results as unknown as NodeUnion[]
+        totalItems = graphqlResponse.sulStudyPlaces?.pageInfo.total || 0
         break
 
       case "sul_branch_locations--branch_locations_table":
         graphqlResponse = await client.sulBranchLocations()
         items = graphqlResponse.sulBranchLocations?.results as unknown as NodeUnion[]
+        totalItems = graphqlResponse.sulBranchLocations?.pageInfo.total || 0
         break
 
       case "sul_events--shared_tags_cards":
@@ -247,6 +249,7 @@ export const getViewPagedItems = async (
     if (e instanceof Error) console.warn(e.message)
     return {items: [], totalItems: 0}
   }
+
   return {items, totalItems}
 }
 

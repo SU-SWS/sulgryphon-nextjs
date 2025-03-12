@@ -17,6 +17,7 @@ export const FragmentNodeInterfaceFragmentDoc = gql`
   title
   status
   path
+  sticky
   changed {
     ...FragmentDateTime
   }
@@ -31,12 +32,21 @@ export const FragmentTextSummaryFragmentDoc = gql`
   summary
 }
     `;
+export const FragmentLinkAttributesFragmentDoc = gql`
+    fragment FragmentLinkAttributes on LinkAttributes {
+  ariaLabel
+  ariaLabelledBy
+}
+    `;
 export const FragmentLinkFragmentDoc = gql`
     fragment FragmentLink on Link {
   url
   title
+  attributes {
+    ...FragmentLinkAttributes
+  }
 }
-    `;
+    ${FragmentLinkAttributesFragmentDoc}`;
 export const FragmentTermInterfaceFragmentDoc = gql`
     fragment FragmentTermInterface on TermInterface {
   __typename
@@ -204,8 +214,7 @@ export const FragmentParagraphStanfordCardFragmentDoc = gql`
     ...FragmentText
   }
   suCardLink {
-    url
-    title
+    ...FragmentLink
   }
   suCardMedia {
     ...FragmentMediaUnion
@@ -214,6 +223,7 @@ export const FragmentParagraphStanfordCardFragmentDoc = gql`
 }
     ${FragmentParagraphInterfaceFragmentDoc}
 ${FragmentTextFragmentDoc}
+${FragmentLinkFragmentDoc}
 ${FragmentMediaUnionFragmentDoc}`;
 export const FragmentParagraphStanfordEntityFragmentDoc = gql`
     fragment FragmentParagraphStanfordEntity on ParagraphStanfordEntity {
@@ -944,11 +954,16 @@ export const FragmentNodeSulStudyPlaceFragmentDoc = gql`
   sulStudyImage {
     ...FragmentMediaImage
   }
+  sulStudyAdditionalInfo {
+    ...FragmentText
+  }
+  sulStudyHours
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentNodeSulLibraryFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
-${FragmentMediaImageFragmentDoc}`;
+${FragmentMediaImageFragmentDoc}
+${FragmentTextFragmentDoc}`;
 export const FragmentNodeUnionFragmentDoc = gql`
     fragment FragmentNodeUnion on NodeUnion {
   ...FragmentNodeInterface
@@ -1087,13 +1102,18 @@ export const FragmentNodeSulStudyPlaceTeaserFragmentDoc = gql`
   }
   sulStudyRoomNumber
   sulStudyRoomDonorName
+  sulStudyAdditionalInfo {
+    ...FragmentText
+  }
   sulStudyImage {
     ...FragmentMediaImage
   }
+  sulStudyHours
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
 ${FragmentNodeSulLibraryTeaserFragmentDoc}
+${FragmentTextFragmentDoc}
 ${FragmentMediaImageFragmentDoc}`;
 export const FragmentNodeTeaserUnionFragmentDoc = gql`
     fragment FragmentNodeTeaserUnion on NodeUnion {
@@ -1445,18 +1465,26 @@ export const SulStudyPlacesDocument = gql`
     results {
       ...FragmentNodeSulStudyPlaceTeaser
     }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
   }
 }
-    ${FragmentNodeSulStudyPlaceTeaserFragmentDoc}`;
+    ${FragmentNodeSulStudyPlaceTeaserFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
 export const SulBranchLocationsDocument = gql`
     query sulBranchLocations {
   sulBranchLocations {
     results {
       ...FragmentNodeSulLibraryTeaser
     }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
   }
 }
-    ${FragmentNodeSulLibraryTeaserFragmentDoc}`;
+    ${FragmentNodeSulLibraryTeaserFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
 export const SulEventsDocument = gql`
     query sulEvents($contextualFilters: SulEventsContextualFilterInput, $sortDir: SortDirection = ASC, $pageSize: Int, $page: Int = -1, $offset: Int) {
   sulEvents(

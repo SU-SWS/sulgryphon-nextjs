@@ -16,7 +16,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   const libGuides = node.sulPersonLibguideId
     ? await fetchLibGuides({
         accountId: node.sulPersonLibguideId,
-        cacheTags: [`paths:${node.path}`],
+        cacheTags: [`paths:${node.path || "#"}`],
       })
     : []
   const imageUrl = node.suPersonPhoto?.mediaImage.url
@@ -167,18 +167,18 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                 <LinkIcon title="Link" width={26} className="mr-3 md:absolute md:left-[-32px] md:mr-0" />
                 <h2 className="type-0">Links</h2>
               </div>
-              <div>
+              <ul>
                 {node.suPersonLinks.map((link, index) => {
                   if (!link.url) return
                   return (
-                    <div key={`person-link-${index}`}>
+                    <li key={`person-link-${index}`} className="m-0">
                       <Link href={link.url} className={"leading text-blue-600 no-underline hocus:text-black"}>
-                        * {link.title}
+                        {link.title}
                       </Link>
-                    </div>
+                    </li>
                   )
                 })}
-              </div>
+              </ul>
             </div>
           )}
 

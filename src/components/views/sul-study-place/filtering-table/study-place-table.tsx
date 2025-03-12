@@ -33,8 +33,12 @@ const StudyPlaceTable = ({items}: Props) => {
       capacity: item.sulStudyCapacity?.name,
       libCalId: item.sulStudyLibcalId,
       libHours: item.sulStudyBranch.suLibraryHours,
+      additionalInfo: item.sulStudyAdditionalInfo,
+      sticky: item.sticky,
+      hoursId: item.sulStudyHours,
     })
   })
+
   return (
     <CachedClientFetch>
       <StudyPlaceFilteringTable items={trimmedItems} />

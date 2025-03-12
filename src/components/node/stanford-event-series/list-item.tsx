@@ -5,7 +5,7 @@ const StanfordEventSeriesListItem = ({node, ...props}: {node: NodeStanfordEventS
   // Not being utilized anywhere currently
   return (
     <article {...props}>
-      <Link href={node.path}>
+      <Link href={node.path || "#"}>
         <h2 className="text-cardinal-red">{node.title}</h2>
       </Link>
     </article>

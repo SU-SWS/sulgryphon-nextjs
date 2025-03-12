@@ -11,14 +11,20 @@ query sulStudyPlaces {
         results {
             ...FragmentNodeSulStudyPlaceTeaser
         }
+        pageInfo {
+            ...FragmentViewPageInfo
+        }
     }
 }
 
 query sulBranchLocations {
     sulBranchLocations {
-      results {
-          ...FragmentNodeSulLibraryTeaser
-      }
+        results {
+            ...FragmentNodeSulLibraryTeaser
+        }
+        pageInfo {
+            ...FragmentViewPageInfo
+        }
     }
 }
 

@@ -18,7 +18,8 @@ const ListParagraph = async ({paragraph}: Props) => {
   const displayId = paragraph.suListView?.display || ""
 
   const limit =
-    viewId === "sul_branch_locations" && displayId === "branch_locations_table"
+    (viewId === "sul_branch_locations" && displayId === "branch_locations_table") ||
+    (viewId === "sul_study_places" && displayId === "study_places_table")
       ? 999
       : paragraph.suListView?.pageSize || VIEW_PAGE_SIZE
 

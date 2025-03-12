@@ -16,7 +16,7 @@ const StanfordCourseListItem = ({node, ...props}: {node: NodeStanfordCourse}) =>
           </span>
         )}
       </span>
-      <Link href={node.path} className="text-digital-red no-underline hocus:text-digital-red hocus:underline">
+      <Link href={node.path || "#"} className="text-digital-red no-underline hocus:text-digital-red hocus:underline">
         <h2 className="type-2">{node.title}</h2>
       </Link>
       {node.suCourseInstructors && (

@@ -2,6 +2,14 @@
 fragment FragmentLink on Link {
     url
     title
+    attributes {
+        ...FragmentLinkAttributes
+    }
+}
+
+fragment FragmentLinkAttributes on LinkAttributes {
+  ariaLabel
+  ariaLabelledBy
 }
 
 fragment FragmentTextSummary on TextSummary {

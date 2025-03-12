@@ -24,7 +24,7 @@ const StanfordPersonListItem = ({node, ...props}: {node: NodeStanfordPerson}) =>
         </div>
       )}
       <div>
-        <Link href={node.path} className="text-digital-red no-underline hocus:text-black hocus:underline">
+        <Link href={node.path || "#"} className="text-digital-red no-underline hocus:text-black hocus:underline">
           <h2 className="type-1 mb-[0.2em] font-semibold">{node.title}</h2>
         </Link>
         <div className="type-0 leading-snug">{node.suPersonShortTitle}</div>

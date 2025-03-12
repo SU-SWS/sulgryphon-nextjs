@@ -6,7 +6,7 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import {useBoolean} from "usehooks-ts"
-import {MenuItem} from "@/lib/gql/__generated__/drupal.d"
+import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
 import {usePathname} from "next/navigation"
 import {getActiveTrail} from "@/lib/drupal/utils"
 
@@ -22,7 +22,7 @@ const getCurrentPageTitle = (activeTrail: string[], items: MenuItem[], trail: st
   }
 }
 
-const SecondaryMenu = ({menuItems, currentPath}: {menuItems: MenuItem[]; currentPath: string}) => {
+const SecondaryMenu = ({menuItems, currentPath}: {menuItems: MenuItem[]; currentPath?: NodeInterface["path"]}) => {
   const browserUrl = usePathname()
   const ref = useRef<HTMLDivElement>(null)
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenuOpen} = useBoolean(false)
