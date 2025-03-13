@@ -79,12 +79,12 @@ const HorizontalCard = ({
             {superHeader && <span className="type-0 mb-0 font-bold leading-display underline">{superHeader}</span>}
 
             {header && (
-              <Heading id={headerId} className={twMerge("type-4", hideHeading && "sr-only")}>
+              <Heading id={headerId} className={twMerge("text-24", hideHeading && "sr-only")}>
                 {header}
               </Heading>
             )}
 
-            {body && <div>{formatHtml(body)}</div>}
+            {body && <div className="[&_p]:text-20">{formatHtml(body)}</div>}
 
             {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
 
