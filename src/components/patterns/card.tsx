@@ -55,7 +55,7 @@ const Card = ({
       {...props}
       aria-labelledby={header ? headerId : undefined}
       className={twMerge(
-        "card basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
+        "card block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
         props.className
       )}
     >
@@ -66,7 +66,7 @@ const Card = ({
           </div>
           {caption && (
             <div className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
-              <div className="mx-auto w-fit text-12 font-semibold leading-normal text-white sm:text-16">{caption}</div>
+              <div className="mx-auto w-fit text-16 font-medium leading-normal text-white">{caption}</div>
             </div>
           )}
         </div>
@@ -80,7 +80,7 @@ const Card = ({
         {header && (
           <Heading
             id={headerId}
-            className={twMerge("type-1 mb-03em font-bold leading-tight", hideHeading && "sr-only")}
+            className={twMerge("mb-03em text-24 font-bold leading-[3rem]", hideHeading && "sr-only")}
           >
             {header}
           </Heading>

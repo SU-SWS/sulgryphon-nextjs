@@ -31,7 +31,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
       )}
 
       <div className="flex flex-col">
-        <HeadingElement className="type-0 mb-0 leading-cozy">
+        <HeadingElement className="mb-0 text-24 font-bold leading-[3rem]">
           <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
             {node.title}
           </Link>

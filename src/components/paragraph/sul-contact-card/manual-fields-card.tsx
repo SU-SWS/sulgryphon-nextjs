@@ -24,7 +24,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
 
   return (
     <div className="@container">
-      <div className="basefont-20 flex w-full flex-col rounded border-0 leading-display shadow-md @6xl:flex-row">
+      <div className="flex w-full flex-col rounded border-0 leading-display shadow-md @6xl:flex-row">
         {imageUrl && (
           <div className="relative aspect-[16/9] flex-shrink-0 overflow-hidden @6xl:w-1/2">
             <Image

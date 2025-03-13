@@ -27,7 +27,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
           <Link className="text-digital-red no-underline hover:underline" href={goToUrl}>
             <HeadingElement className="type-2">{node.title}</HeadingElement>
           </Link>
-          {node.suNewsDek && <div className="rs-mb-1">{node.suNewsDek}</div>}
+          {node.suNewsDek && <div className="rs-mb-1 text-22 leading-[2.75rem]">{node.suNewsDek}</div>}
         </div>
         {imageUrl && (
           <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">

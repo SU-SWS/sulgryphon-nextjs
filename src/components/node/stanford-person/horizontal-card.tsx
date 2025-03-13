@@ -18,7 +18,7 @@ const HorizontalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
   return (
     <article
-      className="rs-pt-2 rs-px-2 rs-pb-3 basefont-20 mt-0 flex w-full flex-col border-x border-b-5 border-t border-solid border-black-10 border-b-digital-red bg-white leading-display text-black shadow-md @3xl:flex-row"
+      className="rs-pt-2 rs-px-2 rs-pb-3 mt-0 flex w-full flex-col border-x border-b-5 border-t border-solid border-black-10 border-b-digital-red bg-white leading-display text-black shadow-md @3xl:flex-row"
       {...props}
     >
       {imageUrl && (

@@ -5,58 +5,54 @@
 module.exports = function () {
   return function ({ addBase }) {
     addBase({
-      'h1, h2, h3, h4, h5': {
-        fontFamily: '"Source Serif Pro", Georgia, Times, "Times New Roman", serif',
+      'h1, h2, h3, h4, h5, h6': {
+        fontFamily: '"Source Sans 3", Georgia, Times, "Times New Roman", serif',
+        letterSpacing: 'inherit'
       },
       'h1': {
-        fontSize: '1.8em',
-        letterSpacing: '-0.02em',
-        '@screen md': {
-          fontSize: '2.31em',
+        fontSize: '3.6rem',
+        lineHeight: '4.5rem',
+        '@screen sm': {
+          fontSize: '4rem',
+          lineHeight: '5rem',
         },
         '@screen lg': {
-          fontSize: '2.99em',
+          fontSize: '5.6rem',
+          lineHeight: '7rem',
         },
       },
       'h2': {
-        fontSize: '1.42em',
-        letterSpacing: '-0.016em',
-        '@screen md': {
-          fontSize: '1.69em',
+        fontSize: '3.2rem',
+        lineHeight: '4rem',
+        '@screen sm': {
+          fontSize: '3.6rem',
+          lineHeight: '4.5rem',
         },
         '@screen lg': {
-          fontSize: '2.03em',
+          fontSize: '4rem',
+          lineHeight: '5rem',
         },
       },
       'h3': {
-        fontSize: '1.32em',
-        letterSpacing: '-0.014em',
-        '@screen md': {
-          fontSize: '1.52em',
-        },
+        fontSize: '2.2rem',
+        lineHeight: '2.75rem',
         '@screen lg': {
-          fontSize: '1.73em',
+          fontSize: '2.4rem',
+          lineHeight: '3rem',
         },
       },
       'h4': {
-        fontSize: '1.21em',
-        letterSpacing: '-0.012em',
-        '@screen md': {
-          fontSize: '1.32em',
-        },
-        '@screen lg': {
-          fontSize: '1.44em',
-        },
+        fontSize: '2rem',
+        lineHeight: '2.5rem',
       },
       'h5': {
-        fontSize: '1.1em',
-        letterSpacing: '-0.01em',
-        '@screen md': {
-          fontSize: '1.15em',
-        },
-        '@screen lg': {
-          fontSize: '1.2em',
-        },
+        fontSize: '2.4rem',
+        lineHeight: 'normal',
+      },
+      'h6': {
+        fontSize: '2.4rem',
+        fontWeight: 'semibold',
+        lineHeight: 'normal',
       },
     });
   };
