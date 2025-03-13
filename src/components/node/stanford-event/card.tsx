@@ -43,7 +43,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         <div className="flex w-full flex-row items-center bg-black-true text-center uppercase text-white" aria-hidden>
           <div className="mx-auto flex flex-col items-center">
             <div className="px-30 pt-10 text-24 font-semibold leading-[2.8rem]">{startMonth}</div>
-            <div className="text-40 px-30 pb-10 leading-[5rem]">{startDay}</div>
+            <div className="px-30 pb-10 text-[4rem] leading-[5rem]">{startDay}</div>
           </div>
 
           {(startMonth !== endMonth || startDay !== endDay) && (
@@ -51,7 +51,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
               <div className="font-bold">&mdash;</div>
               <div className="mx-auto">
                 <div className="px-30 pt-10 text-24 font-semibold leading-[2.8rem]">{endMonth}</div>
-                <div className="text-40 px-30 pb-10 leading-[5rem]">{endDay}</div>
+                <div className="px-30 pb-10 text-[4rem] leading-[5rem]">{endDay}</div>
               </div>
             </>
           )}
