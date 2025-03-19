@@ -80,7 +80,7 @@ const options: HTMLReactParserOptions = {
           delete nodeProps.role
           return <figure {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</figure>
         case "figcaption":
-          nodeProps.className += " table-caption caption-bottom text-center leading text-19"
+          nodeProps.className += " table-caption caption-bottom text-center text-16 font-normal"
           return (
             <figcaption {...nodeProps} style={{captionSide: "bottom"}}>
               {domToReact(domNode.children as DOMNode[], options)}
@@ -100,7 +100,7 @@ const options: HTMLReactParserOptions = {
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
         case "p":
-          nodeProps.className += " max-w-[100ch]"
+          nodeProps.className += " max-w-[100ch] text-16 sm:text-18"
         case "h1":
         case "h2":
         case "h3":
