@@ -113,7 +113,7 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
             {!sulSidebar && <SecondaryMenu menuItems={menuItems} currentPath={entity.path} />}
 
             <div className="flex-1">
-              <NodePageDisplay node={entity} aria-labelledby={entity.id} />
+              <NodePageDisplay node={entity} />
             </div>
           </div>
         )}
