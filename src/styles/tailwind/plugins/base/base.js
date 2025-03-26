@@ -22,23 +22,23 @@ module.exports = function () {
         },
       },
       'h2': {
-        fontSize: '3.2rem',
-        lineHeight: '4rem',
+        fontSize: '3.6rem',
+        lineHeight: '4.5rem',
         '@screen sm': {
-          fontSize: '3.6rem',
-          lineHeight: '4.5rem',
+          fontSize: '4rem',
+          lineHeight: '5rem',
         },
         '@screen lg': {
-          fontSize: '4rem',
+          fontSize: '4.4rem',
           lineHeight: '5rem',
         },
       },
       'h3': {
-        fontSize: '2.2rem',
-        lineHeight: '2.75rem',
+        fontSize: '2.4rem',
+        lineHeight: '3rem',
         '@screen lg': {
-          fontSize: '2.4rem',
-          lineHeight: '3rem',
+          fontSize: '3.2rem',
+          lineHeight: '4rem',
         },
       },
       'h4': {
