@@ -138,7 +138,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
       {items.length === 0 && <SignalIcon width={50} className="mx-auto my-50 animate-ping" />}
 
       {items.length > 0 && (
-        <p className={"type-2 mb-32 mt-60 font-serif font-bold"} aria-live="polite" aria-atomic="true">
+        <p className={"type-2 mb-32 mt-60 font-bold"} aria-live="polite" aria-atomic="true">
           Showing {itemsToDisplay.length} of {items.length}
           <br />
           {itemsToDisplay.length == 0 && <>No items match the search.</>}
