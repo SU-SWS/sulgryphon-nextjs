@@ -15,18 +15,14 @@ interface NodeProps {
 export const NodePageDisplay = ({node, ...props}: NodeProps) => {
   return (
     <>
-      {node.__typename === "NodeStanfordCourse" && <StanfordCourse node={node} aria-labelledby={node.id} {...props} />}
-      {node.__typename === "NodeStanfordEvent" && <StanfordEvent node={node} aria-labelledby={node.id} {...props} />}
-      {node.__typename === "NodeStanfordEventSeries" && (
-        <StanfordEventSeries node={node} aria-labelledby={node.id} {...props} />
-      )}
-      {node.__typename === "NodeStanfordNews" && <StanfordNews node={node} aria-labelledby={node.id} {...props} />}
+      {node.__typename === "NodeStanfordCourse" && <StanfordCourse node={node} {...props} />}
+      {node.__typename === "NodeStanfordEvent" && <StanfordEvent node={node} {...props} />}
+      {node.__typename === "NodeStanfordEventSeries" && <StanfordEventSeries node={node} {...props} />}
+      {node.__typename === "NodeStanfordNews" && <StanfordNews node={node} {...props} />}
       {node.__typename === "NodeStanfordPage" && <StanfordPage node={node} {...props} />}
-      {node.__typename === "NodeStanfordPerson" && <StanfordPerson node={node} aria-labelledby={node.id} {...props} />}
-      {node.__typename === "NodeStanfordPublication" && (
-        <StanfordPublication node={node} aria-labelledby={node.id} {...props} />
-      )}
-      {node.__typename === "NodeSulLibrary" && <SulLibrary node={node} aria-labelledby={node.id} {...props} />}
+      {node.__typename === "NodeStanfordPerson" && <StanfordPerson node={node} {...props} />}
+      {node.__typename === "NodeStanfordPublication" && <StanfordPublication node={node} {...props} />}
+      {node.__typename === "NodeSulLibrary" && <SulLibrary node={node} {...props} />}
     </>
   )
 }
