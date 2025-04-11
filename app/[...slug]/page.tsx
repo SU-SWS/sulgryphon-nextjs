@@ -88,7 +88,7 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
                   <div className="lg:mt-40">
                     <h2
                       data-skip-heading="true"
-                      className="type-0 m-0 block px-10 py-2 font-sans font-semibold leading-[30px] text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black"
+                      className="type-0 m-0 block px-10 py-2 font-sans font-semibold text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black"
                     >
                       {entity.sulRelLinksHeading || "Related content"}
                     </h2>
@@ -98,7 +98,7 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
                           {link.url && (
                             <DrupalLink
                               href={link.url}
-                              className="type-0 block break-words px-10 py-2 font-sans font-normal leading-[30px] text-black no-underline hocus:bg-black-10 hocus:underline lg:p-0 lg:text-digital-blue lg:underline lg:hocus:bg-transparent"
+                              className="type-0 block break-words px-10 py-2 font-sans font-normal text-black no-underline hocus:bg-black-10 hocus:underline lg:p-0 lg:text-digital-blue lg:underline lg:hocus:bg-transparent"
                             >
                               {link.title}
                             </DrupalLink>

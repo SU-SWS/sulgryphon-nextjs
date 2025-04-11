@@ -42,23 +42,23 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
       <div className="flex flex-col items-start gap-xs">
         <div className="flex w-full flex-row items-center bg-black-true text-center uppercase text-white" aria-hidden>
           <div className="mx-auto flex flex-col items-center">
-            <div className="px-30 pt-10 text-24 font-semibold leading-[2.8rem]">{startMonth}</div>
-            <div className="px-30 pb-10 text-[4rem] leading-[5rem]">{startDay}</div>
+            <div className="px-30 pt-10 text-24 font-semibold leading-display">{startMonth}</div>
+            <div className="px-30 pb-10 text-[4rem] leading-display">{startDay}</div>
           </div>
 
           {(startMonth !== endMonth || startDay !== endDay) && (
             <>
               <div className="font-bold">&mdash;</div>
               <div className="mx-auto">
-                <div className="px-30 pt-10 text-24 font-semibold leading-[2.8rem]">{endMonth}</div>
-                <div className="px-30 pb-10 text-[4rem] leading-[5rem]">{endDay}</div>
+                <div className="px-30 pt-10 text-24 font-semibold leading-display">{endMonth}</div>
+                <div className="px-30 pb-10 text-[4rem] leading-display">{endDay}</div>
               </div>
             </>
           )}
         </div>
 
         <div className="flex flex-col gap-[.5rem]">
-          <HeadingElement className="order-2 text-24 font-bold leading-[3rem] tracking-[-0.2px]">
+          <HeadingElement className="order-2 text-24 font-bold tracking-[-0.2px]">
             <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
               {node.title}
             </Link>

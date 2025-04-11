@@ -33,7 +33,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
     <article {...props} className="centered mt-50">
       <StanfordNewsMetadata node={node} />
       <div className="centered mb-100 2xl:w-2/3">
-        {node.suNewsDek && <p className="rs-mb-1 text-22 leading-[2.75rem]">{node.suNewsDek}</p>}
+        {node.suNewsDek && <p className="rs-mb-1 text-22 leading">{node.suNewsDek}</p>}
         <div className="md:flex">
           <div className="flex md:order-last">
             {!node.suNewsHideSocial && (

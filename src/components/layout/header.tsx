@@ -47,7 +47,7 @@ const Header = async () => {
                 <li>
                   <Link
                     href="https://give.stanford.edu/?kwoDCPreselect=KDC-29V9KK0&olc=10734"
-                    className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-18 font-normal leading-[1.5] text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
+                    className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-18 font-normal leading text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
                   >
                     Donate now
                   </Link>

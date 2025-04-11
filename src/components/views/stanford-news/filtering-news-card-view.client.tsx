@@ -93,7 +93,7 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
           <legend className="sr-only">Filter news</legend>
           <div className="mb-50 flex w-full flex-col flex-wrap items-end justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
             <div className="relative w-full md:w-[435px]">
-              <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
+              <label className="pl-15 text-18 font-semibold leading-display" htmlFor={id}>
                 Search by title
               </label>
 
