@@ -28,15 +28,14 @@ export const SulHomeBannerFormClient = () => {
   const [formAction, setFormAction] = useState("/all")
   const inputId = useId()
 
-  const handleSearchOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
-    setFormAction(value)
-
-    // Send GA event
+  // Google Analytics: Track the selected search option when the user submits the form.
+  // Helps measure actual search behavior by logging which resource option was used.
+  const handleSubmit = () => {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "search_option_selected", {
         event_category: "Search",
-        event_label: value,
+        event_label: formAction,
+        interaction_type: "submit",
       })
     }
   }
@@ -44,6 +43,7 @@ export const SulHomeBannerFormClient = () => {
   return (
     <form
       action={formAction}
+      onSubmit={handleSubmit}
       className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24 xs:flex-nowrap"
     >
       <div className="flex w-full items-center overflow-hidden xs:w-fit">
@@ -67,7 +67,7 @@ export const SulHomeBannerFormClient = () => {
         <select
           id={`${inputId}-action`}
           className="h-40 w-full border-0 bg-none text-16 font-semibold leading-normal hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
-          onChange={handleSearchOptionChange}
+          onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
           <option value="/all">All resources</option>
