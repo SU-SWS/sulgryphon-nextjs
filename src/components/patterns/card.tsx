@@ -86,7 +86,7 @@ const Card = ({
           </Heading>
         )}
 
-        {body && <div>{formatHtml(body)}</div>}
+        {body && <div className="last:[&_p]:mb-0">{formatHtml(body)}</div>}
 
         {footer && (
           <div className={twMerge("rs-pt-0 text-18 font-normal leading-display", footerClasses)}>{footer}</div>
