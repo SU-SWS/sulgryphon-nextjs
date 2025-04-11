@@ -27,6 +27,20 @@ export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
 export const SulHomeBannerFormClient = () => {
   const [formAction, setFormAction] = useState("/all")
   const inputId = useId()
+
+  const handleSearchOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    setFormAction(value)
+
+    // Send GA event
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "search_option_selected", {
+        event_category: "Search",
+        event_label: value,
+      })
+    }
+  }
+
   return (
     <form
       action={formAction}
@@ -53,7 +67,7 @@ export const SulHomeBannerFormClient = () => {
         <select
           id={`${inputId}-action`}
           className="h-40 w-full border-0 bg-none text-16 font-semibold leading-normal hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
-          onChange={e => setFormAction(e.target.value)}
+          onChange={handleSearchOptionChange}
           value={formAction}
         >
           <option value="/all">All resources</option>
