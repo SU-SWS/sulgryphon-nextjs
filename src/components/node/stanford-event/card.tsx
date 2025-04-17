@@ -58,28 +58,28 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         </div>
 
         <div className="flex flex-col gap-[.5rem]">
-          <HeadingElement className="order-2 text-24 font-bold tracking-[-0.2px]">
+          <HeadingElement className="order-2 text-18 font-bold tracking-[-0.2px] sm:text-20">
             <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
               {node.title}
             </Link>
           </HeadingElement>
 
           {node.suEventType?.[0]?.name && (
-            <div className="order-1 mr-5 inline font-semibold">{node.suEventType?.[0].name}</div>
+            <div className="order-1 mr-5 inline text-16 font-semibold sm:text-18">{node.suEventType?.[0].name}</div>
           )}
 
-          <div className="order-3 flex">
+          <div className="order-3 flex text-16 sm:text-18">
             <CalendarDaysIcon title="Date" width={20} className="mr-20 flex-shrink-0" />
             {start.toLocaleDateString("en-US", {timeZone: "America/Los_Angeles"})}
           </div>
 
-          <div className="order-4 flex">
+          <div className="order-4 flex text-16 sm:text-18">
             <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
             <div>{dateTimeString}</div>
           </div>
 
           {node.suEventMapLink?.url && (
-            <div className="order-5 flex">
+            <div className="order-5 flex text-16 sm:text-18">
               <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
               <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>{node.suEventMapLink?.title}</Link>
             </div>

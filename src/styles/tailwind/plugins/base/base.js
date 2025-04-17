@@ -29,13 +29,19 @@ module.exports = function () {
         },
       },
       'h3': {
-        fontSize: '2.4rem',
+        fontSize: '2.6rem',
+        '@screen sm': {
+          fontSize: '2.8rem',
+        },
         '@screen lg': {
           fontSize: '3.2rem',
         },
       },
       'h4': {
-        fontSize: '2rem',
+        fontSize: '2.2rem',
+        '@screen sm': {
+          fontSize: '2.4rem',
+        },
       },
       'h5': {
         fontSize: '2.4rem',
