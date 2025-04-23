@@ -2117,6 +2117,8 @@ export type ParagraphStanfordCard = LayoutParagraphsInterface & ParagraphInterfa
   suCardSuperHeader?: Maybe<Scalars['String']['output']>;
   /** Text that will overlay the bottom of the image. */
   sulCardImageCaption?: Maybe<Scalars['String']['output']>;
+  /** HTML Superhead */
+  sulCardSuperHead?: Maybe<Text>;
 };
 
 /** The main graphical element in the card. See: /patterns/card */
