@@ -6,7 +6,6 @@ import {ElementType, HTMLAttributes, useRef} from "react"
 import Link from "@/components/patterns/elements/drupal-link"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
-import {l} from "node_modules/next-drupal/dist/next-drupal-base-PvsTIUjS"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
@@ -103,7 +102,7 @@ const HorizontalCard = ({
                 )}
               </div>
             </div>
-            <div className="m-0 lg:rs-ml-2">
+            <div className="m-0 @6xl:rs-ml-2">
               {body && <div className={twMerge("[&_p]:text-20", linkColor)}>{formatHtml(body)}</div>}
 
               {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
