@@ -88,7 +88,7 @@ const HorizontalCard = ({
           )}
 
           <div>
-            <div className="mb-16 flex flex-row flex-wrap items-center gap-16">
+            <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @6xl:flex-nowrap">
               <Image src="/card-rosette.png" alt="" className="object-contain" height={80} width={80} />
               <div>
                 {superHeader && (
@@ -96,7 +96,10 @@ const HorizontalCard = ({
                 )}
 
                 {header && (
-                  <Heading id={headerId} className={twMerge("mb-0", headingTypography, hideHeading && "sr-only")}>
+                  <Heading
+                    id={headerId}
+                    className={twMerge("word-break mb-0", headingTypography, hideHeading && "sr-only")}
+                  >
                     {header}
                   </Heading>
                 )}
