@@ -88,7 +88,7 @@ const HorizontalCard = ({
           )}
 
           <div>
-            <div className="mb-16 flex flex-row items-center gap-16">
+            <div className="mb-16 flex flex-row flex-wrap items-center gap-16">
               <Image src="/card-rosette.png" alt="" className="object-contain" height={80} width={80} />
               <div>
                 {superHeader && (
