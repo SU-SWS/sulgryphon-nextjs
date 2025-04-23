@@ -71,8 +71,8 @@ const HorizontalCard = ({
 
   return (
     <div {...props} ref={ref} className={twMerge("relative", bgColor, props.className)}>
-      <div className="rs-py-3 rs-px-5 relative m-0 w-full leading-display @container @6xl:rs-py-5 lg:rs-px-7 2xl:centered">
-        <div className="grid items-center gap-2xl @6xl:grid-cols-2 md:gap-[8.8rem]">
+      <div className="rs-p-5 relative w-full leading-display @container @6xl:centered lg:px-80">
+        <div className="grid items-center gap-2xl @6xl:grid-cols-2 @10xl:gap-[8.8rem]">
           {(image || video) && (
             <div className="relative h-fit w-full">
               <div className="relative aspect-[4/3] w-full overflow-hidden">
@@ -102,7 +102,7 @@ const HorizontalCard = ({
                 )}
               </div>
             </div>
-            <div className="m-0 @6xl:rs-ml-2">
+            <div className="m-0 @10xl:rs-ml-2">
               {body && <div className={twMerge("[&_p]:text-20", linkColor)}>{formatHtml(body)}</div>}
 
               {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
