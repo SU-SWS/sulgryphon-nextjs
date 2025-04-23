@@ -35,7 +35,7 @@ const Paragraph = ({paragraph, ...props}: ParagraphProps) => {
   )
 }
 
-const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ...props}: ParagraphProps) => {
+const ParagraphComponent = ({paragraph, fullWidth = false, ...props}: ParagraphProps) => {
   const headerId = useId()
 
   const paragraphBehaviors = getParagraphBehaviors(paragraph)
@@ -45,20 +45,18 @@ const ParagraphComponent = ({paragraph, singleRow = false, fullWidth = false, ..
       {paragraph.__typename === "ParagraphStanfordCard" && (
         <StanfordCard
           header={paragraph.suCardHeader}
-          superHeader={paragraph.suCardSuperHeader}
+          superHeader={paragraph.sulCardSuperHead?.processed}
           body={paragraph.suCardBody?.processed}
           link={paragraph.suCardLink}
           linkStyle={paragraphBehaviors?.sul_card_styles?.link_display_style}
-          sprinklePosition={paragraphBehaviors?.sul_card_styles?.background_sprinkles}
+          cardBgColor={paragraphBehaviors?.sul_card_styles?.background_color}
           image={paragraph.suCardMedia?.__typename === "MediaImage" ? paragraph.suCardMedia : undefined}
           caption={paragraph.sulCardImageCaption}
           videoUrl={
             paragraph.suCardMedia?.__typename === "MediaVideo" ? paragraph.suCardMedia.mediaOembedVideo : undefined
           }
           orientation={paragraphBehaviors?.sul_card_styles?.orientation}
-          singleRow={singleRow}
           headerId={headerId}
-          fullWidth={fullWidth}
           headingTag={(paragraphBehaviors.su_card_styles?.heading?.replace(/\..*/, "") || "h2") as ElementType}
           hideHeading={paragraphBehaviors.su_card_styles?.hide_heading}
           {...props}

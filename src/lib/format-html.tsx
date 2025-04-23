@@ -5,6 +5,7 @@ import {
   DrupalLinkBigButton,
   DrupalLinkButton,
   DrupalLinkSecondaryButton,
+  DrupalLocationLink,
 } from "@/components/patterns/link"
 import Oembed from "@/components/patterns/elements/oembed"
 import {twMerge} from "tailwind-merge"
@@ -55,6 +56,14 @@ const options: HTMLReactParserOptions = {
               <DrupalActionLink href={nodeProps.href} {...nodeProps}>
                 {domToReact(domNode.children as DOMNode[], options)}
               </DrupalActionLink>
+            )
+          }
+
+          if (nodeProps.className?.includes("link--location")) {
+            return (
+              <DrupalLocationLink href={nodeProps.href} {...nodeProps}>
+                {domToReact(domNode.children as DOMNode[], options)}
+              </DrupalLocationLink>
             )
           }
 
