@@ -43,7 +43,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
             href={node.path || "#"}
             className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
           >
-            <HeadingElement className="type-0 font-serif @lg:type-1">{node.title}</HeadingElement>
+            <HeadingElement className="mb-03em text-24 font-bold leading-[3rem]">{node.title}</HeadingElement>
           </Link>
           <div className="flex flex-col gap-[1.2rem]">
             {node.suPersonFullTitle && <div className="text-18 @lg:type-0">{node.suPersonFullTitle}</div>}

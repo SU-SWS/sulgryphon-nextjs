@@ -70,15 +70,24 @@ export const DrupalLinkBigButton = ({
 export const DrupalActionLink = ({
   href,
   children,
+  title,
   ...props
 }: HTMLAttributes<HTMLAnchorElement> & {
   href: string
   className?: string
 }) => {
+  // Don't include title if title is part of the display text
+  const shouldIncludeTitle =
+    title &&
+    !(
+      typeof children === "string" &&
+      (children.toLowerCase().includes(title.toLowerCase()) || title.toLowerCase().includes(children.toLowerCase()))
+    )
   return (
     <Link
-      href={href}
       {...props}
+      href={href}
+      title={shouldIncludeTitle ? title : undefined}
       className={twMerge(
         "hocus:su-dark-brick rs-mt-neg1 relative pr-30 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
         props.className
