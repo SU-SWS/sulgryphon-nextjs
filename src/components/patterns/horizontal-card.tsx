@@ -7,6 +7,7 @@ import {ElementType, HTMLAttributes, useRef} from "react"
 import FullScreenBackground from "@/components/patterns/full-screen-background"
 import Link from "@/components/patterns/elements/drupal-link"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {twMerge} from "tailwind-merge"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
@@ -75,10 +76,10 @@ const HorizontalCard = ({
           )}
 
           <div className="">
-            {superHeader && <span className="type-0 mb-0 font-bold leading-display underline">{superHeader}</span>}
+            {superHeader && <span className="mb-0 text-20 font-bold leading-display underline">{superHeader}</span>}
 
             {header && (
-              <Heading id={headerId} className={hideHeading && "sr-only"}>
+              <Heading id={headerId} className={twMerge("lg:text-32 text-26 md:text-28", hideHeading && "sr-only")}>
                 {header}
               </Heading>
             )}
