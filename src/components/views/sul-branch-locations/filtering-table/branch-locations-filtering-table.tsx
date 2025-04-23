@@ -221,11 +221,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   })
 
   return (
-<<<<<<< HEAD
-    <div ref={containerRef} className="relative flex text-16 leading-cozy md:flex lg:block">
-=======
     <div ref={containerRef} className="relative flex text-20 leading-normal md:flex lg:block">
->>>>>>> 1.x
       {isOpen && (
         <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
           Open
