@@ -11,7 +11,7 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
   caption?: Maybe<string>
-  cardBgColor?: "fog_light" | "cardinal_red" // @TODO TBD BASED ON BACKEND
+  cardBgColor?: "fog_light" | "cardinal_red"
   superHeader?: Maybe<string>
   header?: Maybe<string>
   footer?: Maybe<ReactNodeLike>
