@@ -40,16 +40,6 @@ const HorizontalCard = ({
   const ref = useRef(null)
   const Heading: ElementType = headingLevel || "h2"
 
-  let headingTypography = "text-32 m,d:text-36 lg:text-40"
-  switch (headingLevel) {
-    case "h3":
-      headingTypography = "text-26 md:text-28 lg:text-32"
-      break
-    case "h4":
-      headingTypography = "text-20"
-      break
-  }
-
   const linkAttributes: Record<string, string> = {}
   if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
 
@@ -98,7 +88,7 @@ const HorizontalCard = ({
                 {header && (
                   <Heading
                     id={headerId}
-                    className={twMerge("word-break mb-0", headingTypography, hideHeading && "sr-only")}
+                    className={twMerge("word-break lg:text-32 mb-0 text-26 md:text-28", hideHeading && "sr-only")}
                   >
                     {header}
                   </Heading>
