@@ -209,7 +209,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   scope="row"
                   className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
-                  <div className="pt-0 text-16 font-normal leading-cozy">
+                  <div className="pt-0 text-16 font-normal leading-display">
                     <span className="mb-[0px] font-sans text-20 font-semibold">
                       {[item.donorName, item.studyType].filter(item => !!item).join(" ")}
                     </span>
