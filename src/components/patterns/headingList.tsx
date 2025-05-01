@@ -100,7 +100,7 @@ const HeadingList = () => {
             <a
               href={`#${heading.id}`}
               className={twMerge(
-                "type-0 block break-words px-10 py-2 font-sans font-normal leading-[30px] text-black no-underline hocus:bg-black-10 hocus:underline lg:border-l-4 lg:p-0 lg:pl-16 lg:hocus:bg-transparent",
+                "type-0 block break-words px-10 py-2 font-sans font-normal leading text-black no-underline hocus:bg-black-10 hocus:underline lg:border-l-4 lg:p-0 lg:pl-16 lg:hocus:bg-transparent",
                 activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
               )}
             >
