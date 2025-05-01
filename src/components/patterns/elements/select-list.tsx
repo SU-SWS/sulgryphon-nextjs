@@ -139,7 +139,8 @@ const SelectList = ({options, label, multiple, ariaLabelledby, emptyLabel, ...pr
       <button
         {...getButtonProps()}
         className={
-          "w-full border border-black-40 px-5 py-9 pl-15 text-left " + (optionChosen ? "rounded-3xl" : " rounded-full")
+          "w-full border border-black-40 px-5 py-9 pl-15 text-left leading-tight " +
+          (optionChosen ? "rounded-3xl" : " rounded-full")
         }
         aria-labelledby={labeledBy}
       >
