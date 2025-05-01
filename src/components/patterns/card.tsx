@@ -61,7 +61,7 @@ const Card = ({
     >
       {image && (
         <div className="relative h-fit w-full">
-          <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
+          <div className="relative aspect-[16/9]" aria-hidden="true">
             {image}
           </div>
           {caption && (
