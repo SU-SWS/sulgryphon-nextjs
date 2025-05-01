@@ -66,7 +66,7 @@ const HorizontalCard = ({
         </FullScreenBackground>
       )}
 
-      <div className="centered relative mt-[77px] pb-[7.2rem] pt-[5.8rem] leading-display text-white @container @6xl:mt-0 lg:px-80">
+      <div className="basefont-20 centered relative mt-[77px] pb-[7.2rem] pt-[5.8rem] leading-display text-white @container @6xl:mt-0 lg:px-80">
         <div className="grid items-center gap-2xl @6xl:grid-cols-2">
           {(image || video) && (
             <div className="relative mt-[-135px] aspect-[16/9] w-full overflow-hidden @6xl:mt-0">
@@ -76,15 +76,15 @@ const HorizontalCard = ({
           )}
 
           <div className="">
-            {superHeader && <span className="mb-0 text-20 font-bold leading-display underline">{superHeader}</span>}
+            {superHeader && <span className="type-0 mb-0 font-bold leading-display underline">{superHeader}</span>}
 
             {header && (
-              <Heading id={headerId} className={twMerge("lg:text-32 text-26 md:text-28", hideHeading && "sr-only")}>
+              <Heading id={headerId} className={twMerge("type-4", hideHeading && "sr-only")}>
                 {header}
               </Heading>
             )}
 
-            {body && <div className="[&_p]:text-20">{formatHtml(body)}</div>}
+            {body && <div>{formatHtml(body)}</div>}
 
             {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
 
