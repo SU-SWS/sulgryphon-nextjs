@@ -28,7 +28,7 @@ export type ParagraphBehaviors = {
     hide_heading?: boolean
   }
   sul_card_styles?: {
-    background_sprinkles?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
+    background_color?: "fog_light" | "cardinal_red"
     orientation?: string
     link_display_style?: string
   }
