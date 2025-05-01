@@ -77,54 +77,56 @@ const HorizontalCard = ({
               )}
             </div>
           )}
-          <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @6xl:flex-nowrap">
-            <Image src="/card-rosette.png" alt="" className="object-contain" height={80} width={80} />
-            <div>
-              {superHeader && (
-                <span className="mb-0 text-20 font-semibold uppercase leading-display">{superHeader}</span>
+          <div>
+            <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @6xl:flex-nowrap">
+              <Image src="/card-rosette.png" alt="" className="object-contain" height={80} width={80} />
+              <div>
+                {superHeader && (
+                  <span className="mb-0 text-20 font-semibold uppercase leading-display">{superHeader}</span>
+                )}
+
+                {header && (
+                  <Heading
+                    id={headerId}
+                    className={twMerge("word-break lg:text-32 mb-0 text-26 md:text-28", hideHeading && "sr-only")}
+                  >
+                    {header}
+                  </Heading>
+                )}
+              </div>
+            </div>
+            <div className="m-0 @10xl:rs-ml-2">
+              {body && (
+                <div
+                  className={twMerge(
+                    "[&_p]:text-20",
+                    cardBgColor === "cardinal_red" && "[&_a]:text-white hocus:[&_a]:text-black-true"
+                  )}
+                >
+                  {formatHtml(body)}
+                </div>
               )}
 
-              {header && (
-                <Heading
-                  id={headerId}
-                  className={twMerge("word-break lg:text-32 mb-0 text-26 md:text-28", hideHeading && "sr-only")}
+              {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
+
+              {link?.url && (
+                <Link
+                  href={link.url}
+                  className={twMerge(
+                    "cta-button group mt-32 block w-fit rounded-full border-2 px-26 pb-11 pt-10 text-24 font-semibold leading-display no-underline transition-colors hocus:underline md:text-18",
+                    clsx({
+                      "border-white bg-white text-cardinal-red hocus:bg-black-true hocus:text-white":
+                        cardBgColor === "cardinal_red",
+                      "border-cardinal-red bg-cardinal-red text-white hocus:bg-black-true hocus:text-white":
+                        cardBgColor !== "cardinal_red",
+                    })
+                  )}
+                  {...linkAttributes}
                 >
-                  {header}
-                </Heading>
+                  {link.title}
+                </Link>
               )}
             </div>
-          </div>
-          <div className="m-0 @10xl:rs-ml-2">
-            {body && (
-              <div
-                className={twMerge(
-                  "[&_p]:text-20",
-                  cardBgColor === "cardinal_red" && "[&_a]:text-white hocus:[&_a]:text-black-true"
-                )}
-              >
-                {formatHtml(body)}
-              </div>
-            )}
-
-            {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
-
-            {link?.url && (
-              <Link
-                href={link.url}
-                className={twMerge(
-                  "cta-button group mt-32 block w-fit rounded-full border-2 px-26 pb-11 pt-10 text-24 font-semibold leading-display no-underline transition-colors hocus:underline md:text-18",
-                  clsx({
-                    "border-white bg-white text-cardinal-red hocus:bg-black-true hocus:text-white":
-                      cardBgColor === "cardinal_red",
-                    "border-cardinal-red bg-cardinal-red text-white hocus:bg-black-true hocus:text-white":
-                      cardBgColor !== "cardinal_red",
-                  })
-                )}
-                {...linkAttributes}
-              >
-                {link.title}
-              </Link>
-            )}
           </div>
         </div>
       </div>
