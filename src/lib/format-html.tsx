@@ -84,6 +84,7 @@ const options: HTMLReactParserOptions = {
           nodeProps.className = twMerge(
             nodeProps.className,
             "table mb-20",
+            nodeProps.className.includes("center") && "*:mx-auto",
             !nodeProps.className.includes("float") && "w-full"
           )
           delete nodeProps.role
