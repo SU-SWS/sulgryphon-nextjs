@@ -209,7 +209,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   scope="row"
                   className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
-                  <div className="pt-0 text-16 font-normal leading-[23px]">
+                  <div className="pt-0 text-16 font-normal leading-cozy">
                     <span className="mb-[0px] font-sans text-20 font-semibold">
                       {[item.donorName, item.studyType].filter(item => !!item).join(" ")}
                     </span>
@@ -220,14 +220,14 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
                     href={item.branchPath || "#"}
-                    className="mb-16 block w-fit text-16 font-normal leading-[23px] underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
+                    className="mb-16 block w-fit text-16 font-normal leading-cozy underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
                   >
                     <div>{item.branchTitle}</div>
                   </Link>
                 </Td>
                 <Td className="justify-left flex w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   {item.libHours && (
-                    <div className="pb-16 text-16 leading-[23px] lg:pb-0">
+                    <div className="pb-16 text-16 leading-cozy lg:pb-0">
                       {(item.hoursId || item.libHours) && <BranchHours hoursId={item.hoursId || item.libHours} />}
                     </div>
                   )}
@@ -236,7 +236,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 </Td>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-2/5 lg:pr-32">
                   {item.features && (
-                    <div className="mb-16 bg-black-10 px-16 py-12 text-16 leading-[23px] lg:mb-0 lg:bg-transparent lg:px-0">
+                    <div className="mb-16 bg-black-10 px-16 py-12 text-16 leading-cozy lg:mb-0 lg:bg-transparent lg:px-0">
                       <span className="bg-black-10 font-bold lg:hidden">Features: </span>
                       {item.features.join(", ")}
                     </div>
@@ -245,7 +245,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-[22px] text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
+                      className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-snug text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
@@ -258,7 +258,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {!item.libCalId && <p className="m-0 mb-16 text-16 text-cardinal-red">Reservation not required</p>}
 
                   {item.additionalInfo && (
-                    <div className="mb-16 py-12 text-16 leading-[23px] lg:bg-transparent lg:p-0">
+                    <div className="mb-16 py-12 text-16 leading-cozy lg:bg-transparent lg:p-0">
                       {formatHtml(item.additionalInfo.processed)}
                     </div>
                   )}
@@ -316,7 +316,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   })
 
   return (
-    <div ref={containerRef} className="relative flex text-16 leading-[23px] lg:block">
+    <div ref={containerRef} className="relative flex text-16 leading-cozy lg:block">
       {isOpen && (
         <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
           Open
