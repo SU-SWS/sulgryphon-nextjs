@@ -31,18 +31,20 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
       )}
 
       <div className="flex flex-col">
-        <HeadingElement className="type-0 mb-0 leading-cozy">
+        <HeadingElement className="mb-0 text-18 font-bold sm:text-20">
           <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
             {node.title}
           </Link>
         </HeadingElement>
 
         {node.suNewsTopics?.[0]?.name && (
-          <div className="order-first mb-0 font-semibold">{node.suNewsTopics[0].name}</div>
+          <div className="order-first mb-0 text-16 font-semibold sm:text-18">{node.suNewsTopics[0].name}</div>
         )}
       </div>
 
-      {node.suNewsPublishingDate && <div>{formatDate(node.suNewsPublishingDate.time)}</div>}
+      {node.suNewsPublishingDate && (
+        <div className="text-16 sm:text-18">{formatDate(node.suNewsPublishingDate.time)}</div>
+      )}
     </article>
   )
 }

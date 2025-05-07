@@ -1,5 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link"
-import {ChevronRightIcon} from "@heroicons/react/20/solid"
+import {ChevronRightIcon, MapPinIcon} from "@heroicons/react/20/solid"
 import {HTMLAttributes, JSX} from "react"
 import {twJoin, twMerge} from "tailwind-merge"
 import {Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
@@ -70,15 +70,24 @@ export const DrupalLinkBigButton = ({
 export const DrupalActionLink = ({
   href,
   children,
+  title,
   ...props
 }: HTMLAttributes<HTMLAnchorElement> & {
   href: string
   className?: string
 }) => {
+  // Don't include title if title is part of the display text
+  const shouldIncludeTitle =
+    title &&
+    !(
+      typeof children === "string" &&
+      (children.toLowerCase().includes(title.toLowerCase()) || title.toLowerCase().includes(children.toLowerCase()))
+    )
   return (
     <Link
-      href={href}
       {...props}
+      href={href}
+      title={shouldIncludeTitle ? title : undefined}
       className={twMerge(
         "hocus:su-dark-brick rs-mt-neg1 relative pr-30 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
         props.className
@@ -86,6 +95,38 @@ export const DrupalActionLink = ({
     >
       {children}
       <ChevronRightIcon className="absolute right-0 top-0 inline h-full" />
+    </Link>
+  )
+}
+
+export const DrupalLocationLink = ({
+  href,
+  children,
+  title,
+  ...props
+}: HTMLAttributes<HTMLAnchorElement> & {
+  href: string
+  className?: string
+}) => {
+  // Don't include title if title is part of the display text
+  const shouldIncludeTitle =
+    title &&
+    !(
+      typeof children === "string" &&
+      (children.toLowerCase().includes(title.toLowerCase()) || title.toLowerCase().includes(children.toLowerCase()))
+    )
+  return (
+    <Link
+      {...props}
+      href={href}
+      title={shouldIncludeTitle ? title : undefined}
+      className={twMerge(
+        "hocus:su-dark-brick relative underline active:text-cardinal-red hocus:bg-black-10",
+        props.className
+      )}
+    >
+      <MapPinIcon title="Location" width={20} className="my-auto mr-10 inline-block h-fit" />
+      {children}
     </Link>
   )
 }

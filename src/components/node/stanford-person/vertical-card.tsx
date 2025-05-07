@@ -18,7 +18,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
 
   return (
     <article
-      className="rs-pt-2 rs-px-2 rs-pb-3 basefont-20 mt-70 w-full border-x border-b border-t-5 border-solid border-black-10 border-t-digital-red bg-white leading-display text-black shadow-md @container"
+      className="rs-pt-2 rs-px-2 rs-pb-3 mt-70 w-full border-x border-b border-t-5 border-solid border-black-10 border-t-digital-red bg-white leading-display text-black shadow-md @container"
       {...props}
     >
       {imageUrl && (
@@ -43,7 +43,7 @@ const VerticalPersonCard = ({node, h3Heading, ...props}: Props) => {
             href={node.path || "#"}
             className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
           >
-            <HeadingElement className="type-0 font-serif @lg:type-1">{node.title}</HeadingElement>
+            <HeadingElement className="mb-03em text-24 font-bold">{node.title}</HeadingElement>
           </Link>
           <div className="flex flex-col gap-[1.2rem]">
             {node.suPersonFullTitle && <div className="text-18 @lg:type-0">{node.suPersonFullTitle}</div>}

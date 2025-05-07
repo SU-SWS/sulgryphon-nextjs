@@ -60,7 +60,7 @@ const SulPeopleTableView = ({items}: Props) => {
         action="javascript:void(0);"
       >
         <div className="relative w-full md:w-[435px]">
-          <label className="pl-15 text-18 font-semibold leading-[23px]" htmlFor={id}>
+          <label className="pl-15 text-18 font-semibold leading-display" htmlFor={id}>
             Search by name, title, or subject
           </label>
 
@@ -179,12 +179,12 @@ const SulPeopleTableView = ({items}: Props) => {
                     </Link>
                   )}
                   {item.fullTitle && (
-                    <div className="pb-16 text-16 font-normal leading-[23px] lg:pb-0">{item.fullTitle}</div>
+                    <div className="pb-16 text-16 font-normal leading-cozy lg:pb-0">{item.fullTitle}</div>
                   )}
                 </Th>
                 <Td className="min-w-1/5 block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5 lg:pr-72">
                   {!!item.researchAreas?.length && (
-                    <div className="mb-16 bg-black-10 px-1em py-1em text-16 leading-[23px] md:bg-transparent md:p-0 lg:mb-0">
+                    <div className="mb-16 bg-black-10 px-1em py-1em text-16 leading-cozy md:bg-transparent md:p-0 lg:mb-0">
                       <span className="font-bold md:hidden">Expertise: </span>
                       {item.researchAreas.join(", ")}
                     </div>
@@ -196,7 +196,7 @@ const SulPeopleTableView = ({items}: Props) => {
                       <Link
                         href={`mailto:${item.email}`}
                         prefetch={false}
-                        className="whitespace-nowrap text-16 font-normal leading-[23px] text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                        className="whitespace-nowrap text-16 font-normal leading-cozy text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                       >
                         <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block" />
                         {item.email}

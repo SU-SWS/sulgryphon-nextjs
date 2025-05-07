@@ -10,7 +10,7 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: Props) => {
   const HeadingElement = h3Heading ? "h3" : "h2"
   return (
     <article
-      className="rs-pt-2 rs-px-2 rs-pb-3 basefont-20 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md"
+      className="rs-pt-2 rs-px-2 rs-pb-3 block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md"
       {...props}
     >
       <div className="rs-pb-0">
@@ -30,7 +30,7 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: Props) => {
         href={node.path || "#"}
         className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
       >
-        <HeadingElement className="type-1">{node.title}</HeadingElement>
+        <HeadingElement className="text-24 font-bold">{node.title}</HeadingElement>
       </Link>
     </article>
   )

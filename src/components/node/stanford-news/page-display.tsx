@@ -33,7 +33,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
     <article {...props} className="centered mt-50">
       <StanfordNewsMetadata node={node} />
       <div className="centered mb-100 2xl:w-2/3">
-        {node.suNewsDek && <div className="rs-mb-1">{node.suNewsDek}</div>}
+        {node.suNewsDek && <p className="rs-mb-1 text-22 leading">{node.suNewsDek}</p>}
         <div className="md:flex">
           <div className="flex md:order-last">
             {!node.suNewsHideSocial && (
@@ -97,7 +97,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
           {node.suNewsBannerMediaCaption && (
-            <figcaption className="table-caption caption-bottom text-center">
+            <figcaption className="table-caption caption-bottom text-center text-16 font-normal">
               {node.suNewsBannerMediaCaption}
             </figcaption>
           )}
@@ -110,7 +110,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
             <Oembed url={node.suNewsBanner.mediaOembedVideo} />
           </span>
           {node.suNewsBannerMediaCaption && (
-            <figcaption className="table-caption caption-bottom text-center">
+            <figcaption className="table-caption caption-bottom text-center text-16 font-normal">
               {node.suNewsBannerMediaCaption}
             </figcaption>
           )}

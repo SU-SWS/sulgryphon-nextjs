@@ -5,6 +5,7 @@ import {
   DrupalLinkBigButton,
   DrupalLinkButton,
   DrupalLinkSecondaryButton,
+  DrupalLocationLink,
 } from "@/components/patterns/link"
 import Oembed from "@/components/patterns/elements/oembed"
 import {twMerge} from "tailwind-merge"
@@ -58,6 +59,14 @@ const options: HTMLReactParserOptions = {
             )
           }
 
+          if (nodeProps.className?.includes("link--location")) {
+            return (
+              <DrupalLocationLink href={nodeProps.href} {...nodeProps}>
+                {domToReact(domNode.children as DOMNode[], options)}
+              </DrupalLocationLink>
+            )
+          }
+
           nodeProps.className = twMerge(
             "hocus:underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red",
             nodeProps.className
@@ -75,12 +84,13 @@ const options: HTMLReactParserOptions = {
           nodeProps.className = twMerge(
             nodeProps.className,
             "table mb-20",
+            nodeProps.className.includes("center") && "*:mx-auto",
             !nodeProps.className.includes("float") && "w-full"
           )
           delete nodeProps.role
           return <figure {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</figure>
         case "figcaption":
-          nodeProps.className += " table-caption caption-bottom text-center leading text-19"
+          nodeProps.className += " table-caption caption-bottom text-center text-16 font-normal"
           return (
             <figcaption {...nodeProps} style={{captionSide: "bottom"}}>
               {domToReact(domNode.children as DOMNode[], options)}
@@ -100,7 +110,9 @@ const options: HTMLReactParserOptions = {
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
         case "p":
-          nodeProps.className += " max-w-[100ch]"
+          nodeProps.className += " max-w-[100ch] text-16 sm:text-18 [&_li]:text-16 [&_li]:sm:text-18"
+        case "li":
+          nodeProps.className += " text-16 sm:text-18"
         case "h1":
         case "h2":
         case "h3":
@@ -111,7 +123,6 @@ const options: HTMLReactParserOptions = {
         case "td":
         case "ul":
         case "ol":
-        case "li":
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
       }
     }

@@ -83,9 +83,9 @@ const LibrariesTodayHours = ({
       }
       footerClasses="p-0"
       footer={
-        <div className="basefont-20 relative">
+        <div className="relative">
           <div className="mb-16 flex flex-col items-start justify-between xl:flex-row xl:items-center">
-            <h2 id={formId} className="type-1 mb-03em font-serif font-bold leading-tight text-black">
+            <h2 id={formId} className="mb-03em text-24 font-bold">
               Library hours
             </h2>
             <a href="https://library-hours.stanford.edu/libraries">See all hours</a>

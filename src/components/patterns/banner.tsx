@@ -30,14 +30,14 @@ const Banner = ({
   const hasCardText = header || superHeader || body || link
 
   return (
-    <div className="hero basefont-20 relative mx-auto h-full w-full lg:max-h-500" {...props}>
+    <div className="hero relative mx-auto h-full w-full lg:max-h-500" {...props}>
       <div className="relative max-h-500 min-h-[30rem] w-full overflow-hidden bg-[grey] lg:min-h-[50rem]">{image}</div>
 
       {hasCardText && (
         <div
           className={`mx-auto block lg:absolute lg:bottom-36 lg:top-auto ${overlayPosition === "right" ? "lg:right-36" : "lg:left-36"}`}
         >
-          <div className="card basefont-20 relative border border-solid border-black-10 bg-white leading-display text-black shadow lg:max-w-[50%]">
+          <div className="card relative border border-solid border-black-10 bg-white leading-display text-black shadow lg:max-w-[50%]">
             <Card
               header={header}
               superHeader={superHeader}

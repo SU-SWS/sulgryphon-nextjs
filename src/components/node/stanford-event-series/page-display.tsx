@@ -6,7 +6,7 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
   return (
     <article {...props}>
       {node.suEventSeriesSubheadline && <h2 className="rs-mb-1 type-3">{node.suEventSeriesSubheadline}</h2>}
-      {node.suEventSeriesDek && <div className="rs-mb-4 text-16 md:text-21">{node.suEventSeriesDek}</div>}
+      {node.suEventSeriesDek && <div className="rs-mb-4 text-22 leading">{node.suEventSeriesDek}</div>}
 
       {node.suEventSeriesComponents && (
         <>

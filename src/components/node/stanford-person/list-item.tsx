@@ -8,10 +8,7 @@ const StanfordPersonListItem = ({node, ...props}: {node: NodeStanfordPerson}) =>
   const imageUrl = node.suPersonPhoto?.mediaImage.url
 
   return (
-    <article
-      className="basefont-20 flex w-full flex-col gap-lg bg-white leading-display text-black @container"
-      {...props}
-    >
+    <article className="flex w-full flex-col gap-lg bg-white leading-display text-black @container" {...props}>
       {imageUrl && (
         <div className="relative mx-auto aspect-[1/1] w-[130px] overflow-hidden rounded-full @lg:w-[215px]">
           <Image
