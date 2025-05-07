@@ -136,6 +136,9 @@ fragment FragmentParagraphStanfordCard on ParagraphStanfordCard {
         ...FragmentMediaUnion
     }
     sulCardImageCaption
+    sulCardSuperHead {
+        ... FragmentText
+    }
 }
 
 fragment FragmentParagraphStanfordEntity on ParagraphStanfordEntity {

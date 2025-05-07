@@ -14,14 +14,12 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   body?: Maybe<string>
   link?: Maybe<LinkType>
   linkStyle?: Maybe<string>
-  sprinklePosition?: "top_right" | "top_left" | "bottom_right" | "bottom_left"
+  cardBgColor?: "fog_light" | "cardinal_red"
   image?: Maybe<MediaImage>
   caption?: Maybe<string>
   videoUrl?: Maybe<string>
   orientation?: Maybe<string>
-  fullWidth?: Maybe<boolean>
   headerId?: string
-  singleRow?: Maybe<boolean>
   headingTag?: ElementType
   hideHeading?: boolean
 }
@@ -36,11 +34,9 @@ const StanfordCard = ({
   caption,
   videoUrl,
   linkStyle,
-  sprinklePosition,
+  cardBgColor,
   orientation,
   headingTag = "h2",
-  fullWidth = true,
-  singleRow = false,
   hideHeading,
   ...props
 }: Props) => {
@@ -76,12 +72,12 @@ const StanfordCard = ({
               />
             )
           }
+          caption={caption}
           header={header}
           superHeader={superHeader}
           body={body}
           link={link}
-          backgroundSprinkles={sprinklePosition}
-          fullWidth={singleRow && fullWidth}
+          cardBgColor={cardBgColor}
           headerId={headerId}
           headingLevel={headingTag}
           hideHeading={hideHeading}

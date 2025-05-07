@@ -62,7 +62,7 @@ const LibraryFooter = () => {
           </ul>
         </div>
         <div>
-          <h2 className="mb-24 text-24 leading-none">Who we are</h2>
+          <h2 className="mb-10 text-24">Who we are</h2>
           <ul className="list-unstyled">
             <li>
               <FooterLink href="/about-us">About us</FooterLink>
@@ -87,7 +87,7 @@ const LibraryFooter = () => {
           </ul>
         </div>
         <div>
-          <h2 className="mb-24 text-24">Administration</h2>
+          <h2 className="mb-10 text-24">Administration</h2>
           <ul className="list-unstyled">
             <li>
               <FooterLink href="/general-policies">General policies</FooterLink>
@@ -104,7 +104,7 @@ const LibraryFooter = () => {
           </ul>
         </div>
         <div>
-          <h2 className="mb-24 text-24">Search</h2>
+          <h2 className="mb-10 text-24">Search</h2>
           <ul className="list-unstyled">
             <li>
               <FooterLink href="https://searchworks.stanford.edu/">SearchWorks Catalog</FooterLink> |{" "}
