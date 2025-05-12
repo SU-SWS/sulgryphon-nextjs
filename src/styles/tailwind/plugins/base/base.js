@@ -50,6 +50,12 @@ module.exports = function () {
         fontSize: '2.4rem',
         fontWeight: 'semibold',
       },
+      'p, li': {
+        fontSize: '1.6rem',
+        '@screen sm': {
+          fontSize: '1.8rem',
+        },
+      }
     });
   };
 };
