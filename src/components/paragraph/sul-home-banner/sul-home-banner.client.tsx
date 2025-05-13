@@ -36,7 +36,7 @@ export const SulHomeBannerFormClient = () => {
     event.preventDefault()
 
     // @TODO: DELETE BEFORE MERGE
-    console.log("Form submission prevented. Firing GA event.")
+    console.log("Form submission prevented. Firing GA event:", formAction)
 
     sendGAEvent({
       event: "search_option_selected",
