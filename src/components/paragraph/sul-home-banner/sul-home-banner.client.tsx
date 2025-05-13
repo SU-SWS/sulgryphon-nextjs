@@ -35,6 +35,9 @@ export const SulHomeBannerFormClient = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
+    // @TODO: DELETE BEFORE MERGE
+    console.log("Form submission prevented. Firing GA event.")
+
     sendGAEvent({
       event: "search_option_selected",
       category: "Search",
@@ -43,6 +46,9 @@ export const SulHomeBannerFormClient = () => {
 
     // Delay to let GA event send before navigation
     setTimeout(() => {
+      // @TODO: DELETE BEFORE MERGE
+      console.log("Now submitting the form.")
+
       formRef.current?.submit()
     }, 300)
   }
