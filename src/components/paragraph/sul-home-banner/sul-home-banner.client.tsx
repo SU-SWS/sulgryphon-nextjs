@@ -2,6 +2,7 @@
 import {HTMLAttributes, useEffect, useId, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
+import {sendGAEvent} from "@next/third-parties/google"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]
@@ -31,13 +32,11 @@ export const SulHomeBannerFormClient = () => {
   // Google Analytics: Track the selected search option when the user submits the form.
   // Helps measure actual search behavior by logging which resource option was used.
   const handleSubmit = () => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "search_option_selected", {
-        event_category: "Search",
-        event_label: formAction,
-        interaction_type: "submit",
-      })
-    }
+    sendGAEvent({
+      event: "search_option_selected",
+      category: "Search",
+      label: formAction,
+    })
   }
 
   return (
