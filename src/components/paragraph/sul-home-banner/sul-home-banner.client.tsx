@@ -35,9 +35,6 @@ export const SulHomeBannerFormClient = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    // @TODO: DELETE BEFORE MERGE
-    console.log("Form submission prevented. Firing GA event:", formAction)
-
     sendGAEvent({
       event: "search_option_selected",
       category: "Search",
@@ -46,9 +43,6 @@ export const SulHomeBannerFormClient = () => {
 
     // Delay to let GA event send before navigation
     setTimeout(() => {
-      // @TODO: DELETE BEFORE MERGE
-      console.log("Now submitting the form.")
-
       formRef.current?.submit()
     }, 300)
   }
@@ -58,7 +52,6 @@ export const SulHomeBannerFormClient = () => {
       ref={formRef}
       action={formAction}
       onSubmit={handleSubmit}
-      method="GET"
       className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24 xs:flex-nowrap"
     >
       <div className="flex w-full items-center overflow-hidden xs:w-fit">
