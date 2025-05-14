@@ -13,6 +13,7 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   image?: Maybe<ReactNodeLike>
   caption?: Maybe<string>
   cardBgColor?: "fog_light" | "cardinal_red"
+  hasRosette?: Maybe<boolean>
   superHeader?: Maybe<string>
   header?: Maybe<string>
   footer?: Maybe<ReactNodeLike>
@@ -29,6 +30,7 @@ const HorizontalCard = ({
   image,
   caption,
   cardBgColor,
+  hasRosette,
   superHeader,
   header,
   footer,
@@ -62,7 +64,7 @@ const HorizontalCard = ({
         props.className
       )}
     >
-      <div className="rs-p-5 relative w-full leading-display @container @6xl:centered lg:px-80">
+      <div className="rs-px-5 relative w-full py-[5.6rem] leading-display @container @6xl:centered lg:px-80">
         <div className="grid items-center gap-2xl @6xl:grid-cols-2 @10xl:gap-[8.8rem]">
           {(image || video) && (
             <div className="relative h-fit w-full">
@@ -79,7 +81,7 @@ const HorizontalCard = ({
           )}
           <div>
             <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @6xl:flex-nowrap">
-              <Image src="/card-rosette.png" alt="" className="object-contain" height={80} width={80} />
+              {hasRosette && <Image src="/card-rosette.png" alt="" className="object-contain" height={64} width={64} />}
               <div>
                 {superHeader && (
                   <span className="mb-0 text-20 font-semibold uppercase leading-display">{superHeader}</span>

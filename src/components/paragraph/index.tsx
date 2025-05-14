@@ -50,6 +50,7 @@ const ParagraphComponent = ({paragraph, fullWidth = false, ...props}: ParagraphP
           link={paragraph.suCardLink}
           linkStyle={paragraphBehaviors?.sul_card_styles?.link_display_style}
           cardBgColor={paragraphBehaviors?.sul_card_styles?.background_color}
+          hasRosette={paragraphBehaviors?.sul_card_styles?.display_rosette}
           image={paragraph.suCardMedia?.__typename === "MediaImage" ? paragraph.suCardMedia : undefined}
           caption={paragraph.sulCardImageCaption}
           videoUrl={
