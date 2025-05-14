@@ -15,14 +15,21 @@ const LockupLogo = ({
     <>
       {logoUrl && (
         <picture>
-          <img src={logoUrl} alt={`${siteName} Logo`} className="h-auto max-h-[35px] max-w-[400px] object-contain" />
+          <img
+            src={logoUrl}
+            alt={`${siteName} Logo`}
+            className="h-auto max-h-[35px] max-w-[12rem] object-contain xl:max-w-400"
+          />
         </picture>
       )}
       {!logoUrl && (
         <StanfordWordMark
           aria-label={`Stanford ${siteName} Logo`}
           role="img"
-          className={twMerge("block max-h-[30px] w-auto no-underline", whiteText ? "text-white" : "text-cardinal-red")}
+          className={twMerge(
+            "block max-h-[30px] w-auto max-w-[12rem] no-underline xl:max-w-400",
+            whiteText ? "text-white" : "text-cardinal-red"
+          )}
         />
       )}
     </>
