@@ -220,7 +220,7 @@ const MenuItem = ({
           )}
           aria-current={activeTrail.at(-1) === id ? "page" : undefined}
         >
-          <div className={twMerge("w-full shrink-0 pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
+          <div className={twMerge("w-full shrink-0 text-nowrap pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
         </Link>
       )}
 
