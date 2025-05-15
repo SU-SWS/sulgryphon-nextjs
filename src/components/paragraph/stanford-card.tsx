@@ -15,7 +15,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   link?: Maybe<LinkType>
   linkStyle?: Maybe<string>
   cardBgColor?: "fog_light" | "cardinal_red"
-  hasRosette?: Maybe<boolean>
+  hideRosette?: Maybe<boolean>
   image?: Maybe<MediaImage>
   caption?: Maybe<string>
   videoUrl?: Maybe<string>
@@ -36,7 +36,7 @@ const StanfordCard = ({
   videoUrl,
   linkStyle,
   cardBgColor,
-  hasRosette,
+  hideRosette,
   orientation,
   headingTag = "h2",
   hideHeading,
@@ -80,7 +80,7 @@ const StanfordCard = ({
           body={body}
           link={link}
           cardBgColor={cardBgColor}
-          hasRosette={hasRosette}
+          hideRosette={hideRosette}
           headerId={headerId}
           headingLevel={headingTag}
           hideHeading={hideHeading}

@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image"
 import {ReactNodeLike} from "prop-types"
 import formatHtml from "@/lib/format-html"
 import {ElementType, HTMLAttributes, useRef} from "react"
@@ -7,13 +6,14 @@ import Link from "@/components/patterns/elements/drupal-link"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import {clsx} from "clsx"
+import RosetteIcon from "./icons/RosetteIcon"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNodeLike>
   image?: Maybe<ReactNodeLike>
   caption?: Maybe<string>
   cardBgColor?: "fog_light" | "cardinal_red"
-  hasRosette?: Maybe<boolean>
+  hideRosette?: Maybe<boolean>
   superHeader?: Maybe<string>
   header?: Maybe<string>
   footer?: Maybe<ReactNodeLike>
@@ -30,7 +30,7 @@ const HorizontalCard = ({
   image,
   caption,
   cardBgColor,
-  hasRosette,
+  hideRosette,
   superHeader,
   header,
   footer,
@@ -81,7 +81,7 @@ const HorizontalCard = ({
           )}
           <div>
             <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @6xl:flex-nowrap">
-              {hasRosette && <Image src="/card-rosette.png" alt="" className="object-contain" height={64} width={64} />}
+              {!hideRosette && <RosetteIcon height={64} width={64} className="object-contain" />}
               <div>
                 {superHeader && (
                   <span className="mb-0 text-20 font-semibold uppercase leading-display">{superHeader}</span>
