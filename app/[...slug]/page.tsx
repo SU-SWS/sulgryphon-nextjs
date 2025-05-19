@@ -10,6 +10,7 @@ import FlushCache from "@/components/patterns/elements/flush-cache"
 import OnThisPage from "@/components/patterns/on-this-page"
 import DrupalLink from "@/components/patterns/elements/drupal-link"
 import {getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
+import RosetteIcon from "@/components/patterns/icons/RosetteIcon"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -67,8 +68,9 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
           <InternalHeaderBanner>
             <h1
               id={entity.id}
-              className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+              className="relative mx-auto mb-10 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
             >
+              {entity.__typename === "NodeStanfordPage" && <RosetteIcon width={60} height={60} />}
               {entity.title}
             </h1>
           </InternalHeaderBanner>
