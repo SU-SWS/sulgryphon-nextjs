@@ -97,7 +97,7 @@ const HorizontalCard = ({
                 )}
               </div>
             </div>
-            <div className={clsx(!hideRosette && "m-0 @10xl:rs-ml-2")}>
+            <div className={clsx({"m-0 @10xl:rs-ml-2": !hideRosette})}>
               {body && (
                 <div
                   className={twMerge(
