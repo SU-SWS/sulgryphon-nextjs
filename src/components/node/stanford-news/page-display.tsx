@@ -30,15 +30,14 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   const encodeTitle = encodeURIComponent(node.title)
 
   return (
-    <article {...props} className="centered mt-50">
+    <article {...props} className="centered">
       <StanfordNewsMetadata node={node} />
-      <div className="centered mb-100 2xl:w-2/3">
-        {node.suNewsDek && <p className="rs-mb-1 text-22 leading">{node.suNewsDek}</p>}
-        <div className="md:flex">
+      <div className="centered mb-40 2xl:w-2/3">
+        <div className="mx-auto w-fit gap-16 md:flex">
           <div className="flex md:order-last">
             {!node.suNewsHideSocial && (
-              <ul className="list-unstyled mt-[-3px] flex md:pl-[10px]">
-                <li className="mr-1em">
+              <ul className="list-unstyled flex flex-row gap-[0.8rem]">
+                <li>
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
                     prefix="http://www.facebook.com/sharer.php?u="
@@ -48,7 +47,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                     <FacebookIcon />
                   </NewsSocialLink>
                 </li>
-                <li className="mr-1em">
+                <li>
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
                     prefix="https://twitter.com/intent/tweet?url="
@@ -58,7 +57,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                     <TwitterIcon />
                   </NewsSocialLink>
                 </li>
-                <li className="mr-1em">
+                <li>
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
                     prefix="https://www.linkedin.com/shareArticle?mini=true&url="
@@ -68,7 +67,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                     <LinkedInIcon />
                   </NewsSocialLink>
                 </li>
-                <li className="mr-1em">
+                <li>
                   <NewsSocialLink
                     className="text-black transition-colors hocus:text-digital-blue"
                     prefix={`mailto:?subject=${encodeTitle}&body=`}
@@ -77,7 +76,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
                     <EnvelopeIcon title="Email" width={28} />
                   </NewsSocialLink>
                 </li>
-                <li className="mr-1em">
+                <li>
                   <NewsPrintButton />
                 </li>
               </ul>
@@ -89,11 +88,11 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
           </div>
         </div>
       </div>
-      <hr className="mx-auto mb-100 w-1/2 text-black-40" />
+      <hr className="mx-auto mb-40 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="mb-100 table w-full">
-          <span className="relative mx-auto block aspect-[16/9] lg:w-10/12">
+        <figure className="mb-40 table w-full">
+          <span className="relative mx-auto block aspect-[16/9] lg:w-800">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
           {node.suNewsBannerMediaCaption && (
@@ -118,7 +117,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       )}
 
       {node.suNewsComponents && (
-        <div className="centered 2xl:w-2/3">
+        <div className="w-full lg:children:max-w-1000">
           {node.suNewsComponents.map(paragraph => (
             <Paragraph key={paragraph.id} paragraph={paragraph} />
           ))}
