@@ -100,26 +100,26 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
               <h2 className="text-24">Contact</h2>
               <ul className="list-none p-0 children:mb-[0.4rem] last:children:mb-0">
                 {node.suPersonTelephone && (
-                  <li>
-                    <PhoneIcon title="Phone" width={24} className="mr-4 inline-block text-digital-blue" />p{" "}
+                  <li className="flex flex-row items-center">
+                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />p{" "}
                     <NumberLink tel={node.suPersonTelephone} />
                   </li>
                 )}
                 {node.suPersonMobilePhone && (
-                  <li>
-                    <PhoneIcon title="Phone" width={24} className="mr-4 inline-block text-digital-blue" /> m{" "}
+                  <li className="flex flex-row items-center">
+                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" /> m{" "}
                     <NumberLink tel={node.suPersonMobilePhone} />
                   </li>
                 )}
                 {node.suPersonFax && (
-                  <li>
-                    <PhoneIcon title="Phone" width={24} className="mr-4 inline-block text-digital-blue" />f{" "}
+                  <li className="flex flex-row items-center">
+                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />f{" "}
                     <NumberLink tel={node.suPersonFax} />
                   </li>
                 )}
                 {node.suPersonEmail && (
-                  <li>
-                    <EnvelopeIcon title="Email" width={20} className="mr-4 inline-block text-digital-blue" />
+                  <li className="flex flex-row items-center">
+                    <EnvelopeIcon title="Email" width={24} className="mr-4 text-digital-blue" />
                     <EmailLink className="break-words" email={node.suPersonEmail} />
                   </li>
                 )}
@@ -132,16 +132,18 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
             <div className="children:mb-[0.4rem] last:children:mb-0">
               <h2 className="text-24">Location</h2>
 
-              {node.suPersonLocationName && <div>{node.suPersonLocationName}</div>}
+              {node.suPersonLocationName && <div className="text-16 md:text-18">{node.suPersonLocationName}</div>}
 
               {node.suPersonLocationAddress && (
                 <div className="children:mb-0">{formatHtml(node.suPersonLocationAddress.processed)}</div>
               )}
 
               {node.suPersonMapUrl?.url && (
-                <div>
-                  <MapIcon title="Location" width={26} className="mr-4 inline-block text-digital-blue" />
-                  <Link href={node.suPersonMapUrl.url}>Map</Link>
+                <div className="flex flex-row items-center">
+                  <MapIcon title="Location" width={24} className="mr-4 text-digital-blue" />
+                  <Link href={node.suPersonMapUrl.url} className="text-16 md:text-18">
+                    Map
+                  </Link>
                 </div>
               )}
             </div>
