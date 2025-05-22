@@ -31,7 +31,7 @@ const Header = async () => {
             </div>
             <nav className="hidden lg:block" aria-label="User links">
               <ul className="list-unstyled flex items-baseline gap-24">
-                <li className="flex items-start">
+                <li className="flex shrink-0 items-start">
                   <Link className="text-16 font-normal text-black" href="https://searchworks.stanford.edu/">
                     SearchWorks Catalog
                   </Link>
