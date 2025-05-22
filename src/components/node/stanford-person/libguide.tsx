@@ -21,8 +21,8 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
     <div {...props}>
       {[...groupedGuides.keys()].map(guideTopic => (
         <div key={guideTopic}>
-          {headingLevel === 2 && <h2 className="type-1">{guideTopic}</h2>}
-          {headingLevel === 3 && <h3 className="type-1">{guideTopic}</h3>}
+          {headingLevel === 2 && <h2>{guideTopic}</h2>}
+          {headingLevel === 3 && <h3>{guideTopic}</h3>}
           <LibGuideSection heading="Course Guides" guides={groupedGuides.get(guideTopic)} />
         </div>
       ))}
@@ -47,7 +47,7 @@ const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]
 
   return (
     <>
-      <ul ref={parent} id={containerId} className="list-unstyled relative">
+      <ul ref={parent} id={containerId} className="relative list-none p-0 children:rs-mb-0 last:children:mb-0">
         {firstGuides.map(guide => (
           <li key={guide.id}>
             <Link href={guide.url}>{guide.title}</Link>

@@ -61,7 +61,7 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
                   ))}
                 </div>
               )}
-              {entity.suNewsDek && <p className="order-3 mb-0 text-23 leading md:text-28">{entity.suNewsDek}</p>}
+              {entity.suNewsDek && <p className="order-3 mb-0 text-20 leading sm:text-22">{entity.suNewsDek}</p>}
             </div>
           </InternalHeaderBanner>
         )}
@@ -75,11 +75,11 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
                 </h1>
                 <div>
                   {(entity.suPersonFullTitle || entity.suPersonShortTitle) && (
-                    <div className="text-23 md:text-28">{entity.suPersonFullTitle || entity.suPersonShortTitle}</div>
+                    <div className="text-20 md:text-22">{entity.suPersonFullTitle || entity.suPersonShortTitle}</div>
                   )}
 
                   {entity.suPersonPronouns && (
-                    <div className="text-23 md:text-28">Pronouns: {entity.suPersonPronouns}</div>
+                    <div className="text-20 md:text-22">Pronouns: {entity.suPersonPronouns}</div>
                   )}
                 </div>
               </div>

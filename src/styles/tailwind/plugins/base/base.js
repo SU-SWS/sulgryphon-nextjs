@@ -16,7 +16,7 @@ module.exports = function () {
           fontSize: '4rem',
         },
         '@screen lg': {
-          fontSize: '5.6rem',
+          fontSize: '5.4rem',
         },
       },
       'h2': {
