@@ -84,7 +84,7 @@ const HorizontalCard = ({
               {!hideRosette && <RosetteIcon height={64} width={64} className="object-contain" />}
               <div>
                 {superHeader && (
-                  <span className="mb-0 text-20 font-semibold uppercase leading-display">{superHeader}</span>
+                  <span className="mb-0 text-16 font-normal uppercase leading-display md:text-18">{superHeader}</span>
                 )}
 
                 {header && (
