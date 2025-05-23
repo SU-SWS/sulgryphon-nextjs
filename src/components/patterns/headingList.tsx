@@ -60,6 +60,7 @@ const HeadingList = () => {
             headingIndex++
           }
           heading.setAttribute("id", newId)
+          id = newId
         }
 
         allHeadings.push({text: headingText, id})
@@ -82,9 +83,35 @@ const HeadingList = () => {
 
       h2Elements.forEach(heading => observer.observe(heading))
 
+      // Handle initial anchor link on page load
+      const handleInitialAnchor = () => {
+        const hash = window.location.hash.slice(1)
+        if (hash) {
+          const targetElement = document.getElementById(hash)
+          if (targetElement) {
+            // Small delay to ensure layout is complete
+            setTimeout(() => {
+              targetElement.scrollIntoView({behavior: "smooth", block: "start"})
+              setActiveHeading(hash)
+            }, 100)
+          }
+        }
+      }
+
+      // Check for anchor on initial load
+      handleInitialAnchor()
+
+      // Also handle hash changes (for SPA navigation)
+      const handleHashChange = () => {
+        handleInitialAnchor()
+      }
+
+      window.addEventListener("hashchange", handleHashChange)
+
       return () => {
         clearTimeout(timeoutId)
         observer.disconnect()
+        window.removeEventListener("hashchange", handleHashChange)
       }
     }, 250)
   }, [uuid])
