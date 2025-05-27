@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useEffect, useId, useState} from "react"
+import React, {useCallback, useEffect, useId, useState} from "react"
 import {twMerge} from "tailwind-merge"
 import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
@@ -101,20 +101,28 @@ const HeadingList = () => {
       // Check for anchor on initial load
       handleInitialAnchor()
 
-      // Also handle hash changes (for SPA navigation)
-      const handleHashChange = () => {
-        handleInitialAnchor()
-      }
-
-      window.addEventListener("hashchange", handleHashChange)
-
       return () => {
         clearTimeout(timeoutId)
         observer.disconnect()
-        window.removeEventListener("hashchange", handleHashChange)
       }
     }, 250)
   }, [uuid])
+
+  // Handle hash changes with useEventListener
+  const handleHashChange = useCallback(() => {
+    const hash = window.location.hash.slice(1)
+    if (hash) {
+      const targetElement = document.getElementById(hash)
+      if (targetElement) {
+        setTimeout(() => {
+          targetElement.scrollIntoView({behavior: "smooth", block: "start"})
+          setActiveHeading(hash)
+        }, 100)
+      }
+    }
+  }, [])
+
+  useEventListener("hashchange", handleHashChange)
 
   return (
     <nav aria-label="on this page menu">
