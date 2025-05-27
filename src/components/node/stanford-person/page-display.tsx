@@ -1,6 +1,6 @@
 import formatHtml from "@/lib/format-html"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import {EnvelopeIcon, PhoneIcon, MapIcon} from "@heroicons/react/24/outline"
+import {EnvelopeIcon, PhoneIcon, MapIcon, DevicePhoneMobileIcon, PrinterIcon} from "@heroicons/react/24/outline"
 import Link from "@/components/patterns/elements/drupal-link"
 import LibCal from "@/components/node/stanford-person/libcal"
 import LibGuides from "@/components/node/stanford-person/libguide"
@@ -38,23 +38,26 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           )}
 
           {node.suPersonComponents && (
-            <div className="mb-40">
+            <div className="*:mb-40 last:*:mb-0">
               {node.suPersonComponents.map(paragraph => (
                 <Paragraph key={paragraph.id} paragraph={paragraph} />
               ))}
             </div>
           )}
 
-          {libGuides.length > 0 && <LibGuides guides={libGuides} className="mb-50 space-y-40" />}
+          {libGuides.length > 0 && (
+            <div>
+              <h2 className="mb-16">Guides</h2>
+              <LibGuides guides={libGuides} className="mb-50 space-y-40" headingLevel={3} />
+            </div>
+          )}
 
           {node.suPersonEducation && (
             <div>
               <h2 className="mb-16">Education</h2>
-              <ul className="list-none p-0">
+              <ul>
                 {node.suPersonEducation.map((education, index) => (
-                  <li key={`person-education-${index}`} className="rs-mb-0">
-                    {education}
-                  </li>
+                  <li key={`person-education-${index}`}>{education}</li>
                 ))}
               </ul>
             </div>
@@ -63,11 +66,9 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {node.suPersonResearch && (
             <div>
               <h2 className="mb-16">Expertise</h2>
-              <ul className="list-none p-0">
+              <ul>
                 {node.suPersonResearch.map((interest, index) => (
-                  <li key={`research-${index}`} className="rs-mb-1">
-                    {formatHtml(interest.processed)}
-                  </li>
+                  <li key={`research-${index}`}>{formatHtml(interest.processed)}</li>
                 ))}
               </ul>
             </div>
@@ -101,19 +102,19 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
               <ul className="list-none p-0 children:mb-[0.4rem] last:children:mb-0">
                 {node.suPersonTelephone && (
                   <li className="flex flex-row items-center">
-                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />p{" "}
+                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
                     <NumberLink tel={node.suPersonTelephone} />
                   </li>
                 )}
                 {node.suPersonMobilePhone && (
                   <li className="flex flex-row items-center">
-                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" /> m{" "}
+                    <DevicePhoneMobileIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
                     <NumberLink tel={node.suPersonMobilePhone} />
                   </li>
                 )}
                 {node.suPersonFax && (
                   <li className="flex flex-row items-center">
-                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />f{" "}
+                    <PrinterIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
                     <NumberLink tel={node.suPersonFax} />
                   </li>
                 )}
@@ -130,8 +131,6 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
 
           {(node.suPersonLocationName || node.suPersonLocationAddress || node.suPersonMapUrl) && (
             <div className="children:mb-[0.4rem] last:children:mb-0">
-              <h2 className="text-24">Location</h2>
-
               {node.suPersonLocationName && <div className="text-16 md:text-18">{node.suPersonLocationName}</div>}
 
               {node.suPersonLocationAddress && (
