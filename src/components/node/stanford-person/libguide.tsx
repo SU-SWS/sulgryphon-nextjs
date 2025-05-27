@@ -21,8 +21,8 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
     <div {...props}>
       {[...groupedGuides.keys()].map(guideTopic => (
         <div key={guideTopic}>
-          {headingLevel === 2 && <h2>{guideTopic.replace(/guide/gi, "")}</h2>}
-          {headingLevel === 3 && <h3>{guideTopic.replace(/guide/gi, "")}</h3>}
+          {headingLevel === 2 && <h2>{guideTopic.replace(/\s?guide/gi, "")}</h2>}
+          {headingLevel === 3 && <h3>{guideTopic.replace(/\s?guide/gi, "")}</h3>}
           <LibGuideSection heading="Course Guides" guides={groupedGuides.get(guideTopic)} />
         </div>
       ))}
