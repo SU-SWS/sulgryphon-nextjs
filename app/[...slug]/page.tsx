@@ -55,7 +55,7 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
               {entity.suNewsTopics && (
                 <div className="order-1 mb-1">
                   {entity.suNewsTopics.slice(0, 1).map(topic => (
-                    <span key={topic.id} className="text-22 font-semibold uppercase text-cardinal-red">
+                    <span key={topic.id} className="text-16 font-semibold uppercase text-cardinal-red md:text-18">
                       {topic.name}
                     </span>
                   ))}
