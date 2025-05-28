@@ -7,30 +7,10 @@ import {LibGuide} from "@/lib/drupal/drupal"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   guides: LibGuide[]
-  headingLevel?: number
+  heading?: string
 }
 
-const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
-  // Group the guides by their type, so we can loop over it later.
-  const groupedGuides = guides.reduce(
-    (entryMap, e) => entryMap.set(e.type, [...(entryMap.get(e.type) || []), e]),
-    new Map()
-  )
-
-  return (
-    <div {...props}>
-      {[...groupedGuides.keys()].map(guideTopic => (
-        <div key={guideTopic}>
-          {headingLevel === 2 && <h2>{guideTopic.replace(/\s?guide/gi, "")}</h2>}
-          {headingLevel === 3 && <h3>{guideTopic.replace(/\s?guide/gi, "")}</h3>}
-          <LibGuideSection heading="Course Guides" guides={groupedGuides.get(guideTopic)} />
-        </div>
-      ))}
-    </div>
-  )
-}
-
-const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]}) => {
+const LibGuides = ({heading, guides}: Props) => {
   const firstGuides = guides.slice(0, 5)
   const moreGuides = guides.slice(5)
   const moreGuideRef = useRef<HTMLAnchorElement>(null)
@@ -47,7 +27,7 @@ const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]
 
   return (
     <>
-      <ul ref={parent} id={containerId} className="relative list-none p-0 children:rs-mb-0 last:children:mb-0">
+      <ul ref={parent} id={containerId} className="relative p-0 children:rs-mb-0 last:children:mb-0">
         {firstGuides.map(guide => (
           <li key={guide.id}>
             <Link href={guide.url}>{guide.title}</Link>

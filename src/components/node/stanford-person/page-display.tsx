@@ -48,7 +48,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {libGuides.length > 0 && (
             <div>
               <h2 className="mb-16">Guides</h2>
-              <LibGuides guides={libGuides} className="mb-50 space-y-40" headingLevel={3} />
+              <LibGuides heading="Guides" guides={libGuides} className="space-y-40" />
             </div>
           )}
 
