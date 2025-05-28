@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useEffect, useId, useState} from "react"
+import React, {useCallback, useEffect, useId, useState} from "react"
 import {twMerge} from "tailwind-merge"
 import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
@@ -32,6 +32,20 @@ const HeadingList = () => {
 
   useEventListener("scroll", debouncedHandleScroll)
 
+  // Handle initial anchor link on page load and handle hash changes with useEventListener
+  const handleAnchor = useCallback(() => {
+    const hash = window.location.hash.slice(1)
+    if (hash) {
+      const targetElement = document.getElementById(hash)
+      if (targetElement) {
+        setTimeout(() => {
+          targetElement.scrollIntoView({behavior: "smooth", block: "start"})
+          setActiveHeading(hash)
+        }, 100)
+      }
+    }
+  }, [])
+
   useEffect(() => {
     /**
      * Delays execution to ensure that all dynamically rendered <h2> elements
@@ -60,6 +74,7 @@ const HeadingList = () => {
             headingIndex++
           }
           heading.setAttribute("id", newId)
+          id = newId
         }
 
         allHeadings.push({text: headingText, id})
@@ -82,12 +97,17 @@ const HeadingList = () => {
 
       h2Elements.forEach(heading => observer.observe(heading))
 
+      // Check for anchor on initial load
+      handleAnchor()
+
       return () => {
         clearTimeout(timeoutId)
         observer.disconnect()
       }
     }, 250)
-  }, [uuid])
+  }, [handleAnchor, uuid])
+
+  useEventListener("hashchange", handleAnchor)
 
   return (
     <nav aria-label="on this page menu">
