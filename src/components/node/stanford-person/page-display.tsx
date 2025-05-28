@@ -3,7 +3,7 @@ import {DrupalLinkButton} from "@/components/patterns/link"
 import {EnvelopeIcon, PhoneIcon, MapIcon, DevicePhoneMobileIcon, PrinterIcon} from "@heroicons/react/24/outline"
 import Link from "@/components/patterns/elements/drupal-link"
 import LibCal from "@/components/node/stanford-person/libcal"
-import LibGuides from "@/components/node/stanford-person/libguide"
+import {LibGuideSection} from "@/components/node/stanford-person/libguide"
 import fetchLibGuides from "@/lib/libguides"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
@@ -48,7 +48,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {libGuides.length > 0 && (
             <div>
               <h2 className="mb-16">Guides</h2>
-              <LibGuides heading="Guides" guides={libGuides} className="space-y-40" />
+              <LibGuideSection heading="Guides" guides={libGuides} />
             </div>
           )}
 
