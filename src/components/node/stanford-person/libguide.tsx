@@ -30,7 +30,7 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   )
 }
 
-const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]}) => {
+export const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]}) => {
   const firstGuides = guides.slice(0, 5)
   const moreGuides = guides.slice(5)
   const moreGuideRef = useRef<HTMLAnchorElement>(null)
@@ -47,7 +47,7 @@ const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]
 
   return (
     <>
-      <ul ref={parent} id={containerId} className="relative list-none p-0 children:rs-mb-0 last:children:mb-0">
+      <ul ref={parent} id={containerId} className="relative">
         {firstGuides.map(guide => (
           <li key={guide.id}>
             <Link href={guide.url}>{guide.title}</Link>
@@ -81,4 +81,5 @@ const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]
     </>
   )
 }
+
 export default LibGuides
