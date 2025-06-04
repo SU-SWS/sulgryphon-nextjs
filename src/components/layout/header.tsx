@@ -25,29 +25,29 @@ const Header = async () => {
 
       <header className="relative top-0 z-20 bg-white shadow-lg">
         <div className="lg:centered">
-          <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-40 pt-20 lg:z-10 lg:flex lg:gap-32 lg:px-0">
+          <div className="relative z-20 mx-auto w-full max-w-1500 justify-between bg-white px-40 pt-20 lg:z-10 lg:flex lg:gap-24 lg:px-0">
             <div className="pb-20">
               <Lockup />
             </div>
             <nav className="hidden lg:block" aria-label="User links">
-              <ul className="list-unstyled flex items-baseline gap-40 xl:gap-[55px]">
-                <li className="flex items-start gap-5">
-                  <Link className="text-18 font-normal text-black" href="https://searchworks.stanford.edu/">
-                    Searchworks Catalog
+              <ul className="list-unstyled flex items-baseline gap-24">
+                <li className="flex shrink-0 items-start">
+                  <Link className="text-16 font-normal text-black" href="https://searchworks.stanford.edu/">
+                    SearchWorks Catalog
                   </Link>
                   <Link
-                    className="ml-10 border-l border-black pl-10 text-18 font-normal text-black"
+                    className="ml-10 border-l border-black pl-10 text-16 font-normal text-black"
                     href="https://searchworks.stanford.edu/articles"
                   >
                     Articles+
                   </Link>
                 </li>
-                <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
                 <HeaderLink href="/contact-us" text="Contact Us" />
+                <HeaderLink href="https://mylibrary.stanford.edu/" text="My Account" />
                 <li>
                   <Link
                     href="https://give.stanford.edu/?kwoDCPreselect=KDC-29V9KK0&olc=10734"
-                    className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-18 font-normal leading text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
+                    className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-16 font-normal leading text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
                   >
                     Donate now
                   </Link>
@@ -67,7 +67,7 @@ const Header = async () => {
 const HeaderLink = ({href, text}: {href: string; text: string}) => {
   return (
     <li>
-      <Link className="text-18 font-normal text-black" href={href}>
+      <Link className="text-nowrap text-16 font-normal text-black" href={href}>
         {text}
       </Link>
     </li>

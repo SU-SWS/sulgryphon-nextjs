@@ -9,7 +9,9 @@ import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banne
 import FlushCache from "@/components/patterns/elements/flush-cache"
 import OnThisPage from "@/components/patterns/on-this-page"
 import DrupalLink from "@/components/patterns/elements/drupal-link"
-import {getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
+import {buildUrl, getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
+import RosetteIcon from "@/components/patterns/icons/RosetteIcon"
+import Image from "next/image"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -45,30 +47,71 @@ const NodePage = async (props: PageProps & {previewMode?: true}) => {
 
         {entity.__typename === "NodeStanfordNews" && (
           <InternalHeaderBanner>
-            <div className="mx-auto mb-50 mt-80 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
-              <h1 id={entity.id} className="order-2 text-white">
+            <div className="mx-auto mb-65 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+              <h1 id={entity.id} className="order-2 mb-0">
                 {entity.title}
               </h1>
 
               {entity.suNewsTopics && (
-                <div className="order-1 mb-20">
+                <div className="order-1 mb-1">
                   {entity.suNewsTopics.slice(0, 1).map(topic => (
-                    <span key={topic.id} className="font-semibold text-illuminating-dark">
+                    <span key={topic.id} className="text-16 font-semibold uppercase text-cardinal-red md:text-18">
                       {topic.name}
                     </span>
                   ))}
+                </div>
+              )}
+              {entity.suNewsDek && <p className="order-3 mb-0 text-20 leading sm:text-22">{entity.suNewsDek}</p>}
+            </div>
+          </InternalHeaderBanner>
+        )}
+
+        {entity.__typename === "NodeStanfordPerson" && (
+          <InternalHeaderBanner>
+            <div className="mx-auto mb-40 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col items-center gap-32 p-0 md:mb-10 md:max-w-[calc(100vw-20rem)] md:flex-row 3xl:max-w-[calc(1500px-20rem)]">
+              <div className="order-2 flex flex-col">
+                <h1 id={entity.id} className="mb-0">
+                  {entity.title}
+                </h1>
+                <div>
+                  {(entity.suPersonFullTitle || entity.suPersonShortTitle) && (
+                    <div className="text-20 md:text-22">{entity.suPersonFullTitle || entity.suPersonShortTitle}</div>
+                  )}
+
+                  {entity.suPersonPronouns && (
+                    <div className="text-20 md:text-22">Pronouns: {entity.suPersonPronouns}</div>
+                  )}
+                </div>
+              </div>
+
+              {entity.suPersonPhoto && (
+                <div className="order-1">
+                  <div className="relative aspect-[1/1] w-220">
+                    <Image
+                      src={buildUrl(entity.suPersonPhoto?.mediaImage.url).toString()}
+                      alt=""
+                      className="rounded-full object-cover"
+                      fill
+                      sizes="500px"
+                    />
+                  </div>
                 </div>
               )}
             </div>
           </InternalHeaderBanner>
         )}
 
-        {!(entity.__typename === "NodeSulLibrary" || entity.__typename === "NodeStanfordNews") && (
+        {!(
+          entity.__typename === "NodeSulLibrary" ||
+          entity.__typename === "NodeStanfordNews" ||
+          entity.__typename === "NodeStanfordPerson"
+        ) && (
           <InternalHeaderBanner>
             <h1
               id={entity.id}
-              className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+              className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
             >
+              {entity.__typename === "NodeStanfordPage" && <RosetteIcon width={60} height={60} />}
               {entity.title}
             </h1>
           </InternalHeaderBanner>

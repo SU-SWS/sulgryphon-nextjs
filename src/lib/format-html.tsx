@@ -110,9 +110,8 @@ const options: HTMLReactParserOptions = {
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
         case "p":
-          nodeProps.className += " max-w-[100ch] text-16 sm:text-18 [&_li]:text-16 [&_li]:sm:text-18"
+          nodeProps.className += " max-w-[100ch]"
         case "li":
-          nodeProps.className += " text-16 sm:text-18"
         case "h1":
         case "h2":
         case "h3":

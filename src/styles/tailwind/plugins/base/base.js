@@ -16,7 +16,7 @@ module.exports = function () {
           fontSize: '4rem',
         },
         '@screen lg': {
-          fontSize: '5.6rem',
+          fontSize: '5.4rem',
         },
       },
       'h2': {
@@ -50,6 +50,12 @@ module.exports = function () {
         fontSize: '2.4rem',
         fontWeight: 'semibold',
       },
+      'p, li': {
+        fontSize: '1.6rem',
+        '@screen sm': {
+          fontSize: '1.8rem',
+        },
+      }
     });
   };
 };

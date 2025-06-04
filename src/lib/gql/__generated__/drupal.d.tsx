@@ -481,6 +481,15 @@ export type File = {
   url: Scalars['String']['output'];
 };
 
+/** Smart Date data. */
+export type FontawesomeIconType = {
+  __typename?: 'FontawesomeIconType';
+  /** Icon Name */
+  iconName: Scalars['String']['output'];
+  /** Icon Style */
+  style: Scalars['String']['output'];
+};
+
 /** A image object to represent an managed file. */
 export type Image = {
   __typename?: 'Image';

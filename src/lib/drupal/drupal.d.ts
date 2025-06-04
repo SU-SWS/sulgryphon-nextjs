@@ -31,6 +31,7 @@ export type ParagraphBehaviors = {
     background_color?: "fog_light" | "cardinal_red"
     orientation?: string
     link_display_style?: string
+    hide_rosette?: boolean
   }
   list_paragraph?: {
     hide_empty?: Maybe<boolean>

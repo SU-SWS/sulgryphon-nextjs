@@ -5,7 +5,7 @@ const NotFound = () => {
   return (
     <main id="main-content" className="mb-50">
       <InternalHeaderBanner>
-        <h1 className="md::max-w-[calc(100vw-20rem)] relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 text-white md:mt-100 3xl:max-w-[calc(1500px-20rem)]">
+        <h1 className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
           Page Not Found
         </h1>
       </InternalHeaderBanner>

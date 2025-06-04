@@ -21,8 +21,8 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
     <div {...props}>
       {[...groupedGuides.keys()].map(guideTopic => (
         <div key={guideTopic}>
-          {headingLevel === 2 && <h2 className="type-1">{guideTopic}</h2>}
-          {headingLevel === 3 && <h3 className="type-1">{guideTopic}</h3>}
+          {headingLevel === 2 && <h2>{guideTopic.replace(/\s?guide/gi, "")}</h2>}
+          {headingLevel === 3 && <h3>{guideTopic.replace(/\s?guide/gi, "")}</h3>}
           <LibGuideSection heading="Course Guides" guides={groupedGuides.get(guideTopic)} />
         </div>
       ))}
@@ -30,7 +30,7 @@ const LibGuides = ({guides, headingLevel = 2, ...props}: Props) => {
   )
 }
 
-const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]}) => {
+export const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]}) => {
   const firstGuides = guides.slice(0, 5)
   const moreGuides = guides.slice(5)
   const moreGuideRef = useRef<HTMLAnchorElement>(null)
@@ -47,7 +47,7 @@ const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]
 
   return (
     <>
-      <ul ref={parent} id={containerId} className="list-unstyled relative">
+      <ul ref={parent} id={containerId} className="relative">
         {firstGuides.map(guide => (
           <li key={guide.id}>
             <Link href={guide.url}>{guide.title}</Link>
@@ -81,4 +81,5 @@ const LibGuideSection = ({heading, guides}: {heading: string; guides: LibGuide[]
     </>
   )
 }
+
 export default LibGuides
