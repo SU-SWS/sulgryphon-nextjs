@@ -1,8 +1,7 @@
 "use client"
-import {HTMLAttributes, useEffect, useId, useRef, useState} from "react"
+import {HTMLAttributes, useEffect, useId, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
-import {sendGAEvent} from "@next/third-parties/google"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]

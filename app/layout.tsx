@@ -53,13 +53,14 @@ const RootLayout = async ({children, modal}: {children: ReactNode; modal: ReactN
             Skip to main content
           </a>
         </nav>
-        {!previewMode && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        {!previewMode && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
           <>
             <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js" />
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
           </>
+        ) : (
+          <GoogleAnalytics gaId="G-CEWCE1NE90" />
         )}
-        {previewMode && <GoogleAnalytics gaId="G-CEWCE1NE90" />}
         <div className="grid min-h-screen grid-rows-1">
           <div>
             <Header />
