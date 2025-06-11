@@ -65,7 +65,7 @@ const LibraryFooter = () => {
           <h2 className="mb-10 text-24">Who we are</h2>
           <ul className="list-unstyled">
             <li>
-              <FooterLink href="/about-us">About us</FooterLink>
+              <FooterLink href="/about-stanford-libraries">About us</FooterLink>
             </li>
             <li>
               <FooterLink href="/staff-directory">Staff directory</FooterLink>
