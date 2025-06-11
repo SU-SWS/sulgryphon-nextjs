@@ -28,28 +28,21 @@ export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
 export const SulHomeBannerFormClient = () => {
   const [formAction, setFormAction] = useState("/all")
   const inputId = useId()
-  const formRef = useRef<HTMLFormElement>(null)
 
   // Google Analytics: Track the selected search option when the user submits the form.
   // Helps measure actual search behavior by logging which resource option was used.
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-
-    sendGAEvent({
-      event: "search_option_selected",
-      category: "Search",
-      label: formAction,
-    })
-
-    // Delay to let GA event send before navigation
-    setTimeout(() => {
-      formRef.current?.submit()
-    }, 300)
+  const handleSubmit = () => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "search_option_selected", {
+        event_category: "Search",
+        event_label: formAction,
+        interaction_type: "submit",
+      })
+    }
   }
 
   return (
     <form
-      ref={formRef}
       action={formAction}
       onSubmit={handleSubmit}
       className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24 xs:flex-nowrap"
