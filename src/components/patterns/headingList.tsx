@@ -7,12 +7,14 @@ import {useDebounceCallback, useEventListener} from "usehooks-ts"
 type Heading = {
   text: string
   id: string
+  isDuplicateLink: boolean
 }
 
 const HeadingList = () => {
   const uuid = useId()
   const [headings, setHeadings] = useState<Array<Heading>>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
+  const [pageH1, setPageH1] = useState<string>("")
 
   const debouncedHandleScroll = useDebounceCallback(() => {
     const firstHeading = document.querySelector("#main-content h2:not([data-skip-heading])")
@@ -46,7 +48,51 @@ const HeadingList = () => {
     }
   }, [])
 
+  // Function to check for duplicate link text across the entire page
+  const checkForDuplicateLinks = useCallback((linkText: string): boolean => {
+    // Get all links on the page
+    const allLinks = document.querySelectorAll("a")
+    const matchingLinks: HTMLAnchorElement[] = []
+
+    allLinks.forEach(link => {
+      const text = link.textContent?.trim()
+      if (text && text.toLowerCase() === linkText.toLowerCase()) {
+        matchingLinks.push(link)
+      }
+    })
+
+    // If we find more than one link with the same text, check if they have different purposes
+    if (matchingLinks.length > 1) {
+      // Check if they have different hrefs or are in different contexts
+      const uniqueHrefs = new Set(matchingLinks.map(link => link.getAttribute("href")))
+      const uniqueContexts = new Set(
+        matchingLinks.map(link => {
+          // Determine context based on parent elements or data attributes
+          const nav = link.closest("nav")
+          const footer = link.closest("footer")
+          const header = link.closest("header")
+          const main = link.closest("main")
+
+          if (nav) return "navigation"
+          if (footer) return "footer"
+          if (header) return "header"
+          if (main) return "main"
+          return "other"
+        })
+      )
+
+      // Consider it a duplicate if there are multiple contexts or multiple destinations
+      return uniqueHrefs.size > 1 || uniqueContexts.size > 1
+    }
+
+    return false
+  }, [])
+
   useEffect(() => {
+    // Get page H1 on mount
+    const h1Element = document.querySelector("h1")
+    setPageH1(h1Element?.textContent?.trim() || "")
+
     /**
      * Delays execution to ensure that all dynamically rendered <h2> elements
      * are present in the DOM before assigning IDs. This is necessary because
@@ -63,9 +109,11 @@ const HeadingList = () => {
         const headingText = heading.textContent
         if (!headingText) return
 
+        const trimmedText = headingText.trim()
+
         let id = heading.getAttribute("id")
         if (!id) {
-          id = headingText.trim().toLowerCase().replace(/\s+/g, "-")
+          id = trimmedText.toLowerCase().replace(/\s+/g, "-")
           let newId = id
           let headingIndex = 0
 
@@ -77,7 +125,14 @@ const HeadingList = () => {
           id = newId
         }
 
-        allHeadings.push({text: headingText, id})
+        // Check if this heading text appears as duplicate links elsewhere on the page
+        const isDuplicateLink = checkForDuplicateLinks(trimmedText)
+
+        allHeadings.push({
+          text: headingText,
+          id,
+          isDuplicateLink,
+        })
       })
 
       setHeadings(allHeadings)
@@ -105,7 +160,7 @@ const HeadingList = () => {
         observer.disconnect()
       }
     }, 250)
-  }, [handleAnchor, uuid])
+  }, [handleAnchor, uuid, checkForDuplicateLinks])
 
   useEventListener("hashchange", handleAnchor)
 
@@ -119,6 +174,7 @@ const HeadingList = () => {
           <li key={heading.id} className="m-0 mb-2 lg:mb-12">
             <a
               href={`#${heading.id}`}
+              aria-label={heading.isDuplicateLink && pageH1 ? `${pageH1}: ${heading.text}` : undefined}
               className={twMerge(
                 "type-0 block break-words px-10 py-2 font-sans font-normal leading text-black no-underline hocus:bg-black-10 hocus:underline lg:border-l-4 lg:p-0 lg:pl-16 lg:hocus:bg-transparent",
                 activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
