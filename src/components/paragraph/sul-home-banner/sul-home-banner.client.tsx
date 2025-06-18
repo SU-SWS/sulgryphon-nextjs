@@ -36,8 +36,12 @@ export const SulHomeBannerFormClient = () => {
     event.preventDefault()
 
     sendGAEvent("event", "search_option_selected", {
-      label: formAction,
+      search_option: formAction,
+      search_value: (event.target as HTMLFormElement).q.value,
+      debug_mode: true,
     })
+    console.log("Search option selected:", formAction)
+    console.log("Search value:", (event.target as HTMLFormElement).q.value)
 
     // Delay to let GA event send before navigation
     setTimeout(() => {
