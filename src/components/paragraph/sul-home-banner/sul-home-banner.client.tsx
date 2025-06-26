@@ -36,6 +36,7 @@ export const SulHomeBannerFormClient = () => {
     event.preventDefault()
 
     sendGAEvent("event", "search_option_selected", {
+      debug_mode: true,
       search_option: formAction,
       search_value: (event.target as HTMLFormElement).q.value,
     })
