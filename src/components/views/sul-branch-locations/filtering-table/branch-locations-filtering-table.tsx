@@ -78,18 +78,18 @@ const BranchLocationFilteringTable = ({items}: Props) => {
       </form>
 
       <Table className="responsive-table responsive-table-branches sm:ml-0">
-        <Thead className="sr-only lg:not-sr-only">
-          <Tr className="block sm:hidden lg:!table-row">
-            <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-16" scope="col">
+        <Thead className="sr-only xl:not-sr-only">
+          <Tr className="block sm:hidden xl:!table-row">
+            <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell xl:pr-16" scope="col">
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-20 xl:pr-80">
+            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left xl:pr-20 xl:pr-80">
               Library
             </Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell lg:pr-20 xl:pr-80">
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell xl:pr-20 xl:pr-80">
               Open/Closed
             </Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left lg:pr-20 xl:pr-80">
+            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left xl:pr-20 xl:pr-80">
               Contact
             </Th>
             <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
@@ -109,13 +109,13 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
   return (
     <Tr
       key={id}
-      className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top lg:!table-row lg:max-h-none"
+      className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top xl:!table-row xl:max-h-none"
     >
-      <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 lg:mr-25 lg:table-cell lg:w-[125px] lg:pr-16 lg:align-middle">
+      <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 xl:mr-25 xl:table-cell xl:w-[125px] xl:pr-16 xl:align-middle">
         {imageUrl && (
           <Link
             href={path || "#"}
-            className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]"
+            className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] xl:max-w-[125px]"
             aria-hidden="true"
             tabIndex={-1}
           >
@@ -125,7 +125,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
       </Td>
       <Th
         scope="row"
-        className="flex w-auto px-0 text-center md:text-left lg:table-cell lg:w-1/4 lg:border-b lg:border-black-40 lg:pr-20 lg:align-middle xl:pr-80"
+        className="flex w-auto px-0 text-center md:text-left xl:table-cell xl:w-1/4 xl:border-b xl:border-black-40 xl:pr-20 xl:pr-80 xl:align-middle"
       >
         <Link
           href={path || "#"}
@@ -134,16 +134,16 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
           <span className="mb-0 font-sans text-20 font-semibold">{title}</span>
         </Link>
       </Th>
-      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start xl:table-cell xl:w-1/4 xl:pr-20 xl:pr-80 xl:align-middle">
         {hoursId && (
-          <div className="pb-16 lg:pb-0">
+          <div className="pb-16 xl:pb-0">
             <BranchHours hoursId={hoursId} />
           </div>
         )}
         {/* Without this, the responsive table library injects a "&nbsp;". */}
         {""}
       </Td>
-      <Td className="block w-auto sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:pr-20 lg:align-middle xl:pr-80">
+      <Td className="block w-auto sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:pr-20 xl:pr-80 xl:align-middle">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
@@ -156,7 +156,7 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {email && (
           <a
             href={`mailto:${email}`}
-            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-20 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start lg:mb-0"
+            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-20 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start xl:mb-0"
           >
             <EnvelopeIcon title="Email" width={20} />
             {email}
@@ -165,9 +165,9 @@ const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hou
         {/* Without this, the responsive table library injects a "&nbsp;". */}
         {""}
       </Td>
-      <Td className="block w-auto text-20 leading-normal sm:border-b sm:border-black-40 lg:table-cell lg:w-1/4 lg:align-middle">
+      <Td className="block w-auto text-20 leading-normal sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:align-middle">
         {address && mapUrl && (
-          <div className="pb-16 lg:pb-0">
+          <div className="pb-16 xl:pb-0">
             <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
               <MapPinIcon title="Map" width={20} className="min-w-20" />
               <Address
@@ -221,20 +221,20 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   })
 
   return (
-    <div ref={containerRef} className="relative flex text-20 leading-normal md:flex lg:block">
+    <div ref={containerRef} className="relative flex text-20 leading-normal md:flex xl:block">
       {isOpen && (
-        <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
+        <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left xl:m-0 xl:mx-auto xl:mb-4 xl:text-center">
           Open
         </span>
       )}
 
       {!isOpen && (
-        <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">
+        <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left xl:m-0 xl:mx-auto xl:text-center">
           Closed
         </span>
       )}
 
-      <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left lg:mx-auto lg:text-center">
+      <div className="flex w-fit items-center whitespace-nowrap sm:text-center md:text-left xl:mx-auto xl:text-center">
         {isOpen && closingTime && `until ${closingTime}`}
         {!isOpen && nextOpeningTime && `until ${nextOpeningTime}`}
         {!isOpen && !nextOpeningTime && `Hours this week`}
