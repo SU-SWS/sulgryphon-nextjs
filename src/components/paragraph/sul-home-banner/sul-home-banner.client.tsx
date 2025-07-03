@@ -35,10 +35,9 @@ export const SulHomeBannerFormClient = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    sendGAEvent({
-      event: "search_option_selected",
-      category: "Search",
-      label: formAction,
+    sendGAEvent("event", "search_option_selected", {
+      search_option: formAction,
+      search_value: (event.target as HTMLFormElement).q.value,
     })
 
     // Delay to let GA event send before navigation
