@@ -51,7 +51,7 @@ export const SulHomeBannerFormClient = () => {
       ref={formRef}
       action={formAction}
       onSubmit={handleSubmit}
-      className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24 xs:flex-nowrap"
+      className="flex w-full flex-wrap items-center justify-between gap-10 rounded-2xl bg-white px-16 py-8 xs:flex-nowrap md:w-fit md:justify-start md:px-24 md:py-16 lg:gap-32 lg:px-40 lg:py-24"
     >
       <div className="flex w-full items-center overflow-hidden xs:w-fit">
         <label className="sr-only" htmlFor={inputId}>
