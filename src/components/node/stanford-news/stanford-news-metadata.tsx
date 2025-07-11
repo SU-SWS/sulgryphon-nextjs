@@ -24,7 +24,9 @@ const SulStudyPlaceMetadata = async ({node}: Props) => {
         <meta property="article:published_time" content={new Date(node.suNewsPublishingDate.time).toISOString()} />
       )}
 
-      {node.suNewsTopics?.map((topic, i) => <meta key={`meta-tag-${i}`} property="article:tag" content={topic.name} />)}
+      {node.suNewsTopics?.map((topic, i) => (
+        <meta key={`meta-tag-${i}`} property="article:tag" content={topic.name} />
+      ))}
 
       {image && (
         <>

@@ -12,9 +12,21 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
 
       {node.suCourseLink?.url && <Link href={node.suCourseLink.url}>{node.suCourseLink?.title}</Link>}
 
-      {node.suCourseQuarters && <>{node.suCourseQuarters?.map(term => <div key={term.id}>{term.name}</div>)}</>}
+      {node.suCourseQuarters && (
+        <>
+          {node.suCourseQuarters?.map(term => (
+            <div key={term.id}>{term.name}</div>
+          ))}
+        </>
+      )}
       {node.suCourseSubject && <div>{node.suCourseSubject?.name}</div>}
-      {node.suCourseTags && <div>{node.suCourseTags?.map(term => <div key={term.id}>{term.name}</div>)}</div>}
+      {node.suCourseTags && (
+        <div>
+          {node.suCourseTags?.map(term => (
+            <div key={term.id}>{term.name}</div>
+          ))}
+        </div>
+      )}
       {node.suCourseInstructors && (
         <div>
           {node.suCourseInstructors?.map((instructor, index) => (
