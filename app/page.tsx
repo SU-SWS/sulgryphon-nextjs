@@ -33,7 +33,9 @@ const Page = async () => {
       {!entity.suPageBanner?.__typename && <HomePageBanner />}
 
       {entity.suPageComponents && <Rows components={entity.suPageComponents} fullWidth />}
-      <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
+      <footer>
+        <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
+      </footer>
     </main>
   )
 }

@@ -33,7 +33,9 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
           {formatHtml(node.sulLibraryA11y.processed)}
         </div>
       )}
-      <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
+      <footer>
+        <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
+      </footer>
     </article>
   )
 }
