@@ -123,7 +123,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
           ))}
         </div>
       )}
-      <div className="rs-py-4 centered">Last updated {lastUpdated}</div>
+      <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
     </article>
   )
 }
