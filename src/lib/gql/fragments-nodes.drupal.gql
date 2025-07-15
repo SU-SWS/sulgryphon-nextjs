@@ -450,12 +450,19 @@ fragment FragmentNodeStanfordPageTeaser on NodeStanfordPage {
 
 fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
     ...FragmentNodeInterface
+    body {
+        processed
+    }
     suPersonPhoto {
         ...FragmentMediaImage
     }
+    suPersonFirstName
+    suPersonLastName
     suPersonFullTitle
     suPersonShortTitle
     suPersonEmail
+    suPersonTelephone
+    suPersonMailCode
     sulPersonLibguideId
     sulPersonLibcalId
     suPersonResearch {
