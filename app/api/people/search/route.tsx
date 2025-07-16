@@ -35,7 +35,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
 
     while (hasMorePages) {
       const data = await graphqlClient().stanfordPerson({
-        pageSize: 60, // Use the apparent page limit
+        pageSize: 50, // Fetch 50 results per page
         page: page,
       })
 
