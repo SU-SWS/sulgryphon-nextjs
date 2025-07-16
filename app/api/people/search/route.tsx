@@ -28,11 +28,38 @@ type PersonSearchResult = {
 
 const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> => {
   try {
-    // Get all stanford persons using the existing GraphQL query
-    // Since there's no search parameter in the existing view, we'll fetch all and filter
-    const data = await graphqlClient().stanfordPerson({
-      pageSize: -1, // Get all results
-    })
+    // Get all stanford persons using pagination to fetch ALL results
+    let allResults: any[] = []
+    let page = 0
+    let hasMorePages = true
+
+    while (hasMorePages) {
+      const data = await graphqlClient().stanfordPerson({
+        pageSize: 60, // Use the apparent page limit
+        page: page,
+      })
+
+      if (data.stanfordPerson?.results) {
+        allResults = allResults.concat(data.stanfordPerson.results)
+
+        // Check if we have more pages
+        const pageSize = 60
+        const totalFetched = (page + 1) * pageSize
+        const total = data.stanfordPerson.pageInfo?.total || 0
+        hasMorePages = totalFetched < total
+        page++
+      } else {
+        hasMorePages = false
+      }
+    }
+
+    // Create a fake response structure
+    const data = {
+      stanfordPerson: {
+        results: allResults,
+        pageInfo: {total: allResults.length},
+      },
+    }
 
     if (!data.stanfordPerson?.results) {
       return []
@@ -50,23 +77,35 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
       return node.__typename === "NodeStanfordPerson"
     }
 
-    // Filter to only stanford person nodes and then filter by search terms
-    const filteredResults = data.stanfordPerson.results.filter(isStanfordPerson).filter(person => {
-      // Create searchable text from all relevant fields
-      const searchableFields = [
-        person.suPersonFirstName || "",
-        person.suPersonLastName || "",
-        person.suPersonFullTitle || "",
-        person.suPersonShortTitle || "",
-        person.body?.processed || "",
-        ...(person.suPersonResearch?.map(research => (research.processed as string) || "") || []),
-      ]
-        .join(" ")
-        .toLowerCase()
+    // Filter to only stanford person nodes and calculate relevance scores
+    const scoredResults = data.stanfordPerson.results
+      .filter(isStanfordPerson)
+      .map(person => {
+        // Create searchable text from all relevant fields
+        const searchableFields = [
+          person.suPersonFirstName || "",
+          person.suPersonLastName || "",
+          person.suPersonFullTitle || "",
+          person.suPersonShortTitle || "",
+          person.body?.processed || "",
+          ...(person.suPersonResearchInterests || []),
+          ...(person.suPersonResearch?.map(research => (research?.processed as string) || "") || []),
+        ]
+          .join(" ")
+          .toLowerCase()
 
-      // Check if any search term matches
-      return searchTerms.some(term => searchableFields.includes(term))
-    })
+        // Calculate score based on how many search terms match (partial word matching)
+        const score = searchTerms.reduce((count, term) => {
+          const found = searchableFields.indexOf(term) !== -1
+          return found ? count + 1 : count
+        }, 0)
+
+        return {person, score}
+      })
+      .filter(result => result.score > 0) // Only include results with at least one match
+      .sort((a, b) => b.score - a.score) // Sort by score (highest first)
+
+    const filteredResults = scoredResults.map(result => result.person)
 
     // Transform to API response format
     return filteredResults.map(

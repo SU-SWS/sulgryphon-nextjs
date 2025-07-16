@@ -852,19 +852,12 @@ ${FragmentDateTimeFragmentDoc}`;
 export const FragmentNodeStanfordPersonTeaserFragmentDoc = gql`
     fragment FragmentNodeStanfordPersonTeaser on NodeStanfordPerson {
   ...FragmentNodeInterface
-  body {
-    processed
-  }
   suPersonPhoto {
     ...FragmentMediaImage
   }
-  suPersonFirstName
-  suPersonLastName
   suPersonFullTitle
   suPersonShortTitle
   suPersonEmail
-  suPersonTelephone
-  suPersonMailCode
   sulPersonLibguideId
   sulPersonLibcalId
   suPersonResearch {
@@ -1588,7 +1581,7 @@ export const StanfordPersonDocument = gql`
   ) {
     results {
       ...FragmentNodeInterface
-      ...FragmentNodeStanfordPersonTeaser
+      ...FragmentNodeStanfordPerson
     }
     pageInfo {
       ...FragmentViewPageInfo
@@ -1596,7 +1589,7 @@ export const StanfordPersonDocument = gql`
   }
 }
     ${FragmentNodeInterfaceFragmentDoc}
-${FragmentNodeStanfordPersonTeaserFragmentDoc}
+${FragmentNodeStanfordPersonFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const StanfordSharedTagsDocument = gql`
     query stanfordSharedTags($contextualFilters: StanfordSharedTagsContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {

@@ -6810,13 +6810,9 @@ export type NodeQuery = {
         created: {__typename?: "DateTime"; timezone: any; time: any}
         suPublicationAuthorRef?: Array<{
           __typename: "NodeStanfordPerson"
-          suPersonFirstName: string
-          suPersonLastName: string
           suPersonFullTitle?: string | null
           suPersonShortTitle?: string | null
           suPersonEmail?: any | null
-          suPersonTelephone?: string | null
-          suPersonMailCode?: string | null
           sulPersonLibguideId?: number | null
           sulPersonLibcalId?: number | null
           id: string
@@ -6824,7 +6820,6 @@ export type NodeQuery = {
           status: boolean
           path?: string | null
           sticky: boolean
-          body?: {__typename?: "TextSummary"; processed?: any | null} | null
           suPersonPhoto?: {
             __typename: "MediaImage"
             sulImageCredit?: string | null
@@ -12324,13 +12319,9 @@ export type FragmentNodeStanfordPublicationFragment = {
   sticky: boolean
   suPublicationAuthorRef?: Array<{
     __typename: "NodeStanfordPerson"
-    suPersonFirstName: string
-    suPersonLastName: string
     suPersonFullTitle?: string | null
     suPersonShortTitle?: string | null
     suPersonEmail?: any | null
-    suPersonTelephone?: string | null
-    suPersonMailCode?: string | null
     sulPersonLibguideId?: number | null
     sulPersonLibcalId?: number | null
     id: string
@@ -12338,7 +12329,6 @@ export type FragmentNodeStanfordPublicationFragment = {
     status: boolean
     path?: string | null
     sticky: boolean
-    body?: {__typename?: "TextSummary"; processed?: any | null} | null
     suPersonPhoto?: {
       __typename: "MediaImage"
       sulImageCredit?: string | null
@@ -14677,13 +14667,9 @@ type FragmentNodeUnion_NodeStanfordPublication_Fragment = {
   created: {__typename?: "DateTime"; timezone: any; time: any}
   suPublicationAuthorRef?: Array<{
     __typename: "NodeStanfordPerson"
-    suPersonFirstName: string
-    suPersonLastName: string
     suPersonFullTitle?: string | null
     suPersonShortTitle?: string | null
     suPersonEmail?: any | null
-    suPersonTelephone?: string | null
-    suPersonMailCode?: string | null
     sulPersonLibguideId?: number | null
     sulPersonLibcalId?: number | null
     id: string
@@ -14691,7 +14677,6 @@ type FragmentNodeUnion_NodeStanfordPublication_Fragment = {
     status: boolean
     path?: string | null
     sticky: boolean
-    body?: {__typename?: "TextSummary"; processed?: any | null} | null
     suPersonPhoto?: {
       __typename: "MediaImage"
       sulImageCredit?: string | null
@@ -16154,13 +16139,9 @@ export type FragmentNodeStanfordPageTeaserFragment = {
 
 export type FragmentNodeStanfordPersonTeaserFragment = {
   __typename: "NodeStanfordPerson"
-  suPersonFirstName: string
-  suPersonLastName: string
   suPersonFullTitle?: string | null
   suPersonShortTitle?: string | null
   suPersonEmail?: any | null
-  suPersonTelephone?: string | null
-  suPersonMailCode?: string | null
   sulPersonLibguideId?: number | null
   sulPersonLibcalId?: number | null
   id: string
@@ -16168,7 +16149,6 @@ export type FragmentNodeStanfordPersonTeaserFragment = {
   status: boolean
   path?: string | null
   sticky: boolean
-  body?: {__typename?: "TextSummary"; processed?: any | null} | null
   suPersonPhoto?: {
     __typename: "MediaImage"
     sulImageCredit?: string | null
@@ -16473,18 +16453,13 @@ type FragmentNodeTeaserUnion_NodeStanfordPerson_Fragment = {
   status: boolean
   path?: string | null
   sticky: boolean
-  suPersonFirstName: string
-  suPersonLastName: string
   suPersonFullTitle?: string | null
   suPersonShortTitle?: string | null
   suPersonEmail?: any | null
-  suPersonTelephone?: string | null
-  suPersonMailCode?: string | null
   sulPersonLibguideId?: number | null
   sulPersonLibcalId?: number | null
   changed: {__typename?: "DateTime"; timezone: any; time: any}
   created: {__typename?: "DateTime"; timezone: any; time: any}
-  body?: {__typename?: "TextSummary"; processed?: any | null} | null
   suPersonPhoto?: {
     __typename: "MediaImage"
     sulImageCredit?: string | null
@@ -20357,13 +20332,9 @@ export type RouteQuery = {
               created: {__typename?: "DateTime"; timezone: any; time: any}
               suPublicationAuthorRef?: Array<{
                 __typename: "NodeStanfordPerson"
-                suPersonFirstName: string
-                suPersonLastName: string
                 suPersonFullTitle?: string | null
                 suPersonShortTitle?: string | null
                 suPersonEmail?: any | null
-                suPersonTelephone?: string | null
-                suPersonMailCode?: string | null
                 sulPersonLibguideId?: number | null
                 sulPersonLibcalId?: number | null
                 id: string
@@ -20371,7 +20342,6 @@ export type RouteQuery = {
                 status: boolean
                 path?: string | null
                 sticky: boolean
-                body?: {__typename?: "TextSummary"; processed?: any | null} | null
                 suPersonPhoto?: {
                   __typename: "MediaImage"
                   sulImageCredit?: string | null
@@ -21869,18 +21839,404 @@ export type StanfordPersonQuery = {
           status: boolean
           path?: string | null
           sticky: boolean
-          suPersonFirstName: string
-          suPersonLastName: string
-          suPersonFullTitle?: string | null
-          suPersonShortTitle?: string | null
-          suPersonEmail?: any | null
-          suPersonTelephone?: string | null
-          suPersonMailCode?: string | null
           sulPersonLibguideId?: number | null
           sulPersonLibcalId?: number | null
+          suPersonAcademicAppt?: string | null
+          suPersonAdminAppts?: Array<string> | null
+          suPersonEducation?: Array<string> | null
+          suPersonEmail?: any | null
+          suPersonFax?: string | null
+          suPersonFirstName: string
+          suPersonFullTitle?: string | null
+          suPersonLastName: string
+          suPersonLocationName?: string | null
+          suPersonMailCode?: string | null
+          suPersonMobilePhone?: string | null
+          suPersonPronouns?: string | null
+          suPersonResearchInterests?: Array<string> | null
+          suPersonShortTitle?: string | null
+          suPersonTelephone?: string | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
-          body?: {__typename?: "TextSummary"; processed?: any | null} | null
+          body?: {__typename?: "TextSummary"; processed?: any | null; summary?: any | null} | null
+          suPersonAffiliations?: Array<{
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          }> | null
+          suPersonComponents?: Array<
+            | {
+                __typename: "ParagraphCollection"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                sulCollectionHeading?: string | null
+                sulCollectionCard?: Array<{
+                  __typename: "ParagraphCollectionCard"
+                  sulCardInfo: string
+                  id: string
+                  behaviors?: string | null
+                  status: boolean
+                  sulCard?: {
+                    __typename: "ParagraphStanfordCard"
+                    suCardHeader?: string | null
+                    suCardSuperHeader?: string | null
+                    sulCardImageCaption?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suCardLink?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suCardMedia?:
+                      | {
+                          __typename: "MediaImage"
+                          sulImageCredit?: string | null
+                          id: string
+                          name: string
+                          mediaImage: {
+                            __typename?: "Image"
+                            url: string
+                            alt?: string | null
+                            height: number
+                            width: number
+                          }
+                        }
+                      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                      | null
+                    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                  } | null
+                }> | null
+              }
+            | {__typename: "ParagraphLayout"; id: string; behaviors?: string | null; status: boolean}
+            | {
+                __typename: "ParagraphStanfordBanner"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suBannerHeader?: string | null
+                suBannerSupHeader?: string | null
+                suBannerBody?: {__typename?: "Text"; processed?: any | null} | null
+                suBannerButton?: {__typename?: "Link"; url?: string | null; title?: string | null} | null
+                suBannerImage?: {
+                  __typename: "MediaImage"
+                  sulImageCredit?: string | null
+                  id: string
+                  name: string
+                  mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                } | null
+              }
+            | {
+                __typename: "ParagraphStanfordCard"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suCardHeader?: string | null
+                suCardSuperHeader?: string | null
+                sulCardImageCaption?: string | null
+                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                suCardLink?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                suCardMedia?:
+                  | {
+                      __typename: "MediaImage"
+                      sulImageCredit?: string | null
+                      id: string
+                      name: string
+                      mediaImage: {
+                        __typename?: "Image"
+                        url: string
+                        alt?: string | null
+                        height: number
+                        width: number
+                      }
+                    }
+                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                  | null
+                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+              }
+            | {
+                __typename: "ParagraphStanfordEntity"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suEntityHeadline?: string | null
+                suEntityDescription?: {__typename?: "Text"; processed?: any | null} | null
+                suEntityButton?: {__typename?: "Link"; url?: string | null; title?: string | null} | null
+                suEntityItem?: Array<
+                  | {__typename?: "NodeStanfordCourse"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordEvent"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordEventSeries"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordNews"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordPage"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordPerson"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordPolicy"; id: string; path?: string | null}
+                  | {__typename?: "NodeStanfordPublication"; id: string; path?: string | null}
+                > | null
+              }
+            | {
+                __typename: "ParagraphStanfordFaq"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suFaqHeadline?: string | null
+                created: {__typename?: "DateTime"; timezone: any; time: any}
+                suFaqDescription?: {__typename?: "Text"; processed?: any | null} | null
+                suFaqQuestions?: Array<{
+                  __typename: "ParagraphStanfordAccordion"
+                  suAccordionTitle: string
+                  id: string
+                  behaviors?: string | null
+                  status: boolean
+                  suAccordionBody: {__typename?: "Text"; processed?: any | null}
+                }> | null
+              }
+            | {
+                __typename: "ParagraphStanfordGallery"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suGalleryHeadline?: string | null
+                suGalleryDescription?: {__typename?: "Text"; processed?: any | null} | null
+                suGalleryButton?: {__typename?: "Link"; url?: string | null; title?: string | null} | null
+                suGalleryImages?: Array<{
+                  __typename: "MediaStanfordGalleryImage"
+                  suGalleryCaption?: string | null
+                  id: string
+                  name: string
+                  suGalleryImage?: {
+                    __typename?: "Image"
+                    url: string
+                    alt?: string | null
+                    height: number
+                    width: number
+                  } | null
+                }> | null
+              }
+            | {
+                __typename: "ParagraphStanfordList"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suListHeadline: string
+                suListDescription?: {__typename?: "Text"; processed?: any | null} | null
+                suListButton?: {__typename?: "Link"; url?: string | null; title?: string | null} | null
+                suListView?: {
+                  __typename?: "ViewReference"
+                  view: string
+                  display: string
+                  contextualFilter?: Array<string> | null
+                  pageSize?: number | null
+                } | null
+              }
+            | {
+                __typename: "ParagraphStanfordMediaCaption"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suMediaCaptionMedia?:
+                  | {
+                      __typename: "MediaImage"
+                      sulImageCredit?: string | null
+                      id: string
+                      name: string
+                      mediaImage: {
+                        __typename?: "Image"
+                        url: string
+                        alt?: string | null
+                        height: number
+                        width: number
+                      }
+                    }
+                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                  | null
+                suMediaCaptionLink?: {__typename?: "Link"; url?: string | null; title?: string | null} | null
+                suMediaCaptionCaption?: {__typename?: "Text"; processed?: any | null} | null
+              }
+            | {
+                __typename: "ParagraphStanfordWysiwyg"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suWysiwygText?: {__typename?: "Text"; processed?: any | null} | null
+              }
+            | {
+                __typename: "ParagraphSulButton"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                sulButtonHeadline?: string | null
+                sulButtonLink: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                }
+              }
+            | {
+                __typename: "ParagraphSulContactCard"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                sulContactEmail?: any | null
+                sulContactHours?: string | null
+                sulContactPhone?: any | null
+                sulContactTitle?: string | null
+                sulContactAddress?: {
+                  __typename?: "Address"
+                  langcode?: string | null
+                  givenName?: string | null
+                  additionalName?: string | null
+                  familyName?: string | null
+                  organization?: string | null
+                  addressLine1?: string | null
+                  addressLine2?: string | null
+                  postalCode?: string | null
+                  sortingCode?: string | null
+                  dependentLocality?: string | null
+                  locality?: string | null
+                  administrativeArea?: string | null
+                  country?: {__typename?: "AddressCountry"; name?: string | null; code?: string | null} | null
+                } | null
+                sulContactBranch?: {__typename?: "NodeSulLibrary"; id: string; path?: string | null} | null
+                sulContactImage?: {
+                  __typename: "MediaImage"
+                  sulImageCredit?: string | null
+                  id: string
+                  name: string
+                  mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                } | null
+                sulContactLink?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                sulContactMapLink?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+              }
+            | {
+                __typename: "ParagraphSulFeatCollection"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                sulCollectionHeadline?: string | null
+                sulCollectionCards: Array<{
+                  __typename: "ParagraphStanfordCard"
+                  suCardHeader?: string | null
+                  suCardSuperHeader?: string | null
+                  sulCardImageCaption?: string | null
+                  id: string
+                  behaviors?: string | null
+                  status: boolean
+                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                  suCardLink?: {
+                    __typename?: "Link"
+                    url?: string | null
+                    title?: string | null
+                    attributes?: {
+                      __typename?: "LinkAttributes"
+                      ariaLabel?: string | null
+                      ariaLabelledBy?: string | null
+                    } | null
+                  } | null
+                  suCardMedia?:
+                    | {
+                        __typename: "MediaImage"
+                        sulImageCredit?: string | null
+                        id: string
+                        name: string
+                        mediaImage: {
+                          __typename?: "Image"
+                          url: string
+                          alt?: string | null
+                          height: number
+                          width: number
+                        }
+                      }
+                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                    | null
+                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                }>
+                sulCollectionLink?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+              }
+            | {
+                __typename: "ParagraphSulLibguide"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                sulLibguideHeadline?: string | null
+                sulLibguideId: number
+                sulLibguideDesc?: {__typename?: "Text"; processed?: any | null} | null
+              }
+          > | null
+          suPersonLinks?: Array<{
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          }> | null
+          suPersonLocationAddress?: {__typename?: "Text"; processed?: any | null} | null
+          suPersonMapUrl?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
           suPersonPhoto?: {
             __typename: "MediaImage"
             sulImageCredit?: string | null
@@ -21888,7 +22244,18 @@ export type StanfordPersonQuery = {
             name: string
             mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
           } | null
+          suPersonProfileLink?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
           suPersonResearch?: Array<{__typename?: "Text"; processed?: any | null}> | null
+          suPersonScholarlyInterests?: {__typename?: "Text"; processed?: any | null} | null
           suPersonTypeGroup?: Array<{
             __typename: "TermStanfordPersonType"
             id: string
@@ -22198,18 +22565,13 @@ export type StanfordSharedTagsQuery = {
           status: boolean
           path?: string | null
           sticky: boolean
-          suPersonFirstName: string
-          suPersonLastName: string
           suPersonFullTitle?: string | null
           suPersonShortTitle?: string | null
           suPersonEmail?: any | null
-          suPersonTelephone?: string | null
-          suPersonMailCode?: string | null
           sulPersonLibguideId?: number | null
           sulPersonLibcalId?: number | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
-          body?: {__typename?: "TextSummary"; processed?: any | null} | null
           suPersonPhoto?: {
             __typename: "MediaImage"
             sulImageCredit?: string | null
@@ -24841,13 +25203,9 @@ export type SearchQuery = {
           created: {__typename?: "DateTime"; timezone: any; time: any}
           suPublicationAuthorRef?: Array<{
             __typename: "NodeStanfordPerson"
-            suPersonFirstName: string
-            suPersonLastName: string
             suPersonFullTitle?: string | null
             suPersonShortTitle?: string | null
             suPersonEmail?: any | null
-            suPersonTelephone?: string | null
-            suPersonMailCode?: string | null
             sulPersonLibguideId?: number | null
             sulPersonLibcalId?: number | null
             id: string
@@ -24855,7 +25213,6 @@ export type SearchQuery = {
             status: boolean
             path?: string | null
             sticky: boolean
-            body?: {__typename?: "TextSummary"; processed?: any | null} | null
             suPersonPhoto?: {
               __typename: "MediaImage"
               sulImageCredit?: string | null
