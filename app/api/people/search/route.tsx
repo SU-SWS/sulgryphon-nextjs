@@ -29,7 +29,7 @@ type PersonSearchResult = {
 const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> => {
   try {
     // Get all stanford persons using pagination to fetch ALL results
-    let allResults: any[] = []
+    let allResults: StanfordPersonResultItem[] = []
     let page = 0
     let hasMorePages = true
 
