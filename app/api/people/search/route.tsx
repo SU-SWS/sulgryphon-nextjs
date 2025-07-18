@@ -8,21 +8,22 @@ type StanfordPersonNode = Extract<StanfordPersonResultItem, {__typename: "NodeSt
 
 export const dynamic = "force-dynamic"
 
+// Create a simplified API response type based on the GraphQL NodeStanfordPerson type
 type PersonSearchResult = {
-  id: string
-  firstName: string
-  lastName: string
-  fullTitle?: string
+  id: StanfordPersonNode["id"]
+  firstName: StanfordPersonNode["suPersonFirstName"]
+  lastName: StanfordPersonNode["suPersonLastName"]
+  fullTitle: StanfordPersonNode["suPersonFullTitle"]
   photo?: {
     url: string
     alt?: string
   }
   body?: string
-  email?: string
-  telephone?: string
-  mailCode?: string
+  email: StanfordPersonNode["suPersonEmail"]
+  telephone: StanfordPersonNode["suPersonTelephone"]
+  mailCode: StanfordPersonNode["suPersonMailCode"]
   research?: string
-  path: string
+  path: StanfordPersonNode["path"]
 }
 
 const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> => {
