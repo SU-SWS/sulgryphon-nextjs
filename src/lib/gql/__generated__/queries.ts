@@ -1626,6 +1626,39 @@ export const SearchDocument = gql`
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentNodeUnionFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
+export const StanfordPersonSearchDocument = gql`
+    query stanfordPersonSearch($pageSize: Int = 999, $page: Int = 0, $offset: Int) {
+  stanfordPerson(pageSize: $pageSize, page: $page, offset: $offset) {
+    results {
+      ...FragmentNodeInterface
+      ... on NodeStanfordPerson {
+        suPersonFirstName
+        suPersonLastName
+        suPersonFullTitle
+        suPersonShortTitle
+        suPersonPhoto {
+          ...FragmentMediaImage
+        }
+        body {
+          processed
+        }
+        suPersonEmail
+        suPersonTelephone
+        suPersonMailCode
+        suPersonResearch {
+          processed
+        }
+        suPersonResearchInterests
+      }
+    }
+    pageInfo {
+      ...FragmentViewPageInfo
+    }
+  }
+}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentMediaImageFragmentDoc}
+${FragmentViewPageInfoFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1687,6 +1720,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     search(variables?: DrupalTypes.SearchQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DrupalTypes.SearchQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.SearchQuery>({ document: SearchDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'search', 'query', variables);
+    },
+    stanfordPersonSearch(variables?: DrupalTypes.StanfordPersonSearchQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DrupalTypes.StanfordPersonSearchQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DrupalTypes.StanfordPersonSearchQuery>({ document: StanfordPersonSearchDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'stanfordPersonSearch', 'query', variables);
     }
   };
 }

@@ -1,9 +1,10 @@
 import {NextRequest, NextResponse} from "next/server"
 import {graphqlClient} from "@/lib/gql/fetcher"
-import {StanfordPersonQuery} from "@/lib/gql/__generated__/drupal.d"
+import {StanfordPersonSearchQuery} from "@/lib/gql/__generated__/drupal.d"
 
 // Extract the actual type of items in the results array
-type StanfordPersonResultItem = NonNullable<NonNullable<StanfordPersonQuery["stanfordPerson"]>["results"][number]>
+type StanfordPersonResultItem = NonNullable<NonNullable<StanfordPersonSearchQuery["stanfordPerson"]>["results"][number]>
+type StanfordPersonNode = Extract<StanfordPersonResultItem, {__typename: "NodeStanfordPerson"}>
 
 export const dynamic = "force-dynamic"
 
@@ -16,9 +17,7 @@ type PersonSearchResult = {
     url: string
     alt?: string
   }
-  body?: {
-    processed: string
-  }
+  body?: string
   email?: string
   telephone?: string
   mailCode?: string
@@ -34,8 +33,8 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
     let hasMorePages = true
 
     while (hasMorePages) {
-      const data = await graphqlClient().stanfordPerson({
-        pageSize: 50, // Fetch 50 results per page
+      const data = await graphqlClient().stanfordPersonSearch({
+        pageSize: 999, // Fetch large batch to reduce API calls
         page: page,
       })
 
@@ -43,7 +42,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
         allResults = allResults.concat(data.stanfordPerson.results)
 
         // Check if we have more pages
-        const pageSize = 60
+        const pageSize = 999
         const totalFetched = (page + 1) * pageSize
         const total = data.stanfordPerson.pageInfo?.total || 0
         hasMorePages = totalFetched < total
@@ -53,15 +52,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
       }
     }
 
-    // Create a fake response structure
-    const data = {
-      stanfordPerson: {
-        results: allResults,
-        pageInfo: {total: allResults.length},
-      },
-    }
-
-    if (!data.stanfordPerson?.results) {
+    if (!allResults.length) {
       return []
     }
 
@@ -71,14 +62,11 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
       .filter(term => term.length > 0)
 
     // Type guard to ensure we only work with NodeStanfordPerson
-    const isStanfordPerson = (
-      node: StanfordPersonResultItem
-    ): node is Extract<StanfordPersonResultItem, {__typename: "NodeStanfordPerson"}> => {
-      return node.__typename === "NodeStanfordPerson"
-    }
+    const isStanfordPerson = (node: StanfordPersonResultItem): node is StanfordPersonNode =>
+      node.__typename === "NodeStanfordPerson"
 
     // Filter to only stanford person nodes and calculate relevance scores
-    const scoredResults = data.stanfordPerson.results
+    const scoredResults = allResults
       .filter(isStanfordPerson)
       .map(person => {
         // Create searchable text from all relevant fields
@@ -89,7 +77,9 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
           person.suPersonShortTitle || "",
           person.body?.processed || "",
           ...(person.suPersonResearchInterests || []),
-          ...(person.suPersonResearch?.map(research => (research?.processed as string) || "") || []),
+          ...(person.suPersonResearch?.map(
+            (research: {processed?: string | null}) => (research?.processed as string) || ""
+          ) || []),
         ]
           .join(" ")
           .toLowerCase()
@@ -105,7 +95,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
       .filter(result => result.score > 0) // Only include results with at least one match
       .sort((a, b) => b.score - a.score) // Sort by score (highest first)
 
-    const filteredResults = scoredResults.map(result => result.person)
+    const filteredResults = scoredResults.map((result): StanfordPersonNode => result.person)
 
     // Transform to API response format
     return filteredResults.map(
@@ -120,7 +110,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
               alt: person.suPersonPhoto.mediaImage.alt || undefined,
             }
           : undefined,
-        body: person.body?.processed ? {processed: person.body.processed} : undefined,
+        body: person.body?.processed || undefined,
         email: person.suPersonEmail || undefined,
         telephone: person.suPersonTelephone || undefined,
         mailCode: person.suPersonMailCode || undefined,
@@ -130,7 +120,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
     )
   } catch (error) {
     console.error("Failed to fetch person search results:", error)
-    throw new Error("Failed to fetch search results")
+    return []
   }
 }
 

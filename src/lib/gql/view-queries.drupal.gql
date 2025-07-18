@@ -158,3 +158,33 @@ query search($filter: SearchFilterInput = {key: ""}, $pageSize: Int = 3, $page: 
         }
     }
 }
+
+query stanfordPersonSearch($pageSize: Int = 999, $page: Int = 0, $offset: Int) {
+    stanfordPerson(pageSize: $pageSize, page: $page, offset: $offset) {
+        results {
+            ...FragmentNodeInterface
+            ... on NodeStanfordPerson {
+                suPersonFirstName
+                suPersonLastName
+                suPersonFullTitle
+                suPersonShortTitle
+                suPersonPhoto {
+                    ...FragmentMediaImage
+                }
+                body {
+                    processed
+                }
+                suPersonEmail
+                suPersonTelephone
+                suPersonMailCode
+                suPersonResearch {
+                    processed
+                }
+                suPersonResearchInterests
+            }
+        }
+        pageInfo {
+            ...FragmentViewPageInfo
+        }
+    }
+}

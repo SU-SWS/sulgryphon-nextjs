@@ -25869,3 +25869,136 @@ export type SearchQuery = {
     pageInfo: {__typename?: "ViewPageInfo"; page: number; total: number}
   } | null
 }
+
+export type StanfordPersonSearchQueryVariables = Exact<{
+  pageSize?: InputMaybe<Scalars["Int"]["input"]>
+  page?: InputMaybe<Scalars["Int"]["input"]>
+  offset?: InputMaybe<Scalars["Int"]["input"]>
+}>
+
+export type StanfordPersonSearchQuery = {
+  __typename?: "Query"
+  stanfordPerson?: {
+    __typename?: "StanfordPersonResult"
+    results: Array<
+      | {
+          __typename: "NodeStanfordCourse"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordEvent"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordEventSeries"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordNews"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordPage"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordPerson"
+          suPersonFirstName: string
+          suPersonLastName: string
+          suPersonFullTitle?: string | null
+          suPersonShortTitle?: string | null
+          suPersonEmail?: any | null
+          suPersonTelephone?: string | null
+          suPersonMailCode?: string | null
+          suPersonResearchInterests?: Array<string> | null
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          suPersonPhoto?: {
+            __typename: "MediaImage"
+            sulImageCredit?: string | null
+            id: string
+            name: string
+            mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+          } | null
+          body?: {__typename?: "TextSummary"; processed?: any | null} | null
+          suPersonResearch?: Array<{__typename?: "Text"; processed?: any | null}> | null
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordPolicy"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeStanfordPublication"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeSulLibrary"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+      | {
+          __typename: "NodeSulStudyPlace"
+          id: string
+          title: string
+          status: boolean
+          path?: string | null
+          sticky: boolean
+          changed: {__typename?: "DateTime"; timezone: any; time: any}
+          created: {__typename?: "DateTime"; timezone: any; time: any}
+        }
+    >
+    pageInfo: {__typename?: "ViewPageInfo"; page: number; total: number}
+  } | null
+}
