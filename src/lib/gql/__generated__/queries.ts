@@ -1581,7 +1581,7 @@ export const StanfordPersonDocument = gql`
   ) {
     results {
       ...FragmentNodeInterface
-      ...FragmentNodeStanfordPerson
+      ...FragmentNodeStanfordPersonTeaser
     }
     pageInfo {
       ...FragmentViewPageInfo
@@ -1589,7 +1589,7 @@ export const StanfordPersonDocument = gql`
   }
 }
     ${FragmentNodeInterfaceFragmentDoc}
-${FragmentNodeStanfordPersonFragmentDoc}
+${FragmentNodeStanfordPersonTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const StanfordSharedTagsDocument = gql`
     query stanfordSharedTags($contextualFilters: StanfordSharedTagsContextualFilterInput, $pageSize: Int = 3, $page: Int, $offset: Int) {

@@ -115,7 +115,7 @@ query stanfordPerson($contextualFilters: StanfordPersonContextualFilterInput, $p
     stanfordPerson(contextualFilter: $contextualFilters, pageSize: $pageSize, page: $page, offset: $offset) {
         results {
             ...FragmentNodeInterface
-            ...FragmentNodeStanfordPerson
+            ...FragmentNodeStanfordPersonTeaser
         }
         pageInfo {
             ...FragmentViewPageInfo
