@@ -1,29 +1,28 @@
 import {NextRequest, NextResponse} from "next/server"
 import {graphqlClient} from "@/lib/gql/fetcher"
-import {StanfordPersonSearchQuery} from "@/lib/gql/__generated__/drupal.d"
+import {StanfordPersonSearchQuery, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 
 // Extract the actual type of items in the results array
 type StanfordPersonResultItem = NonNullable<NonNullable<StanfordPersonSearchQuery["stanfordPerson"]>["results"][number]>
-type StanfordPersonNode = Extract<StanfordPersonResultItem, {__typename: "NodeStanfordPerson"}>
 
 export const dynamic = "force-dynamic"
 
 // Create a simplified API response type based on the GraphQL NodeStanfordPerson type
 type PersonSearchResult = {
-  id: StanfordPersonNode["id"]
-  firstName: StanfordPersonNode["suPersonFirstName"]
-  lastName: StanfordPersonNode["suPersonLastName"]
-  fullTitle: StanfordPersonNode["suPersonFullTitle"]
+  id: NodeStanfordPerson["id"]
+  firstName: NodeStanfordPerson["suPersonFirstName"]
+  lastName: NodeStanfordPerson["suPersonLastName"]
+  fullTitle: NodeStanfordPerson["suPersonFullTitle"]
   photo?: {
     url: string
     alt?: string
   }
   body?: string
-  email: StanfordPersonNode["suPersonEmail"]
-  telephone: StanfordPersonNode["suPersonTelephone"]
-  mailCode: StanfordPersonNode["suPersonMailCode"]
+  email: NodeStanfordPerson["suPersonEmail"]
+  telephone: NodeStanfordPerson["suPersonTelephone"]
+  mailCode: NodeStanfordPerson["suPersonMailCode"]
   research?: string
-  path: StanfordPersonNode["path"]
+  path: NodeStanfordPerson["path"]
 }
 
 const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> => {
@@ -63,7 +62,9 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
       .filter(term => term.length > 0)
 
     // Type guard to ensure we only work with NodeStanfordPerson
-    const isStanfordPerson = (node: StanfordPersonResultItem): node is StanfordPersonNode =>
+    const isStanfordPerson = (
+      node: StanfordPersonResultItem
+    ): node is Extract<StanfordPersonResultItem, {__typename: "NodeStanfordPerson"}> =>
       node.__typename === "NodeStanfordPerson"
 
     // Filter to only stanford person nodes and calculate relevance scores
@@ -96,7 +97,9 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
       .filter(result => result.score > 0) // Only include results with at least one match
       .sort((a, b) => b.score - a.score) // Sort by score (highest first)
 
-    const filteredResults = scoredResults.map((result): StanfordPersonNode => result.person)
+    const filteredResults = scoredResults.map(
+      (result): Extract<StanfordPersonResultItem, {__typename: "NodeStanfordPerson"}> => result.person
+    )
 
     // Transform to API response format
     return filteredResults.map(
