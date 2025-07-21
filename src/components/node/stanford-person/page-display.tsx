@@ -168,7 +168,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {node.sulPersonLibcalId && <LibCal libcalId={node.sulPersonLibcalId} srText={node.title} />}
         </div>
       </div>
-      <div className="rs-mb-0 rs-mt-4 centered">Last updated {lastUpdated}</div>
+      <footer className="rs-mb-0 rs-mt-4 centered">Last updated {lastUpdated}</footer>
     </article>
   )
 }
