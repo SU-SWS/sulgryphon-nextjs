@@ -20,19 +20,39 @@ const HeadingList = () => {
   const [headings, setHeadings] = useState<Array<Heading>>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
   const [pageH1, setPageH1] = useState<string>("")
-  const [allPageLinks, setAllPageLinks] = useState<Array<PageLink>>([])
+
+  const getPageContext = (element: Element): string => {
+    if (element.closest("nav")) return "navigation"
+    if (element.closest("footer")) return "footer"
+    if (element.closest("header")) return "header"
+    if (element.closest("main")) return "main"
+    return "other"
+  }
 
   // Memoized duplicate links detection
   const duplicateLinksMap = useMemo(() => {
+    if (typeof document === "undefined") {
+      return new Set<string>()
+    }
+
     const linkGroups = new Map<string, PageLink[]>()
 
-    // Group links by text (case-insensitive)
-    allPageLinks.forEach(link => {
-      const key = link.text.toLowerCase()
-      if (!linkGroups.has(key)) {
-        linkGroups.set(key, [])
+    document.querySelectorAll("a").forEach(link => {
+      const text = link.textContent?.trim()
+      if (text) {
+        const pageLink: PageLink = {
+          text,
+          href: link.getAttribute("href") || "",
+          context: getPageContext(link),
+        }
+
+        // Group links by text (case-insensitive)
+        const key = text.toLowerCase()
+        if (!linkGroups.has(key)) {
+          linkGroups.set(key, [])
+        }
+        linkGroups.get(key)!.push(pageLink)
       }
-      linkGroups.get(key)!.push(link)
     })
 
     // Find duplicates (multiple hrefs or contexts)
@@ -48,7 +68,7 @@ const HeadingList = () => {
     })
 
     return duplicates
-  }, [allPageLinks])
+  }, [])
 
   const debouncedHandleScroll = useDebounceCallback(() => {
     const firstHeading = document.querySelector("#main-content h2:not([data-skip-heading])")
@@ -75,37 +95,10 @@ const HeadingList = () => {
     }
   }, [])
 
-  const getPageContext = (element: Element): string => {
-    if (element.closest("nav")) return "navigation"
-    if (element.closest("footer")) return "footer"
-    if (element.closest("header")) return "header"
-    if (element.closest("main")) return "main"
-    return "other"
-  }
-
   useEffect(() => {
     // Initialize page data
     const h1 = document.querySelector("h1")
     setPageH1(h1?.textContent?.trim() || "")
-
-    // Collect all page links
-    const links: PageLink[] = []
-    document.querySelectorAll("a").forEach(link => {
-      const text = link.textContent?.trim()
-      if (text) {
-        links.push({
-          text,
-          href: link.getAttribute("href") || "",
-          context: getPageContext(link),
-        })
-      }
-    })
-    setAllPageLinks(links)
-  }, [])
-
-  // Separate effect for processing headings after allPageLinks are set
-  useEffect(() => {
-    if (allPageLinks.length === 0) return
 
     const timeoutId = setTimeout(() => {
       const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
@@ -163,7 +156,7 @@ const HeadingList = () => {
     }, 250)
 
     return () => clearTimeout(timeoutId)
-  }, [allPageLinks, duplicateLinksMap, handleAnchor])
+  }, [duplicateLinksMap, handleAnchor])
 
   useEventListener("scroll", debouncedHandleScroll)
   useEventListener("hashchange", handleAnchor)
