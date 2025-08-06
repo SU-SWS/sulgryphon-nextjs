@@ -22,7 +22,7 @@ div .__embed_column,
 /* styles for the responsive tables */
 @layer utilities {
   /* Added to get center alignment on branches table. */
-  @media screen and (max-width: 40em) {
+  @media screen and (max-width: 1000px) {
     .responsiveTable td.branch-hours,
     .responsiveTable td.table-image {
       display: flex;
@@ -51,7 +51,7 @@ div .__embed_column,
   .responsive-table ul li:last-child span {
     display: none;
   }
-  @media screen and (max-width: 40em) {
+  @media screen and (max-width: 1000px) {
     .responsiveTable.responsive-table-study td.table-image {
       display: block;
     }
