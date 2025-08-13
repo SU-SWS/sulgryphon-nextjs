@@ -13,11 +13,11 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   })
 
   return (
-    <article {...props}>
+    <div {...props}>
       <StanfordPageMetadata node={node} />
       {node.suPageComponents && <Rows components={node.suPageComponents} fullWidth={fullWidth} />}
       <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
-    </article>
+    </div>
   )
 }
 
