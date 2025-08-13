@@ -1,13 +1,12 @@
 import {HtmlHTMLAttributes} from "react"
 import {ParagraphStanfordStatCard} from "@/lib/gql/__generated__/drupal.d"
-import {H2, H3, H4} from "@/components/elements/headers"
-import Wysiwyg from "@/components/patterns/wysiwyg"
-import {Link} from "@/components/patterns/link"
+import StanfordWysiwyg from "@/components/paragraph/stanford-wysiwyg"
+import Link from "@/components/patterns/elements/drupal-link"
 import ReverseVisualOrder from "@/components/patterns/reverse-visual-order"
 import ImageCard from "@/components/patterns/image-card"
 import CountUpNumber from "@/components/patterns/count-up"
 import {clsx} from "clsx"
-import twMerge from "tailwind-merge"
+import {twMerge} from "tailwind-merge"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
@@ -72,19 +71,19 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
         {paragraph.suStatHeadline && (
           <>
             {headerTag === "h2" && (
-              <H2 id={paragraph.uuid} className={twMerge("mb-0", headerClasses)}>
+              <h2 id={paragraph.uuid} className={twMerge("mb-0", headerClasses)}>
                 {paragraph.suStatHeadline}
-              </H2>
+              </h2>
             )}
             {headerTag === "h3" && (
-              <H3 id={paragraph.uuid} className={twMerge("mb-0", headerClasses)}>
+              <h3 id={paragraph.uuid} className={twMerge("mb-0", headerClasses)}>
                 {paragraph.suStatHeadline}
-              </H3>
+              </h3>
             )}
             {headerTag === "h4" && (
-              <H4 id={paragraph.uuid} className={twMerge("mb-0", headerClasses)}>
+              <h4 id={paragraph.uuid} className={twMerge("mb-0", headerClasses)}>
                 {paragraph.suStatHeadline}
-              </H4>
+              </h4>
             )}
             {headerTag === "div" && <div className={twMerge("mb-0", headerClasses)}>{paragraph.suStatHeadline}</div>}
           </>
@@ -129,7 +128,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
           )}
         </div>
       </ReverseVisualOrder>
-      <Wysiwyg html={paragraph.suStatBody?.processed} />
+      <StanfordWysiwyg text={paragraph.suStatBody?.processed} />
       {paragraph.suStatButton?.url && (
         <Link
           className={twMerge(
