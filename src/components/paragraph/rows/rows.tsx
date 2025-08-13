@@ -75,12 +75,12 @@ const Row = ({
   items: ParagraphUnion[]
   fullWidth?: boolean
 }) => {
-  if (layout === "sul_helper_2_column")
-    return <TwoColumn config={layoutSettings as TwoColumnConfig} items={items} fullWidth={fullWidth} />
-  if (layout === "sul_helper_3_column") return <ThreeColumn items={items} fullWidth={fullWidth} />
+  if (layout === "sul_helper_2_column") return <TwoColumn config={layoutSettings} items={items} fullWidth={fullWidth} />
+  if (layout === "sul_helper_3_column")
+    return <ThreeColumn items={items} fullWidth={fullWidth} config={layoutSettings} />
 
   // Fall back to one column if the layout is unknown.
-  return <OneColumn items={items} fullWidth={fullWidth} />
+  return <OneColumn items={items} fullWidth={fullWidth} config={layoutSettings} />
 }
 
 export default Rows
