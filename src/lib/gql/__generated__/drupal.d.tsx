@@ -1677,6 +1677,7 @@ export type NodeStanfordPageSuPageComponentsUnion =
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
   | ParagraphStanfordSpacer
+  | ParagraphStanfordStatCard
   | ParagraphStanfordWysiwyg
   | ParagraphSulButton
   | ParagraphSulContactCard
@@ -2560,6 +2561,52 @@ export type ParagraphStanfordSpacer = LayoutParagraphsInterface &
     suSpacerSize?: Maybe<Scalars["String"]["output"]>
   }
 
+/** Entity type paragraph. */
+export type ParagraphStanfordStatCard = LayoutParagraphsInterface &
+  ParagraphInterface & {
+    __typename?: "ParagraphStanfordStatCard"
+    /** Paragraph Behavior Settings. */
+    behaviors?: Maybe<Scalars["String"]["output"]>
+    /** The layout information for this paragraph. */
+    composition: LayoutParagraphs
+    /** The time that the Paragraph was created. */
+    created: DateTime
+    /** The Universally Unique IDentifier (UUID). */
+    id: Scalars["ID"]["output"]
+    /** The paragraphs entity language code. */
+    langcode: Language
+    /** Published */
+    status: Scalars["Boolean"]["output"]
+    /** Background Color */
+    suStatBgColor?: Maybe<ColorFieldType>
+    /** Body */
+    suStatBody?: Maybe<Text>
+    /** Button */
+    suStatButton?: Maybe<Link>
+    /** Centered Text */
+    suStatCentered?: Maybe<Scalars["Boolean"]["output"]>
+    /** Visually Hide Heading */
+    suStatHeadingHide?: Maybe<Scalars["Boolean"]["output"]>
+    /** Headline */
+    suStatHeadline: Scalars["String"]["output"]
+    /** Headling Level */
+    suStatHeadlineLvl: Scalars["String"]["output"]
+    /** Icon */
+    suStatIcon?: Maybe<FontawesomeIconType>
+    /** Icon Color */
+    suStatIconColor?: Maybe<ColorFieldType>
+    /** Image */
+    suStatImage?: Maybe<MediaImage>
+    /** Choose how you would like the link to display.  */
+    suStatLinkStyle: Scalars["String"]["output"]
+    /** Stat */
+    suStatStat: Scalars["String"]["output"]
+    /** Stat Color */
+    suStatStatColor?: Maybe<ColorFieldType>
+    /** Superhead */
+    suStatSuperhead?: Maybe<Scalars["String"]["output"]>
+  }
+
 /** A WYSIWYG Editor for all your text writing needs */
 export type ParagraphStanfordWysiwyg = LayoutParagraphsInterface &
   ParagraphInterface & {
@@ -2765,6 +2812,7 @@ export type ParagraphUnion =
   | ParagraphStanfordPersonCtum
   | ParagraphStanfordSchedule
   | ParagraphStanfordSpacer
+  | ParagraphStanfordStatCard
   | ParagraphStanfordWysiwyg
   | ParagraphSulButton
   | ParagraphSulContactCard
@@ -6187,6 +6235,41 @@ export type NodeQuery = {
               suSpacerSize?: string | null
             }
           | {
+              __typename: "ParagraphStanfordStatCard"
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
+                __typename: "MediaImage"
+                sulImageCredit?: string | null
+                id: string
+                name: string
+                mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+          | {
               __typename: "ParagraphStanfordWysiwyg"
               id: string
               behaviors?: string | null
@@ -9266,6 +9349,10 @@ export type FragmentAddressTypeFragment = {
   country?: {__typename?: "AddressCountry"; name?: string | null; code?: string | null} | null
 }
 
+export type FragmentColorFieldTypeFragment = {__typename?: "ColorFieldType"; color: string; opacity?: number | null}
+
+export type FragmentFontawesomeIconTypeFragment = {__typename?: "FontawesomeIconType"; iconName: string; style: string}
+
 type FragmentNodeInterface_NodeStanfordCourse_Fragment = {
   __typename: "NodeStanfordCourse"
   id: string
@@ -10476,6 +10563,37 @@ export type FragmentNodeStanfordPageFragment = {
         behaviors?: string | null
         status: boolean
         suSpacerSize?: string | null
+      }
+    | {
+        __typename: "ParagraphStanfordStatCard"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suStatCentered?: boolean | null
+        suStatHeadingHide?: boolean | null
+        suStatHeadline: string
+        suStatHeadlineLvl: string
+        suStatLinkStyle: string
+        suStatStat: string
+        suStatSuperhead?: string | null
+        suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+        suStatButton?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
+        suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+        suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatImage?: {
+          __typename: "MediaImage"
+          sulImageCredit?: string | null
+          id: string
+          name: string
+          mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+        } | null
+        suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
       }
     | {
         __typename: "ParagraphStanfordWysiwyg"
@@ -14095,6 +14213,37 @@ type FragmentNodeUnion_NodeStanfordPage_Fragment = {
         suSpacerSize?: string | null
       }
     | {
+        __typename: "ParagraphStanfordStatCard"
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suStatCentered?: boolean | null
+        suStatHeadingHide?: boolean | null
+        suStatHeadline: string
+        suStatHeadlineLvl: string
+        suStatLinkStyle: string
+        suStatStat: string
+        suStatSuperhead?: string | null
+        suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+        suStatButton?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
+        suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+        suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatImage?: {
+          __typename: "MediaImage"
+          sulImageCredit?: string | null
+          id: string
+          name: string
+          mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+        } | null
+        suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+      }
+    | {
         __typename: "ParagraphStanfordWysiwyg"
         id: string
         behaviors?: string | null
@@ -16843,6 +16992,13 @@ type FragmentParagraphInterface_ParagraphStanfordSpacer_Fragment = {
   status: boolean
 }
 
+type FragmentParagraphInterface_ParagraphStanfordStatCard_Fragment = {
+  __typename: "ParagraphStanfordStatCard"
+  id: string
+  behaviors?: string | null
+  status: boolean
+}
+
 type FragmentParagraphInterface_ParagraphStanfordWysiwyg_Fragment = {
   __typename: "ParagraphStanfordWysiwyg"
   id: string
@@ -16915,6 +17071,7 @@ export type FragmentParagraphInterfaceFragment =
   | FragmentParagraphInterface_ParagraphStanfordPersonCtum_Fragment
   | FragmentParagraphInterface_ParagraphStanfordSchedule_Fragment
   | FragmentParagraphInterface_ParagraphStanfordSpacer_Fragment
+  | FragmentParagraphInterface_ParagraphStanfordStatCard_Fragment
   | FragmentParagraphInterface_ParagraphStanfordWysiwyg_Fragment
   | FragmentParagraphInterface_ParagraphSulButton_Fragment
   | FragmentParagraphInterface_ParagraphSulContactCard_Fragment
@@ -17407,6 +17564,38 @@ export type FragmentParagraphStanfordFaqFragment = {
   }> | null
 }
 
+export type FragmentParagraphStanfordStatCardFragment = {
+  __typename: "ParagraphStanfordStatCard"
+  suStatCentered?: boolean | null
+  suStatHeadingHide?: boolean | null
+  suStatHeadline: string
+  suStatHeadlineLvl: string
+  suStatLinkStyle: string
+  suStatStat: string
+  suStatSuperhead?: string | null
+  id: string
+  behaviors?: string | null
+  status: boolean
+  suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+  suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+  suStatButton?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
+  suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+  suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+  suStatImage?: {
+    __typename: "MediaImage"
+    sulImageCredit?: string | null
+    id: string
+    name: string
+    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+  } | null
+  suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+}
+
 type FragmentParagraphUnion_ParagraphCollection_Fragment = {
   __typename: "ParagraphCollection"
   id: string
@@ -17666,6 +17855,38 @@ type FragmentParagraphUnion_ParagraphStanfordSpacer_Fragment = {
   suSpacerSize?: string | null
 }
 
+type FragmentParagraphUnion_ParagraphStanfordStatCard_Fragment = {
+  __typename: "ParagraphStanfordStatCard"
+  id: string
+  behaviors?: string | null
+  status: boolean
+  suStatCentered?: boolean | null
+  suStatHeadingHide?: boolean | null
+  suStatHeadline: string
+  suStatHeadlineLvl: string
+  suStatLinkStyle: string
+  suStatStat: string
+  suStatSuperhead?: string | null
+  suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+  suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+  suStatButton?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
+  suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+  suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+  suStatImage?: {
+    __typename: "MediaImage"
+    sulImageCredit?: string | null
+    id: string
+    name: string
+    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+  } | null
+  suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+}
+
 type FragmentParagraphUnion_ParagraphStanfordWysiwyg_Fragment = {
   __typename: "ParagraphStanfordWysiwyg"
   id: string
@@ -17846,6 +18067,7 @@ export type FragmentParagraphUnionFragment =
   | FragmentParagraphUnion_ParagraphStanfordPersonCtum_Fragment
   | FragmentParagraphUnion_ParagraphStanfordSchedule_Fragment
   | FragmentParagraphUnion_ParagraphStanfordSpacer_Fragment
+  | FragmentParagraphUnion_ParagraphStanfordStatCard_Fragment
   | FragmentParagraphUnion_ParagraphStanfordWysiwyg_Fragment
   | FragmentParagraphUnion_ParagraphSulButton_Fragment
   | FragmentParagraphUnion_ParagraphSulContactCard_Fragment
@@ -19657,6 +19879,47 @@ export type RouteQuery = {
                     behaviors?: string | null
                     status: boolean
                     suSpacerSize?: string | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordStatCard"
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suStatCentered?: boolean | null
+                    suStatHeadingHide?: boolean | null
+                    suStatHeadline: string
+                    suStatHeadlineLvl: string
+                    suStatLinkStyle: string
+                    suStatStat: string
+                    suStatSuperhead?: string | null
+                    suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suStatButton?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                    suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatImage?: {
+                      __typename: "MediaImage"
+                      sulImageCredit?: string | null
+                      id: string
+                      name: string
+                      mediaImage: {
+                        __typename?: "Image"
+                        url: string
+                        alt?: string | null
+                        height: number
+                        width: number
+                      }
+                    } | null
+                    suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
                   }
                 | {
                     __typename: "ParagraphStanfordWysiwyg"
@@ -24144,6 +24407,41 @@ export type SearchQuery = {
                 behaviors?: string | null
                 status: boolean
                 suSpacerSize?: string | null
+              }
+            | {
+                __typename: "ParagraphStanfordStatCard"
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suStatCentered?: boolean | null
+                suStatHeadingHide?: boolean | null
+                suStatHeadline: string
+                suStatHeadlineLvl: string
+                suStatLinkStyle: string
+                suStatStat: string
+                suStatSuperhead?: string | null
+                suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                suStatButton?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                suStatImage?: {
+                  __typename: "MediaImage"
+                  sulImageCredit?: string | null
+                  id: string
+                  name: string
+                  mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                } | null
+                suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
               }
             | {
                 __typename: "ParagraphStanfordWysiwyg"
