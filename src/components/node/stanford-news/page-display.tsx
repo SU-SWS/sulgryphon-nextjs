@@ -30,7 +30,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   const encodeTitle = encodeURIComponent(node.title)
 
   return (
-    <article {...props} className="centered">
+    <div {...props} className="centered">
       <StanfordNewsMetadata node={node} />
       <div className="centered mb-40 2xl:w-2/3">
         <div className="mx-auto w-fit gap-16 md:flex">
@@ -124,7 +124,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
         </div>
       )}
       <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
-    </article>
+    </div>
   )
 }
 

@@ -4,7 +4,7 @@ import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
 
 const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
   return (
-    <article {...props}>
+    <div {...props}>
       {node.suCourseAcademicYear}
       {node.body?.processed && <>{formatHtml(node.body.processed)}</>}
       {node.suCourseCode}
@@ -35,7 +35,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
         </div>
       )}
       {node.suCourseSectionUnits}
-    </article>
+    </div>
   )
 }
 
