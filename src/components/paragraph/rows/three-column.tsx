@@ -2,17 +2,17 @@ import OneColumn from "@/components/paragraph/rows/one-column"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 import {getParagraphBehaviors} from "@/components/paragraph"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
-import {LayoutParagraphBehaviors} from "@lib/drupal/drupal-jsonapi.d"
+import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
 
-interface LayoutProps {
+type Props = {
   items: ParagraphUnion[]
   fullWidth?: boolean
-  config?: LayoutParagraphBehaviors["config"]
+  config: NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {vertical_dividers?: boolean}
 }
 
-const ThreeColumn = async ({items, fullWidth = true, config}: LayoutProps) => {
+const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
   const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
   const mainItems = items.filter(
     item => !["left", "right"].includes(getParagraphBehaviors(item).layout_paragraphs?.region || "main")
@@ -47,8 +47,22 @@ const ThreeColumn = async ({items, fullWidth = true, config}: LayoutProps) => {
       data-columns="3"
       {...draftProps}
     >
-      <OneColumn items={leftItems} fullWidth={fullWidth} />
-      <OneColumn items={mainItems} fullWidth={fullWidth} />
+      <OneColumn
+        items={leftItems}
+        fullWidth={fullWidth}
+        className={clsx({
+          "after:contents('') relative after:absolute after:-right-10 after:top-0 after:h-full after:w-1 after:bg-black":
+            config?.vertical_dividers,
+        })}
+      />
+      <OneColumn
+        items={mainItems}
+        fullWidth={fullWidth}
+        className={clsx({
+          "after:contents('') relative after:absolute after:-right-10 after:top-0 after:h-full after:w-1 after:bg-black":
+            config?.vertical_dividers,
+        })}
+      />
       <OneColumn items={rightItems} fullWidth={fullWidth} />
     </div>
   )

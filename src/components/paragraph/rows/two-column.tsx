@@ -2,14 +2,17 @@ import OneColumn from "@/components/paragraph/rows/one-column"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 import {getParagraphBehaviors} from "@/components/paragraph"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
-import {LayoutParagraphBehaviors} from "@lib/drupal/drupal-jsonapi.d"
+import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
 
 type Props = {
   items: ParagraphUnion[]
   fullWidth?: boolean
-  config?: LayoutParagraphBehaviors["config"]
+  config: NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
+    column_widths: "33-67" | "67-33"
+    vertical_dividers?: boolean
+  }
 }
 
 const TwoColumn = async ({items, fullWidth, config}: Props) => {
@@ -52,7 +55,15 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
       data-columns="2"
       {...draftProps}
     >
-      <OneColumn items={leftItems} fullWidth={fullWidth} config={{top_padding: "none", bottom_margin: "none"}} />
+      <OneColumn
+        items={leftItems}
+        fullWidth={fullWidth}
+        config={{top_padding: "none", bottom_margin: "none"}}
+        className={clsx({
+          "after:contents('') relative after:absolute after:-right-10 after:top-0 after:h-full after:w-1 after:bg-black":
+            config?.vertical_dividers,
+        })}
+      />
       <OneColumn items={rightItems} fullWidth={fullWidth} config={{top_padding: "none", bottom_margin: "none"}} />
     </div>
   )
