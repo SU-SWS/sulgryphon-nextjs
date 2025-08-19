@@ -1649,6 +1649,12 @@ export const StanfordPersonSearchDocument = gql`
           processed
         }
         suPersonResearchInterests
+        suPersonTypeGroup {
+          id
+          name
+          path
+          weight
+        }
       }
     }
     pageInfo {
