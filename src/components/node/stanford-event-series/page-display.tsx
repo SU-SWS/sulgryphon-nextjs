@@ -4,7 +4,7 @@ import Paragraph from "@/components/paragraph"
 
 const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSeries}) => {
   return (
-    <article {...props}>
+    <div {...props}>
       {node.suEventSeriesSubheadline && <h2 className="rs-mb-1 type-3">{node.suEventSeriesSubheadline}</h2>}
       {node.suEventSeriesDek && <div className="rs-mb-4 text-22 leading">{node.suEventSeriesDek}</div>}
 
@@ -25,7 +25,7 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
           ))}
         </div>
       )}
-    </article>
+    </div>
   )
 }
 

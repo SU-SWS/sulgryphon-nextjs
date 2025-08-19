@@ -27,7 +27,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   })
 
   return (
-    <article {...props}>
+    <div {...props}>
       <StanfordPersonMetadata node={node} />
       <div className="grid gap-2xl md:grid-cols-6">
         <div className="flex flex-col gap-40 md:col-span-4">
@@ -169,7 +169,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
         </div>
       </div>
       <footer className="rs-mb-0 rs-mt-4 centered">Last updated {lastUpdated}</footer>
-    </article>
+    </div>
   )
 }
 
