@@ -128,10 +128,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
             .filter((text): text is string => Boolean(text)) || undefined,
         personTypes:
           person.suPersonTypeGroup?.map(type => ({
-            id: type.id,
             name: type.name,
-            path: type.path || undefined,
-            weight: type.weight,
           })) || undefined,
         path: person.path || "",
       })
