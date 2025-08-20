@@ -407,6 +407,7 @@ fragment FragmentNodeStanfordEventTeaser on NodeStanfordEvent {
     suEventSource {
         ...FragmentLink
     }
+    suEventAltLoc
     suEventMapLink {
         ...FragmentLink
     }

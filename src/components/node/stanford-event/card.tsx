@@ -70,18 +70,20 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
 
           <div className="order-3 flex text-16 sm:text-18">
             <CalendarDaysIcon title="Date" width={20} className="mr-20 flex-shrink-0" />
-            {start.toLocaleDateString("en-US", {timeZone: "America/Los_Angeles"})}
+            {dateTimeString || start}
           </div>
 
           <div className="order-4 flex text-16 sm:text-18">
             <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
-            <div>{dateTimeString}</div>
+            {/* <div>{dateTimeString}</div> */}
           </div>
 
           {node.suEventMapLink?.url && (
             <div className="order-5 flex text-16 sm:text-18">
               <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
-              <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>{node.suEventMapLink?.title}</Link>
+              <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>
+                {node.suEventAltLoc || node.suEventMapLink?.title}
+              </Link>
             </div>
           )}
         </div>

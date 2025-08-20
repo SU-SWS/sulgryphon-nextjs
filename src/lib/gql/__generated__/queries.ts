@@ -645,6 +645,7 @@ export const FragmentNodeStanfordEventTeaserFragmentDoc = gql`
   suEventSource {
     ...FragmentLink
   }
+  suEventAltLoc
   suEventMapLink {
     ...FragmentLink
   }
