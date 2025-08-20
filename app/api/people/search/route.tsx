@@ -23,10 +23,7 @@ type PersonSearchResult = {
   mailCode: NodeStanfordPerson["suPersonMailCode"]
   research?: string[]
   personTypes?: Array<{
-    id: string
     name: string
-    path?: string
-    weight: number
   }>
   path: NodeStanfordPerson["path"]
 }
