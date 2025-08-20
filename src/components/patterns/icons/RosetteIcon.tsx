@@ -4,7 +4,6 @@ import {twMerge} from "tailwind-merge"
 const RosetteIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     aria-hidden="true"
-    id="rosette"
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
     viewBox="0 0 504 504.019"
