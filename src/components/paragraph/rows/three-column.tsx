@@ -48,7 +48,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={leftItems}
           fullWidth={fullWidth}
           className={clsx({
-            "after:contents('') relative after:absolute after:-right-10 after:top-0 after:h-full after:w-1 after:bg-black":
+            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
               config?.vertical_dividers,
           })}
         />
@@ -56,7 +56,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={mainItems}
           fullWidth={fullWidth}
           className={clsx({
-            "after:contents('') relative after:absolute after:-right-10 after:top-0 after:h-full after:w-1 after:bg-black":
+            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
               config?.vertical_dividers,
           })}
         />

@@ -53,7 +53,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
           fullWidth={fullWidth}
           config={{top_padding: "none", bottom_margin: "none"}}
           className={clsx({
-            "after:contents('') relative after:absolute after:-right-10 after:top-0 after:h-full after:w-1 after:bg-black":
+            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
               config?.vertical_dividers,
           })}
         />
