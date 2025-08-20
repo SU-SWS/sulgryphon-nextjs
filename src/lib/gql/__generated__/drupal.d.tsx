@@ -25553,13 +25553,7 @@ export type StanfordPersonSearchQuery = {
           } | null
           body?: {__typename?: "TextSummary"; processed?: any | null} | null
           suPersonResearch?: Array<{__typename?: "Text"; processed?: any | null}> | null
-          suPersonTypeGroup?: Array<{
-            __typename?: "TermStanfordPersonType"
-            id: string
-            name: string
-            path?: string | null
-            weight: number
-          }> | null
+          suPersonTypeGroup?: Array<{__typename?: "TermStanfordPersonType"; name: string}> | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
         }

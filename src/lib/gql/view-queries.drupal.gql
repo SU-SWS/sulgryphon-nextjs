@@ -182,10 +182,9 @@ query stanfordPersonSearch($pageSize: Int = 999, $page: Int = 0, $offset: Int) {
                 }
                 suPersonResearchInterests
                 suPersonTypeGroup {
-                    id
+
                     name
-                    path
-                    weight
+
                 }
             }
         }
