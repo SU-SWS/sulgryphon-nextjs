@@ -48,7 +48,7 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
 
       {videoUrl && <Oembed url={videoUrl} />}
 
-      <div className="flex flex-col gap-5 p-10">{children}</div>
+      <div className="flex flex-col gap-5 px-24 py-30">{children}</div>
     </CardWrapper>
   )
 }
