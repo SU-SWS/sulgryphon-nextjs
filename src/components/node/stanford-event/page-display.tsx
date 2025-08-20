@@ -80,7 +80,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   }
 
   return (
-    <article {...props} className="mt-50">
+    <div {...props} className="mt-50">
       <StanfordEventMetadata node={node} />
       {inPast && <div className="uppercase text-black-70">Past Event</div>}
 
@@ -205,7 +205,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
           ))}
         </div>
       )}
-    </article>
+    </div>
   )
 }
 
