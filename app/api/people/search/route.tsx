@@ -21,7 +21,10 @@ type PersonSearchResult = {
   email: NodeStanfordPerson["suPersonEmail"]
   telephone: NodeStanfordPerson["suPersonTelephone"]
   mailCode: NodeStanfordPerson["suPersonMailCode"]
-  research?: string
+  research?: string[]
+  personTypes?: Array<{
+    name: string
+  }>
   path: NodeStanfordPerson["path"]
 }
 
@@ -82,6 +85,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
           ...(person.suPersonResearch?.map(
             (research: {processed?: string | null}) => (research?.processed as string) || ""
           ) || []),
+          ...(person.suPersonTypeGroup?.map((type: {name: string}) => type.name) || []),
         ]
           .join(" ")
           .toLowerCase()
@@ -118,7 +122,14 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
         email: person.suPersonEmail || undefined,
         telephone: person.suPersonTelephone || undefined,
         mailCode: person.suPersonMailCode || undefined,
-        research: person.suPersonResearch?.[0]?.processed || undefined,
+        research:
+          person.suPersonResearch
+            ?.map((r: {processed?: string | null}) => r.processed)
+            .filter((text): text is string => Boolean(text)) || undefined,
+        personTypes:
+          person.suPersonTypeGroup?.map(type => ({
+            name: type.name,
+          })) || undefined,
         path: person.path || "",
       })
     )
