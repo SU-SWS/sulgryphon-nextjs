@@ -218,7 +218,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         {(isAllDayEvent || timeString) && (
           <div className="order-4 flex text-16 sm:text-18">
             <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
-            {timeString || "All Day"}
+            {timeString || "All day"}
           </div>
         )}
 
