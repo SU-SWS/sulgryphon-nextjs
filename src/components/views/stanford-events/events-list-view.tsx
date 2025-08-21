@@ -18,7 +18,13 @@ interface Props {
 
 const EventsListView = async ({items, hasHeading, totalItems, loadPage}: Props) => {
   return (
-    <LoadMoreList loadPage={loadPage} totalItems={totalItems}>
+    <LoadMoreList
+      className="@container"
+      ulProps={{className: "list-unstyled flex flex-col mb-50"}}
+      liProps={{className: "w-full py-50 first:pt-0 last:border-none last:pb-0 border-b"}}
+      loadPage={loadPage}
+      totalItems={totalItems}
+    >
       {items.map(item => (
         <StanfordEventListItem key={item.id} node={item} h3Heading={hasHeading} />
       ))}

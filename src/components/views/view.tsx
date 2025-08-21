@@ -21,6 +21,7 @@ import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/
 import {JSX} from "react"
 import FilteringNewsCardView from "@/components/views/stanford-news/filtering-news-card-view"
 import SearchListView from "@/components/views/search-search/search-search-view"
+import EventsListView from "./stanford-events/events-list-view"
 
 export type ViewDisplayProps<T extends NodeUnion = NodeUnion> = {
   /**
@@ -84,8 +85,10 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
     case "sul_events--cards_desc":
     case "sul_events--shared_tags_cards":
     case "sul_events--shared_tags_cards_desc":
-    case "sul_events--list_page":
       return <EventsCardView items={items as NodeStanfordEvent[]} {...viewProps} />
+
+    case "sul_events--list_page":
+      return <EventsListView items={items as NodeStanfordEvent[]} {...viewProps} />
 
     case "stanford_basic_pages--viewfield_block_1":
       return <PageCardView items={items as NodeStanfordPage[]} {...viewProps} />
