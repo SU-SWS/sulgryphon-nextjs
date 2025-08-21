@@ -176,6 +176,7 @@ fragment FragmentNodeStanfordEvent on NodeStanfordEvent {
     suEventType {
         ...FragmentTermInterface
     }
+    sulEventExperience
 }
 
 fragment FragmentNodeStanfordEventSeries on NodeStanfordEventSeries {
@@ -411,6 +412,7 @@ fragment FragmentNodeStanfordEventTeaser on NodeStanfordEvent {
     suEventMapLink {
         ...FragmentLink
     }
+    sulEventExperience
 }
 
 fragment FragmentNodeStanfordEventSeriesTeaser on NodeStanfordEventSeries {

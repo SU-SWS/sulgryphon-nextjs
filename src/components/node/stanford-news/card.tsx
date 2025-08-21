@@ -17,7 +17,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
 
   const HeadingElement = h3Heading ? "h3" : "h2"
   return (
-    <article {...props}>
+    <article {...props} className="relative">
       {imageUrl && (
         <div className="relative mb-10 aspect-[16/9] overflow-hidden" aria-hidden="true">
           <Image
@@ -32,13 +32,18 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
 
       <div className="flex flex-col">
         <HeadingElement className="mb-0 text-18 font-bold sm:text-20">
-          <Link href={goToUrl} className="text-black-true underline hover:text-brick-dark hover:no-underline">
+          <Link
+            href={goToUrl}
+            className="stretched-link text-black-true no-underline hocus:text-brick-dark hocus:underline"
+          >
             {node.title}
           </Link>
         </HeadingElement>
 
         {node.suNewsTopics?.[0]?.name && (
-          <div className="order-first mb-0 text-16 font-semibold sm:text-18">{node.suNewsTopics[0].name}</div>
+          <div className="order-first mb-0 text-16 font-semibold uppercase text-cardinal-red sm:text-18">
+            {node.suNewsTopics[0].name}
+          </div>
         )}
       </div>
 

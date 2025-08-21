@@ -620,6 +620,7 @@ export const FragmentNodeStanfordEventFragmentDoc = gql`
   suEventType {
     ...FragmentTermInterface
   }
+  sulEventExperience
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
@@ -649,6 +650,7 @@ export const FragmentNodeStanfordEventTeaserFragmentDoc = gql`
   suEventMapLink {
     ...FragmentLink
   }
+  sulEventExperience
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
