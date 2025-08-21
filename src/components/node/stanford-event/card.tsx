@@ -154,6 +154,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
   const timeString = getTimeString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
   const isAllDayEvent = isAllDay(start, end)
+  console.log("isAllDayEvent", isAllDayEvent)
 
   const imageUrl = node.sulEventImage?.mediaImage.url
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
@@ -206,13 +207,12 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
             {dateString}
           </div>
 
-          {!isAllDayEvent ||
-            (timeString && (
-              <div className="order-4 flex text-16 sm:text-18">
-                <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
-                {timeString}
-              </div>
-            ))}
+          {(isAllDayEvent || timeString) && (
+            <div className="order-4 flex text-16 sm:text-18">
+              <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
+              {timeString || "All Day"}
+            </div>
+          )}
 
           {node.suEventMapLink?.url && (
             <div className="order-5 flex text-16 sm:text-18">
