@@ -1,6 +1,6 @@
 import OneColumn from "@/components/paragraph/rows/one-column"
 import TwoColumn, {TwoColumnConfig} from "@/components/paragraph/rows/two-column"
-import ThreeColumn from "@/components/paragraph/rows/three-column"
+import ThreeColumn, {ThreeColumnConfig} from "@/components/paragraph/rows/three-column"
 import {Maybe, ParagraphLayout, ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 import {getParagraphBehaviors} from "@/components/paragraph"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal"
@@ -75,9 +75,10 @@ const Row = ({
   items: ParagraphUnion[]
   fullWidth?: boolean
 }) => {
-  if (layout === "sul_helper_2_column") return <TwoColumn config={layoutSettings} items={items} fullWidth={fullWidth} />
+  if (layout === "sul_helper_2_column")
+    return <TwoColumn config={layoutSettings as TwoColumnConfig} items={items} fullWidth={fullWidth} />
   if (layout === "sul_helper_3_column")
-    return <ThreeColumn items={items} fullWidth={fullWidth} config={layoutSettings} />
+    return <ThreeColumn items={items} fullWidth={fullWidth} config={layoutSettings as ThreeColumnConfig} />
 
   // Fall back to one column if the layout is unknown.
   return <OneColumn items={items} fullWidth={fullWidth} config={layoutSettings} />

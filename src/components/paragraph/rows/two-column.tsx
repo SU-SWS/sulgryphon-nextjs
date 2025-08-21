@@ -6,6 +6,10 @@ import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
 
+export type TwoColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
+  column_widths: "33-67" | "67-33"
+  vertical_dividers?: boolean
+}
 type Props = {
   items: ParagraphUnion[]
   fullWidth?: boolean

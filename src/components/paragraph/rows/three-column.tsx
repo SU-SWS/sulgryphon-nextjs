@@ -5,6 +5,10 @@ import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 
+export type ThreeColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
+  vertical_dividers?: boolean
+}
+
 type Props = {
   items: ParagraphUnion[]
   fullWidth?: boolean
