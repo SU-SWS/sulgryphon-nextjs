@@ -6,7 +6,7 @@ type Props = {
   isHome?: true
 }
 const StanfordPageMetadata = async ({node, isHome}: Props) => {
-  const siteName = "Stanford Libraries"
+  const siteName = "Stanford University Libraries"
   const bannerImage =
     node.suPageBanner?.__typename === "ParagraphStanfordBanner" && node.suPageBanner.suBannerImage?.mediaImage
   const image = node.suPageImage?.mediaImage || bannerImage

@@ -5,7 +5,7 @@ type Props = {
   node: NodeStanfordPerson
 }
 const StanfordPersonMetadata = async ({node}: Props) => {
-  const siteName = "Stanford Libraries"
+  const siteName = "Stanford University Libraries"
   const image = node.suPersonPhoto?.mediaImage
   const description = node.suPersonFullTitle || getCleanDescription(node.body?.processed)
   const pageTitle = `${node.title} | ${siteName}`

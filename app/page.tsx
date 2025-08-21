@@ -26,7 +26,7 @@ const Page = async () => {
   return (
     <main id="main-content" className="mb-50">
       <StanfordPageMetadata node={entity} isHome />
-      <h1 className="sr-only">Stanford Libraries</h1>
+      <h1 className="sr-only">Stanford University Libraries</h1>
       {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={"/"} />}
 
       {entity.suPageBanner?.__typename && <Paragraph paragraph={entity.suPageBanner} />}

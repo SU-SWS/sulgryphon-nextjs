@@ -4,7 +4,7 @@ type Props = {
   node: NodeSulStudyPlace
 }
 const SulStudyPlaceMetadata = async ({node}: Props) => {
-  const siteName = "Stanford Libraries"
+  const siteName = "Stanford University Libraries"
   const image = node.sulStudyImage?.mediaImage || node.sulStudyBranch.suLibraryBanner?.mediaImage
 
   const pageTitle = `${node.title} | ${siteName}`

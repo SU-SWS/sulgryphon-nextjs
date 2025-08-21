@@ -5,7 +5,7 @@ type Props = {
   node: NodeStanfordNews
 }
 const SulStudyPlaceMetadata = async ({node}: Props) => {
-  const siteName = "Stanford Libraries"
+  const siteName = "Stanford University Libraries"
   const featuredImage = node.suNewsFeaturedMedia?.mediaImage
   const bannerImage = node.suNewsBanner?.__typename === "MediaImage" && node.suNewsBanner.mediaImage
   const image = featuredImage || bannerImage
