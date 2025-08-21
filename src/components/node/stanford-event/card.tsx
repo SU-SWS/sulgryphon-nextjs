@@ -234,7 +234,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         {node.sulEventExperience === "virtual" && (
           <div className="order-5 flex text-16 sm:text-18">
             <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
-            <span>Virtual Event</span>
+            <span>Virtual event</span>
           </div>
         )}
       </div>
