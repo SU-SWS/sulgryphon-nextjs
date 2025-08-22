@@ -90,6 +90,9 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
     case "sul_events--list_page":
       return <EventsListView items={items as NodeStanfordEvent[]} {...viewProps} />
 
+    case "sul_events--filtered_list":
+      return <EventsFilteredList items={items as NodeStanfordEvent[]} {...viewProps} />
+
     case "stanford_basic_pages--viewfield_block_1":
       return <PageCardView items={items as NodeStanfordPage[]} {...viewProps} />
 
