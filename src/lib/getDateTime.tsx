@@ -79,7 +79,6 @@ export const getTimeString = (start: Date, end: Date): string | null => {
     const endTime = end.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      timeZoneName: "short",
       timeZone,
     })
     return `${startTime} - ${endTime}`
@@ -89,7 +88,6 @@ export const getTimeString = (start: Date, end: Date): string | null => {
   return start.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "numeric",
-    timeZoneName: "short",
     timeZone,
   })
 }

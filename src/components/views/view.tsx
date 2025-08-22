@@ -21,7 +21,8 @@ import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/
 import {JSX} from "react"
 import FilteringNewsCardView from "@/components/views/stanford-news/filtering-news-card-view"
 import SearchListView from "@/components/views/search-search/search-search-view"
-import EventsListView from "./stanford-events/events-list-view"
+import EventsListView from "@/components/views/stanford-events/events-list-view"
+import EventsFilteredList from "@/components/views/stanford-events/events-filtered-list"
 
 export type ViewDisplayProps<T extends NodeUnion = NodeUnion> = {
   /**

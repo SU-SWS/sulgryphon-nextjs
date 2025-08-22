@@ -3,7 +3,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
-import {getDateString, getTimeString, isAllDay} from "@/lib/getDateTime"
+import {getDateString, getTimeString} from "@/lib/getDateTime"
 
 interface Props {
   node: NodeStanfordEvent
