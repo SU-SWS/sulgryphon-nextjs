@@ -144,25 +144,20 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
   const HeadingElement = h3Heading ? "h3" : "h2"
   const start = new Date(node.suEventDateTime.value * 1000)
   const end = new Date(node.suEventDateTime.end_value * 1000)
-  const startMonth = start.toLocaleDateString("en-US", {month: "short", timeZone: "America/Los_Angeles"})
-  const startDay = parseInt(start.toLocaleDateString("en-US", {day: "numeric", timeZone: "America/Los_Angeles"}))
-
-  const endMonth = end.toLocaleDateString("en-US", {month: "short", timeZone: "America/Los_Angeles"})
-  const endDay = parseInt(end.toLocaleDateString("en-US", {day: "numeric", timeZone: "America/Los_Angeles"}))
 
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
   const timeString = getTimeString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
-  const isAllDayEvent = isAllDay(start, end)
 
   const imageUrl = node.sulEventImage?.mediaImage.url
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
+  const isExhibition = node.suEventType?.[0]?.name?.toLowerCase().includes("exhibition")
 
   return (
     <article {...props} className="mx-auto @container">
-      <div className="relative">
+      <div className="relative flex flex-col gap-xs">
         {imageUrl && (
-          <div className={"relative aspect-[4/3] overflow-hidden"} aria-hidden="true">
+          <div className={"relative aspect-[4/3] overflow-hidden border"} aria-hidden="true">
             <Image
               className="object-cover object-center"
               src={buildUrl(imageUrl).toString()}
@@ -174,23 +169,6 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         )}
 
         <div className="flex flex-col items-start gap-xs">
-          <div className="flex w-full flex-row items-center bg-black-true text-center uppercase text-white" aria-hidden>
-            <div className="mx-auto flex flex-col items-center">
-              <div className="px-30 pt-10 text-24 font-semibold leading-display">{startMonth}</div>
-              <div className="px-30 pb-10 text-[4rem] leading-display">{startDay}</div>
-            </div>
-
-            {(startMonth !== endMonth || startDay !== endDay) && (
-              <>
-                <div className="font-bold">&mdash;</div>
-                <div className="mx-auto">
-                  <div className="px-30 pt-10 text-24 font-semibold leading-display">{endMonth}</div>
-                  <div className="px-30 pb-10 text-[4rem] leading-display">{endDay}</div>
-                </div>
-              </>
-            )}
-          </div>
-
           <div className="flex flex-col gap-[.5rem]">
             <HeadingElement className="order-2 text-18 font-bold tracking-[-0.2px] sm:text-20">
               <Link
@@ -215,10 +193,11 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
           {dateString}
         </div>
 
-        {(isAllDayEvent || timeString) && (
+        {/*  Exhibitions should not have the time range displayed */}
+        {!isExhibition && timeString && (
           <div className="order-4 flex text-16 sm:text-18">
             <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
-            {timeString || "All day"}
+            {timeString}
           </div>
         )}
 
