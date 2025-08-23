@@ -103,6 +103,7 @@ export const getViewPagedItems = async (
       case "sul_events--cards_desc":
       case "sul_events--cards":
       case "sul_events--list_page":
+      case "sul_events--filtered_list":
         contextualFilters = getContextualFilters(
           [
             "term_node_taxonomy_name_depth",

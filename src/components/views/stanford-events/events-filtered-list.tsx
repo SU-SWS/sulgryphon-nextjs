@@ -1,7 +1,7 @@
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
-import LoadMoreList from "@/components/patterns/load-more-list"
 import {JSX} from "react"
 import StanfordEventListItem from "@/components/node/stanford-event/list-item"
+import EventsFilteredListClient from "./events-filtered-list.client"
 
 interface Props {
   items: NodeStanfordEvent[]
@@ -11,14 +11,15 @@ interface Props {
    */
   totalItems: number
   /**
-   * Server action to load a page.
+   * Server action to load a page with filters.
+   * Now expects filters as second parameter: {search?: string, eventType?: string}
    */
-  loadPage?: (_page: number) => Promise<JSX.Element>
+  loadPage?: (_page: number, filters?: {search?: string; eventType?: string}) => Promise<JSX.Element>
 }
 
 const EventsFilteredList = async ({items, hasHeading, totalItems, loadPage}: Props) => {
   return (
-    <LoadMoreList
+    <EventsFilteredListClient
       className="@container"
       ulProps={{className: "list-unstyled flex flex-col mb-50 max-w-[98rem] mx-auto"}}
       liProps={{className: "w-full py-50 first:pt-0 last:border-none last:pb-0 border-b"}}
@@ -28,7 +29,7 @@ const EventsFilteredList = async ({items, hasHeading, totalItems, loadPage}: Pro
       {items.map(item => (
         <StanfordEventListItem key={item.id} node={item} h3Heading={hasHeading} />
       ))}
-    </LoadMoreList>
+    </EventsFilteredListClient>
   )
 }
 export default EventsFilteredList
