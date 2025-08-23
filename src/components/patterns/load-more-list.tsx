@@ -7,7 +7,7 @@ import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
 import {twMerge} from "tailwind-merge"
 
-type Props = HtmlHTMLAttributes<HTMLDivElement> & {
+export type LoadMoreListProps = HtmlHTMLAttributes<HTMLDivElement> & {
   /**
    * Load more button text/element.
    */
@@ -38,7 +38,7 @@ type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   totalItems: number
 }
 
-const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadPage, ...props}: Props) => {
+const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadPage, ...props}: LoadMoreListProps) => {
   const id = useId()
   const {count: page, increment: incrementPage} = useCounter(0)
   const [items, setItems] = useState<JSX.Element[]>(children)
