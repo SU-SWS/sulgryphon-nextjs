@@ -1679,10 +1679,12 @@ export type NodeStanfordPageSuPageComponentsUnion =
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
   | ParagraphStanfordFaq
+  | ParagraphStanfordFilteredList
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
   | ParagraphStanfordSpacer
+  | ParagraphStanfordStatCard
   | ParagraphStanfordWysiwyg
   | ParagraphSulButton
   | ParagraphSulContactCard
@@ -2376,6 +2378,40 @@ export type ParagraphStanfordFaq = LayoutParagraphsInterface &
     suFaqQuestions?: Maybe<Array<ParagraphStanfordAccordion>>
   }
 
+/** Choose a list to display various items dynamically, with filters. */
+export type ParagraphStanfordFilteredList = LayoutParagraphsInterface &
+  ParagraphInterface & {
+    __typename?: "ParagraphStanfordFilteredList"
+    /** Paragraph Behavior Settings. */
+    behaviors?: Maybe<Scalars["String"]["output"]>
+    /** The layout information for this paragraph. */
+    composition: LayoutParagraphs
+    /** The time that the Paragraph was created. */
+    created: DateTime
+    /** The Universally Unique IDentifier (UUID). */
+    id: Scalars["ID"]["output"]
+    /** The paragraphs entity language code. */
+    langcode: Language
+    /** Published */
+    status: Scalars["Boolean"]["output"]
+    /**
+     * This is a viewfield query proxy. Page size and contextual filters are applied
+     * within the CMS. See the actual view base query for more documentation on
+     * filters and options available. Main display options for items presented in the
+     * list view. Learn more in the guide to &lt;a
+     * Lists.&lt;/a&gt;
+     */
+    suFilteredListView?: Maybe<ViewReference>
+    /** Description */
+    suListDescription?: Maybe<Text>
+    /**
+     * This is the main headline for the list paragraph. The headline will appear
+     * above the list view in large font. This heading is required to build correct
+     * heading structure for accessibility purposes.
+     */
+    suListHeadline: Scalars["String"]["output"]
+  }
+
 /** Entity type paragraph. */
 export type ParagraphStanfordGallery = LayoutParagraphsInterface &
   ParagraphInterface & {
@@ -2564,6 +2600,52 @@ export type ParagraphStanfordSpacer = LayoutParagraphsInterface &
     status: Scalars["Boolean"]["output"]
     /** Select the size for the spacer.  Choosing None will apply the standard spacer height. */
     suSpacerSize?: Maybe<Scalars["String"]["output"]>
+  }
+
+/** Entity type paragraph. */
+export type ParagraphStanfordStatCard = LayoutParagraphsInterface &
+  ParagraphInterface & {
+    __typename?: "ParagraphStanfordStatCard"
+    /** Paragraph Behavior Settings. */
+    behaviors?: Maybe<Scalars["String"]["output"]>
+    /** The layout information for this paragraph. */
+    composition: LayoutParagraphs
+    /** The time that the Paragraph was created. */
+    created: DateTime
+    /** The Universally Unique IDentifier (UUID). */
+    id: Scalars["ID"]["output"]
+    /** The paragraphs entity language code. */
+    langcode: Language
+    /** Published */
+    status: Scalars["Boolean"]["output"]
+    /** Background Color */
+    suStatBgColor?: Maybe<ColorFieldType>
+    /** Body */
+    suStatBody?: Maybe<Text>
+    /** Button */
+    suStatButton?: Maybe<Link>
+    /** Centered Text */
+    suStatCentered?: Maybe<Scalars["Boolean"]["output"]>
+    /** Visually Hide Heading */
+    suStatHeadingHide?: Maybe<Scalars["Boolean"]["output"]>
+    /** Headline */
+    suStatHeadline: Scalars["String"]["output"]
+    /** Headling Level */
+    suStatHeadlineLvl: Scalars["String"]["output"]
+    /** Icon */
+    suStatIcon?: Maybe<FontawesomeIconType>
+    /** Icon Color */
+    suStatIconColor?: Maybe<ColorFieldType>
+    /** Image */
+    suStatImage?: Maybe<MediaImage>
+    /** Choose how you would like the link to display.  */
+    suStatLinkStyle: Scalars["String"]["output"]
+    /** Stat */
+    suStatStat: Scalars["String"]["output"]
+    /** Stat Color */
+    suStatStatColor?: Maybe<ColorFieldType>
+    /** Superhead */
+    suStatSuperhead?: Maybe<Scalars["String"]["output"]>
   }
 
 /** A WYSIWYG Editor for all your text writing needs */
@@ -2764,6 +2846,7 @@ export type ParagraphUnion =
   | ParagraphStanfordCard
   | ParagraphStanfordEntity
   | ParagraphStanfordFaq
+  | ParagraphStanfordFilteredList
   | ParagraphStanfordGallery
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
@@ -2771,6 +2854,7 @@ export type ParagraphUnion =
   | ParagraphStanfordPersonCtum
   | ParagraphStanfordSchedule
   | ParagraphStanfordSpacer
+  | ParagraphStanfordStatCard
   | ParagraphStanfordWysiwyg
   | ParagraphSulButton
   | ParagraphSulContactCard
@@ -3874,10 +3958,12 @@ export type SulBranchLocationsResult = View & {
 }
 
 export type SulEventsContextualFilterInput = {
+  su_event_type_target_id?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth_1?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth_2?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth_3?: InputMaybe<Scalars["String"]["input"]>
+  title?: InputMaybe<Scalars["String"]["input"]>
 }
 
 /** Result for view sul_events display list_page_graphql. */
@@ -6132,6 +6218,7 @@ export type NodeQuery = {
                 suAccordionBody: {__typename?: "Text"; processed?: any | null}
               }> | null
             }
+          | {__typename: "ParagraphStanfordFilteredList"; id: string; behaviors?: string | null; status: boolean}
           | {
               __typename: "ParagraphStanfordGallery"
               id: string
@@ -6195,6 +6282,7 @@ export type NodeQuery = {
               status: boolean
               suSpacerSize?: string | null
             }
+          | {__typename: "ParagraphStanfordStatCard"; id: string; behaviors?: string | null; status: boolean}
           | {
               __typename: "ParagraphStanfordWysiwyg"
               id: string
@@ -10423,6 +10511,7 @@ export type FragmentNodeStanfordPageFragment = {
           suAccordionBody: {__typename?: "Text"; processed?: any | null}
         }> | null
       }
+    | {__typename: "ParagraphStanfordFilteredList"; id: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordGallery"
         id: string
@@ -10486,6 +10575,7 @@ export type FragmentNodeStanfordPageFragment = {
         status: boolean
         suSpacerSize?: string | null
       }
+    | {__typename: "ParagraphStanfordStatCard"; id: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordWysiwyg"
         id: string
@@ -14046,6 +14136,7 @@ type FragmentNodeUnion_NodeStanfordPage_Fragment = {
           suAccordionBody: {__typename?: "Text"; processed?: any | null}
         }> | null
       }
+    | {__typename: "ParagraphStanfordFilteredList"; id: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordGallery"
         id: string
@@ -14109,6 +14200,7 @@ type FragmentNodeUnion_NodeStanfordPage_Fragment = {
         status: boolean
         suSpacerSize?: string | null
       }
+    | {__typename: "ParagraphStanfordStatCard"; id: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordWysiwyg"
         id: string
@@ -16813,6 +16905,13 @@ type FragmentParagraphInterface_ParagraphStanfordFaq_Fragment = {
   status: boolean
 }
 
+type FragmentParagraphInterface_ParagraphStanfordFilteredList_Fragment = {
+  __typename: "ParagraphStanfordFilteredList"
+  id: string
+  behaviors?: string | null
+  status: boolean
+}
+
 type FragmentParagraphInterface_ParagraphStanfordGallery_Fragment = {
   __typename: "ParagraphStanfordGallery"
   id: string
@@ -16857,6 +16956,13 @@ type FragmentParagraphInterface_ParagraphStanfordSchedule_Fragment = {
 
 type FragmentParagraphInterface_ParagraphStanfordSpacer_Fragment = {
   __typename: "ParagraphStanfordSpacer"
+  id: string
+  behaviors?: string | null
+  status: boolean
+}
+
+type FragmentParagraphInterface_ParagraphStanfordStatCard_Fragment = {
+  __typename: "ParagraphStanfordStatCard"
   id: string
   behaviors?: string | null
   status: boolean
@@ -16927,6 +17033,7 @@ export type FragmentParagraphInterfaceFragment =
   | FragmentParagraphInterface_ParagraphStanfordCard_Fragment
   | FragmentParagraphInterface_ParagraphStanfordEntity_Fragment
   | FragmentParagraphInterface_ParagraphStanfordFaq_Fragment
+  | FragmentParagraphInterface_ParagraphStanfordFilteredList_Fragment
   | FragmentParagraphInterface_ParagraphStanfordGallery_Fragment
   | FragmentParagraphInterface_ParagraphStanfordList_Fragment
   | FragmentParagraphInterface_ParagraphStanfordMediaCaption_Fragment
@@ -16934,6 +17041,7 @@ export type FragmentParagraphInterfaceFragment =
   | FragmentParagraphInterface_ParagraphStanfordPersonCtum_Fragment
   | FragmentParagraphInterface_ParagraphStanfordSchedule_Fragment
   | FragmentParagraphInterface_ParagraphStanfordSpacer_Fragment
+  | FragmentParagraphInterface_ParagraphStanfordStatCard_Fragment
   | FragmentParagraphInterface_ParagraphStanfordWysiwyg_Fragment
   | FragmentParagraphInterface_ParagraphSulButton_Fragment
   | FragmentParagraphInterface_ParagraphSulContactCard_Fragment
@@ -17603,6 +17711,13 @@ type FragmentParagraphUnion_ParagraphStanfordFaq_Fragment = {
   }> | null
 }
 
+type FragmentParagraphUnion_ParagraphStanfordFilteredList_Fragment = {
+  __typename: "ParagraphStanfordFilteredList"
+  id: string
+  behaviors?: string | null
+  status: boolean
+}
+
 type FragmentParagraphUnion_ParagraphStanfordGallery_Fragment = {
   __typename: "ParagraphStanfordGallery"
   id: string
@@ -17683,6 +17798,13 @@ type FragmentParagraphUnion_ParagraphStanfordSpacer_Fragment = {
   behaviors?: string | null
   status: boolean
   suSpacerSize?: string | null
+}
+
+type FragmentParagraphUnion_ParagraphStanfordStatCard_Fragment = {
+  __typename: "ParagraphStanfordStatCard"
+  id: string
+  behaviors?: string | null
+  status: boolean
 }
 
 type FragmentParagraphUnion_ParagraphStanfordWysiwyg_Fragment = {
@@ -17858,6 +17980,7 @@ export type FragmentParagraphUnionFragment =
   | FragmentParagraphUnion_ParagraphStanfordCard_Fragment
   | FragmentParagraphUnion_ParagraphStanfordEntity_Fragment
   | FragmentParagraphUnion_ParagraphStanfordFaq_Fragment
+  | FragmentParagraphUnion_ParagraphStanfordFilteredList_Fragment
   | FragmentParagraphUnion_ParagraphStanfordGallery_Fragment
   | FragmentParagraphUnion_ParagraphStanfordList_Fragment
   | FragmentParagraphUnion_ParagraphStanfordMediaCaption_Fragment
@@ -17865,6 +17988,7 @@ export type FragmentParagraphUnionFragment =
   | FragmentParagraphUnion_ParagraphStanfordPersonCtum_Fragment
   | FragmentParagraphUnion_ParagraphStanfordSchedule_Fragment
   | FragmentParagraphUnion_ParagraphStanfordSpacer_Fragment
+  | FragmentParagraphUnion_ParagraphStanfordStatCard_Fragment
   | FragmentParagraphUnion_ParagraphStanfordWysiwyg_Fragment
   | FragmentParagraphUnion_ParagraphSulButton_Fragment
   | FragmentParagraphUnion_ParagraphSulContactCard_Fragment
@@ -19611,6 +19735,7 @@ export type RouteQuery = {
                       suAccordionBody: {__typename?: "Text"; processed?: any | null}
                     }> | null
                   }
+                | {__typename: "ParagraphStanfordFilteredList"; id: string; behaviors?: string | null; status: boolean}
                 | {
                     __typename: "ParagraphStanfordGallery"
                     id: string
@@ -19680,6 +19805,7 @@ export type RouteQuery = {
                     status: boolean
                     suSpacerSize?: string | null
                   }
+                | {__typename: "ParagraphStanfordStatCard"; id: string; behaviors?: string | null; status: boolean}
                 | {
                     __typename: "ParagraphStanfordWysiwyg"
                     id: string
@@ -24107,6 +24233,7 @@ export type SearchQuery = {
                   suAccordionBody: {__typename?: "Text"; processed?: any | null}
                 }> | null
               }
+            | {__typename: "ParagraphStanfordFilteredList"; id: string; behaviors?: string | null; status: boolean}
             | {
                 __typename: "ParagraphStanfordGallery"
                 id: string
@@ -24176,6 +24303,7 @@ export type SearchQuery = {
                 status: boolean
                 suSpacerSize?: string | null
               }
+            | {__typename: "ParagraphStanfordStatCard"; id: string; behaviors?: string | null; status: boolean}
             | {
                 __typename: "ParagraphStanfordWysiwyg"
                 id: string
