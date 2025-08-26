@@ -120,12 +120,12 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
       )}
 
       <form
-        className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
+        className="mx-auto mb-60 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={handleSearchSubmit}
       >
         <div className="relative w-full md:w-[435px]">
           <label className="pl-15 text-18 font-semibold leading-display" htmlFor={id}>
-            Search by name, title, or subject
+            Search by event title
           </label>
 
           <input
@@ -154,16 +154,16 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
         <div className="w-full self-end md:w-[435px]">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by event type</legend>
-            <ToggleOption checked={eventType === ""} onChange={() => handleTypeToggle("")} first name="events-all">
-              All Events
-            </ToggleOption>
             <ToggleOption
               checked={eventType === "workshop"}
               onChange={() => handleTypeToggle("workshop")}
-              last
+              first
               name="events-workshop"
             >
               Workshops
+            </ToggleOption>
+            <ToggleOption checked={eventType === ""} onChange={() => handleTypeToggle("")} last name="events-all">
+              All Events
             </ToggleOption>
           </fieldset>
         </div>

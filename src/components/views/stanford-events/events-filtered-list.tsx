@@ -18,11 +18,12 @@ interface Props {
 }
 
 const EventsFilteredList = async ({items, hasHeading, totalItems, loadPage}: Props) => {
+  console.log("items", items)
   return (
     <EventsFilteredListClient
       className="@container"
       ulProps={{className: "list-unstyled flex flex-col mb-50 max-w-[98rem] mx-auto"}}
-      liProps={{className: "w-full py-50 first:pt-0 last:border-none last:pb-0 border-b"}}
+      liProps={{className: "w-full py-50 last:pb-0 border-t"}}
       loadPage={loadPage}
       totalItems={totalItems}
     >
