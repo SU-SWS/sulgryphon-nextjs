@@ -5311,6 +5311,7 @@ export type SulBranchLocationsQuery = { __typename?: 'Query', sulBranchLocations
 
 export type SulEventsQueryVariables = Exact<{
   contextualFilters?: InputMaybe<SulEventsContextualFilterInput>;
+  filter?: InputMaybe<SulEventsFilterInput>;
   sortDir?: InputMaybe<SortDirection>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;

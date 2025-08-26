@@ -104,37 +104,28 @@ export const getViewPagedItems = async (
       case "sul_events--cards":
       case "sul_events--list_page":
       case "sul_events--filtered_list": {
-        // Build contextual filter values - add search and eventType to existing filters
-        const contextualValues = [
-          ...(contextualFilter || []),
-          String(filter?.search || "all"),
-          String(filter?.eventType || "all"),
-        ]
-
         contextualFilters = getContextualFilters(
           [
             "term_node_taxonomy_name_depth",
             "term_node_taxonomy_name_depth_1",
             "term_node_taxonomy_name_depth_2",
             "term_node_taxonomy_name_depth_3",
-            "title",
-            "type",
           ],
-          contextualValues
+          contextualFilter
         )
-
         graphqlResponse = await client.sulEvents({
           contextualFilters,
+          filter: {
+            ...(filter?.search && {search: String(filter.search)}),
+            ...(filter?.eventType === "workshop" && {eventType: "workshop"}),
+          },
           sortDir,
-          pageSize: itemsPerPage,
-          page,
           ...queryVariables,
         })
         items = graphqlResponse.sulEvents?.results as unknown as NodeStanfordEvent[]
         totalItems = graphqlResponse.sulEvents?.pageInfo.total || 0
         break
       }
-
       case "sul_events--past_events_list_block":
         graphqlResponse = await client.sulEvents({
           contextualFilters,
