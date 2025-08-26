@@ -20,10 +20,14 @@ type Props = Omit<LoadMoreListProps, "loadPage"> & {
 const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, totalItems, loadPage, ...props}: Props) => {
   const {count: filteredTotalItems, setCount: setFilteredTotalItems} = useCounter(totalItems)
   const [searchKeyword, setSearchKeyword] = useState("")
+  const [inputValue, setInputValue] = useState("")
   const [eventType, setEventType] = useState<"" | "workshop">("")
   const id = useId()
   const {count: page, increment: incrementPage, reset: resetPage} = useCounter(0)
-  const [items, setItems] = useState<JSX.Element[]>(children)
+
+  const initialItems = Array.isArray(children) ? children : [children].filter(Boolean)
+  const [items, setItems] = useState<JSX.Element[]>(initialItems)
+
   const {value: focusOnElement, setTrue: enableFocusElement, setFalse: disableFocusElement} = useBoolean(false)
   const [runLoadPage, isPending] = useServerAction(loadPage)
 
@@ -37,12 +41,16 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
         eventType: eventType || undefined,
       })
         .then(results => {
-          const resultChildren = results?.props.children
+          const resultChildren = Array.isArray(results?.props.children)
+            ? results.props.children
+            : [results?.props.children].filter(Boolean)
           setItems([...items, ...resultChildren])
           enableFocusElement()
           incrementPage()
         })
-        .catch(_e => console.warn("An error happened loading more items"))
+        .catch(error => {
+          console.warn("An error happened loading more items", error)
+        })
     }
   }
 
@@ -52,23 +60,28 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
     if (focusOnElement) setFocusOnItem()
   }, [focusOnElement, setFocusOnItem])
 
-  const applyFilters = () => {
-    const keyword = keywordRef.current?.value || ""
+  const applyFilters = (searchValue?: string, typeValue?: "" | "workshop") => {
+    const keyword = searchValue ?? inputValue
+    const type = typeValue ?? eventType
 
     if (loadPage) {
       runLoadPage(0, {
-        search: keyword,
-        eventType: eventType || undefined,
+        search: keyword || undefined,
+        eventType: type || undefined,
       })
         .then(results => {
-          const resultChildren = results?.props.children
-          setFilteredTotalItems(results?.props.totalItems)
+          const resultChildren = Array.isArray(results?.props.children)
+            ? results.props.children
+            : [results?.props.children].filter(Boolean)
+          setFilteredTotalItems(results?.props.totalItems || 0)
           setItems([...resultChildren])
           resetPage()
           setSearchKeyword(keyword)
           enableFocusElement()
         })
-        .catch(_e => console.warn("An error happened applying filters"))
+        .catch(error => {
+          console.warn("An error happened applying filters", error)
+        })
     }
   }
 
@@ -79,34 +92,20 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
 
   const handleTypeToggle = (newType: "" | "workshop") => {
     setEventType(newType)
-    // Apply filters immediately when type changes
-    setTimeout(() => {
-      const keyword = keywordRef.current?.value || ""
-      if (loadPage) {
-        runLoadPage(0, {
-          search: keyword,
-          eventType: newType || undefined,
-        })
-          .then(results => {
-            const resultChildren = results?.props.children
-            setFilteredTotalItems(results?.props.totalItems)
-            setItems([...resultChildren])
-            resetPage()
-            setSearchKeyword(keyword)
-            enableFocusElement()
-          })
-          .catch(_e => console.warn("An error happened filtering by type"))
-      }
-    }, 0)
+    applyFilters(inputValue, newType)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
   }
 
   const clearSearch = () => {
+    setInputValue("")
     if (keywordRef.current) {
-      keywordRef.current.value = ""
       keywordRef.current.focus()
     }
     setSearchKeyword("")
-    applyFilters()
+    applyFilters("")
   }
 
   return (
@@ -134,6 +133,8 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
             type="text"
             id={id}
             placeholder=""
+            value={inputValue}
+            onChange={handleInputChange}
           />
 
           <button
@@ -174,8 +175,8 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
           {items.map((item, i) => (
             <li
               key={`${id}--${i}`}
-              ref={i === children.length * page ? focusItemRef : null}
-              tabIndex={i === children.length * page && focusOnElement ? 0 : undefined}
+              ref={i === initialItems.length * page ? focusItemRef : null}
+              tabIndex={i === initialItems.length * page && focusOnElement ? 0 : undefined}
               onBlur={disableFocusElement}
               {...liProps}
             >

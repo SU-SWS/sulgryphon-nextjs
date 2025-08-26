@@ -18,7 +18,6 @@ interface Props {
 }
 
 const EventsFilteredList = async ({items, hasHeading, totalItems, loadPage}: Props) => {
-  console.log("items", items)
   return (
     <EventsFilteredListClient
       className="@container"
