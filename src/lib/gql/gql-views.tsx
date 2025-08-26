@@ -103,7 +103,7 @@ export const getViewPagedItems = async (
       case "sul_events--cards_desc":
       case "sul_events--cards":
       case "sul_events--list_page":
-      case "sul_events--filtered_list": {
+      case "sul_events--filtered_list":
         contextualFilters = getContextualFilters(
           [
             "term_node_taxonomy_name_depth",
@@ -125,7 +125,7 @@ export const getViewPagedItems = async (
         items = graphqlResponse.sulEvents?.results as unknown as NodeStanfordEvent[]
         totalItems = graphqlResponse.sulEvents?.pageInfo.total || 0
         break
-      }
+
       case "sul_events--past_events_list_block":
         graphqlResponse = await client.sulEvents({
           contextualFilters,
