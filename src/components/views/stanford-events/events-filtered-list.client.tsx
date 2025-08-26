@@ -159,7 +159,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
               checked={eventType === "workshop"}
               onChange={() => handleTypeToggle("workshop")}
               first
-              name="events-workshop"
+              name="events-workshops"
             >
               Workshops
             </ToggleOption>

@@ -3219,6 +3219,7 @@ export type QueryStanfordSuperFootersArgs = {
 /** The schema's entry-point for queries. */
 export type QuerySulEventsArgs = {
   contextualFilter?: InputMaybe<SulEventsContextualFilterInput>
+  filter?: InputMaybe<SulEventsFilterInput>
   offset?: InputMaybe<Scalars["Int"]["input"]>
   page?: InputMaybe<Scalars["Int"]["input"]>
   pageSize?: InputMaybe<Scalars["Int"]["input"]>
@@ -3958,12 +3959,17 @@ export type SulBranchLocationsResult = View & {
 }
 
 export type SulEventsContextualFilterInput = {
-  su_event_type_target_id?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth_1?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth_2?: InputMaybe<Scalars["String"]["input"]>
   term_node_taxonomy_name_depth_3?: InputMaybe<Scalars["String"]["input"]>
-  title?: InputMaybe<Scalars["String"]["input"]>
+}
+
+export type SulEventsFilterInput = {
+  /** Event Types (su_event_type)  */
+  eventType?: InputMaybe<Scalars["String"]["input"]>
+  /** Title  */
+  search?: InputMaybe<Scalars["String"]["input"]>
 }
 
 /** Result for view sul_events display list_page_graphql. */
@@ -21407,6 +21413,7 @@ export type SulBranchLocationsQuery = {
 
 export type SulEventsQueryVariables = Exact<{
   contextualFilters?: InputMaybe<SulEventsContextualFilterInput>
+  filter?: InputMaybe<SulEventsFilterInput>
   sortDir?: InputMaybe<SortDirection>
   pageSize?: InputMaybe<Scalars["Int"]["input"]>
   page?: InputMaybe<Scalars["Int"]["input"]>

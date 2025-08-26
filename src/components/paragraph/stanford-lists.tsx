@@ -31,7 +31,7 @@ const ListParagraph = async ({paragraph}: Props) => {
   const {totalItems} = pagedItems
   const viewItems = limit ? pagedItems.items.slice(0, limit) : pagedItems.items
 
-  const addLoadMore = (limit || 3) >= VIEW_PAGE_SIZE && totalItems > viewItems.length
+  const addLoadMore = ((limit || 3) >= VIEW_PAGE_SIZE && totalItems > viewItems.length) || displayId === "filtered_list"
 
   if (behaviors.list_paragraph?.hide_empty && viewItems.length === 0) return null
 
