@@ -1,6 +1,9 @@
 
 name: Build & Lint
 on: [push]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   lint:
     name: Lint & TS Check
@@ -30,7 +33,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: pookmish/drupal8ci:latest
+      image: pookmish/drupal8ci:php8.3
       env:
         BUILD_PAGES: 100
         BUILD_COMPLETE: 'true'
