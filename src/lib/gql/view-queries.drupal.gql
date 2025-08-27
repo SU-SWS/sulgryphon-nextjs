@@ -181,6 +181,9 @@ query stanfordPersonSearch($pageSize: Int = 999, $page: Int = 0, $offset: Int) {
                     processed
                 }
                 suPersonResearchInterests
+                suPersonTypeGroup {
+                    name
+                }
             }
         }
         pageInfo {
