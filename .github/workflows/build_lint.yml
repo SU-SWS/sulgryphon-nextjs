@@ -74,11 +74,11 @@ jobs:
             docroot/libraries
             docroot/modules/contrib
             frontend/node_modules
-          key: build-${{ hashFiles('blt/blt.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
+          key: build-${{ hashFiles('drush/drush.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
           restore-keys: |
-            build-${{ hashFiles('blt/blt.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
-            build-${{ hashFiles('blt/blt.yml') }}-${{ hashFiles('composer.json') }}-
-            build-${{ hashFiles('blt/blt.yml') }}-
+            build-${{ hashFiles('drush/drush.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
+            build-${{ hashFiles('drush/drush.yml') }}-${{ hashFiles('composer.json') }}-
+            build-${{ hashFiles('drush/drush.yml') }}-
       - name: Sync Site
         run: |
           git config --system --add safe.directory '*' &&
@@ -91,8 +91,8 @@ jobs:
           ln -sL ../default/files/ docroot/sites/library/files &&
           apachectl stop && apachectl start &&
           composer install -n &&
-          blt drupal:sync --site=library -n &&
-          drush sqlq 'truncate config_pages__su_site_algolia_id'
+          drush drupal:sync --site=library -n &&
+          drush sqlq 'truncate config_pages__su_site_algolia_index; truncate config_pages__su_site_algolia_key; truncate config_pages__su_site_algolia_id'
       - name: Build Frontend
         run: |
           cd $GITHUB_WORKSPACE/frontend &&
