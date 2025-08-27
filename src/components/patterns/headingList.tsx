@@ -20,6 +20,7 @@ const HeadingList = () => {
   const [headings, setHeadings] = useState<Array<Heading>>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
   const [pageH1, setPageH1] = useState<string>("")
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   const getPageContext = (element: Element): string => {
     if (element.closest("nav")) return "navigation"
@@ -133,6 +134,7 @@ const HeadingList = () => {
       })
 
       setHeadings(allHeadings)
+      setIsLoaded(true)
 
       // Set up intersection observer
       const observer = new IntersectionObserver(
@@ -160,6 +162,11 @@ const HeadingList = () => {
 
   useEventListener("scroll", debouncedHandleScroll)
   useEventListener("hashchange", handleAnchor)
+
+  // Don't render anything until headings are loaded
+  if (!isLoaded) {
+    return null
+  }
 
   return (
     <nav aria-label="on this page menu">
