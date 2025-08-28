@@ -10,6 +10,9 @@ import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
 import StanfordPersonMetadata from "@/components/node/stanford-person/stanford-person-metadata"
 import NumberLink from "@/components/patterns/elements/number-link"
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import Image from "next/image"
+import {buildUrl} from "@/lib/drupal/utils"
 
 const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   const libGuides = node.sulPersonLibguideId
@@ -29,6 +32,37 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   return (
     <div {...props}>
       <StanfordPersonMetadata node={node} />
+
+      <InternalHeaderBanner>
+        <div className="mx-auto mb-40 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col items-center gap-32 p-0 md:mb-10 md:max-w-[calc(100vw-20rem)] md:flex-row 3xl:max-w-[calc(1500px-20rem)]">
+          <div className="order-2 flex flex-col">
+            <h1 id={node.id} className="mb-0">
+              {node.title}
+            </h1>
+            <div>
+              {(node.suPersonFullTitle || node.suPersonShortTitle) && (
+                <div className="text-20 md:text-22">{node.suPersonFullTitle || node.suPersonShortTitle}</div>
+              )}
+
+              {node.suPersonPronouns && <div className="text-20 md:text-22">Pronouns: {node.suPersonPronouns}</div>}
+            </div>
+          </div>
+
+          {node.suPersonPhoto && (
+            <div className="order-1">
+              <div className="relative aspect-[1/1] w-220">
+                <Image
+                  src={buildUrl(node.suPersonPhoto?.mediaImage.url).toString()}
+                  alt=""
+                  className="rounded-full object-cover"
+                  fill
+                  sizes="500px"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </InternalHeaderBanner>
       <div className="grid gap-2xl md:grid-cols-6">
         <div className="flex flex-col gap-40 md:col-span-4">
           {node.body && <div className="text-20 last:children:mb-0">{formatHtml(node.body.processed)}</div>}
