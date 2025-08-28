@@ -18,6 +18,7 @@ import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banne
 import StanfordAccordionParagraph from "@/components/paragraph/stanford-accordion"
 import SulHomeBanner from "@/components/paragraph/sul-home-banner/sul-home-banner"
 import SulLocationHour from "@/components/paragraph/sul-location-hour/sul-location-hour"
+import StatCardParagraph from "./stanford-stat-card/stat-card-paragraph"
 
 type ParagraphProps = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphUnion
@@ -150,6 +151,7 @@ const ParagraphComponent = ({paragraph, fullWidth = false, ...props}: ParagraphP
       )}
       {paragraph.__typename === "ParagraphSulHomeBanner" && <SulHomeBanner paragraph={paragraph} {...props} />}
       {paragraph.__typename === "ParagraphSulLocationHour" && <SulLocationHour paragraph={paragraph} {...props} />}
+      {paragraph.__typename === "ParagraphStanfordStatCard" && <StatCardParagraph paragraph={paragraph} {...props} />}
     </>
   )
 }

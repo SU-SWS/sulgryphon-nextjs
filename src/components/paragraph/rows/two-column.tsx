@@ -2,13 +2,21 @@ import OneColumn from "@/components/paragraph/rows/one-column"
 import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
 import {getParagraphBehaviors} from "@/components/paragraph"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
+import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
+import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
 
-export type TwoColumnConfig = Record<string, string>
+export type TwoColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
+  column_widths: "33-67" | "67-33"
+  vertical_dividers?: boolean
+}
 type Props = {
   items: ParagraphUnion[]
   fullWidth?: boolean
-  config?: TwoColumnConfig
+  config: NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
+    column_widths: "33-67" | "67-33"
+    vertical_dividers?: boolean
+  }
 }
 
 const TwoColumn = async ({items, fullWidth, config}: Props) => {
@@ -28,9 +36,33 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
   }
 
   return (
-    <div className={twMerge("gutters centered grid gap-90", gridCols)} {...draftProps}>
-      <OneColumn items={leftItems} fullWidth={fullWidth} />
-      <OneColumn items={rightItems} fullWidth={fullWidth} />
+    <div
+      className={clsx({
+        "px-5 pb-20 pt-20": !!config?.bg_color,
+        "pt-0": config?.top_padding === "none",
+        "pt-40": config?.top_padding === "more",
+        "mb-0": config?.bottom_margin === "none",
+        "pb-0": config?.bottom_padding === "none",
+        "bg-foggy-light": config?.bg_color === "f4f4f4",
+        "bg-[#ebeae4]": config?.bg_color === "ebeae5",
+        "bg-[#dcecef]": config?.bg_color === "dcecef",
+        "bg-[#dcefec]": config?.bg_color === "dcefec",
+        "bg-[#f2e8f1]": config?.bg_color === "f2e8f1",
+        "bg-[#f7ecde]": config?.bg_color === "f7ecde",
+      })}
+    >
+      <div className={twMerge("gutters centered grid gap-90", gridCols)} data-columns="2" {...draftProps}>
+        <OneColumn
+          items={leftItems}
+          fullWidth={fullWidth}
+          config={{top_padding: "none", bottom_margin: "none"}}
+          className={clsx({
+            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+              config?.vertical_dividers,
+          })}
+        />
+        <OneColumn items={rightItems} fullWidth={fullWidth} config={{top_padding: "none", bottom_margin: "none"}} />
+      </div>
     </div>
   )
 }
