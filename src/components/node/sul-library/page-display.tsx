@@ -4,6 +4,8 @@ import formatHtml from "@/lib/format-html"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 import {redirect} from "next/navigation"
 import SulLibraryMetadata from "@/components/node/sul-library/sul-library-metadata"
+import LibraryHeader from "./library-header"
+import InteriorPage from "@/components/layout/interior-page"
 
 const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
   if (node.sulLibraryExtUrl?.url) redirect(node.sulLibraryExtUrl.url)
@@ -16,9 +18,8 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
     timeZone: "America/Los_Angeles",
   })
 
-  return (
-    <article className="mb-50 @container" {...props}>
-      <SulLibraryMetadata node={node} />
+  const content = (
+    <>
       {node.suLibraryHours && (
         <div className="centered mx-auto mb-50 w-full lg:max-w-[980px]">
           <LibraryAdditionalHours hoursId={node.suLibraryHours} />
@@ -34,6 +35,21 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
         </div>
       )}
       <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
+    </>
+  )
+
+  return (
+    <article className="mb-50 @container" {...props}>
+      <SulLibraryMetadata node={node} />
+      <LibraryHeader node={node} />
+
+      {!fullWidth && (
+        <InteriorPage node={node} currentPath={node.path || "#"}>
+          {content}
+        </InteriorPage>
+      )}
+
+      {fullWidth && content}
     </article>
   )
 }
