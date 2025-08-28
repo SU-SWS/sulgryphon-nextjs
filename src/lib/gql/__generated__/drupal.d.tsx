@@ -1356,6 +1356,8 @@ export type NodeStanfordEvent = EdgeNode &
      * to add, edit and delete event terms.</a>
      */
     suEventType?: Maybe<Array<TermStanfordEventType>>
+    /** Experience */
+    sulEventExperience?: Maybe<Scalars["String"]["output"]>
     /** Image */
     sulEventImage?: Maybe<MediaImage>
     /** Title */
@@ -1494,7 +1496,9 @@ export type NodeStanfordNews = EdgeNode &
     sticky: Scalars["Boolean"]["output"]
     /**
      * Maximum one banner media. <em>The “banner media” will display as a
-     * full-width image or video above the body text area on the article page.</em>
+     * full-width image or video above the body text area on the article page. It
+     * will also be used as a thumbnail on the list page, and as a thumbnail on the
+     * teaser card paragraph if no Featured Media is added.</em>
      */
     suNewsBanner?: Maybe<NodeStanfordNewsSuNewsBannerUnion>
     /** Banner Caption */
@@ -1560,7 +1564,9 @@ export type NodeStanfordNewsEdge = Edge & {
 
 /**
  * Maximum one banner media. <em>The “banner media” will display as a
- * full-width image or video above the body text area on the article page.</em>
+ * full-width image or video above the body text area on the article page. It will
+ * also be used as a thumbnail on the list page, and as a thumbnail on the teaser
+ * card paragraph if no Featured Media is added.</em>
  */
 export type NodeStanfordNewsSuNewsBannerUnion = MediaImage | MediaVideo
 
@@ -4728,6 +4734,7 @@ export type NodeQuery = {
         suEventSponsor?: Array<string> | null
         suEventSubheadline?: string | null
         suEventTelephone?: any | null
+        sulEventExperience?: string | null
         changed: {__typename?: "DateTime"; timezone: any; time: any}
         created: {__typename?: "DateTime"; timezone: any; time: any}
         sulEventImage?: {
@@ -5458,6 +5465,8 @@ export type NodeQuery = {
         > | null
         suEventSeriesEvent?: Array<{
           __typename: "NodeStanfordEvent"
+          suEventAltLoc?: string | null
+          sulEventExperience?: string | null
           id: string
           title: string
           status: boolean
@@ -10846,6 +10855,7 @@ export type FragmentNodeStanfordEventFragment = {
   suEventSponsor?: Array<string> | null
   suEventSubheadline?: string | null
   suEventTelephone?: any | null
+  sulEventExperience?: string | null
   id: string
   title: string
   status: boolean
@@ -11544,6 +11554,8 @@ export type FragmentNodeStanfordEventSeriesFragment = {
   > | null
   suEventSeriesEvent?: Array<{
     __typename: "NodeStanfordEvent"
+    suEventAltLoc?: string | null
+    sulEventExperience?: string | null
     id: string
     title: string
     status: boolean
@@ -12789,6 +12801,7 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
   suEventSponsor?: Array<string> | null
   suEventSubheadline?: string | null
   suEventTelephone?: any | null
+  sulEventExperience?: string | null
   changed: {__typename?: "DateTime"; timezone: any; time: any}
   created: {__typename?: "DateTime"; timezone: any; time: any}
   sulEventImage?: {
@@ -13484,6 +13497,8 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
   > | null
   suEventSeriesEvent?: Array<{
     __typename: "NodeStanfordEvent"
+    suEventAltLoc?: string | null
+    sulEventExperience?: string | null
     id: string
     title: string
     status: boolean
@@ -16113,6 +16128,8 @@ export type FragmentNodeStanfordCourseTeaserFragment = {
 
 export type FragmentNodeStanfordEventTeaserFragment = {
   __typename: "NodeStanfordEvent"
+  suEventAltLoc?: string | null
+  sulEventExperience?: string | null
   id: string
   title: string
   status: boolean
@@ -16427,6 +16444,8 @@ type FragmentNodeTeaserUnion_NodeStanfordEvent_Fragment = {
   status: boolean
   path?: string | null
   sticky: boolean
+  suEventAltLoc?: string | null
+  sulEventExperience?: string | null
   changed: {__typename?: "DateTime"; timezone: any; time: any}
   created: {__typename?: "DateTime"; timezone: any; time: any}
   sulEventImage?: {
@@ -18258,6 +18277,7 @@ export type RouteQuery = {
               suEventSponsor?: Array<string> | null
               suEventSubheadline?: string | null
               suEventTelephone?: any | null
+              sulEventExperience?: string | null
               changed: {__typename?: "DateTime"; timezone: any; time: any}
               created: {__typename?: "DateTime"; timezone: any; time: any}
               sulEventImage?: {
@@ -19042,6 +19062,8 @@ export type RouteQuery = {
               > | null
               suEventSeriesEvent?: Array<{
                 __typename: "NodeStanfordEvent"
+                suEventAltLoc?: string | null
+                sulEventExperience?: string | null
                 id: string
                 title: string
                 status: boolean
@@ -21536,6 +21558,8 @@ export type SulEventsQuery = {
       | {__typename?: "NodeStanfordCourse"}
       | {
           __typename: "NodeStanfordEvent"
+          suEventAltLoc?: string | null
+          sulEventExperience?: string | null
           id: string
           title: string
           status: boolean
@@ -21633,6 +21657,8 @@ export type SulEventsSharedTagsQuery = {
       | {__typename?: "NodeStanfordCourse"}
       | {
           __typename: "NodeStanfordEvent"
+          suEventAltLoc?: string | null
+          sulEventExperience?: string | null
           id: string
           title: string
           status: boolean
@@ -22243,6 +22269,8 @@ export type StanfordSharedTagsQuery = {
           status: boolean
           path?: string | null
           sticky: boolean
+          suEventAltLoc?: string | null
+          sulEventExperience?: string | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
           sulEventImage?: {
@@ -22834,6 +22862,7 @@ export type SearchQuery = {
           suEventSponsor?: Array<string> | null
           suEventSubheadline?: string | null
           suEventTelephone?: any | null
+          sulEventExperience?: string | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
           sulEventImage?: {
@@ -23600,6 +23629,8 @@ export type SearchQuery = {
           > | null
           suEventSeriesEvent?: Array<{
             __typename: "NodeStanfordEvent"
+            suEventAltLoc?: string | null
+            sulEventExperience?: string | null
             id: string
             title: string
             status: boolean
@@ -25851,6 +25882,7 @@ export type StanfordPersonSearchQuery = {
           } | null
           body?: {__typename?: "TextSummary"; processed?: any | null} | null
           suPersonResearch?: Array<{__typename?: "Text"; processed?: any | null}> | null
+          suPersonTypeGroup?: Array<{__typename?: "TermStanfordPersonType"; name: string}> | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
         }

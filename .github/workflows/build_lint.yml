@@ -1,6 +1,9 @@
 
 name: Build & Lint
 on: [push]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   lint:
     name: Lint & TS Check
@@ -30,7 +33,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: pookmish/drupal8ci:latest
+      image: pookmish/drupal8ci:php8.3
       env:
         BUILD_PAGES: 100
         BUILD_COMPLETE: 'true'
@@ -39,7 +42,7 @@ jobs:
         STANFORD_ENCRYPT: ${{ secrets.STANFORD_ENCRYPT }}
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_DATABASE: drupal
           MYSQL_USER: drupal
@@ -59,6 +62,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: "SU-SWS/ace-stanfordlagunita"
+          ref: '3.x'
       - uses: actions/checkout@v4
         with:
           path: frontend
@@ -71,11 +75,11 @@ jobs:
             docroot/libraries
             docroot/modules/contrib
             frontend/node_modules
-          key: build-${{ hashFiles('blt/blt.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
+          key: build-${{ hashFiles('drush/drush.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
           restore-keys: |
-            build-${{ hashFiles('blt/blt.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
-            build-${{ hashFiles('blt/blt.yml') }}-${{ hashFiles('composer.json') }}-
-            build-${{ hashFiles('blt/blt.yml') }}-
+            build-${{ hashFiles('drush/drush.yml') }}-${{ hashFiles('composer.json') }}-${{ hashFiles('composer.lock') }}
+            build-${{ hashFiles('drush/drush.yml') }}-${{ hashFiles('composer.json') }}-
+            build-${{ hashFiles('drush/drush.yml') }}-
       - name: Sync Site
         run: |
           git config --system --add safe.directory '*' &&
@@ -89,7 +93,7 @@ jobs:
           apachectl stop && apachectl start &&
           composer install -n &&
           drush drupal:sync --site=library -n &&
-          drush sqlq 'truncate config_pages__su_site_algolia_id'
+          drush sqlq 'truncate config_pages__su_site_algolia_index; truncate config_pages__su_site_algolia_key; truncate config_pages__su_site_algolia_id'
       - name: Build Frontend
         run: |
           cd $GITHUB_WORKSPACE/frontend &&

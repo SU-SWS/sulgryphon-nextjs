@@ -16,7 +16,7 @@ interface Props {
   loadPage?: (_page: number) => Promise<JSX.Element>
 }
 
-const EventsListView = async ({items, hasHeading, totalItems, loadPage}: Props) => {
+const EventsFilteredList = async ({items, hasHeading, totalItems, loadPage}: Props) => {
   return (
     <LoadMoreList
       className="@container"
@@ -31,4 +31,4 @@ const EventsListView = async ({items, hasHeading, totalItems, loadPage}: Props) 
     </LoadMoreList>
   )
 }
-export default EventsListView
+export default EventsFilteredList

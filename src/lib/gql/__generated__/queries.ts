@@ -672,6 +672,7 @@ export const FragmentNodeStanfordEventFragmentDoc = gql`
   suEventType {
     ...FragmentTermInterface
   }
+  sulEventExperience
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
@@ -697,9 +698,11 @@ export const FragmentNodeStanfordEventTeaserFragmentDoc = gql`
   suEventSource {
     ...FragmentLink
   }
+  suEventAltLoc
   suEventMapLink {
     ...FragmentLink
   }
+  sulEventExperience
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
@@ -1701,6 +1704,9 @@ export const StanfordPersonSearchDocument = gql`
           processed
         }
         suPersonResearchInterests
+        suPersonTypeGroup {
+          name
+        }
       }
     }
     pageInfo {
