@@ -277,6 +277,38 @@ fragment FragmentParagraphStanfordFaq on ParagraphStanfordFaq {
     }
 }
 
+fragment FragmentParagraphStanfordStatCard on ParagraphStanfordStatCard {
+    ...FragmentParagraphInterface
+    suStatBgColor {
+        ... FragmentColorFieldType
+    }
+    suStatBody {
+        ... FragmentText
+    }
+    suStatButton {
+        ... FragmentLink
+    }
+    suStatCentered
+    suStatHeadingHide
+    suStatHeadline
+    suStatHeadlineLvl
+    suStatIcon {
+        ... FragmentFontawesomeIconType
+    }
+    suStatIconColor {
+        ... FragmentColorFieldType
+    }
+    suStatImage {
+        ... FragmentMediaImage
+    }
+    suStatLinkStyle
+    suStatStat
+    suStatStatColor {
+        ... FragmentColorFieldType
+    }
+    suStatSuperhead
+}
+
 fragment FragmentParagraphUnion on ParagraphUnion {
     ...FragmentParagraphInterface
     ...FragmentParagraphStanfordAccordion
@@ -287,6 +319,7 @@ fragment FragmentParagraphUnion on ParagraphUnion {
     ...FragmentParagraphStanfordList
     ...FragmentParagraphStanfordMediaCaption
     ...FragmentParagraphStanfordSpacer
+    ... FragmentParagraphStanfordStatCard
     ...FragmentParagraphStanfordWysiwyg
     ...FragmentParagraphLayout
     ...FragmentParagraphCollection

@@ -101,6 +101,12 @@ module.exports = {
       },
       boxShadow: {
         'button': '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+      },
+      listStyleType: {
+        "lower-alpha": "lower-alpha",
+        "upper-alpha": "upper-alpha",
+        "lower-roman": "lower-roman",
+        "upper-roman": "upper-roman",
       }
     },
   },
