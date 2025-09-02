@@ -31,7 +31,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   const encodeTitle = encodeURIComponent(node.title)
 
   return (
-    <div {...props} className="centered">
+    <article {...props} className="centered" aria-labelledby={node.id}>
       <StanfordNewsMetadata node={node} />
       <InternalHeaderBanner>
         <div className="mx-auto mb-65 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
@@ -143,7 +143,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
         </div>
       )}
       <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
-    </div>
+    </article>
   )
 }
 

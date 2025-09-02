@@ -16,8 +16,8 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   })
 
   return (
-    <div {...props}>
-      <StanfordPageMetadata node={node} />{" "}
+    <article {...props} aria-labelledby={node.id}>
+      <StanfordPageMetadata node={node} />
       <InternalHeaderBanner>
         <h1
           id={node.id}
@@ -29,17 +29,12 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
       </InternalHeaderBanner>
       {!fullWidth && (
         <InteriorPage node={node} currentPath={node.path || "#"}>
-          {node.suPageComponents && <Rows components={node.suPageComponents} fullWidth={fullWidth} />}
-          <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
+          <Rows components={node.suPageComponents} />
         </InteriorPage>
       )}
-      {fullWidth && (
-        <>
-          {node.suPageComponents && <Rows components={node.suPageComponents} fullWidth={fullWidth} />}
-          <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
-        </>
-      )}
-    </div>
+      {fullWidth && <Rows components={node.suPageComponents} fullWidth />}
+      <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
+    </article>
   )
 }
 
