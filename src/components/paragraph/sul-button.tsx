@@ -22,7 +22,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
   const ref = useRef<HTMLDivElement>(null)
   const isCentered = useIsCentered(ref)
 
-  const isBlackBackground = styles?.background === "black"
+  const isBlackBackground = !styles?.background?.includes("gray")
   const isCtaVariant = styles?.background === "gray-cta"
 
   const linkAttributes: Record<string, string> = {}
@@ -37,9 +37,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
     <div
       className={twMerge(
         "relative",
-        clsx(!fullWidth || !isCentered ? "w-full" : "full-screen", {
-          "h-fit w-fit": isCtaVariant,
-        })
+        clsx({"w-full": !fullWidth || !isCentered, "h-fit w-fit lg:ml-auto": isCtaVariant})
       )}
       ref={ref}
       {...props}
@@ -66,7 +64,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
             <h2
               id={headerId}
               className={twMerge(
-                "text-center",
+                "shrink-0 text-center",
                 clsx({
                   "text-white": isBlackBackground,
                   "type-3": !isCtaVariant,
@@ -92,10 +90,13 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
             >
               {link.title}
               {isCtaVariant && (
-                <ChevronDoubleRightIcon
-                  width="20"
-                  className="ml-2 inline transition duration-500 ease-in-out group-hover:translate-x-02em group-focus:translate-x-02em"
-                />
+                <span className="whitespace-nowrap">
+                  &#65279;
+                  <ChevronDoubleRightIcon
+                    width="20"
+                    className="ml-2 inline transition duration-500 ease-in-out group-hover:translate-x-02em group-focus:translate-x-02em"
+                  />
+                </span>
               )}
             </Link>
           )}
