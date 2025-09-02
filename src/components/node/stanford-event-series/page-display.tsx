@@ -5,7 +5,7 @@ import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 
 const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSeries}) => {
   return (
-    <div {...props}>
+    <article {...props} aria-labelledby={node.id}>
       <InternalHeaderBanner>
         <h1
           id={node.id}
@@ -34,7 +34,7 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
           ))}
         </div>
       )}
-    </div>
+    </article>
   )
 }
 

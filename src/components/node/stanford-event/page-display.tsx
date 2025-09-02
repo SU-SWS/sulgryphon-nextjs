@@ -81,7 +81,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   }
 
   return (
-    <div {...props} className="mt-50">
+    <article {...props} className="mt-50" aria-labelledby={node.id}>
       <StanfordEventMetadata node={node} />
       <InternalHeaderBanner>
         <h1
@@ -214,7 +214,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
           ))}
         </div>
       )}
-    </div>
+    </article>
   )
 }
 

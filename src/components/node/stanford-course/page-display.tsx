@@ -5,7 +5,7 @@ import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 
 const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
   return (
-    <div {...props}>
+    <article {...props} aria-labelledby={node.id}>
       <InternalHeaderBanner>
         <h1
           id={node.id}
@@ -44,7 +44,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
         </div>
       )}
       {node.suCourseSectionUnits}
-    </div>
+    </article>
   )
 }
 

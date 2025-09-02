@@ -30,7 +30,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   })
 
   return (
-    <div {...props}>
+    <article {...props} aria-labelledby={node.id}>
       <StanfordPersonMetadata node={node} />
 
       <InternalHeaderBanner>
@@ -203,7 +203,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
         </div>
       </div>
       <footer className="rs-mb-0 rs-mt-4 centered">Last updated {lastUpdated}</footer>
-    </div>
+    </article>
   )
 }
 
