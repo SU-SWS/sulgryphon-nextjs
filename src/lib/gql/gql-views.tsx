@@ -116,8 +116,7 @@ export const getViewPagedItems = async (
         graphqlResponse = await client.sulEvents({
           contextualFilters,
           filter: {
-            ...(filter?.search && {search: String(filter.search)}),
-            ...(filter?.eventType === "workshop" && {eventType: "workshop"}),
+            ...filter,
           },
           sortDir,
           ...queryVariables,

@@ -20,7 +20,6 @@ type Props = Omit<LoadMoreListProps, "loadPage"> & {
 const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, totalItems, loadPage, ...props}: Props) => {
   const {count: filteredTotalItems, setCount: setFilteredTotalItems} = useCounter(totalItems)
   const [searchKeyword, setSearchKeyword] = useState("")
-  const [inputValue, setInputValue] = useState("")
   const [eventType, setEventType] = useState<"" | "workshop">("")
   const id = useId()
   const {count: page, increment: incrementPage, reset: resetPage} = useCounter(0)
@@ -61,7 +60,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
   }, [focusOnElement, setFocusOnItem])
 
   const applyFilters = (searchValue?: string, typeValue?: "" | "workshop") => {
-    const keyword = searchValue ?? inputValue
+    const keyword = searchValue ?? ""
     const type = typeValue ?? eventType
 
     if (loadPage) {
@@ -87,21 +86,17 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
 
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault()
-    applyFilters()
+    applyFilters(keywordRef.current?.value)
   }
 
   const handleTypeToggle = (newType: "" | "workshop") => {
     setEventType(newType)
-    applyFilters(inputValue, newType)
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
+    applyFilters(keywordRef.current?.value, newType)
   }
 
   const clearSearch = () => {
-    setInputValue("")
     if (keywordRef.current) {
+      keywordRef.current.value = ""
       keywordRef.current.focus()
     }
     setSearchKeyword("")
@@ -133,8 +128,6 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
             type="text"
             id={id}
             placeholder=""
-            value={inputValue}
-            onChange={handleInputChange}
           />
 
           <button
