@@ -4,9 +4,15 @@ import {Maybe} from "@/lib/gql/__generated__/drupal.d"
 export type ParagraphBehaviors = {
   layout_paragraphs?: {
     layout?: "sul_helper_1_column" | "sul_helper_2_column" | "sul_helper_3_column"
+    config?: {
+      label?: string
+      bg_color?: string
+      bottom_margin?: "none"
+      bottom_padding?: "none"
+      top_padding?: "none" | "more"
+    }
     parent_uuid?: string
     region?: string
-    config?: Record<string, string>
   }
   sul_button_styles?: {
     background?: Maybe<string>

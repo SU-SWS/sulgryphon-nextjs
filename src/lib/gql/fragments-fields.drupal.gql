@@ -137,3 +137,13 @@ fragment FragmentAddressType on Address {
     locality
     administrativeArea
 }
+
+fragment FragmentColorFieldType on ColorFieldType {
+  color
+  opacity
+}
+
+fragment FragmentFontawesomeIconType on FontawesomeIconType {
+  iconName
+  style
+}
