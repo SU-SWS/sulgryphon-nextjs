@@ -40,25 +40,32 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className="centered flex flex-col gap-xl"
+      className={twMerge("centered flex flex-col", behaviors.list_paragraph?.heading_behavior == "show" && "gap-xl")}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
-      <div className="mb-20 flex items-center justify-between">
-        {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
-          <h2
-            id={paragraph.id}
-            className={twMerge("m-0", behaviors.list_paragraph?.heading_behavior === "hide" && "sr-only")}
-          >
-            {paragraph.suListHeadline}
-          </h2>
-        )}
+      {(behaviors.list_paragraph?.heading_behavior !== "remove" || paragraph.suListButton?.url) && (
+        <div
+          className={twMerge(
+            "flex items-center justify-between",
+            (behaviors.list_paragraph?.heading_behavior === "show" || paragraph.suListButton?.url) && "mb-20"
+          )}
+        >
+          {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
+            <h2
+              id={paragraph.id}
+              className={twMerge("m-0", behaviors.list_paragraph?.heading_behavior === "hide" && "sr-only")}
+            >
+              {paragraph.suListHeadline}
+            </h2>
+          )}
 
-        {paragraph.suListButton?.url && (
-          <DrupalLinkButton href={paragraph.suListButton.url} {...paragraph.suListButton.attributes}>
-            {paragraph.suListButton.title}
-          </DrupalLinkButton>
-        )}
-      </div>
+          {paragraph.suListButton?.url && (
+            <DrupalLinkButton href={paragraph.suListButton.url} {...paragraph.suListButton.attributes}>
+              {paragraph.suListButton.title}
+            </DrupalLinkButton>
+          )}
+        </div>
+      )}
 
       {paragraph.suListDescription?.processed && <div>{formatHtml(paragraph.suListDescription.processed)}</div>}
 
