@@ -63,7 +63,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           )}
         </div>
       </InternalHeaderBanner>
-      <div className="grid gap-2xl md:grid-cols-6">
+      <div className="centered grid gap-2xl md:grid-cols-6">
         <div className="flex flex-col gap-40 md:col-span-4">
           {node.body && <div className="text-20 last:children:mb-0">{formatHtml(node.body.processed)}</div>}
 
