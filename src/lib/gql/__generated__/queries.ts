@@ -1544,10 +1544,11 @@ export const SulBranchLocationsDocument = gql`
     ${FragmentNodeSulLibraryTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const SulEventsDocument = gql`
-    query sulEvents($contextualFilters: SulEventsContextualFilterInput, $sortDir: SortDirection = ASC, $pageSize: Int, $page: Int = -1, $offset: Int) {
+    query sulEvents($contextualFilters: SulEventsContextualFilterInput, $filter: SulEventsFilterInput, $sortDir: SortDirection = ASC, $pageSize: Int, $page: Int = -1, $offset: Int) {
   sulEvents(
     contextualFilter: $contextualFilters
     sortDir: $sortDir
+    filter: $filter
     sortKey: START_TIME
     pageSize: $pageSize
     page: $page
