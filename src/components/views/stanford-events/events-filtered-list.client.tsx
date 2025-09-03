@@ -114,7 +114,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
       )}
 
       <form
-        className="mx-auto mb-60 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
+        className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-16 md:mb-60 md:flex-nowrap md:gap-30"
         onSubmit={handleSearchSubmit}
       >
         <div className="relative w-full md:w-[435px]">
