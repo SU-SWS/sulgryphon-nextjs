@@ -12,6 +12,7 @@ import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
 import StanfordNewsMetadata from "@/components/node/stanford-news/stanford-news-metadata"
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   // Redirect the user to the external source.
@@ -30,8 +31,26 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   const encodeTitle = encodeURIComponent(node.title)
 
   return (
-    <div {...props} className="centered">
+    <article {...props} aria-labelledby={node.id}>
       <StanfordNewsMetadata node={node} />
+      <InternalHeaderBanner>
+        <div className="mx-auto mb-65 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+          <h1 id={node.id} className="order-2 mb-0">
+            {node.title}
+          </h1>
+
+          {node.suNewsTopics && (
+            <div className="order-1 mb-1">
+              {node.suNewsTopics.slice(0, 1).map(topic => (
+                <span key={topic.id} className="text-16 font-semibold uppercase text-cardinal-red md:text-18">
+                  {topic.name}
+                </span>
+              ))}
+            </div>
+          )}
+          {node.suNewsDek && <p className="order-3 mb-0 text-20 leading sm:text-22">{node.suNewsDek}</p>}
+        </div>
+      </InternalHeaderBanner>
       <div className="centered mb-40 2xl:w-2/3">
         <div className="mx-auto w-fit gap-16 md:flex">
           <div className="flex md:order-last">
@@ -124,7 +143,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
         </div>
       )}
       <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
-    </div>
+    </article>
   )
 }
 

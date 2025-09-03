@@ -4,7 +4,7 @@ import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d"
 
 const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublication}) => {
   return (
-    <div {...props}>
+    <article {...props} aria-labelledby={node.id}>
       {node.suPublicationCitation?.__typename && (
         <div className="rs-mb-2 text-16 md:text-18 2xl:text-19">{node.suPublicationCitation.__typename}</div>
       )}
@@ -69,7 +69,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
           </div>
         </div>
       )}
-    </div>
+    </article>
   )
 }
 

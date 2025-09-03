@@ -1,6 +1,9 @@
 import Rows from "@/components/paragraph/rows/rows"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
 import StanfordPageMetadata from "@/components/node/stanford-page/stanford-page-metadata"
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import RosetteIcon from "@/components/patterns/icons/RosetteIcon"
+import InteriorPage from "@/components/layout/interior-page"
 
 const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   const fullWidth = node.layoutSelection?.id === "stanford_basic_page_full"
@@ -13,11 +16,25 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   })
 
   return (
-    <div {...props}>
+    <article {...props} aria-labelledby={node.id}>
       <StanfordPageMetadata node={node} />
-      {node.suPageComponents && <Rows components={node.suPageComponents} fullWidth={fullWidth} />}
+      <InternalHeaderBanner>
+        <h1
+          id={node.id}
+          className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+        >
+          <RosetteIcon width={60} height={60} />
+          {node.title}
+        </h1>
+      </InternalHeaderBanner>
+      {!fullWidth && (
+        <InteriorPage node={node} currentPath={node.path || "#"}>
+          <Rows components={node.suPageComponents} />
+        </InteriorPage>
+      )}
+      {fullWidth && <Rows components={node.suPageComponents} fullWidth />}
       <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
-    </div>
+    </article>
   )
 }
 
