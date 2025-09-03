@@ -3,10 +3,10 @@ import {DrupalLinkButton} from "@/components/patterns/link"
 import {HTMLAttributes} from "react"
 import {ParagraphStanfordList} from "@/lib/gql/__generated__/drupal.d"
 import View from "@/components/views/view"
-import {twMerge} from "tailwind-merge"
 import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
+import clsx from "clsx"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
@@ -40,20 +40,19 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className={twMerge("centered flex flex-col", behaviors.list_paragraph?.heading_behavior == "show" && "gap-xl")}
+      className={clsx("centered flex flex-col", {"gap-xl": behaviors.list_paragraph?.heading_behavior == "show"})}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
       {(behaviors.list_paragraph?.heading_behavior !== "remove" || paragraph.suListButton?.url) && (
         <div
-          className={twMerge(
-            "flex items-center justify-between",
-            (behaviors.list_paragraph?.heading_behavior === "show" || paragraph.suListButton?.url) && "mb-20"
-          )}
+          className={clsx("flex items-center justify-between", {
+            "mb-20": behaviors.list_paragraph?.heading_behavior === "show" || paragraph.suListButton?.url,
+          })}
         >
           {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
             <h2
               id={paragraph.id}
-              className={twMerge("m-0", behaviors.list_paragraph?.heading_behavior === "hide" && "sr-only")}
+              className={clsx("m-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
             >
               {paragraph.suListHeadline}
             </h2>
