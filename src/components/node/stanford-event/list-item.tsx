@@ -3,7 +3,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
-import {getDateString, getTimeString, isAllDay} from "@/lib/getDateTime"
+import {getDateString, getTimeString} from "@/lib/getDateTime"
 
 interface Props {
   node: NodeStanfordEvent
@@ -18,7 +18,6 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
   const timeString = getTimeString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
-  const isAllDayEvent = isAllDay(start, end)
 
   const imageUrl = node.sulEventImage?.mediaImage.url
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
@@ -56,10 +55,10 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
             {dateString}
           </div>
 
-          {(isAllDayEvent || timeString) && (
+          {timeString && (
             <div className="order-4 flex text-16 sm:text-18">
               <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
-              {timeString || "All day"}
+              {timeString}
             </div>
           )}
 
