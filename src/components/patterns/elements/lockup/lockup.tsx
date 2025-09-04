@@ -53,7 +53,7 @@ export const Lockup = async () => {
           <LockupLogo {...lockupProps} />
         </div>
         <div className="text-nowrap font-sans text-21 font-normal text-black sm:relative sm:top-[5px] sm:pl-9 xl:text-23 2xl:text-26">
-          {siteName || "University Libraries"}
+          {siteName || "Stanford University Libraries"}
         </div>
       </Link>
     )
