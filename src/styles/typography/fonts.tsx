@@ -7,3 +7,9 @@ export const sourceSans3 = Source_Sans_3({
   variable: "--font-sans",
   adjustFontFallback: false,
 })
+
+export const stanford = localFont({
+  src: "stanford.woff2",
+  weight: "300",
+  variable: "--font-stanford",
+})
