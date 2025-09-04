@@ -3,9 +3,10 @@ import LibraryAdditionalHours from "@/components/node/sul-library/library-additi
 import formatHtml from "@/lib/format-html"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 import {redirect} from "next/navigation"
-import SulLibraryMetadata from "@/components/node/sul-library/sul-library-metadata"
 import LibraryHeader from "./library-header"
 import InteriorPage from "@/components/layout/interior-page"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getFirstText} from "@/lib/text-tools"
 
 const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
   if (node.sulLibraryExtUrl?.url) redirect(node.sulLibraryExtUrl.url)
@@ -20,7 +21,11 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
 
   return (
     <article {...props} className="mb-50 @container" aria-labelledby={node.id}>
-      <SulLibraryMetadata node={node} />
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={getFirstText(node.suLibraryParagraphs)}
+      />
       <LibraryHeader node={node} />
 
       {!fullWidth && (

@@ -1,9 +1,10 @@
 import Rows from "@/components/paragraph/rows/rows"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
-import StanfordPageMetadata from "@/components/node/stanford-page/stanford-page-metadata"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import RosetteIcon from "@/components/patterns/icons/RosetteIcon"
 import InteriorPage from "@/components/layout/interior-page"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getFirstText} from "@/lib/text-tools"
 
 const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   const fullWidth = node.layoutSelection?.id === "stanford_basic_page_full"
@@ -17,7 +18,11 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
 
   return (
     <article {...props} aria-labelledby={node.id}>
-      <StanfordPageMetadata node={node} />
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={getFirstText(node.suPageComponents)}
+      />
       <InternalHeaderBanner>
         <h1
           id={node.id}

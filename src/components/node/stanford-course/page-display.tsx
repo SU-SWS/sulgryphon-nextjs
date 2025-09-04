@@ -2,10 +2,17 @@ import formatHtml from "@/lib/format-html"
 import Link from "@/components/patterns/elements/drupal-link"
 import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getCleanDescription} from "@/lib/text-tools"
 
 const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
   return (
     <article {...props} aria-labelledby={node.id}>
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={getCleanDescription(node.body?.processed)}
+      />
       <InternalHeaderBanner>
         <h1
           id={node.id}

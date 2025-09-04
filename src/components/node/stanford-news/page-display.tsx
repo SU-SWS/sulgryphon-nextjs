@@ -11,8 +11,9 @@ import {redirect} from "next/navigation"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
-import StanfordNewsMetadata from "@/components/node/stanford-news/stanford-news-metadata"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getFirstText} from "@/lib/text-tools"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   // Redirect the user to the external source.
@@ -32,7 +33,11 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
   return (
     <article {...props} aria-labelledby={node.id}>
-      <StanfordNewsMetadata node={node} />
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={node.suNewsDek || getFirstText(node.suNewsComponents)}
+      />
       <InternalHeaderBanner>
         <div className="mx-auto mb-65 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
           <h1 id={node.id} className="order-2 mb-0">
