@@ -22,7 +22,7 @@ const EventsFilteredList = async ({items, hasHeading, totalItems, loadPage}: Pro
     <EventsFilteredListClient
       className="@container"
       ulProps={{className: "list-unstyled flex flex-col mb-50 max-w-[98rem] mx-auto"}}
-      liProps={{className: "w-full py-50 last:pb-0 border-t"}}
+      liProps={{className: "w-full pt-16 pb-40 last:pb-0 md:border-t"}}
       loadPage={loadPage}
       totalItems={totalItems}
     >
