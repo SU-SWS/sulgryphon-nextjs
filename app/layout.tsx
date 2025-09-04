@@ -2,7 +2,7 @@ import "../src/styles/globals.css"
 
 import {ReactNode} from "react"
 import {Icon} from "next/dist/lib/metadata/types/metadata-types"
-import {sourceSans3} from "../src/styles/typography/fonts"
+import {sourceSans3, stanford} from "../src/styles/typography/fonts"
 import DrupalWindowSync from "@/components/utils/drupal-window-sync"
 import Script from "next/script"
 import {GoogleAnalytics} from "@next/third-parties/google"
@@ -47,7 +47,7 @@ export const revalidate = false
 const RootLayout = async ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
   const previewMode = await isPreviewMode()
   return (
-    <html lang="en" className={twJoin(sourceSans3.className, "scroll-smooth")}>
+    <html lang="en" className={twJoin(sourceSans3.className, stanford.variable, "scroll-smooth")}>
       <DrupalWindowSync />
       <body>
         <nav aria-label="Skip link">
