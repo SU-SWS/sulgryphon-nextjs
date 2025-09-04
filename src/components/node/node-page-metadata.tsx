@@ -31,7 +31,7 @@ const NodePageMetadata = async ({pageTitle, metatags, backupDescription, childre
     (await getConfigPageField<StanfordBasicSiteSetting, StanfordBasicSiteSetting["suSiteName"]>(
       "StanfordBasicSiteSetting",
       "suSiteName"
-    )) || "Stanford University"
+    )) || "Stanford University Libraries"
 
   const title = pageTitle ? `${pageTitle} | ${siteName}` : siteName
 
