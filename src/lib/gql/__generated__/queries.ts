@@ -977,6 +977,10 @@ export const FragmentNodeSulLibraryFragmentDoc = gql`
     ...FragmentParagraphUnion
   }
   suLibraryPhone
+  suPageDescription
+  suSharedTags {
+    ...FragmentTermInterface
+  }
   sulLibraryA11y {
     processed
   }
@@ -990,7 +994,8 @@ export const FragmentNodeSulLibraryFragmentDoc = gql`
 ${FragmentAddressTypeFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
 ${FragmentLinkFragmentDoc}
-${FragmentParagraphUnionFragmentDoc}`;
+${FragmentParagraphUnionFragmentDoc}
+${FragmentTermInterfaceFragmentDoc}`;
 export const FragmentNodeSulStudyPlaceFragmentDoc = gql`
     fragment FragmentNodeSulStudyPlace on NodeSulStudyPlace {
   ...FragmentNodeInterface

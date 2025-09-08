@@ -8,7 +8,8 @@ const SulLibraryMetadata = async ({node}: Props) => {
   const siteName = "Stanford University Libraries"
   const image = node.suLibraryContactImg?.mediaImage || node.suLibraryBanner?.mediaImage
 
-  const description = getFirstText(node.suLibraryParagraphs)
+  // Use dedicated page description field, fall back to extracting from paragraphs
+  const description = node.suPageDescription || getFirstText(node.suLibraryParagraphs)
   const pageTitle = `${node.title} | ${siteName}`
 
   return (

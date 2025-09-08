@@ -40,6 +40,10 @@ fragment FragmentNodeSulLibrary on NodeSulLibrary {
         ...FragmentParagraphUnion
     }
     suLibraryPhone
+    suPageDescription
+    suSharedTags {
+        ...FragmentTermInterface
+    }
     sulLibraryA11y {
         processed
     }
