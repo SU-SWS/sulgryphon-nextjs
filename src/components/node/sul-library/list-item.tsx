@@ -1,14 +1,14 @@
-import SulLibraryCard from "@/components/node/sul-library/card"
+import Link from "@/components/patterns/elements/drupal-link"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
 
-interface Props {
-  node: NodeSulLibrary
-  h3Heading?: boolean
-}
-
-const SulLibraryListItem = ({node, ...props}: Props) => {
-  // Use the enhanced card component for consistent display
-  return <SulLibraryCard node={node} {...props} />
+const SulLibraryListItem = ({node, ...props}: {node: NodeSulLibrary}) => {
+  return (
+    <article {...props}>
+      <Link href={node.path || "#"}>
+        <h2 className="text-cardinal-red">{node.title}</h2>
+      </Link>
+    </article>
+  )
 }
 
 export default SulLibraryListItem
