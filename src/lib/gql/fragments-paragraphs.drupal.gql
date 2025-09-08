@@ -28,6 +28,9 @@ fragment FragmentParagraphSulLocationHour on ParagraphSulLocationHour {
     sulLocHoursAlert {
         processed
     }
+    sulLocAlertIcon {
+        ... FragmentFontawesomeIconType
+    }
 }
 
 fragment FragmentParagraphCollection on ParagraphCollection {
