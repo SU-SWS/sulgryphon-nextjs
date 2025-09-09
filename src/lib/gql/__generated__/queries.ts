@@ -26,6 +26,36 @@ export const FragmentNodeInterfaceFragmentDoc = gql`
   }
 }
     ${FragmentDateTimeFragmentDoc}`;
+export const FragmentMetaTagFragmentDoc = gql`
+    fragment FragmentMetaTag on MetaTagUnion {
+  ... on MetaTagValue {
+    __typename
+    tag
+    attributes {
+      name
+      content
+    }
+  }
+  ... on MetaTagProperty {
+    __typename
+    tag
+    attributes {
+      property
+      content
+    }
+  }
+}
+    `;
+export const FragmentNodePageFragmentDoc = gql`
+    fragment FragmentNodePage on NodeInterface {
+  ...FragmentNodeInterface
+  status
+  metatag {
+    ...FragmentMetaTag
+  }
+}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentMetaTagFragmentDoc}`;
 export const FragmentTextSummaryFragmentDoc = gql`
     fragment FragmentTextSummary on TextSummary {
   processed
@@ -1024,6 +1054,7 @@ ${FragmentMediaImageFragmentDoc}
 ${FragmentTextFragmentDoc}`;
 export const FragmentNodeUnionFragmentDoc = gql`
     fragment FragmentNodeUnion on NodeUnion {
+  ...FragmentNodePage
   ...FragmentNodeInterface
   ...FragmentNodeStanfordCourse
   ...FragmentNodeStanfordEvent
@@ -1036,7 +1067,8 @@ export const FragmentNodeUnionFragmentDoc = gql`
   ...FragmentNodeSulLibrary
   ...FragmentNodeSulStudyPlace
 }
-    ${FragmentNodeInterfaceFragmentDoc}
+    ${FragmentNodePageFragmentDoc}
+${FragmentNodeInterfaceFragmentDoc}
 ${FragmentNodeStanfordCourseFragmentDoc}
 ${FragmentNodeStanfordEventFragmentDoc}
 ${FragmentNodeStanfordEventSeriesFragmentDoc}

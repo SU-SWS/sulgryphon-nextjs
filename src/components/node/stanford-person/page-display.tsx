@@ -8,11 +8,12 @@ import fetchLibGuides from "@/lib/libguides"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
-import StanfordPersonMetadata from "@/components/node/stanford-person/stanford-person-metadata"
 import NumberLink from "@/components/patterns/elements/number-link"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getCleanDescription} from "@/lib/text-tools"
 
 const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   const libGuides = node.sulPersonLibguideId
@@ -31,8 +32,11 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
 
   return (
     <article {...props} aria-labelledby={node.id}>
-      <StanfordPersonMetadata node={node} />
-
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={node.suPersonFullTitle || getCleanDescription(node.body?.processed)}
+      />
       <InternalHeaderBanner>
         <div className="mx-auto mb-40 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col items-center gap-32 p-0 md:mb-10 md:max-w-[calc(100vw-20rem)] md:flex-row 3xl:max-w-[calc(1500px-20rem)]">
           <div className="order-2 flex flex-col">

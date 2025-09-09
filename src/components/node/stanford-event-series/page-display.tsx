@@ -2,10 +2,17 @@ import NodeListDisplay from "@/components/node/node-list-display"
 import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getFirstText} from "@/lib/text-tools"
 
 const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSeries}) => {
   return (
     <article {...props} aria-labelledby={node.id}>
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={node.suEventSeriesSubheadline || getFirstText(node.suEventSeriesComponents)}
+      />
       <InternalHeaderBanner>
         <h1
           id={node.id}

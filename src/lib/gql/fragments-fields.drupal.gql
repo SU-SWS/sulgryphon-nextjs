@@ -147,3 +147,22 @@ fragment FragmentFontawesomeIconType on FontawesomeIconType {
   iconName
   style
 }
+
+fragment FragmentMetaTag on MetaTagUnion {
+    ... on MetaTagValue {
+        __typename
+        tag
+        attributes {
+            name
+            content
+        }
+    }
+    ... on MetaTagProperty {
+        __typename
+        tag
+        attributes {
+            property
+            content
+        }
+    }
+}

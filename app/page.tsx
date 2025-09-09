@@ -4,8 +4,8 @@ import {notFound} from "next/navigation"
 import {getEntityFromPath} from "@/lib/gql/fetcher"
 import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
 import FlushCache from "@/components/patterns/elements/flush-cache"
-import StanfordPageMetadata from "@/components/node/stanford-page/stanford-page-metadata"
 import Paragraph from "@/components/paragraph"
+import NodePageMetadata from "@/components/node/node-page-metadata"
 
 // https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
 export const revalidate = false
@@ -25,7 +25,7 @@ const Page = async () => {
 
   return (
     <main id="main-content" className="mb-50">
-      <StanfordPageMetadata node={entity} isHome />
+      <NodePageMetadata pageTitle={undefined} metatags={entity.metatag} />
       <h1 className="sr-only">Stanford University Libraries</h1>
       {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={"/"} />}
 

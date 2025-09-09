@@ -7,8 +7,9 @@ import EmailLink from "@/components/patterns/elements/email-link"
 import TelephoneLink from "@/components/patterns/elements/telephone-link"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
-import StanfordEventMetadata from "@/components/node/stanford-event/stanford-event-metadata"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getCleanDescription} from "@/lib/text-tools"
 
 const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   if (node.suEventSource?.url) redirect(node.suEventSource.url)
@@ -82,7 +83,11 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
 
   return (
     <article {...props} className="mt-50" aria-labelledby={node.id}>
-      <StanfordEventMetadata node={node} />
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={node.suEventSubheadline || getCleanDescription(node.body?.processed)}
+      />
       <InternalHeaderBanner>
         <h1
           id={node.id}
