@@ -23,9 +23,9 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
 
   return (
-    <article {...props} className="mx-auto flex flex-col gap-16 @container md:flex-row">
+    <article {...props} className="mx-auto flex flex-col gap-16 @container sm:flex-row">
       {imageUrl && (
-        <div className={"relative aspect-[4/3] h-fit w-full overflow-hidden md:max-w-180"} aria-hidden="true">
+        <div className="relative aspect-[4/3] h-fit w-full shrink-0 overflow-hidden sm:max-w-180" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
