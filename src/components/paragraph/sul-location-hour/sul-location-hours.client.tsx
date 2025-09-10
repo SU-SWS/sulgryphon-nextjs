@@ -10,14 +10,14 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Text, NodeSulLibrary, Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/drupal.d"
 import Link from "next/link"
-import MoonStarsIcon from "@/components/patterns/icons/MoonStarsIcon"
 import formatHtml from "@/lib/format-html"
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
   libraries: NodeSulLibrary[]
   alert?: Maybe<Text>
+  icon?: Maybe<FontawesomeIconType>
 }
 
 const SulLocationHoursClient = ({libraries, alert, ...props}: HoursProps) => {
@@ -36,14 +36,7 @@ interface option {
   label: string
 }
 
-const LibrariesTodayHours = ({
-  libraries,
-  alert,
-  ...props
-}: {
-  libraries: HoursProps["libraries"]
-  alert?: Maybe<Text>
-}) => {
+const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => {
   const formId = useId()
   const [selectedLibrary, setSelectedLibrary] = useState(
     libraries.find(library => library.suLibraryHours === "green")?.id ?? libraries[0].id
@@ -74,7 +67,9 @@ const LibrariesTodayHours = ({
             {alert && (
               <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">
                 <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
-                  <MoonStarsIcon className="ml-10" />
+                  {icon && (
+                    <span aria-hidden="true" className={`fa-${icon.iconName} ${icon.style} text-16 text-white`} />
+                  )}
                   <span className="[&_a:active]:text-white [&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black [&_a]:text-white">
                     {formatHtml(alert?.processed)}
                   </span>
