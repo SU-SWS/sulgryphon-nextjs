@@ -7,7 +7,7 @@ import TwitterIcon from "@/components/patterns/icons/TwitterIcon"
 import InstagramIcon from "@/components/patterns/icons/InstagramIcon"
 import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon"
 import {ReactNode} from "react"
-import Image from "next/image"
+import HomePageSquirrel from "./home-page-squirrel"
 
 const LibraryFooter = () => {
   return (
@@ -22,17 +22,7 @@ const LibraryFooter = () => {
         <div>
           <Lockup />
         </div>
-        <div className="absolute bottom-50 right-[-5rem] block @3xl:right-[-3rem] @5xl:bottom-0 @5xl:right-[2rem] @8xl:right-[8rem]">
-          <div className="relative h-[18.5rem] w-180 @5xl:h-[20.5rem] @5xl:w-200 @8xl:h-[23.6rem] @8xl:w-[23rem]">
-            <Image
-              src="/footer-nerd-squirrel.png"
-              alt=""
-              className="object-contain"
-              fill
-              sizes="(max-width: 300px) 100vw, 300px"
-            />
-          </div>
-        </div>
+        <HomePageSquirrel />
       </div>
 
       <div className="centered relative grid w-full gap-2xl text-center @8xl:grid-cols-2 @8xl:text-left @12xl:grid-cols-4">
