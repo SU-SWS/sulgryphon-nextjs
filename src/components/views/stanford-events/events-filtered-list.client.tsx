@@ -4,7 +4,7 @@ import {useLayoutEffect, useRef, useId, useState, JSX, FormEvent} from "react"
 import {useBoolean, useCounter} from "usehooks-ts"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
-import {MagnifyingGlassIcon, XMarkIcon, ArrowPathIcon} from "@heroicons/react/20/solid"
+import {MagnifyingGlassIcon, XMarkIcon} from "@heroicons/react/20/solid"
 import {twMerge} from "tailwind-merge"
 import ToggleOption from "@/components/patterns/toggle-option"
 
@@ -28,7 +28,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
   const [items, setItems] = useState<JSX.Element[]>(initialItems)
 
   const {value: focusOnElement, setTrue: enableFocusElement, setFalse: disableFocusElement} = useBoolean(false)
-  const [runLoadPage, isPending] = useServerAction(loadPage)
+  const [runLoadPage] = useServerAction(loadPage)
 
   const keywordRef = useRef<HTMLInputElement>(null)
   const focusItemRef = useRef<HTMLLIElement>(null)
@@ -105,14 +105,6 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
 
   return (
     <div {...props} className={twMerge("relative", props.className)}>
-      {isPending && (
-        <div className="absolute left-0 top-0 z-20 h-full w-full bg-black-30 bg-opacity-80">
-          <div className="absolute bottom-20 left-1/2 -translate-x-[25px]">
-            <ArrowPathIcon className="animate-spin" width={50} />
-          </div>
-        </div>
-      )}
-
       <form
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-16 md:mb-60 md:flex-nowrap md:gap-30"
         onSubmit={handleSearchSubmit}
