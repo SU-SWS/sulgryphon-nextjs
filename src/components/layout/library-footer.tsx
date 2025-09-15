@@ -7,7 +7,7 @@ import TwitterIcon from "@/components/patterns/icons/TwitterIcon"
 import InstagramIcon from "@/components/patterns/icons/InstagramIcon"
 import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon"
 import {ReactNode} from "react"
-import HomePageSquirrel from "./home-page-squirrel"
+import HomePageSquirrel from "@/components/layout/home-page-squirrel"
 
 const LibraryFooter = () => {
   return (
