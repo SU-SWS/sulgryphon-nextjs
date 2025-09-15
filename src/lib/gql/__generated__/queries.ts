@@ -551,8 +551,12 @@ export const FragmentParagraphSulLocationHourFragmentDoc = gql`
   sulLocHoursAlert {
     processed
   }
+  sulLocAlertIcon {
+    ...FragmentFontawesomeIconType
+  }
 }
-    ${FragmentParagraphInterfaceFragmentDoc}`;
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentFontawesomeIconTypeFragmentDoc}`;
 export const FragmentParagraphUnionFragmentDoc = gql`
     fragment FragmentParagraphUnion on ParagraphUnion {
   ...FragmentParagraphInterface
