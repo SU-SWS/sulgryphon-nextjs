@@ -7,6 +7,7 @@ import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
 import {MagnifyingGlassIcon, XMarkIcon} from "@heroicons/react/20/solid"
 import {twMerge} from "tailwind-merge"
 import ToggleOption from "@/components/patterns/toggle-option"
+import clsx from "clsx"
 
 type EventFilters = {
   search?: string
@@ -28,7 +29,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
   const [items, setItems] = useState<JSX.Element[]>(initialItems)
 
   const {value: focusOnElement, setTrue: enableFocusElement, setFalse: disableFocusElement} = useBoolean(false)
-  const [runLoadPage] = useServerAction(loadPage)
+  const [runLoadPage, isPending] = useServerAction(loadPage)
 
   const keywordRef = useRef<HTMLInputElement>(null)
   const focusItemRef = useRef<HTMLLIElement>(null)
@@ -175,7 +176,16 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
         </span>
 
         {items.length < filteredTotalItems && loadPage && (
-          <button onClick={showMoreItems}>{buttonText || "Load More Events"}</button>
+          <button
+            onClick={showMoreItems}
+            disabled={isPending}
+            className={clsx(
+              "cta-button group mx-auto mt-32 block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-24 font-semibold leading-display text-white no-underline transition-colors hocus:bg-cardinal-red-dark hocus:text-white hocus:underline md:text-18",
+              {"cursor-none bg-archway": isPending}
+            )}
+          >
+            {buttonText || "Load more events"}
+          </button>
         )}
       </div>
     </div>
