@@ -4,9 +4,10 @@ import {useLayoutEffect, useRef, useId, useState, JSX, FormEvent} from "react"
 import {useBoolean, useCounter} from "usehooks-ts"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
-import {MagnifyingGlassIcon, XMarkIcon, ArrowPathIcon} from "@heroicons/react/20/solid"
+import {MagnifyingGlassIcon, XMarkIcon} from "@heroicons/react/20/solid"
 import {twMerge} from "tailwind-merge"
 import ToggleOption from "@/components/patterns/toggle-option"
+import clsx from "clsx"
 
 type EventFilters = {
   search?: string
@@ -105,14 +106,6 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
 
   return (
     <div {...props} className={twMerge("relative", props.className)}>
-      {isPending && (
-        <div className="absolute left-0 top-0 z-20 h-full w-full bg-black-30 bg-opacity-80">
-          <div className="absolute bottom-20 left-1/2 -translate-x-[25px]">
-            <ArrowPathIcon className="animate-spin" width={50} />
-          </div>
-        </div>
-      )}
-
       <form
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-16 md:mb-60 md:flex-nowrap md:gap-30"
         onSubmit={handleSearchSubmit}
@@ -183,7 +176,16 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
         </span>
 
         {items.length < filteredTotalItems && loadPage && (
-          <button onClick={showMoreItems}>{buttonText || "Load More Events"}</button>
+          <button
+            onClick={showMoreItems}
+            disabled={isPending}
+            className={clsx(
+              "cta-button group mx-auto mt-32 block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-24 font-semibold leading-display text-white no-underline transition-colors hocus:bg-cardinal-red-dark hocus:text-white hocus:underline md:text-18",
+              {"cursor-none bg-archway": isPending}
+            )}
+          >
+            {buttonText || "Load more events"}
+          </button>
         )}
       </div>
     </div>
