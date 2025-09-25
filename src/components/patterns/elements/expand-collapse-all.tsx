@@ -30,7 +30,7 @@ const ExpandCollapseAll = ({...props}: Props) => {
       onClick={toggle}
       {...props}
       className={twMerge(
-        "cta-button group rs-mt-neg1 flex w-fit items-center gap-5 whitespace-nowrap rounded-full border-2 border-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-digital-red no-underline transition-colors hocus:bg-cardinal-red hocus:text-white hocus:underline md:text-18",
+        "cta-button group flex w-fit items-center gap-5 whitespace-nowrap rounded-full border-2 border-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-digital-red no-underline transition-colors hocus:bg-cardinal-red hocus:text-white hocus:underline md:text-18",
         props.className
       )}
     >

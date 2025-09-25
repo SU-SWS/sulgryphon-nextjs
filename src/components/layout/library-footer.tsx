@@ -101,7 +101,7 @@ const LibraryFooter = () => {
               <FooterLink href="https://searchworks.stanford.edu/articles">Articles+</FooterLink>
             </li>
             <li>
-              <FooterLink href="https://exhibits.stanford.edu/">Spotlight at Stanford</FooterLink>
+              <FooterLink href="https://exhibits.stanford.edu/">Spotlight Exhibits</FooterLink>
             </li>
             <li>
               <FooterLink href="https://archives.stanford.edu/">Archival Collections at Stanford </FooterLink>
