@@ -2,6 +2,7 @@ import "../src/styles/globals.css"
 
 import {ReactNode} from "react"
 import {Icon} from "next/dist/lib/metadata/types/metadata-types"
+import {sourceSans3, stanford} from "../src/styles/typography/fonts"
 import DrupalWindowSync from "@/components/utils/drupal-window-sync"
 import Script from "next/script"
 import {GoogleAnalytics} from "@next/third-parties/google"
@@ -9,6 +10,7 @@ import Header from "@/components/layout/header"
 import LibraryFooter from "@/components/layout/library-footer"
 import GlobalFooter from "@/components/layout/global-footer"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
+import {twJoin} from "tailwind-merge"
 
 const appleIcons: Icon[] = [60, 72, 76, 114, 120, 144, 152, 180].map(size => ({
   url: `https://www-media.stanford.edu/assets/favicon/apple-touch-icon-${size}x${size}.png`,
@@ -45,7 +47,7 @@ export const revalidate = false
 const RootLayout = async ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
   const previewMode = await isPreviewMode()
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={twJoin(sourceSans3.className, stanford.variable, "scroll-smooth")}>
       <DrupalWindowSync />
       <body>
         <nav aria-label="Skip link">

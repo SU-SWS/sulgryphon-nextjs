@@ -14,6 +14,14 @@ fragment FragmentNodeInterface on NodeInterface {
     }
 }
 
+fragment FragmentNodePage on NodeInterface {
+    ...FragmentNodeInterface
+    status
+    metatag {
+        ...FragmentMetaTag
+    }
+}
+
 fragment FragmentNodeSulLibrary on NodeSulLibrary {
     ...FragmentNodeInterface
     layoutSelection {
@@ -176,6 +184,7 @@ fragment FragmentNodeStanfordEvent on NodeStanfordEvent {
     suEventType {
         ...FragmentTermInterface
     }
+    sulEventExperience
 }
 
 fragment FragmentNodeStanfordEventSeries on NodeStanfordEventSeries {
@@ -328,6 +337,7 @@ fragment FragmentNodeStanfordPublication on NodeStanfordPublication {
 }
 
 fragment FragmentNodeUnion on NodeUnion {
+    ...FragmentNodePage
     ...FragmentNodeInterface
     ...FragmentNodeStanfordCourse
     ...FragmentNodeStanfordEvent
@@ -407,9 +417,11 @@ fragment FragmentNodeStanfordEventTeaser on NodeStanfordEvent {
     suEventSource {
         ...FragmentLink
     }
+    suEventAltLoc
     suEventMapLink {
         ...FragmentLink
     }
+    sulEventExperience
 }
 
 fragment FragmentNodeStanfordEventSeriesTeaser on NodeStanfordEventSeries {

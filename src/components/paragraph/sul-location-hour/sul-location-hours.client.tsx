@@ -4,19 +4,20 @@ import Card from "@/components/patterns/card"
 import {ClockIcon} from "@heroicons/react/24/outline"
 import {MapPinIcon} from "@heroicons/react/24/solid"
 import Image from "next/image"
-import {HTMLAttributes, ReactNode, useId, useState} from "react"
+import {HTMLAttributes, useId, useState} from "react"
 import {ErrorBoundary} from "react-error-boundary"
 import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/drupal.d"
 import Link from "next/link"
-import MoonStarsIcon from "@/components/patterns/icons/MoonStarsIcon"
+import formatHtml from "@/lib/format-html"
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
   libraries: NodeSulLibrary[]
-  alert?: string | ReactNode
+  alert?: Maybe<Text>
+  icon?: Maybe<FontawesomeIconType>
 }
 
 const SulLocationHoursClient = ({libraries, alert, ...props}: HoursProps) => {
@@ -35,14 +36,7 @@ interface option {
   label: string
 }
 
-const LibrariesTodayHours = ({
-  libraries,
-  alert,
-  ...props
-}: {
-  libraries: HoursProps["libraries"]
-  alert?: string | ReactNode
-}) => {
+const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => {
   const formId = useId()
   const [selectedLibrary, setSelectedLibrary] = useState(
     libraries.find(library => library.suLibraryHours === "green")?.id ?? libraries[0].id
@@ -70,14 +64,18 @@ const LibrariesTodayHours = ({
               fill
               sizes="500px"
             />
-            <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">
-              <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
-                <MoonStarsIcon className="ml-10" />
-                <span className="[&_a:active]:text-white [&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black [&_a]:text-white">
-                  {alert}
+            {alert && (
+              <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">
+                <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
+                  {icon && (
+                    <span aria-hidden="true" className={`fa-${icon.iconName} ${icon.style} text-16 text-white`} />
+                  )}
+                  <span className="[&_a:active]:text-white [&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black [&_a]:text-white">
+                    {formatHtml(alert?.processed)}
+                  </span>
                 </span>
               </span>
-            </span>
+            )}
           </span>
         )
       }

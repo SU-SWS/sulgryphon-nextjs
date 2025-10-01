@@ -3,10 +3,10 @@ import {DrupalLinkButton} from "@/components/patterns/link"
 import {HTMLAttributes} from "react"
 import {ParagraphStanfordList} from "@/lib/gql/__generated__/drupal.d"
 import View from "@/components/views/view"
-import {twMerge} from "tailwind-merge"
 import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
+import clsx from "clsx"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
@@ -31,7 +31,7 @@ const ListParagraph = async ({paragraph}: Props) => {
   const {totalItems} = pagedItems
   const viewItems = limit ? pagedItems.items.slice(0, limit) : pagedItems.items
 
-  const addLoadMore = (limit || 3) >= VIEW_PAGE_SIZE && totalItems > viewItems.length
+  const addLoadMore = ((limit || 3) >= VIEW_PAGE_SIZE && totalItems > viewItems.length) || displayId === "filtered_list"
 
   if (behaviors.list_paragraph?.hide_empty && viewItems.length === 0) return null
 
@@ -40,25 +40,31 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className="centered flex flex-col gap-xl"
+      className={clsx("centered flex flex-col", {"gap-xl": behaviors.list_paragraph?.heading_behavior == "show"})}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
-      <div className="mb-20 flex items-center justify-between">
-        {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
-          <h2
-            id={paragraph.id}
-            className={twMerge("m-0", behaviors.list_paragraph?.heading_behavior === "hide" && "sr-only")}
-          >
-            {paragraph.suListHeadline}
-          </h2>
-        )}
+      {(behaviors.list_paragraph?.heading_behavior !== "remove" || paragraph.suListButton?.url) && (
+        <div
+          className={clsx("flex items-center justify-between", {
+            "mb-20": behaviors.list_paragraph?.heading_behavior === "show" || paragraph.suListButton?.url,
+          })}
+        >
+          {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
+            <h2
+              id={paragraph.id}
+              className={clsx("m-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
+            >
+              {paragraph.suListHeadline}
+            </h2>
+          )}
 
-        {paragraph.suListButton?.url && (
-          <DrupalLinkButton href={paragraph.suListButton.url} {...paragraph.suListButton.attributes}>
-            {paragraph.suListButton.title}
-          </DrupalLinkButton>
-        )}
-      </div>
+          {paragraph.suListButton?.url && (
+            <DrupalLinkButton href={paragraph.suListButton.url} {...paragraph.suListButton.attributes}>
+              {paragraph.suListButton.title}
+            </DrupalLinkButton>
+          )}
+        </div>
+      )}
 
       {paragraph.suListDescription?.processed && <div>{formatHtml(paragraph.suListDescription.processed)}</div>}
 

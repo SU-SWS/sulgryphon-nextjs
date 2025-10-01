@@ -68,7 +68,7 @@ const options: HTMLReactParserOptions = {
           }
 
           nodeProps.className = twMerge(
-            "hocus:underline transition-colors hover:text-brick-dark hover:bg-black-10 focus:bg-none focus:text-cardinal-red active:text-cardinal-red",
+            "hocus:underline transition-colors hocus:bg-black-10 focus:bg-none hocus:text-cardinal-red active:text-cardinal-red",
             nodeProps.className
           )
           return <a {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</a>

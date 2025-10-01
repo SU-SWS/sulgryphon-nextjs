@@ -161,6 +161,11 @@ const HeadingList = () => {
   useEventListener("scroll", debouncedHandleScroll)
   useEventListener("hashchange", handleAnchor)
 
+  // Don't render anything until headings are loaded
+  if (headings.length === 0) {
+    return null
+  }
+
   return (
     <nav aria-label="on this page menu">
       <h2 data-skip-heading className="type-1 hidden font-sans font-semibold lg:mb-8 lg:block">

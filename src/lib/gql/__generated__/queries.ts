@@ -26,6 +26,36 @@ export const FragmentNodeInterfaceFragmentDoc = gql`
   }
 }
     ${FragmentDateTimeFragmentDoc}`;
+export const FragmentMetaTagFragmentDoc = gql`
+    fragment FragmentMetaTag on MetaTagUnion {
+  ... on MetaTagValue {
+    __typename
+    tag
+    attributes {
+      name
+      content
+    }
+  }
+  ... on MetaTagProperty {
+    __typename
+    tag
+    attributes {
+      property
+      content
+    }
+  }
+}
+    `;
+export const FragmentNodePageFragmentDoc = gql`
+    fragment FragmentNodePage on NodeInterface {
+  ...FragmentNodeInterface
+  status
+  metatag {
+    ...FragmentMetaTag
+  }
+}
+    ${FragmentNodeInterfaceFragmentDoc}
+${FragmentMetaTagFragmentDoc}`;
 export const FragmentTextSummaryFragmentDoc = gql`
     fragment FragmentTextSummary on TextSummary {
   processed
@@ -309,6 +339,56 @@ export const FragmentParagraphStanfordSpacerFragmentDoc = gql`
   suSpacerSize
 }
     ${FragmentParagraphInterfaceFragmentDoc}`;
+export const FragmentColorFieldTypeFragmentDoc = gql`
+    fragment FragmentColorFieldType on ColorFieldType {
+  color
+  opacity
+}
+    `;
+export const FragmentFontawesomeIconTypeFragmentDoc = gql`
+    fragment FragmentFontawesomeIconType on FontawesomeIconType {
+  iconName
+  style
+}
+    `;
+export const FragmentParagraphStanfordStatCardFragmentDoc = gql`
+    fragment FragmentParagraphStanfordStatCard on ParagraphStanfordStatCard {
+  ...FragmentParagraphInterface
+  suStatBgColor {
+    ...FragmentColorFieldType
+  }
+  suStatBody {
+    ...FragmentText
+  }
+  suStatButton {
+    ...FragmentLink
+  }
+  suStatCentered
+  suStatHeadingHide
+  suStatHeadline
+  suStatHeadlineLvl
+  suStatIcon {
+    ...FragmentFontawesomeIconType
+  }
+  suStatIconColor {
+    ...FragmentColorFieldType
+  }
+  suStatImage {
+    ...FragmentMediaImage
+  }
+  suStatLinkStyle
+  suStatStat
+  suStatStatColor {
+    ...FragmentColorFieldType
+  }
+  suStatSuperhead
+}
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentColorFieldTypeFragmentDoc}
+${FragmentTextFragmentDoc}
+${FragmentLinkFragmentDoc}
+${FragmentFontawesomeIconTypeFragmentDoc}
+${FragmentMediaImageFragmentDoc}`;
 export const FragmentParagraphStanfordWysiwygFragmentDoc = gql`
     fragment FragmentParagraphStanfordWysiwyg on ParagraphStanfordWysiwyg {
   ...FragmentParagraphInterface
@@ -471,8 +551,12 @@ export const FragmentParagraphSulLocationHourFragmentDoc = gql`
   sulLocHoursAlert {
     processed
   }
+  sulLocAlertIcon {
+    ...FragmentFontawesomeIconType
+  }
 }
-    ${FragmentParagraphInterfaceFragmentDoc}`;
+    ${FragmentParagraphInterfaceFragmentDoc}
+${FragmentFontawesomeIconTypeFragmentDoc}`;
 export const FragmentParagraphUnionFragmentDoc = gql`
     fragment FragmentParagraphUnion on ParagraphUnion {
   ...FragmentParagraphInterface
@@ -484,6 +568,7 @@ export const FragmentParagraphUnionFragmentDoc = gql`
   ...FragmentParagraphStanfordList
   ...FragmentParagraphStanfordMediaCaption
   ...FragmentParagraphStanfordSpacer
+  ...FragmentParagraphStanfordStatCard
   ...FragmentParagraphStanfordWysiwyg
   ...FragmentParagraphLayout
   ...FragmentParagraphCollection
@@ -506,6 +591,7 @@ ${FragmentParagraphStanfordGalleryFragmentDoc}
 ${FragmentParagraphStanfordListFragmentDoc}
 ${FragmentParagraphStanfordMediaCaptionFragmentDoc}
 ${FragmentParagraphStanfordSpacerFragmentDoc}
+${FragmentParagraphStanfordStatCardFragmentDoc}
 ${FragmentParagraphStanfordWysiwygFragmentDoc}
 ${FragmentParagraphLayoutFragmentDoc}
 ${FragmentParagraphCollectionFragmentDoc}
@@ -620,6 +706,7 @@ export const FragmentNodeStanfordEventFragmentDoc = gql`
   suEventType {
     ...FragmentTermInterface
   }
+  sulEventExperience
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
@@ -645,9 +732,11 @@ export const FragmentNodeStanfordEventTeaserFragmentDoc = gql`
   suEventSource {
     ...FragmentLink
   }
+  suEventAltLoc
   suEventMapLink {
     ...FragmentLink
   }
+  sulEventExperience
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
@@ -969,6 +1058,7 @@ ${FragmentMediaImageFragmentDoc}
 ${FragmentTextFragmentDoc}`;
 export const FragmentNodeUnionFragmentDoc = gql`
     fragment FragmentNodeUnion on NodeUnion {
+  ...FragmentNodePage
   ...FragmentNodeInterface
   ...FragmentNodeStanfordCourse
   ...FragmentNodeStanfordEvent
@@ -981,7 +1071,8 @@ export const FragmentNodeUnionFragmentDoc = gql`
   ...FragmentNodeSulLibrary
   ...FragmentNodeSulStudyPlace
 }
-    ${FragmentNodeInterfaceFragmentDoc}
+    ${FragmentNodePageFragmentDoc}
+${FragmentNodeInterfaceFragmentDoc}
 ${FragmentNodeStanfordCourseFragmentDoc}
 ${FragmentNodeStanfordEventFragmentDoc}
 ${FragmentNodeStanfordEventSeriesFragmentDoc}
@@ -1489,10 +1580,11 @@ export const SulBranchLocationsDocument = gql`
     ${FragmentNodeSulLibraryTeaserFragmentDoc}
 ${FragmentViewPageInfoFragmentDoc}`;
 export const SulEventsDocument = gql`
-    query sulEvents($contextualFilters: SulEventsContextualFilterInput, $sortDir: SortDirection = ASC, $pageSize: Int, $page: Int = -1, $offset: Int) {
+    query sulEvents($contextualFilters: SulEventsContextualFilterInput, $filter: SulEventsFilterInput, $sortDir: SortDirection = ASC, $pageSize: Int, $page: Int = -1, $offset: Int) {
   sulEvents(
     contextualFilter: $contextualFilters
     sortDir: $sortDir
+    filter: $filter
     sortKey: START_TIME
     pageSize: $pageSize
     page: $page

@@ -7,7 +7,9 @@ import EmailLink from "@/components/patterns/elements/email-link"
 import TelephoneLink from "@/components/patterns/elements/telephone-link"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
 import Paragraph from "@/components/paragraph"
-import StanfordEventMetadata from "@/components/node/stanford-event/stanford-event-metadata"
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getCleanDescription} from "@/lib/text-tools"
 
 const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   if (node.suEventSource?.url) redirect(node.suEventSource.url)
@@ -80,8 +82,20 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   }
 
   return (
-    <article {...props} className="mt-50">
-      <StanfordEventMetadata node={node} />
+    <article {...props} className="mt-50" aria-labelledby={node.id}>
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={node.suEventSubheadline || getCleanDescription(node.body?.processed)}
+      />
+      <InternalHeaderBanner>
+        <h1
+          id={node.id}
+          className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+        >
+          {node.title}
+        </h1>
+      </InternalHeaderBanner>
       {inPast && <div className="uppercase text-black-70">Past Event</div>}
 
       {node.suEventType && node.suEventType.length > 0 && (

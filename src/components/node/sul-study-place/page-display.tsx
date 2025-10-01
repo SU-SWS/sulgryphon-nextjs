@@ -1,5 +1,6 @@
-import SulStudyPlaceMetadata from "@/components/node/sul-study-place/sul-study-place-metadata"
 import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d"
+import NodePageMetadata from "../node-page-metadata"
+import {getCleanDescription} from "@/lib/text-tools"
 
 type Props = {
   node: NodeSulStudyPlace
@@ -7,7 +8,12 @@ type Props = {
 const SulStudyPlace = ({node}: Props) => {
   return (
     <div>
-      <SulStudyPlaceMetadata node={node} /> Place of Study
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={getCleanDescription(node.sulStudyAdditionalInfo?.processed)}
+      />
+      Place of Study
     </div>
   )
 }

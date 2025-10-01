@@ -137,3 +137,32 @@ fragment FragmentAddressType on Address {
     locality
     administrativeArea
 }
+
+fragment FragmentColorFieldType on ColorFieldType {
+  color
+  opacity
+}
+
+fragment FragmentFontawesomeIconType on FontawesomeIconType {
+  iconName
+  style
+}
+
+fragment FragmentMetaTag on MetaTagUnion {
+    ... on MetaTagValue {
+        __typename
+        tag
+        attributes {
+            name
+            content
+        }
+    }
+    ... on MetaTagProperty {
+        __typename
+        tag
+        attributes {
+            property
+            content
+        }
+    }
+}

@@ -2,7 +2,6 @@ import {HTMLAttributes} from "react"
 import {NodeSulLibrary, ParagraphSulLocationHour} from "@/lib/gql/__generated__/drupal.d"
 import {graphqlClient} from "@/lib/gql/fetcher"
 import SulLocationHoursClient from "@/components/paragraph/sul-location-hour/sul-location-hours.client"
-import formatHtml from "@/lib/format-html"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphSulLocationHour
@@ -14,7 +13,8 @@ const SulLocationHour = async ({paragraph, ...props}: Props) => {
   return (
     <SulLocationHoursClient
       libraries={libraries}
-      alert={formatHtml(paragraph.sulLocHoursAlert?.processed)}
+      alert={paragraph.sulLocHoursAlert}
+      icon={paragraph.sulLocAlertIcon}
       {...props}
     />
   )

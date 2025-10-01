@@ -1,10 +1,17 @@
 import Rows from "@/components/paragraph/rows/rows"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getFirstText} from "@/lib/text-tools"
 
 const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublication}) => {
   return (
-    <article {...props}>
+    <article {...props} aria-labelledby={node.id}>
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={getFirstText(node.suPublicationComponents)}
+      />
       {node.suPublicationCitation?.__typename && (
         <div className="rs-mb-2 text-16 md:text-18 2xl:text-19">{node.suPublicationCitation.__typename}</div>
       )}

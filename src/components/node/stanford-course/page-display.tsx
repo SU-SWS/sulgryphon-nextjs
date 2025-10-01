@@ -1,10 +1,26 @@
 import formatHtml from "@/lib/format-html"
 import Link from "@/components/patterns/elements/drupal-link"
 import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
+import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
+import NodePageMetadata from "@/components/node/node-page-metadata"
+import {getCleanDescription} from "@/lib/text-tools"
 
 const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
   return (
-    <article {...props}>
+    <article {...props} aria-labelledby={node.id}>
+      <NodePageMetadata
+        pageTitle={node.title}
+        metatags={node.metatag}
+        backupDescription={getCleanDescription(node.body?.processed)}
+      />
+      <InternalHeaderBanner>
+        <h1
+          id={node.id}
+          className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+        >
+          {node.title}
+        </h1>
+      </InternalHeaderBanner>
       {node.suCourseAcademicYear}
       {node.body?.processed && <>{formatHtml(node.body.processed)}</>}
       {node.suCourseCode}
