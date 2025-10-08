@@ -37,7 +37,11 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
     <div
       className={twMerge(
         "relative",
-        clsx({"w-full": !fullWidth || !isCentered, "h-fit w-fit lg:ml-auto": isCtaVariant})
+        clsx({
+          "w-full": !fullWidth || !isCentered,
+          "w-screen": fullWidth || isCentered,
+          centered: isCtaVariant,
+        })
       )}
       ref={ref}
       {...props}
@@ -48,7 +52,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
           clsx({
             "bg-black-true": isBlackBackground,
             "bg-black-10": !isBlackBackground,
-            "rounded border-2 border-black-10 bg-fog-light px-10 py-6": isCtaVariant,
+            "h-fit w-fit rounded border-2 border-black-10 bg-fog-light px-10 py-6 lg:ml-auto": isCtaVariant,
           })
         )}
       >
