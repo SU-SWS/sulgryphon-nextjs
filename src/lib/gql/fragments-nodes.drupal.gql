@@ -142,6 +142,7 @@ fragment FragmentNodeStanfordEvent on NodeStanfordEvent {
         ...FragmentTextSummary
     }
     suEventAltLoc
+    sulEventAltLocLink
     suEventAudience {
         ...FragmentTermInterface
     }
@@ -418,6 +419,7 @@ fragment FragmentNodeStanfordEventTeaser on NodeStanfordEvent {
         ...FragmentLink
     }
     suEventAltLoc
+    sulEventAltLocLink
     suEventMapLink {
         ...FragmentLink
     }

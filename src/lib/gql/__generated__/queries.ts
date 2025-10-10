@@ -664,6 +664,7 @@ export const FragmentNodeStanfordEventFragmentDoc = gql`
     ...FragmentTextSummary
   }
   suEventAltLoc
+  sulEventAltLocLink
   suEventAudience {
     ...FragmentTermInterface
   }
@@ -733,6 +734,7 @@ export const FragmentNodeStanfordEventTeaserFragmentDoc = gql`
     ...FragmentLink
   }
   suEventAltLoc
+  sulEventAltLocLink
   suEventMapLink {
     ...FragmentLink
   }
