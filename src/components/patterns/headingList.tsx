@@ -103,6 +103,7 @@ const HeadingList = () => {
     const timeoutId = setTimeout(() => {
       const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
       const allHeadings: Heading[] = []
+      const existingIds = new Set<string>()
 
       h2Elements.forEach(heading => {
         const headingText = heading.textContent
@@ -110,20 +111,36 @@ const HeadingList = () => {
 
         const trimmedText = headingText.trim()
 
-        // Ensure heading has an ID
+        // Get or generate a valid ID
         let id = heading.getAttribute("id")
-        if (!id) {
-          id = trimmedText.toLowerCase().replace(/\s+/g, "-")
+
+        // If ID exists, regenerate it
+        const hasInvalidId = id && (/^[^a-z]/i.test(id) || /[^a-z0-9-_]/i.test(id))
+
+        if (!id || hasInvalidId) {
+          // Generate ID from heading text
+          id = trimmedText
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-z0-9-]/g, "")
+
+          // Ensure it starts with a letter
+          if (/^[^a-z]/i.test(id)) {
+            id = `heading-${id}`
+          }
+
           let newId = id
           let headingIndex = 0
 
-          while (document.getElementById(newId)) {
+          while (document.getElementById(newId) || existingIds.has(newId)) {
             newId = `${id}-${headingIndex}`
             headingIndex++
           }
           heading.setAttribute("id", newId)
           id = newId
         }
+
+        existingIds.add(id)
 
         allHeadings.push({
           text: headingText,
