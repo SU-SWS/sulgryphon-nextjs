@@ -119,10 +119,7 @@ const HeadingList = () => {
 
         if (!id || hasInvalidId) {
           // Generate ID from heading text
-          id = trimmedText
-            .toLowerCase()
-            .replace(/[^a-z0-9]/g, "-")
-
+          id = trimmedText.toLowerCase().replace(/[^a-z0-9]/g, "-")
 
           // Ensure it starts with a letter
           if (/^[^a-z]/i.test(id)) {
