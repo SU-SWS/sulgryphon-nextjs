@@ -15,7 +15,6 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   const start = new Date(node.suEventDateTime.value * 1000)
   const end = new Date(node.suEventDateTime.end_value * 1000)
 
-  console.log("sulEventAltLocLink", node.sulEventAltLocLink)
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
   const timeString = getTimeString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
