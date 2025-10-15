@@ -1361,7 +1361,7 @@ export type NodeStanfordEvent = EdgeNode &
      * does not supply a map link. Enter a direct URL (e.g., Google Maps) for the
      * text-based location provided.
      */
-    sulEventAltLocLink?: Maybe<Scalars["String"]["output"]>
+    sulEventAltLocLink?: Maybe<Link>
     /** Experience */
     sulEventExperience?: Maybe<Scalars["String"]["output"]>
     /** Image */
@@ -5317,7 +5317,6 @@ export type NodeQuery = {
         path?: string | null
         sticky: boolean
         suEventAltLoc?: string | null
-        sulEventAltLocLink?: string | null
         suEventContactInfo?: string | null
         suEventDek?: string | null
         suEventEmail?: any | null
@@ -5349,6 +5348,12 @@ export type NodeQuery = {
           mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
         } | null
         body?: {__typename?: "TextSummary"; processed?: any | null; summary?: any | null} | null
+        sulEventAltLocLink?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
         suEventAudience?: Array<{
           __typename: "TermEventAudience"
           id: string
@@ -6121,7 +6126,6 @@ export type NodeQuery = {
         suEventSeriesEvent?: Array<{
           __typename: "NodeStanfordEvent"
           suEventAltLoc?: string | null
-          sulEventAltLocLink?: string | null
           sulEventExperience?: string | null
           id: string
           title: string
@@ -6176,6 +6180,16 @@ export type NodeQuery = {
               | null
           }> | null
           suEventSource?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
+          sulEventAltLocLink?: {
             __typename?: "Link"
             url?: string | null
             title?: string | null
@@ -12767,7 +12781,6 @@ export type FragmentNodeStanfordCourseFragment = {
 export type FragmentNodeStanfordEventFragment = {
   __typename: "NodeStanfordEvent"
   suEventAltLoc?: string | null
-  sulEventAltLocLink?: string | null
   suEventContactInfo?: string | null
   suEventDek?: string | null
   suEventEmail?: any | null
@@ -12788,6 +12801,12 @@ export type FragmentNodeStanfordEventFragment = {
     mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
   } | null
   body?: {__typename?: "TextSummary"; processed?: any | null; summary?: any | null} | null
+  sulEventAltLocLink?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
   suEventAudience?: Array<{
     __typename: "TermEventAudience"
     id: string
@@ -13511,7 +13530,6 @@ export type FragmentNodeStanfordEventSeriesFragment = {
   suEventSeriesEvent?: Array<{
     __typename: "NodeStanfordEvent"
     suEventAltLoc?: string | null
-    sulEventAltLocLink?: string | null
     sulEventExperience?: string | null
     id: string
     title: string
@@ -13566,6 +13584,12 @@ export type FragmentNodeStanfordEventSeriesFragment = {
         | null
     }> | null
     suEventSource?: {
+      __typename?: "Link"
+      url?: string | null
+      title?: string | null
+      attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+    } | null
+    sulEventAltLocLink?: {
       __typename?: "Link"
       url?: string | null
       title?: string | null
@@ -14832,7 +14856,6 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
   path?: string | null
   sticky: boolean
   suEventAltLoc?: string | null
-  sulEventAltLocLink?: string | null
   suEventContactInfo?: string | null
   suEventDek?: string | null
   suEventEmail?: any | null
@@ -14864,6 +14887,12 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
     mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
   } | null
   body?: {__typename?: "TextSummary"; processed?: any | null; summary?: any | null} | null
+  sulEventAltLocLink?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
   suEventAudience?: Array<{
     __typename: "TermEventAudience"
     id: string
@@ -15601,7 +15630,6 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
   suEventSeriesEvent?: Array<{
     __typename: "NodeStanfordEvent"
     suEventAltLoc?: string | null
-    sulEventAltLocLink?: string | null
     sulEventExperience?: string | null
     id: string
     title: string
@@ -15656,6 +15684,12 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
         | null
     }> | null
     suEventSource?: {
+      __typename?: "Link"
+      url?: string | null
+      title?: string | null
+      attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+    } | null
+    sulEventAltLocLink?: {
       __typename?: "Link"
       url?: string | null
       title?: string | null
@@ -18463,7 +18497,6 @@ export type FragmentNodeStanfordCourseTeaserFragment = {
 export type FragmentNodeStanfordEventTeaserFragment = {
   __typename: "NodeStanfordEvent"
   suEventAltLoc?: string | null
-  sulEventAltLocLink?: string | null
   sulEventExperience?: string | null
   id: string
   title: string
@@ -18518,6 +18551,12 @@ export type FragmentNodeStanfordEventTeaserFragment = {
       | null
   }> | null
   suEventSource?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
+  sulEventAltLocLink?: {
     __typename?: "Link"
     url?: string | null
     title?: string | null
@@ -18815,7 +18854,6 @@ type FragmentNodeTeaserUnion_NodeStanfordEvent_Fragment = {
   path?: string | null
   sticky: boolean
   suEventAltLoc?: string | null
-  sulEventAltLocLink?: string | null
   sulEventExperience?: string | null
   changed: {__typename?: "DateTime"; timezone: any; time: any}
   created: {__typename?: "DateTime"; timezone: any; time: any}
@@ -18867,6 +18905,12 @@ type FragmentNodeTeaserUnion_NodeStanfordEvent_Fragment = {
       | null
   }> | null
   suEventSource?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
+  sulEventAltLocLink?: {
     __typename?: "Link"
     url?: string | null
     title?: string | null
@@ -20762,7 +20806,6 @@ export type RouteQuery = {
               path?: string | null
               sticky: boolean
               suEventAltLoc?: string | null
-              sulEventAltLocLink?: string | null
               suEventContactInfo?: string | null
               suEventDek?: string | null
               suEventEmail?: any | null
@@ -20798,6 +20841,16 @@ export type RouteQuery = {
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
               } | null
               body?: {__typename?: "TextSummary"; processed?: any | null; summary?: any | null} | null
+              sulEventAltLocLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
               suEventAudience?: Array<{
                 __typename: "TermEventAudience"
                 id: string
@@ -21628,7 +21681,6 @@ export type RouteQuery = {
               suEventSeriesEvent?: Array<{
                 __typename: "NodeStanfordEvent"
                 suEventAltLoc?: string | null
-                sulEventAltLocLink?: string | null
                 sulEventExperience?: string | null
                 id: string
                 title: string
@@ -21683,6 +21735,16 @@ export type RouteQuery = {
                     | null
                 }> | null
                 suEventSource?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                sulEventAltLocLink?: {
                   __typename?: "Link"
                   url?: string | null
                   title?: string | null
@@ -24335,7 +24397,6 @@ export type SulEventsQuery = {
       | {
           __typename: "NodeStanfordEvent"
           suEventAltLoc?: string | null
-          sulEventAltLocLink?: string | null
           sulEventExperience?: string | null
           id: string
           title: string
@@ -24390,6 +24451,16 @@ export type SulEventsQuery = {
               | null
           }> | null
           suEventSource?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
+          sulEventAltLocLink?: {
             __typename?: "Link"
             url?: string | null
             title?: string | null
@@ -24443,7 +24514,6 @@ export type SulEventsSharedTagsQuery = {
       | {
           __typename: "NodeStanfordEvent"
           suEventAltLoc?: string | null
-          sulEventAltLocLink?: string | null
           sulEventExperience?: string | null
           id: string
           title: string
@@ -24498,6 +24568,16 @@ export type SulEventsSharedTagsQuery = {
               | null
           }> | null
           suEventSource?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
+          sulEventAltLocLink?: {
             __typename?: "Link"
             url?: string | null
             title?: string | null
@@ -25115,7 +25195,6 @@ export type StanfordSharedTagsQuery = {
           path?: string | null
           sticky: boolean
           suEventAltLoc?: string | null
-          sulEventAltLocLink?: string | null
           sulEventExperience?: string | null
           changed: {__typename?: "DateTime"; timezone: any; time: any}
           created: {__typename?: "DateTime"; timezone: any; time: any}
@@ -25167,6 +25246,16 @@ export type StanfordSharedTagsQuery = {
               | null
           }> | null
           suEventSource?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
+          sulEventAltLocLink?: {
             __typename?: "Link"
             url?: string | null
             title?: string | null
@@ -25800,7 +25889,6 @@ export type SearchQuery = {
           path?: string | null
           sticky: boolean
           suEventAltLoc?: string | null
-          sulEventAltLocLink?: string | null
           suEventContactInfo?: string | null
           suEventDek?: string | null
           suEventEmail?: any | null
@@ -25836,6 +25924,16 @@ export type SearchQuery = {
             mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
           } | null
           body?: {__typename?: "TextSummary"; processed?: any | null; summary?: any | null} | null
+          sulEventAltLocLink?: {
+            __typename?: "Link"
+            url?: string | null
+            title?: string | null
+            attributes?: {
+              __typename?: "LinkAttributes"
+              ariaLabel?: string | null
+              ariaLabelledBy?: string | null
+            } | null
+          } | null
           suEventAudience?: Array<{
             __typename: "TermEventAudience"
             id: string
@@ -26648,7 +26746,6 @@ export type SearchQuery = {
           suEventSeriesEvent?: Array<{
             __typename: "NodeStanfordEvent"
             suEventAltLoc?: string | null
-            sulEventAltLocLink?: string | null
             sulEventExperience?: string | null
             id: string
             title: string
@@ -26703,6 +26800,16 @@ export type SearchQuery = {
                 | null
             }> | null
             suEventSource?: {
+              __typename?: "Link"
+              url?: string | null
+              title?: string | null
+              attributes?: {
+                __typename?: "LinkAttributes"
+                ariaLabel?: string | null
+                ariaLabelledBy?: string | null
+              } | null
+            } | null
+            sulEventAltLocLink?: {
               __typename?: "Link"
               url?: string | null
               title?: string | null

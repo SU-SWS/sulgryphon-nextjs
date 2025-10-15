@@ -15,6 +15,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   const start = new Date(node.suEventDateTime.value * 1000)
   const end = new Date(node.suEventDateTime.end_value * 1000)
 
+  console.log("sulEventAltLocLink", node.sulEventAltLocLink)
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
   const timeString = getTimeString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
@@ -72,12 +73,12 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
               )}
 
               {/* Alternative link */}
-              {!node.suEventMapLink?.url && node.sulEventAltLocLink && (
-                <Link href={node.sulEventAltLocLink}>{node.suEventAltLoc}</Link>
+              {!node.suEventMapLink?.url && node.sulEventAltLocLink?.url && (
+                <Link href={node.sulEventAltLocLink?.url}>{node.suEventAltLoc}</Link>
               )}
 
               {/* Plain text */}
-              {!node.suEventMapLink?.url && !node.sulEventAltLocLink && <span>{node.suEventAltLoc}</span>}
+              {!node.suEventMapLink?.url && !node.sulEventAltLocLink?.url && <span>{node.suEventAltLoc}</span>}
             </div>
           )}
 

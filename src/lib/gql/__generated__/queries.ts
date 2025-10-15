@@ -664,7 +664,9 @@ export const FragmentNodeStanfordEventFragmentDoc = gql`
     ...FragmentTextSummary
   }
   suEventAltLoc
-  sulEventAltLocLink
+  sulEventAltLocLink {
+    ...FragmentLink
+  }
   suEventAudience {
     ...FragmentTermInterface
   }
@@ -712,9 +714,9 @@ export const FragmentNodeStanfordEventFragmentDoc = gql`
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
 ${FragmentTextSummaryFragmentDoc}
+${FragmentLinkFragmentDoc}
 ${FragmentTermInterfaceFragmentDoc}
 ${FragmentParagraphUnionFragmentDoc}
-${FragmentLinkFragmentDoc}
 ${FragmentSmartDateTypeFragmentDoc}
 ${FragmentAddressTypeFragmentDoc}
 ${FragmentParagraphStanfordScheduleFragmentDoc}`;
@@ -734,7 +736,9 @@ export const FragmentNodeStanfordEventTeaserFragmentDoc = gql`
     ...FragmentLink
   }
   suEventAltLoc
-  sulEventAltLocLink
+  sulEventAltLocLink {
+    ...FragmentLink
+  }
   suEventMapLink {
     ...FragmentLink
   }
