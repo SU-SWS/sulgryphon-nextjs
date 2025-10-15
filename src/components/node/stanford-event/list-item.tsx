@@ -68,14 +68,12 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
               {/* Localist Map link */}
               {node.suEventMapLink?.url && (
-                <Link href={node.suEventMapLink.url.replaceAll(" ", "%20")}>
-                  {node.suEventAltLoc || node.suEventMapLink.title}
-                </Link>
+                <Link href={node.suEventMapLink.url}>{node.suEventAltLoc || node.suEventMapLink.title}</Link>
               )}
 
               {/* Alternative link */}
               {!node.suEventMapLink?.url && node.sulEventAltLocLink && (
-                <Link href={node.sulEventAltLocLink.replaceAll(" ", "%20")}>{node.suEventAltLoc}</Link>
+                <Link href={node.sulEventAltLocLink}>{node.suEventAltLoc}</Link>
               )}
 
               {/* Plain text */}
