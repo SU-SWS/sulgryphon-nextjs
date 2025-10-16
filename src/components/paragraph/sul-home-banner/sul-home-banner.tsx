@@ -14,7 +14,7 @@ const SulHomeBanner = ({paragraph, ...props}: Props) => {
   if (!paragraph.sulHomeImages) return
   return (
     <div {...props} className={twMerge("relative mb-50", props.className)}>
-      <div className="absolute top-[15%] z-10 w-full sm:top-1/4">
+      <div className="absolute top-[15%] z-10 w-full xl:top-1/4">
         <div className="centered">
           <SulHomeBannerFormClient />
         </div>
