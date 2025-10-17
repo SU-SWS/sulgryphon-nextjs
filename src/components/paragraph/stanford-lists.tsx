@@ -7,6 +7,7 @@ import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
 import clsx from "clsx"
+import HeaderGradientLine from "../patterns/header-gradient-line"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
@@ -43,26 +44,15 @@ const ListParagraph = async ({paragraph}: Props) => {
       className={clsx("centered flex flex-col", {"gap-xl": behaviors.list_paragraph?.heading_behavior == "show"})}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
-      {(behaviors.list_paragraph?.heading_behavior !== "remove" || paragraph.suListButton?.url) && (
-        <div
-          className={clsx("flex items-center justify-between", {
-            "mb-20": behaviors.list_paragraph?.heading_behavior === "show" || paragraph.suListButton?.url,
-          })}
-        >
-          {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
-            <h2
-              id={paragraph.id}
-              className={clsx("m-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
-            >
-              {paragraph.suListHeadline}
-            </h2>
-          )}
-
-          {paragraph.suListButton?.url && (
-            <DrupalLinkButton href={paragraph.suListButton.url} {...paragraph.suListButton.attributes}>
-              {paragraph.suListButton.title}
-            </DrupalLinkButton>
-          )}
+      {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
+        <div className="flex items-center justify-between gap-16">
+          <h2
+            id={paragraph.id}
+            className={clsx("m-0 shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
+          >
+            {paragraph.suListHeadline}
+          </h2>
+          <HeaderGradientLine />
         </div>
       )}
 
@@ -92,6 +82,16 @@ const ListParagraph = async ({paragraph}: Props) => {
           }
           totalItems={addLoadMore ? totalItems : viewItems.length}
         />
+      )}
+
+      {paragraph.suListButton?.url && (
+        <DrupalLinkButton
+          className="mx-auto mt-0"
+          href={paragraph.suListButton.url}
+          {...paragraph.suListButton.attributes}
+        >
+          {paragraph.suListButton.title}
+        </DrupalLinkButton>
       )}
     </ListWrapper>
   )
