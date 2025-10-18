@@ -35,8 +35,6 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   if (behaviors.list_paragraph?.hide_empty && viewItems.length === 0) return null
 
-  console.log("items:", viewItems)
-
   const ListWrapper: ElementType =
     paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" ? "section" : "div"
 
