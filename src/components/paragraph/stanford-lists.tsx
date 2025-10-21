@@ -8,7 +8,6 @@ import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
 import clsx from "clsx"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
-import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
