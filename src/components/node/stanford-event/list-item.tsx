@@ -38,7 +38,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
       <div className="flex flex-col items-start gap-xs">
         <div className="flex flex-col gap-[.5rem]">
-          <HeadingElement className="order-2 mb-0 text-18 font-bold tracking-[-0.2px] sm:text-20">
+          <HeadingElement className="order-2 mb-0 text-18 font-bold tracking-[-0.2px] sm:text-22">
             <Link href={goToUrl} className="text-black-true no-underline hocus:text-brick-dark hocus:underline">
               {node.title}
             </Link>
@@ -62,12 +62,22 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
             </div>
           )}
 
-          {node.suEventMapLink?.url && (
+          {(node.suEventMapLink?.url || node.suEventAltLoc) && (
             <div className="order-5 flex text-16 sm:text-18">
               <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
-              <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>
-                {node.suEventAltLoc || node.suEventMapLink?.title}
-              </Link>
+
+              {/* Localist Map link */}
+              {node.suEventMapLink?.url && (
+                <Link href={node.suEventMapLink.url}>{node.suEventAltLoc || node.suEventMapLink.title}</Link>
+              )}
+
+              {/* Alternative link */}
+              {!node.suEventMapLink?.url && node.sulEventAltLocLink?.url && (
+                <Link href={node.sulEventAltLocLink?.url}>{node.suEventAltLoc}</Link>
+              )}
+
+              {/* Plain text */}
+              {!node.suEventMapLink?.url && !node.sulEventAltLocLink?.url && <span>{node.suEventAltLoc}</span>}
             </div>
           )}
 
