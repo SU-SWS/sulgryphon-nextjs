@@ -51,7 +51,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
       })}
     >
       <div
-        className={clsx("gutters centered grid w-full gap-90 md:w-[124rem] lg:w-[124rem]", gridCols)}
+        className={clsx("gutters centered grid w-full gap-90 md:w-[124rem]", gridCols)}
         data-columns="2"
         {...draftProps}
       >
