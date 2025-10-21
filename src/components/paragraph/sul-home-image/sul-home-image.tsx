@@ -10,7 +10,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 const SulHomeImage = ({paragraph, ...props}: Props) => {
   return (
     <div {...props}>
-      <div className="relative h-300 md:h-[40rem] lg:h-450 xl:h-[56rem] 2xl:h-[65rem]">
+      <div className="relative h-300 md:h-[37rem] lg:h-400 xl:h-[56rem] 2xl:h-[57rem]">
         <Image
           src={paragraph.sulHomeImage.mediaImage.url}
           alt={paragraph.sulHomeImage.mediaImage.alt || ""}

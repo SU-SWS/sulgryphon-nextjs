@@ -38,7 +38,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
       <div className="flex flex-col items-start gap-xs">
         <div className="flex flex-col gap-[.5rem]">
-          <HeadingElement className="order-2 mb-0 text-18 font-bold tracking-[-0.2px] sm:text-20">
+          <HeadingElement className="order-2 mb-0 text-18 font-bold tracking-[-0.2px] sm:text-22">
             <Link href={goToUrl} className="text-black-true no-underline hocus:text-brick-dark hocus:underline">
               {node.title}
             </Link>
