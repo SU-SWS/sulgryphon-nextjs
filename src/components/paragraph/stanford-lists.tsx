@@ -7,7 +7,8 @@ import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
 import clsx from "clsx"
-import HeaderGradientLine from "../patterns/header-gradient-line"
+import HeaderGradientLine from "@/components/patterns/header-gradient-line"
+import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
@@ -86,9 +87,9 @@ const ListParagraph = async ({paragraph}: Props) => {
 
       {paragraph.suListButton?.url && (
         <DrupalLinkButton
+          {...paragraph.suListButton.attributes}
           className="mx-auto mt-0"
           href={paragraph.suListButton.url}
-          {...paragraph.suListButton.attributes}
         >
           {paragraph.suListButton.title}
         </DrupalLinkButton>

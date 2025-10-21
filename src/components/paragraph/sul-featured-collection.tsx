@@ -9,7 +9,8 @@ import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
-import HeaderGradientLine from "../patterns/header-gradient-line"
+import HeaderGradientLine from "@/components/patterns/header-gradient-line"
+import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
   headline?: Maybe<string>
@@ -85,11 +86,11 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
 
       {link?.url && (
         <DrupalLink
+          {...linkAttributes}
           url={link?.url}
           title={link?.title}
           linkStyle={styles?.link_display_style}
-          {...linkAttributes}
-          className="mx-auto mt-0 mt-40"
+          className={twMerge("mx-auto mt-0 mt-40", linkAttributes?.className)}
         />
       )}
     </section>
