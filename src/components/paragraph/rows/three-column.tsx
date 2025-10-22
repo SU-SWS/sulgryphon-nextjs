@@ -53,16 +53,16 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}
-          className={clsx({
-            "after:contents('') relative mx-auto w-full after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]":
+          className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
+            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
               config?.vertical_dividers,
           })}
         />
         <OneColumn
           items={mainItems}
           fullWidth={fullWidth}
-          className={clsx({
-            "after:contents('') relative mx-auto w-full after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]":
+          className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
+            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
               config?.vertical_dividers,
           })}
         />
