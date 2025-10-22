@@ -45,7 +45,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
     >
       <div
         className={clsx(
-          "centered flex w-full flex-col justify-between gap-90 *:mx-auto *:w-full md:w-[124rem] md:flex-row md:flex-wrap *:md:w-[calc(50%_-_5rem)] lg:flex-nowrap *:lg:w-[calc(33.3%_-_5rem)]"
+          "centered flex w-full flex-col justify-between gap-90 md:w-[124rem] md:flex-row md:flex-wrap lg:flex-nowrap"
         )}
         data-columns="3"
         {...draftProps}
@@ -54,7 +54,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={leftItems}
           fullWidth={fullWidth}
           className={clsx({
-            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+            "after:contents('') relative mx-auto w-full after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]":
               config?.vertical_dividers,
           })}
         />
@@ -62,11 +62,15 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={mainItems}
           fullWidth={fullWidth}
           className={clsx({
-            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+            "after:contents('') relative mx-auto w-full after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]":
               config?.vertical_dividers,
           })}
         />
-        <OneColumn items={rightItems} fullWidth={fullWidth} />
+        <OneColumn
+          items={rightItems}
+          fullWidth={fullWidth}
+          className="mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]"
+        />
       </div>
     </div>
   )
