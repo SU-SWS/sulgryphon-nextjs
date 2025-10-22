@@ -131,11 +131,11 @@ export const DrupalLocationLink = ({
   )
 }
 
-type DrupalLinkProps = {
+type DrupalLinkProps = Omit<HTMLAttributes<HTMLAnchorElement>, "title"> & {
   url: string
   title: LinkType["title"]
   linkStyle?: "secondary_button" | "cta_button" | string | null
-  children?: JSX.Element | JSX.Element[]
+  children?: JSX.Element | JSX.Element[] | string
 }
 
 export const DrupalLink = ({url, title, linkStyle, children, ...props}: DrupalLinkProps) => {
