@@ -1,6 +1,5 @@
 "use client"
 
-import AboveHeaderBorder from "@/components/patterns/above-header-border"
 import Wave from "@/components/patterns/wave"
 import {DrupalLink} from "@/components/patterns/link"
 import {HTMLAttributes, useRef} from "react"
@@ -10,6 +9,8 @@ import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import HeaderGradientLine from "@/components/patterns/header-gradient-line"
+import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
   headline?: Maybe<string>
@@ -35,28 +36,13 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
 
   return (
     <section className="centered relative" ref={ref} {...props}>
-      {(headline || link?.url) && (
-        <>
-          <AboveHeaderBorder />
-          <header className="mb-40 gap-2xl md:flex">
-            {headline && (
-              <h2 id={headerId} className="mb-0 flex-grow">
-                {headline}
-              </h2>
-            )}
-
-            {link?.url && (
-              <div>
-                <DrupalLink
-                  url={link?.url}
-                  title={link?.title}
-                  linkStyle={styles?.link_display_style}
-                  {...linkAttributes}
-                />
-              </div>
-            )}
-          </header>
-        </>
+      {headline && (
+        <header className="mb-40 flex flex-row items-center justify-between gap-16">
+          <h2 id={headerId} className="mb-0 shrink-0">
+            {headline}
+          </h2>
+          <HeaderGradientLine />
+        </header>
       )}
 
       <div className="relative @container">
@@ -97,6 +83,16 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
           </OnlyIfCentered>
         )}
       </div>
+
+      {link?.url && (
+        <DrupalLink
+          {...linkAttributes}
+          url={link?.url}
+          title={link?.title}
+          linkStyle={styles?.link_display_style}
+          className={twMerge("mx-auto mt-0 mt-40", linkAttributes?.className)}
+        />
+      )}
     </section>
   )
 }
