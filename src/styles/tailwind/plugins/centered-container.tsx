@@ -34,13 +34,13 @@ module.exports = function () {
     const components = {
       // Center an element horizontally.
       ".centered": {
-        maxWidth: "calc(100vw - " + smallestGutter * 2 + "px)",
         width: "100%",
         marginLeft: "auto",
         marginRight: "auto",
+        maxWidth: "calc(100vw - 100px)",
         ...maxWidths,
-        [key]: {
-          maxWidth: `${largestScreen}px`,
+        "@media only screen and (min-width: 1700px)": {
+          maxWidth: "1500px",
         },
       },
       ".gutters": {

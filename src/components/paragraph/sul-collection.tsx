@@ -16,7 +16,7 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
   const elementId = useId()
 
   return (
-    <section className="centered relative" aria-labelledby={`${elementId}-heading`} {...props}>
+    <section className="centered relative md:w-[124rem]" aria-labelledby={`${elementId}-heading`} {...props}>
       {heading && (
         <>
           <AboveHeaderBorder />
