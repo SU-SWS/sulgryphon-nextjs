@@ -4,7 +4,6 @@ import {getParagraphBehaviors} from "@/components/paragraph"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
 
 export type TwoColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
   column_widths: "33-67" | "67-33"
@@ -51,7 +50,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
-      <div className={twMerge("gutters centered grid gap-90", gridCols)} data-columns="2" {...draftProps}>
+      <div className={clsx("centered grid w-full gap-90 md:w-[124rem]", gridCols)} data-columns="2" {...draftProps}>
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}
