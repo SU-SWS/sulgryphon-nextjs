@@ -1,7 +1,7 @@
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
 import LoadMoreList from "@/components/patterns/load-more-list"
 import {JSX} from "react"
-import VerticalPersonCard from "@/components/node/stanford-person/vertical-card"
+import StanfordPersonCard from "@/components/node/stanford-person/card"
 
 interface Props {
   items: NodeStanfordPerson[]
@@ -21,12 +21,12 @@ const PeopleRandomizedCardView = async ({items, hasHeading, totalItems, loadPage
     <LoadMoreList
       className="@container"
       ulProps={{className: "list-unstyled grid gap-[90px] @4xl:grid-cols-2 @7xl:grid-cols-3 mb-50"}}
-      liProps={{className: "w-full max-w-[500px] mx-auto"}}
+      liProps={{className: "w-full mx-auto"}}
       loadPage={loadPage}
       totalItems={totalItems}
     >
       {items.map(newsItem => (
-        <VerticalPersonCard h3Heading={hasHeading} key={newsItem.id} node={newsItem} />
+        <StanfordPersonCard h3Heading={hasHeading} key={newsItem.id} node={newsItem} />
       ))}
     </LoadMoreList>
   )

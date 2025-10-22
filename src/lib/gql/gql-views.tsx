@@ -166,59 +166,56 @@ export const getViewPagedItems = async (
         totalItems = graphqlResponse.stanfordBasicPages?.pageInfo.total || 0
         break
 
-        // case "stanford_courses--default_list_viewfield_block":
-        // case "stanford_courses--vertical_teaser_viewfield_block":
-        //   graphqlResponse = await client.stanfordCourses({
-        //     contextualFilters,
-        //     ...queryVariables,
-        //   })
-        //   items = graphqlResponse.stanfordCourses?.results as unknown as NodeStanfordCourse[]
-        //   totalItems = graphqlResponse.stanfordCourses?.pageInfo.total || 0
-        //   break
-        //
-        // case "stanford_events--cards":
-        // case "stanford_events--list_page":
-        //   contextualFilters = getContextualFilters(
-        //     [
-        //       "term_node_taxonomy_name_depth",
-        //       "term_node_taxonomy_name_depth_1",
-        //       "term_node_taxonomy_name_depth_2",
-        //       "term_node_taxonomy_name_depth_3",
-        //     ],
-        //     contextualFilter
-        //   )
-        //   graphqlResponse = await client.stanfordEvents({
-        //     contextualFilters,
-        //     ...queryVariables,
-        //   })
-        //   items = graphqlResponse.stanfordEvents?.results as unknown as NodeStanfordEvent[]
-        //   totalItems = graphqlResponse.stanfordEvents?.pageInfo.total || 0
-        //   break
-        //
-        // case "stanford_events--past_events_list_block":
-        //   graphqlResponse = await client.stanfordEventsPastEvents({
-        //     contextualFilters,
-        //     ...queryVariables,
-        //   })
-        //   items = graphqlResponse.stanfordEventsPastEvents?.results as unknown as NodeStanfordEvent[]
-        //   totalItems = graphqlResponse.stanfordEventsPastEvents?.pageInfo.total || 0
-        //   break
-        //
-        // case "stanford_news--block_1":
-        // case "stanford_news--vertical_cards":
-        //   graphqlResponse = await client.stanfordNews({
-        //     contextualFilters,
-        //     ...queryVariables,
-        //   })
-        //   items = graphqlResponse.stanfordNews?.results as unknown as NodeStanfordNews[]
-        //   totalItems = graphqlResponse.stanfordNews?.pageInfo.total || 0
-        //   break
-
-        queryVariables.pageSize = pageSize || 3
+      // case "stanford_courses--default_list_viewfield_block":
+      // case "stanford_courses--vertical_teaser_viewfield_block":
+      //   graphqlResponse = await client.stanfordCourses({
+      //     contextualFilters,
+      //     ...queryVariables,
+      //   })
+      //   items = graphqlResponse.stanfordCourses?.results as unknown as NodeStanfordCourse[]
+      //   totalItems = graphqlResponse.stanfordCourses?.pageInfo.total || 0
+      //   break
+      //
+      // case "stanford_events--cards":
+      // case "stanford_events--list_page":
+      //   contextualFilters = getContextualFilters(
+      //     [
+      //       "term_node_taxonomy_name_depth",
+      //       "term_node_taxonomy_name_depth_1",
+      //       "term_node_taxonomy_name_depth_2",
+      //       "term_node_taxonomy_name_depth_3",
+      //     ],
+      //     contextualFilter
+      //   )
+      //   graphqlResponse = await client.stanfordEvents({
+      //     contextualFilters,
+      //     ...queryVariables,
+      //   })
+      //   items = graphqlResponse.stanfordEvents?.results as unknown as NodeStanfordEvent[]
+      //   totalItems = graphqlResponse.stanfordEvents?.pageInfo.total || 0
+      //   break
+      //
+      // case "stanford_events--past_events_list_block":
+      //   graphqlResponse = await client.stanfordEventsPastEvents({
+      //     contextualFilters,
+      //     ...queryVariables,
+      //   })
+      //   items = graphqlResponse.stanfordEventsPastEvents?.results as unknown as NodeStanfordEvent[]
+      //   totalItems = graphqlResponse.stanfordEventsPastEvents?.pageInfo.total || 0
+      //   break
+      //
+      // case "stanford_news--block_1":
+      // case "stanford_news--vertical_cards":
+      //   graphqlResponse = await client.stanfordNews({
+      //     contextualFilters,
+      //     ...queryVariables,
+      //   })
+      //   items = graphqlResponse.stanfordNews?.results as unknown as NodeStanfordNews[]
+      //   totalItems = graphqlResponse.stanfordNews?.pageInfo.total || 0
+      //   break
 
       case "sul_people--randomized_card_grid": {
-        const poolSize = 30
-        queryVariables.pageSize = poolSize
+        queryVariables.pageSize = 999
 
         graphqlResponse = await client.stanfordPerson({
           contextualFilters,

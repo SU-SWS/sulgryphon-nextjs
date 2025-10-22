@@ -11,7 +11,7 @@ const CardList = ({items, h3Heading}: {items: NodeUnion[]; h3Heading?: boolean})
         {items
           .filter(item => !!item?.id)
           .map(item => (
-            <li key={item.id} className="mx-auto w-full max-w-[500px]">
+            <li key={item.id} className="mx-auto w-full">
               <NodeCard node={item} key={item.id} h3Heading={h3Heading} />
             </li>
           ))}
