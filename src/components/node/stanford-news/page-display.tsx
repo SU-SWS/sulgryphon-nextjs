@@ -115,8 +115,8 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <hr className="mx-auto mb-40 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="mb-40 table w-full">
-          <span className="relative mx-auto block aspect-[16/9] lg:w-800">
+        <figure className="centered mx-auto mb-40 table w-800">
+          <span className="relative mx-auto block aspect-[16/9]">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
           {node.suNewsBannerMediaCaption && (
@@ -129,7 +129,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
       {node.suNewsBanner?.__typename === "MediaVideo" && (
         <figure className="mb-100 table w-full">
-          <span className="relative mx-auto block aspect-[16/9] w-10/12">
+          <span className="centered relative mx-auto block aspect-[16/9] w-10/12">
             <Oembed url={node.suNewsBanner.mediaOembedVideo} />
           </span>
           {node.suNewsBannerMediaCaption && (
@@ -141,7 +141,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       )}
 
       {node.suNewsComponents && (
-        <div className="w-full lg:children:max-w-1000">
+        <div className="w-full [&_p]:mx-auto lg:[&_p]:max-w-800">
           {node.suNewsComponents.map(paragraph => (
             <Paragraph key={paragraph.id} paragraph={paragraph} />
           ))}
