@@ -11,6 +11,7 @@ import Oembed from "@/components/patterns/elements/oembed"
 import {twMerge} from "tailwind-merge"
 import {ElementType} from "react"
 import type {DOMNode} from "html-dom-parser"
+import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
 const options: HTMLReactParserOptions = {
   replace: domNode => {
@@ -112,16 +113,28 @@ const options: HTMLReactParserOptions = {
         case "p":
           nodeProps.className += " max-w-[100ch]"
         case "li":
-        case "h1":
-        case "h2":
-        case "h3":
-        case "h4":
         case "span":
         case "tr":
         case "th":
         case "td":
         case "ul":
         case "ol":
+          return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
+
+        case "h1":
+        case "h2":
+        case "h3":
+        case "h4":
+          if (nodeProps.className?.includes("sul-gradient-accent")) {
+            nodeProps.className += " !mb-0 shrink-0 "
+            return (
+              <div className="centered mb-40 flex w-[124rem] flex-row items-center justify-between gap-16">
+                <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
+                <HeaderGradientLine />
+              </div>
+            )
+          }
+
           return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
       }
     }
