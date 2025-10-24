@@ -35,7 +35,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   }
 
   return (
-    <section className="centered relative" ref={ref} {...props}>
+    <section className="centered relative md:w-[124rem]" ref={ref} {...props}>
       {headline && (
         <header className="mb-40 flex flex-row items-center justify-between gap-16">
           <h2 id={headerId} className="mb-0 shrink-0">
