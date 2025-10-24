@@ -159,7 +159,7 @@ const fixClasses = (classes: string | boolean): string => {
     .replaceAll(" su-callout-text ", " font-bold ")
     .replaceAll(" visually-hidden ", " sr-only ")
     .replace(/ plain-text | caption /g, " ")
-    .replaceAll(" media-entity-wrapper ", " block mb-20 ")
+    .replaceAll(" media-entity-wrapper ", " block mt-04 ")
     .replace(/tablesaw.*? /g, " ")
     .replace(/ +/g, " ")
     .trim()
