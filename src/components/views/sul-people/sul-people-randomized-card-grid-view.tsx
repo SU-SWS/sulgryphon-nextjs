@@ -1,34 +1,31 @@
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
-import LoadMoreList from "@/components/patterns/load-more-list"
-import {JSX} from "react"
+import RandomizeChildren from "@/components/patterns/elements/randomize-children"
 import StanfordPersonCard from "@/components/node/stanford-person/card"
 
 interface Props {
   items: NodeStanfordPerson[]
   hasHeading: boolean
   /**
-   * Total number of items to build the pager.
+   * Number of random people to display
+   * @default 3
    */
-  totalItems: number
-  /**
-   * Server action to load a page.
-   */
-  loadPage?: (_page: number) => Promise<JSX.Element>
+  count?: number
 }
 
-const PeopleRandomizedCardView = async ({items, hasHeading, totalItems, loadPage}: Props) => {
+const PeopleRandomizedCardView = ({items, hasHeading, count = 3}: Props) => {
   return (
-    <LoadMoreList
-      className="@container"
-      ulProps={{className: "list-unstyled grid gap-[90px] @4xl:grid-cols-2 @7xl:grid-cols-3 mb-50"}}
-      liProps={{className: "w-full mx-auto"}}
-      loadPage={loadPage}
-      totalItems={totalItems}
-    >
-      {items.map(newsItem => (
-        <StanfordPersonCard h3Heading={hasHeading} key={newsItem.id} node={newsItem} />
-      ))}
-    </LoadMoreList>
+    <div className="@container">
+      <ul className="list-unstyled mb-50 grid gap-[90px] @4xl:grid-cols-2 @7xl:grid-cols-3">
+        <RandomizeChildren count={count}>
+          {items.map(person => (
+            <li className="mx-auto w-full" key={person.id}>
+              <StanfordPersonCard h3Heading={hasHeading} node={person} />
+            </li>
+          ))}
+        </RandomizeChildren>
+      </ul>
+    </div>
   )
 }
+
 export default PeopleRandomizedCardView
