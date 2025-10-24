@@ -56,7 +56,7 @@ const HorizontalCard = ({
       {...props}
       ref={ref}
       className={twMerge(
-        "relative",
+        "relative @container",
         clsx({
           "bg-cardinal-red text-white": cardBgColor === "cardinal_red",
           "bg-fog-light text-black-true": cardBgColor !== "cardinal_red",
@@ -64,7 +64,7 @@ const HorizontalCard = ({
         props.className
       )}
     >
-      <div className="rs-px-5 relative w-full py-[5.6rem] leading-display @container @6xl:centered lg:px-80">
+      <div className="rs-p-1 relative w-full leading-display @5xl:rs-px-5 @5xl:centered @5xl:px-80 @5xl:py-[5.6rem]">
         <div className="grid items-center gap-2xl @6xl:grid-cols-2 @10xl:gap-[8.8rem]">
           {(image || video) && (
             <div className="relative h-fit w-full">
