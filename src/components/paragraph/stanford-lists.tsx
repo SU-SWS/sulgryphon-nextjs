@@ -39,6 +39,7 @@ const ListParagraph = async ({paragraph}: Props) => {
   const ListWrapper: ElementType =
     paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" ? "section" : "div"
 
+  console.log(behaviors.list_paragraph)
   return (
     <ListWrapper
       className={clsx("centered flex flex-col", {
@@ -49,7 +50,7 @@ const ListParagraph = async ({paragraph}: Props) => {
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
         <div
           className={clsx({
-            "flex items-center justify-between gap-16": behaviors.list_paragraph?.display_heading_gradient,
+            "flex items-center justify-between gap-16": behaviors.sul_list_styles?.display_heading_gradient,
           })}
         >
           <h2
@@ -58,7 +59,7 @@ const ListParagraph = async ({paragraph}: Props) => {
           >
             {paragraph.suListHeadline}
           </h2>
-          {behaviors.list_paragraph?.display_heading_gradient && <HeaderGradientLine />}
+          {behaviors.sul_list_styles?.display_heading_gradient && <HeaderGradientLine />}
         </div>
       )}
 
