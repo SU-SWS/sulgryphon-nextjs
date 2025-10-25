@@ -39,7 +39,6 @@ const ListParagraph = async ({paragraph}: Props) => {
   const ListWrapper: ElementType =
     paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" ? "section" : "div"
 
-  console.log(behaviors.list_paragraph)
   return (
     <ListWrapper
       className={clsx("centered flex flex-col", {
