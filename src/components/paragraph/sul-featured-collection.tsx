@@ -9,7 +9,6 @@ import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
-import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
@@ -41,7 +40,6 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
           <h2 id={headerId} className="mb-0 shrink-0">
             {headline}
           </h2>
-          <HeaderGradientLine />
         </header>
       )}
 

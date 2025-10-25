@@ -47,14 +47,18 @@ const ListParagraph = async ({paragraph}: Props) => {
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
-        <div className="flex items-center justify-between gap-16">
+        <div
+          className={clsx({
+            "flex items-center justify-between gap-16": behaviors.list_paragraph?.display_heading_gradient,
+          })}
+        >
           <h2
             id={paragraph.id}
             className={clsx("m-0 shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
           >
             {paragraph.suListHeadline}
           </h2>
-          <HeaderGradientLine />
+          {behaviors.list_paragraph?.display_heading_gradient && <HeaderGradientLine />}
         </div>
       )}
 

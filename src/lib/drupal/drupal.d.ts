@@ -45,6 +45,7 @@ export type ParagraphBehaviors = {
     hide_empty?: Maybe<boolean>
     empty_message?: Maybe<string>
     heading_behavior?: Maybe<"show" | "hide" | "remove">
+    display_heading_gradient?: Maybe<boolean>
   }
   sul_list_styles?: {link_display_style?: Maybe<string>}
   stanford_teaser?: {heading_behavior?: Maybe<"show" | "hide" | "remove">}
