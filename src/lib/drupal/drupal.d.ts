@@ -10,6 +10,8 @@ export type ParagraphBehaviors = {
       bottom_margin?: "none"
       bottom_padding?: "none"
       top_padding?: "none" | "more"
+      heading?: string
+      heading_level?: "h2" | "h3" | "h4"
     }
     parent_uuid?: string
     region?: string

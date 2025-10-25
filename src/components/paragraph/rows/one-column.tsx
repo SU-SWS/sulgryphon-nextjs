@@ -5,6 +5,7 @@ import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
+import SectionHeading from "@/components/patterns/section-heading"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   items: ParagraphUnion[]
@@ -41,6 +42,7 @@ const OneColumn = async ({items, fullWidth = true, config, className}: Props) =>
       data-columns="1"
       {...draftProps}
     >
+      {config?.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
       {items.map(item => (
         <Paragraph paragraph={item} key={item.id} fullWidth={fullWidth} />
       ))}
