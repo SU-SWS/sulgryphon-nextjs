@@ -128,7 +128,7 @@ const options: HTMLReactParserOptions = {
           if (nodeProps.className?.includes("sul-gradient-accent")) {
             nodeProps.className += " !mb-0 shrink-0 "
             return (
-              <div className="centered mb-40 flex w-[124rem] flex-row items-center justify-between gap-16">
+              <div className="centered mb-40 flex w-full flex-row items-center justify-between gap-16">
                 <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
                 <HeaderGradientLine />
               </div>
@@ -148,7 +148,7 @@ const fixClasses = (classes: string | boolean): string => {
     .replaceAll(" align-center ", " center ")
     .replaceAll(" align-left ", " block float-left mr-20 mb-20 ")
     .replaceAll(" align-right ", " block float-right ml-20 mb-20 ")
-    .replaceAll(" text-align-center ", " text-center ")
+    .replaceAll(" text-align-center ", " text-center *:mx-auto ")
     .replaceAll(" text-align-right ", " text-right ")
     .replaceAll(" su-intro-text ", " type-2 ")
     .replaceAll(" su-drop-cap ", " first-letter:type-2 first-letter:font-bold ")
@@ -158,6 +158,7 @@ const fixClasses = (classes: string | boolean): string => {
     .replaceAll(" su-subheading ", " type-1 ")
     .replaceAll(" su-callout-text ", " font-bold ")
     .replaceAll(" visually-hidden ", " sr-only ")
+    .replaceAll(" sul-inline-button ", " flex flex-wrap gap-24 ")
     .replace(/ plain-text | caption /g, " ")
     .replaceAll(" media-entity-wrapper ", " block mt-04 ")
     .replace(/tablesaw.*? /g, " ")

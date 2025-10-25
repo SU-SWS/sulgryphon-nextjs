@@ -38,7 +38,7 @@ export const DrupalLinkSecondaryButton = ({
       href={href}
       {...props}
       className={twMerge(
-        "cta-button group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pb-11 pt-10 text-16 font-semibold leading-display text-black no-underline transition-colors hover:border-cardinal-red hover:bg-cardinal-red focus:border-black-true focus:bg-black-true active:border-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18",
+        "cta-button group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pb-11 pt-10 text-16 font-semibold leading-display text-digital-red no-underline transition-colors hover:border-cardinal-red hover:bg-cardinal-red focus:border-black-true focus:bg-black-true active:border-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18",
         className
       )}
     >

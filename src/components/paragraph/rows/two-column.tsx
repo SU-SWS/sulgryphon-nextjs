@@ -50,7 +50,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
-      <div className={clsx("centered grid w-full gap-90 md:w-[124rem]", gridCols)} data-columns="2" {...draftProps}>
+      <div className={clsx("centered grid w-full gap-90", gridCols)} data-columns="2" {...draftProps}>
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}

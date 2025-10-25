@@ -44,9 +44,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
       })}
     >
       <div
-        className={clsx(
-          "centered flex w-full flex-col justify-between gap-90 md:w-[124rem] md:flex-row md:flex-wrap lg:flex-nowrap"
-        )}
+        className={clsx("centered flex w-full flex-col justify-between gap-90 md:flex-row md:flex-wrap lg:flex-nowrap")}
         data-columns="3"
         {...draftProps}
       >

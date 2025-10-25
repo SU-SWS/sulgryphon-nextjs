@@ -41,7 +41,7 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className={clsx("centered flex flex-col md:w-[124rem]", {
+      className={clsx("centered flex flex-col", {
         "gap-xl": behaviors.list_paragraph?.heading_behavior == "show",
       })}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
