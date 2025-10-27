@@ -10,6 +10,8 @@ export type ParagraphBehaviors = {
       bottom_margin?: "none"
       bottom_padding?: "none"
       top_padding?: "none" | "more"
+      heading?: string
+      heading_level?: "h2" | "h3" | "h4"
     }
     parent_uuid?: string
     region?: string
@@ -44,7 +46,10 @@ export type ParagraphBehaviors = {
     empty_message?: Maybe<string>
     heading_behavior?: Maybe<"show" | "hide" | "remove">
   }
-  sul_list_styles?: {link_display_style?: Maybe<string>}
+  sul_list_styles?: {
+    link_display_style?: Maybe<string>
+    display_heading_gradient?: Maybe<boolean>
+  }
   stanford_teaser?: {heading_behavior?: Maybe<"show" | "hide" | "remove">}
   faq_accordions?: {heading?: "h2" | "h3" | "h4"}
 }

@@ -24,8 +24,8 @@ module.exports = function () {
         marginRight: "auto",
         maxWidth: "calc(100vw - 100px)",
         ...maxWidths,
-        "@media only screen and (min-width: 1700px)": {
-          maxWidth: "1500px",
+        "@media only screen and (min-width: 1440px)": {
+          maxWidth: "1240px",
         },
       },
     }

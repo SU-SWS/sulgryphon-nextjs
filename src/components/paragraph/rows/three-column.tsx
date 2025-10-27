@@ -4,6 +4,7 @@ import {getParagraphBehaviors} from "@/components/paragraph"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
+import SectionHeading from "@/components/patterns/section-heading"
 
 export type ThreeColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
   vertical_dividers?: boolean
@@ -43,10 +44,9 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
+      {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
       <div
-        className={clsx(
-          "centered flex w-full flex-col justify-between gap-90 md:w-[124rem] md:flex-row md:flex-wrap lg:flex-nowrap"
-        )}
+        className={clsx("centered flex w-full flex-col justify-between gap-90 md:flex-row md:flex-wrap lg:flex-nowrap")}
         data-columns="3"
         {...draftProps}
       >

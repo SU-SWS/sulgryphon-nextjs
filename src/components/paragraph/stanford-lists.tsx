@@ -41,20 +41,25 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className={clsx("centered flex flex-col md:w-[124rem]", {
+      className={clsx("centered flex flex-col", {
         "gap-xl": behaviors.list_paragraph?.heading_behavior == "show",
       })}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
-        <div className="flex items-center justify-between gap-16">
+        <div
+          className={clsx({
+            "flex items-center justify-between gap-16": behaviors.sul_list_styles?.display_heading_gradient,
+          })}
+        >
           <h2
             id={paragraph.id}
             className={clsx("m-0 shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
           >
             {paragraph.suListHeadline}
           </h2>
-          <HeaderGradientLine />
+          {behaviors.sul_list_styles?.display_heading_gradient &&
+            behaviors.list_paragraph?.heading_behavior === "show" && <HeaderGradientLine />}
         </div>
       )}
 
