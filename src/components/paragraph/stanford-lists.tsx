@@ -58,7 +58,8 @@ const ListParagraph = async ({paragraph}: Props) => {
           >
             {paragraph.suListHeadline}
           </h2>
-          {behaviors.sul_list_styles?.display_heading_gradient && <HeaderGradientLine />}
+          {behaviors.sul_list_styles?.display_heading_gradient &&
+            behaviors.list_paragraph?.heading_behavior === "show" && <HeaderGradientLine />}
         </div>
       )}
 
