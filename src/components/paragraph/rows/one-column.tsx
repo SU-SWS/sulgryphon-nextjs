@@ -22,11 +22,12 @@ const OneColumn = async ({items, fullWidth = true, config, className}: Props) =>
     <div
       className={twMerge(
         clsx(
-          "flex flex-col gap-90",
+          "flex flex-col gap-90 px-5",
           {
-            "px-5 pb-20 pt-20": !!config?.bg_color,
+            "pb-20 pt-20": !!config?.bg_color,
+            "pb-90 pt-40": config?.bg_color,
             "pt-0": config?.top_padding === "none",
-            "pt-40": config?.top_padding === "more",
+            "pt-60": config?.top_padding === "more",
             "mb-0": config?.bottom_margin === "none",
             "pb-0": config?.bottom_padding === "none",
             "bg-foggy-light": config?.bg_color === "f4f4f4",

@@ -1525,21 +1525,37 @@ export type NodeStanfordNews = EdgeNode &
      */
     suNewsDek?: Maybe<Scalars["String"]["output"]>
     /**
-     * Maximum one featured media. <em>The “featured media” will appear as a
-     * thumbnail on the list page, and as a thumbnail on the teaser card
-     * paragraph.</em>
+     * Maximum of one featured media item. <em>The featured media will appear as a
+     * thumbnail on the list page and on the teaser card paragraph.</em> The
+     * alternative text for the image should not be just the image or person’s
+     * name. The image should either be marked as decorative, or the alternative text
+     * should describe the image. See the <a
+     * Guide: Alternative text (alt text) for images and other media</a> for
+     * additional information.
      */
     suNewsFeaturedMedia?: Maybe<MediaImage>
     /** Hide Social Share Icons */
     suNewsHideSocial?: Maybe<Scalars["Boolean"]["output"]>
+    /** Related Person */
+    suNewsPerson?: Maybe<Array<NodeStanfordPerson>>
     /** <em>The “publishing date” will appear next to the “byline” below the headline and dek on the article page.</em> */
     suNewsPublishingDate?: Maybe<DateTime>
+    /** Quote / Big Text */
+    suNewsQuote?: Maybe<Scalars["String"]["output"]>
     /**
      * Add a URL to an external source for this news item such as
      * https://example.com/. By adding an external source URL all listings of this
      * news article will link to the external source instead of a page on this
      */
     suNewsSource?: Maybe<Link>
+    /**
+     * Enter the categories associated with this spotlight. These will be used in two
+     * ways: displayed in the content on the individual spotlight page, and as
+     * filters for the Filtered Lists Paragraph view.
+     */
+    suNewsSpotlightFilters?: Maybe<Array<TermStanfordNewsSpotlightFilter>>
+    /** Subtitle */
+    suNewsSubtitle?: Maybe<Scalars["String"]["output"]>
     /**
      * Add all News Type terms for this article. Note: Only the top three selected
      * terms will be displayed to the end-users. The complete list of terms will be
@@ -1669,13 +1685,6 @@ export type NodeStanfordOpportunity = EdgeNode &
      */
     suOppImage?: Maybe<MediaImage>
     /**
-     * Provide a internal or external link where users can find out more about this
-     * opportunity. Please ensure this link has text that describes where the link
-     */
-    suOppLearnMore?: Maybe<Link>
-    /** The date that applications or registration is first available. */
-    suOppOpenDate?: Maybe<DateTime>
-    /**
      * This field is used for indicating prerequisites to participate in this
      * opportunity. Common uses include course pre-requisites, language experience,
      * skills needed, etc. This displays on the individual opportunity page.
@@ -1691,10 +1700,6 @@ export type NodeStanfordOpportunity = EdgeNode &
     suOppSource?: Maybe<Link>
     /** Who sponsors this opportunity. */
     suOppSponsor?: Maybe<Array<TermOpportunitySponsor>>
-    /** The date the Opportunity starts. */
-    suOppStartDate?: Maybe<DateTime>
-    /** Status of the Opportunity. Check this box if the Opportunity should be listed as "Closed." */
-    suOppStatus?: Maybe<Scalars["Boolean"]["output"]>
     /**
      * Use this field to provide a short summary about the opportunity. This will
      * appear on card displays on Teasers, Lists Paragraphs, and Filtered Lists
@@ -4746,6 +4751,32 @@ export type TermStanfordEventType = MetaTagInterface &
     weight: Scalars["Int"]["output"]
   }
 
+/** Entity type taxonomy_term. */
+export type TermStanfordNewsSpotlightFilter = MetaTagInterface &
+  TermInterface & {
+    __typename?: "TermStanfordNewsSpotlightFilter"
+    /** The time that the term was last edited. */
+    changed: DateTime
+    /** Description */
+    description: Text
+    /** The Universally Unique IDentifier (UUID). */
+    id: Scalars["ID"]["output"]
+    /** The term language code. */
+    langcode: Language
+    /** The computed meta tags for the entity. */
+    metatag: Array<MetaTagUnion>
+    /** Name */
+    name: Scalars["String"]["output"]
+    /** The parents of this term. */
+    parent?: Maybe<TermUnion>
+    /** URL alias */
+    path?: Maybe<Scalars["String"]["output"]>
+    /** Published */
+    status: Scalars["Boolean"]["output"]
+    /** The weight of this term in relation to other terms. */
+    weight: Scalars["Int"]["output"]
+  }
+
 /** Broad categories that specify a type of News article. (i.e. Blog) */
 export type TermStanfordNewsTopic = EdgeNode &
   MetaTagInterface &
@@ -5039,6 +5070,7 @@ export type TermUnion =
   | TermStanfordEventKeyword
   | TermStanfordEventSubject
   | TermStanfordEventType
+  | TermStanfordNewsSpotlightFilter
   | TermStanfordNewsTopic
   | TermStanfordPersonType
   | TermStanfordPublicationTopic
@@ -5232,6 +5264,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5264,6 +5297,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5296,6 +5330,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5374,6 +5409,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5755,6 +5791,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5787,6 +5824,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5896,6 +5934,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -5928,6 +5967,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -6167,6 +6207,7 @@ export type NodeQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -6232,6 +6273,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -6654,6 +6696,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -6743,6 +6786,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -7626,6 +7670,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -7744,6 +7789,7 @@ export type NodeQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -7949,6 +7995,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -8815,6 +8862,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -8847,6 +8895,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -8879,6 +8928,7 @@ export type NodeQuery = {
             | {__typename?: "TermStanfordEventKeyword"; id: string}
             | {__typename?: "TermStanfordEventSubject"; id: string}
             | {__typename?: "TermStanfordEventType"; id: string}
+            | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
             | {__typename?: "TermStanfordNewsTopic"; id: string}
             | {__typename?: "TermStanfordPersonType"; id: string}
             | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9123,6 +9173,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9155,6 +9206,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9187,6 +9239,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9219,6 +9272,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9251,6 +9305,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9283,6 +9338,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9315,6 +9371,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9347,6 +9404,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9379,6 +9437,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9411,6 +9470,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9443,6 +9503,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9475,6 +9536,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9507,6 +9569,40 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
+          | {__typename?: "TermStanfordNewsTopic"; id: string}
+          | {__typename?: "TermStanfordPersonType"; id: string}
+          | {__typename?: "TermStanfordPublicationTopic"; id: string}
+          | {__typename?: "TermStudyPlaceCapacity"; id: string}
+          | {__typename?: "TermSuCourseQuarter"; id: string}
+          | {__typename?: "TermSuCourseSubject"; id: string}
+          | {__typename?: "TermSuCourseTag"; id: string}
+          | {__typename?: "TermSuSharedTag"; id: string}
+          | {__typename?: "TermSulStudyPlaceFeature"; id: string}
+          | {__typename?: "TermSulStudyPlaceType"; id: string}
+          | null
+      }
+    | {
+        __typename: "TermStanfordNewsSpotlightFilter"
+        id: string
+        name: string
+        path?: string | null
+        weight: number
+        parent?:
+          | {__typename?: "TermBasicPageType"; id: string}
+          | {__typename?: "TermEventAudience"; id: string}
+          | {__typename?: "TermEventFilter"; id: string}
+          | {__typename?: "TermOpportunitySponsor"; id: string}
+          | {__typename?: "TermOpportunityTagFilter"; id: string}
+          | {__typename?: "TermOpportunityType"; id: string}
+          | {__typename?: "TermOpportunityUnit"; id: string}
+          | {__typename?: "TermPersonFilter"; id: string}
+          | {__typename?: "TermPublicationFilter"; id: string}
+          | {__typename?: "TermStanfordEventGroup"; id: string}
+          | {__typename?: "TermStanfordEventKeyword"; id: string}
+          | {__typename?: "TermStanfordEventSubject"; id: string}
+          | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9539,6 +9635,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9571,6 +9668,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9603,6 +9701,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9635,6 +9734,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9667,6 +9767,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9699,6 +9800,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9731,6 +9833,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9763,6 +9866,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9795,6 +9899,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -9827,6 +9932,7 @@ export type TermQuery = {
           | {__typename?: "TermStanfordEventKeyword"; id: string}
           | {__typename?: "TermStanfordEventSubject"; id: string}
           | {__typename?: "TermStanfordEventType"; id: string}
+          | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
           | {__typename?: "TermStanfordNewsTopic"; id: string}
           | {__typename?: "TermStanfordPersonType"; id: string}
           | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10005,6 +10111,7 @@ type FragmentTermInterface_TermBasicPageType_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10038,6 +10145,7 @@ type FragmentTermInterface_TermEventAudience_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10071,6 +10179,7 @@ type FragmentTermInterface_TermEventFilter_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10104,6 +10213,7 @@ type FragmentTermInterface_TermOpportunitySponsor_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10137,6 +10247,7 @@ type FragmentTermInterface_TermOpportunityTagFilter_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10170,6 +10281,7 @@ type FragmentTermInterface_TermOpportunityType_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10203,6 +10315,7 @@ type FragmentTermInterface_TermOpportunityUnit_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10236,6 +10349,7 @@ type FragmentTermInterface_TermPersonFilter_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10269,6 +10383,7 @@ type FragmentTermInterface_TermPublicationFilter_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10302,6 +10417,7 @@ type FragmentTermInterface_TermStanfordEventGroup_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10335,6 +10451,7 @@ type FragmentTermInterface_TermStanfordEventKeyword_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10368,6 +10485,7 @@ type FragmentTermInterface_TermStanfordEventSubject_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10401,6 +10519,41 @@ type FragmentTermInterface_TermStanfordEventType_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
+    | {__typename?: "TermStanfordNewsTopic"; id: string}
+    | {__typename?: "TermStanfordPersonType"; id: string}
+    | {__typename?: "TermStanfordPublicationTopic"; id: string}
+    | {__typename?: "TermStudyPlaceCapacity"; id: string}
+    | {__typename?: "TermSuCourseQuarter"; id: string}
+    | {__typename?: "TermSuCourseSubject"; id: string}
+    | {__typename?: "TermSuCourseTag"; id: string}
+    | {__typename?: "TermSuSharedTag"; id: string}
+    | {__typename?: "TermSulStudyPlaceFeature"; id: string}
+    | {__typename?: "TermSulStudyPlaceType"; id: string}
+    | null
+}
+
+type FragmentTermInterface_TermStanfordNewsSpotlightFilter_Fragment = {
+  __typename: "TermStanfordNewsSpotlightFilter"
+  id: string
+  name: string
+  path?: string | null
+  weight: number
+  parent?:
+    | {__typename?: "TermBasicPageType"; id: string}
+    | {__typename?: "TermEventAudience"; id: string}
+    | {__typename?: "TermEventFilter"; id: string}
+    | {__typename?: "TermOpportunitySponsor"; id: string}
+    | {__typename?: "TermOpportunityTagFilter"; id: string}
+    | {__typename?: "TermOpportunityType"; id: string}
+    | {__typename?: "TermOpportunityUnit"; id: string}
+    | {__typename?: "TermPersonFilter"; id: string}
+    | {__typename?: "TermPublicationFilter"; id: string}
+    | {__typename?: "TermStanfordEventGroup"; id: string}
+    | {__typename?: "TermStanfordEventKeyword"; id: string}
+    | {__typename?: "TermStanfordEventSubject"; id: string}
+    | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10434,6 +10587,7 @@ type FragmentTermInterface_TermStanfordNewsTopic_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10467,6 +10621,7 @@ type FragmentTermInterface_TermStanfordPersonType_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10500,6 +10655,7 @@ type FragmentTermInterface_TermStanfordPublicationTopic_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10533,6 +10689,7 @@ type FragmentTermInterface_TermStudyPlaceCapacity_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10566,6 +10723,7 @@ type FragmentTermInterface_TermSuCourseQuarter_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10599,6 +10757,7 @@ type FragmentTermInterface_TermSuCourseSubject_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10632,6 +10791,7 @@ type FragmentTermInterface_TermSuCourseTag_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10665,6 +10825,7 @@ type FragmentTermInterface_TermSuSharedTag_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10698,6 +10859,7 @@ type FragmentTermInterface_TermSulStudyPlaceFeature_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10731,6 +10893,7 @@ type FragmentTermInterface_TermSulStudyPlaceType_Fragment = {
     | {__typename?: "TermStanfordEventKeyword"; id: string}
     | {__typename?: "TermStanfordEventSubject"; id: string}
     | {__typename?: "TermStanfordEventType"; id: string}
+    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
     | {__typename?: "TermStanfordNewsTopic"; id: string}
     | {__typename?: "TermStanfordPersonType"; id: string}
     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -10758,6 +10921,7 @@ export type FragmentTermInterfaceFragment =
   | FragmentTermInterface_TermStanfordEventKeyword_Fragment
   | FragmentTermInterface_TermStanfordEventSubject_Fragment
   | FragmentTermInterface_TermStanfordEventType_Fragment
+  | FragmentTermInterface_TermStanfordNewsSpotlightFilter_Fragment
   | FragmentTermInterface_TermStanfordNewsTopic_Fragment
   | FragmentTermInterface_TermStanfordPersonType_Fragment
   | FragmentTermInterface_TermStanfordPublicationTopic_Fragment
@@ -12122,6 +12286,7 @@ export type FragmentNodeSulStudyPlaceFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12154,6 +12319,7 @@ export type FragmentNodeSulStudyPlaceFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12186,6 +12352,7 @@ export type FragmentNodeSulStudyPlaceFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12240,6 +12407,7 @@ export type FragmentNodeStanfordPageFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12698,6 +12866,7 @@ export type FragmentNodeStanfordCourseFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12730,6 +12899,7 @@ export type FragmentNodeStanfordCourseFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12762,6 +12932,7 @@ export type FragmentNodeStanfordCourseFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -12827,6 +12998,7 @@ export type FragmentNodeStanfordEventFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -13176,6 +13348,7 @@ export type FragmentNodeStanfordEventFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -13208,6 +13381,7 @@ export type FragmentNodeStanfordEventFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -13317,6 +13491,7 @@ export type FragmentNodeStanfordEventFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -13349,6 +13524,7 @@ export type FragmentNodeStanfordEventFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -13571,6 +13747,7 @@ export type FragmentNodeStanfordEventSeriesFragment = {
         | {__typename?: "TermStanfordEventKeyword"; id: string}
         | {__typename?: "TermStanfordEventSubject"; id: string}
         | {__typename?: "TermStanfordEventType"; id: string}
+        | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
         | {__typename?: "TermStanfordNewsTopic"; id: string}
         | {__typename?: "TermStanfordPersonType"; id: string}
         | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -13624,6 +13801,7 @@ export type FragmentNodeStanfordEventSeriesFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14001,6 +14179,7 @@ export type FragmentNodeStanfordNewsFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14406,6 +14585,7 @@ export type FragmentNodeStanfordPersonFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14498,6 +14678,7 @@ export type FragmentNodeStanfordPublicationFragment = {
         | {__typename?: "TermStanfordEventKeyword"; id: string}
         | {__typename?: "TermStanfordEventSubject"; id: string}
         | {__typename?: "TermStanfordEventType"; id: string}
+        | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
         | {__typename?: "TermStanfordNewsTopic"; id: string}
         | {__typename?: "TermStanfordPersonType"; id: string}
         | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14699,6 +14880,7 @@ export type FragmentNodeStanfordPublicationFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14770,6 +14952,7 @@ type FragmentNodeUnion_NodeStanfordCourse_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14802,6 +14985,7 @@ type FragmentNodeUnion_NodeStanfordCourse_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14834,6 +15018,7 @@ type FragmentNodeUnion_NodeStanfordCourse_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -14913,6 +15098,7 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -15262,6 +15448,7 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -15294,6 +15481,7 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -15403,6 +15591,7 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -15435,6 +15624,7 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -15671,6 +15861,7 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
         | {__typename?: "TermStanfordEventKeyword"; id: string}
         | {__typename?: "TermStanfordEventSubject"; id: string}
         | {__typename?: "TermStanfordEventType"; id: string}
+        | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
         | {__typename?: "TermStanfordNewsTopic"; id: string}
         | {__typename?: "TermStanfordPersonType"; id: string}
         | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -15724,6 +15915,7 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -16115,6 +16307,7 @@ type FragmentNodeUnion_NodeStanfordNews_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -16206,6 +16399,7 @@ type FragmentNodeUnion_NodeStanfordPage_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -17022,6 +17216,7 @@ type FragmentNodeUnion_NodeStanfordPerson_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -17142,6 +17337,7 @@ type FragmentNodeUnion_NodeStanfordPublication_Fragment = {
         | {__typename?: "TermStanfordEventKeyword"; id: string}
         | {__typename?: "TermStanfordEventSubject"; id: string}
         | {__typename?: "TermStanfordEventType"; id: string}
+        | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
         | {__typename?: "TermStanfordNewsTopic"; id: string}
         | {__typename?: "TermStanfordPersonType"; id: string}
         | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -17343,6 +17539,7 @@ type FragmentNodeUnion_NodeStanfordPublication_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18147,6 +18344,7 @@ type FragmentNodeUnion_NodeSulStudyPlace_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18179,6 +18377,7 @@ type FragmentNodeUnion_NodeSulStudyPlace_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18211,6 +18410,7 @@ type FragmentNodeUnion_NodeSulStudyPlace_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18320,6 +18520,7 @@ export type FragmentNodeSulStudyPlaceTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18352,6 +18553,7 @@ export type FragmentNodeSulStudyPlaceTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18384,6 +18586,7 @@ export type FragmentNodeSulStudyPlaceTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18478,6 +18681,7 @@ export type FragmentNodeStanfordCourseTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18538,6 +18742,7 @@ export type FragmentNodeStanfordEventTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18629,6 +18834,7 @@ export type FragmentNodeStanfordNewsTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18731,6 +18937,7 @@ export type FragmentNodeStanfordPersonTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18786,6 +18993,7 @@ export type FragmentNodeStanfordPublicationTeaserFragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18832,6 +19040,7 @@ type FragmentNodeTeaserUnion_NodeStanfordCourse_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18892,6 +19101,7 @@ type FragmentNodeTeaserUnion_NodeStanfordEvent_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -18983,6 +19193,7 @@ type FragmentNodeTeaserUnion_NodeStanfordNews_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -19096,6 +19307,7 @@ type FragmentNodeTeaserUnion_NodeStanfordPerson_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -19151,6 +19363,7 @@ type FragmentNodeTeaserUnion_NodeStanfordPublication_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -19241,6 +19454,7 @@ type FragmentNodeTeaserUnion_NodeSulStudyPlace_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -19273,6 +19487,7 @@ type FragmentNodeTeaserUnion_NodeSulStudyPlace_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -19305,6 +19520,7 @@ type FragmentNodeTeaserUnion_NodeSulStudyPlace_Fragment = {
       | {__typename?: "TermStanfordEventKeyword"; id: string}
       | {__typename?: "TermStanfordEventSubject"; id: string}
       | {__typename?: "TermStanfordEventType"; id: string}
+      | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
       | {__typename?: "TermStanfordNewsTopic"; id: string}
       | {__typename?: "TermStanfordPersonType"; id: string}
       | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -20721,6 +20937,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -20753,6 +20970,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -20785,6 +21003,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -20871,6 +21090,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -21280,6 +21500,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -21312,6 +21533,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -21429,6 +21651,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -21461,6 +21684,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -21722,6 +21946,7 @@ export type RouteQuery = {
                     | {__typename?: "TermStanfordEventKeyword"; id: string}
                     | {__typename?: "TermStanfordEventSubject"; id: string}
                     | {__typename?: "TermStanfordEventType"; id: string}
+                    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                     | {__typename?: "TermStanfordNewsTopic"; id: string}
                     | {__typename?: "TermStanfordPersonType"; id: string}
                     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -21787,6 +22012,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -22241,6 +22467,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -22342,6 +22569,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -23315,6 +23543,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -23441,6 +23670,7 @@ export type RouteQuery = {
                     | {__typename?: "TermStanfordEventKeyword"; id: string}
                     | {__typename?: "TermStanfordEventSubject"; id: string}
                     | {__typename?: "TermStanfordEventType"; id: string}
+                    | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                     | {__typename?: "TermStanfordNewsTopic"; id: string}
                     | {__typename?: "TermStanfordPersonType"; id: string}
                     | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -23668,6 +23898,7 @@ export type RouteQuery = {
                   | {__typename?: "TermStanfordEventKeyword"; id: string}
                   | {__typename?: "TermStanfordEventSubject"; id: string}
                   | {__typename?: "TermStanfordEventType"; id: string}
+                  | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                   | {__typename?: "TermStanfordNewsTopic"; id: string}
                   | {__typename?: "TermStanfordPersonType"; id: string}
                   | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -24173,6 +24404,7 @@ export type SulStudyPlacesQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -24205,6 +24437,7 @@ export type SulStudyPlacesQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -24237,6 +24470,7 @@ export type SulStudyPlacesQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -24438,6 +24672,7 @@ export type SulEventsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -24555,6 +24790,7 @@ export type SulEventsSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -24861,6 +25097,7 @@ export type StanfordNewsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25074,6 +25311,7 @@ export type StanfordPersonQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25174,6 +25412,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25233,6 +25472,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25334,6 +25574,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25448,6 +25689,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25501,6 +25743,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25593,6 +25836,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25625,6 +25869,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25657,6 +25902,7 @@ export type StanfordSharedTagsQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25804,6 +26050,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25836,6 +26083,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25868,6 +26116,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -25954,6 +26203,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -26351,6 +26601,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -26383,6 +26634,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -26500,6 +26752,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -26532,6 +26785,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -26787,6 +27041,7 @@ export type SearchQuery = {
                 | {__typename?: "TermStanfordEventKeyword"; id: string}
                 | {__typename?: "TermStanfordEventSubject"; id: string}
                 | {__typename?: "TermStanfordEventType"; id: string}
+                | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                 | {__typename?: "TermStanfordNewsTopic"; id: string}
                 | {__typename?: "TermStanfordPersonType"; id: string}
                 | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -26852,6 +27107,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -27294,6 +27550,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -27395,6 +27652,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -28326,6 +28584,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -28452,6 +28711,7 @@ export type SearchQuery = {
                 | {__typename?: "TermStanfordEventKeyword"; id: string}
                 | {__typename?: "TermStanfordEventSubject"; id: string}
                 | {__typename?: "TermStanfordEventType"; id: string}
+                | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
                 | {__typename?: "TermStanfordNewsTopic"; id: string}
                 | {__typename?: "TermStanfordPersonType"; id: string}
                 | {__typename?: "TermStanfordPublicationTopic"; id: string}
@@ -28673,6 +28933,7 @@ export type SearchQuery = {
               | {__typename?: "TermStanfordEventKeyword"; id: string}
               | {__typename?: "TermStanfordEventSubject"; id: string}
               | {__typename?: "TermStanfordEventType"; id: string}
+              | {__typename?: "TermStanfordNewsSpotlightFilter"; id: string}
               | {__typename?: "TermStanfordNewsTopic"; id: string}
               | {__typename?: "TermStanfordPersonType"; id: string}
               | {__typename?: "TermStanfordPublicationTopic"; id: string}
