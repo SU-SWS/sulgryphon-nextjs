@@ -79,7 +79,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               <h2
                 id={paragraph.id}
                 className={clsx("mb-0", headerClasses, {
-                  "type-1 font-normal": transparentBg,
+                  "text-24 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -89,7 +89,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               <h3
                 id={paragraph.id}
                 className={clsx("mb-0", headerClasses, {
-                  "type-1 font-normal": transparentBg,
+                  "text-24 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -99,7 +99,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               <h4
                 id={paragraph.id}
                 className={clsx("mb-0", headerClasses, {
-                  "type-1 font-normal": transparentBg,
+                  "text-24 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -108,7 +108,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
             {headerTag === "div" && (
               <div
                 className={clsx("mb-0", headerClasses, {
-                  "type-1 font-normal": transparentBg,
+                  "text-24 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -166,6 +166,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               "border border-digital-red px-26 py-8": paragraph.suStatLinkStyle === "button",
               "border-white text-white hocus:text-white": whiteText,
               "mx-auto": paragraph.suStatCentered,
+              "text-18": transparentBg,
             })
           )}
           href={paragraph.suStatButton.url}
