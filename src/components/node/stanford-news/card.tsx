@@ -31,7 +31,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
       )}
 
       <div className="flex flex-col">
-        <HeadingElement className="mb-0 text-18 font-bold sm:text-22">
+        <HeadingElement className="mb-0 text-18 font-bold sm:text-20">
           <Link
             href={goToUrl}
             className="stretched-link text-black-true no-underline hocus:text-brick-dark hocus:underline"
@@ -41,7 +41,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
         </HeadingElement>
 
         {node.suNewsTopics?.[0]?.name && (
-          <div className="order-first mb-0 text-16 font-semibold uppercase text-cardinal-red sm:text-18">
+          <div className="order-first mb-0 text-16 font-semibold uppercase text-cardinal-red">
             {node.suNewsTopics[0].name}
           </div>
         )}
