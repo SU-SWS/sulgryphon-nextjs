@@ -214,7 +214,21 @@ export const getViewPagedItems = async (
       //   totalItems = graphqlResponse.stanfordNews?.pageInfo.total || 0
       //   break
 
-      case "sul_people--randomized_card_grid":
+      case "sul_people--randomized_card_grid": {
+        queryVariables.pageSize = 999
+        graphqlResponse = await client.stanfordPerson({
+          contextualFilters,
+          ...queryVariables,
+        })
+        // Filter the results on the front end
+        const allPeople = (graphqlResponse.stanfordPerson?.results || []) as NodeStanfordPerson[]
+        items = allPeople.filter(person =>
+          person.suPersonTypeGroup?.some(typeGroup => typeGroup.name === "Subject specialist")
+        )
+        totalItems = items.length
+        break
+      }
+
       case "sul_people--table_list_all":
         queryVariables.pageSize = 999
       case "stanford_person--grid_list_all":
