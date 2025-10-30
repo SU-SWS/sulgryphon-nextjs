@@ -67,7 +67,7 @@ const Accordion = ({
 
   return (
     <section aria-labelledby={`${id}-button`} {...props}>
-      <Heading id={`${id}-button`}>
+      <Heading id={`${id}-button`} className={clsx({"text-28": headingLevel === "h3"})}>
         <button
           {...buttonProps}
           className={twMerge("flex w-full items-center text-left hocus-visible:underline", buttonProps?.className)}
