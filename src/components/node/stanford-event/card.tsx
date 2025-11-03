@@ -39,7 +39,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         )}
 
         <div className="flex flex-col items-start gap-xs">
-          <div className="flex flex-col gap-[.5rem]">
+          <div className="mb-5 flex flex-col">
             <HeadingElement className="order-2 text-18 font-bold tracking-[-0.2px] sm:text-20">
               <Link
                 href={goToUrl}
@@ -58,21 +58,21 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         </div>
       </div>
       <div className="flex flex-col gap-[.5rem]">
-        <div className="order-3 flex text-16 sm:text-18">
+        <div className="flex text-16 sm:text-18">
           <CalendarDaysIcon title="Date" width={20} className="mr-20 flex-shrink-0" />
           {dateString}
         </div>
 
         {/*  Exhibitions should not have the time range displayed */}
         {!isExhibition && timeString && (
-          <div className="order-4 flex text-16 sm:text-18">
+          <div className="flex text-16 sm:text-18">
             <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
             {timeString}
           </div>
         )}
 
         {node.suEventMapLink?.url && (
-          <div className="order-5 flex text-16 sm:text-18">
+          <div className="flex text-16 sm:text-18">
             <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
             <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>
               {node.suEventAltLoc || node.suEventMapLink?.title}
@@ -81,7 +81,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         )}
 
         {node.sulEventExperience === "virtual" && (
-          <div className="order-5 flex text-16 sm:text-18">
+          <div className="flex text-16 sm:text-18">
             <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
             <span>Virtual event</span>
           </div>

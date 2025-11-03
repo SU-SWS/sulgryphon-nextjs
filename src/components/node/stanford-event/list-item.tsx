@@ -36,8 +36,8 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
         </div>
       )}
 
-      <div className="flex flex-col items-start gap-xs">
-        <div className="flex flex-col gap-[.5rem]">
+      <div className="flex flex-col items-start">
+        <div className="mb-5 flex flex-col">
           <HeadingElement className="order-2 mb-0 text-18 font-bold tracking-[-0.2px] sm:text-20">
             <Link href={goToUrl} className="text-black-true no-underline hocus:text-brick-dark hocus:underline">
               {node.title}
@@ -49,21 +49,22 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
               {node.suEventType?.[0].name}
             </div>
           )}
-
-          <div className="order-3 flex text-16 sm:text-18">
+        </div>
+        <div className="flex flex-col gap-[.5rem]">
+          <div className="flex text-16 sm:text-18">
             <CalendarDaysIcon title="Date" width={20} className="mr-20 flex-shrink-0" />
             {dateString}
           </div>
 
           {timeString && (
-            <div className="order-4 flex text-16 sm:text-18">
+            <div className="flex text-16 sm:text-18">
               <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
               {timeString}
             </div>
           )}
 
           {(node.suEventMapLink?.url || node.suEventAltLoc) && (
-            <div className="order-5 flex text-16 sm:text-18">
+            <div className="flex text-16 sm:text-18">
               <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
 
               {/* Localist Map link */}
@@ -82,7 +83,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
           )}
 
           {node.sulEventExperience === "virtual" && (
-            <div className="order-5 flex text-16 sm:text-18">
+            <div className="flex text-16 sm:text-18">
               <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
               <span>Virtual event</span>
             </div>
