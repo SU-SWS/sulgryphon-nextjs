@@ -52,7 +52,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
       })}
     >
       {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
-      <div className={clsx("centered grid w-full gap-90", gridCols)} data-columns="2" {...draftProps}>
+      <div className={clsx("centered grid w-full gap-45 lg:gap-90", gridCols)} data-columns="2" {...draftProps}>
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}
