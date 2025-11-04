@@ -158,7 +158,7 @@ const fixClasses = (classes: string | boolean): string => {
     .replaceAll(" su-subheading ", " type-1 ")
     .replaceAll(" su-callout-text ", " font-bold ")
     .replaceAll(" visually-hidden ", " sr-only ")
-    .replaceAll(" sul-inline-button ", " flex flex-wrap gap-24 ")
+    .replaceAll(" sul-inline-button ", " flex flex-wrap gap-24 items-center *:mt-0 ")
     .replace(/ plain-text | caption /g, " ")
     .replaceAll(" media-entity-wrapper ", " block mt-04 ")
     .replace(/tablesaw.*? /g, " ")
