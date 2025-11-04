@@ -8,15 +8,26 @@ import Card from "@/components/patterns/card"
 import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
-import {MediaImage, ParagraphStanfordCard, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {
+  MediaImage,
+  ParagraphStanfordCard,
+  Maybe,
+  Link as LinkType,
+  ParagraphStanfordStatCard,
+} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
+import HeaderGradientLine from "../patterns/header-gradient-line"
+import clsx from "clsx"
+import StatCardParagraph from "./stanford-stat-card/stat-card-paragraph"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
   headline?: Maybe<string>
   link?: Maybe<LinkType>
-  cards: ParagraphStanfordCard[]
+  cards: ParagraphStanfordCard[] | ParagraphStanfordStatCard[]
   styles?: {
     link_display_style?: Maybe<string>
+    disable_wave_background?: Maybe<boolean>
+    display_heading_gradient?: Maybe<boolean>
   }
   fullWidth?: Maybe<boolean>
   headerId?: string
@@ -33,13 +44,20 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
     delete linkAttributes["aria-label"]
   }
 
+  console.log("SulFeaturedCollection cards:", cards)
+
   return (
     <section className="centered relative" ref={ref} {...props}>
       {headline && (
-        <header className="mb-40 flex flex-row items-center justify-between gap-16">
+        <header
+          className={clsx("mb-40", {
+            "flex flex-row items-center justify-between gap-16": styles?.display_heading_gradient,
+          })}
+        >
           <h2 id={headerId} className="mb-0 shrink-0">
             {headline}
           </h2>
+          {styles?.display_heading_gradient && <HeaderGradientLine />}
         </header>
       )}
 
@@ -47,38 +65,47 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         <ul className="list-unstyled grid gap-xl @7xl:grid-cols-3">
           {cards.map(card => (
             <li key={card.id}>
-              <CollectionCard
-                header={card.suCardHeader}
-                superHeader={card.suCardSuperHeader}
-                body={card.suCardBody?.processed}
-                link={card.suCardLink}
-                image={card.suCardMedia?.__typename === "MediaImage" ? card.suCardMedia : undefined}
-                videoUrl={card.suCardMedia?.__typename === "MediaVideo" ? card.suCardMedia.mediaOembedVideo : undefined}
-              />
+              {card.__typename === "ParagraphStanfordCard" ? (
+                <CollectionCard
+                  header={card.suCardHeader}
+                  superHeader={card.suCardSuperHeader}
+                  body={card.suCardBody?.processed}
+                  link={card.suCardLink}
+                  image={card.suCardMedia?.__typename === "MediaImage" ? card.suCardMedia : undefined}
+                  videoUrl={
+                    card.suCardMedia?.__typename === "MediaVideo" ? card.suCardMedia.mediaOembedVideo : undefined
+                  }
+                />
+              ) : (
+                <StatCardParagraph paragraph={card} />
+              )}
             </li>
           ))}
         </ul>
 
-        {fullWidth && (
-          <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
-            <div className="relative flex h-full w-full flex-col">
-              <Wave className="rotate-180 -scale-x-100 transform" />
-              <div className="flex-grow" />
-              <Wave className="-scale-x-100 transform" />
-            </div>
-          </div>
-        )}
-
-        {!fullWidth && (
-          <OnlyIfCentered elem={ref}>
-            <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
-              <div className="relative flex h-full w-full flex-col">
-                <Wave className="rotate-180 -scale-x-100 transform" />
-                <div className="flex-grow" />
-                <Wave className="-scale-x-100 transform" />
+        {!styles?.disable_wave_background && (
+          <>
+            {fullWidth && (
+              <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+                <div className="relative flex h-full w-full flex-col">
+                  <Wave className="rotate-180 -scale-x-100 transform" />
+                  <div className="flex-grow" />
+                  <Wave className="-scale-x-100 transform" />
+                </div>
               </div>
-            </div>
-          </OnlyIfCentered>
+            )}
+            {!fullWidth && (
+              <OnlyIfCentered elem={ref}>
+                <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+                  <div className="relative flex h-full w-full flex-col">
+                    <Wave className="rotate-180 -scale-x-100 transform" />
+                    <div className="flex-grow" />
+                    <Wave className="-scale-x-100 transform" />
+                  </div>
+                </div>
+              </OnlyIfCentered>
+            )}
+          </>
         )}
       </div>
 
