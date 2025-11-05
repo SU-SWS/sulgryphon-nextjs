@@ -43,8 +43,6 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
     delete linkAttributes["aria-label"]
   }
 
-  console.log("SulFeaturedCollection cards:", cards)
-
   return (
     <section className="centered relative" ref={ref} {...props}>
       {headline && (
@@ -75,9 +73,9 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
                     card.suCardMedia?.__typename === "MediaVideo" ? card.suCardMedia.mediaOembedVideo : undefined
                   }
                 />
-              ) : (
+              ) : card.__typename === "ParagraphStanfordStatCard" ? (
                 <StatCardParagraph paragraph={card} />
-              )}
+              ) : null}
             </li>
           ))}
         </ul>
