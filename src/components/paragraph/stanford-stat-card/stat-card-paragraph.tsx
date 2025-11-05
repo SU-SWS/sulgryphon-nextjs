@@ -161,7 +161,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
       {paragraph.suStatButton?.url && (
         <Link
           className={clsx(
-            "group flex w-fit items-center gap-3 rounded-[3.5rem] text-digital-red no-underline transition duration-500 ease-in-out hocus:underline",
+            "group flex w-fit items-center gap-3 rounded-[3.5rem] leading-display text-digital-red no-underline transition duration-500 ease-in-out hocus:underline",
             {
               "border-2 border-digital-red px-26 py-8 hocus:border-black hocus:bg-black hocus:text-white":
                 paragraph.suStatLinkStyle === "button",

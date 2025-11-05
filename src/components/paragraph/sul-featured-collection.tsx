@@ -10,10 +10,9 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {
   MediaImage,
-  ParagraphStanfordCard,
   Maybe,
   Link as LinkType,
-  ParagraphStanfordStatCard,
+  ParagraphSulFeatCollectionSulCollectionCardsUnion,
 } from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import HeaderGradientLine from "../patterns/header-gradient-line"
@@ -23,7 +22,7 @@ import StatCardParagraph from "./stanford-stat-card/stat-card-paragraph"
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
   headline?: Maybe<string>
   link?: Maybe<LinkType>
-  cards: ParagraphStanfordCard[] | ParagraphStanfordStatCard[]
+  cards: ParagraphSulFeatCollectionSulCollectionCardsUnion[]
   styles?: {
     link_display_style?: Maybe<string>
     disable_wave_background?: Maybe<boolean>
@@ -62,7 +61,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
       )}
 
       <div className="relative @container">
-        <ul className="list-unstyled grid gap-xl @7xl:grid-cols-3">
+        <ul className="list-unstyled grid gap-x-90 gap-y-30 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map(card => (
             <li key={card.id}>
               {card.__typename === "ParagraphStanfordCard" ? (
