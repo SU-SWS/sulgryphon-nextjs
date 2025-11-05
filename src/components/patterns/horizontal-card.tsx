@@ -101,11 +101,11 @@ const HorizontalCard = ({
               {body && (
                 <div
                   className={clsx("[&_p]:text-20", {
-                    "[&_.btn--primary]:border-2 [&_.btn--primary]:border-white [&_.btn--primary]:bg-transparent [&_.btn--primary]:text-white hocus:[&_.btn--primary]:bg-white hocus:[&_.btn--primary]:text-digital-red hocus:[&_.btn--secondary]:border-cardinal-red-xdark hocus:[&_.btn--secondary]:bg-digital-red [&_a:not(.cta-button)]:text-white hocus:[&_a:not(.cta-button)]:text-black-true":
+                    "[&_a:not(.cta-button)]:text-white hocus:[&_a:not(.cta-button)]:text-black-true":
                       cardBgColor === "cardinal_red",
                   })}
                 >
-                  {formatHtml(body)}
+                  {formatHtml(body, cardBgColor === "cardinal_red")}
                 </div>
               )}
 
