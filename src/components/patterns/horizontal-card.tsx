@@ -64,11 +64,11 @@ const HorizontalCard = ({
         props.className
       )}
     >
-      <div className="rs-p-1 relative w-full leading-display @5xl:rs-px-5 @5xl:centered @5xl:px-80 @5xl:py-[5.6rem]">
-        <div className="grid items-center gap-2xl @6xl:grid-cols-2 @10xl:gap-[8.8rem]">
+      <div className="rs-p-1 relative w-full leading-display @container @6xl:centered @5xl:px-0 @5xl:py-[5.6rem]">
+        <div className="grid items-center gap-2xl @6xl:grid-cols-2 @10xl:gap-30">
           {(image || video) && (
             <div className="relative h-fit w-full">
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
+              <div className="relative aspect-[4/3] w-full overflow-hidden @5xl:aspect-[5/3]">
                 {image}
                 {video}
               </div>
@@ -100,12 +100,12 @@ const HorizontalCard = ({
             <div className={clsx({"m-0 @10xl:rs-ml-2": !hideRosette})}>
               {body && (
                 <div
-                  className={twMerge(
-                    "[&_p]:text-20",
-                    cardBgColor === "cardinal_red" && "[&_a]:text-white hocus:[&_a]:text-black-true"
-                  )}
+                  className={clsx("[&_p]:text-20", {
+                    "[&_a:not(.cta-button)]:text-white hocus:[&_a:not(.cta-button)]:text-black-true":
+                      cardBgColor === "cardinal_red",
+                  })}
                 >
-                  {formatHtml(body)}
+                  {formatHtml(body, cardBgColor === "cardinal_red")}
                 </div>
               )}
 

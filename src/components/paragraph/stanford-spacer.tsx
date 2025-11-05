@@ -1,19 +1,15 @@
 import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {clsx} from "clsx"
 
 const StanfordSpacer = ({size}: {size?: Maybe<"spacer-reduced" | "spacer-minimal" | string>}) => {
-  let height
-  switch (size) {
-    case "spacer-reduced":
-      height = "min-h-[20px]"
-
-      break
-    case "spacer-minimal":
-      height = "min-h-[10px]"
-
-      break
-    default:
-      height = "min-h-[40px]"
-  }
-  return <div className={height} />
+  return (
+    <div
+      className={clsx({
+        "min-h-40": !size,
+        "min-h-20": size === "su-spacer-reduced",
+        "min-h-10": size === "su-spacer-minimal",
+      })}
+    ></div>
+  )
 }
 export default StanfordSpacer

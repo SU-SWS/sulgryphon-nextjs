@@ -1,21 +1,29 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import {ChevronRightIcon, MapPinIcon} from "@heroicons/react/20/solid"
 import {HTMLAttributes, JSX} from "react"
-import {twJoin, twMerge} from "tailwind-merge"
+import {twMerge} from "tailwind-merge"
+import {clsx} from "clsx"
 import {Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 
 export const DrupalLinkButton = ({
   href,
   children,
   className = "",
+  isDarkBg,
   ...props
-}: HTMLAttributes<HTMLAnchorElement> & {href: string; className?: string}) => {
+}: HTMLAttributes<HTMLAnchorElement> & {href: string; isDarkBg?: boolean; className?: string}) => {
   return (
     <Link
       href={href}
       {...props}
-      className={twJoin(
-        "cta-button group rs-mt-neg1 block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18",
+      className={clsx(
+        "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hocus:underline md:text-18",
+        {
+          "border-2 border-white bg-transparent text-white hover:bg-white hover:text-digital-red focus:bg-black-true focus:text-white":
+            isDarkBg,
+          "bg-digital-red hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white":
+            !isDarkBg,
+        },
         className
       )}
     >
@@ -28,17 +36,25 @@ export const DrupalLinkSecondaryButton = ({
   href,
   children,
   className = "",
+  isDarkBg,
   ...props
 }: HTMLAttributes<HTMLAnchorElement> & {
   href: string
+  isDarkBg?: boolean
   className?: string
 }) => {
   return (
     <Link
       href={href}
       {...props}
-      className={twMerge(
-        "cta-button group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pb-11 pt-10 text-16 font-semibold leading-display text-digital-red no-underline transition-colors hover:border-cardinal-red hover:bg-cardinal-red focus:border-black-true focus:bg-black-true active:border-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18",
+      className={clsx(
+        "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pb-11 pt-10 text-16 font-semibold leading-display text-digital-red no-underline transition-colors hocus:text-white hocus:underline md:text-18",
+        {
+          "hover:border-cardinal-red-xdark hover:bg-digital-red focus:border-white focus:bg-black-true focus:text-white":
+            isDarkBg,
+          "hover:border-cardinal-red hover:bg-cardinal-red focus:border-black-true focus:bg-black-true active:border-black-true active:bg-black-true":
+            !isDarkBg,
+        },
         className
       )}
     >
