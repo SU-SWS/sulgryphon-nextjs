@@ -62,7 +62,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         <ul className="list-unstyled grid gap-x-90 gap-y-30 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map(card => (
             <li key={card.id}>
-              {card.__typename === "ParagraphStanfordCard" ? (
+              {card.__typename === "ParagraphStanfordCard" && (
                 <CollectionCard
                   header={card.suCardHeader}
                   superHeader={card.suCardSuperHeader}
@@ -73,9 +73,8 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
                     card.suCardMedia?.__typename === "MediaVideo" ? card.suCardMedia.mediaOembedVideo : undefined
                   }
                 />
-              ) : card.__typename === "ParagraphStanfordStatCard" ? (
-                <StatCardParagraph paragraph={card} />
-              ) : null}
+              )}
+              {card.__typename === "ParagraphStanfordStatCard" && <StatCardParagraph paragraph={card} />}
             </li>
           ))}
         </ul>
