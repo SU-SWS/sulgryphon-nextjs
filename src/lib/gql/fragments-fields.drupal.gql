@@ -166,3 +166,8 @@ fragment FragmentMetaTag on MetaTagUnion {
         }
     }
 }
+
+fragment FragmentParagraphSulFeatCollectionCards on ParagraphSulFeatCollectionSulCollectionCardsUnion {
+  ...FragmentParagraphStanfordCard
+  ...FragmentParagraphStanfordStatCard
+}

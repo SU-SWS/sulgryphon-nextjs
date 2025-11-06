@@ -2945,12 +2945,15 @@ export type ParagraphSulFeatCollection = LayoutParagraphsInterface &
     /** Published */
     status: Scalars["Boolean"]["output"]
     /** Cards */
-    sulCollectionCards: Array<ParagraphStanfordCard>
+    sulCollectionCards: Array<ParagraphSulFeatCollectionSulCollectionCardsUnion>
     /** Headline */
     sulCollectionHeadline?: Maybe<Scalars["String"]["output"]>
     /** Headline Link */
     sulCollectionLink?: Maybe<Link>
   }
+
+/** Cards */
+export type ParagraphSulFeatCollectionSulCollectionCardsUnion = ParagraphStanfordCard | ParagraphStanfordStatCard
 
 /** Entity type paragraph. */
 export type ParagraphSulHomeBanner = LayoutParagraphsInterface &
@@ -5699,27 +5702,71 @@ export type NodeQuery = {
               behaviors?: string | null
               status: boolean
               sulCollectionHeadline?: string | null
-              sulCollectionCards: Array<{
-                __typename: "ParagraphStanfordCard"
-                suCardHeader?: string | null
-                suCardSuperHeader?: string | null
-                sulCardImageCaption?: string | null
-                id: string
-                behaviors?: string | null
-                status: boolean
-                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                suCardLink?: {
-                  __typename?: "Link"
-                  url?: string | null
-                  title?: string | null
-                  attributes?: {
-                    __typename?: "LinkAttributes"
-                    ariaLabel?: string | null
-                    ariaLabelledBy?: string | null
-                  } | null
-                } | null
-                suCardMedia?:
-                  | {
+              sulCollectionCards: Array<
+                | {
+                    __typename: "ParagraphStanfordCard"
+                    suCardHeader?: string | null
+                    suCardSuperHeader?: string | null
+                    sulCardImageCaption?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suCardLink?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suCardMedia?:
+                      | {
+                          __typename: "MediaImage"
+                          sulImageCredit?: string | null
+                          id: string
+                          name: string
+                          mediaImage: {
+                            __typename?: "Image"
+                            url: string
+                            alt?: string | null
+                            height: number
+                            width: number
+                          }
+                        }
+                      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                      | null
+                    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordStatCard"
+                    suStatCentered?: boolean | null
+                    suStatHeadingHide?: boolean | null
+                    suStatHeadline: string
+                    suStatHeadlineLvl: string
+                    suStatLinkStyle: string
+                    suStatStat: string
+                    suStatSuperhead?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suStatButton?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                    suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatImage?: {
                       __typename: "MediaImage"
                       sulImageCredit?: string | null
                       id: string
@@ -5731,11 +5778,10 @@ export type NodeQuery = {
                         height: number
                         width: number
                       }
-                    }
-                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                  | null
-                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-              }>
+                    } | null
+                    suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                  }
+              >
               sulCollectionLink?: {
                 __typename?: "Link"
                 url?: string | null
@@ -6604,27 +6650,71 @@ export type NodeQuery = {
               behaviors?: string | null
               status: boolean
               sulCollectionHeadline?: string | null
-              sulCollectionCards: Array<{
-                __typename: "ParagraphStanfordCard"
-                suCardHeader?: string | null
-                suCardSuperHeader?: string | null
-                sulCardImageCaption?: string | null
-                id: string
-                behaviors?: string | null
-                status: boolean
-                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                suCardLink?: {
-                  __typename?: "Link"
-                  url?: string | null
-                  title?: string | null
-                  attributes?: {
-                    __typename?: "LinkAttributes"
-                    ariaLabel?: string | null
-                    ariaLabelledBy?: string | null
-                  } | null
-                } | null
-                suCardMedia?:
-                  | {
+              sulCollectionCards: Array<
+                | {
+                    __typename: "ParagraphStanfordCard"
+                    suCardHeader?: string | null
+                    suCardSuperHeader?: string | null
+                    sulCardImageCaption?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suCardLink?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suCardMedia?:
+                      | {
+                          __typename: "MediaImage"
+                          sulImageCredit?: string | null
+                          id: string
+                          name: string
+                          mediaImage: {
+                            __typename?: "Image"
+                            url: string
+                            alt?: string | null
+                            height: number
+                            width: number
+                          }
+                        }
+                      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                      | null
+                    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordStatCard"
+                    suStatCentered?: boolean | null
+                    suStatHeadingHide?: boolean | null
+                    suStatHeadline: string
+                    suStatHeadlineLvl: string
+                    suStatLinkStyle: string
+                    suStatStat: string
+                    suStatSuperhead?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suStatButton?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                    suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatImage?: {
                       __typename: "MediaImage"
                       sulImageCredit?: string | null
                       id: string
@@ -6636,11 +6726,10 @@ export type NodeQuery = {
                         height: number
                         width: number
                       }
-                    }
-                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                  | null
-                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-              }>
+                    } | null
+                    suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                  }
+              >
               sulCollectionLink?: {
                 __typename?: "Link"
                 url?: string | null
@@ -7159,27 +7248,71 @@ export type NodeQuery = {
               behaviors?: string | null
               status: boolean
               sulCollectionHeadline?: string | null
-              sulCollectionCards: Array<{
-                __typename: "ParagraphStanfordCard"
-                suCardHeader?: string | null
-                suCardSuperHeader?: string | null
-                sulCardImageCaption?: string | null
-                id: string
-                behaviors?: string | null
-                status: boolean
-                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                suCardLink?: {
-                  __typename?: "Link"
-                  url?: string | null
-                  title?: string | null
-                  attributes?: {
-                    __typename?: "LinkAttributes"
-                    ariaLabel?: string | null
-                    ariaLabelledBy?: string | null
-                  } | null
-                } | null
-                suCardMedia?:
-                  | {
+              sulCollectionCards: Array<
+                | {
+                    __typename: "ParagraphStanfordCard"
+                    suCardHeader?: string | null
+                    suCardSuperHeader?: string | null
+                    sulCardImageCaption?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suCardLink?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suCardMedia?:
+                      | {
+                          __typename: "MediaImage"
+                          sulImageCredit?: string | null
+                          id: string
+                          name: string
+                          mediaImage: {
+                            __typename?: "Image"
+                            url: string
+                            alt?: string | null
+                            height: number
+                            width: number
+                          }
+                        }
+                      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                      | null
+                    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordStatCard"
+                    suStatCentered?: boolean | null
+                    suStatHeadingHide?: boolean | null
+                    suStatHeadline: string
+                    suStatHeadlineLvl: string
+                    suStatLinkStyle: string
+                    suStatStat: string
+                    suStatSuperhead?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suStatButton?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                    suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatImage?: {
                       __typename: "MediaImage"
                       sulImageCredit?: string | null
                       id: string
@@ -7191,11 +7324,10 @@ export type NodeQuery = {
                         height: number
                         width: number
                       }
-                    }
-                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                  | null
-                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-              }>
+                    } | null
+                    suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                  }
+              >
               sulCollectionLink?: {
                 __typename?: "Link"
                 url?: string | null
@@ -7564,27 +7696,71 @@ export type NodeQuery = {
               behaviors?: string | null
               status: boolean
               sulCollectionHeadline?: string | null
-              sulCollectionCards: Array<{
-                __typename: "ParagraphStanfordCard"
-                suCardHeader?: string | null
-                suCardSuperHeader?: string | null
-                sulCardImageCaption?: string | null
-                id: string
-                behaviors?: string | null
-                status: boolean
-                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                suCardLink?: {
-                  __typename?: "Link"
-                  url?: string | null
-                  title?: string | null
-                  attributes?: {
-                    __typename?: "LinkAttributes"
-                    ariaLabel?: string | null
-                    ariaLabelledBy?: string | null
-                  } | null
-                } | null
-                suCardMedia?:
-                  | {
+              sulCollectionCards: Array<
+                | {
+                    __typename: "ParagraphStanfordCard"
+                    suCardHeader?: string | null
+                    suCardSuperHeader?: string | null
+                    sulCardImageCaption?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suCardLink?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suCardMedia?:
+                      | {
+                          __typename: "MediaImage"
+                          sulImageCredit?: string | null
+                          id: string
+                          name: string
+                          mediaImage: {
+                            __typename?: "Image"
+                            url: string
+                            alt?: string | null
+                            height: number
+                            width: number
+                          }
+                        }
+                      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                      | null
+                    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordStatCard"
+                    suStatCentered?: boolean | null
+                    suStatHeadingHide?: boolean | null
+                    suStatHeadline: string
+                    suStatHeadlineLvl: string
+                    suStatLinkStyle: string
+                    suStatStat: string
+                    suStatSuperhead?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suStatButton?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                    suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatImage?: {
                       __typename: "MediaImage"
                       sulImageCredit?: string | null
                       id: string
@@ -7596,11 +7772,10 @@ export type NodeQuery = {
                         height: number
                         width: number
                       }
-                    }
-                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                  | null
-                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-              }>
+                    } | null
+                    suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                  }
+              >
               sulCollectionLink?: {
                 __typename?: "Link"
                 url?: string | null
@@ -8343,27 +8518,71 @@ export type NodeQuery = {
               behaviors?: string | null
               status: boolean
               sulCollectionHeadline?: string | null
-              sulCollectionCards: Array<{
-                __typename: "ParagraphStanfordCard"
-                suCardHeader?: string | null
-                suCardSuperHeader?: string | null
-                sulCardImageCaption?: string | null
-                id: string
-                behaviors?: string | null
-                status: boolean
-                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                suCardLink?: {
-                  __typename?: "Link"
-                  url?: string | null
-                  title?: string | null
-                  attributes?: {
-                    __typename?: "LinkAttributes"
-                    ariaLabel?: string | null
-                    ariaLabelledBy?: string | null
-                  } | null
-                } | null
-                suCardMedia?:
-                  | {
+              sulCollectionCards: Array<
+                | {
+                    __typename: "ParagraphStanfordCard"
+                    suCardHeader?: string | null
+                    suCardSuperHeader?: string | null
+                    sulCardImageCaption?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suCardLink?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suCardMedia?:
+                      | {
+                          __typename: "MediaImage"
+                          sulImageCredit?: string | null
+                          id: string
+                          name: string
+                          mediaImage: {
+                            __typename?: "Image"
+                            url: string
+                            alt?: string | null
+                            height: number
+                            width: number
+                          }
+                        }
+                      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                      | null
+                    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                  }
+                | {
+                    __typename: "ParagraphStanfordStatCard"
+                    suStatCentered?: boolean | null
+                    suStatHeadingHide?: boolean | null
+                    suStatHeadline: string
+                    suStatHeadlineLvl: string
+                    suStatLinkStyle: string
+                    suStatStat: string
+                    suStatSuperhead?: string | null
+                    id: string
+                    behaviors?: string | null
+                    status: boolean
+                    suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                    suStatButton?: {
+                      __typename?: "Link"
+                      url?: string | null
+                      title?: string | null
+                      attributes?: {
+                        __typename?: "LinkAttributes"
+                        ariaLabel?: string | null
+                        ariaLabelledBy?: string | null
+                      } | null
+                    } | null
+                    suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                    suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    suStatImage?: {
                       __typename: "MediaImage"
                       sulImageCredit?: string | null
                       id: string
@@ -8375,11 +8594,10 @@ export type NodeQuery = {
                         height: number
                         width: number
                       }
-                    }
-                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                  | null
-                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-              }>
+                    } | null
+                    suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                  }
+              >
               sulCollectionLink?: {
                 __typename?: "Link"
                 url?: string | null
@@ -8770,27 +8988,71 @@ export type NodeQuery = {
                 behaviors?: string | null
                 status: boolean
                 sulCollectionHeadline?: string | null
-                sulCollectionCards: Array<{
-                  __typename: "ParagraphStanfordCard"
-                  suCardHeader?: string | null
-                  suCardSuperHeader?: string | null
-                  sulCardImageCaption?: string | null
-                  id: string
-                  behaviors?: string | null
-                  status: boolean
-                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                  suCardLink?: {
-                    __typename?: "Link"
-                    url?: string | null
-                    title?: string | null
-                    attributes?: {
-                      __typename?: "LinkAttributes"
-                      ariaLabel?: string | null
-                      ariaLabelledBy?: string | null
-                    } | null
-                  } | null
-                  suCardMedia?:
-                    | {
+                sulCollectionCards: Array<
+                  | {
+                      __typename: "ParagraphStanfordCard"
+                      suCardHeader?: string | null
+                      suCardSuperHeader?: string | null
+                      sulCardImageCaption?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suCardLink?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suCardMedia?:
+                        | {
+                            __typename: "MediaImage"
+                            sulImageCredit?: string | null
+                            id: string
+                            name: string
+                            mediaImage: {
+                              __typename?: "Image"
+                              url: string
+                              alt?: string | null
+                              height: number
+                              width: number
+                            }
+                          }
+                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                        | null
+                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                    }
+                  | {
+                      __typename: "ParagraphStanfordStatCard"
+                      suStatCentered?: boolean | null
+                      suStatHeadingHide?: boolean | null
+                      suStatHeadline: string
+                      suStatHeadlineLvl: string
+                      suStatLinkStyle: string
+                      suStatStat: string
+                      suStatSuperhead?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suStatButton?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                      suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatImage?: {
                         __typename: "MediaImage"
                         sulImageCredit?: string | null
                         id: string
@@ -8802,11 +9064,10 @@ export type NodeQuery = {
                           height: number
                           width: number
                         }
-                      }
-                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                    | null
-                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                }>
+                      } | null
+                      suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    }
+                >
                 sulCollectionLink?: {
                   __typename?: "Link"
                   url?: string | null
@@ -11104,6 +11365,70 @@ export type FragmentMetaTagFragment =
   | FragmentMetaTag_MetaTagScript_Fragment
   | FragmentMetaTag_MetaTagValue_Fragment
 
+type FragmentParagraphSulFeatCollectionCards_ParagraphStanfordCard_Fragment = {
+  __typename: "ParagraphStanfordCard"
+  suCardHeader?: string | null
+  suCardSuperHeader?: string | null
+  sulCardImageCaption?: string | null
+  id: string
+  behaviors?: string | null
+  status: boolean
+  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+  suCardLink?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
+  suCardMedia?:
+    | {
+        __typename: "MediaImage"
+        sulImageCredit?: string | null
+        id: string
+        name: string
+        mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+      }
+    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+    | null
+  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+}
+
+type FragmentParagraphSulFeatCollectionCards_ParagraphStanfordStatCard_Fragment = {
+  __typename: "ParagraphStanfordStatCard"
+  suStatCentered?: boolean | null
+  suStatHeadingHide?: boolean | null
+  suStatHeadline: string
+  suStatHeadlineLvl: string
+  suStatLinkStyle: string
+  suStatStat: string
+  suStatSuperhead?: string | null
+  id: string
+  behaviors?: string | null
+  status: boolean
+  suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+  suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+  suStatButton?: {
+    __typename?: "Link"
+    url?: string | null
+    title?: string | null
+    attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+  } | null
+  suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+  suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+  suStatImage?: {
+    __typename: "MediaImage"
+    sulImageCredit?: string | null
+    id: string
+    name: string
+    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+  } | null
+  suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+}
+
+export type FragmentParagraphSulFeatCollectionCardsFragment =
+  | FragmentParagraphSulFeatCollectionCards_ParagraphStanfordCard_Fragment
+  | FragmentParagraphSulFeatCollectionCards_ParagraphStanfordStatCard_Fragment
+
 type FragmentNodeInterface_NodeStanfordCourse_Fragment = {
   __typename: "NodeStanfordCourse"
   id: string
@@ -11822,37 +12147,74 @@ export type FragmentNodeSulLibraryFragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -12204,37 +12566,80 @@ export type FragmentNodeSulStudyPlaceFragment = {
           behaviors?: string | null
           status: boolean
           sulCollectionHeadline?: string | null
-          sulCollectionCards: Array<{
-            __typename: "ParagraphStanfordCard"
-            suCardHeader?: string | null
-            suCardSuperHeader?: string | null
-            sulCardImageCaption?: string | null
-            id: string
-            behaviors?: string | null
-            status: boolean
-            suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-            suCardLink?: {
-              __typename?: "Link"
-              url?: string | null
-              title?: string | null
-              attributes?: {
-                __typename?: "LinkAttributes"
-                ariaLabel?: string | null
-                ariaLabelledBy?: string | null
-              } | null
-            } | null
-            suCardMedia?:
-              | {
+          sulCollectionCards: Array<
+            | {
+                __typename: "ParagraphStanfordCard"
+                suCardHeader?: string | null
+                suCardSuperHeader?: string | null
+                sulCardImageCaption?: string | null
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                suCardLink?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                suCardMedia?:
+                  | {
+                      __typename: "MediaImage"
+                      sulImageCredit?: string | null
+                      id: string
+                      name: string
+                      mediaImage: {
+                        __typename?: "Image"
+                        url: string
+                        alt?: string | null
+                        height: number
+                        width: number
+                      }
+                    }
+                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                  | null
+                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+              }
+            | {
+                __typename: "ParagraphStanfordStatCard"
+                suStatCentered?: boolean | null
+                suStatHeadingHide?: boolean | null
+                suStatHeadline: string
+                suStatHeadlineLvl: string
+                suStatLinkStyle: string
+                suStatStat: string
+                suStatSuperhead?: string | null
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                suStatButton?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                suStatImage?: {
                   __typename: "MediaImage"
                   sulImageCredit?: string | null
                   id: string
                   name: string
                   mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-                }
-              | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-              | null
-            sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-          }>
+                } | null
+                suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              }
+          >
           sulCollectionLink?: {
             __typename?: "Link"
             url?: string | null
@@ -12754,37 +13159,74 @@ export type FragmentNodeStanfordPageFragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -13266,37 +13708,74 @@ export type FragmentNodeStanfordEventFragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -14097,37 +14576,74 @@ export type FragmentNodeStanfordNewsFragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -14489,37 +15005,74 @@ export type FragmentNodeStanfordPersonFragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -15366,37 +15919,74 @@ type FragmentNodeUnion_NodeStanfordEvent_Fragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -16225,37 +16815,74 @@ type FragmentNodeUnion_NodeStanfordNews_Fragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -16746,37 +17373,74 @@ type FragmentNodeUnion_NodeStanfordPage_Fragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -17120,37 +17784,74 @@ type FragmentNodeUnion_NodeStanfordPerson_Fragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -17866,37 +18567,74 @@ type FragmentNodeUnion_NodeSulLibrary_Fragment = {
         behaviors?: string | null
         status: boolean
         sulCollectionHeadline?: string | null
-        sulCollectionCards: Array<{
-          __typename: "ParagraphStanfordCard"
-          suCardHeader?: string | null
-          suCardSuperHeader?: string | null
-          sulCardImageCaption?: string | null
-          id: string
-          behaviors?: string | null
-          status: boolean
-          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-          suCardLink?: {
-            __typename?: "Link"
-            url?: string | null
-            title?: string | null
-            attributes?: {
-              __typename?: "LinkAttributes"
-              ariaLabel?: string | null
-              ariaLabelledBy?: string | null
-            } | null
-          } | null
-          suCardMedia?:
-            | {
+        sulCollectionCards: Array<
+          | {
+              __typename: "ParagraphStanfordCard"
+              suCardHeader?: string | null
+              suCardSuperHeader?: string | null
+              sulCardImageCaption?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+              suCardLink?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suCardMedia?:
+                | {
+                    __typename: "MediaImage"
+                    sulImageCredit?: string | null
+                    id: string
+                    name: string
+                    mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+                  }
+                | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                | null
+              sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+            }
+          | {
+              __typename: "ParagraphStanfordStatCard"
+              suStatCentered?: boolean | null
+              suStatHeadingHide?: boolean | null
+              suStatHeadline: string
+              suStatHeadlineLvl: string
+              suStatLinkStyle: string
+              suStatStat: string
+              suStatSuperhead?: string | null
+              id: string
+              behaviors?: string | null
+              status: boolean
+              suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+              suStatButton?: {
+                __typename?: "Link"
+                url?: string | null
+                title?: string | null
+                attributes?: {
+                  __typename?: "LinkAttributes"
+                  ariaLabel?: string | null
+                  ariaLabelledBy?: string | null
+                } | null
+              } | null
+              suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+              suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              suStatImage?: {
                 __typename: "MediaImage"
                 sulImageCredit?: string | null
                 id: string
                 name: string
                 mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-              }
-            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-            | null
-          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-        }>
+              } | null
+              suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+            }
+        >
         sulCollectionLink?: {
           __typename?: "Link"
           url?: string | null
@@ -18262,37 +19000,80 @@ type FragmentNodeUnion_NodeSulStudyPlace_Fragment = {
           behaviors?: string | null
           status: boolean
           sulCollectionHeadline?: string | null
-          sulCollectionCards: Array<{
-            __typename: "ParagraphStanfordCard"
-            suCardHeader?: string | null
-            suCardSuperHeader?: string | null
-            sulCardImageCaption?: string | null
-            id: string
-            behaviors?: string | null
-            status: boolean
-            suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-            suCardLink?: {
-              __typename?: "Link"
-              url?: string | null
-              title?: string | null
-              attributes?: {
-                __typename?: "LinkAttributes"
-                ariaLabel?: string | null
-                ariaLabelledBy?: string | null
-              } | null
-            } | null
-            suCardMedia?:
-              | {
+          sulCollectionCards: Array<
+            | {
+                __typename: "ParagraphStanfordCard"
+                suCardHeader?: string | null
+                suCardSuperHeader?: string | null
+                sulCardImageCaption?: string | null
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                suCardLink?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                suCardMedia?:
+                  | {
+                      __typename: "MediaImage"
+                      sulImageCredit?: string | null
+                      id: string
+                      name: string
+                      mediaImage: {
+                        __typename?: "Image"
+                        url: string
+                        alt?: string | null
+                        height: number
+                        width: number
+                      }
+                    }
+                  | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                  | null
+                sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+              }
+            | {
+                __typename: "ParagraphStanfordStatCard"
+                suStatCentered?: boolean | null
+                suStatHeadingHide?: boolean | null
+                suStatHeadline: string
+                suStatHeadlineLvl: string
+                suStatLinkStyle: string
+                suStatStat: string
+                suStatSuperhead?: string | null
+                id: string
+                behaviors?: string | null
+                status: boolean
+                suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                suStatButton?: {
+                  __typename?: "Link"
+                  url?: string | null
+                  title?: string | null
+                  attributes?: {
+                    __typename?: "LinkAttributes"
+                    ariaLabel?: string | null
+                    ariaLabelledBy?: string | null
+                  } | null
+                } | null
+                suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                suStatImage?: {
                   __typename: "MediaImage"
                   sulImageCredit?: string | null
                   id: string
                   name: string
                   mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-                }
-              | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-              | null
-            sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-          }>
+                } | null
+                suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+              }
+          >
           sulCollectionLink?: {
             __typename?: "Link"
             url?: string | null
@@ -19989,33 +20770,66 @@ export type FragmentParagraphSulFeatCollectionFragment = {
   id: string
   behaviors?: string | null
   status: boolean
-  sulCollectionCards: Array<{
-    __typename: "ParagraphStanfordCard"
-    suCardHeader?: string | null
-    suCardSuperHeader?: string | null
-    sulCardImageCaption?: string | null
-    id: string
-    behaviors?: string | null
-    status: boolean
-    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-    suCardLink?: {
-      __typename?: "Link"
-      url?: string | null
-      title?: string | null
-      attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
-    } | null
-    suCardMedia?:
-      | {
+  sulCollectionCards: Array<
+    | {
+        __typename: "ParagraphStanfordCard"
+        suCardHeader?: string | null
+        suCardSuperHeader?: string | null
+        sulCardImageCaption?: string | null
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+        suCardLink?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
+        suCardMedia?:
+          | {
+              __typename: "MediaImage"
+              sulImageCredit?: string | null
+              id: string
+              name: string
+              mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+            }
+          | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+          | null
+        sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+      }
+    | {
+        __typename: "ParagraphStanfordStatCard"
+        suStatCentered?: boolean | null
+        suStatHeadingHide?: boolean | null
+        suStatHeadline: string
+        suStatHeadlineLvl: string
+        suStatLinkStyle: string
+        suStatStat: string
+        suStatSuperhead?: string | null
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+        suStatButton?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
+        suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+        suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatImage?: {
           __typename: "MediaImage"
           sulImageCredit?: string | null
           id: string
           name: string
           mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-        }
-      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-      | null
-    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-  }>
+        } | null
+        suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+      }
+  >
   sulCollectionLink?: {
     __typename?: "Link"
     url?: string | null
@@ -20691,33 +21505,66 @@ type FragmentParagraphUnion_ParagraphSulFeatCollection_Fragment = {
   behaviors?: string | null
   status: boolean
   sulCollectionHeadline?: string | null
-  sulCollectionCards: Array<{
-    __typename: "ParagraphStanfordCard"
-    suCardHeader?: string | null
-    suCardSuperHeader?: string | null
-    sulCardImageCaption?: string | null
-    id: string
-    behaviors?: string | null
-    status: boolean
-    suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-    suCardLink?: {
-      __typename?: "Link"
-      url?: string | null
-      title?: string | null
-      attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
-    } | null
-    suCardMedia?:
-      | {
+  sulCollectionCards: Array<
+    | {
+        __typename: "ParagraphStanfordCard"
+        suCardHeader?: string | null
+        suCardSuperHeader?: string | null
+        sulCardImageCaption?: string | null
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+        suCardLink?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
+        suCardMedia?:
+          | {
+              __typename: "MediaImage"
+              sulImageCredit?: string | null
+              id: string
+              name: string
+              mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
+            }
+          | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+          | null
+        sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+      }
+    | {
+        __typename: "ParagraphStanfordStatCard"
+        suStatCentered?: boolean | null
+        suStatHeadingHide?: boolean | null
+        suStatHeadline: string
+        suStatHeadlineLvl: string
+        suStatLinkStyle: string
+        suStatStat: string
+        suStatSuperhead?: string | null
+        id: string
+        behaviors?: string | null
+        status: boolean
+        suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+        suStatButton?: {
+          __typename?: "Link"
+          url?: string | null
+          title?: string | null
+          attributes?: {__typename?: "LinkAttributes"; ariaLabel?: string | null; ariaLabelledBy?: string | null} | null
+        } | null
+        suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+        suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+        suStatImage?: {
           __typename: "MediaImage"
           sulImageCredit?: string | null
           id: string
           name: string
           mediaImage: {__typename?: "Image"; url: string; alt?: string | null; height: number; width: number}
-        }
-      | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-      | null
-    sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-  }>
+        } | null
+        suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+      }
+  >
   sulCollectionLink?: {
     __typename?: "Link"
     url?: string | null
@@ -21404,27 +22251,75 @@ export type RouteQuery = {
                     behaviors?: string | null
                     status: boolean
                     sulCollectionHeadline?: string | null
-                    sulCollectionCards: Array<{
-                      __typename: "ParagraphStanfordCard"
-                      suCardHeader?: string | null
-                      suCardSuperHeader?: string | null
-                      sulCardImageCaption?: string | null
-                      id: string
-                      behaviors?: string | null
-                      status: boolean
-                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                      suCardLink?: {
-                        __typename?: "Link"
-                        url?: string | null
-                        title?: string | null
-                        attributes?: {
-                          __typename?: "LinkAttributes"
-                          ariaLabel?: string | null
-                          ariaLabelledBy?: string | null
-                        } | null
-                      } | null
-                      suCardMedia?:
-                        | {
+                    sulCollectionCards: Array<
+                      | {
+                          __typename: "ParagraphStanfordCard"
+                          suCardHeader?: string | null
+                          suCardSuperHeader?: string | null
+                          sulCardImageCaption?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suCardLink?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suCardMedia?:
+                            | {
+                                __typename: "MediaImage"
+                                sulImageCredit?: string | null
+                                id: string
+                                name: string
+                                mediaImage: {
+                                  __typename?: "Image"
+                                  url: string
+                                  alt?: string | null
+                                  height: number
+                                  width: number
+                                }
+                              }
+                            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                            | null
+                          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                        }
+                      | {
+                          __typename: "ParagraphStanfordStatCard"
+                          suStatCentered?: boolean | null
+                          suStatHeadingHide?: boolean | null
+                          suStatHeadline: string
+                          suStatHeadlineLvl: string
+                          suStatLinkStyle: string
+                          suStatStat: string
+                          suStatSuperhead?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                          suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suStatButton?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                          suStatIconColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                          suStatImage?: {
                             __typename: "MediaImage"
                             sulImageCredit?: string | null
                             id: string
@@ -21436,11 +22331,14 @@ export type RouteQuery = {
                               height: number
                               width: number
                             }
-                          }
-                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                        | null
-                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                    }>
+                          } | null
+                          suStatStatColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                        }
+                    >
                     sulCollectionLink?: {
                       __typename?: "Link"
                       url?: string | null
@@ -22371,27 +23269,75 @@ export type RouteQuery = {
                     behaviors?: string | null
                     status: boolean
                     sulCollectionHeadline?: string | null
-                    sulCollectionCards: Array<{
-                      __typename: "ParagraphStanfordCard"
-                      suCardHeader?: string | null
-                      suCardSuperHeader?: string | null
-                      sulCardImageCaption?: string | null
-                      id: string
-                      behaviors?: string | null
-                      status: boolean
-                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                      suCardLink?: {
-                        __typename?: "Link"
-                        url?: string | null
-                        title?: string | null
-                        attributes?: {
-                          __typename?: "LinkAttributes"
-                          ariaLabel?: string | null
-                          ariaLabelledBy?: string | null
-                        } | null
-                      } | null
-                      suCardMedia?:
-                        | {
+                    sulCollectionCards: Array<
+                      | {
+                          __typename: "ParagraphStanfordCard"
+                          suCardHeader?: string | null
+                          suCardSuperHeader?: string | null
+                          sulCardImageCaption?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suCardLink?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suCardMedia?:
+                            | {
+                                __typename: "MediaImage"
+                                sulImageCredit?: string | null
+                                id: string
+                                name: string
+                                mediaImage: {
+                                  __typename?: "Image"
+                                  url: string
+                                  alt?: string | null
+                                  height: number
+                                  width: number
+                                }
+                              }
+                            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                            | null
+                          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                        }
+                      | {
+                          __typename: "ParagraphStanfordStatCard"
+                          suStatCentered?: boolean | null
+                          suStatHeadingHide?: boolean | null
+                          suStatHeadline: string
+                          suStatHeadlineLvl: string
+                          suStatLinkStyle: string
+                          suStatStat: string
+                          suStatSuperhead?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                          suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suStatButton?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                          suStatIconColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                          suStatImage?: {
                             __typename: "MediaImage"
                             sulImageCredit?: string | null
                             id: string
@@ -22403,11 +23349,14 @@ export type RouteQuery = {
                               height: number
                               width: number
                             }
-                          }
-                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                        | null
-                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                    }>
+                          } | null
+                          suStatStatColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                        }
+                    >
                     sulCollectionLink?: {
                       __typename?: "Link"
                       url?: string | null
@@ -22984,27 +23933,75 @@ export type RouteQuery = {
                     behaviors?: string | null
                     status: boolean
                     sulCollectionHeadline?: string | null
-                    sulCollectionCards: Array<{
-                      __typename: "ParagraphStanfordCard"
-                      suCardHeader?: string | null
-                      suCardSuperHeader?: string | null
-                      sulCardImageCaption?: string | null
-                      id: string
-                      behaviors?: string | null
-                      status: boolean
-                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                      suCardLink?: {
-                        __typename?: "Link"
-                        url?: string | null
-                        title?: string | null
-                        attributes?: {
-                          __typename?: "LinkAttributes"
-                          ariaLabel?: string | null
-                          ariaLabelledBy?: string | null
-                        } | null
-                      } | null
-                      suCardMedia?:
-                        | {
+                    sulCollectionCards: Array<
+                      | {
+                          __typename: "ParagraphStanfordCard"
+                          suCardHeader?: string | null
+                          suCardSuperHeader?: string | null
+                          sulCardImageCaption?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suCardLink?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suCardMedia?:
+                            | {
+                                __typename: "MediaImage"
+                                sulImageCredit?: string | null
+                                id: string
+                                name: string
+                                mediaImage: {
+                                  __typename?: "Image"
+                                  url: string
+                                  alt?: string | null
+                                  height: number
+                                  width: number
+                                }
+                              }
+                            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                            | null
+                          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                        }
+                      | {
+                          __typename: "ParagraphStanfordStatCard"
+                          suStatCentered?: boolean | null
+                          suStatHeadingHide?: boolean | null
+                          suStatHeadline: string
+                          suStatHeadlineLvl: string
+                          suStatLinkStyle: string
+                          suStatStat: string
+                          suStatSuperhead?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                          suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suStatButton?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                          suStatIconColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                          suStatImage?: {
                             __typename: "MediaImage"
                             sulImageCredit?: string | null
                             id: string
@@ -23016,11 +24013,14 @@ export type RouteQuery = {
                               height: number
                               width: number
                             }
-                          }
-                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                        | null
-                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                    }>
+                          } | null
+                          suStatStatColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                        }
+                    >
                     sulCollectionLink?: {
                       __typename?: "Link"
                       url?: string | null
@@ -23425,27 +24425,75 @@ export type RouteQuery = {
                     behaviors?: string | null
                     status: boolean
                     sulCollectionHeadline?: string | null
-                    sulCollectionCards: Array<{
-                      __typename: "ParagraphStanfordCard"
-                      suCardHeader?: string | null
-                      suCardSuperHeader?: string | null
-                      sulCardImageCaption?: string | null
-                      id: string
-                      behaviors?: string | null
-                      status: boolean
-                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                      suCardLink?: {
-                        __typename?: "Link"
-                        url?: string | null
-                        title?: string | null
-                        attributes?: {
-                          __typename?: "LinkAttributes"
-                          ariaLabel?: string | null
-                          ariaLabelledBy?: string | null
-                        } | null
-                      } | null
-                      suCardMedia?:
-                        | {
+                    sulCollectionCards: Array<
+                      | {
+                          __typename: "ParagraphStanfordCard"
+                          suCardHeader?: string | null
+                          suCardSuperHeader?: string | null
+                          sulCardImageCaption?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suCardLink?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suCardMedia?:
+                            | {
+                                __typename: "MediaImage"
+                                sulImageCredit?: string | null
+                                id: string
+                                name: string
+                                mediaImage: {
+                                  __typename?: "Image"
+                                  url: string
+                                  alt?: string | null
+                                  height: number
+                                  width: number
+                                }
+                              }
+                            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                            | null
+                          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                        }
+                      | {
+                          __typename: "ParagraphStanfordStatCard"
+                          suStatCentered?: boolean | null
+                          suStatHeadingHide?: boolean | null
+                          suStatHeadline: string
+                          suStatHeadlineLvl: string
+                          suStatLinkStyle: string
+                          suStatStat: string
+                          suStatSuperhead?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                          suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suStatButton?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                          suStatIconColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                          suStatImage?: {
                             __typename: "MediaImage"
                             sulImageCredit?: string | null
                             id: string
@@ -23457,11 +24505,14 @@ export type RouteQuery = {
                               height: number
                               width: number
                             }
-                          }
-                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                        | null
-                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                    }>
+                          } | null
+                          suStatStatColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                        }
+                    >
                     sulCollectionLink?: {
                       __typename?: "Link"
                       url?: string | null
@@ -24278,27 +25329,75 @@ export type RouteQuery = {
                     behaviors?: string | null
                     status: boolean
                     sulCollectionHeadline?: string | null
-                    sulCollectionCards: Array<{
-                      __typename: "ParagraphStanfordCard"
-                      suCardHeader?: string | null
-                      suCardSuperHeader?: string | null
-                      sulCardImageCaption?: string | null
-                      id: string
-                      behaviors?: string | null
-                      status: boolean
-                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                      suCardLink?: {
-                        __typename?: "Link"
-                        url?: string | null
-                        title?: string | null
-                        attributes?: {
-                          __typename?: "LinkAttributes"
-                          ariaLabel?: string | null
-                          ariaLabelledBy?: string | null
-                        } | null
-                      } | null
-                      suCardMedia?:
-                        | {
+                    sulCollectionCards: Array<
+                      | {
+                          __typename: "ParagraphStanfordCard"
+                          suCardHeader?: string | null
+                          suCardSuperHeader?: string | null
+                          sulCardImageCaption?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suCardLink?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suCardMedia?:
+                            | {
+                                __typename: "MediaImage"
+                                sulImageCredit?: string | null
+                                id: string
+                                name: string
+                                mediaImage: {
+                                  __typename?: "Image"
+                                  url: string
+                                  alt?: string | null
+                                  height: number
+                                  width: number
+                                }
+                              }
+                            | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                            | null
+                          sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                        }
+                      | {
+                          __typename: "ParagraphStanfordStatCard"
+                          suStatCentered?: boolean | null
+                          suStatHeadingHide?: boolean | null
+                          suStatHeadline: string
+                          suStatHeadlineLvl: string
+                          suStatLinkStyle: string
+                          suStatStat: string
+                          suStatSuperhead?: string | null
+                          id: string
+                          behaviors?: string | null
+                          status: boolean
+                          suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                          suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                          suStatButton?: {
+                            __typename?: "Link"
+                            url?: string | null
+                            title?: string | null
+                            attributes?: {
+                              __typename?: "LinkAttributes"
+                              ariaLabel?: string | null
+                              ariaLabelledBy?: string | null
+                            } | null
+                          } | null
+                          suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                          suStatIconColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                          suStatImage?: {
                             __typename: "MediaImage"
                             sulImageCredit?: string | null
                             id: string
@@ -24310,11 +25409,14 @@ export type RouteQuery = {
                               height: number
                               width: number
                             }
-                          }
-                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                        | null
-                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                    }>
+                          } | null
+                          suStatStatColor?: {
+                            __typename?: "ColorFieldType"
+                            color: string
+                            opacity?: number | null
+                          } | null
+                        }
+                    >
                     sulCollectionLink?: {
                       __typename?: "Link"
                       url?: string | null
@@ -26505,27 +27607,71 @@ export type SearchQuery = {
                 behaviors?: string | null
                 status: boolean
                 sulCollectionHeadline?: string | null
-                sulCollectionCards: Array<{
-                  __typename: "ParagraphStanfordCard"
-                  suCardHeader?: string | null
-                  suCardSuperHeader?: string | null
-                  sulCardImageCaption?: string | null
-                  id: string
-                  behaviors?: string | null
-                  status: boolean
-                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                  suCardLink?: {
-                    __typename?: "Link"
-                    url?: string | null
-                    title?: string | null
-                    attributes?: {
-                      __typename?: "LinkAttributes"
-                      ariaLabel?: string | null
-                      ariaLabelledBy?: string | null
-                    } | null
-                  } | null
-                  suCardMedia?:
-                    | {
+                sulCollectionCards: Array<
+                  | {
+                      __typename: "ParagraphStanfordCard"
+                      suCardHeader?: string | null
+                      suCardSuperHeader?: string | null
+                      sulCardImageCaption?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suCardLink?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suCardMedia?:
+                        | {
+                            __typename: "MediaImage"
+                            sulImageCredit?: string | null
+                            id: string
+                            name: string
+                            mediaImage: {
+                              __typename?: "Image"
+                              url: string
+                              alt?: string | null
+                              height: number
+                              width: number
+                            }
+                          }
+                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                        | null
+                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                    }
+                  | {
+                      __typename: "ParagraphStanfordStatCard"
+                      suStatCentered?: boolean | null
+                      suStatHeadingHide?: boolean | null
+                      suStatHeadline: string
+                      suStatHeadlineLvl: string
+                      suStatLinkStyle: string
+                      suStatStat: string
+                      suStatSuperhead?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suStatButton?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                      suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatImage?: {
                         __typename: "MediaImage"
                         sulImageCredit?: string | null
                         id: string
@@ -26537,11 +27683,10 @@ export type SearchQuery = {
                           height: number
                           width: number
                         }
-                      }
-                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                    | null
-                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                }>
+                      } | null
+                      suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    }
+                >
                 sulCollectionLink?: {
                   __typename?: "Link"
                   url?: string | null
@@ -27454,27 +28599,71 @@ export type SearchQuery = {
                 behaviors?: string | null
                 status: boolean
                 sulCollectionHeadline?: string | null
-                sulCollectionCards: Array<{
-                  __typename: "ParagraphStanfordCard"
-                  suCardHeader?: string | null
-                  suCardSuperHeader?: string | null
-                  sulCardImageCaption?: string | null
-                  id: string
-                  behaviors?: string | null
-                  status: boolean
-                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                  suCardLink?: {
-                    __typename?: "Link"
-                    url?: string | null
-                    title?: string | null
-                    attributes?: {
-                      __typename?: "LinkAttributes"
-                      ariaLabel?: string | null
-                      ariaLabelledBy?: string | null
-                    } | null
-                  } | null
-                  suCardMedia?:
-                    | {
+                sulCollectionCards: Array<
+                  | {
+                      __typename: "ParagraphStanfordCard"
+                      suCardHeader?: string | null
+                      suCardSuperHeader?: string | null
+                      sulCardImageCaption?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suCardLink?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suCardMedia?:
+                        | {
+                            __typename: "MediaImage"
+                            sulImageCredit?: string | null
+                            id: string
+                            name: string
+                            mediaImage: {
+                              __typename?: "Image"
+                              url: string
+                              alt?: string | null
+                              height: number
+                              width: number
+                            }
+                          }
+                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                        | null
+                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                    }
+                  | {
+                      __typename: "ParagraphStanfordStatCard"
+                      suStatCentered?: boolean | null
+                      suStatHeadingHide?: boolean | null
+                      suStatHeadline: string
+                      suStatHeadlineLvl: string
+                      suStatLinkStyle: string
+                      suStatStat: string
+                      suStatSuperhead?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suStatButton?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                      suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatImage?: {
                         __typename: "MediaImage"
                         sulImageCredit?: string | null
                         id: string
@@ -27486,11 +28675,10 @@ export type SearchQuery = {
                           height: number
                           width: number
                         }
-                      }
-                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                    | null
-                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                }>
+                      } | null
+                      suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    }
+                >
                 sulCollectionLink?: {
                   __typename?: "Link"
                   url?: string | null
@@ -28037,27 +29225,71 @@ export type SearchQuery = {
                 behaviors?: string | null
                 status: boolean
                 sulCollectionHeadline?: string | null
-                sulCollectionCards: Array<{
-                  __typename: "ParagraphStanfordCard"
-                  suCardHeader?: string | null
-                  suCardSuperHeader?: string | null
-                  sulCardImageCaption?: string | null
-                  id: string
-                  behaviors?: string | null
-                  status: boolean
-                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                  suCardLink?: {
-                    __typename?: "Link"
-                    url?: string | null
-                    title?: string | null
-                    attributes?: {
-                      __typename?: "LinkAttributes"
-                      ariaLabel?: string | null
-                      ariaLabelledBy?: string | null
-                    } | null
-                  } | null
-                  suCardMedia?:
-                    | {
+                sulCollectionCards: Array<
+                  | {
+                      __typename: "ParagraphStanfordCard"
+                      suCardHeader?: string | null
+                      suCardSuperHeader?: string | null
+                      sulCardImageCaption?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suCardLink?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suCardMedia?:
+                        | {
+                            __typename: "MediaImage"
+                            sulImageCredit?: string | null
+                            id: string
+                            name: string
+                            mediaImage: {
+                              __typename?: "Image"
+                              url: string
+                              alt?: string | null
+                              height: number
+                              width: number
+                            }
+                          }
+                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                        | null
+                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                    }
+                  | {
+                      __typename: "ParagraphStanfordStatCard"
+                      suStatCentered?: boolean | null
+                      suStatHeadingHide?: boolean | null
+                      suStatHeadline: string
+                      suStatHeadlineLvl: string
+                      suStatLinkStyle: string
+                      suStatStat: string
+                      suStatSuperhead?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suStatButton?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                      suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatImage?: {
                         __typename: "MediaImage"
                         sulImageCredit?: string | null
                         id: string
@@ -28069,11 +29301,10 @@ export type SearchQuery = {
                           height: number
                           width: number
                         }
-                      }
-                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                    | null
-                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                }>
+                      } | null
+                      suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    }
+                >
                 sulCollectionLink?: {
                   __typename?: "Link"
                   url?: string | null
@@ -28466,27 +29697,71 @@ export type SearchQuery = {
                 behaviors?: string | null
                 status: boolean
                 sulCollectionHeadline?: string | null
-                sulCollectionCards: Array<{
-                  __typename: "ParagraphStanfordCard"
-                  suCardHeader?: string | null
-                  suCardSuperHeader?: string | null
-                  sulCardImageCaption?: string | null
-                  id: string
-                  behaviors?: string | null
-                  status: boolean
-                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                  suCardLink?: {
-                    __typename?: "Link"
-                    url?: string | null
-                    title?: string | null
-                    attributes?: {
-                      __typename?: "LinkAttributes"
-                      ariaLabel?: string | null
-                      ariaLabelledBy?: string | null
-                    } | null
-                  } | null
-                  suCardMedia?:
-                    | {
+                sulCollectionCards: Array<
+                  | {
+                      __typename: "ParagraphStanfordCard"
+                      suCardHeader?: string | null
+                      suCardSuperHeader?: string | null
+                      sulCardImageCaption?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suCardLink?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suCardMedia?:
+                        | {
+                            __typename: "MediaImage"
+                            sulImageCredit?: string | null
+                            id: string
+                            name: string
+                            mediaImage: {
+                              __typename?: "Image"
+                              url: string
+                              alt?: string | null
+                              height: number
+                              width: number
+                            }
+                          }
+                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                        | null
+                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                    }
+                  | {
+                      __typename: "ParagraphStanfordStatCard"
+                      suStatCentered?: boolean | null
+                      suStatHeadingHide?: boolean | null
+                      suStatHeadline: string
+                      suStatHeadlineLvl: string
+                      suStatLinkStyle: string
+                      suStatStat: string
+                      suStatSuperhead?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suStatButton?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                      suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatImage?: {
                         __typename: "MediaImage"
                         sulImageCredit?: string | null
                         id: string
@@ -28498,11 +29773,10 @@ export type SearchQuery = {
                           height: number
                           width: number
                         }
-                      }
-                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                    | null
-                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                }>
+                      } | null
+                      suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    }
+                >
                 sulCollectionLink?: {
                   __typename?: "Link"
                   url?: string | null
@@ -29301,27 +30575,71 @@ export type SearchQuery = {
                 behaviors?: string | null
                 status: boolean
                 sulCollectionHeadline?: string | null
-                sulCollectionCards: Array<{
-                  __typename: "ParagraphStanfordCard"
-                  suCardHeader?: string | null
-                  suCardSuperHeader?: string | null
-                  sulCardImageCaption?: string | null
-                  id: string
-                  behaviors?: string | null
-                  status: boolean
-                  suCardBody?: {__typename?: "Text"; processed?: any | null} | null
-                  suCardLink?: {
-                    __typename?: "Link"
-                    url?: string | null
-                    title?: string | null
-                    attributes?: {
-                      __typename?: "LinkAttributes"
-                      ariaLabel?: string | null
-                      ariaLabelledBy?: string | null
-                    } | null
-                  } | null
-                  suCardMedia?:
-                    | {
+                sulCollectionCards: Array<
+                  | {
+                      __typename: "ParagraphStanfordCard"
+                      suCardHeader?: string | null
+                      suCardSuperHeader?: string | null
+                      sulCardImageCaption?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suCardBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suCardLink?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suCardMedia?:
+                        | {
+                            __typename: "MediaImage"
+                            sulImageCredit?: string | null
+                            id: string
+                            name: string
+                            mediaImage: {
+                              __typename?: "Image"
+                              url: string
+                              alt?: string | null
+                              height: number
+                              width: number
+                            }
+                          }
+                        | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
+                        | null
+                      sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
+                    }
+                  | {
+                      __typename: "ParagraphStanfordStatCard"
+                      suStatCentered?: boolean | null
+                      suStatHeadingHide?: boolean | null
+                      suStatHeadline: string
+                      suStatHeadlineLvl: string
+                      suStatLinkStyle: string
+                      suStatStat: string
+                      suStatSuperhead?: string | null
+                      id: string
+                      behaviors?: string | null
+                      status: boolean
+                      suStatBgColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatBody?: {__typename?: "Text"; processed?: any | null} | null
+                      suStatButton?: {
+                        __typename?: "Link"
+                        url?: string | null
+                        title?: string | null
+                        attributes?: {
+                          __typename?: "LinkAttributes"
+                          ariaLabel?: string | null
+                          ariaLabelledBy?: string | null
+                        } | null
+                      } | null
+                      suStatIcon?: {__typename?: "FontawesomeIconType"; iconName: string; style: string} | null
+                      suStatIconColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                      suStatImage?: {
                         __typename: "MediaImage"
                         sulImageCredit?: string | null
                         id: string
@@ -29333,11 +30651,10 @@ export type SearchQuery = {
                           height: number
                           width: number
                         }
-                      }
-                    | {__typename: "MediaVideo"; mediaOembedVideo: string; id: string; name: string}
-                    | null
-                  sulCardSuperHead?: {__typename?: "Text"; processed?: any | null} | null
-                }>
+                      } | null
+                      suStatStatColor?: {__typename?: "ColorFieldType"; color: string; opacity?: number | null} | null
+                    }
+                >
                 sulCollectionLink?: {
                   __typename?: "Link"
                   url?: string | null

@@ -21,6 +21,8 @@ export type ParagraphBehaviors = {
   }
   sul_feat_collections_styles?: {
     link_display_style?: Maybe<string>
+    disable_wave_background?: Maybe<boolean>
+    display_heading_gradient?: Maybe<boolean>
   }
   sul_teaser_styles?: {
     orientation?: Maybe<string>

@@ -6,7 +6,6 @@ import ReverseVisualOrder from "@/components/patterns/reverse-visual-order"
 import ImageCard from "@/components/patterns/image-card"
 import CountUpNumber from "@/components/patterns/count-up"
 import {clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
@@ -161,13 +160,15 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
       <StanfordWysiwyg text={paragraph.suStatBody?.processed} />
       {paragraph.suStatButton?.url && (
         <Link
-          className={twMerge(
-            clsx("group flex w-fit items-center gap-3 rounded-[3.5rem] text-digital-red no-underline hocus:underline", {
-              "border border-digital-red px-26 py-8": paragraph.suStatLinkStyle === "button",
+          className={clsx(
+            "group flex w-fit items-center gap-3 rounded-[3.5rem] leading-display text-digital-red no-underline transition duration-500 ease-in-out hocus:underline",
+            {
+              "border-2 border-digital-red px-26 py-8 hocus:border-black hocus:bg-black hocus:text-white":
+                paragraph.suStatLinkStyle === "button",
               "border-white text-white hocus:text-white": whiteText,
               "mx-auto": paragraph.suStatCentered,
               "text-18": transparentBg,
-            })
+            }
           )}
           href={paragraph.suStatButton.url}
         >

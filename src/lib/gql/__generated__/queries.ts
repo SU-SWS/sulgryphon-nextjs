@@ -481,11 +481,18 @@ export const FragmentParagraphSulContactCardFragmentDoc = gql`
 ${FragmentAddressTypeFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
 ${FragmentLinkFragmentDoc}`;
+export const FragmentParagraphSulFeatCollectionCardsFragmentDoc = gql`
+    fragment FragmentParagraphSulFeatCollectionCards on ParagraphSulFeatCollectionSulCollectionCardsUnion {
+  ...FragmentParagraphStanfordCard
+  ...FragmentParagraphStanfordStatCard
+}
+    ${FragmentParagraphStanfordCardFragmentDoc}
+${FragmentParagraphStanfordStatCardFragmentDoc}`;
 export const FragmentParagraphSulFeatCollectionFragmentDoc = gql`
     fragment FragmentParagraphSulFeatCollection on ParagraphSulFeatCollection {
   ...FragmentParagraphInterface
   sulCollectionCards {
-    ...FragmentParagraphStanfordCard
+    ...FragmentParagraphSulFeatCollectionCards
   }
   sulCollectionHeadline
   sulCollectionLink {
@@ -493,7 +500,7 @@ export const FragmentParagraphSulFeatCollectionFragmentDoc = gql`
   }
 }
     ${FragmentParagraphInterfaceFragmentDoc}
-${FragmentParagraphStanfordCardFragmentDoc}
+${FragmentParagraphSulFeatCollectionCardsFragmentDoc}
 ${FragmentLinkFragmentDoc}`;
 export const FragmentParagraphSulLibguideFragmentDoc = gql`
     fragment FragmentParagraphSulLibguide on ParagraphSulLibguide {
