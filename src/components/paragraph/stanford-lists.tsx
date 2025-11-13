@@ -48,7 +48,7 @@ const ListParagraph = async ({paragraph}: Props) => {
     >
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
         <div
-          className={clsx({
+          className={clsx("mb-20", {
             "flex items-center justify-between gap-16": behaviors.sul_list_styles?.display_heading_gradient,
           })}
         >
