@@ -27,7 +27,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
     <div {...props} className={twMerge("mx-auto w-full lg:max-w-[98rem]", props.className)}>
       <div className="rs-mb-1 flex flex-col items-center justify-between gap-20 md:flex-row">
         {paragraph.suFaqHeadline && (
-          <Heading id={paragraph.id} className="mb-0 text-center">
+          <Heading id={paragraph.id} className="mb-0 text-left">
             {paragraph.suFaqHeadline}
           </Heading>
         )}
