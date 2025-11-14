@@ -18,7 +18,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article className="@container" {...props}>
       {/* Vertical layout (default) */}
-      <div className="rs-pt-2 rs-px-2 rs-pb-3 mt-70 w-full border-x border-b border-t-5 border-solid border-black-10 border-t-digital-red bg-white leading-display text-black shadow-md @[510px]:hidden">
+      <div className="rs-pt-2 mt-70 w-full border-x border-b border-t-5 border-solid border-black-10 border-t-digital-red bg-white px-30 pb-40 leading-display text-black shadow-md @[510px]:hidden">
         {imageUrl && (
           <div className="relative flex justify-center pb-70 @lg:pb-80">
             <div className="absolute top-[-11rem]">
