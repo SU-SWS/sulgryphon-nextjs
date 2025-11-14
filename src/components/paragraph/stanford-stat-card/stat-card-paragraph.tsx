@@ -10,8 +10,9 @@ import {ChevronRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordStatCard
+  disableAnimation?: boolean
 }
-const StatCardParagraph = ({paragraph, ...props}: Props) => {
+const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
   const headerTagChoice = (paragraph.suStatHeadlineLvl || "h2").split(".", 2)
   const headerTag = headerTagChoice[0]
   const headerClasses = clsx(
@@ -78,7 +79,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               <h2
                 id={paragraph.id}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "type-3 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -88,7 +89,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               <h3
                 id={paragraph.id}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "type-3 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -98,7 +99,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               <h4
                 id={paragraph.id}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "type-3 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -107,7 +108,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
             {headerTag === "div" && (
               <div
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "type-3 font-normal": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -153,6 +154,7 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               startOnMount={false}
               enableScrollSpy={true}
               scrollSpyOnce={true}
+              duration={disableAnimation ? 0 : undefined}
             />
           )}
         </div>
