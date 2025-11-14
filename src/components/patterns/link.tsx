@@ -105,7 +105,7 @@ export const DrupalActionLink = ({
       href={href}
       title={shouldIncludeTitle ? title : undefined}
       className={twMerge(
-        "hocus:su-dark-brick rs-mt-neg1 pr-30 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
+        "hocus:su-dark-brick rs-mt-neg1 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
         props.className
       )}
     >
