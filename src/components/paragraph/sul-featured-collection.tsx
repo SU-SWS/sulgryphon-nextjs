@@ -74,7 +74,9 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
                   }
                 />
               )}
-              {card.__typename === "ParagraphStanfordStatCard" && <StatCardParagraph paragraph={card} />}
+              {card.__typename === "ParagraphStanfordStatCard" && (
+                <StatCardParagraph disableAnimation paragraph={card} />
+              )}
             </li>
           ))}
         </ul>
