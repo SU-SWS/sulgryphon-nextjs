@@ -64,11 +64,11 @@ const HorizontalCard = ({
         props.className
       )}
     >
-      <div className="rs-p-1 relative w-full leading-display @container @6xl:centered @5xl:px-0 @5xl:py-[5.6rem]">
-        <div className="grid items-center gap-2xl @6xl:grid-cols-2 @10xl:gap-30">
+      <div className="rs-p-1 relative w-full leading-display @container @6xl:rs-px-5 @8xl:centered @8xl:py-[5.6rem] @11xl:px-0">
+        <div className="grid items-center gap-2xl @9xl:grid-cols-2 @10xl:gap-30">
           {(image || video) && (
             <div className="relative h-fit w-full">
-              <div className="relative aspect-[4/3] w-full overflow-hidden @5xl:aspect-[5/3]">
+              <div className="relative aspect-[4/3] w-full overflow-hidden @8xl:aspect-[5/3]">
                 {image}
                 {video}
               </div>
@@ -80,7 +80,7 @@ const HorizontalCard = ({
             </div>
           )}
           <div>
-            <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @6xl:flex-nowrap">
+            <div className="mb-16 flex flex-row flex-wrap items-center gap-16 @8xl:flex-nowrap">
               {!hideRosette && <RosetteIcon height={64} width={64} className="object-contain" />}
               <div>
                 {superHeader && (
