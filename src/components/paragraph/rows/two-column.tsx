@@ -23,7 +23,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
   const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
   const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region !== "left")
 
-  let gridCols = "md:grid-cols-2"
+  let gridCols = "@9xl:grid-cols-2"
   if (config?.column_widths === "33-67") {
     gridCols = "@6xl:grid-cols-1-2"
   } else if (config?.column_widths === "67-33") {
