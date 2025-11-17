@@ -10,8 +10,9 @@ import {ChevronRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordStatCard
+  disableAnimation?: boolean
 }
-const StatCardParagraph = ({paragraph, ...props}: Props) => {
+const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
   const headerTagChoice = (paragraph.suStatHeadlineLvl || "h2").split(".", 2)
   const headerTag = headerTagChoice[0]
   const headerClasses = clsx(
@@ -147,12 +148,13 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
                 "text-poppy-dark": allowTextColors && paragraph.suStatStatColor?.color === "d1660f",
                 "text-spirited": allowTextColors && paragraph.suStatStatColor?.color === "e04f39",
                 "text-[40px] @xl:text-[50px] @2xl:text-[60px]": !transparentBg,
-                "fluid-type-4": transparentBg,
+                "fluid-type-3": transparentBg,
               })}
               decimals={decimalPlaces}
               startOnMount={false}
               enableScrollSpy={true}
               scrollSpyOnce={true}
+              duration={disableAnimation ? 0 : undefined}
             />
           )}
         </div>

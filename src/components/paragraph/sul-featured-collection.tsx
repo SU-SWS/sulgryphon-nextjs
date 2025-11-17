@@ -59,7 +59,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
       )}
 
       <div className="relative @container">
-        <ul className="list-unstyled grid gap-x-90 gap-y-30 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="list-unstyled grid gap-x-90 gap-y-30 sm:grid-cols-2 xl:grid-cols-3">
           {cards.map(card => (
             <li key={card.id}>
               {card.__typename === "ParagraphStanfordCard" && (
@@ -74,7 +74,9 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
                   }
                 />
               )}
-              {card.__typename === "ParagraphStanfordStatCard" && <StatCardParagraph paragraph={card} />}
+              {card.__typename === "ParagraphStanfordStatCard" && (
+                <StatCardParagraph disableAnimation paragraph={card} />
+              )}
             </li>
           ))}
         </ul>

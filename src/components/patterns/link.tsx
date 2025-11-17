@@ -105,12 +105,15 @@ export const DrupalActionLink = ({
       href={href}
       title={shouldIncludeTitle ? title : undefined}
       className={twMerge(
-        "hocus:su-dark-brick rs-mt-neg1 relative pr-30 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
+        "hocus:su-dark-brick rs-mt-neg1 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
         props.className
       )}
     >
       {children}
-      <ChevronRightIcon className="absolute right-0 top-0 inline h-full" />
+      <span className="whitespace-nowrap">
+        &#65279;
+        <ChevronRightIcon height={20} className="inline-block h-full" />
+      </span>
     </Link>
   )
 }
