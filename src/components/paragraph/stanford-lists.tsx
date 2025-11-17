@@ -63,7 +63,9 @@ const ListParagraph = async ({paragraph}: Props) => {
         </div>
       )}
 
-      {paragraph.suListDescription?.processed && <div>{formatHtml(paragraph.suListDescription.processed)}</div>}
+      {paragraph.suListDescription?.processed && (
+        <div className="wysiwyg *:mx-auto">{formatHtml(paragraph.suListDescription.processed)}</div>
+      )}
 
       {viewItems.length === 0 && behaviors.list_paragraph?.empty_message && (
         <p>{behaviors.list_paragraph.empty_message}</p>
