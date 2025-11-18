@@ -7,7 +7,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 
 const StanfordWysiwyg = ({text, ...props}: Props) => {
   return (
-    <div className="wysiwyg centered relative lg:max-w-[980px]" {...props}>
+    <div className="wysiwyg centered relative w-[100ch] lg:max-w-[980px]" {...props}>
       {text && <>{formatHtml(text)}</>}
     </div>
   )
