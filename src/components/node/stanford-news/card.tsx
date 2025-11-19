@@ -41,7 +41,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
         </HeadingElement>
 
         {node.suNewsTopics?.[0]?.name && (
-          <div className="order-first mb-0 text-16 font-semibold uppercase text-cardinal-red sm:text-18">
+          <div className="order-first mb-0 text-16 font-semibold uppercase text-cardinal-red">
             {node.suNewsTopics[0].name}
           </div>
         )}

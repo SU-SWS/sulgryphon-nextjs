@@ -6,13 +6,13 @@ import ReverseVisualOrder from "@/components/patterns/reverse-visual-order"
 import ImageCard from "@/components/patterns/image-card"
 import CountUpNumber from "@/components/patterns/count-up"
 import {clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordStatCard
+  disableAnimation?: boolean
 }
-const StatCardParagraph = ({paragraph, ...props}: Props) => {
+const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
   const headerTagChoice = (paragraph.suStatHeadlineLvl || "h2").split(".", 2)
   const headerTag = headerTagChoice[0]
   const headerClasses = clsx(
@@ -41,9 +41,12 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
       decimalPlaces = statMatches[1].replace(/^.*\./, "").length
     }
   }
-  const allowTextColors = !paragraph.suStatBgColor?.color || ["f4f4f4"].includes(paragraph.suStatBgColor?.color)
+
+  const transparentBg = !paragraph.suStatBgColor?.color
+  const allowTextColors =
+    !paragraph.suStatBgColor?.color || ["f4f4f4", "ffffff"].includes(paragraph.suStatBgColor?.color)
   const whiteText =
-    paragraph.suStatBgColor?.color && !["f4f4f4", "e98300", "e04f39"].includes(paragraph.suStatBgColor?.color)
+    paragraph.suStatBgColor?.color && !["ffffff", "f4f4f4", "e98300", "e04f39"].includes(paragraph.suStatBgColor?.color)
 
   return (
     <ImageCard
@@ -51,6 +54,8 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
       className={clsx({
         "text-center": paragraph.suStatCentered,
         "text-white [&_a]:text-white": whiteText,
+        "border-0 bg-transparent shadow-none children:gap-10 children:px-10 children:py-0": transparentBg,
+        "bg-white": paragraph.suStatBgColor?.color === "ffffff",
         "bg-black": paragraph.suStatBgColor?.color === "2e2d29",
         "bg-cool-grey": paragraph.suStatBgColor?.color === "53565a",
         "bg-stone-dark": paragraph.suStatBgColor?.color === "544948",
@@ -71,21 +76,44 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
         {paragraph.suStatHeadline && (
           <>
             {headerTag === "h2" && (
-              <h2 id={paragraph.id} className={twMerge("mb-0", headerClasses)}>
+              <h2
+                id={paragraph.id}
+                className={clsx("mb-0", headerClasses, {
+                  "text-24 font-normal": transparentBg,
+                })}
+              >
                 {paragraph.suStatHeadline}
               </h2>
             )}
             {headerTag === "h3" && (
-              <h3 id={paragraph.id} className={twMerge("mb-0", headerClasses)}>
+              <h3
+                id={paragraph.id}
+                className={clsx("mb-0", headerClasses, {
+                  "text-24 font-normal": transparentBg,
+                })}
+              >
                 {paragraph.suStatHeadline}
               </h3>
             )}
             {headerTag === "h4" && (
-              <h4 id={paragraph.id} className={twMerge("mb-0", headerClasses)}>
+              <h4
+                id={paragraph.id}
+                className={clsx("mb-0", headerClasses, {
+                  "text-24 font-normal": transparentBg,
+                })}
+              >
                 {paragraph.suStatHeadline}
               </h4>
             )}
-            {headerTag === "div" && <div className={twMerge("mb-0", headerClasses)}>{paragraph.suStatHeadline}</div>}
+            {headerTag === "div" && (
+              <div
+                className={clsx("mb-0", headerClasses, {
+                  "text-24 font-normal": transparentBg,
+                })}
+              >
+                {paragraph.suStatHeadline}
+              </div>
+            )}
           </>
         )}
 
@@ -112,18 +140,21 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
               end={parseFloat(statMatches[1])}
               prefix={prefix}
               suffix={(statMatches && statMatches[2]) || undefined}
-              className={clsx("text-[40px] font-bold @xl:text-[50px] @2xl:text-[60px]", {
+              className={clsx("font-bold", {
                 "text-cardinal-red": allowTextColors && paragraph.suStatStatColor?.color === "8c1515",
                 "text-plum": allowTextColors && paragraph.suStatStatColor?.color === "620059",
                 "text-lagunita": allowTextColors && paragraph.suStatStatColor?.color === "007c92",
                 "text-palo-verde-dark": allowTextColors && paragraph.suStatStatColor?.color === "279989",
                 "text-poppy-dark": allowTextColors && paragraph.suStatStatColor?.color === "d1660f",
                 "text-spirited": allowTextColors && paragraph.suStatStatColor?.color === "e04f39",
+                "text-[40px] @xl:text-[50px] @2xl:text-[60px]": !transparentBg,
+                "fluid-type-3": transparentBg,
               })}
               decimals={decimalPlaces}
               startOnMount={false}
               enableScrollSpy={true}
               scrollSpyOnce={true}
+              duration={disableAnimation ? 0 : undefined}
             />
           )}
         </div>
@@ -131,12 +162,15 @@ const StatCardParagraph = ({paragraph, ...props}: Props) => {
       <StanfordWysiwyg text={paragraph.suStatBody?.processed} />
       {paragraph.suStatButton?.url && (
         <Link
-          className={twMerge(
-            clsx("group flex w-fit items-center gap-3 text-black no-underline hocus:underline", {
-              "border border-black px-7 py-5": paragraph.suStatLinkStyle === "button",
+          className={clsx(
+            "group flex w-fit items-center gap-3 rounded-[3.5rem] leading-display text-digital-red no-underline transition duration-500 ease-in-out hocus:underline",
+            {
+              "border-2 border-digital-red px-26 py-8 hocus:border-black hocus:bg-black hocus:text-white":
+                paragraph.suStatLinkStyle === "button",
               "border-white text-white hocus:text-white": whiteText,
               "mx-auto": paragraph.suStatCentered,
-            })
+              "text-18": transparentBg,
+            }
           )}
           href={paragraph.suStatButton.url}
         >

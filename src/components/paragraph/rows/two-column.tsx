@@ -4,7 +4,7 @@ import {getParagraphBehaviors} from "@/components/paragraph"
 import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
+import SectionHeading from "@/components/patterns/section-heading"
 
 export type TwoColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
   column_widths: "33-67" | "67-33"
@@ -23,7 +23,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
   const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
   const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region !== "left")
 
-  let gridCols = "md:grid-cols-2"
+  let gridCols = "@9xl:grid-cols-2"
   if (config?.column_widths === "33-67") {
     gridCols = "@6xl:grid-cols-1-2"
   } else if (config?.column_widths === "67-33") {
@@ -51,7 +51,8 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
-      <div className={twMerge("gutters centered grid gap-90", gridCols)} data-columns="2" {...draftProps}>
+      {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
+      <div className={clsx("centered grid w-full gap-45 lg:gap-90", gridCols)} data-columns="2" {...draftProps}>
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}

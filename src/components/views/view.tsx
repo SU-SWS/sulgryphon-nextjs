@@ -23,6 +23,7 @@ import FilteringNewsCardView from "@/components/views/stanford-news/filtering-ne
 import SearchListView from "@/components/views/search-search/search-search-view"
 import EventsListView from "@/components/views/stanford-events/events-list-view"
 import EventsFilteredList from "@/components/views/stanford-events/events-filtered-list"
+import PeopleRandomizedCardView from "./sul-people/sul-people-randomized-card-grid-view"
 
 export type ViewDisplayProps<T extends NodeUnion = NodeUnion> = {
   /**
@@ -119,6 +120,9 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
           }))}
         />
       )
+
+    case "sul_people--randomized_card_grid":
+      return <PeopleRandomizedCardView items={items as NodeStanfordPerson[]} {...viewProps} />
 
     case "sul_branch_locations--branch_locations_table":
       return <SulBranchLocationTableView items={items as NodeSulLibrary[]} {...viewProps} />

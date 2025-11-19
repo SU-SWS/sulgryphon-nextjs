@@ -214,6 +214,7 @@ export const getViewPagedItems = async (
       //   totalItems = graphqlResponse.stanfordNews?.pageInfo.total || 0
       //   break
 
+      case "sul_people--randomized_card_grid":
       case "sul_people--table_list_all":
         queryVariables.pageSize = 999
       case "stanford_person--grid_list_all":

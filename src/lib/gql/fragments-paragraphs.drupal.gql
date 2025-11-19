@@ -84,7 +84,7 @@ fragment FragmentParagraphSulContactCard on ParagraphSulContactCard {
 fragment FragmentParagraphSulFeatCollection on ParagraphSulFeatCollection {
     ...FragmentParagraphInterface
     sulCollectionCards {
-        ...FragmentParagraphStanfordCard
+        ...FragmentParagraphSulFeatCollectionCards
     }
     sulCollectionHeadline
     sulCollectionLink {

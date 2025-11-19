@@ -7,6 +7,7 @@ import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
 import clsx from "clsx"
+import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordList
@@ -40,33 +41,31 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className={clsx("centered flex flex-col", {"gap-xl": behaviors.list_paragraph?.heading_behavior == "show"})}
+      className={clsx("centered flex flex-col", {
+        "gap-xl": behaviors.list_paragraph?.heading_behavior == "show",
+      })}
       aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
     >
-      {(behaviors.list_paragraph?.heading_behavior !== "remove" || paragraph.suListButton?.url) && (
+      {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
         <div
-          className={clsx("flex items-center justify-between", {
-            "mb-20": behaviors.list_paragraph?.heading_behavior === "show" || paragraph.suListButton?.url,
+          className={clsx("mb-20", {
+            "flex items-center justify-between gap-16": behaviors.sul_list_styles?.display_heading_gradient,
           })}
         >
-          {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
-            <h2
-              id={paragraph.id}
-              className={clsx("m-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
-            >
-              {paragraph.suListHeadline}
-            </h2>
-          )}
-
-          {paragraph.suListButton?.url && (
-            <DrupalLinkButton href={paragraph.suListButton.url} {...paragraph.suListButton.attributes}>
-              {paragraph.suListButton.title}
-            </DrupalLinkButton>
-          )}
+          <h2
+            id={paragraph.id}
+            className={clsx("m-0 shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
+          >
+            {paragraph.suListHeadline}
+          </h2>
+          {behaviors.sul_list_styles?.display_heading_gradient &&
+            behaviors.list_paragraph?.heading_behavior === "show" && <HeaderGradientLine />}
         </div>
       )}
 
-      {paragraph.suListDescription?.processed && <div>{formatHtml(paragraph.suListDescription.processed)}</div>}
+      {paragraph.suListDescription?.processed && (
+        <div className="wysiwyg *:mx-auto">{formatHtml(paragraph.suListDescription.processed)}</div>
+      )}
 
       {viewItems.length === 0 && behaviors.list_paragraph?.empty_message && (
         <p>{behaviors.list_paragraph.empty_message}</p>
@@ -92,6 +91,16 @@ const ListParagraph = async ({paragraph}: Props) => {
           }
           totalItems={addLoadMore ? totalItems : viewItems.length}
         />
+      )}
+
+      {paragraph.suListButton?.url && (
+        <DrupalLinkButton
+          {...paragraph.suListButton.attributes}
+          className="mx-auto mt-0"
+          href={paragraph.suListButton.url}
+        >
+          {paragraph.suListButton.title}
+        </DrupalLinkButton>
       )}
     </ListWrapper>
   )

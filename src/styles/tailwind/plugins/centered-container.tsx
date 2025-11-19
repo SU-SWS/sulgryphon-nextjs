@@ -3,7 +3,7 @@
  */
 module.exports = function () {
   return function ({addComponents}) {
-    const maxWdiths = {}
+    const maxWidths = {}
 
     const gutterSizes = [
       {screen: "lg", gutterSize: 80},
@@ -11,7 +11,7 @@ module.exports = function () {
     ]
 
     gutterSizes.map(screenGutter => {
-      maxWdiths["@screen " + screenGutter.screen] = {
+      maxWidths["@screen " + screenGutter.screen] = {
         maxWidth: "calc(100vw - " + screenGutter.gutterSize * 2 + "px)",
       }
     })
@@ -23,9 +23,9 @@ module.exports = function () {
         marginLeft: "auto",
         marginRight: "auto",
         maxWidth: "calc(100vw - 100px)",
-        ...maxWdiths,
-        "@media only screen and (min-width: 1700px)": {
-          maxWidth: "1500px",
+        ...maxWidths,
+        "@media only screen and (min-width: 1440px)": {
+          maxWidth: "1240px",
         },
       },
     }
