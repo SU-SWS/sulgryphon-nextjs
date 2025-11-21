@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     minimumCacheTTL: 2678400,
+    dangerouslyAllowLocalIP: !!(process.env.CI || process.env.NODE_ENV === "development"),
     remotePatterns: [
       {
         // Allow any stanford domain for images, but require https.
@@ -44,23 +45,23 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/home',
-        destination: '/',
-        permanent: true
-      },
-      {
-        source: '/search/website',
-        destination: '/search',
+        source: "/home",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/sfx',
-        destination: 'https://sfx-01stanford.hosted.exlibrisgroup.com/01stanford',
+        source: "/search/website",
+        destination: "/search",
         permanent: true,
       },
       {
-        source: '/sfx/:path*',
-        destination: 'https://sfx-01stanford.hosted.exlibrisgroup.com/01stanford/:path*',
+        source: "/sfx",
+        destination: "https://sfx-01stanford.hosted.exlibrisgroup.com/01stanford",
+        permanent: true,
+      },
+      {
+        source: "/sfx/:path*",
+        destination: "https://sfx-01stanford.hosted.exlibrisgroup.com/01stanford/:path*",
         permanent: true,
       },
       {

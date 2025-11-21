@@ -29,24 +29,24 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
 
   items.map(item => {
     item.sulStudyFeatures?.map(term => {
-      if (featureOptions.findIndex(option => option.value === term.id) === -1 && term.name) {
-        featureOptions.push({value: term.id, label: term.name})
+      if (featureOptions.findIndex(option => option.value === term.uuid) === -1 && term.name) {
+        featureOptions.push({value: term.uuid, label: term.name})
       }
     })
     if (
-      capacityOptions.findIndex(option => option.value === item.sulStudyCapacity?.id) === -1 &&
+      capacityOptions.findIndex(option => option.value === item.sulStudyCapacity?.uuid) === -1 &&
       item.sulStudyCapacity?.name
     ) {
-      capacityOptions.push({value: item.sulStudyCapacity.id, label: item.sulStudyCapacity.name})
+      capacityOptions.push({value: item.sulStudyCapacity.uuid, label: item.sulStudyCapacity.name})
     }
-    if (typeOfStudies.findIndex(option => option.value === item.sulStudyType.id) === -1 && item.sulStudyType.name) {
-      typeOfStudies.push({value: item.sulStudyType.id, label: item.sulStudyType.name})
+    if (typeOfStudies.findIndex(option => option.value === item.sulStudyType.uuid) === -1 && item.sulStudyType.name) {
+      typeOfStudies.push({value: item.sulStudyType.uuid, label: item.sulStudyType.name})
     }
     if (
-      libraryOptions.findIndex(option => option.value === item.sulStudyBranch.id) === -1 &&
+      libraryOptions.findIndex(option => option.value === item.sulStudyBranch.uuid) === -1 &&
       item.sulStudyBranch.title
     ) {
-      libraryOptions.push({value: item.sulStudyBranch.id, label: item.sulStudyBranch.title})
+      libraryOptions.push({value: item.sulStudyBranch.uuid, label: item.sulStudyBranch.title})
     }
   })
 
@@ -59,12 +59,12 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
     e.preventDefault()
     const filteredItems = items.filter(
       (item: NodeSulStudyPlace) =>
-        (!selectedLibraries.length || selectedLibraries.indexOf(item.sulStudyBranch.id) != -1) &&
-        (!selectedTypes.length || selectedTypes.indexOf(item.sulStudyType.id) != -1) &&
-        (!selectedCapacity.length || selectedCapacity.indexOf(item.sulStudyCapacity?.id || "") != -1) &&
+        (!selectedLibraries.length || selectedLibraries.indexOf(item.sulStudyBranch.uuid) != -1) &&
+        (!selectedTypes.length || selectedTypes.indexOf(item.sulStudyType.uuid) != -1) &&
+        (!selectedCapacity.length || selectedCapacity.indexOf(item.sulStudyCapacity?.uuid || "") != -1) &&
         (!selectedFeatures.length ||
           (item.sulStudyFeatures &&
-            item.sulStudyFeatures.filter(term => selectedFeatures.indexOf(term.id) != -1).length > 0))
+            item.sulStudyFeatures.filter(term => selectedFeatures.indexOf(term.uuid) != -1).length > 0))
     )
     setItemsToDisplay(filteredItems)
   }
@@ -147,7 +147,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
       {itemsToDisplay.length > 0 && (
         <ul ref={parent} className="list-unstyled grid gap-2xl @3xl:grid-cols-2 @7xl:grid-cols-3">
           {itemsToDisplay.map(item => (
-            <li key={item.id} className="">
+            <li key={item.uuid} className="">
               <SulStudyPlaceCard node={item} />
             </li>
           ))}

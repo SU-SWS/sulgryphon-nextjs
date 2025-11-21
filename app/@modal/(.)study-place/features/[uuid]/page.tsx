@@ -16,20 +16,20 @@ const Page = async (props: {params: Promise<{uuid: string}>}) => {
   // Filter out empty terms and deduplicate terms by their ID.
   const features =
     node.sulStudyFeatures?.filter(
-      (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
+      (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.uuid === term.uuid)
     ) ?? []
 
   return (
-    <InterceptionModal aria-labelledby={node.id}>
+    <InterceptionModal aria-labelledby={node.uuid}>
       <StudyPlaceFeatures
-        headingId={node.id}
+        headingId={node.uuid}
         branchHours={node.sulStudyBranch.suLibraryHours}
         branchTitle={node.sulStudyBranch.title}
         branchUrl={node.sulStudyBranch.path}
         capacity={node.sulStudyCapacity?.name}
         contactImageAlt={node.sulStudyBranch.suLibraryContactImg?.mediaImage.alt || ""}
         contactImageUrl={node.sulStudyBranch.suLibraryContactImg?.mediaImage.url}
-        features={features.map(feature => ({id: feature.id, name: feature.name}))}
+        features={features.map(feature => ({id: feature.uuid, name: feature.name}))}
         type={node.sulStudyType.name}
         roomNumber={node.sulStudyRoomNumber}
         roomDonorName={node.sulStudyRoomDonorName}

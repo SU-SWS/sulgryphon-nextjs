@@ -108,7 +108,7 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
     // Transform to API response format
     return filteredResults.map(
       (person): PersonSearchResult => ({
-        id: person.id,
+        id: person.uuid,
         firstName: person.suPersonFirstName || "",
         lastName: person.suPersonLastName || "",
         fullTitle: person.suPersonFullTitle || undefined,

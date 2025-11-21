@@ -31,7 +31,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   })
 
   return (
-    <article {...props} aria-labelledby={node.id}>
+    <article {...props} aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -40,7 +40,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
       <InternalHeaderBanner>
         <div className="mx-auto mb-40 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col items-center gap-32 p-0 md:mb-10 md:max-w-[calc(100vw-20rem)] md:flex-row 3xl:max-w-[calc(1500px-20rem)]">
           <div className="order-2 flex flex-col">
-            <h1 id={node.id} className="mb-0">
+            <h1 id={node.uuid} className="mb-0">
               {node.title}
             </h1>
             <div>
@@ -78,7 +78,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {node.suPersonComponents && (
             <div className="*:mb-40 last:*:mb-0">
               {node.suPersonComponents.map(paragraph => (
-                <Paragraph key={paragraph.id} paragraph={paragraph} />
+                <Paragraph key={paragraph.uuid} paragraph={paragraph} />
               ))}
             </div>
           )}

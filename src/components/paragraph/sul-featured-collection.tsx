@@ -61,7 +61,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
       <div className="relative @container">
         <ul className="list-unstyled grid gap-x-90 gap-y-30 sm:grid-cols-2 xl:grid-cols-3">
           {cards.map(card => (
-            <li key={card.id}>
+            <li key={card.uuid}>
               {card.__typename === "ParagraphStanfordCard" && (
                 <CollectionCard
                   header={card.suCardHeader}

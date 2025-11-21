@@ -108,7 +108,7 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
       return (
         <SulPeopleTableView
           items={(items as NodeStanfordPerson[]).map(item => ({
-            id: item.id,
+            uuid: item.uuid,
             title: item.title,
             path: item.path,
             types: item.suPersonTypeGroup?.map(typeGroup => typeGroup.name) || [],

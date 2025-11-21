@@ -26,7 +26,7 @@ const EventsListView = async ({items, hasHeading, totalItems, loadPage}: Props) 
       totalItems={totalItems}
     >
       {items.map(item => (
-        <StanfordEventListItem key={item.id} node={item} h3Heading={hasHeading} />
+        <StanfordEventListItem key={item.uuid} node={item} h3Heading={hasHeading} />
       ))}
     </LoadMoreList>
   )

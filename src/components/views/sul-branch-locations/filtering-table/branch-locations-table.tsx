@@ -12,7 +12,7 @@ const SulBranchLocationTableView = async ({items}: Props) => {
   const trimmedItems: BranchLocation[] = []
   items.map(item => {
     trimmedItems.push({
-      id: item.id,
+      uuid: item.uuid,
       title: item.title,
       path: item.path,
       imageUrl: item.suLibraryContactImg?.mediaImage.url,

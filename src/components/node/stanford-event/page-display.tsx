@@ -82,7 +82,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   }
 
   return (
-    <article {...props} className="mt-50" aria-labelledby={node.id}>
+    <article {...props} className="mt-50" aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -90,7 +90,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       />
       <InternalHeaderBanner>
         <h1
-          id={node.id}
+          id={node.uuid}
           className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           {node.title}
@@ -101,7 +101,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       {node.suEventType && node.suEventType.length > 0 && (
         <div>
           {node.suEventType.map(term => (
-            <div key={term.id} className="text-16 text-digital-red md:text-18 2xl:text-19">
+            <div key={term.uuid} className="text-16 text-digital-red md:text-18 2xl:text-19">
               {term.name}
             </div>
           ))}
@@ -192,7 +192,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
                   <h3 className="text-16 md:text-18">This event is open to:</h3>
                 </div>
                 {node.suEventAudience.map(audience => (
-                  <div className="ml-36 text-16 md:text-18" key={audience.id}>
+                  <div className="ml-36 text-16 md:text-18" key={audience.uuid}>
                     {audience.name}
                   </div>
                 ))}
@@ -215,7 +215,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       {node.suEventComponents && (
         <div className="mb-40">
           {node.suEventComponents.map(paragraph => (
-            <Paragraph key={paragraph.id} paragraph={paragraph} />
+            <Paragraph key={paragraph.uuid} paragraph={paragraph} />
           ))}
         </div>
       )}

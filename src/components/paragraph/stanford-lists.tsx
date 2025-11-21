@@ -44,7 +44,7 @@ const ListParagraph = async ({paragraph}: Props) => {
       className={clsx("centered flex flex-col", {
         "gap-xl": behaviors.list_paragraph?.heading_behavior == "show",
       })}
-      aria-labelledby={ListWrapper === "section" ? paragraph.id : undefined}
+      aria-labelledby={ListWrapper === "section" ? paragraph.uuid : undefined}
     >
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
         <div
@@ -53,7 +53,7 @@ const ListParagraph = async ({paragraph}: Props) => {
           })}
         >
           <h2
-            id={paragraph.id}
+            id={paragraph.uuid}
             className={clsx("m-0 shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
           >
             {paragraph.suListHeadline}

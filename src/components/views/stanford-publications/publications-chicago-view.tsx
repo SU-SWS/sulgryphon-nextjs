@@ -9,7 +9,7 @@ const PublicationsChicagoView = async ({items}: Props) => {
   return (
     <div className="mb-20">
       {items.map(item => (
-        <div key={item.id} className="border-b border-black-20 pb-10 pt-10 first:pt-0 last:border-0 last:pb-0">
+        <div key={item.uuid} className="border-b border-black-20 pb-10 pt-10 first:pt-0 last:border-0 last:pb-0">
           <StanfordPublicationListItem node={item} />
         </div>
       ))}

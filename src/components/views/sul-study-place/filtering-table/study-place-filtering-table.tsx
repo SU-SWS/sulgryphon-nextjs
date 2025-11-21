@@ -16,7 +16,7 @@ import ToggleOption from "@/components/patterns/toggle-option"
 import formatHtml from "@/lib/format-html"
 
 export type StudyPlaces = {
-  id: NodeSulStudyPlace["id"]
+  uuid: NodeSulStudyPlace["uuid"]
   title: NodeSulStudyPlace["id"]
   sticky: NodeSulStudyPlace["sticky"]
   branchPath: NodeSulStudyPlace["sulStudyBranch"]["path"]
@@ -187,7 +187,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           <Tbody>
             {displayedItems.map(item => (
               <Tr
-                key={item.id}
+                key={item.uuid}
                 className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:!table-row lg:max-h-none"
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">

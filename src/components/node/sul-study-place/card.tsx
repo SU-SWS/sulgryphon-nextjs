@@ -10,7 +10,7 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
   // Filter out empty terms and deduplicate terms by their ID.
   const features: TermUnion[] =
     node.sulStudyFeatures?.filter(
-      (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
+      (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.uuid === term.uuid)
     ) || []
 
   const imageUrl = node.sulStudyImage?.mediaImage.url || node.sulStudyBranch.suLibraryContactImg?.mediaImage.url
@@ -78,8 +78,8 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
                   {features &&
                     features.slice(0, 4).map(feature => (
                       <li
-                        key={`feature-${node.id}-${feature.id}`}
-                        data-foo={`feature-${node.id}-${feature.id}`}
+                        key={`feature-${node.uuid}-${feature.uuid}`}
+                        data-foo={`feature-${node.uuid}-${feature.uuid}`}
                         className="type-0 leading-display"
                       >
                         {feature.name}
@@ -90,7 +90,7 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
 
               {features && features.length > 4 && (
                 <Link
-                  href={`/study-place/features/${node.id}`}
+                  href={`/study-place/features/${node.uuid}`}
                   className="type-0 transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                   aria-haspopup="dialog"
                 >

@@ -1,7 +1,7 @@
 
 fragment FragmentParagraphInterface on ParagraphInterface {
     __typename
-    id
+    uuid
     behaviors
     status
 }
@@ -63,7 +63,7 @@ fragment FragmentParagraphSulContactCard on ParagraphSulContactCard {
         ...FragmentAddressType
     }
     sulContactBranch {
-        id
+        uuid
         path
     }
     sulContactEmail
@@ -156,7 +156,7 @@ fragment FragmentParagraphStanfordEntity on ParagraphStanfordEntity {
     }
     suEntityItem {
         ... on NodeInterface {
-            id
+            uuid
             path
         }
     }

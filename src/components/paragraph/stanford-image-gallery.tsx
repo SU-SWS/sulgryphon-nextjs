@@ -26,14 +26,14 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
           {paragraph.suGalleryImages.map(image => {
             if (!image.suGalleryImage?.url) return
             return (
-              <figure key={image.id} className="table h-fit">
+              <figure key={image.uuid} className="table h-fit">
                 <div className="relative aspect-[16/9] w-full">
                   <Link
                     href={buildUrl(image.suGalleryImage?.url).toString()}
                     className=""
                     onClick={e => {
                       e.preventDefault()
-                      setModalOpen(image.id)
+                      setModalOpen(image.uuid)
                     }}
                   >
                     <Image
@@ -53,10 +53,10 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                 )}
 
                 <Modal
-                  isOpen={modalOpen === image.id}
+                  isOpen={modalOpen === image.uuid}
                   onClose={() => setModalOpen("")}
                   ariaLabel={image.suGalleryImage?.alt || ""}
-                  labelledBy={image.id}
+                  labelledBy={image.uuid}
                 >
                   <figure className="relative table h-full w-full">
                     <div className="relative table-row h-full">
@@ -71,7 +71,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
 
                     {image.suGalleryCaption && (
                       <figcaption
-                        id={image.id}
+                        id={image.uuid}
                         className="mt-10 table-caption w-full caption-bottom bg-white p-10 text-right text-16 font-normal leading"
                       >
                         {image.suGalleryCaption}

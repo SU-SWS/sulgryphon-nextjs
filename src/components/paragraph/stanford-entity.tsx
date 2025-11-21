@@ -57,7 +57,7 @@ const StanfordEntity = async ({
         {entities && (
           <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
             {entities.map(item => (
-              <div key={item.id} className="mx-auto w-full">
+              <div key={item.uuid} className="mx-auto w-full">
                 <EntityCard path={item.path} h3Heading={!!headline} />
               </div>
             ))}

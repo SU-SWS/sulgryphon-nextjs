@@ -67,7 +67,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         "bg-foggy-light": paragraph.suStatBgColor?.color === "f4f4f4",
         "bg-spirited": paragraph.suStatBgColor?.color === "e04f39",
       })}
-      aria-labelledby={paragraph.suStatHeadline ? paragraph.id : undefined}
+      aria-labelledby={paragraph.suStatHeadline ? paragraph.uuid : undefined}
       imageUrl={paragraph.suStatImage?.mediaImage.url}
       imageAlt={paragraph.suStatImage?.mediaImage.alt}
       isArticle={!!paragraph.suStatHeadline && headerTag !== "div"}
@@ -77,7 +77,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
           <>
             {headerTag === "h2" && (
               <h2
-                id={paragraph.id}
+                id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
                   "text-24 font-normal": transparentBg,
                 })}
@@ -87,7 +87,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             )}
             {headerTag === "h3" && (
               <h3
-                id={paragraph.id}
+                id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
                   "text-24 font-normal": transparentBg,
                 })}
@@ -97,7 +97,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             )}
             {headerTag === "h4" && (
               <h4
-                id={paragraph.id}
+                id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
                   "text-24 font-normal": transparentBg,
                 })}

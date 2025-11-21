@@ -31,7 +31,7 @@ const Rows = async ({components, className, fullWidth, ...props}: Props) => {
     if (item.__typename === "ParagraphLayout") {
       const behaviors = getParagraphBehaviors(item)
 
-      layouts[item.id] = {
+      layouts[item.uuid] = {
         item,
         layout: behaviors.layout_paragraphs?.layout || "sul_helper_1_column",
         config: behaviors.layout_paragraphs?.config,

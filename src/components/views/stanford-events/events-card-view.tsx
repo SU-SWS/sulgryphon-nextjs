@@ -37,7 +37,7 @@ const EventsCardView = async ({items, hasHeading, totalItems, loadPage}: Props) 
       totalItems={totalItems}
     >
       {items.map(newsItem => (
-        <StanfordEventCard h3Heading={hasHeading} key={newsItem.id} node={newsItem} />
+        <StanfordEventCard h3Heading={hasHeading} key={newsItem.uuid} node={newsItem} />
       ))}
     </LoadMoreList>
   )

@@ -9,8 +9,8 @@ const PublicationsApaView = async ({items}: Props) => {
   return (
     <ul className="list-unstyled flex flex-wrap justify-between gap-2xl">
       {items.map(item => (
-        <li key={item.id} className="min-w-[250px] flex-1">
-          <StanfordPublicationListItem node={item} key={item.id} />
+        <li key={item.uuid} className="min-w-[250px] flex-1">
+          <StanfordPublicationListItem node={item} key={item.uuid} />
         </li>
       ))}
     </ul>

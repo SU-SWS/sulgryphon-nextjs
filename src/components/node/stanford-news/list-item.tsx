@@ -42,7 +42,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
         )}
       </div>
       {node.suNewsTopics?.map((cardTopic, index) => (
-        <span key={cardTopic.id} className="mt-10 text-19 font-semibold text-digital-red">
+        <span key={cardTopic.uuid} className="mt-10 text-19 font-semibold text-digital-red">
           {(index ? ", " : "") + cardTopic.name}
         </span>
       ))}

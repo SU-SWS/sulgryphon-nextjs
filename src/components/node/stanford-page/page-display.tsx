@@ -17,7 +17,7 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
   })
 
   return (
-    <article {...props} aria-labelledby={node.id}>
+    <article {...props} aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -25,7 +25,7 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
       />
       <InternalHeaderBanner>
         <h1
-          id={node.id}
+          id={node.uuid}
           className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           <RosetteIcon width={60} height={60} />

@@ -44,12 +44,14 @@ const StanfordCard = ({
 }: Props) => {
   const isHorizontal = orientation === "horizontal"
 
+  const cardLink = link ? {...link} : undefined
+
   const imageUrl = image?.mediaImage.url
   const imageAlt = image?.mediaImage.alt || ""
 
-  if (headerId && link?.attributes?.ariaLabel && link?.attributes?.ariaLabel === header) {
-    link.attributes.ariaLabelledBy = headerId
-    delete link.attributes.ariaLabel
+  if (headerId && cardLink?.attributes?.ariaLabel && cardLink?.attributes?.ariaLabel === header) {
+    cardLink.attributes.ariaLabelledBy = headerId
+    delete cardLink.attributes.ariaLabel
   }
 
   return (
@@ -72,7 +74,7 @@ const StanfordCard = ({
           header={header}
           superHeader={superHeader}
           body={body}
-          link={link}
+          link={cardLink}
           cardBgColor={cardBgColor}
           hideRosette={hideRosette}
           headerId={headerId}
@@ -99,7 +101,7 @@ const StanfordCard = ({
           header={header}
           superHeader={superHeader}
           body={body}
-          link={link}
+          link={cardLink}
           linkStyle={linkStyle}
           headerId={headerId}
           headingLevel={headingTag}

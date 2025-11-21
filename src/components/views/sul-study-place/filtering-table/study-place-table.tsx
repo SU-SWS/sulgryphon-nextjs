@@ -14,14 +14,14 @@ const StudyPlaceTable = ({items}: Props) => {
     // Filter out empty terms and deduplicate terms by their ID.
     return (
       features.filter(
-        (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.id === term.id)
+        (term, index, self) => term.name?.length > 0 && index === self.findIndex(t => t.uuid === term.uuid)
       ) || []
     )
   }
 
   items.map(item => {
     trimmedItems.push({
-      id: item.id,
+      uuid: item.uuid,
       title: item.title,
       branchTitle: item.sulStudyBranch.title,
       branchPath: item.sulStudyBranch.path,

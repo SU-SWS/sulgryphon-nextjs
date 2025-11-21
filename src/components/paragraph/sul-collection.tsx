@@ -27,7 +27,7 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
         <TabsList className="md:w-1/3">
           {cards?.map(card => (
             <Tab
-              key={card.id + "-tab"}
+              key={card.uuid + "-tab"}
               className="mb-2 w-full cursor-pointer py-20 pl-10 text-left aria-selected:bg-archway aria-selected:text-white hocus:underline"
             >
               {card.sulCardInfo}
@@ -37,7 +37,7 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
 
         <div className="md:w-2/3">
           {cards?.map(card => (
-            <TabPanel key={card.id + "-panel"}>
+            <TabPanel key={card.uuid + "-panel"}>
               <CollectionCard
                 header={card.sulCard?.suCardHeader}
                 superHeader={card.sulCard?.suCardSuperHeader}
@@ -49,7 +49,7 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
                     ? card.sulCard.suCardMedia.mediaOembedVideo
                     : undefined
                 }
-                headerId={card.sulCard?.id}
+                headerId={card.sulCard?.uuid}
               />
             </TabPanel>
           ))}

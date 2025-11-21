@@ -13,7 +13,7 @@ export const FragmentDateTimeFragmentDoc = gql`
 export const FragmentNodeInterfaceFragmentDoc = gql`
     fragment FragmentNodeInterface on NodeInterface {
   __typename
-  id
+  uuid
   title
   status
   path
@@ -80,13 +80,13 @@ export const FragmentLinkFragmentDoc = gql`
 export const FragmentTermInterfaceFragmentDoc = gql`
     fragment FragmentTermInterface on TermInterface {
   __typename
-  id
+  uuid
   name
   path
   weight
   parent {
     ... on TermInterface {
-      id
+      uuid
     }
   }
 }
@@ -122,7 +122,7 @@ ${FragmentTermInterfaceFragmentDoc}`;
 export const FragmentMediaInterfaceFragmentDoc = gql`
     fragment FragmentMediaInterface on MediaInterface {
   __typename
-  id
+  uuid
   name
 }
     `;
@@ -141,7 +141,7 @@ export const FragmentMediaImageFragmentDoc = gql`
 export const FragmentParagraphInterfaceFragmentDoc = gql`
     fragment FragmentParagraphInterface on ParagraphInterface {
   __typename
-  id
+  uuid
   behaviors
   status
 }
@@ -271,7 +271,7 @@ export const FragmentParagraphStanfordEntityFragmentDoc = gql`
   }
   suEntityItem {
     ... on NodeInterface {
-      id
+      uuid
       path
     }
   }
@@ -460,7 +460,7 @@ export const FragmentParagraphSulContactCardFragmentDoc = gql`
     ...FragmentAddressType
   }
   sulContactBranch {
-    id
+    uuid
     path
   }
   sulContactEmail
@@ -910,7 +910,7 @@ ${FragmentTermInterfaceFragmentDoc}`;
 export const FragmentSuPolicyLogFragmentDoc = gql`
     fragment FragmentSuPolicyLog on SuPolicyLog {
   __typename
-  id
+  uuid
   suPolicyDate {
     ...FragmentDateTime
   }
@@ -937,7 +937,7 @@ export const FragmentNodeStanfordPolicyFragmentDoc = gql`
   suPolicyPolicyNum
   suPolicyRelated {
     ... on NodeInterface {
-      id
+      uuid
       path
     }
   }
@@ -1330,7 +1330,7 @@ export const LibrariesDocument = gql`
     query Libraries {
   nodeSulLibraries(first: 1000, sortKey: TITLE) {
     nodes {
-      id
+      uuid
       title
       path
       suLibraryHours
@@ -1519,7 +1519,7 @@ export const NewsTypesDocument = gql`
     query NewsTypes {
   termStanfordNewsTopics(first: 1000, sortKey: TITLE) {
     nodes {
-      id
+      uuid
       name
     }
   }

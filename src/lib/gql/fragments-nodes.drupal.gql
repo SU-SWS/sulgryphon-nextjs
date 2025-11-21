@@ -1,7 +1,7 @@
 
 fragment FragmentNodeInterface on NodeInterface {
     __typename
-    id
+    uuid
     title
     status
     path
@@ -309,7 +309,7 @@ fragment FragmentNodeStanfordPolicy on NodeStanfordPolicy {
     suPolicyPolicyNum
     suPolicyRelated {
         ... on NodeInterface {
-            id
+            uuid
             path
         }
     }

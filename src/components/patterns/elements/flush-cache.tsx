@@ -5,11 +5,10 @@ const FlushCache = ({currentPath}: {currentPath: string}) => {
     "use server"
 
     revalidatePath(currentPath)
-    revalidateTag(`paths:${currentPath}`)
+    revalidateTag(`paths:${currentPath}`, "max")
   }
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form action={clearCache} className="fixed bottom-0 z-50">
       <button type="submit" className="rounded-full bg-white p-4 hocus:underline">
         Clear this page cache
