@@ -54,7 +54,7 @@ const ListParagraph = async ({paragraph}: Props) => {
         >
           <h2
             id={paragraph.uuid}
-            className={clsx("m-0 shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
+            className={clsx("m-0 md:shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
           >
             {paragraph.suListHeadline}
           </h2>
