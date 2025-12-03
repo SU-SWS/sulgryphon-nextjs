@@ -112,7 +112,6 @@ const formatHtml = (html?: string, isDarkBg?: boolean) => {
             return <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
 
           case "p":
-            nodeProps.className += " max-w-[100ch]"
           case "li":
           case "span":
           case "tr":
