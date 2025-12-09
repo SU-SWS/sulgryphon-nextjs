@@ -25,31 +25,31 @@ const GlobalMessage = async () => {
     plain: {
       bgColor: "bg-foggy-light",
       textColor: "text-black-true",
-      linkClasses: "transition text-black-true hocus:text-black hocus:bg-sky",
+      linkClasses: "block w-fit transition text-black-true hocus:text-black hocus:bg-sky",
       icon: <BellIcon width={30} />,
     },
     success: {
       bgColor: "bg-digital-green",
       textColor: "text-white",
-      linkClasses: "transition text-white hocus:text-black hocus:bg-white",
+      linkClasses: "block w-fit transition text-white hocus:text-black hocus:bg-white",
       icon: <CheckCircleIcon width={30} />,
     },
     info: {
       bgColor: "bg-digital-blue-dark",
       textColor: "text-white",
-      linkClasses: "transition text-white hocus:text-black hocus:bg-white",
+      linkClasses: "block w-fit transition text-white hocus:text-black hocus:bg-white",
       icon: <InformationCircleIcon width={30} />,
     },
     warning: {
       bgColor: "bg-illuminating-dark",
       textColor: "text-black-true",
-      linkClasses: "transition text-black-true hocus:text-black hocus:bg-sky",
+      linkClasses: "block w-fit transition text-black-true hocus:text-black hocus:bg-sky",
       icon: <ExclamationCircleIcon width={30} />,
     },
     error: {
       bgColor: "bg-digital-red",
       textColor: "text-white",
-      linkClasses: "transition text-white hocus:text-black hocus:bg-white",
+      linkClasses: "block w-fit transition text-white hocus:text-black hocus:bg-white",
       icon: <ExclamationTriangleIcon width={30} />,
     },
   }
