@@ -141,7 +141,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       )}
 
       {node.suNewsComponents && (
-        <div className="w-full [&_p]:mx-auto lg:[&_p]:max-w-800">
+        <div className="[&>.wysiwyg]:max-w-800">
           {node.suNewsComponents.map(paragraph => (
             <Paragraph key={paragraph.uuid} paragraph={paragraph} />
           ))}
