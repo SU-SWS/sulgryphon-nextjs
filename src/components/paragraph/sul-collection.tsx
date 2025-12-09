@@ -1,5 +1,4 @@
 import {HTMLAttributes, useId} from "react"
-import AboveHeaderBorder from "@/components/patterns/above-header-border"
 import Card from "@/components/patterns/card"
 import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
@@ -19,7 +18,6 @@ const SulCollection = ({cards, heading, ...props}: Props) => {
     <section className="centered relative" aria-labelledby={`${elementId}-heading`} {...props}>
       {heading && (
         <>
-          <AboveHeaderBorder />
           <h2 id={`${elementId}-heading`}>{heading}</h2>
         </>
       )}
