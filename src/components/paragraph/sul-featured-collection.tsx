@@ -51,7 +51,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
             "flex flex-row items-center justify-between gap-16": styles?.display_heading_gradient,
           })}
         >
-          <h2 id={headerId} className="mb-0 shrink-0">
+          <h2 id={headerId} className="mb-0 md:shrink-0">
             {headline}
           </h2>
           {styles?.display_heading_gradient && <HeaderGradientLine />}
@@ -61,7 +61,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
       <div className="relative @container">
         <ul className="list-unstyled grid gap-x-90 gap-y-30 sm:grid-cols-2 xl:grid-cols-3">
           {cards.map(card => (
-            <li key={card.id}>
+            <li key={card.uuid}>
               {card.__typename === "ParagraphStanfordCard" && (
                 <CollectionCard
                   header={card.suCardHeader}

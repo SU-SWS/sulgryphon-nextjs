@@ -67,7 +67,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         "bg-foggy-light": paragraph.suStatBgColor?.color === "f4f4f4",
         "bg-spirited": paragraph.suStatBgColor?.color === "e04f39",
       })}
-      aria-labelledby={paragraph.suStatHeadline ? paragraph.id : undefined}
+      aria-labelledby={paragraph.suStatHeadline ? paragraph.uuid : undefined}
       imageUrl={paragraph.suStatImage?.mediaImage.url}
       imageAlt={paragraph.suStatImage?.mediaImage.alt}
       isArticle={!!paragraph.suStatHeadline && headerTag !== "div"}
@@ -77,9 +77,9 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
           <>
             {headerTag === "h2" && (
               <h2
-                id={paragraph.id}
+                id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -87,9 +87,9 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             )}
             {headerTag === "h3" && (
               <h3
-                id={paragraph.id}
+                id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -97,9 +97,9 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             )}
             {headerTag === "h4" && (
               <h4
-                id={paragraph.id}
+                id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -108,7 +108,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             {headerTag === "div" && (
               <div
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -148,7 +148,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
                 "text-poppy-dark": allowTextColors && paragraph.suStatStatColor?.color === "d1660f",
                 "text-spirited": allowTextColors && paragraph.suStatStatColor?.color === "e04f39",
                 "text-[40px] @xl:text-[50px] @2xl:text-[60px]": !transparentBg,
-                "fluid-type-3": transparentBg,
+                "text-28 leading-display md:text-[32px] lg:text-[40px]": transparentBg,
               })}
               decimals={decimalPlaces}
               startOnMount={false}

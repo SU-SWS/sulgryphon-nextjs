@@ -6,7 +6,7 @@ import {getFirstText} from "@/lib/text-tools"
 
 const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublication}) => {
   return (
-    <article {...props} aria-labelledby={node.id}>
+    <article {...props} aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -69,7 +69,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
           <h2 className="rs-pt-0 text-16 font-bold md:text-18 2xl:text-19">Related Topics</h2>
           <div className="rs-mb-2 text-16 md:text-18 2xl:text-19">
             {node.suPublicationTopics.map((term, index) => (
-              <span key={term.id} className="rs-mb-2 text-16 text-digital-red md:text-18 2xl:text-19">
+              <span key={term.uuid} className="rs-mb-2 text-16 text-digital-red md:text-18 2xl:text-19">
                 {(index ? ", " : "") + term.name}
               </span>
             ))}

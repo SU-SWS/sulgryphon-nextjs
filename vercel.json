@@ -1,5 +1,5 @@
 {
-  "buildCommand": "yarn build --no-lint",
+  "buildCommand": "yarn build --webpack",
   "installCommand": "yarn workspaces focus --production",
   "redirects": [
     {

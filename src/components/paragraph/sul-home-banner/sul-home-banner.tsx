@@ -12,6 +12,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 }
 const SulHomeBanner = ({paragraph, ...props}: Props) => {
   if (!paragraph.sulHomeImages) return
+
   return (
     <div {...props} className={twMerge("relative mb-50", props.className)}>
       <div className="absolute top-[15%] z-10 w-full xl:top-1/4">
@@ -21,7 +22,7 @@ const SulHomeBanner = ({paragraph, ...props}: Props) => {
       </div>
       <SulHomeBannerRandomClient>
         {paragraph.sulHomeImages.map(imageParagraph => (
-          <SulHomeImage key={imageParagraph.id} paragraph={imageParagraph} />
+          <SulHomeImage key={imageParagraph.uuid} paragraph={imageParagraph} />
         ))}
       </SulHomeBannerRandomClient>
     </div>

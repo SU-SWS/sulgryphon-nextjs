@@ -22,14 +22,14 @@ interface Props {
 
 const FilteringNewsCardView = async ({items, hasHeading, totalItems, loadPage}: Props) => {
   const newsTypes = (await graphqlClient().NewsTypes()).termStanfordNewsTopics.nodes.map(term => ({
-    value: term.id,
+    value: term.uuid,
     label: term.name,
   }))
 
   return (
     <FilteringNewsCardViewClient loadPage={loadPage} totalItems={totalItems} typeOptions={newsTypes}>
       {items.map(newsItem => (
-        <StanfordNewsCard h3Heading={hasHeading} key={newsItem.id} node={newsItem} />
+        <StanfordNewsCard h3Heading={hasHeading} key={newsItem.uuid} node={newsItem} />
       ))}
     </FilteringNewsCardViewClient>
   )

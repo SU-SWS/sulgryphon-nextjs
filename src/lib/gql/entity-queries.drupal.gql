@@ -57,7 +57,7 @@ query Nodes {
 query Libraries {
     nodeSulLibraries(first: 1000, sortKey: TITLE) {
         nodes {
-            id
+            uuid
             title
             path
             suLibraryHours
@@ -243,7 +243,7 @@ query ConfigPages {
 query NewsTypes {
     termStanfordNewsTopics(first: 1000, sortKey: TITLE) {
         nodes {
-            id
+            uuid
             name
         }
     }

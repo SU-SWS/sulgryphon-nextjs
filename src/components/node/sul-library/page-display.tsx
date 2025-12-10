@@ -20,7 +20,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
   })
 
   return (
-    <article {...props} className="mb-50 @container" aria-labelledby={node.id}>
+    <article {...props} className="mb-50 @container" aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}

@@ -98,6 +98,7 @@ const HeadingList = () => {
   useEffect(() => {
     // Initialize page data
     const h1 = document.querySelector("h1")
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPageH1(h1?.textContent?.trim() || "")
 
     const timeoutId = setTimeout(() => {

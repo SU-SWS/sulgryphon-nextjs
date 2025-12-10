@@ -37,13 +37,13 @@ interface option {
 const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libraries"]}) => {
   const formId = useId()
   const [selectedLibrary, setSelectedLibrary] = useState(
-    libraries.find(library => library.suLibraryHours === "green")?.id ?? libraries[0].id
+    libraries.find(library => library.suLibraryHours === "green")?.uuid ?? libraries[0].uuid
   )
-  const library = libraries.find((item, index) => (selectedLibrary ? item.id === selectedLibrary : index === 0))
+  const library = libraries.find((item, index) => (selectedLibrary ? item.uuid === selectedLibrary : index === 0))
 
   const libraryOptions: option[] = []
   libraries.map(library => {
-    libraryOptions.push({value: library.id, label: library.title})
+    libraryOptions.push({value: library.uuid, label: library.title})
   })
 
   const imageUrl = library?.suLibraryContactImg?.mediaImage.url || library?.suLibraryBanner?.mediaImage.url

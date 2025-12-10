@@ -7,7 +7,7 @@ import {getFirstText} from "@/lib/text-tools"
 
 const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSeries}) => {
   return (
-    <article {...props} aria-labelledby={node.id}>
+    <article {...props} aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -15,7 +15,7 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
       />
       <InternalHeaderBanner>
         <h1
-          id={node.id}
+          id={node.uuid}
           className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           {node.title}
@@ -27,7 +27,7 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
       {node.suEventSeriesComponents && (
         <>
           {node.suEventSeriesComponents.map(paragraph => (
-            <Paragraph key={paragraph.id} paragraph={paragraph} />
+            <Paragraph key={paragraph.uuid} paragraph={paragraph} />
           ))}
         </>
       )}
@@ -35,8 +35,8 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
       {node.suEventSeriesEvent && (
         <div className={"rs-my-6 grid gap-xl md:centered"}>
           {node.suEventSeriesEvent.map(item => (
-            <div key={item.id} className={"mb-50 border-b border-[#c6c6c6] pb-50 last:border-none last:pb-0"}>
-              <NodeListDisplay node={item} key={item.id} />
+            <div key={item.uuid} className={"mb-50 border-b border-[#c6c6c6] pb-50 last:border-none last:pb-0"}>
+              <NodeListDisplay node={item} key={item.uuid} />
             </div>
           ))}
         </div>

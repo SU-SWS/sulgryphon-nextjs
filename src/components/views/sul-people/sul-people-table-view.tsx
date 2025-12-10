@@ -13,7 +13,7 @@ import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
 import ToggleOption from "@/components/patterns/toggle-option"
 
 export type TablePerson = {
-  id: NodeStanfordPerson["id"]
+  uuid: NodeStanfordPerson["uuid"]
   title: NodeStanfordPerson["title"]
   path: NodeStanfordPerson["path"]
   types: string[]
@@ -143,7 +143,7 @@ const SulPeopleTableView = ({items}: Props) => {
           <Tbody>
             {displayedItems.map(item => (
               <Tr
-                key={item.id}
+                key={item.uuid}
                 className="block pt-16 sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:first:pt-0 lg:!table-row lg:max-h-none"
               >
                 <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
@@ -173,7 +173,7 @@ const SulPeopleTableView = ({items}: Props) => {
                       href={item.path || "#"}
                       className="mb-16 inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
                     >
-                      <span className="mb-0 font-sans text-20 font-semibold" id={item.id}>
+                      <span className="mb-0 font-sans text-20 font-semibold" id={item.uuid}>
                         {item.title}
                       </span>
                     </Link>

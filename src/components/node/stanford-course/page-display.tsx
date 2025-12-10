@@ -7,7 +7,7 @@ import {getCleanDescription} from "@/lib/text-tools"
 
 const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
   return (
-    <article {...props} aria-labelledby={node.id}>
+    <article {...props} aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -15,7 +15,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
       />
       <InternalHeaderBanner>
         <h1
-          id={node.id}
+          id={node.uuid}
           className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           {node.title}
@@ -31,7 +31,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
       {node.suCourseQuarters && (
         <>
           {node.suCourseQuarters?.map(term => (
-            <div key={term.id}>{term.name}</div>
+            <div key={term.uuid}>{term.name}</div>
           ))}
         </>
       )}
@@ -39,7 +39,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
       {node.suCourseTags && (
         <div>
           {node.suCourseTags?.map(term => (
-            <div key={term.id}>{term.name}</div>
+            <div key={term.uuid}>{term.name}</div>
           ))}
         </div>
       )}

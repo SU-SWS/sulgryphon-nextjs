@@ -1,7 +1,6 @@
 import formatHtml from "@/lib/format-html"
 import NodeCardDisplay from "@/components/node/node-card"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import AboveHeaderBorder from "@/components/patterns/above-header-border"
 import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
 import {twMerge} from "tailwind-merge"
 import {getEntityFromPath} from "@/lib/gql/fetcher"
@@ -48,7 +47,6 @@ const StanfordEntity = async ({
       <div className={wrapperClasses}>
         {headline && headingBehavior !== "remove" && (
           <h2 id={headerId} className={twMerge("mb-40 text-left", headingBehavior === "hide" && "sr-only")}>
-            <AboveHeaderBorder />
             {headline}
           </h2>
         )}
@@ -57,7 +55,7 @@ const StanfordEntity = async ({
         {entities && (
           <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
             {entities.map(item => (
-              <div key={item.id} className="mx-auto w-full">
+              <div key={item.uuid} className="mx-auto w-full">
                 <EntityCard path={item.path} h3Heading={!!headline} />
               </div>
             ))}

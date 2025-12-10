@@ -16,7 +16,7 @@ import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import ToggleOption from "@/components/patterns/toggle-option"
 
 export type BranchLocation = {
-  id: NodeSulLibrary["id"]
+  uuid: NodeSulLibrary["uuid"]
   title: NodeSulLibrary["title"]
   path: NodeSulLibrary["path"]
   imageUrl?: Maybe<string>
@@ -97,7 +97,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
         </Thead>
         <Tbody>
           {displayedItems.map(item => (
-            <TableRow key={item.id} {...item} />
+            <TableRow key={item.uuid} {...item} />
           ))}
         </Tbody>
       </Table>
@@ -105,10 +105,10 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   )
 }
 
-const TableRow = ({id, imageUrl, path, title, phone, email, mapUrl, address, hoursId}: BranchLocation) => {
+const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, hoursId}: BranchLocation) => {
   return (
     <Tr
-      key={id}
+      key={uuid}
       className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top xl:!table-row xl:max-h-none"
     >
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 xl:mr-25 xl:table-cell xl:w-[125px] xl:pr-16 xl:align-middle">

@@ -27,7 +27,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
     <div {...props} className={twMerge("mx-auto w-full lg:max-w-[98rem]", props.className)}>
       <div className="rs-mb-1 flex flex-col items-center justify-between gap-20 md:flex-row">
         {paragraph.suFaqHeadline && (
-          <Heading id={paragraph.id} className="mb-0 text-left">
+          <Heading id={paragraph.uuid} className="mb-0 text-left">
             {paragraph.suFaqHeadline}
           </Heading>
         )}
@@ -42,7 +42,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
         <Accordion
           className="border-t border-black-40 last:border-b"
           buttonProps={{className: "mt-15"}}
-          key={question.id}
+          key={question.uuid}
           button={question.suAccordionTitle}
           headingLevel={accordionHeadingLevel}
         >

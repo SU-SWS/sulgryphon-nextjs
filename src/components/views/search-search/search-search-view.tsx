@@ -16,7 +16,7 @@ const SearchListView = async ({items, totalItems, loadPage}: ViewDisplayProps) =
       loadPage={loadPage}
     >
       {items.map(item => (
-        <ResultItem key={item.id} item={item} />
+        <ResultItem key={item.uuid} item={item} />
       ))}
     </LoadMoreList>
   )
@@ -51,9 +51,9 @@ const ResultItem = ({item}: {item: NodeUnion}) => {
   }
 
   return (
-    <article key={item.id} aria-labelledby={item.id}>
+    <article key={item.uuid} aria-labelledby={item.uuid}>
       <Link href={item.path ?? "#"} className="no-underline hocus:underline">
-        <h3 className="type-2" id={item.id}>
+        <h3 className="type-2" id={item.uuid}>
           {item.title}
         </h3>
       </Link>

@@ -5,7 +5,7 @@ import {useRouter, useSearchParams} from "next/navigation"
 
 type FormProps = HTMLAttributes<HTMLDivElement> & {
   action: string
-  inputProps?: HTMLAttributes<HTMLInputElement>
+  inputProps?: Omit<HTMLAttributes<HTMLInputElement>, "ref">
 }
 
 const SearchForm = ({...props}: FormProps) => {
@@ -49,9 +49,11 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
         onSubmit={formSubmit}
       >
         <div className="flex-grow">
+          {/* eslint-disable-next-line react-hooks/refs */}
           <label className="mb-2 text-white" htmlFor={inputProps.id}>
             Keyword Search
           </label>
+          {/* eslint-disable-next-line react-hooks/refs */}
           <input {...inputProps} ref={inputRef} />
         </div>
         <button

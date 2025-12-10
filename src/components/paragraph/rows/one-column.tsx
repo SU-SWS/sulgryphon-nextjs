@@ -45,7 +45,7 @@ const OneColumn = async ({items, fullWidth = true, config, className}: Props) =>
     >
       {config?.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
       {items.map(item => (
-        <Paragraph paragraph={item} key={item.id} fullWidth={fullWidth} />
+        <Paragraph paragraph={item} key={item.uuid} fullWidth={fullWidth} />
       ))}
     </div>
   )

@@ -13,7 +13,7 @@ const PeopleRandomizedCardView = ({items, hasHeading}: Props) => {
       <ul className="list-unstyled flex flex-col justify-between gap-90 md:flex-row md:flex-wrap lg:flex-nowrap">
         <RandomizeChildren count={3}>
           {items.map(person => (
-            <li className="mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]" key={person.id}>
+            <li key={person.uuid} className="mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]">
               <StanfordPersonCard h3Heading={hasHeading} node={person} />
             </li>
           ))}

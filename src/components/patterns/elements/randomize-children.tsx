@@ -21,6 +21,7 @@ const RandomizeChildren = ({children, count = 3}: Props) => {
 
   useEffect(() => {
     const shuffled = [...(Children.toArray(children) as ReactElement[])].sort(() => Math.random() - 0.5)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelected(shuffled.slice(0, count))
   }, [children, count])
 

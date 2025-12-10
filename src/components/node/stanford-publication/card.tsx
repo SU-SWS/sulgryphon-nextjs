@@ -21,7 +21,7 @@ const StanfordPublicationCard = ({node, ...props}: {node: NodeStanfordPublicatio
         footer={
           <div>
             {topics.map((topic, index) => (
-              <span key={topic.id}>{(index ? ", " : "") + topic.name}</span>
+              <span key={topic.uuid}>{(index ? ", " : "") + topic.name}</span>
             ))}
           </div>
         }

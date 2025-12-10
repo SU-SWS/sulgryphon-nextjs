@@ -14,6 +14,7 @@ import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getFirstText} from "@/lib/text-tools"
+import {clsx} from "clsx"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   // Redirect the user to the external source.
@@ -32,7 +33,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   const encodeTitle = encodeURIComponent(node.title)
 
   return (
-    <article {...props} aria-labelledby={node.id}>
+    <article {...props} aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -40,14 +41,14 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       />
       <InternalHeaderBanner>
         <div className="mx-auto mb-65 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
-          <h1 id={node.id} className="order-2 mb-0">
+          <h1 id={node.uuid} className="order-2 mb-0">
             {node.title}
           </h1>
 
           {node.suNewsTopics && (
             <div className="order-1 mb-1">
               {node.suNewsTopics.slice(0, 1).map(topic => (
-                <span key={topic.id} className="text-16 font-semibold uppercase text-cardinal-red md:text-18">
+                <span key={topic.uuid} className="text-16 font-semibold uppercase text-cardinal-red md:text-18">
                   {topic.name}
                 </span>
               ))}
@@ -115,7 +116,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <hr className="mx-auto mb-40 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="centered mx-auto mb-40 table w-800">
+        <figure className="centered mx-auto mb-40 table lg:max-w-800">
           <span className="relative mx-auto block aspect-[16/9]">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
@@ -141,9 +142,13 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       )}
 
       {node.suNewsComponents && (
-        <div className="w-full [&_p]:mx-auto lg:[&_p]:max-w-800">
+        <div>
           {node.suNewsComponents.map(paragraph => (
-            <Paragraph key={paragraph.id} paragraph={paragraph} />
+            <Paragraph
+              key={paragraph.uuid}
+              paragraph={paragraph}
+              className={clsx({"lg:max-w-800": paragraph.__typename === "ParagraphStanfordWysiwyg"})}
+            />
           ))}
         </div>
       )}
