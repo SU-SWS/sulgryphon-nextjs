@@ -147,7 +147,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
             <Paragraph
               key={paragraph.uuid}
               paragraph={paragraph}
-              className={clsx({"max-w-800 lg:max-w-800": paragraph.__typename === "ParagraphStanfordWysiwyg"})}
+              className={clsx({"lg:max-w-800": paragraph.__typename === "ParagraphStanfordWysiwyg"})}
             />
           ))}
         </div>
