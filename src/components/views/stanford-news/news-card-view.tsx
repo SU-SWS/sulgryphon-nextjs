@@ -22,7 +22,7 @@ const NewsCardView = async ({items, hasHeading, totalItems, loadPage}: Props) =>
     <LoadMoreList
       className="@container"
       ulProps={{
-        className: clsx("list-unstyled gap-90", {
+        className: clsx("list-unstyled gap-40", {
           "flex flex-col justify-between md:flex-row md:flex-wrap lg:flex-nowrap": items.length === 3,
           "grid @4xl:grid-cols-2 @7xl:grid-cols-3": items.length !== 3,
         }),
