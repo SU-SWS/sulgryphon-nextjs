@@ -12,7 +12,19 @@ import {useBoolean} from "usehooks-ts"
 import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
 import {getActiveTrail} from "@/lib/drupal/utils"
 import {twMerge} from "tailwind-merge"
-import {trackMenuClick} from "@/lib/trackMenuClick"
+import {sendGAEvent} from "@next/third-parties/google"
+
+// Google Analytics: Track the click of a menu item
+const trackMenuClick = (menuItem: {label: string; url: string; menuLevel?: number; parentMenu?: string}): void => {
+  sendGAEvent("event", "menu_click", {
+    menu_label: menuItem.label,
+    menu_url: menuItem.url,
+    menu_level: menuItem.menuLevel || 1,
+    parent_menu: menuItem.parentMenu || "main",
+    event_category: "navigation",
+    event_action: "click",
+  })
+}
 
 const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   const ref = useRef<HTMLDivElement>(null)
