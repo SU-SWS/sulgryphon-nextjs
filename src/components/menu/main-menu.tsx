@@ -12,7 +12,7 @@ import {useBoolean} from "usehooks-ts"
 import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
 import {getActiveTrail} from "@/lib/drupal/utils"
 import {twMerge} from "tailwind-merge"
-import {trackMenuClick} from "@/lib/analytics"
+import {trackMenuClick} from "@/lib/trackMenuClick"
 
 const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   const ref = useRef<HTMLDivElement>(null)
