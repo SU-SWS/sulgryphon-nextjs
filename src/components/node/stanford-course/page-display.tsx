@@ -11,6 +11,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
+        url={node.path || undefined}
         backupDescription={getCleanDescription(node.body?.processed)}
       />
       <InternalHeaderBanner>

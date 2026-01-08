@@ -11,6 +11,7 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
+        url={node.path || undefined}
         backupDescription={node.suEventSeriesSubheadline || getFirstText(node.suEventSeriesComponents)}
       />
       <InternalHeaderBanner>

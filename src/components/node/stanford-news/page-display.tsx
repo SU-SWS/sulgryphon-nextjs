@@ -37,6 +37,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
+        url={node.path || undefined}
         backupDescription={node.suNewsDek || getFirstText(node.suNewsComponents)}
       />
       <InternalHeaderBanner>

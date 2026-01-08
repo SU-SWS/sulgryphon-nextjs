@@ -24,6 +24,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
+        url={node.path || undefined}
         backupDescription={getFirstText(node.suLibraryParagraphs)}
       />
       <LibraryHeader node={node} />

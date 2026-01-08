@@ -17,6 +17,10 @@ type Props = {
    */
   metatags?: MetaTagUnion[]
   /**
+   * URL of the current page for url metatag.
+   */
+  url?: string
+  /**
    * If no description metatag is provided by the backend, use this.
    */
   backupDescription?: string
@@ -26,7 +30,7 @@ type Props = {
   children?: JSX.Element | JSX.Element[]
 }
 
-const NodePageMetadata = async ({pageTitle, metatags, backupDescription, children}: Props) => {
+const NodePageMetadata = async ({pageTitle, metatags, url, backupDescription, children}: Props) => {
   const siteName =
     (await getConfigPageField<StanfordBasicSiteSetting, StanfordBasicSiteSetting["suSiteName"]>(
       "StanfordBasicSiteSetting",
@@ -44,6 +48,7 @@ const NodePageMetadata = async ({pageTitle, metatags, backupDescription, childre
       <title>{title}</title>
       <meta property="og:title" content={title} />
       <meta name="twitter:title" content={title} />
+      <meta property="og:url" content={`https://library.stanford.edu${url || ""}`} />
 
       {!hasDescription && backupDescription && (
         <>
