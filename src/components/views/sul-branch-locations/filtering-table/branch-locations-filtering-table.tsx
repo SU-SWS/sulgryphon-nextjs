@@ -147,7 +147,7 @@ const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, h
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="m-auto flex w-fit items-center justify-center gap-4 text-20 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:m-[unset] md:justify-start"
+            className="m-auto flex w-fit items-center justify-center gap-4 text-16 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:m-[unset] md:justify-start"
           >
             <PhoneIcon title="Phone Number" width={20} />
             {phone}
@@ -156,7 +156,7 @@ const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, h
         {email && (
           <a
             href={`mailto:${email}`}
-            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-20 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start xl:mb-0"
+            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-16 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start xl:mb-0"
           >
             <EnvelopeIcon title="Email" width={20} />
             {email}
@@ -165,7 +165,7 @@ const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, h
         {/* Without this, the responsive table library injects a "&nbsp;". */}
         {""}
       </Td>
-      <Td className="block w-auto text-20 leading-normal sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:align-middle">
+      <Td className="block w-auto text-16 leading-normal sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:align-middle">
         {address && mapUrl && (
           <div className="pb-16 xl:pb-0">
             <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
@@ -221,7 +221,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   })
 
   return (
-    <div ref={containerRef} className="relative flex text-20 leading-normal md:flex xl:block">
+    <div ref={containerRef} className="relative flex text-16 leading-normal md:flex xl:block">
       {isOpen && (
         <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left xl:m-0 xl:mx-auto xl:mb-4 xl:text-center">
           Open
