@@ -63,7 +63,7 @@ const GlobalMessage = async () => {
           {configPage.suGlobalMsgLabel}
         </div>
 
-        <div>
+        <div className="max-w-[980px]">
           {configPage.suGlobalMsgHeader && <h2 className="type-3">{configPage.suGlobalMsgHeader}</h2>}
 
           {configPage.suGlobalMsgMessage?.processed && (
