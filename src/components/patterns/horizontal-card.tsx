@@ -64,7 +64,7 @@ const HorizontalCard = ({
         props.className
       )}
     >
-      <div className="rs-p-1 relative w-full leading-display @container @6xl:rs-px-5 @8xl:centered @8xl:py-[5.6rem] @11xl:px-0">
+      <div className="rs-p-1 relative w-full leading-display @container @6xl:rs-px-5 @8xl:centered @8xl:py-[5.6rem] @13xl:px-0">
         <div className="grid items-center gap-2xl @9xl:grid-cols-2 @10xl:gap-30">
           {(image || video) && (
             <div className="relative h-fit w-full">
