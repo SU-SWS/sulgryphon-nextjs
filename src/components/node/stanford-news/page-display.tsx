@@ -14,6 +14,7 @@ import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getFirstText} from "@/lib/text-tools"
+import {clsx} from "clsx"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   // Redirect the user to the external source.
@@ -115,7 +116,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <hr className="mx-auto mb-40 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="centered mx-auto mb-40 table w-800">
+        <figure className="centered mx-auto mb-40 table lg:max-w-800">
           <span className="relative mx-auto block aspect-[16/9]">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
@@ -141,9 +142,13 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       )}
 
       {node.suNewsComponents && (
-        <div className="w-full [&_p]:mx-auto lg:[&_p]:max-w-800">
+        <div>
           {node.suNewsComponents.map(paragraph => (
-            <Paragraph key={paragraph.uuid} paragraph={paragraph} />
+            <Paragraph
+              key={paragraph.uuid}
+              paragraph={paragraph}
+              className={clsx({"lg:max-w-800": paragraph.__typename === "ParagraphStanfordWysiwyg"})}
+            />
           ))}
         </div>
       )}

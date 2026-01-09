@@ -51,7 +51,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
             "flex flex-row items-center justify-between gap-16": styles?.display_heading_gradient,
           })}
         >
-          <h2 id={headerId} className="mb-0 shrink-0">
+          <h2 id={headerId} className="mb-0 md:shrink-0">
             {headline}
           </h2>
           {styles?.display_heading_gradient && <HeaderGradientLine />}

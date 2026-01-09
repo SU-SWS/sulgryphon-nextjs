@@ -37,7 +37,7 @@ const LibraryFooter = () => {
             <li>
               <Link
                 className="type-0 text-black no-underline hocus:text-black hocus:underline"
-                href="/all-locations-and-hours"
+                href="/libraries/branches-and-centers"
               >
                 All locations and hours
                 <ArrowRightIcon className="ml-10 inline-block" width={15} />
@@ -72,7 +72,9 @@ const LibraryFooter = () => {
               <FooterLink href="https://stanford.joinhandshake.com/login">Student job openings</FooterLink>
             </li>
             <li>
-              <FooterLink href="/careers">Careers</FooterLink>
+              <FooterLink href="https://stanford.referrals.selectminds.com/page/university-libraries-855">
+                Careers
+              </FooterLink>
             </li>
           </ul>
         </div>

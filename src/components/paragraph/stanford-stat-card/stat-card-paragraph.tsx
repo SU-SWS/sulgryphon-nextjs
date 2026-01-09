@@ -79,7 +79,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               <h2
                 id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -89,7 +89,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               <h3
                 id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -99,7 +99,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               <h4
                 id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -108,7 +108,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             {headerTag === "div" && (
               <div
                 className={clsx("mb-0", headerClasses, {
-                  "text-24 font-normal": transparentBg,
+                  "text-22 font-normal leading-display lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -148,7 +148,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
                 "text-poppy-dark": allowTextColors && paragraph.suStatStatColor?.color === "d1660f",
                 "text-spirited": allowTextColors && paragraph.suStatStatColor?.color === "e04f39",
                 "text-[40px] @xl:text-[50px] @2xl:text-[60px]": !transparentBg,
-                "fluid-type-3": transparentBg,
+                "text-28 leading-display md:text-[32px] lg:text-[40px]": transparentBg,
               })}
               decimals={decimalPlaces}
               startOnMount={false}
