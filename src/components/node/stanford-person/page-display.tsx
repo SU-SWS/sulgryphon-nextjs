@@ -35,7 +35,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
-        url={node.path || undefined}
+        url={node.path}
         backupDescription={node.suPersonFullTitle || getCleanDescription(node.body?.processed)}
       />
       <InternalHeaderBanner>

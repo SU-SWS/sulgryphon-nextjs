@@ -86,7 +86,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
-        url={node.path || undefined}
+        url={node.path}
         backupDescription={node.suEventSubheadline || getCleanDescription(node.body?.processed)}
       />
       <InternalHeaderBanner>

@@ -4,6 +4,7 @@ import {
   MetaTagValue as MetaTagValueType,
   MetaTagProperty as MetaTagPropertyType,
   StanfordBasicSiteSetting,
+  NodeInterface,
 } from "@/lib/gql/__generated__/drupal.d"
 import {JSX} from "react"
 
@@ -19,7 +20,7 @@ type Props = {
   /**
    * URL of the current page for url metatag.
    */
-  url?: string
+  url?: NodeInterface["path"]
   /**
    * If no description metatag is provided by the backend, use this.
    */

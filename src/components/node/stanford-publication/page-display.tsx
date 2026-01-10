@@ -10,7 +10,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
-        url={node.path || undefined}
+        url={node.path}
         backupDescription={getFirstText(node.suPublicationComponents)}
       />
       {node.suPublicationCitation?.__typename && (
