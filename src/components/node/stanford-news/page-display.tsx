@@ -116,7 +116,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <hr className="mx-auto mb-40 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="centered mx-auto mb-40 table lg:max-w-800">
+        <figure className="centered mx-auto mb-40 table w-full">
           <span className="relative mx-auto block aspect-[16/9]">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
