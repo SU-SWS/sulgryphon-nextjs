@@ -23,7 +23,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
   const leftItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "left")
   const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region !== "left")
 
-  let gridCols = "@9xl:grid-cols-2"
+  let gridCols = "@8xl:grid-cols-2"
   if (config?.column_widths === "33-67") {
     gridCols = "@6xl:grid-cols-1-2"
   } else if (config?.column_widths === "67-33") {
@@ -52,7 +52,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
       })}
     >
       {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
-      <div className={clsx("centered grid w-full gap-45 lg:gap-90", gridCols)} data-columns="2" {...draftProps}>
+      <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2" {...draftProps}>
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}

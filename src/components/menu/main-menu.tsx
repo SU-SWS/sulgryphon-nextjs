@@ -12,6 +12,19 @@ import {useBoolean} from "usehooks-ts"
 import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
 import {getActiveTrail} from "@/lib/drupal/utils"
 import {twMerge} from "tailwind-merge"
+import {sendGAEvent} from "@next/third-parties/google"
+
+// Google Analytics: Track the click of a menu item
+const trackMenuClick = (menuItem: {label: string; url: string; menuLevel?: number; parentMenu?: string}): void => {
+  sendGAEvent("event", "menu_click", {
+    menu_label: menuItem.label,
+    menu_url: menuItem.url,
+    menu_level: menuItem.menuLevel || 1,
+    parent_menu: menuItem.parentMenu || "main",
+    event_category: "navigation",
+    event_action: "click",
+  })
+}
 
 const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -78,6 +91,13 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 <Link
                   className="text-white no-underline hocus:text-white hocus:underline @sm:border-r @sm:border-white @sm:pr-10"
                   href="https://searchworks.stanford.edu/"
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "Searchworks Catalog",
+                      url: "https://searchworks.stanford.edu/",
+                      parentMenu: "quick-links",
+                    })
+                  }
                 >
                   Searchworks Catalog
                 </Link>
@@ -86,6 +106,13 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 <Link
                   className="mr-20 text-white no-underline hocus:text-white hocus:underline"
                   href="https://searchworks.stanford.edu/articles"
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "Articles+",
+                      url: "https://searchworks.stanford.edu/articles",
+                      parentMenu: "quick-links",
+                    })
+                  }
                 >
                   Articles+
                 </Link>
@@ -94,6 +121,13 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 <Link
                   className="mr-20 text-white no-underline hocus:text-white hocus:underline"
                   href="https://mylibrary.stanford.edu/"
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "My Account",
+                      url: "https://mylibrary.stanford.edu/",
+                      parentMenu: "quick-links",
+                    })
+                  }
                 >
                   My Account
                 </Link>
@@ -103,6 +137,13 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                   className="mr-20 text-white no-underline hocus:text-white hocus:underline"
                   href="/all"
                   prefetch={false}
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "Search Results",
+                      url: "/all",
+                      parentMenu: "quick-links",
+                    })
+                  }
                 >
                   Search Results
                 </Link>
@@ -111,12 +152,29 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 <Link
                   className="mr-20 text-white no-underline hocus:text-white hocus:underline"
                   href="/library-accessibility"
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "Accessibility",
+                      url: "/library-accessibility",
+                      parentMenu: "quick-links",
+                    })
+                  }
                 >
                   Accessibility
                 </Link>
               </li>
               <li className="m-0">
-                <Link className="mr-20 text-white no-underline hocus:text-white hocus:underline" href="/contact-us">
+                <Link
+                  className="mr-20 text-white no-underline hocus:text-white hocus:underline"
+                  href="/contact-us"
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "Contact Us",
+                      url: "/contact-us",
+                      parentMenu: "quick-links",
+                    })
+                  }
+                >
                   Contact Us
                 </Link>
               </li>
@@ -124,6 +182,13 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
                 <Link
                   className="text-white no-underline hocus:text-white hocus:underline"
                   href="/support-stanford-libraries"
+                  onClick={() =>
+                    trackMenuClick({
+                      label: "Donate now",
+                      url: "/support-stanford-libraries",
+                      parentMenu: "quick-links",
+                    })
+                  }
                 >
                   Donate now
                 </Link>
@@ -207,12 +272,22 @@ const MenuItem = ({
     return classes.join(" ")
   }
 
+  const handleMenuClick = () => {
+    trackMenuClick({
+      label: title,
+      url: url || "#",
+      menuLevel: menuLevel,
+      parentMenu: "main",
+    })
+  }
+
   return (
     <li ref={ref} className="relative m-0 p-0 lg:flex">
       {url && url.length >= 1 && (
         <Link
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : "#"}
+          onClick={handleMenuClick}
           className={twMerge(
             "flex w-full items-center p-20 text-white no-underline hocus:text-white hocus:underline lg:text-black-true",
             menuLevel > 0 ? "lg:hocus:bg-black-10 lg:hocus:text-archway" : "lg:hocus:text-archway",

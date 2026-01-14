@@ -11,6 +11,7 @@ const SulStudyPlace = ({node}: Props) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
+        url={node.path}
         backupDescription={getCleanDescription(node.sulStudyAdditionalInfo?.processed)}
       />
       Place of Study

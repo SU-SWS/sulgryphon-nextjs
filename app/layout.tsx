@@ -30,8 +30,6 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IE",
-    url: "https://library.stanford.edu",
-    siteName: process.env.NEXT_PUBLIC_SITE_NAME,
   },
   twitter: {
     card: "summary_large_image",
@@ -57,7 +55,7 @@ const RootLayout = async ({children, modal}: {children: ReactNode; modal: ReactN
         </nav>
         {!previewMode && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <>
-            <Script async src="//siteimproveanalytics.com/js/siteanalyze_80352.js" />
+            <Script async src="//siteimproveanalytics.com/js/siteanalyze_6343745.js" />
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
           </>
         )}

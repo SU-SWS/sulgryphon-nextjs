@@ -21,6 +21,7 @@ const StanfordPage = async ({node, ...props}: {node: NodeStanfordPage}) => {
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
+        url={node.path}
         backupDescription={getFirstText(node.suPageComponents)}
       />
       <InternalHeaderBanner>
