@@ -87,7 +87,7 @@ const nextConfig: NextConfig = {
     ]
   },
   async headers() {
-    if (process.env.NEXT_PUBLIC_DOMAIN) {
+    if (process.env.VERCEL_ENV === "production") {
       return []
     }
     return [
