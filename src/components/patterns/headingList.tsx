@@ -55,11 +55,11 @@ const HeadingList = () => {
   }, [])
 
   useEffect(() => {
-    // Initialize page data
-    const h1 = document.querySelector("h1")
-    setPageH1(h1?.textContent?.trim() || "")
-
     const timeoutId = setTimeout(() => {
+      // Get page H1
+      const h1 = document.querySelector("h1")
+      const h1Text = h1?.textContent?.trim() || ""
+
       // First, get all h2 headings
       const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
       const headingTexts = new Set<string>()
@@ -102,7 +102,6 @@ const HeadingList = () => {
           // There's at least one other link with this text
           // (The on-this-page link will be added later, so any existing link means duplicate)
           duplicateLinksMap.add(headingText)
-          console.log(`Duplicate found (heading matches existing link): "${headingText}"`, links)
         }
       })
 
@@ -112,7 +111,6 @@ const HeadingList = () => {
           const uniqueHrefs = new Set(links.map(l => l.href))
           if (uniqueHrefs.size > 1) {
             duplicateLinksMap.add(text)
-            console.log(`Duplicate found (multiple hrefs): "${text}"`, links)
           }
         }
       })
@@ -161,6 +159,8 @@ const HeadingList = () => {
         })
       })
 
+      // Set state once with all data
+      setPageH1(h1Text)
       setHeadings(allHeadings)
 
       // Set up intersection observer
