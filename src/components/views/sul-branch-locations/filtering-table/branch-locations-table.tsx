@@ -15,6 +15,7 @@ const SulBranchLocationTableView = async ({items}: Props) => {
       uuid: item.uuid,
       title: item.title,
       path: item.path,
+      extUrl: item.sulLibraryExtUrl?.url,
       imageUrl: item.suLibraryContactImg?.mediaImage.url,
       email: item.suLibraryEmail,
       phone: item.suLibraryPhone,
