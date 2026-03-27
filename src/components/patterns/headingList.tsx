@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useCallback, useEffect, useMemo, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {twMerge} from "tailwind-merge"
 import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
@@ -29,47 +29,6 @@ const HeadingList = () => {
     return "other"
   }
 
-  // Memoized duplicate links detection
-  const duplicateLinksMap = useMemo(() => {
-    if (typeof document === "undefined") {
-      return new Set<string>()
-    }
-
-    const linkGroups = new Map<string, PageLink[]>()
-
-    document.querySelectorAll("a").forEach(link => {
-      const text = link.textContent?.trim()
-      if (text) {
-        const pageLink: PageLink = {
-          text,
-          href: link.getAttribute("href") || "",
-          context: getPageContext(link),
-        }
-
-        // Group links by text (case-insensitive)
-        const key = text.toLowerCase()
-        if (!linkGroups.has(key)) {
-          linkGroups.set(key, [])
-        }
-        linkGroups.get(key)!.push(pageLink)
-      }
-    })
-
-    // Find duplicates (multiple hrefs or contexts)
-    const duplicates = new Set<string>()
-    linkGroups.forEach((links, text) => {
-      if (links.length > 1) {
-        const uniqueHrefs = new Set(links.map(l => l.href))
-        const uniqueContexts = new Set(links.map(l => l.context))
-        if (uniqueHrefs.size > 1 || uniqueContexts.size > 1) {
-          duplicates.add(text)
-        }
-      }
-    })
-
-    return duplicates
-  }, [])
-
   const debouncedHandleScroll = useDebounceCallback(() => {
     const firstHeading = document.querySelector("#main-content h2:not([data-skip-heading])")
     if (!firstHeading || !activeHeading) return
@@ -96,13 +55,66 @@ const HeadingList = () => {
   }, [])
 
   useEffect(() => {
-    // Initialize page data
-    const h1 = document.querySelector("h1")
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPageH1(h1?.textContent?.trim() || "")
-
     const timeoutId = setTimeout(() => {
+      // Get page H1
+      const h1 = document.querySelector("h1")
+      const h1Text = h1?.textContent?.trim() || ""
+
+      // First, get all h2 headings
       const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
+      const headingTexts = new Set<string>()
+
+      h2Elements.forEach(heading => {
+        const text = heading.textContent?.trim().replace(/\s+/g, " ")
+        if (text) {
+          headingTexts.add(text.toLowerCase())
+        }
+      })
+
+      // Now scan all links on the page
+      const linksByText = new Map<string, PageLink[]>()
+
+      document.querySelectorAll("a").forEach(link => {
+        const text = link.textContent?.trim().replace(/\s+/g, " ")
+        if (text) {
+          const pageLink: PageLink = {
+            text,
+            href: link.getAttribute("href") || "",
+            context: getPageContext(link),
+          }
+
+          const key = text.toLowerCase()
+          if (!linksByText.has(key)) {
+            linksByText.set(key, [])
+          }
+          linksByText.get(key)!.push(pageLink)
+        }
+      })
+
+      // A heading is a duplicate if:
+      // 1. There's already a link with that text elsewhere on the page
+      // 2. OR there are multiple links with that text going to different places
+      const duplicateLinksMap = new Set<string>()
+
+      headingTexts.forEach(headingText => {
+        const links = linksByText.get(headingText)
+        if (links && links.length > 0) {
+          // There's at least one other link with this text
+          // (The on-this-page link will be added later, so any existing link means duplicate)
+          duplicateLinksMap.add(headingText)
+        }
+      })
+
+      // Also check for same text -> different hrefs
+      linksByText.forEach((links, text) => {
+        if (links.length > 1) {
+          const uniqueHrefs = new Set(links.map(l => l.href))
+          if (uniqueHrefs.size > 1) {
+            duplicateLinksMap.add(text)
+          }
+        }
+      })
+
       const allHeadings: Heading[] = []
       const existingIds = new Set<string>()
 
@@ -110,19 +122,17 @@ const HeadingList = () => {
         const headingText = heading.textContent
         if (!headingText) return
 
-        const trimmedText = headingText.trim()
+        const trimmedText = headingText.trim().replace(/\s+/g, " ")
+        const normalizedText = trimmedText.toLowerCase()
 
         // Get or generate a valid ID
         let id = heading.getAttribute("id")
 
-        // If ID exists, regenerate it
         const hasInvalidId = id && (/^[^a-z]/i.test(id) || /[^a-z0-9-_]/i.test(id))
 
         if (!id || hasInvalidId) {
-          // Generate ID from heading text
           id = trimmedText.toLowerCase().replace(/[^a-z0-9]/g, "-")
 
-          // Ensure it starts with a letter
           if (/^[^a-z]/i.test(id)) {
             id = `heading-${id}`
           }
@@ -140,13 +150,17 @@ const HeadingList = () => {
 
         existingIds.add(id)
 
+        const isDupe = duplicateLinksMap.has(normalizedText)
+
         allHeadings.push({
           text: headingText,
           id,
-          isDuplicateLink: duplicateLinksMap.has(trimmedText.toLowerCase()),
+          isDuplicateLink: isDupe,
         })
       })
 
+      // Set state once with all data
+      setPageH1(h1Text)
       setHeadings(allHeadings)
 
       // Set up intersection observer
@@ -171,12 +185,11 @@ const HeadingList = () => {
     }, 250)
 
     return () => clearTimeout(timeoutId)
-  }, [duplicateLinksMap, handleAnchor])
+  }, [handleAnchor])
 
   useEventListener("scroll", debouncedHandleScroll)
   useEventListener("hashchange", handleAnchor)
 
-  // Don't render anything until headings are loaded
   if (headings.length === 0) {
     return null
   }
