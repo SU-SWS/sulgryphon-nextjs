@@ -1186,6 +1186,9 @@ export const FragmentNodeSulLibraryTeaserFragmentDoc = gql`
   suLibraryMapLink {
     ...FragmentLink
   }
+  sulLibraryExtUrl {
+    url
+  }
 }
     ${FragmentNodeInterfaceFragmentDoc}
 ${FragmentMediaImageFragmentDoc}
