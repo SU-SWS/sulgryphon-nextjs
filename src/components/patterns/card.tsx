@@ -42,14 +42,16 @@ const Card = ({
   const Heading: ElementType = headingLevel || "h2"
 
   // Use headerId if provided, otherwise generate one from header
-  const actualHeadingId =
-    headerId ||
-    (typeof header === "string"
+  // Use provided headerId only if it doesn't look like a mangled RSC ID
+  const isValidId = headerId && !headerId.startsWith("_S_")
+  const actualHeadingId = isValidId
+    ? headerId
+    : typeof header === "string"
       ? header
           .toLowerCase()
           .replace(/\s+/g, "-")
           .replace(/[^\w-]/g, "")
-      : undefined)
+      : undefined
 
   const linkAttributes: Record<string, string> = {}
   if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
