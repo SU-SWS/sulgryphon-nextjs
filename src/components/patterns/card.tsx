@@ -41,19 +41,37 @@ const Card = ({
 }: Props) => {
   const Heading: ElementType = headingLevel || "h2"
 
+  // Use headerId if provided, otherwise generate one from header
+  // Use provided headerId only if it doesn't look like a mangled RSC ID
+  const isValidId = headerId && !headerId.startsWith("_S_")
+  const actualHeadingId = isValidId
+    ? headerId
+    : typeof header === "string"
+      ? header
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "")
+      : undefined
+
   const linkAttributes: Record<string, string> = {}
   if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
 
-  if (headerId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === header) {
-    linkAttributes["aria-labelledby"] = headerId
+  if (actualHeadingId && link?.attributes?.ariaLabel && link.attributes.ariaLabel === header) {
+    linkAttributes["aria-labelledby"] = actualHeadingId
     delete linkAttributes["aria-label"]
   }
+
+  // Extract the header text for aria-label
+  const headerText = typeof header === "string" ? header : undefined
+
+  // Remove aria-labelledby and aria-label from props to prevent conflicts
+  const {["aria-labelledby"]: removedLabelledBy, ["aria-label"]: removedLabel, ...restProps} = props
 
   const CardWrapper = header ? "article" : "div"
   return (
     <CardWrapper
-      {...props}
-      aria-labelledby={header ? headerId : undefined}
+      {...restProps}
+      aria-label={headerText}
       className={twMerge(
         "card block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
         props.className
@@ -79,7 +97,7 @@ const Card = ({
 
         {header && (
           <Heading
-            id={headerId}
+            id={actualHeadingId}
             className={twMerge("mb-03em text-24 font-bold tracking-[-0.2px]", hideHeading && "sr-only")}
           >
             {header}
