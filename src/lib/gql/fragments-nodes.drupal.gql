@@ -370,6 +370,9 @@ fragment FragmentNodeSulLibraryTeaser on NodeSulLibrary {
     suLibraryMapLink {
         ...FragmentLink
     }
+    sulLibraryExtUrl {
+        url
+    }
 }
 
 fragment FragmentNodeSulStudyPlaceTeaser on NodeSulStudyPlace {
