@@ -19,7 +19,18 @@ import {GraphQLError} from "graphql/error"
 const githubBranch = process.env.VERCEL_GIT_COMMIT_REF || "local"
 
 export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, isPreviewMode?: boolean) => {
-  requestConfig.headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
+  const headers = buildHeaders(requestConfig.headers as HeadersInit, isPreviewMode)
+
+  if (process.env.DRUPAL_REQUEST_HEADER) {
+    try {
+      const extraHeaders: Record<string, string> = JSON.parse(process.env.DRUPAL_REQUEST_HEADER)
+      Object.entries(extraHeaders).forEach(([name, value]) => headers.set(name, value))
+    } catch (_e) {
+      console.warn("DRUPAL_REQUEST_HEADER is not valid JSON, skipping.")
+    }
+  }
+
+  requestConfig.headers = headers
 
   const client = new GraphQLClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + "/graphql", {
     ...requestConfig,
