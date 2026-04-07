@@ -19,6 +19,7 @@ export type BranchLocation = {
   uuid: NodeSulLibrary["uuid"]
   title: NodeSulLibrary["title"]
   path: NodeSulLibrary["path"]
+  extUrl?: Maybe<string>
   imageUrl?: Maybe<string>
   email?: NodeSulLibrary["suLibraryEmail"]
   phone?: NodeSulLibrary["suLibraryPhone"]
@@ -105,7 +106,8 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   )
 }
 
-const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, hoursId}: BranchLocation) => {
+const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, address, hoursId}: BranchLocation) => {
+  const href = extUrl || path || "#"
   return (
     <Tr
       key={uuid}
@@ -114,7 +116,7 @@ const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, h
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 xl:mr-25 xl:table-cell xl:w-[125px] xl:pr-16 xl:align-middle">
         {imageUrl && (
           <Link
-            href={path || "#"}
+            href={href}
             className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] xl:max-w-[125px]"
             aria-hidden="true"
             tabIndex={-1}
@@ -128,7 +130,7 @@ const TableRow = ({uuid, imageUrl, path, title, phone, email, mapUrl, address, h
         className="flex w-auto px-0 text-center xl:rs-pr-5 md:text-left xl:table-cell xl:w-1/4 xl:border-b xl:border-black-40 xl:pr-20 xl:align-middle"
       >
         <Link
-          href={path || "#"}
+          href={href}
           className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
         >
           <span className="mb-0 font-sans text-20 font-semibold">{title}</span>
