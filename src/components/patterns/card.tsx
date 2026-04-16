@@ -79,7 +79,7 @@ const Card = ({
     >
       {image && (
         <div className="relative h-fit w-full">
-          <div className="-z-1 relative aspect-[16/9]">{image}</div>
+          <div className="relative aspect-[16/9]">{image}</div>
           {caption && (
             <div className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
               <div className="mx-auto w-fit text-16 font-medium leading-normal text-white">{caption}</div>
