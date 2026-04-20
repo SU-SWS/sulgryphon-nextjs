@@ -12,6 +12,7 @@ export type ParagraphBehaviors = {
       top_padding?: "none" | "more"
       heading?: string
       heading_level?: "h2" | "h3" | "h4"
+      display_heading_gradient?: Maybe<boolean>
     }
     parent_uuid?: string
     region?: string
