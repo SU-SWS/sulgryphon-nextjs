@@ -54,7 +54,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={leftItems}
           fullWidth={fullWidth}
           className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
-            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+            "relative after:absolute after:-right-45 after:top-0 after:h-full lg:after:w-1 lg:after:bg-black":
               config?.vertical_dividers,
           })}
         />
@@ -62,7 +62,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={mainItems}
           fullWidth={fullWidth}
           className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
-            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+            "relative after:absolute after:-right-45 after:top-0 after:h-full lg:after:w-1 lg:after:bg-black":
               config?.vertical_dividers,
           })}
         />
