@@ -51,7 +51,13 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
-      {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
+      {config.heading && (
+        <SectionHeading
+          heading={config.heading}
+          headerTag={config.heading_level}
+          headingGradient={!!config.display_heading_gradient}
+        />
+      )}
       <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2" {...draftProps}>
         <OneColumn
           items={leftItems}
