@@ -44,7 +44,13 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
-      {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
+      {config.heading && (
+        <SectionHeading
+          heading={config.heading}
+          headerTag={config.heading_level}
+          headingGradient={!!config.display_heading_gradient}
+        />
+      )}
       <div
         className={clsx("centered flex w-full flex-col justify-between gap-40 md:flex-row md:flex-wrap lg:flex-nowrap")}
         data-columns="3"
