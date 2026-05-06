@@ -44,7 +44,13 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
         "bg-[#f7ecde]": config?.bg_color === "f7ecde",
       })}
     >
-      {config.heading && <SectionHeading heading={config.heading} headerTag={config.heading_level} />}
+      {config.heading && (
+        <SectionHeading
+          heading={config.heading}
+          headerTag={config.heading_level}
+          headingGradient={!!config.display_heading_gradient}
+        />
+      )}
       <div
         className={clsx("centered flex w-full flex-col justify-between gap-40 md:flex-row md:flex-wrap lg:flex-nowrap")}
         data-columns="3"
@@ -54,7 +60,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={leftItems}
           fullWidth={fullWidth}
           className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
-            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+            "relative after:absolute after:-right-45 after:top-0 after:h-full md:after:w-1 md:after:bg-black":
               config?.vertical_dividers,
           })}
         />
@@ -62,7 +68,7 @@ const ThreeColumn = async ({items, fullWidth = true, config}: Props) => {
           items={mainItems}
           fullWidth={fullWidth}
           className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
-            "after:contents('') relative after:absolute after:-right-45 after:top-0 after:h-full after:w-1 after:bg-black":
+            "relative after:absolute after:-right-45 after:top-0 after:h-full lg:after:w-1 lg:after:bg-black":
               config?.vertical_dividers,
           })}
         />

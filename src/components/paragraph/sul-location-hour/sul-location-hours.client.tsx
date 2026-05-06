@@ -63,6 +63,7 @@ const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => 
               alt=""
               fill
               sizes="500px"
+              aria-hidden="true"
             />
             {alert && (
               <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">

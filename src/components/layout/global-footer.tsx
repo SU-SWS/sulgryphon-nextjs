@@ -19,7 +19,7 @@ const GlobalFooter = () => {
                 </a>
               </li>
               <li className="sm:mr-10 md:mr-20 lg:mr-27">
-                <a rel="nofollow" href="https://visit.stanford.edu/plan/">
+                <a rel="nofollow" href="https://visit.stanford.edu/">
                   {" "}
                   Maps &amp; Directions
                 </a>
