@@ -2,6 +2,7 @@
 
 import {FormEvent, HTMLAttributes, Suspense, useId, useRef} from "react"
 import {useRouter, useSearchParams} from "next/navigation"
+import HoneypotField from "@/components/patterns/elements/honeypot-field"
 
 type FormProps = HTMLAttributes<HTMLDivElement> & {
   action: string
@@ -21,7 +22,6 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
   const inputRef = useRef<HTMLInputElement>(null)
   const inputId = useId()
   const honeypotRef = useRef<HTMLInputElement>(null)
-  const honeypotId = useId()
   inputProps = {
     id: inputId + "-search",
     className: "input w-full p-10 rounded",
@@ -44,10 +44,14 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
       return
     }
 
+    // Disabled fields are excluded from form serialization, so this keeps
+    // the empty honeypot out of the submitted query string.
+    if (honeypotRef.current) honeypotRef.current.disabled = true
+
     if (action === "/search") {
       e.preventDefault()
       const newSearch = inputRef.current?.value
-      router.push(`/search?q=${newSearch}`)
+      router.push(`/search?q=${encodeURIComponent(newSearch ?? "")}`)
     }
     // action="/all": honeypot empty -> native form submission proceeds as today.
   }
@@ -67,22 +71,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
           {/* eslint-disable-next-line react-hooks/refs */}
           <input {...inputProps} ref={inputRef} />
         </div>
-        {/* Honeypot bot trap. Hidden both visually and from assistive tech
-            (aria-hidden + off-screen + tabIndex -1 + autoComplete off). Humans never
-            populate it; see formSubmit for the block. Do NOT use sr-only here — that
-            is announced by screen readers. */}
-        <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
-          <label htmlFor={honeypotId}>Leave this field blank</label>
-          <input
-            id={honeypotId}
-            type="text"
-            name="search"
-            tabIndex={-1}
-            autoComplete="off"
-            defaultValue=""
-            ref={honeypotRef}
-          />
-        </div>
+        <HoneypotField ref={honeypotRef} />
         <button
           type="submit"
           className="rounded-full bg-digital-red p-15 text-16 text-white transition hover:bg-cardinal-red-dark hocus:underline md:text-18"

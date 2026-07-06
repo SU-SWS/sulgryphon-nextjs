@@ -3,6 +3,7 @@ import {HTMLAttributes, useEffect, useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 import {sendGAEvent} from "@next/third-parties/google"
+import HoneypotField from "@/components/patterns/elements/honeypot-field"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]
@@ -29,11 +30,19 @@ export const SulHomeBannerFormClient = () => {
   const [formAction, setFormAction] = useState("/all")
   const inputId = useId()
   const formRef = useRef<HTMLFormElement>(null)
+  const honeypotRef = useRef<HTMLInputElement>(null)
 
   // Google Analytics: Track the selected search option when the user submits the form.
   // Helps measure actual search behavior by logging which resource option was used.
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
+
+    // Bot trap: a human never fills the visually/SR-hidden honeypot field.
+    if (honeypotRef.current?.value) return
+
+    // Disabled fields are excluded from form serialization, so this keeps
+    // the empty honeypot out of the submitted query string.
+    if (honeypotRef.current) honeypotRef.current.disabled = true
 
     sendGAEvent("event", "search_option_selected", {
       search_option: formAction,
@@ -87,6 +96,7 @@ export const SulHomeBannerFormClient = () => {
           <input type="hidden" name="f[eds_search_limiters_facet][]" value="Direct access to full text" />
         )}
       </div>
+      <HoneypotField ref={honeypotRef} />
       <button
         className="button relative m-0 block h-40 w-40 shrink-0 p-0 md:h-auto md:w-auto md:px-20 md:py-10"
         type="submit"
