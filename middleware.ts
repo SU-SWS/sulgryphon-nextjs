@@ -37,14 +37,18 @@ export const config = {
 // form - neither of which the client-side honeypot check in
 // search-form.tsx / sul-home-banner.client.tsx can see.
 export function middleware(request: NextRequest) {
-  const honeypot = request.nextUrl.searchParams.get(HONEYPOT_FIELD_NAME)
+  // getAll, not get: get() only returns the first occurrence of a repeated
+  // query param, so a crafted "?_hp=&_hp=spam" would let the empty first
+  // value slip past a get()-based check while the real payload in the
+  // second occurrence went unseen.
+  const honeypotValues = request.nextUrl.searchParams.getAll(HONEYPOT_FIELD_NAME)
 
-  if (honeypot === null) return NextResponse.next()
+  if (honeypotValues.length === 0) return NextResponse.next()
 
   // Match the client-side check (`if (honeypotRef.current?.value)`) exactly:
   // any non-empty value, including whitespace-only, is treated as filled.
   // Only the truly empty string is the "JS-disabled legit visitor" case.
-  if (honeypot !== "") {
+  if (honeypotValues.some(v => v !== "")) {
     return new NextResponse(null, {status: 403})
   }
 
