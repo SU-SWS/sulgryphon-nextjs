@@ -1,10 +1,7 @@
 "use client"
 
 import {Ref, useId} from "react"
-
-// Not "search", "q", etc: those are real params the external /all and
-// searchworks.stanford.edu targets may interpret, so a generic name risks colliding.
-export const HONEYPOT_FIELD_NAME = "_hp"
+import {HONEYPOT_FIELD_NAME} from "@/lib/honeypot"
 
 const HoneypotField = ({ref}: {ref: Ref<HTMLInputElement>}) => {
   const honeypotId = useId()

@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server"
-import {HONEYPOT_FIELD_NAME} from "@/components/patterns/elements/honeypot-field"
+import {HONEYPOT_FIELD_NAME} from "@/lib/honeypot"
 
 // Runs ahead of the /all rewrite to discover.stanford.edu (see vercel.json),
 // catching JS-disabled bots and direct hits on /all that never touched the
@@ -12,7 +12,10 @@ export const handle = (request: NextRequest): NextResponse => {
 
   if (honeypot === null) return NextResponse.next()
 
-  if (honeypot.trim()) {
+  // Match the client-side check (`if (honeypotRef.current?.value)`) exactly:
+  // any non-empty value, including whitespace-only, is treated as filled.
+  // Only the truly empty string is the "JS-disabled legit visitor" case.
+  if (honeypot !== "") {
     return new NextResponse(null, {status: 403})
   }
 
