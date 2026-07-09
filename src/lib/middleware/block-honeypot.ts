@@ -8,14 +8,14 @@ import {HONEYPOT_FIELD_NAME} from "@/lib/honeypot"
 export const matcher = ["/all", "/all/:path*"]
 
 export const handle = (request: NextRequest): NextResponse => {
-  const honeypot = request.nextUrl.searchParams.get(HONEYPOT_FIELD_NAME)
+  const honeypotValues = request.nextUrl.searchParams.getAll(HONEYPOT_FIELD_NAME)
 
-  if (honeypot === null) return NextResponse.next()
+  if (honeypotValues.length === 0) return NextResponse.next()
 
   // Match the client-side check (`if (honeypotRef.current?.value)`) exactly:
   // any non-empty value, including whitespace-only, is treated as filled.
   // Only the truly empty string is the "JS-disabled legit visitor" case.
-  if (honeypot !== "") {
+  if (honeypotValues.some(v => v !== "")) {
     return new NextResponse(null, {status: 403})
   }
 
