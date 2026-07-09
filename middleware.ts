@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server"
-import * as blockHoneypot from "@/lib/middleware/block-honeypot"
+import {HONEYPOT_FIELD_NAME} from "@/lib/honeypot"
 
 // Next.js 16 deprecated this file convention in favor of proxy.ts, but it
 // is not usable here: on the pinned 16.0.10, with this repo's webpack
@@ -16,31 +16,42 @@ import * as blockHoneypot from "@/lib/middleware/block-honeypot"
 // on the next Next.js upgrade (or if this repo ever switches to
 // Turbopack, which this gap doesn't affect).
 
-// To add another concern: create src/lib/middleware/<name>.ts exporting
-// `matcher` (path patterns) and `handle` (request => response), then list
-// it in `handlers` below. Only the first handler whose matcher matches the
-// request runs.
-const handlers = [blockHoneypot]
-
-const matchesPath = (pathname: string, pattern: string): boolean => {
-  if (pattern.endsWith("/:path*")) {
-    const prefix = pattern.slice(0, -"/:path*".length)
-    return pathname === prefix || pathname.startsWith(`${prefix}/`)
-  }
-  return pathname === pattern
-}
-
-// Next.js statically parses this at build time and only accepts literal
-// values here (see https://nextjs.org/docs/messages/invalid-page-config) -
-// it can't evaluate handlers.flatMap(...), or even a reference to an
-// imported/local constant. Keep this list in sync by hand with the
-// `matcher` each handler above exports; the handlers themselves use their
-// own `matcher` for the actual per-request dispatch below.
+// `has` scopes invocation to requests that actually carry the honeypot
+// param. Legit JS-enabled submissions never have it (search-form.tsx /
+// sul-home-banner.client.tsx disable the field before the browser submits),
+// so normal search traffic skips middleware entirely - this only runs for
+// the cases that need a decision: a bot that filled it, or a JS-disabled
+// visitor whose empty _hp is still in the URL. Keeps invocation volume (and
+// cost) tied to suspicious/edge-case traffic, not all of /all.
+//
+// The "_hp" below must stay a literal, not HONEYPOT_FIELD_NAME - Next.js
+// statically parses `config` at build time and silently ignores matcher
+// values that aren't literals (confirmed earlier: it can't even evaluate a
+// reference to an imported constant, let alone a computed expression).
 export const config = {
-  matcher: ["/all", "/all/:path*"],
+  matcher: [{source: "/all/:path*", has: [{type: "query", key: "_hp"}]}],
 }
 
+// Runs ahead of the /all rewrite to discover.stanford.edu, catching
+// JS-disabled bots and direct hits on /all that never touched the search
+// form - neither of which the client-side honeypot check in
+// search-form.tsx / sul-home-banner.client.tsx can see.
 export function middleware(request: NextRequest) {
-  const handler = handlers.find(({matcher}) => matcher.some(pattern => matchesPath(request.nextUrl.pathname, pattern)))
-  return handler ? handler.handle(request) : NextResponse.next()
+  const honeypot = request.nextUrl.searchParams.get(HONEYPOT_FIELD_NAME)
+
+  if (honeypot === null) return NextResponse.next()
+
+  // Match the client-side check (`if (honeypotRef.current?.value)`) exactly:
+  // any non-empty value, including whitespace-only, is treated as filled.
+  // Only the truly empty string is the "JS-disabled legit visitor" case.
+  if (honeypot !== "") {
+    return new NextResponse(null, {status: 403})
+  }
+
+  // JS-disabled visitor: the client-side "disable before submit" trick never
+  // ran, so an empty honeypot value is still in the querystring. Drop it so
+  // Bento gets the same clean URL a JS-enabled visitor would send.
+  const url = request.nextUrl.clone()
+  url.searchParams.delete(HONEYPOT_FIELD_NAME)
+  return NextResponse.rewrite(url)
 }
