@@ -13,7 +13,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   config?: NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"]
 }
 
-const OneColumn = async ({items, fullWidth = true, config, className}: Props) => {
+const OneColumn = async ({items, fullWidth, config, className}: Props) => {
   const draftProps: Record<string, string> = {}
   if (await isPreviewMode()) {
     draftProps["data-columns"] = "1"
@@ -26,6 +26,7 @@ const OneColumn = async ({items, fullWidth = true, config, className}: Props) =>
           {
             "pb-20 pt-20": !!config?.bg_color,
             "pb-90 pt-40": config?.bg_color,
+            "px-30": config?.bg_color && !fullWidth,
             "pt-0": config?.top_padding === "none",
             "pt-60": config?.top_padding === "more",
             "mb-0": config?.bottom_margin === "none",
