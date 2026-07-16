@@ -38,7 +38,8 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
   return (
     <div
       className={clsx({
-        "px-5 pb-20 pt-20": !!config?.bg_color,
+        "pb-20 pt-20": !!config?.bg_color,
+        "px-30": config?.bg_color && !fullWidth,
         "pt-0": config?.top_padding === "none",
         "pt-40": config?.top_padding === "more",
         "mb-0": config?.bottom_margin === "none",
