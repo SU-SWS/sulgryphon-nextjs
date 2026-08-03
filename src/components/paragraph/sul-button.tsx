@@ -18,7 +18,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   fullWidth?: Maybe<boolean>
 }
 
-const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props}: Props) => {
+const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Props) => {
   const ref = useRef<HTMLDivElement>(null)
   const isCentered = useIsCentered(ref)
 
