@@ -18,7 +18,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   fullWidth?: Maybe<boolean>
 }
 
-const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props}: Props) => {
+const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Props) => {
   const ref = useRef<HTMLDivElement>(null)
   const isCentered = useIsCentered(ref)
 
@@ -39,7 +39,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
         "relative",
         clsx({
           "w-full": !fullWidth || !isCentered || isCtaVariant,
-          "full-screen": (fullWidth || isCentered) && !isCtaVariant,
+          "full-screen": fullWidth && isCentered && !isCtaVariant,
           centered: isCtaVariant,
         })
       )}
@@ -52,7 +52,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth = true, ...props
           clsx({
             "bg-black-true": isBlackBackground,
             "bg-black-10": !isBlackBackground,
-            "w-screen": (fullWidth || isCentered) && !isCtaVariant,
+            "w-screen": fullWidth && isCentered && !isCtaVariant,
             "h-fit w-fit rounded border-2 border-black-10 bg-fog-light px-10 py-6 lg:ml-auto": isCtaVariant,
           })
         )}
