@@ -67,11 +67,7 @@ const GlobalFooter = () => {
                 </a>
               </li>
               <li className="sm:mr-10 md:mr-20 lg:mr-27">
-                <a
-                  rel="nofollow"
-                  href="https://bulletin.stanford.edu/pages/c7vDgeOuJIfpZe8GKmW3"
-                  title="Non-discrimination policy"
-                >
+                <a rel="nofollow" href="https://non-discrimination.stanford.edu/" title="Non-discrimination policy">
                   Non-Discrimination
                 </a>
               </li>
