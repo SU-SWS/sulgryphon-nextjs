@@ -3,4 +3,5 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /all/
+Disallow: /all?
 crawl-delay: 30
