@@ -1514,6 +1514,7 @@ export type NodeStanfordEventSeriesSuEventSeriesComponentsUnion =
   | ParagraphStanfordEntity
   | ParagraphStanfordFaq
   | ParagraphStanfordGallery
+  | ParagraphStanfordLayout
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
   | ParagraphStanfordSpacer
@@ -1894,6 +1895,7 @@ export type NodeStanfordOpportunitySuOppComponentsUnion =
   | ParagraphStanfordEntity
   | ParagraphStanfordFaq
   | ParagraphStanfordGallery
+  | ParagraphStanfordLayout
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
   | ParagraphStanfordSpacer
@@ -2305,6 +2307,7 @@ export type NodeStanfordPublicationSuPublicationComponentsUnion =
   | ParagraphStanfordEntity
   | ParagraphStanfordFaq
   | ParagraphStanfordGallery
+  | ParagraphStanfordLayout
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
   | ParagraphStanfordSpacer
@@ -2814,6 +2817,26 @@ export type ParagraphStanfordGallery = LayoutParagraphsInterface &
     uuid: Scalars["ID"]["output"]
   }
 
+/** Entity type paragraph. */
+export type ParagraphStanfordLayout = LayoutParagraphsInterface &
+  ParagraphInterface & {
+    __typename?: "ParagraphStanfordLayout"
+    /** Paragraph Behavior Settings. */
+    behaviors?: Maybe<Scalars["String"]["output"]>
+    /** The layout information for this paragraph. */
+    composition: LayoutParagraphs
+    /** The time that the Paragraph was created. */
+    created: DateTime
+    /** The entity ID. */
+    id: Scalars["ID"]["output"]
+    /** The paragraphs entity language code. */
+    langcode: Language
+    /** Published */
+    status: Scalars["Boolean"]["output"]
+    /** The Universally Unique IDentifier (UUID). */
+    uuid: Scalars["ID"]["output"]
+  }
+
 /** Choose a list to display various items dynamically. */
 export type ParagraphStanfordList = LayoutParagraphsInterface &
   ParagraphInterface & {
@@ -3273,6 +3296,7 @@ export type ParagraphUnion =
   | ParagraphStanfordFaq
   | ParagraphStanfordFilteredList
   | ParagraphStanfordGallery
+  | ParagraphStanfordLayout
   | ParagraphStanfordList
   | ParagraphStanfordMediaCaption
   | ParagraphStanfordPageTitleBanner
@@ -6710,6 +6734,7 @@ export type NodeQuery = {
                 } | null
               }> | null
             }
+          | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
           | {
               __typename: "ParagraphStanfordList"
               uuid: string
@@ -8684,6 +8709,7 @@ export type NodeQuery = {
                 } | null
               }> | null
             }
+          | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
           | {
               __typename: "ParagraphStanfordList"
               uuid: string
@@ -11012,6 +11038,7 @@ export type ConfigPagesQuery = {
       suSiteAlgoliaId?: string | null
       suSiteAlgoliaIndex?: string | null
       suSiteAlgoliaSearch?: string | null
+      suSiteAlgoliaUi?: boolean | null
       suSiteDropdowns?: boolean | null
       suSiteMenuLevels?: number | null
       suSiteName?: string | null
@@ -15193,6 +15220,7 @@ export type FragmentNodeStanfordEventSeriesFragment = {
           } | null
         }> | null
       }
+    | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordList"
         uuid: string
@@ -16429,6 +16457,7 @@ export type FragmentNodeStanfordPublicationFragment = {
           } | null
         }> | null
       }
+    | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordList"
         uuid: string
@@ -17465,6 +17494,7 @@ type FragmentNodeUnion_NodeStanfordEventSeries_Fragment = {
           } | null
         }> | null
       }
+    | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordList"
         uuid: string
@@ -19312,6 +19342,7 @@ type FragmentNodeUnion_NodeStanfordPublication_Fragment = {
           } | null
         }> | null
       }
+    | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
     | {
         __typename: "ParagraphStanfordList"
         uuid: string
@@ -21682,6 +21713,13 @@ type FragmentParagraphInterface_ParagraphStanfordGallery_Fragment = {
   status: boolean
 }
 
+type FragmentParagraphInterface_ParagraphStanfordLayout_Fragment = {
+  __typename: "ParagraphStanfordLayout"
+  uuid: string
+  behaviors?: string | null
+  status: boolean
+}
+
 type FragmentParagraphInterface_ParagraphStanfordList_Fragment = {
   __typename: "ParagraphStanfordList"
   uuid: string
@@ -21798,6 +21836,7 @@ export type FragmentParagraphInterfaceFragment =
   | FragmentParagraphInterface_ParagraphStanfordFaq_Fragment
   | FragmentParagraphInterface_ParagraphStanfordFilteredList_Fragment
   | FragmentParagraphInterface_ParagraphStanfordGallery_Fragment
+  | FragmentParagraphInterface_ParagraphStanfordLayout_Fragment
   | FragmentParagraphInterface_ParagraphStanfordList_Fragment
   | FragmentParagraphInterface_ParagraphStanfordMediaCaption_Fragment
   | FragmentParagraphInterface_ParagraphStanfordPageTitleBanner_Fragment
@@ -22568,6 +22607,13 @@ type FragmentParagraphUnion_ParagraphStanfordGallery_Fragment = {
   }> | null
 }
 
+type FragmentParagraphUnion_ParagraphStanfordLayout_Fragment = {
+  __typename: "ParagraphStanfordLayout"
+  uuid: string
+  behaviors?: string | null
+  status: boolean
+}
+
 type FragmentParagraphUnion_ParagraphStanfordList_Fragment = {
   __typename: "ParagraphStanfordList"
   uuid: string
@@ -22874,6 +22920,7 @@ export type FragmentParagraphUnionFragment =
   | FragmentParagraphUnion_ParagraphStanfordFaq_Fragment
   | FragmentParagraphUnion_ParagraphStanfordFilteredList_Fragment
   | FragmentParagraphUnion_ParagraphStanfordGallery_Fragment
+  | FragmentParagraphUnion_ParagraphStanfordLayout_Fragment
   | FragmentParagraphUnion_ParagraphStanfordList_Fragment
   | FragmentParagraphUnion_ParagraphStanfordMediaCaption_Fragment
   | FragmentParagraphUnion_ParagraphStanfordPageTitleBanner_Fragment
@@ -24006,6 +24053,7 @@ export type RouteQuery = {
                       } | null
                     }> | null
                   }
+                | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
                 | {
                     __typename: "ParagraphStanfordList"
                     uuid: string
@@ -26173,6 +26221,7 @@ export type RouteQuery = {
                       } | null
                     }> | null
                   }
+                | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
                 | {
                     __typename: "ParagraphStanfordList"
                     uuid: string
@@ -30148,6 +30197,7 @@ export type SearchQuery = {
                   } | null
                 }> | null
               }
+            | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
             | {
                 __typename: "ParagraphStanfordList"
                 uuid: string
@@ -32226,6 +32276,7 @@ export type SearchQuery = {
                   } | null
                 }> | null
               }
+            | {__typename: "ParagraphStanfordLayout"; uuid: string; behaviors?: string | null; status: boolean}
             | {
                 __typename: "ParagraphStanfordList"
                 uuid: string

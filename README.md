@@ -128,6 +128,17 @@ Use the hotfix workflow for urgent production bug fixes when there are pending c
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Site Search (Algolia)
+
+`/search` uses Algolia InstantSearch when credentials resolve, otherwise it falls back to the
+Drupal database search (GraphQL view `search`). Credentials resolve in this order:
+
+1. Environment variables `ALGOLIA_ID`, `ALGOLIA_INDEX`, `ALGOLIA_KEY` (search-only key) — all three required.
+2. Drupal → Site Settings → "Algolia Searching UI" checked, plus Application ID, Search Index and Search Only Key.
+3. Neither → database search.
+
+Bento (`/all`) is unaffected; it queries Drupal JSON:API directly.
+
 ## Getting Started
 
 ### Setup Local Environment Variables:
