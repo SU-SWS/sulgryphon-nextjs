@@ -1,8 +1,7 @@
 "use client"
 
 import {liteClient} from "algoliasearch/lite"
-import type {LiteClient, SearchResponse, SearchResponses} from "algoliasearch/lite"
-import {Configure, useInfiniteHits, useInstantSearch, useSearchBox} from "react-instantsearch"
+import {useInfiniteHits, useInstantSearch, useSearchBox} from "react-instantsearch"
 import {InstantSearchNext} from "react-instantsearch-nextjs"
 import {usePathname} from "next/navigation"
 import {useEffect, useMemo, useRef, useState} from "react"
@@ -15,129 +14,10 @@ type Props = {
   apiKey: string
 }
 
-type SearchMethodParams = Parameters<LiteClient["search"]>[0]
-type SearchRequestOptions = NonNullable<Parameters<LiteClient["search"]>[1]>
-
-const HITS_PER_PAGE = 12
-
-// Only the attributes the hit component renders.
-const ATTRIBUTES_TO_RETRIEVE = ["title", "url", "summary", "updated"]
-const ATTRIBUTES_TO_SNIPPET = ["html:30"]
-// Algolia's maximum for the `query` parameter.
-const MAX_QUERY_BYTES = 512
-
-// A minimal empty response. Every field but `hits` is optional on
-// SearchResponse, but we fill in the common ones so widgets relying on them
-// behave the same as a real "no results" response.
-const emptyResponse = (query = ""): SearchResponse => ({
-  hits: [],
-  nbHits: 0,
-  nbPages: 0,
-  page: 0,
-  hitsPerPage: 0,
-  processingTimeMS: 0,
-  exhaustiveNbHits: true,
-  query,
-  params: "",
-})
-
-// `__isArtificial` is instantsearch.js's flag for responses that did not come from Algolia.
-type SsrFailedResponse = SearchResponse & {__ssrFailed: true; __isArtificial: true}
-
-const getRequestQuery = (request: unknown): string | undefined => {
-  if (!request || typeof request !== "object") return undefined
-  const {query, params} = request as {query?: unknown; params?: unknown}
-  if (typeof query === "string") return query
-  if (typeof params === "string") return new URLSearchParams(params).get("query") ?? undefined
-  if (params && typeof params === "object") {
-    const nestedQuery = (params as {query?: unknown}).query
-    if (typeof nestedQuery === "string") return nestedQuery
-  }
-  return undefined
-}
-
-// Truncate to at most `max` UTF-8 bytes without splitting a code point (surrogate pair).
-const clampToBytes = (value: string, max: number): string => {
-  const encoder = new TextEncoder()
-  if (encoder.encode(value).length <= max) return value
-  let bytes = 0
-  let clamped = ""
-  for (const char of value) {
-    bytes += encoder.encode(char).length
-    if (bytes > max) break
-    clamped += char
-  }
-  return clamped
-}
-
-// Return a copy of the request with its query replaced, in whichever of the shapes
-// getRequestQuery() the request uses.
-const withRequestQuery = <T,>(request: T, query: string): T => {
-  if (!request || typeof request !== "object") return request
-  const {query: flatQuery, params} = request as {query?: unknown; params?: unknown}
-  if (typeof flatQuery === "string") return {...request, query}
-  if (typeof params === "string") {
-    const searchParams = new URLSearchParams(params)
-    searchParams.set("query", query)
-    return {...request, params: searchParams.toString()}
-  }
-  if (params && typeof params === "object" && typeof (params as {query?: unknown}).query === "string") {
-    return {...request, params: {...params, query}}
-  }
-  return request
-}
-
 const AlgoliaSearch = ({appId, indexName, apiKey}: Props) => {
   const pathname = usePathname()
-  // A new client per render makes InstantSearch re-register every
-  // widget on each render (the summer.stanford.edu render-loop/OOM bug).
-  const searchClient = useMemo<LiteClient>(() => {
-    const client = liteClient(appId, apiKey)
-    // Patch `search` in place the way instantsearch's hydrateSearchClient does rather than
-    // spreading the client into a new object.
-    const originalSearch = client.search.bind(client)
-    client.search = function search<T>(
-      searchMethodParams: SearchMethodParams,
-      requestOptions?: SearchRequestOptions
-    ): Promise<SearchResponses<T>> {
-      const requests = Array.isArray(searchMethodParams) ? searchMethodParams : searchMethodParams.requests
-
-      // never hit Algolia for an empty query, e.g. the
-      // bare /search page load before the visitor has typed anything.
-      if (requests.every(request => !getRequestQuery(request)?.trim())) {
-        return Promise.resolve({results: requests.map(() => emptyResponse())} as SearchResponses<T>)
-      }
-
-      // Clamp over-long queries to Algolia's 512-byte limit rather than letting it answer 400
-      // The URL and the input keep the query as typed; only what is sent is shortened.
-      const clampedRequests = requests.map(request => {
-        const query = getRequestQuery(request)
-        if (query === undefined) return request
-        const clamped = clampToBytes(query, MAX_QUERY_BYTES)
-        return clamped === query ? request : withRequestQuery(request, clamped)
-      })
-      const clampedParams = (
-        Array.isArray(searchMethodParams) ? clampedRequests : {...searchMethodParams, requests: clampedRequests}
-      ) as SearchMethodParams
-
-      return originalSearch<T>(clampedParams, requestOptions).catch((error: unknown) => {
-        if (typeof window !== "undefined") throw error
-
-        // react-instantsearch-nextjs's InitializePromise.waitForResults() only
-        // listens for a 'result' event; there's no 'error' path during SSR. Without this,
-        // a bad key or network failure means the promise never settles, the Suspense
-        // boundary never streams, and the request hangs until maxDuration.
-        console.error("Algolia search failed during SSR:", error instanceof Error ? error.message : error)
-        const results: SsrFailedResponse[] = requests.map(request => ({
-          ...emptyResponse(getRequestQuery(request) ?? ""),
-          __ssrFailed: true,
-          __isArtificial: true,
-        }))
-        return {results} as SearchResponses<T>
-      })
-    }
-    return client
-  }, [appId, apiKey])
+  // Memoised so InstantSearch isn't handed a brand new client on every render.
+  const searchClient = useMemo(() => liteClient(appId, apiKey), [appId, apiKey])
 
   return (
     <InstantSearchNext
@@ -162,13 +42,6 @@ const AlgoliaSearch = ({appId, indexName, apiKey}: Props) => {
         },
       }}
     >
-      <Configure
-        hitsPerPage={HITS_PER_PAGE}
-        attributesToRetrieve={ATTRIBUTES_TO_RETRIEVE}
-        attributesToHighlight={[]}
-        attributesToSnippet={ATTRIBUTES_TO_SNIPPET}
-        snippetEllipsisText="…"
-      />
       <div className="rs-pb-8 2xl:w-2/3">
         <SearchBox />
         <Results />
@@ -238,17 +111,9 @@ const SearchBox = () => {
 }
 
 const Results = () => {
-  const {error, results, indexUiState, status, refresh} = useInstantSearch({catchError: true})
+  const {error, results, indexUiState, status} = useInstantSearch({catchError: true})
   const query = indexUiState.query ?? ""
-  // We render the snippet as plain text, so leave Algolia's
-  // default <em> tags in place and let the hit component strip them.
-  const {items, showMore, isLastPage, sendEvent} = useInfiniteHits<AlgoliaHitRecord>({escapeHTML: false})
-
-  // The server-side request failed. refresh() clears the cache and re-searches.
-  const ssrFailed = Boolean((results as {__ssrFailed?: boolean} | undefined)?.__ssrFailed)
-  useEffect(() => {
-    if (ssrFailed) refresh()
-  }, [ssrFailed, refresh])
+  const {items, showMore, isLastPage, sendEvent} = useInfiniteHits<AlgoliaHitRecord>()
 
   // Load More: move focus to the first newly appended item once it renders (parity with
   // LoadMoreList on the database-backed search page).
@@ -266,7 +131,7 @@ const Results = () => {
 
   const hasQuery = Boolean(query.trim())
   const pending = status === "loading" || status === "stalled"
-  const unavailable = Boolean(error) || ssrFailed
+  const unavailable = Boolean(error)
   // refine() updates the UI state synchronously, so until the response lands `results` still
   // describes the previous query
   const searching = pending || results?.query !== query

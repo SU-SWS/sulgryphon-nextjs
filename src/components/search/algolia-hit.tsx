@@ -1,4 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link"
+import {Snippet} from "react-instantsearch"
 import type {useInfiniteHits} from "react-instantsearch"
 
 export type AlgoliaHitRecord = {
@@ -14,41 +15,16 @@ export type AlgoliaHitRecord = {
 // imported from the transitive instantsearch.js dependency.
 type AlgoliaHit = ReturnType<typeof useInfiniteHits<AlgoliaHitRecord>>["items"][number]
 
-/** Hosts whose URLs are rewritten to site-relative paths so Next's router handles them. */
-const getSiteHosts = (): string[] => {
-  const hosts = ["library.stanford.edu"]
-  try {
-    hosts.push(new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string).host)
-  } catch {
-    // Unset or malformed base URL: only the production host is treated as local.
-  }
-  return hosts
-}
-
 /**
- * Convert the indexed absolute URL to a site-relative path so Next's router handles it.
- *
+ * Indexed urls are absolute and point at the public site, not at NEXT_PUBLIC_DRUPAL_BASE_URL, so
+ * <Link> can't strip them. Drop the origin to keep client side navigation.
  */
 const toRelative = (url: string): string => {
   try {
-    const parsed = new URL(url)
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return url
-    const local = getSiteHosts().includes(parsed.host) || !parsed.hostname.includes(".")
-    return local ? `${parsed.pathname}${parsed.search}${parsed.hash}` || "/" : url
+    return url.replace(new URL(url).origin, "") || "/"
   } catch {
-    return url || "#"
+    return "#"
   }
-}
-
-/**
- * Plain-text snippet of the `html` attribute, if Algolia returned one. `_snippetResult` is typed
- * as a recursive union, so narrow it here rather than casting.
- *
- */
-const getHtmlSnippet = (hit: AlgoliaHit): string | undefined => {
-  const snippet = hit._snippetResult?.html
-  if (!snippet || Array.isArray(snippet) || typeof snippet.value !== "string") return undefined
-  return snippet.value.replace(/<\/?(em|mark)>/g, "").trim() || undefined
 }
 
 type Props = {
@@ -65,7 +41,6 @@ const AlgoliaHit = ({hit, onSend}: Props) => {
         timeZone: "America/Los_Angeles",
       })
     : undefined
-  const description = hit.summary || getHtmlSnippet(hit)
 
   return (
     <article aria-labelledby={hit.objectID}>
@@ -82,7 +57,14 @@ const AlgoliaHit = ({hit, onSend}: Props) => {
           {hit.title || "Untitled"}
         </h3>
       </Link>
-      {description && <p>{description}</p>}
+
+      {hit.summary && <p>{hit.summary}</p>}
+      {!hit.summary && (
+        <p>
+          <Snippet attribute="html" hit={hit} />
+        </p>
+      )}
+
       {lastUpdated && <div className="mt-12 pb-10 text-right">Last updated {lastUpdated}</div>}
     </article>
   )
