@@ -185,7 +185,7 @@ const Results = () => {
               disabled={pending}
               aria-disabled={pending}
               onClick={() => {
-setFocusIndex(uniqueItems.length)
+                setFocusIndex(uniqueItems.length)
                 showMore()
               }}
             >
