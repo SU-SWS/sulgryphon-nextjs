@@ -97,6 +97,7 @@ query ConfigPages {
             suSiteAlgoliaId
             suSiteAlgoliaIndex
             suSiteAlgoliaSearch
+            suSiteAlgoliaUi
             suSiteDropdowns
             suSiteMenuLevels
             suSiteName
