@@ -15,13 +15,17 @@ import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getFirstText} from "@/lib/text-tools"
 import {clsx} from "clsx"
+import {appendCredit, getImageCredit} from "@/lib/image-credit"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
   // Redirect the user to the external source.
   if (node.suNewsSource?.url) redirect(node.suNewsSource?.url)
 
-  const imageUrl = node.suNewsBanner?.__typename === "MediaImage" && node.suNewsBanner.mediaImage.url
-  const imageAlt = node.suNewsBanner?.__typename === "MediaImage" && node.suNewsBanner.mediaImage.alt
+  const bannerImage = node.suNewsBanner?.__typename === "MediaImage" ? node.suNewsBanner : undefined
+  const imageUrl = bannerImage?.mediaImage.url
+  const imageAlt = bannerImage?.mediaImage.alt
+  // Videos have no media entity credit, so only the image banner gets one.
+  const bannerCaption = appendCredit(node.suNewsBannerMediaCaption, getImageCredit(bannerImage))
 
   const lastUpdated = new Date(node.changed.time as string).toLocaleDateString("en-us", {
     month: "long",
@@ -121,9 +125,9 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
           <span className="relative mx-auto block aspect-[16/9]">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
-          {node.suNewsBannerMediaCaption && (
+          {bannerCaption && (
             <figcaption className="table-caption caption-bottom text-center text-16 font-normal">
-              {node.suNewsBannerMediaCaption}
+              {bannerCaption}
             </figcaption>
           )}
         </figure>

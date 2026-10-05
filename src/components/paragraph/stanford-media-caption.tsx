@@ -5,6 +5,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import {HTMLAttributes} from "react"
 import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {CREDIT_SEPARATOR, getImageCredit, hasCaptionText} from "@/lib/image-credit"
 
 interface Props extends HTMLAttributes<HTMLElement> {
   image?: Maybe<MediaImage>
@@ -16,6 +17,8 @@ interface Props extends HTMLAttributes<HTMLElement> {
 const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props) => {
   const imageUrl = image?.mediaImage.url
   const imageAlt = image?.mediaImage.alt || ""
+  const credit = getImageCredit(image)
+  const captionHtml = hasCaptionText(caption) ? caption : undefined
 
   const linkAttributes: Record<string, string> = {}
   if (link?.attributes?.ariaLabel) linkAttributes["aria-label"] = link.attributes.ariaLabel
@@ -52,8 +55,18 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
         </div>
       )}
 
-      {caption && (
-        <figcaption className="float-right text-right text-16 font-normal leading">{formatHtml(caption)}</figcaption>
+      {(captionHtml || credit) && (
+        // The last paragraph of the caption is inlined so that the credit
+        // continues the caption rather than dropping onto its own line.
+        <figcaption className="float-right text-right text-16 font-normal leading [&>p:last-of-type]:inline">
+          {captionHtml && formatHtml(captionHtml)}
+          {credit && (
+            <span>
+              {captionHtml && CREDIT_SEPARATOR}
+              {credit}
+            </span>
+          )}
+        </figcaption>
       )}
     </figure>
   )
