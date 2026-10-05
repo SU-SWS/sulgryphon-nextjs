@@ -7,6 +7,7 @@ import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
 import {ElementType, HTMLAttributes} from "react"
 import {clsx} from "clsx"
+import {appendCredit, getImageCredit} from "@/lib/image-credit"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   header?: Maybe<string>
@@ -48,6 +49,7 @@ const StanfordCard = ({
 
   const imageUrl = image?.mediaImage.url
   const imageAlt = image?.mediaImage.alt || ""
+  const captionWithCredit = appendCredit(caption, getImageCredit(image))
 
   if (headerId && cardLink?.attributes?.ariaLabel && cardLink?.attributes?.ariaLabel === header) {
     cardLink.attributes.ariaLabelledBy = headerId
@@ -70,7 +72,7 @@ const StanfordCard = ({
               />
             )
           }
-          caption={caption}
+          caption={captionWithCredit}
           header={header}
           superHeader={superHeader}
           body={body}
@@ -97,7 +99,7 @@ const StanfordCard = ({
               />
             )
           }
-          caption={caption}
+          caption={captionWithCredit}
           header={header}
           superHeader={superHeader}
           body={body}
