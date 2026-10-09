@@ -644,7 +644,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@base-ui/react@npm:^1.8.0":
+"@base-ui/react@npm:^1.9.0":
   version: 1.9.0
   resolution: "@base-ui/react@npm:1.9.0"
   dependencies:
@@ -2937,12 +2937,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^26.6.4":
-  version: 26.6.4
-  resolution: "@types/node@npm:26.6.4"
+"@types/node@npm:^26.6.5":
+  version: 26.6.5
+  resolution: "@types/node@npm:26.6.5"
   dependencies:
     undici-types: "npm:~8.9.0"
-  checksum: 10c0/094e7362df9200ba4c2da09131ca3b5d1aa51535a268a24e4ee2546d9c5a323d1d30cbdaaaa3db7ef8b2387572d1f9edabb11538ab7a09d3bca33ae5cddc2b1b
+  checksum: 10c0/4f791f69466ace7842c09e7bef96cb1ddbb65cf3db916ef7e84f0e2b2a17220b6b816dc7539d01520cadfb17ed7169b8214910900493e0a83be8bc7d124ec20a
   languageName: node
   linkType: hard
 
@@ -3678,7 +3678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "basic-starter@workspace:."
   dependencies:
-    "@base-ui/react": "npm:^1.8.0"
+    "@base-ui/react": "npm:^1.9.0"
     "@formkit/auto-animate": "npm:^0.10.0"
     "@graphql-codegen/add": "npm:^6.0.1"
     "@graphql-codegen/cli": "npm:6.3.1"
@@ -3687,7 +3687,7 @@ __metadata:
     "@next/third-parties": "npm:16.4.0"
     "@tailwindcss/postcss": "npm:^4.3.3"
     "@tanstack/react-query": "npm:^5.104.1"
-    "@types/node": "npm:^26.6.4"
+    "@types/node": "npm:^26.6.5"
     "@types/qs": "npm:^6.15.1"
     "@types/react": "npm:^19.3.0"
     algoliasearch: "npm:^5.59.0"
@@ -3701,6 +3701,7 @@ __metadata:
     graphql: "npm:^16.14.2"
     html-entities: "npm:^2.6.0"
     html-react-parser: "npm:^6.1.8"
+    instantsearch.js: "npm:^4.119.0"
     jsona: "npm:^1.14.0"
     next: "npm:^16.4.0"
     next-drupal: "npm:^2.0.1"
@@ -3708,13 +3709,12 @@ __metadata:
     prettier: "npm:^3.9.9"
     prettier-plugin-tailwindcss: "npm:^0.8.1"
     react: "npm:19.3.0"
-    react-aria: "npm:^3.53.0"
+    react-aria: "npm:^3.53.1"
     react-countup: "npm:^6.5.3"
     react-dom: "npm:19.3.0"
     react-error-boundary: "npm:^6.1.6"
     react-focus-lock: "npm:^2.13.7"
     react-instantsearch: "npm:^7.51.0"
-    react-instantsearch-nextjs: "npm:^1.4.12"
     react-obfuscate: "npm:^3.7.0"
     react-obfuscate-email: "npm:^2.0.5"
     react-stately: "npm:^3.51.0"
@@ -6213,7 +6213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"instantsearch.js@npm:4.119.0":
+"instantsearch.js@npm:4.119.0, instantsearch.js@npm:^4.119.0":
   version: 4.119.0
   resolution: "instantsearch.js@npm:4.119.0"
   dependencies:
@@ -8118,9 +8118,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-aria@npm:^3.53.0":
-  version: 3.53.0
-  resolution: "react-aria@npm:3.53.0"
+"react-aria@npm:^3.53.1":
+  version: 3.53.1
+  resolution: "react-aria@npm:3.53.1"
   dependencies:
     "@internationalized/date": "npm:^3.12.4"
     "@internationalized/number": "npm:^3.6.9"
@@ -8134,7 +8134,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
     react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-  checksum: 10c0/9998373b5b39169f42d3517e16ac56f99de8de2e1ca3891222b5537c8cc88a6f45da163bbaaacca723b6600f1916fb43d7e0d4284cec888e9b0dc902c471637e
+  checksum: 10c0/89b6cf252bdddfa06738ce8a6a84789a1a2310daf79c9f30d21112341de5778ab8afb23cac5db8dad9eadc0297bb90dbb447c4895d930a6f1ceec155e34cce05
   languageName: node
   linkType: hard
 
@@ -8227,18 +8227,6 @@ __metadata:
     algoliasearch: ">= 3.1 < 6"
     react: ">= 16.8.0 < 20"
   checksum: 10c0/0bc8c0cd856e3946bbb6ecc1610d17cd9c2d46db66d9a77250e761035ca4df34f575c9cf11bd6707dd1cad22b8ed7a1bf7702e34061553c31ab7de3e655e44c8
-  languageName: node
-  linkType: hard
-
-"react-instantsearch-nextjs@npm:^1.4.12":
-  version: 1.4.12
-  resolution: "react-instantsearch-nextjs@npm:1.4.12"
-  dependencies:
-    "@swc/helpers": "npm:0.5.18"
-  peerDependencies:
-    next: ">= 13.4 < 17"
-    react-instantsearch: ">= 7.1.0 < 8"
-  checksum: 10c0/74c7420bdbbb6dd907cdc33cbd50b41a95c270cbe300cd4d426e5738cc2617adb12fabe2bc7d75f31c456af1a5b17f4f0d35c3a886e5332b616c9297fbc55fb8
   languageName: node
   linkType: hard
 

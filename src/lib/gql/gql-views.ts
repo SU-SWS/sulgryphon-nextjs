@@ -41,6 +41,95 @@ export const VIEW_PAGE_SIZE = 21
 
 export type ViewFilter = Maybe<Record<string, string | number | Array<string | number>>>
 
+/** Every view display this site queries. Anything else is rejected before it reaches Drupal or the cache. */
+const SUPPORTED_DISPLAYS = new Set([
+  "sul_study_places--study_places",
+  "sul_study_places--study_places_table",
+  "sul_branch_locations--branch_locations_table",
+  "sul_events--shared_tags_cards",
+  "sul_events--shared_tags_cards_desc",
+  "sul_events--cards_desc",
+  "sul_events--cards",
+  "sul_events--list_page",
+  "sul_events--filtered_list",
+  "sul_events--past_events_list_block",
+  "sul_news--filtering_cards",
+  "sul_news--block_1",
+  "sul_news--vertical_cards",
+  "search--search",
+  "stanford_basic_pages--card_grid_alpha",
+  "stanford_basic_pages--basic_page_type_list",
+  "stanford_basic_pages--viewfield_block_1",
+  "sul_people--randomized_card_grid",
+  "sul_people--table_list_all",
+  "stanford_person--grid_list_all",
+  "stanford_shared_tags--card_grid",
+])
+
+/** Filter keys the site's list views send. Free-text ones are what a visitor types. */
+const FREE_TEXT_FILTERS = ["key", "title", "search"]
+const OPTION_FILTERS = ["type", "eventType", "date"]
+const MAX_PAGE = 100
+const MAX_VALUE_LENGTH = 100
+const MAX_CONTEXTUAL_FILTERS = 4
+
+const hasFreeText = (filter?: ViewFilter) =>
+  FREE_TEXT_FILTERS.some(key => typeof filter?.[key] === "string" && (filter[key] as string).length > 0)
+
+/**
+ * Validate a view request that came from the browser.
+ *
+ * The "load more" server action is a public endpoint, and every distinct set of arguments is a Drupal
+ * query and a cache entry. Only displays the site uses are allowed, numbers are clamped, and filters are
+ * limited to known keys with short string values. Free text is trimmed and lowercased so equivalent
+ * searches share a cache entry.
+ *
+ * @returns The arguments to pass to {@link getViewPagedItems}, or `undefined` to reject the request.
+ */
+export const sanitizeViewRequest = (
+  viewId: unknown,
+  displayId: unknown,
+  contextualFilter: unknown,
+  pageSize: unknown,
+  page: unknown,
+  filter: unknown
+): Parameters<typeof getViewPagedItems> | undefined => {
+  if (typeof viewId !== "string" || typeof displayId !== "string") return
+  if (!SUPPORTED_DISPLAYS.has(`${viewId}--${displayId}`)) return
+
+  const toInt = (value: unknown, min: number, max: number, fallback: number) =>
+    typeof value === "number" && Number.isFinite(value) ? Math.min(Math.max(Math.trunc(value), min), max) : fallback
+
+  const cleanString = (value: unknown) =>
+    typeof value === "string" ? value.trim().slice(0, MAX_VALUE_LENGTH) : undefined
+
+  const contextual = Array.isArray(contextualFilter)
+    ? contextualFilter
+        .slice(0, MAX_CONTEXTUAL_FILTERS)
+        .map(cleanString)
+        .filter((value): value is string => value !== undefined)
+    : undefined
+
+  let cleanFilter: Record<string, string> | undefined
+  if (filter && typeof filter === "object") {
+    cleanFilter = {}
+    for (const key of [...FREE_TEXT_FILTERS, ...OPTION_FILTERS]) {
+      let value = cleanString((filter as Record<string, unknown>)[key])
+      if (value && FREE_TEXT_FILTERS.includes(key)) value = value.toLowerCase()
+      if (value) cleanFilter[key] = value
+    }
+  }
+
+  return [
+    viewId,
+    displayId,
+    contextual,
+    toInt(pageSize, 1, VIEW_PAGE_SIZE, VIEW_PAGE_SIZE),
+    toInt(page, 0, MAX_PAGE, 0),
+    cleanFilter,
+  ]
+}
+
 export const getViewPagedItems = async (
   viewId: string,
   displayId: string,
@@ -274,6 +363,8 @@ export const getViewPagedItems = async (
     return {items: [], totalItems: 0}
   }
 
+  // A typed search is effectively unbounded: keep its results for hours rather than forever.
+  if (hasFreeText(filter)) cacheLife("hours")
   return {items, totalItems}
 }
 

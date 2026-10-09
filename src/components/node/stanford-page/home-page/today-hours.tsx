@@ -97,6 +97,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
         <MoonStarsIcon className="mr-02em inline" />
         <span className="font-bold">New!</span>{" "}
         <Link
+          prefetch={false}
           href="/extended-green-library-hours"
           className="grow-0 font-normal text-white underline hocus:text-white hocus:no-underline"
         >

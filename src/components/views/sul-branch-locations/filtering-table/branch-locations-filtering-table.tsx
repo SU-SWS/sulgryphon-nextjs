@@ -115,6 +115,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 xl:mr-25 xl:table-cell xl:w-[125px] xl:pr-16 xl:align-middle">
         {imageUrl && (
           <Link
+            prefetch={false}
             href={href}
             className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] xl:max-w-[125px]"
             aria-hidden="true"
@@ -129,6 +130,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         className="flex w-auto px-0 text-center md:text-left xl:table-cell xl:w-1/4 xl:border-b xl:border-black-40 xl:rs-pr-5 xl:pr-20 xl:align-middle"
       >
         <Link
+          prefetch={false}
           href={href}
           className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red md:m-[unset] md:w-auto md:text-left hocus:underline"
         >

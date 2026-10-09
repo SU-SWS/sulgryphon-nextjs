@@ -218,6 +218,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 </Th>
                 <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
+                    prefetch={false}
                     href={item.branchPath || "#"}
                     className="mb-16 block w-fit text-16 leading-cozy font-normal underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
                   >

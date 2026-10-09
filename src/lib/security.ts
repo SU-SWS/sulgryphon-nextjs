@@ -9,6 +9,15 @@
  * @param expected - The configured secret. An empty or missing secret never matches.
  * @returns Whether the two values are identical.
  */
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+/**
+ * Check a request supplied value is a UUID before it's used to look up a Drupal entity.
+ *
+ * Each distinct value is its own Drupal query and cache entry, so malformed ids are rejected up front.
+ */
+export const isUuid = (value?: string | null): value is string => !!value && UUID_PATTERN.test(value)
+
 export const secretsMatch = async (given?: string | null, expected?: string | null): Promise<boolean> => {
   // Fail closed: an unset secret must never turn into an open door.
   if (!expected || typeof given !== "string") return false
