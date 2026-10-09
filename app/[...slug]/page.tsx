@@ -8,18 +8,20 @@ import {getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
 
 // https://vercel.com/docs/functions/runtimes#max-duration
 export const maxDuration = 60
+// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/ensureStatic
+export const ensureStatic = "navigation"
 
 // Params are awaited outside of a Suspense boundary on purpose: paths not returned by
 // generateStaticParams still render on their first request and are then cached (ISR), and
 // redirects/404s keep their real status codes.
-const NodePage = async (props: PageProps & {previewMode?: true}) => {
+const NodePage = async (props: PageProps) => {
   const params = await props.params
   const path = getPathFromContext(params.slug)
 
   // Paths that start with /node/ should not be used.
   if (path.startsWith("/node/")) notFound()
 
-  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path, props.previewMode)
+  const {redirect: routeRedirect, entity} = await getEntityFromPath<NodeUnion>(path)
 
   if (routeRedirect?.permanent) permanentRedirect(routeRedirect.url)
   if (routeRedirect) redirect(routeRedirect.url)
