@@ -48,8 +48,10 @@ type RouteResult<T extends NodeUnion> = {
  * @param previewMode  When `true`, uses admin credentials so unpublished content is visible.
  * @param teaser       When `true`, Drupal returns a reduced field set suitable for list views.
  *
- * @returns `{ entity }` for real pages, `{ redirect }` for 3xx routes, or `{}` when the path doesn't exist
- *   or the request failed.
+ * @returns `{ entity }` for real pages, `{ redirect }` for 3xx routes, or `{}` when the path doesn't exist.
+ *   A teaser lookup also returns `{}` when Drupal fails, so one card can't break the page around it.
+ * @throws {ClientError} When a full (non-teaser, non-preview) lookup fails. The page render fails with it,
+ *   so a cached copy of the page keeps being served instead of being replaced by a "not found".
  */
 export const getEntityFromPath = async <T extends NodeUnion>(
   path: string,
@@ -80,8 +82,17 @@ const getCachedEntityFromPath = async <T extends NodeUnion>(
     // A path Drupal doesn't know resolves without an error, so a real "not found" is cached normally.
     return await requestEntityFromPath<T>(path, false, teaser)
   } catch (e) {
-    cacheFailure(`Unable to fetch ${path}`, e)
-    return {}
+    // A teaser is a card within some other page: show the page without it, and retry soon.
+    if (teaser) {
+      cacheFailure(`Unable to fetch teaser of ${path}`, e)
+      return {}
+    }
+
+    // A failure is not a "not found". Rendering a 404 here would replace a good cached page, and tell
+    // search engines the page is gone. Failing the render instead keeps the last good copy in the cache
+    // (or returns an error status when there isn't one). A thrown error is never cached.
+    console.warn(`Unable to fetch ${path}: ${describeError(e)}`)
+    throw e
   }
 }
 
