@@ -27,7 +27,7 @@ const StanfordPublication = async ({node, ...props}: {node: NodeStanfordPublicat
         )}
 
         <div className="col-span-2">
-          <div className="border-black-10 lg:rs-pl-3 lg:border-l">
+          <div className="border-black-10 lg:border-l lg:rs-pl-3">
             {node.suPublicationCitation?.suAuthor && (
               <div className="rs-mb-2">
                 <h2 className="mb-01em text-16 md:text-18 2xl:text-19">Author(s)</h2>

@@ -30,7 +30,7 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
     <CardWrapper
       {...props}
       className={twMerge(
-        "centered relative w-full border border-black-10 bg-white shadow-lg xl:max-w-[980px]",
+        "relative centered w-full border border-black-10 bg-white shadow-lg xl:max-w-[980px]",
         props.className
       )}
     >

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
  */
 const AlgoliaSearchFallback = () => (
   <div className="rs-pb-8 2xl:w-2/3">
-    <div className="flex-grow">
+    <div className="grow">
       <label className="mb-8 text-28 font-semibold text-black" htmlFor="keyword-search-fallback">
         Search this site
       </label>
@@ -63,7 +63,7 @@ const Page = async (props: {searchParams?: Promise<Record<string, string | strin
   const algolia = await getAlgoliaCredential()
 
   return (
-    <div className="centered mt-32">
+    <div className="mt-32 centered">
       <div className="mx-auto 3xl:w-10/12">
         {algolia ? (
           <>

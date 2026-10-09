@@ -1,18 +1,18 @@
 const GlobalFooter = () => {
   return (
-    <div className="global-footer rs-py-1 bg-cardinal-red text-white">
+    <div className="global-footer bg-cardinal-red rs-py-1 text-white">
       <div className="centered flex flex-col lg:flex-row" title="Common Stanford resources">
-        <div className="mb-9 mt-5 text-center">
+        <div className="mt-5 mb-9 text-center">
           <a rel="nofollow" className="logo type-3 text-white hocus:text-white" href="https://www.stanford.edu">
             Stanford <br /> University
           </a>
         </div>
-        <div className="flex-grow text-left sm:text-center lg:pl-45 lg:text-left xl:pl-50 [&_a:focus]:text-white [&_a:focus]:underline [&_a:hover]:text-white [&_a:hover]:underline [&_a]:text-white [&_a]:no-underline">
+        <div className="grow text-left sm:text-center lg:pl-45 lg:text-left xl:pl-50 [&_a]:text-white [&_a]:no-underline [&_a:focus]:text-white [&_a:focus]:underline [&_a:hover]:text-white [&_a:hover]:underline">
           <nav
             aria-label="global footer menu"
             className="mb-10 flex flex-row justify-center sm:flex-col sm:items-center lg:items-start"
           >
-            <ul className="list-unstyled mb-10 mr-19 flex flex-col p-0 text-15 sm:mb-4 sm:mr-0 sm:flex-row md:text-17 2xl:text-18">
+            <ul className="list-unstyled mr-19 mb-10 flex flex-col p-0 text-15 sm:mr-0 sm:mb-4 sm:flex-row md:text-17 2xl:text-18">
               <li className="sm:mr-10 md:mr-20 lg:mr-27">
                 <a rel="nofollow" href="https://www.stanford.edu">
                   Stanford Home
@@ -37,7 +37,7 @@ const GlobalFooter = () => {
                 </a>
               </li>
             </ul>
-            <ul className="list-unstyled mb-10 ml-19 flex flex-col p-0 text-15 sm:mb-0 sm:ml-0 sm:flex-row sm:text-14 sm:link-regular md:text-15 xl:text-16">
+            <ul className="list-unstyled mb-10 ml-19 flex flex-col p-0 text-15 sm:mb-0 sm:ml-0 sm:flex-row sm:text-14 sm:link-normal md:text-15 xl:text-16">
               <li className="sm:mr-10 md:mr-20 lg:mr-27">
                 <a rel="nofollow" href="https://www.stanford.edu/site/terms/" title="Terms of use for sites">
                   Terms of Use

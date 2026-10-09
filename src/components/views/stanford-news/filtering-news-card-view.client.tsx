@@ -5,9 +5,8 @@ import {HTMLAttributes, JSX, useCallback, useId, useRef, useState} from "react"
 import {useCounter} from "usehooks-ts"
 import useServerAction from "@/lib/hooks/useServerAction"
 import ToggleOption from "@/components/patterns/toggle-option"
-import SelectList from "@/components/patterns/elements/select-list"
+import SelectList, {SelectOption} from "@/components/patterns/elements/select-list"
 import {ArrowPathIcon, XMarkIcon, MagnifyingGlassIcon} from "@heroicons/react/20/solid"
-import {SelectOptionDefinition} from "@mui/base/useSelect"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   /**
@@ -22,7 +21,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
     _filters?: Record<string, string | number | Array<string | number> | undefined>
   ) => Promise<JSX.Element>
 
-  typeOptions: SelectOptionDefinition<string>[]
+  typeOptions: SelectOption[]
 }
 
 const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOptions = []}: Props) => {
@@ -82,7 +81,7 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
   return (
     <div>
       {isPending && (
-        <div className="absolute left-0 top-0 z-10 h-full w-full rounded-2xl bg-black-20 bg-opacity-30">
+        <div className="absolute top-0 left-0 z-10 h-full w-full rounded-2xl bg-black-20/30">
           <div className="absolute bottom-20 left-1/2 -translate-x-1/2">
             <ArrowPathIcon className="animate-spin" width={50} />
           </div>
@@ -93,7 +92,7 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
           <legend className="sr-only">Filter news</legend>
           <div className="mb-50 flex w-full flex-col flex-wrap items-end justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
             <div className="relative w-full md:w-[435px]">
-              <label className="pl-15 text-18 font-semibold leading-display" htmlFor={id}>
+              <label className="pl-15 text-18 leading-display font-semibold" htmlFor={id}>
                 Search by title
               </label>
 
@@ -108,7 +107,7 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
 
                 <button
                   type="reset"
-                  className="absolute right-0 top-0 z-10 mr-32 flex h-full items-center peer-placeholder-shown:hidden"
+                  className="absolute top-0 right-0 z-10 mr-32 flex h-full items-center peer-placeholder-shown:hidden"
                   aria-label="Clear keyword search"
                   onClick={() => {
                     if (titleFilterRef.current) {
@@ -122,7 +121,7 @@ const FilteringNewsCardViewClient = ({children, totalItems, loadPage, typeOption
 
                 <button
                   type="submit"
-                  className="absolute right-0 top-0 z-10 mr-10 flex h-full items-center"
+                  className="absolute top-0 right-0 z-10 mr-10 flex h-full items-center"
                   onClick={onFilterTitle}
                 >
                   <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
