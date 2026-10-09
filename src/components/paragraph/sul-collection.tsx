@@ -3,7 +3,7 @@ import Card from "@/components/patterns/card"
 import Oembed from "@/components/patterns/elements/oembed"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Maybe, MediaImage, ParagraphCollectionCard, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, MediaImage, ParagraphCollectionCard, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {Tab, TabPanel, Tabs, TabsList} from "@/components/patterns/elements/tabs"
 
 type Props = HTMLAttributes<HTMLDivElement> & {

@@ -4,7 +4,7 @@ import {MapPinIcon, BuildingLibraryIcon} from "@heroicons/react/24/outline"
 import StudyPlaceHours from "./study-place-today-hours"
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/graphql"
 
 const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
   // Filter out empty terms and deduplicate terms by their ID.

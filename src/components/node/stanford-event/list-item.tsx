@@ -2,7 +2,7 @@ import {CalendarDaysIcon, MapPinIcon, ClockIcon} from "@heroicons/react/24/outli
 import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import {getDateString, getTimeString} from "@/lib/getDateTime"
 
 interface Props {
@@ -12,8 +12,8 @@ interface Props {
 
 const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   const HeadingElement = h3Heading ? "h3" : "h2"
-  const start = new Date(node.suEventDateTime.value * 1000)
-  const end = new Date(node.suEventDateTime.end_value * 1000)
+  const start = new Date(parseInt(node.suEventDateTime.value) * 1000)
+  const end = new Date(parseInt(node.suEventDateTime.end_value) * 1000)
 
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")

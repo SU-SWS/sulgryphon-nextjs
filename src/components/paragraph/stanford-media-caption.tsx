@@ -4,7 +4,7 @@ import Oembed from "@/components/patterns/elements/oembed"
 import Link from "@/components/patterns/elements/drupal-link"
 import {HTMLAttributes} from "react"
 import {buildUrl} from "@/lib/drupal/utils"
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {CREDIT_SEPARATOR, getImageCredit, hasCaptionText} from "@/lib/image-credit"
 
 interface Props extends HTMLAttributes<HTMLElement> {

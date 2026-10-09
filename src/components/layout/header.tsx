@@ -4,7 +4,7 @@ import MainMenu from "@/components/menu/main-menu"
 import GlobalMessage from "@/components/layout/global-message"
 import FallbackMainMenu from "@/components/menu/fallback-main-menu"
 import {Suspense} from "react"
-import {getMenu} from "@/lib/gql/fetcher"
+import {getMenu} from "@/lib/gql/gql-queries"
 
 const Header = async () => {
   const menuItems = await getMenu()

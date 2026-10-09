@@ -1,6 +1,6 @@
 import Rows from "@/components/paragraph/rows/rows"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/graphql"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getFirstText} from "@/lib/text-tools"
 

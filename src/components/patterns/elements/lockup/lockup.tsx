@@ -12,8 +12,8 @@ import LockupR from "@/components/patterns/elements/lockup/lockup-r"
 import LockupS from "@/components/patterns/elements/lockup/lockup-s"
 import LockupT from "@/components/patterns/elements/lockup/lockup-t"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
-import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
-import {getConfigPage, getConfigPageField} from "@/lib/gql/fetcher"
+import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/graphql"
+import {getConfigPage, getConfigPageField} from "@/lib/gql/gql-queries"
 
 export interface LockupProps {
   useDefault?: Maybe<boolean>

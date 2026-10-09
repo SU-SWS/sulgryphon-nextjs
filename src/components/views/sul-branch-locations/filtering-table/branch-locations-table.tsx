@@ -1,4 +1,4 @@
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 import BranchLocationFilteringTable, {
   BranchLocation,
 } from "@/components/views/sul-branch-locations/filtering-table/branch-locations-filtering-table"

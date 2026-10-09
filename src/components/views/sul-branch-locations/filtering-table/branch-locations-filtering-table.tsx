@@ -2,9 +2,8 @@
 
 import {MapPinIcon, EnvelopeIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
-import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {Table, Thead, Tbody, Tr, Th, Td} from "@/components/patterns/responsive-table"
+import {Maybe, NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 import {RefObject, useCallback, useId, useRef} from "react"
 import Image from "next/image"
 import Link from "next/link"

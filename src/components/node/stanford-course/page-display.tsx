@@ -1,6 +1,6 @@
 import formatHtml from "@/lib/format-html"
 import Link from "@/components/patterns/elements/drupal-link"
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/graphql"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"

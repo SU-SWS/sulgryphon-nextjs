@@ -3,7 +3,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import LibCal from "./libcal"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/graphql"
 import {EnvelopeIcon} from "@heroicons/react/24/outline"
 
 interface Props {
