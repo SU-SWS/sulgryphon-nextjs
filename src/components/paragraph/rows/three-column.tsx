@@ -25,13 +25,13 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
   return (
     <div
       className={clsx({
-        "pb-20 pt-20": !!config?.bg_color,
+        "pt-20 pb-20": !!config?.bg_color,
         "px-30": config?.bg_color && !fullWidth,
         "pt-0": config?.top_padding === "none",
         "pt-40": config?.top_padding === "more",
         "mb-0": config?.bottom_margin === "none",
         "pb-0": config?.bottom_padding === "none",
-        "bg-foggy-light": config?.bg_color === "f4f4f4",
+        "bg-fog-light": config?.bg_color === "f4f4f4",
         "bg-[#ebeae4]": config?.bg_color === "ebeae5",
         "bg-[#dcecef]": config?.bg_color === "dcecef",
         "bg-[#dcefec]": config?.bg_color === "dcefec",
@@ -54,7 +54,7 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
           items={leftItems}
           fullWidth={fullWidth}
           className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
-            "relative after:absolute after:-right-45 after:top-0 after:h-full md:after:w-1 md:after:bg-black":
+            "relative after:absolute after:top-0 after:-right-45 after:h-full md:after:w-1 md:after:bg-black":
               config?.vertical_dividers,
           })}
         />
@@ -62,7 +62,7 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
           items={mainItems}
           fullWidth={fullWidth}
           className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
-            "relative after:absolute after:-right-45 after:top-0 after:h-full lg:after:w-1 lg:after:bg-black":
+            "relative after:absolute after:top-0 after:-right-45 after:h-full lg:after:w-1 lg:after:bg-black":
               config?.vertical_dividers,
           })}
         />

@@ -1,4 +1,4 @@
-import "../src/styles/globals.css"
+import "../src/styles/index.css"
 
 import {ReactNode, Suspense} from "react"
 import {Icon} from "next/dist/lib/metadata/types/metadata-types"

@@ -28,7 +28,7 @@ const HomePage = async ({previewMode}: {previewMode?: true}) => {
       {!entity.suPageBanner?.__typename && <HomePageBanner />}
 
       {entity.suPageComponents && <Rows components={entity.suPageComponents} fullWidth />}
-      <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
+      <footer className="centered rs-py-4">Last updated {lastUpdated}</footer>
     </main>
   )
 }

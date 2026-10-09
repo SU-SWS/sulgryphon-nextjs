@@ -50,7 +50,7 @@ const StanfordCard = ({
   const captionWithCredit = appendCredit(caption, getImageCredit(image))
 
   return (
-    <div className={clsx("relative", {"centered mx-auto w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
+    <div className={clsx("relative", {"mx-auto centered w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
       {isHorizontal && (
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="h-full" />}

@@ -17,7 +17,7 @@ export const DrupalLinkButton = ({
       href={href}
       {...props}
       className={clsx(
-        "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hocus:underline md:text-18",
+        "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors md:text-18 hocus:underline",
         {
           "border-2 border-white bg-transparent text-white hover:bg-white hover:text-digital-red focus:bg-black-true focus:text-white":
             isDarkBg,
@@ -48,7 +48,7 @@ export const DrupalLinkSecondaryButton = ({
       href={href}
       {...props}
       className={clsx(
-        "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pb-11 pt-10 text-16 font-semibold leading-display text-digital-red no-underline transition-colors hocus:text-white hocus:underline md:text-18",
+        "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pt-10 pb-11 text-16 leading-display font-semibold text-digital-red no-underline transition-colors md:text-18 hocus:text-white hocus:underline",
         {
           "hover:border-cardinal-red-xdark hover:bg-digital-red focus:border-white focus:bg-black-true focus:text-white":
             isDarkBg,
@@ -74,7 +74,7 @@ export const DrupalLinkBigButton = ({
       href={href}
       {...props}
       className={twMerge(
-        "cta-button font-large group rs-mt-neg1 block w-fit rounded-full bg-digital-red px-36 py-16 text-16 leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18",
+        "cta-button font-large group rs-mt-neg1 block w-fit rounded-full bg-digital-red px-36 py-16 text-16 leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true md:text-18 hocus:text-white hocus:underline",
         className
       )}
     >

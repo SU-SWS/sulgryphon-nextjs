@@ -14,7 +14,7 @@ const Calendar = (props: Props) => {
   return (
     <main id="main-content">
       <InternalHeaderBanner>
-        <h1 className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+        <h1 className="relative mx-auto mt-80 mb-50 w-full max-w-[calc(100vw-10rem)] p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
           Make an Appointment
         </h1>
       </InternalHeaderBanner>

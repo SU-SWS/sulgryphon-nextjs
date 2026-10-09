@@ -54,7 +54,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
       className={clsx({
         "text-center": paragraph.suStatCentered,
         "text-white [&_a]:text-white": whiteText,
-        "border-0 bg-transparent shadow-none children:gap-10 children:px-10 children:py-0": transparentBg,
+        "border-0 bg-transparent shadow-none *:gap-10 *:px-10 *:py-0": transparentBg,
         "bg-white": paragraph.suStatBgColor?.color === "ffffff",
         "bg-black": paragraph.suStatBgColor?.color === "2e2d29",
         "bg-cool-grey": paragraph.suStatBgColor?.color === "53565a",
@@ -64,7 +64,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         "bg-lagunita": paragraph.suStatBgColor?.color === "007c92",
         "bg-palo-alto": paragraph.suStatBgColor?.color === "175e54",
         "bg-poppy": paragraph.suStatBgColor?.color === "e98300",
-        "bg-foggy-light": paragraph.suStatBgColor?.color === "f4f4f4",
+        "bg-fog-light": paragraph.suStatBgColor?.color === "f4f4f4",
         "bg-spirited": paragraph.suStatBgColor?.color === "e04f39",
       })}
       aria-labelledby={paragraph.suStatHeadline ? paragraph.uuid : undefined}
@@ -79,7 +79,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               <h2
                 id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -89,7 +89,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               <h3
                 id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -99,7 +99,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               <h4
                 id={paragraph.uuid}
                 className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -108,7 +108,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             {headerTag === "div" && (
               <div
                 className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -177,7 +177,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
           {paragraph.suStatButton.title}
 
           {paragraph.suStatLinkStyle !== "button" && (
-            <ChevronRightIcon className="group-hocus:translate-x-1.5 shrink-0 transition-all" width={20} />
+            <ChevronRightIcon className="shrink-0 transition-all" width={20} />
           )}
         </Link>
       )}

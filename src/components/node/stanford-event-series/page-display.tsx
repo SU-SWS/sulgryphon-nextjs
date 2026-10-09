@@ -17,13 +17,13 @@ const StanfordEventSeries = async ({node, ...props}: {node: NodeStanfordEventSer
       <InternalHeaderBanner>
         <h1
           id={node.uuid}
-          className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+          className="relative mx-auto mt-75 mb-10 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           {node.title}
         </h1>
       </InternalHeaderBanner>
       {node.suEventSeriesSubheadline && <h2 className="rs-mb-1 type-3">{node.suEventSeriesSubheadline}</h2>}
-      {node.suEventSeriesDek && <div className="rs-mb-4 text-22 leading">{node.suEventSeriesDek}</div>}
+      {node.suEventSeriesDek && <div className="rs-mb-4 text-22 leading-normal">{node.suEventSeriesDek}</div>}
 
       {node.suEventSeriesComponents && (
         <>

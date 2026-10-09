@@ -64,7 +64,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
   return (
     <div className="pb-[32px]">
       <form action="javascript:void(0);">
-        <fieldset className="rs-mb-1 mx-auto flex h-25 w-fit items-center rounded-full">
+        <fieldset className="mx-auto rs-mb-1 flex h-25 w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
 
           <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="branch-open">
@@ -79,20 +79,20 @@ const BranchLocationFilteringTable = ({items}: Props) => {
 
       <Table className="responsive-table responsive-table-branches sm:ml-0">
         <Thead className="sr-only xl:not-sr-only">
-          <Tr className="block sm:hidden xl:!table-row">
-            <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell xl:pr-16" scope="col">
+          <Tr className="block sm:hidden xl:table-row!">
+            <Th className="block min-w-[100px] pl-[0px] type-1 md:table-cell xl:pr-16" scope="col">
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="type-1 block min-w-[100px] whitespace-nowrap pl-[0px] text-center xl:rs-pr-5 md:table-cell md:text-left xl:pr-20">
+            <Th className="block min-w-[100px] pl-[0px] text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
               Library
             </Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center xl:rs-pr-5 md:table-cell xl:pr-20">
+            <Th className="block pl-[0px] text-center type-1 whitespace-nowrap md:table-cell xl:rs-pr-5 xl:pr-20">
               Open/Closed
             </Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center xl:rs-pr-5 md:table-cell md:text-left xl:pr-20">
+            <Th className="block pl-[0px] text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
               Contact
             </Th>
-            <Th className="type-1 block whitespace-nowrap pl-[0px] text-center md:table-cell md:text-left">Address</Th>
+            <Th className="block pl-[0px] text-center type-1 whitespace-nowrap md:table-cell md:text-left">Address</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -110,7 +110,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
   return (
     <Tr
       key={uuid}
-      className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top xl:!table-row xl:max-h-none"
+      className="block sm:flex-col sm:flex-wrap sm:text-center md:grid md:grid-cols-2 md:grid-rows-[repeat(4,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:align-top xl:table-row! xl:max-h-none"
     >
       <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-4 xl:mr-25 xl:table-cell xl:w-[125px] xl:pr-16 xl:align-middle">
         {imageUrl && (
@@ -126,16 +126,16 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
       </Td>
       <Th
         scope="row"
-        className="flex w-auto px-0 text-center xl:rs-pr-5 md:text-left xl:table-cell xl:w-1/4 xl:border-b xl:border-black-40 xl:pr-20 xl:align-middle"
+        className="flex w-auto px-0 text-center md:text-left xl:table-cell xl:w-1/4 xl:border-b xl:border-black-40 xl:rs-pr-5 xl:pr-20 xl:align-middle"
       >
         <Link
           href={href}
-          className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline md:m-[unset] md:w-auto md:text-left"
+          className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red md:m-[unset] md:w-auto md:text-left hocus:underline"
         >
           <span className="mb-0 font-sans text-20 font-semibold">{title}</span>
         </Link>
       </Th>
-      <Td className="branch-hours flex w-auto justify-center xl:rs-pr-5 sm:border-b sm:border-black-40 md:items-center md:justify-start xl:table-cell xl:w-1/4 xl:pr-20 xl:align-middle">
+      <Td className="branch-hours flex w-auto justify-center sm:border-b sm:border-black-40 md:items-center md:justify-start xl:table-cell xl:w-1/4 xl:rs-pr-5 xl:pr-20 xl:align-middle">
         {hoursId && (
           <div className="pb-16 xl:pb-0">
             <BranchHours hoursId={hoursId} />
@@ -144,11 +144,11 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         {/* Without this, the responsive table library injects a "&nbsp;". */}
         {""}
       </Td>
-      <Td className="block w-auto xl:rs-pr-5 sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:pr-20 xl:align-middle">
+      <Td className="block w-auto sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:rs-pr-5 xl:pr-20 xl:align-middle">
         {phone && (
           <a
             href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="m-auto flex w-fit items-center justify-center gap-4 text-16 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:m-[unset] md:justify-start"
+            className="m-auto flex w-fit items-center justify-center gap-4 text-16 leading-normal font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:m-[unset] md:justify-start"
           >
             <PhoneIcon title="Phone Number" width={20} />
             {phone}
@@ -157,7 +157,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         {email && (
           <a
             href={`mailto:${email}`}
-            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-16 font-normal leading-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start xl:mb-0"
+            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-16 leading-normal font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start xl:mb-0"
           >
             <EnvelopeIcon title="Email" width={20} />
             {email}
@@ -224,13 +224,13 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   return (
     <div ref={containerRef} className="relative flex text-16 leading-normal md:flex xl:block">
       {isOpen && (
-        <span className="m-auto mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left xl:m-0 xl:mx-auto xl:mb-4 xl:text-center">
+        <span className="m-auto mr-8 mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:mr-5 md:ml-0 md:text-left xl:m-0 xl:mx-auto xl:mb-4 xl:text-center">
           Open
         </span>
       )}
 
       {!isOpen && (
-        <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left xl:m-0 xl:mx-auto xl:text-center">
+        <span className="m-auto mr-8 flex w-fit items-center sm:text-center md:my-0 md:mr-5 md:ml-0 md:text-left xl:m-0 xl:mx-auto xl:text-center">
           Closed
         </span>
       )}

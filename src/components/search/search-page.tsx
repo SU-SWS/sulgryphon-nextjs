@@ -28,7 +28,7 @@ const SiteSearch = async ({searchKey}: Props) => {
             <input name="search" />
           </label>
         </div>
-        <div className="flex-grow">
+        <div className="grow">
           <label className="mb-8 text-28 font-semibold text-black" htmlFor="keyword-search">
             Search this site
           </label>
@@ -47,7 +47,7 @@ const SiteSearch = async ({searchKey}: Props) => {
         </div>
       </form>
 
-      <h2 className="rs-pt-2 type-3 m-0 pb-36">Results</h2>
+      <h2 className="m-0 rs-pt-2 pb-36 type-3">Results</h2>
       {viewItems.length === 0 && <p>No results found for the given search keywords. Please try again.</p>}
 
       {viewItems.length > 0 && (
