@@ -15,9 +15,9 @@ import {
   NodeSulLibrary,
   NodeSulStudyPlace,
   NodeUnion,
-  Maybe,
 } from "@/lib/gql/__generated__/graphql"
-import {getViewPagedItems, VIEW_PAGE_SIZE, ViewFilter} from "@/lib/gql/gql-views"
+import {getViewPagedItems, sanitizeViewRequest, ViewFilter} from "@/lib/gql/gql-views"
+import {verifyViewConfig} from "@/lib/view-config"
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view"
 import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
 import {JSX} from "react"
@@ -142,26 +142,27 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
 /**
  * Server action that fetches one page of a Drupal view and renders it.
  *
- * Bound by list paragraphs and the site search to load subsequent pages on the client.
+ * Bound by list paragraphs and the site search to load subsequent pages on the client. The list's
+ * configuration arrives signed by the server (see signViewConfig); only the page number and filter values
+ * come from the browser, and both are validated.
  */
-export const loadViewPage = async (
-  viewId: string,
-  displayId: string,
-  contextualFilter: Maybe<string[]>,
-  hasHeadline: boolean,
-  pageSize: number = VIEW_PAGE_SIZE,
-  page: number,
-  filter?: ViewFilter
-): Promise<JSX.Element> => {
+export const loadViewPage = async (signedConfig: string, page: number, filter?: ViewFilter): Promise<JSX.Element> => {
   "use server"
 
-  const {items, totalItems} = await getViewPagedItems(viewId, displayId, contextualFilter, pageSize, page, filter)
+  // Server actions are public POST endpoints: any caller can send any arguments.
+  const config = verifyViewConfig(signedConfig)
+  const request =
+    config &&
+    sanitizeViewRequest(config.viewId, config.displayId, config.contextualFilter, config.pageSize, page, filter)
+  if (!config || !request) return <></>
+
+  const {items, totalItems} = await getViewPagedItems(...request)
   return (
     <View
-      viewId={viewId}
-      displayId={displayId}
+      viewId={config.viewId}
+      displayId={config.displayId}
       items={items}
-      headingLevel={hasHeadline ? "h3" : "h2"}
+      headingLevel={config.hasHeadline ? "h3" : "h2"}
       totalItems={totalItems}
     />
   )

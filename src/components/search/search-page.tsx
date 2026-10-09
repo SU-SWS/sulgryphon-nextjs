@@ -1,5 +1,6 @@
 import {getViewPagedItems} from "@/lib/gql/gql-views"
 import View, {loadViewPage} from "@/components/views/view"
+import {signViewConfig} from "@/lib/view-config"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 
 type Props = {
@@ -12,7 +13,14 @@ const SiteSearch = async ({searchKey}: Props) => {
 
   const loadSearchPage = async (page: number) => {
     "use server"
-    return loadViewPage("search", "search", [], false, 12, page, {key: searchKey})
+    const config = signViewConfig({
+      viewId: "search",
+      displayId: "search",
+      contextualFilter: [],
+      hasHeadline: false,
+      pageSize: 12,
+    })
+    return config ? loadViewPage(config, page, {key: searchKey}) : <></>
   }
 
   return (

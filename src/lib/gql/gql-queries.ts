@@ -22,6 +22,7 @@ import {
 } from "@/lib/gql/__generated__/graphql"
 import {describeError, graphqlClient} from "@/lib/gql/gql-client"
 import {cacheLife, cacheTag} from "next/cache"
+import {isUuid} from "@/lib/security"
 
 /**
  * Log a failed Drupal request from inside a `use cache` function and keep its fallback short-lived.
@@ -79,8 +80,11 @@ const getCachedEntityFromPath = async <T extends NodeUnion>(
 
   cacheTag("all-cache", "paths", `paths:${path}`)
   try {
-    // A path Drupal doesn't know resolves without an error, so a real "not found" is cached normally.
-    return await requestEntityFromPath<T>(path, false, teaser)
+    // A path Drupal doesn't know resolves without an error. Caching that "not found" keeps junk URLs from
+    // reaching Drupal, but for days rather than forever, so scanners can't grow the cache without bound.
+    const result = await requestEntityFromPath<T>(path, false, teaser)
+    if (!result.entity && !result.redirect) cacheLife("days")
+    return result
   } catch (e) {
     // A teaser is a card within some other page: show the page without it, and retry soon.
     if (teaser) {
@@ -123,7 +127,24 @@ const requestEntityFromPath = async <T extends NodeUnion>(
  * Tagged by uuid, and by the node's path once it is known, so a Drupal path revalidation also
  * clears this entry.
  */
-export const getNodeByUuid = async <T extends NodeUnion>(uuid: string): Promise<T | undefined> => {
+export const getNodeByUuid = async <T extends NodeUnion>(uuid: string): Promise<T | undefined> =>
+  // The uuid comes from the URL: reject malformed ones before they become a Drupal query.
+  isUuid(uuid) ? getCachedNodeByUuid<T>(uuid.toLowerCase()) : rejectedForDays()
+
+/**
+ * The result for a request that was rejected without asking Drupal.
+ *
+ * It takes no arguments, so every rejection shares one cache entry. Its lifetime still matters: the page
+ * rendering it is cached too, and takes this shorter lifetime instead of keeping each junk URL forever.
+ */
+const rejectedForDays = async (): Promise<undefined> => {
+  "use cache"
+
+  cacheLife("days")
+  return undefined
+}
+
+const getCachedNodeByUuid = async <T extends NodeUnion>(uuid: string): Promise<T | undefined> => {
   "use cache: remote"
 
   cacheTag("all-cache", "nodes", `node:${uuid}`)
@@ -131,6 +152,8 @@ export const getNodeByUuid = async <T extends NodeUnion>(uuid: string): Promise<
     const query = await graphqlClient().request<NodeQuery>(NodeDocument, {uuid})
     const node = query.node as T | undefined
     if (node?.path) cacheTag(`paths:${node.path}`)
+    // An unknown uuid is cached for days rather than forever, like an unknown path.
+    if (!node) cacheLife("days")
     return node
   } catch (e) {
     cacheFailure(`Unable to fetch node ${uuid}`, e)

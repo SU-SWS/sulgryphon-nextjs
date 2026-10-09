@@ -123,6 +123,8 @@ const isSafePreviewSlug = (slug: string | null): slug is string => {
   )
 }
 
+const MAX_SEARCH_LENGTH = 256
+
 /**
  * Bot actors fill the honeypot `search` field, repeat `q`, or add unwanted parameters. Send them
  * back to a bare /search.
@@ -132,6 +134,8 @@ const handleSearch = (request: NextRequest) => {
   const honeypot = params.getAll("search").some(value => value !== "")
   const repeatedQuery = params.getAll("q").length > 1
   const extraParams = [...params.keys()].some(key => key !== "q" && key !== "search")
+  // Each distinct query is a search request and a cache entry; no real search is this long.
+  const tooLong = (params.get("q")?.length ?? 0) > MAX_SEARCH_LENGTH
 
-  if (honeypot || repeatedQuery || extraParams) return NextResponse.redirect(new URL("/search", request.url))
+  if (honeypot || repeatedQuery || extraParams || tooLong) return NextResponse.redirect(new URL("/search", request.url))
 }

@@ -1,8 +1,8 @@
 "use client"
 
 import {liteClient} from "algoliasearch/lite"
-import {useInfiniteHits, useInstantSearch, useSearchBox} from "react-instantsearch"
-import {InstantSearchNext} from "react-instantsearch-nextjs"
+import {InstantSearch, useInfiniteHits, useInstantSearch, useSearchBox} from "react-instantsearch"
+import {history} from "instantsearch.js/es/lib/routers"
 import {usePathname} from "next/navigation"
 import {useEffect, useMemo, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
@@ -19,15 +19,17 @@ const AlgoliaSearch = ({appId, indexName, apiKey}: Props) => {
   // Memoised so InstantSearch isn't handed a brand new client on every render.
   const searchClient = useMemo(() => liteClient(appId, apiKey), [appId, apiKey])
 
+  // Searching only in the browser (not during server rendering) keeps /search a static page served from the
+  // CDN. The page is noindex, so server-rendered results added nothing but a function call per visit.
   return (
-    <InstantSearchNext
+    <InstantSearch
       key={pathname}
       indexName={indexName}
       searchClient={searchClient}
       future={{preserveSharedStateOnUnmount: true}}
       insights
       routing={{
-        router: {cleanUrlOnDispose: false},
+        router: history<Record<string, string>>({cleanUrlOnDispose: false}),
         stateMapping: {
           stateToRoute(uiState): Record<string, string> {
             const query = uiState[indexName]?.query
@@ -46,7 +48,7 @@ const AlgoliaSearch = ({appId, indexName, apiKey}: Props) => {
         <SearchBox />
         <Results />
       </div>
-    </InstantSearchNext>
+    </InstantSearch>
   )
 }
 
