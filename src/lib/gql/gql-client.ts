@@ -10,18 +10,58 @@ export type DrupalGraphqlError = {
 /** Parsed body of a GraphQL response. */
 type GraphqlResponseBody<TResult> = {data?: TResult | null; errors?: DrupalGraphqlError[]}
 
-/**
- * Thrown when a GraphQL request fails, either at the transport level (non-2xx) or because the
- * response carried a GraphQL `errors` array.
- */
-export class ClientError extends Error {
-  readonly response: {status: number; errors?: DrupalGraphqlError[]}
+/** Drupal is given this long to answer before the request is abandoned, so a hung backend can't stall a render. */
+const REQUEST_TIMEOUT_MS = 15000
 
-  constructor(message: string, response: {status: number; errors?: DrupalGraphqlError[]}) {
-    super(message)
-    this.name = "ClientError"
-    this.response = response
+/** Base class for every failed GraphQL request. Check for a subclass to tell the causes apart. */
+export class ClientError extends Error {
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options)
+    this.name = new.target.name
   }
+}
+
+/** Drupal could not be reached: connection refused, DNS failure, or no answer within the timeout. */
+export class NetworkError extends ClientError {
+  constructor(
+    message: string,
+    readonly timedOut: boolean,
+    options?: ErrorOptions
+  ) {
+    super(message, options)
+  }
+}
+
+/** Drupal answered with an error status or a non-JSON body, such as a proxy or WAF error page. */
+export class HttpError extends ClientError {
+  constructor(
+    message: string,
+    readonly status: number,
+    readonly errors?: DrupalGraphqlError[]
+  ) {
+    super(message)
+  }
+}
+
+/** Drupal answered, but the response carried GraphQL errors or no data. */
+export class GraphqlError extends ClientError {
+  constructor(
+    message: string,
+    readonly errors: DrupalGraphqlError[] = []
+  ) {
+    super(message)
+  }
+}
+
+/**
+ * A readable summary of a failed request, for logs. Drupal's `debugMessage` is preferred and repeated
+ * messages are deduplicated.
+ */
+export const describeError = (error: unknown): string => {
+  const errors = error instanceof GraphqlError || error instanceof HttpError ? error.errors : undefined
+  const messages = errors?.map(e => e.debugMessage || e.message).filter(Boolean)
+  if (messages?.length) return [...new Set(messages)].join(" ")
+  return error instanceof Error ? error.message : String(error)
 }
 
 /**
@@ -49,35 +89,51 @@ export const graphqlClient = (requestConfig: Omit<RequestInit, "method" | "body"
      * @param document - A generated `TypedDocumentString` (or any value that serializes to a query).
      * @param variables - Variables for the operation.
      * @returns The `data` payload of the response.
-     * @throws {ClientError} When the request fails or the response contains GraphQL errors.
+     * @throws {NetworkError} When Drupal can't be reached or doesn't answer in time.
+     * @throws {HttpError} When Drupal answers with an error status or a non-JSON body.
+     * @throws {GraphqlError} When the response carries GraphQL errors or no data.
      */
     async request<TResult = unknown, TVariables = Record<string, unknown>>(
       document: {toString(): string},
       variables?: TVariables
     ): Promise<TResult> {
-      const response = await fetch(endpoint, {
-        ...requestConfig,
-        method: "POST",
-        headers,
-        body: JSON.stringify({query: document.toString(), variables}),
-      })
+      const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+      let response: Response
+      try {
+        response = await fetch(endpoint, {
+          ...requestConfig,
+          method: "POST",
+          headers,
+          body: JSON.stringify({query: document.toString(), variables}),
+          signal: requestConfig.signal ? AbortSignal.any([requestConfig.signal, timeout]) : timeout,
+        })
+      } catch (e) {
+        const timedOut = timeout.aborted
+        throw new NetworkError(
+          timedOut
+            ? `Drupal did not respond within ${REQUEST_TIMEOUT_MS / 1000}s`
+            : `Unable to reach Drupal: ${e instanceof Error ? e.message : e}`,
+          timedOut,
+          {cause: e}
+        )
+      }
 
       let body: GraphqlResponseBody<TResult> | undefined
       try {
         body = (await response.json()) as GraphqlResponseBody<TResult>
       } catch {
-        // Non-JSON body, such as a proxy or WAF error page. Fall through to the status-based error.
+        // Non-JSON body, such as a proxy or WAF error page. Reported below by status.
       }
 
-      if (!response.ok || body?.errors?.length || !body?.data) {
-        const firstError = body?.errors?.[0]
-        throw new ClientError(
-          firstError?.debugMessage ||
-            firstError?.message ||
-            `GraphQL request failed: ${response.status} ${response.statusText}`,
-          {status: response.status, errors: body?.errors}
+      if (!response.ok || !body)
+        throw new HttpError(
+          `GraphQL request failed: HTTP ${response.status}${body ? "" : " with a non-JSON response"}`,
+          response.status,
+          body?.errors
         )
-      }
+
+      if (body.errors?.length || !body.data)
+        throw new GraphqlError(body.errors?.length ? "GraphQL errors" : "GraphQL response had no data", body.errors)
 
       return body.data
     },
