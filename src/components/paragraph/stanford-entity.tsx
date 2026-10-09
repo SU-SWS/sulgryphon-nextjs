@@ -43,7 +43,7 @@ const StanfordEntity = async ({
   const gridClass = entities.length >= 3 ? gridClasses[2] : gridClasses[(entities.length % 3) - 1]
 
   return (
-    <div className="centered relative @container" {...props}>
+    <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {headline && headingBehavior !== "remove" && (
           <h2 id={headerId} className={twMerge("mb-40 text-left", headingBehavior === "hide" && "sr-only")}>

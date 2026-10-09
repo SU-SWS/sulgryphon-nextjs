@@ -1,0 +1,117 @@
+/**
+ * SUL custom base styles and components. Ported from the Tailwind v3 plugins in
+ * tailwind/plugins/base/base.js and tailwind/plugins/components/simple/sul-button.js.
+ */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Source Sans 3", Georgia, Times, "Times New Roman", serif;
+    letter-spacing: inherit;
+    line-height: var(--leading-display);
+  }
+
+  h1 {
+    font-size: 3.6rem;
+
+    @variant sm {
+      font-size: 4rem;
+    }
+
+    @variant lg {
+      font-size: 5.4rem;
+    }
+  }
+
+  h2 {
+    font-size: 3.6rem;
+
+    @variant sm {
+      font-size: 4rem;
+    }
+
+    @variant lg {
+      font-size: 4.4rem;
+    }
+  }
+
+  h3 {
+    font-size: 2.6rem;
+
+    @variant sm {
+      font-size: 2.8rem;
+    }
+
+    @variant lg {
+      font-size: 3.2rem;
+    }
+  }
+
+  h4 {
+    font-size: 2.2rem;
+
+    @variant sm {
+      font-size: 2.4rem;
+    }
+  }
+
+  h5,
+  h6 {
+    font-size: 2.4rem;
+  }
+
+  p,
+  li {
+    font-size: 1.6rem;
+
+    @variant sm {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+@layer components {
+  .full-screen {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
+  /* Extends Decanter's .button. */
+  .button {
+    border-radius: 9999px;
+    padding: 1.1rem 2.6rem;
+    line-height: 1.2;
+    font-size: 2rem;
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: var(--color-cardinal-red-dark);
+    }
+  }
+}
+
+/*
+  Tailwind v3 had no cascade layers, so these base rules outranked single-class utilities on
+  specificity (e.g. a link with `text-white` still turned black on hover, and `lg:mb-12` on a last
+  list item stayed 0). In v4 every utility beats every base rule. Re-declaring them in the utilities
+  layer lets specificity decide again: `.text-white` still loses, `hover:text-white` still wins.
+*/
+@layer utilities {
+  a:hover,
+  a:focus {
+    color: var(--color-black);
+  }
+
+  li:last-child,
+  dd:last-child {
+    margin-bottom: 0;
+  }
+}

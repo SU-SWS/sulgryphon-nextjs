@@ -9,11 +9,11 @@ const LockupP = ({line1, line4, siteName, logoUrl}: LockupProps) => {
         <div className="flex flex-col gap-4 lg:flex-row">
           <div>
             <LockupLogo logoUrl={logoUrl} siteName={siteName} />
-            <div className="type-2 mt-1 font-semibold uppercase">{line4}</div>
+            <div className="mt-1 type-2 font-semibold uppercase">{line4}</div>
           </div>
 
           <div className="w-[1px] shrink-0 bg-black" />
-          <div className="type-2 mt-auto font-normal">{line1 || siteName}</div>
+          <div className="mt-auto type-2 font-normal">{line1 || siteName}</div>
         </div>
       </Link>
     </div>

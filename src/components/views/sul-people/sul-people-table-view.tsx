@@ -59,7 +59,7 @@ const SulPeopleTableView = ({items}: Props) => {
         action="javascript:void(0);"
       >
         <div className="relative w-full md:w-[435px]">
-          <label className="pl-15 text-18 font-semibold leading-display" htmlFor={id}>
+          <label className="pl-15 text-18 leading-display font-semibold" htmlFor={id}>
             Search by name, title, or subject
           </label>
 
@@ -73,7 +73,7 @@ const SulPeopleTableView = ({items}: Props) => {
 
           <button
             type="reset"
-            className="absolute bottom-6 right-32 z-10 peer-placeholder-shown:hidden"
+            className="absolute right-32 bottom-6 z-10 peer-placeholder-shown:hidden"
             aria-label="Clear keyword search"
             onClick={() => {
               if (keywordRef.current) {
@@ -88,7 +88,7 @@ const SulPeopleTableView = ({items}: Props) => {
 
           <button
             type="submit"
-            className="absolute bottom-6 right-10 z-10"
+            className="absolute right-10 bottom-6 z-10"
             onClick={() => setKeywordFilter(keywordRef.current?.value || "")}
           >
             <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
@@ -120,7 +120,7 @@ const SulPeopleTableView = ({items}: Props) => {
             Showing {displayedItems.length} of {items.length}
           </caption>
           <Thead className="sr-only lg:not-sr-only lg:border-b lg:border-black-40">
-            <Tr className="block sm:hidden lg:!table-row">
+            <Tr className="block sm:hidden lg:table-row!">
               <Th className="block min-w-[100px] pl-[0px] lg:table-cell" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
@@ -143,7 +143,7 @@ const SulPeopleTableView = ({items}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.uuid}
-                className="block pt-16 sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:first:pt-0 lg:!table-row lg:max-h-none"
+                className="block pt-16 sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:first:pt-0 lg:table-row! lg:max-h-none"
               >
                 <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
                   {item.photoUrl && (
@@ -178,10 +178,10 @@ const SulPeopleTableView = ({items}: Props) => {
                     </Link>
                   )}
                   {item.fullTitle && (
-                    <div className="pb-16 text-16 font-normal leading-cozy lg:pb-0">{item.fullTitle}</div>
+                    <div className="pb-16 text-16 leading-cozy font-normal lg:pb-0">{item.fullTitle}</div>
                   )}
                 </Th>
-                <Td className="min-w-1/5 block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5 lg:pr-72">
+                <Td className="block w-auto px-0 py-16 text-center md:border-b md:border-black-40 md:px-9 md:py-16 md:text-left lg:table-cell lg:w-2/5 lg:pr-72">
                   {!!item.researchAreas?.length && (
                     <div className="mb-16 bg-black-10 px-1em py-1em text-16 leading-cozy md:bg-transparent md:p-0 lg:mb-0">
                       <span className="font-bold md:hidden">Expertise: </span>
@@ -195,7 +195,7 @@ const SulPeopleTableView = ({items}: Props) => {
                       <Link
                         href={`mailto:${item.email}`}
                         prefetch={false}
-                        className="whitespace-nowrap text-16 font-normal leading-cozy text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                        className="text-16 leading-cozy font-normal whitespace-nowrap text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
                       >
                         <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block" />
                         {item.email}

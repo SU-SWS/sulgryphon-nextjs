@@ -18,7 +18,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article className="@container" {...props}>
       {/* Vertical layout (default) */}
-      <div className="rs-pt-2 mt-70 w-full border-x border-b border-t-5 border-solid border-black-10 border-t-digital-red bg-white px-30 pb-40 leading-display text-black shadow-md @[510px]:hidden">
+      <div className="mt-70 w-full border-x border-t-5 border-b border-solid border-black-10 border-t-digital-red bg-white px-30 rs-pt-2 pb-40 leading-display text-black shadow-md @[510px]:hidden">
         {imageUrl && (
           <div className="relative flex justify-center pb-70 @lg:pb-80">
             <div className="absolute top-[-11rem]">
@@ -50,7 +50,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
 
                 <EmailLink
                   email={node.suPersonEmail}
-                  className="break-words text-18 text-digital-blue no-underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red @lg:text-18"
+                  className="text-18 wrap-anywhere text-digital-blue no-underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red @lg:text-18"
                 />
               </div>
             )}
@@ -60,9 +60,9 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
       </div>
 
       {/* Horizontal layout */}
-      <div className="rs-pt-2 rs-px-2 rs-pb-3 mt-0 hidden w-full flex-col border-x border-b-5 border-t border-solid border-black-10 border-b-digital-red bg-white leading-display text-black shadow-md @3xl:flex-row @[510px]:flex">
+      <div className="mt-0 hidden w-full flex-col border-x border-t border-b-5 border-solid border-black-10 border-b-digital-red bg-white rs-pt-2 rs-px-2 rs-pb-3 leading-display text-black shadow-md @[510px]:flex @3xl:flex-row">
         {imageUrl && (
-          <div className="mx-auto mb-50 flex items-center @3xl:mb-0 @3xl:ml-0 @3xl:mr-50">
+          <div className="mx-auto mb-50 flex items-center @3xl:mr-50 @3xl:mb-0 @3xl:ml-0">
             <div className="relative aspect-[1/1] w-[155px]">
               <Image
                 src={buildUrl(imageUrl).toString()}
@@ -90,7 +90,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
 
               <EmailLink
                 email={node.suPersonEmail}
-                className="break-words text-digital-blue no-underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                className="wrap-anywhere text-digital-blue no-underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
               />
             </div>
           )}

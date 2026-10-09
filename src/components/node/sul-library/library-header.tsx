@@ -32,7 +32,7 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
         </div>
       </div>
       <div
-        className="absolute top-0 block h-full w-full bg-gradient-to-tl from-transparent to-black-true"
+        className="absolute top-0 block h-full w-full bg-linear-to-tl/srgb from-transparent to-black-true"
         aria-hidden="true"
       ></div>
       <div className="md::max-w-[calc(100vw-20rem)] relative top-50 z-10 mx-auto w-full max-w-[calc(100vw-10rem)] md:top-100 md:min-h-[300px] 3xl:max-w-[calc(1500px-20rem)]">
@@ -43,9 +43,9 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
             </h1>
           </div>
 
-          <div className="z-100 relative md:min-w-[300px] xl:min-w-[400px]">
+          <div className="relative md:min-w-[300px] xl:min-w-[400px]">
             <Card
-              className="rounded border-0"
+              className="rounded-[0.3rem] border-0"
               image={
                 contactImageUrl && (
                   <Image
@@ -59,29 +59,29 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
               }
               footer={
                 <>
-                  <div className="rs-pb-1 mt-[-2rem] leading-tight text-black md:rs-px-2">
+                  <div className="mt-[-2rem] rs-pb-1 leading-tight text-black md:rs-px-2">
                     {node.suLibraryPhone && (
-                      <div className="type-1 relative mb-4 flex flex-row items-start">
-                        <PhoneIcon title="Phone" width={19} className="mr-12 md:absolute md:left-[-38px] md:top-01em" />
+                      <div className="relative mb-4 flex flex-row items-start type-1">
+                        <PhoneIcon title="Phone" width={19} className="mr-12 md:absolute md:top-01em md:left-[-38px]" />
                         {node.suLibraryPhone}
                       </div>
                     )}
                     {node.suLibraryEmail && (
-                      <div className="type-1 relative mb-4 mt-20 flex flex-row items-start md:mt-18">
+                      <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
                         <EnvelopeIcon
                           width={19}
                           title="Email"
-                          className="mr-12 mt-01em md:absolute md:left-[-38px] md:top-02em md:mt-0"
+                          className="mt-01em mr-12 md:absolute md:top-02em md:left-[-38px] md:mt-0"
                         />
-                        <EmailLink email={node.suLibraryEmail} className="break-words no-underline hocus:underline" />
+                        <EmailLink email={node.suLibraryEmail} className="wrap-anywhere no-underline hocus:underline" />
                       </div>
                     )}
                     {node.suLibraryAddress && (
-                      <div className="type-1 relative mb-4 mt-20 flex flex-row items-start md:mt-18">
+                      <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
                         <MapPinIcon
                           title="Location"
                           width={19}
-                          className="mr-12 mt-01em md:absolute md:left-[-38px] md:top-01em md:mt-0"
+                          className="mt-01em mr-12 md:absolute md:top-01em md:left-[-38px] md:mt-0"
                         />
                         {node.suLibraryMapLink?.url ? (
                           <Link href={node.suLibraryMapLink.url} className="no-underline hocus:underline">

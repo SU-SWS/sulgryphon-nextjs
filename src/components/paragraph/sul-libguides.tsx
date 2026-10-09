@@ -14,7 +14,7 @@ const SulLibguides = async ({headline, description, libguideId, ...props}: Props
   const guides = await fetchLibGuides({subjectId: libguideId})
 
   return (
-    <div className="centered relative lg:max-w-[980px]" {...props}>
+    <div className="relative centered lg:max-w-[980px]" {...props}>
       {headline && <h2>{headline}</h2>}
       {description && <div>{formatHtml(description)}</div>}
 

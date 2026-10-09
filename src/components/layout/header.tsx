@@ -12,7 +12,7 @@ const Header = async () => {
   return (
     <>
       <div role="region" aria-label="Site Messages">
-        <div className="identity-bar relative z-40 bg-cardinal-red pb-1 pt-5 lg:z-10">
+        <div className="identity-bar relative z-40 bg-cardinal-red pt-5 pb-1 lg:z-10">
           <div className="centered">
             <a className="logo text-20 leading-none text-white hocus:text-white" href="https://www.stanford.edu">
               Stanford University
@@ -47,7 +47,7 @@ const Header = async () => {
                 <li>
                   <Link
                     href="/support-stanford-libraries"
-                    className="cta-button group rs-mt-neg1 mt-0 block w-fit whitespace-nowrap rounded-full bg-digital-red px-16 py-6 text-16 font-normal leading text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
+                    className="cta-button group mt-0 block w-fit rounded-full bg-digital-red px-16 py-6 text-16 leading-normal font-normal whitespace-nowrap text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
                   >
                     Donate now
                   </Link>
@@ -67,7 +67,7 @@ const Header = async () => {
 const HeaderLink = ({href, text}: {href: string; text: string}) => {
   return (
     <li>
-      <Link className="text-nowrap text-16 font-normal text-black" href={href}>
+      <Link className="text-16 font-normal text-nowrap text-black" href={href}>
         {text}
       </Link>
     </li>

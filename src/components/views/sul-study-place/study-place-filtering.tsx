@@ -3,8 +3,7 @@
 import {FormEvent, MouseEvent, RefObject, useEffect, useRef, useState} from "react"
 import {SignalIcon} from "@heroicons/react/20/solid"
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card"
-import SelectList from "@/components/patterns/elements/select-list"
-import {SelectValue} from "@mui/base/useSelect"
+import SelectList, {SelectValue} from "@/components/patterns/elements/select-list"
 import autoAnimate from "@formkit/auto-animate"
 import {NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
 
@@ -86,17 +85,17 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
     <div className="@container">
       <form className="relative z-[1]" onSubmit={handleSubmit}>
         <fieldset
-          className="mb-30 grid grid-cols-1 gap-xs @xl:grid-cols-2 @7xl:grid-cols-4 lg:gap-xl"
+          className="mb-30 grid grid-cols-1 gap-xs lg:gap-xl @xl:grid-cols-2 @7xl:grid-cols-4"
           aria-label="Filter study places"
         >
-          <legend className="mb-10 whitespace-nowrap font-bold">Filter by:</legend>
+          <legend className="mb-10 font-bold whitespace-nowrap">Filter by:</legend>
           <SelectList
             label="Type"
             options={typeOfStudies}
             multiple
             disabled={typeOfStudies.length == 0}
             value={selectedTypes}
-            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedTypes(value as string[])}
+            onChange={(_e, value: SelectValue) => setSelectedTypes(value as string[])}
           />
 
           <SelectList
@@ -105,7 +104,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={libraryOptions.length == 0}
             value={selectedLibraries}
-            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedLibraries(value as string[])}
+            onChange={(_e, value: SelectValue) => setSelectedLibraries(value as string[])}
           />
 
           <SelectList
@@ -114,7 +113,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={capacityOptions.length == 0}
             value={selectedCapacity}
-            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedCapacity(value as string[])}
+            onChange={(_e, value: SelectValue) => setSelectedCapacity(value as string[])}
           />
 
           <SelectList
@@ -123,7 +122,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
             multiple
             disabled={featureOptions.length == 0}
             value={selectedFeatures}
-            onChange={(_e, value: SelectValue<string, boolean>) => setSelectedFeatured(value as string[])}
+            onChange={(_e, value: SelectValue) => setSelectedFeatured(value as string[])}
           />
         </fieldset>
 
@@ -138,7 +137,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
       {items.length === 0 && <SignalIcon width={50} className="mx-auto my-50 animate-ping" />}
 
       {items.length > 0 && (
-        <p className={"type-2 mb-32 mt-60 font-bold"} aria-live="polite" aria-atomic="true">
+        <p className={"mt-60 mb-32 type-2 font-bold"} aria-live="polite" aria-atomic="true">
           Showing {itemsToDisplay.length} of {items.length}
           <br />
           {itemsToDisplay.length == 0 && <>No items match the search.</>}

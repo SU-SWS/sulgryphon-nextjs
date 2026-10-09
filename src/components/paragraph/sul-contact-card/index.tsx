@@ -11,7 +11,7 @@ const SulContactCard = ({paragraph, ...props}: ContactCardProps) => {
   const Component = paragraph.sulContactBranch ? NodeReferenceCard : ManualFieldsCard
 
   return (
-    <div className="centered relative" {...props}>
+    <div className="relative centered" {...props}>
       <Component paragraph={paragraph} />
     </div>
   )

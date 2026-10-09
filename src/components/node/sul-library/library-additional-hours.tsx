@@ -33,10 +33,10 @@ const LibraryAdditionalHoursComponent = ({hoursId}: {hoursId: string}) => {
   }
 
   return (
-    <div className="relative z-[1] flex flex-1 basis-1/2 items-center border border-black-10 px-30 py-20 shadow-md @container">
+    <div className="@container relative z-[1] flex flex-1 basis-1/2 items-center border border-black-10 px-30 py-20 shadow-md">
       <div className="w-full">
         <div className="mb-40 flex flex-col justify-between gap-2xl @md:flex-row @md:items-end">
-          <h2 className="type-3 m-0 p-0">Additional Hours</h2>
+          <h2 className="m-0 p-0 type-3">Additional Hours</h2>
           <Link
             href={`https://library-hours.stanford.edu/libraries/${hoursId}`}
             className="no-underline hocus:underline"

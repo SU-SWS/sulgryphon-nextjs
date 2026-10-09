@@ -48,18 +48,18 @@ const Modal = ({children, isOpen, onClose, labelledBy}: ModalProps) => {
       <ReactFocusLock returnFocus>
         <div
           className={
-            "modal fixed left-0 top-0 z-[10000] flex h-full w-screen items-center justify-center overflow-x-hidden overflow-y-scroll overscroll-contain bg-black-true bg-opacity-[90%]"
+            "modal fixed top-0 left-0 z-[10000] flex h-full w-screen items-center justify-center overflow-x-hidden overflow-y-scroll overscroll-contain bg-black-true/90"
           }
         >
-          <div className={"basefont-19 pointer-events-auto absolute h-full w-screen"}>
+          <div className={"pointer-events-auto absolute h-full w-screen basefont-19"}>
             <div>
               <button
                 type="button"
                 onClick={onClose}
-                className={"absolute right-50 top-50 flex text-white hocus:underline"}
+                className={"absolute top-50 right-50 flex text-white hocus:underline"}
               >
                 Close<span className="sr-only"> Overlay</span>
-                <XMarkIcon className="ml-10 mt-[-3px]" width={25} />
+                <XMarkIcon className="mt-[-3px] ml-10" width={25} />
               </button>
             </div>
             <div className="mx-auto mt-[5%] h-5/6 w-11/12 md:h-4/5 md:w-8/12">{children}</div>

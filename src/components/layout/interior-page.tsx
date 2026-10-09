@@ -29,7 +29,7 @@ const InteriorPage = async ({children, node, currentPath, ...props}: Props) => {
             <div className="lg:mt-40">
               <h2
                 data-skip-heading="true"
-                className="type-0 m-0 block px-10 py-2 font-sans font-semibold text-cardinal-red lg:type-1 lg:mb-8 lg:p-0 lg:text-black"
+                className="m-0 block px-10 py-2 font-sans type-0 font-semibold text-cardinal-red lg:mb-8 lg:p-0 lg:type-1 lg:text-black"
               >
                 {node.sulRelLinksHeading || "Related content"}
               </h2>
@@ -39,7 +39,7 @@ const InteriorPage = async ({children, node, currentPath, ...props}: Props) => {
                     {link.url && (
                       <DrupalLink
                         href={link.url}
-                        className="type-0 block break-words px-10 py-2 font-sans font-normal text-black no-underline hocus:bg-black-10 hocus:underline lg:p-0 lg:text-digital-blue lg:underline lg:hocus:bg-transparent"
+                        className="block px-10 py-2 font-sans type-0 font-normal wrap-anywhere text-black no-underline lg:p-0 lg:text-digital-blue lg:underline hocus:bg-black-10 hocus:underline lg:hocus:bg-transparent"
                       >
                         {link.title}
                       </DrupalLink>

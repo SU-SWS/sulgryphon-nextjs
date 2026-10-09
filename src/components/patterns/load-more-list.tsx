@@ -70,7 +70,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
   return (
     <div {...props} className={twMerge("relative", props.className)}>
       {isPending && (
-        <div className="absolute left-0 top-0 z-20 h-full w-full bg-black-30 bg-opacity-80">
+        <div className="absolute top-0 left-0 z-20 h-full w-full bg-black-30/80">
           <div className="absolute bottom-20 left-1/2 -translate-x-[25px]">
             <ArrowPathIcon className="animate-spin" width={50} />
           </div>
@@ -96,7 +96,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
       {items.length < totalItems && loadPage && (
         <button
           type="button"
-          className="cta-button group rs-mt-neg1 mx-auto block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline md:text-18"
+          className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true md:text-18 hocus:text-white hocus:underline"
           onClick={showMoreItems}
         >
           {buttonText ? buttonText : "Load more"}

@@ -51,7 +51,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
   return (
     <div {...props}>
       <Card
-        className="rounded border-0"
+        className="rounded-[0.3rem] border-0"
         image={
           imageUrl && (
             <Image
@@ -66,7 +66,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
         footer={
           <div className="relative pb-140 md:rs-pb-8">
             <div className="absolute w-full">
-              <h2 id={formId} className="type-2 mb-03em font-bold leading-tight text-black">
+              <h2 id={formId} className="mb-03em type-2 leading-tight font-bold text-black">
                 Today&apos;s hours
               </h2>
               <div className="mb-10">
@@ -96,7 +96,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
           </div>
         }
       />
-      <div className="rs-px-1 w-full bg-cardinal-red py-9 text-16 text-white shadow-md">
+      <div className="w-full bg-cardinal-red py-9 rs-px-1 text-16 text-white shadow-md">
         <MoonStarsIcon className="mr-02em inline" />
         <span className="font-bold">New!</span>{" "}
         <Link

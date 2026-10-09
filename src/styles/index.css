@@ -1,0 +1,165 @@
+/*
+  Font Awesome loads into its own layer between components and utilities. Unlayered, its `.sr-only`
+  would beat every Tailwind layer, so `lg:not-sr-only` could never undo it. In this position its icon
+  classes still beat base element styles and utilities still beat it, as in Tailwind v3.
+*/
+@layer properties, theme, base, components, fontawesome, utilities;
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css") layer(fontawesome);
+
+/*
+  Decanter 8 is a CSS-first Tailwind v4 preset; it pulls in Tailwind itself. The default entry keeps
+  Decanter 7's 62.5% root font size, which every rem value in this site assumes.
+*/
+@import "decanter";
+/* Decanter 7 always shipped the form classes and the @tailwindcss/forms reset; v8 makes them opt-in. */
+@import "decanter/forms";
+
+@import "./centered-container.css";
+@import "./responsive-spacing-legacy.css";
+@import "./sul-base.css";
+@import "./responsive-table.css";
+
+/*
+  Decanter's `@import 'tailwindcss'` lives in node_modules, so point automatic source detection back at
+  the application code.
+*/
+@source "../../app";
+@source "../../src";
+
+@theme {
+  /*
+    Tailwind v4 redefined its palette in oklch. Keep the v3 values for the colors the default border,
+    the form reset and the focus ring use, so they render exactly as before.
+  */
+  --color-gray-200: #e5e7eb;
+  --color-gray-500: #6b7280;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+
+  --breakpoint-xs: 440px;
+  /* Decanter ships 3xl at 1700px; this site has always used 1600px. */
+  --breakpoint-3xl: 1600px;
+
+  /* Container query sizes above Tailwind's built-in 7xl (80rem). */
+  --container-8xl: 80rem;
+  --container-9xl: 90rem;
+  --container-10xl: 100rem;
+  --container-11xl: 110rem;
+  --container-12xl: 120rem;
+  --container-13xl: 130rem;
+  --container-14xl: 140rem;
+  --container-15xl: 150rem;
+
+  /* Two column layouts, e.g. grid-cols-1-2 => 33%/67%. */
+  --grid-template-columns-1-1: minmax(0, 1fr) minmax(0, 1fr);
+  --grid-template-columns-1-2: minmax(0, 1fr) minmax(0, 2fr);
+  --grid-template-columns-1-3: minmax(0, 1fr) minmax(0, 3fr);
+  --grid-template-columns-1-4: minmax(0, 1fr) minmax(0, 4fr);
+  --grid-template-columns-2-1: minmax(0, 2fr) minmax(0, 1fr);
+  --grid-template-columns-3-1: minmax(0, 3fr) minmax(0, 1fr);
+  --grid-template-columns-4-1: minmax(0, 4fr) minmax(0, 1fr);
+
+  /* Three column layouts, e.g. grid-cols-1-2-1. */
+  --grid-template-columns-1-1-1: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  --grid-template-columns-2-1-1: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  --grid-template-columns-3-1-1: minmax(0, 3fr) minmax(0, 1fr) minmax(0, 1fr);
+  --grid-template-columns-4-1-1: minmax(0, 4fr) minmax(0, 1fr) minmax(0, 1fr);
+  --grid-template-columns-1-2-1: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+  --grid-template-columns-1-3-1: minmax(0, 1fr) minmax(0, 3fr) minmax(0, 1fr);
+  --grid-template-columns-1-4-1: minmax(0, 1fr) minmax(0, 4fr) minmax(0, 1fr);
+  --grid-template-columns-1-1-2: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr);
+  --grid-template-columns-1-1-3: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 3fr);
+  --grid-template-columns-1-1-4: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 4fr);
+
+  --shadow-button: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  --list-style-type-lower-alpha: lower-alpha;
+  --list-style-type-upper-alpha: upper-alpha;
+  --list-style-type-lower-roman: lower-roman;
+  --list-style-type-upper-roman: upper-roman;
+
+  --animate-slide-up: slide-up 0.4s ease forwards;
+  --animate-slide-down: slide-down 0.4s ease forwards;
+  --animate-menu-x-morph-a: menu-x-morph-a 0.4s ease forwards;
+  --animate-menu-x-morph-b: menu-x-morph-b 0.4s ease forwards;
+  --animate-menu-x-morph-c: menu-x-morph-c 0.4s ease forwards;
+  --animate-menu-x-morph-r-a: menu-x-morph-a 0.4s ease reverse forwards;
+  --animate-menu-x-morph-r-b: menu-x-morph-b 0.4s ease reverse forwards;
+  --animate-menu-x-morph-r-c: menu-x-morph-c 0.4s ease reverse forwards;
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-100%);
+      visibility: hidden;
+    }
+  }
+
+  @keyframes slide-down {
+    0% {
+      transform: translateY(-100%);
+      visibility: hidden;
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+
+  @keyframes menu-x-morph-a {
+    50% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(10px) rotate(45deg);
+    }
+  }
+
+  @keyframes menu-x-morph-b {
+    50% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-45deg);
+    }
+  }
+
+  @keyframes menu-x-morph-c {
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+  }
+}
+
+/* Background images. Tailwind v4 has no theme namespace for these, so each is its own utility. */
+@utility bg-footer-sprinkles {
+  background-image: url("/footer-sprinkles.png");
+}
+@utility bg-interior-header-sprinkles {
+  background-image: url("/interior-header-sprinkles.png");
+}
+@utility bg-home-banner-sprinkles {
+  background-image: url("/home-banner-sprinkles.png");
+}
+@utility bg-horizontal-card-sprinkles {
+  background-image: url("/horizontal-card-sprinkles.png");
+}
+
+/* Styles for react-tiny-oembed containers */
+div .__embed_column,
+.aspect-\[16\/9\] .__embed_column {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  display: block;
+  margin-bottom: 1.6em;
+}
+
+.aspect-\[16\/9\] .__embed_column iframe {
+  width: 100%;
+  height: 100%;
+}

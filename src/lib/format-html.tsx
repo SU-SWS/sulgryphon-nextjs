@@ -126,7 +126,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
           case "h3":
           case "h4":
             if (nodeProps.className?.includes("sul-gradient-accent")) {
-              nodeProps.className += " !mb-0 shrink-0 "
+              nodeProps.className += " mb-0! shrink-0 "
               return (
                 <div className="centered mb-40 flex w-full flex-row items-center justify-between gap-16">
                   <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
