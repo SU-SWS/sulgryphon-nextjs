@@ -2,7 +2,6 @@
 
 import {ClockIcon} from "@heroicons/react/24/outline"
 import {ErrorBoundary} from "react-error-boundary"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import {useId, useRef} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
@@ -12,9 +11,7 @@ import {useBoolean} from "usehooks-ts"
 const LibraryHeaderHours = ({hoursId}: {hoursId: string}) => {
   return (
     <ErrorBoundary fallback={<></>} onError={e => console.error(e instanceof Error ? e.message : e)}>
-      <CachedClientFetch>
-        <LibraryHeaderHoursComponent hoursId={hoursId} />
-      </CachedClientFetch>
+      <LibraryHeaderHoursComponent hoursId={hoursId} />
     </ErrorBoundary>
   )
 }

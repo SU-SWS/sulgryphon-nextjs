@@ -1,10 +1,9 @@
 "use client"
 
-import useLibraryHours, {LocationHours} from "@/lib/hooks/useLibraryHours"
+import useLibraryHours from "@/lib/hooks/useLibraryHours"
 import {getLibrarySelectOptions} from "@/components/node/sul-library/library-select-options"
 import {Suspense, useId} from "react"
 import {ErrorBoundary} from "react-error-boundary"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import Link from "@/components/patterns/elements/drupal-link"
 import {ClockIcon} from "@heroicons/react/24/outline"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
@@ -12,19 +11,17 @@ import {ChevronRightIcon} from "@heroicons/react/20/solid"
 const LibraryAdditionalHours = ({hoursId}: {hoursId: string}) => {
   return (
     <ErrorBoundary fallback={<></>} onError={e => console.error(e instanceof Error ? e.message : e)}>
-      <CachedClientFetch>
-        {/* Reads the current day, so it renders on the client rather than in the prerendered page. */}
-        <Suspense fallback={null}>
-          <LibraryAdditionalHoursComponent hoursId={hoursId} />
-        </Suspense>
-      </CachedClientFetch>
+      {/* Reads the current day, so it renders on the client rather than in the prerendered page. */}
+      <Suspense fallback={null}>
+        <LibraryAdditionalHoursComponent hoursId={hoursId} />
+      </Suspense>
     </ErrorBoundary>
   )
 }
 
 const LibraryAdditionalHoursComponent = ({hoursId}: {hoursId: string}) => {
   const id = useId()
-  const libraryHours = useLibraryHours<LocationHours>(hoursId)
+  const libraryHours = useLibraryHours(hoursId)
   const additionalLocations = libraryHours && libraryHours.additionalLocations
   const today = new Date().toLocaleString("en-us", {weekday: "short", timeZone: "America/Los_Angeles"})
 

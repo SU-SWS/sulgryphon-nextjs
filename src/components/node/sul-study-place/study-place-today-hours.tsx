@@ -2,14 +2,9 @@
 
 import {ClockIcon} from "@heroicons/react/24/outline"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 
 const StudyPlaceHours = ({hoursId}: {hoursId: string}) => {
-  return (
-    <CachedClientFetch>
-      <StudyPlaceHoursComponent hoursId={hoursId} />
-    </CachedClientFetch>
-  )
+  return <StudyPlaceHoursComponent hoursId={hoursId} />
 }
 
 const StudyPlaceHoursComponent = ({hoursId}: {hoursId: string}) => {
