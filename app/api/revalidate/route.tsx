@@ -1,28 +1,19 @@
 import {NextRequest, NextResponse} from "next/server"
-import {revalidateTag, unstable_cache as nextCache} from "next/cache"
-import {getEntityFromPath} from "@/lib/gql/fetcher"
-
-export const revalidate = 0
-
-const getHomePagePath = nextCache(
-  async () => {
-    const {entity} = await getEntityFromPath("/")
-    return entity?.path
-  },
-  [],
-  {tags: ["paths:/"]}
-)
+import {revalidateTag} from "next/cache"
+import {getEntityFromPath, getHomePagePath} from "@/lib/gql/gql-queries"
+import {secretsMatch} from "@/lib/security"
 
 export const GET = async (request: NextRequest) => {
   const secret = request.nextUrl.searchParams.get("secret")
-  if (secret !== process.env.DRUPAL_REVALIDATE_SECRET)
+  if (!(await secretsMatch(secret, process.env.DRUPAL_REVALIDATE_SECRET)))
     return NextResponse.json({message: "Invalid token"}, {status: 403})
 
   let path = request.nextUrl.searchParams.get("path")
-  if (!path) return NextResponse.json({message: "Invalid slug"}, {status: 400})
+  if (!path) return NextResponse.json({message: "Invalid Path"}, {status: 400})
 
   if (path.startsWith("/node/")) {
-    const {entity} = await getEntityFromPath(path)
+    // Fetch the teaser data to avoid the possibly cached page fetch.
+    const {entity} = await getEntityFromPath(path, false, true)
     path = entity?.path || null
     if (!path) return NextResponse.json({message: "Invalid Path"}, {status: 400})
   }
@@ -41,4 +32,19 @@ export const GET = async (request: NextRequest) => {
   tagsInvalidated.map(tag => revalidateTag(tag, "max"))
 
   return NextResponse.json({revalidated: true, tags: tagsInvalidated})
+}
+
+export const POST = async (request: NextRequest) => {
+  const auth = request.headers.get("Authorization")
+
+  // Check the secret is set first, or this would accept the literal header `Bearer undefined`.
+  const secret = process.env.DRUPAL_REVALIDATE_SECRET
+  if (!secret || !(await secretsMatch(auth, `Bearer ${secret}`)))
+    return NextResponse.json({message: "Invalid token"}, {status: 403})
+
+  // Parse the incoming JSON body
+  const {paths, tags} = (await request.json()) as {paths?: string[]; tags?: string[]}
+  paths?.map(path => revalidateTag(`paths:${path}`, "max"))
+  tags?.map(tag => revalidateTag(tag, "max"))
+  return NextResponse.json({revalidated: true, paths, tags})
 }

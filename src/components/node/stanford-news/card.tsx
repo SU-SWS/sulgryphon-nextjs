@@ -1,7 +1,7 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import {formatDate} from "@/lib/format-date"
 
 interface Props {

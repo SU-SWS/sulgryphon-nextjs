@@ -1,5 +1,5 @@
 import Link from "@/components/patterns/elements/drupal-link"
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/graphql"
 
 interface Props {
   node: NodeStanfordCourse

@@ -2,7 +2,7 @@ import formatHtml from "@/lib/format-html"
 import {HTMLAttributes} from "react"
 import Libguide from "@/components/node/stanford-person/libguide"
 import fetchLibGuides from "@/lib/libguides"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe} from "@/lib/gql/__generated__/graphql"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>

@@ -13,7 +13,7 @@ import {
   Maybe,
   Link as LinkType,
   ParagraphSulFeatCollectionSulCollectionCardsUnion,
-} from "@/lib/gql/__generated__/drupal.d"
+} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 import HeaderGradientLine from "../patterns/header-gradient-line"
 import clsx from "clsx"

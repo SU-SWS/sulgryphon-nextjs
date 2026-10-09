@@ -2,12 +2,10 @@ import Wave from "@/components/patterns/wave"
 import SearchForm from "@/components/search/search-form"
 import TodayHours from "./today-hours"
 import Link from "@/components/patterns/elements/drupal-link"
-import {graphqlClient} from "@/lib/gql/fetcher"
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {getLibrariesWithHours} from "@/lib/gql/gql-queries"
 
 const HomePageBanner = async () => {
-  const librariesQuery = await graphqlClient({next: {tags: ["node:sul_library"]}}).Libraries()
-  const libraries = librariesQuery.nodeSulLibraries.nodes.filter(node => !!node.suLibraryHours) as NodeSulLibrary[]
+  const libraries = await getLibrariesWithHours()
 
   return (
     <header className="relative mb-50 bg-black-true">

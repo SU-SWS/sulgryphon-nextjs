@@ -1,6 +1,16 @@
 import InterceptionModal from "@/components/patterns/modals/interception-modal"
+import {Suspense} from "react"
 
-const Calendar = async (props: {params: Promise<{id: string}>}) => {
+type Props = {params: Promise<{id: string}>}
+
+// The id is only known per request, so the modal renders inside a Suspense boundary.
+const Calendar = (props: Props) => (
+  <Suspense>
+    <CalendarModal params={props.params} />
+  </Suspense>
+)
+
+const CalendarModal = async (props: Props) => {
   const params = await props.params
 
   const {id} = params

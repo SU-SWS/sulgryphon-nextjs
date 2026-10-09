@@ -1,4 +1,4 @@
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/graphql"
 import RandomizeChildren from "@/components/patterns/elements/randomize-children"
 import StanfordPersonCard from "@/components/node/stanford-person/card"
 

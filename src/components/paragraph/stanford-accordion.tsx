@@ -1,5 +1,5 @@
 import {ElementType, HtmlHTMLAttributes} from "react"
-import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 import formatHtml from "@/lib/format-html"
 import Accordion, {AccordionHeaderChoice} from "@/components/patterns/elements/accordion"

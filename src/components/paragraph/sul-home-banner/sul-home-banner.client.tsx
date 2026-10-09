@@ -1,5 +1,5 @@
 "use client"
-import {HTMLAttributes, useEffect, useId, useRef, useState} from "react"
+import {HTMLAttributes, useEffect, useId, useRef, useState, useSyncExternalStore} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 import {sendGAEvent} from "@next/third-parties/google"
@@ -8,18 +8,38 @@ import HoneypotField from "@/components/patterns/elements/honeypot-field"
 type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]
 }
-export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
-  const [displayedChild, setDisplayedChild] = useState(-1)
+// The banner picked for the current mount. useSyncExternalStore requires a stable snapshot, so the
+// pick is held here until the banner unmounts.
+let randomChild: number | undefined
 
-  useEffect(() => {
-    setDisplayedChild(Math.floor(Math.random() * children.length))
-  }, [children])
+const getRandomChild = (length: number) => {
+  if (randomChild === undefined || randomChild >= length) randomChild = Math.floor(Math.random() * length)
+  return randomChild
+}
+
+const subscribe = () => () => {}
+
+export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
+  // The server snapshot is -1, so the prerendered page shows the placeholder and the random pick
+  // only happens in the browser.
+  const displayedChild = useSyncExternalStore(
+    subscribe,
+    () => getRandomChild(children.length),
+    () => -1
+  )
+
+  // Pick a new banner the next time it mounts.
+  useEffect(
+    () => () => {
+      randomChild = undefined
+    },
+    []
+  )
 
   return (
     <div {...props}>
-      {/* To avoid initial loading of an image and then switching to another, 
-      display an empty container and allow the children to display after 
-      the useEffect completes. */}
+      {/* To avoid initial loading of an image and then switching to another,
+      display an empty container until the banner is picked in the browser. */}
       {displayedChild === -1 && <div className="relative h-400" />}
       {displayedChild >= 0 && children[displayedChild]}
     </div>

@@ -5,9 +5,9 @@ import {redirect} from "next/navigation"
 import {Suspense} from "react"
 import {Metadata} from "next"
 
-// https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
-export const revalidate = false
-export const dynamic = "force-dynamic"
+// Search reads the query string, so it renders per request. Invalid query strings are redirected in
+// proxy.ts, where the redirect keeps its status code; the checks below are a second line of defense.
+export const instant = false
 // https://vercel.com/docs/functions/runtimes#max-duration
 export const maxDuration = 60
 
