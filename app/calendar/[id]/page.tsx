@@ -1,5 +1,5 @@
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
-import {Suspense} from "react"
+import CalendarFrameFromUrl from "@/components/patterns/elements/calendar-frame.client"
 
 export const metadata = {
   title: "Make an Appointment",
@@ -8,9 +8,8 @@ export const metadata = {
   },
 }
 
-type Props = {params: Promise<{id: string}>}
-
-const Calendar = (props: Props) => {
+// The calendar id is read in the browser (see CalendarFrameFromUrl), so this one static page serves every id.
+const Calendar = () => {
   return (
     <main id="main-content">
       <InternalHeaderBanner>
@@ -19,21 +18,8 @@ const Calendar = (props: Props) => {
         </h1>
       </InternalHeaderBanner>
 
-      <Suspense>
-        <CalendarFrame params={props.params} />
-      </Suspense>
+      <CalendarFrameFromUrl className="centered h-full min-h-[400px] px-50 3xl:px-0" />
     </main>
-  )
-}
-
-const CalendarFrame = async ({params}: Props) => {
-  const {id} = await params
-  return (
-    <iframe
-      src={`https://appointments.library.stanford.edu/widget/appointments?u=${id}&lid=0&gid=0&iid=5247&t=Make%20an%20appointment`}
-      title="Schedule an appointment"
-      className="centered h-full min-h-[400px] px-50 3xl:px-0"
-    />
   )
 }
 

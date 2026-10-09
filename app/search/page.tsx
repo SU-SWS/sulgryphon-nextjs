@@ -1,13 +1,9 @@
 import SiteSearch from "@/components/search/search-page"
 import AlgoliaSearch from "@/components/search/algolia-search"
 import {getAlgoliaCredential} from "@/lib/algolia"
-import {redirect} from "next/navigation"
 import {Suspense} from "react"
 import {Metadata} from "next"
 
-// Search reads the query string, so it renders per request. Invalid query strings are redirected in
-// proxy.ts, where the redirect keeps its status code; the checks below are a second line of defense.
-export const instant = false
 // https://vercel.com/docs/functions/runtimes#max-duration
 export const maxDuration = 60
 
@@ -44,22 +40,12 @@ const AlgoliaSearchFallback = () => (
   </div>
 )
 
-// A repeated parameter (`?q=a&q=b`) arrives as an array, so the value type is wider than string.
-const Page = async (props: {searchParams?: Promise<Record<string, string | string[] | undefined>>}) => {
-  const searchParams = await props.searchParams
-  const searchTerms = typeof searchParams?.q === "string" ? searchParams.q : ""
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
 
-  if (searchParams) {
-    // Honeypot check.
-    if (searchParams?.search) redirect("/search")
-    // Repeated `q`: not a usable query, and an array would break the Algolia search state.
-    if (searchParams.q !== undefined && typeof searchParams.q !== "string") redirect("/search")
-    // Bot actor adding unwanted parameters.
-    delete searchParams.search
-    delete searchParams.q
-    if (Object.keys(searchParams).length > 0) redirect("/search")
-  }
-
+// Invalid query strings (honeypot, repeated or overlong `q`, extra parameters) are redirected in proxy.ts,
+// before rendering. The page itself doesn't read the query string, so with Algolia it is fully static:
+// the search runs in the browser.
+const Page = async (props: {searchParams?: SearchParams}) => {
   const algolia = await getAlgoliaCredential()
 
   return (
@@ -73,11 +59,20 @@ const Page = async (props: {searchParams?: Promise<Record<string, string | strin
             <noscript>JavaScript is required to load more results.</noscript>
           </>
         ) : (
-          <SiteSearch searchKey={searchTerms} />
+          // Without Algolia, Drupal's search view needs the query on the server, so only this part is dynamic.
+          <Suspense>
+            <DrupalSearch searchParams={props.searchParams} />
+          </Suspense>
         )}
       </div>
     </div>
   )
+}
+
+const DrupalSearch = async ({searchParams}: {searchParams?: SearchParams}) => {
+  // A repeated parameter (`?q=a&q=b`) arrives as an array; only a string is a usable query.
+  const q = (await searchParams)?.q
+  return <SiteSearch searchKey={typeof q === "string" ? q : ""} />
 }
 
 export default Page

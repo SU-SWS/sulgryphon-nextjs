@@ -1,4 +1,3 @@
-import {Suspense} from "react"
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import {notFound} from "next/navigation"
@@ -14,14 +13,9 @@ export const metadata = {
 
 type Props = {params: Promise<{uuid: string}>}
 
-// The uuid is only known per request, so the content renders inside a Suspense boundary.
-const Page = (props: Props) => (
-  <Suspense>
-    <StudyPlaceFeaturesPage params={props.params} />
-  </Suspense>
-)
-
-const StudyPlaceFeaturesPage = async (props: Props) => {
+// Params are awaited outside Suspense on purpose, as in [...slug]: each study place renders on its first
+// request and is then cached, instead of rendering on every visit.
+const Page = async (props: Props) => {
   const params = await props.params
 
   const {uuid} = params
@@ -64,3 +58,6 @@ const StudyPlaceFeaturesPage = async (props: Props) => {
 }
 
 export default Page
+
+// Cache Components needs one param to validate the route. Real study places render on their first request.
+export const generateStaticParams = async () => [{uuid: "00000000-0000-0000-0000-000000000000"}]

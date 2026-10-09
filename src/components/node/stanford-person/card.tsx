@@ -6,8 +6,14 @@ import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordPerson} from "@/lib/gql/__generated__/graphql"
 import {EnvelopeIcon} from "@heroicons/react/24/outline"
 
+/** The fields the card reads. Full person nodes fit, and so does the trimmed data sent to the client. */
+export type PersonCardData = Pick<
+  NodeStanfordPerson,
+  "uuid" | "title" | "path" | "suPersonFullTitle" | "suPersonEmail" | "sulPersonLibcalId"
+> & {suPersonPhoto?: {mediaImage: {url: string}} | null}
+
 interface Props {
-  node: NodeStanfordPerson
+  node: PersonCardData
   h3Heading?: boolean
 }
 
