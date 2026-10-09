@@ -1,12 +1,12 @@
 import {NextRequest, NextResponse} from "next/server"
-import {graphqlClient} from "@/lib/gql/gql-client"
+import {describeError, graphqlClient} from "@/lib/gql/gql-client"
 import {
   StanfordPersonSearchDocument,
   StanfordPersonSearchQuery,
   StanfordPersonSearchQueryVariables,
   NodeStanfordPerson,
 } from "@/lib/gql/__generated__/graphql"
-import {cacheTag} from "next/cache"
+import {cacheLife, cacheTag} from "next/cache"
 
 // Extract the actual type of items in the results array
 type StanfordPersonResultItem = NonNullable<NonNullable<StanfordPersonSearchQuery["stanfordPerson"]>["results"][number]>
@@ -44,27 +44,34 @@ const getAllPeople = async (): Promise<StanfordPersonResultItem[]> => {
   let page = 0
   let hasMorePages = true
 
-  while (hasMorePages) {
-    const data = await graphqlClient().request<StanfordPersonSearchQuery, StanfordPersonSearchQueryVariables>(
-      StanfordPersonSearchDocument,
-      {
-        pageSize: 999, // Fetch large batch to reduce API calls
-        page: page,
+  try {
+    while (hasMorePages) {
+      const data = await graphqlClient().request<StanfordPersonSearchQuery, StanfordPersonSearchQueryVariables>(
+        StanfordPersonSearchDocument,
+        {
+          pageSize: 999, // Fetch large batch to reduce API calls
+          page: page,
+        }
+      )
+
+      if (data.stanfordPerson?.results) {
+        allResults = allResults.concat(data.stanfordPerson.results)
+
+        // Check if we have more pages
+        const pageSize = 999
+        const totalFetched = (page + 1) * pageSize
+        const total = data.stanfordPerson.pageInfo?.total || 0
+        hasMorePages = totalFetched < total
+        page++
+      } else {
+        hasMorePages = false
       }
-    )
-
-    if (data.stanfordPerson?.results) {
-      allResults = allResults.concat(data.stanfordPerson.results)
-
-      // Check if we have more pages
-      const pageSize = 999
-      const totalFetched = (page + 1) * pageSize
-      const total = data.stanfordPerson.pageInfo?.total || 0
-      hasMorePages = totalFetched < total
-      page++
-    } else {
-      hasMorePages = false
     }
+  } catch (e) {
+    // Don't cache a partial or empty directory as if it were complete; try again within minutes.
+    console.warn("Unable to fetch people for search: " + describeError(e))
+    cacheLife("minutes")
+    return []
   }
   return allResults
 }

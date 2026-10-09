@@ -41,10 +41,13 @@ export const generateStaticParams = async (): Promise<Array<Slug>> => {
   // the home page alias, which next.config.ts redirects to `/`, so it never serves stale content.
   if (process.env.BUILD_COMPLETE !== "true") return [{slug: ["home"]}]
 
-  return (await getAllNodes())
+  const params = (await getAllNodes())
     .map(node => node.path)
     .filter(path => !!path && path !== "/" && !path.startsWith("/node/"))
     .map(path => ({slug: (path as string).split("/").filter(part => !!part)}))
+
+  // If Drupal couldn't be reached, build the placeholder and let every page render on its first request.
+  return params.length ? params : [{slug: ["home"]}]
 }
 
 export default NodePage

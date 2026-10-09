@@ -34,8 +34,8 @@ import {
   SulStudyPlacesDocument,
   SulStudyPlacesQuery,
 } from "@/lib/gql/__generated__/graphql"
-import {graphqlClient} from "@/lib/gql/gql-client"
-import {cacheTag} from "next/cache"
+import {describeError, graphqlClient} from "@/lib/gql/gql-client"
+import {cacheLife, cacheTag} from "next/cache"
 
 export const VIEW_PAGE_SIZE = 21
 
@@ -268,7 +268,9 @@ export const getViewPagedItems = async (
         break
     }
   } catch (e) {
-    if (e instanceof Error) console.warn(e.message)
+    // Not a real result, so keep it briefly: pages showing the empty list try Drupal again soon.
+    console.warn(`Unable to fetch view ${viewId}--${displayId}: ${describeError(e)}`)
+    cacheLife("minutes")
     return {items: [], totalItems: 0}
   }
 
