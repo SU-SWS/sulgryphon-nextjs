@@ -48,6 +48,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        // Drupal's preview links used to point here. The query string (secret and slug) is passed
+        // through, and proxy.ts takes over from /preview.
+        source: "/api/draft",
+        destination: "/preview",
+        permanent: false,
+      },
+      {
         source: "/home",
         destination: "/",
         permanent: true,
