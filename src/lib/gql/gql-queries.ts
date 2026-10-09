@@ -20,8 +20,20 @@ import {
   RouteQuery,
   RouteRedirect,
 } from "@/lib/gql/__generated__/graphql"
-import {ClientError, graphqlClient} from "@/lib/gql/gql-client"
+import {describeError, graphqlClient} from "@/lib/gql/gql-client"
 import {cacheLife, cacheTag} from "next/cache"
+
+/**
+ * Log a failed Drupal request from inside a `use cache` function and keep its fallback short-lived.
+ *
+ * A failure is not a real answer, so it must not be cached for as long as one. Pages that render the
+ * fallback also take this shorter lifetime, so they try Drupal again within minutes. Only call this
+ * inside a cache scope, and only once per invocation (it sets the scope's cacheLife).
+ */
+const cacheFailure = (context: string, error: unknown) => {
+  console.warn(`${context}: ${describeError(error)}`)
+  cacheLife("minutes")
+}
 
 /** Resolved result of a route lookup: an entity, a redirect, or neither when the lookup failed. */
 type RouteResult<T extends NodeUnion> = {
@@ -36,17 +48,26 @@ type RouteResult<T extends NodeUnion> = {
  * @param previewMode  When `true`, uses admin credentials so unpublished content is visible.
  * @param teaser       When `true`, Drupal returns a reduced field set suitable for list views.
  *
- * @returns `{ entity }` for real pages, `{ redirect }` for 3xx routes, or `{}` on error.
+ * @returns `{ entity }` for real pages, `{ redirect }` for 3xx routes, or `{}` when the path doesn't exist
+ *   or the request failed.
  */
 export const getEntityFromPath = async <T extends NodeUnion>(
   path: string,
   previewMode?: boolean,
   teaser?: boolean
-): Promise<RouteResult<T>> =>
+): Promise<RouteResult<T>> => {
   // Preview renders draft content, which changes on every editor save. Caching it would leave an
   // editor looking at a stale draft until Drupal happened to fire a revalidation for that path, so
   // preview requests go straight to Drupal and only published content is cached.
-  previewMode ? requestEntityFromPath<T>(path, true, teaser) : getCachedEntityFromPath<T>(path, teaser)
+  if (!previewMode) return getCachedEntityFromPath<T>(path, teaser)
+
+  try {
+    return await requestEntityFromPath<T>(path, true, teaser)
+  } catch (e) {
+    console.warn(`Unable to fetch preview of ${path}: ${describeError(e)}`)
+    return {}
+  }
+}
 
 const getCachedEntityFromPath = async <T extends NodeUnion>(
   path: string,
@@ -55,7 +76,13 @@ const getCachedEntityFromPath = async <T extends NodeUnion>(
   "use cache: remote"
 
   cacheTag("all-cache", "paths", `paths:${path}`)
-  return requestEntityFromPath<T>(path, false, teaser)
+  try {
+    // A path Drupal doesn't know resolves without an error, so a real "not found" is cached normally.
+    return await requestEntityFromPath<T>(path, false, teaser)
+  } catch (e) {
+    cacheFailure(`Unable to fetch ${path}`, e)
+    return {}
+  }
 }
 
 const requestEntityFromPath = async <T extends NodeUnion>(
@@ -63,23 +90,11 @@ const requestEntityFromPath = async <T extends NodeUnion>(
   previewMode: boolean,
   teaser?: boolean
 ): Promise<RouteResult<T>> => {
-  let query: RouteQuery
-  try {
-    query = await graphqlClient(undefined, previewMode).request<RouteQuery>(RouteDocument, {
-      path,
-      teaser: !!teaser,
-    })
-  } catch (e) {
-    if (e instanceof ClientError) {
-      // The Drupal GraphQL module attaches a human-readable `debugMessage` alongside the
-      // standard `message`. Deduplicate in case multiple errors carry the same text.
-      const messages = e.response.errors?.map(error => error.debugMessage || error.message)
-      console.warn([...new Set(messages)].join(" "))
-    } else {
-      console.warn(e instanceof Error ? e.message : "An error occurred")
-    }
-    return {}
-  }
+  // Errors are left to the caller: only a cached caller can shorten the cache lifetime.
+  const query = await graphqlClient(undefined, previewMode).request<RouteQuery>(RouteDocument, {
+    path,
+    teaser: !!teaser,
+  })
 
   if (query.route?.__typename === "RouteRedirect")
     return {redirect: {url: query.route.url, permanent: query.route.status === 301}}
@@ -107,7 +122,7 @@ export const getNodeByUuid = async <T extends NodeUnion>(uuid: string): Promise<
     if (node?.path) cacheTag(`paths:${node.path}`)
     return node
   } catch (e) {
-    console.warn(e instanceof Error ? e.message : "Unable to fetch node " + uuid)
+    cacheFailure(`Unable to fetch node ${uuid}`, e)
   }
 }
 
@@ -126,7 +141,7 @@ const getAllConfigPages = async (): Promise<ConfigPagesQuery | undefined> => {
   try {
     return await graphqlClient().request<ConfigPagesQuery>(ConfigPagesDocument)
   } catch (e) {
-    console.error("Unable to fetch config pages: " + (e instanceof Error && e.stack))
+    cacheFailure("Unable to fetch config pages", e)
   }
 }
 
@@ -186,8 +201,8 @@ const fetchMenu = async (name?: MenuAvailable): Promise<MenuItem[]> => {
   try {
     const menu = await graphqlClient().request<MenuQuery>(MenuDocument, {name})
     return (menu.menu?.items ?? []) as MenuItem[]
-  } catch (_e) {
-    console.error("Unable to fetch menu")
+  } catch (e) {
+    cacheFailure(`Unable to fetch the ${name?.toLowerCase() ?? "main"} menu`, e)
     return []
   }
 }
@@ -222,11 +237,17 @@ export const getMenu = async (name?: MenuAvailable): Promise<MenuItem[]> => {
 export const getAllNodes = async (): Promise<NodeUnion[]> => {
   "use cache: remote"
 
-  cacheLife("weeks")
   cacheTag("all-cache", "nodes")
-  const nodeQuery = await graphqlClient().request<NodesQuery>(NodesDocument)
-  const nodes: NodeUnion[] = []
+  let nodeQuery: NodesQuery
+  try {
+    nodeQuery = await graphqlClient().request<NodesQuery>(NodesDocument)
+  } catch (e) {
+    cacheFailure("Unable to fetch all nodes", e)
+    return []
+  }
 
+  cacheLife("weeks")
+  const nodes: NodeUnion[] = []
   ;(Object.keys(nodeQuery) as (keyof NodesQuery)[]).forEach(queryKey => {
     if (queryKey === "__typename") return
     nodeQuery[queryKey].nodes.forEach(node => nodes.push(node as NodeUnion))
@@ -246,7 +267,7 @@ export const getLibrariesWithHours = async (): Promise<NodeSulLibrary[]> => {
     const query = await graphqlClient().request<LibrariesQuery>(LibrariesDocument)
     return query.nodeSulLibraries.nodes.filter(node => !!node.suLibraryHours) as NodeSulLibrary[]
   } catch (e) {
-    console.warn(e instanceof Error ? e.message : "Unable to fetch libraries")
+    cacheFailure("Unable to fetch libraries", e)
     return []
   }
 }
@@ -262,7 +283,7 @@ export const getNewsTypeOptions = async (): Promise<Array<{value: string; label:
     const query = await graphqlClient().request<NewsTypesQuery>(NewsTypesDocument)
     return query.termStanfordNewsTopics.nodes.map(term => ({value: term.uuid, label: term.name}))
   } catch (e) {
-    console.warn(e instanceof Error ? e.message : "Unable to fetch news types")
+    cacheFailure("Unable to fetch news types", e)
     return []
   }
 }

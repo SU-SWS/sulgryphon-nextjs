@@ -34,8 +34,8 @@ import {
   SulStudyPlacesDocument,
   SulStudyPlacesQuery,
 } from "@/lib/gql/__generated__/graphql"
-import {graphqlClient} from "@/lib/gql/gql-client"
-import {cacheTag} from "next/cache"
+import {describeError, graphqlClient} from "@/lib/gql/gql-client"
+import {cacheLife, cacheTag} from "next/cache"
 
 export const VIEW_PAGE_SIZE = 21
 
@@ -268,13 +268,9 @@ export const getViewPagedItems = async (
         break
     }
   } catch (e) {
-    // See getEntityFromPath in fetcher.tsx. An empty result set has to mean
-    // Drupal said the view is empty, not that we failed to ask it — otherwise a
-    // 403 renders a 200 page with silently missing content, which gets stored in
-    // the prerendered output and reported by nobody.
-    if (!isDrupalResponse(e)) throw e
-
-    console.warn(describeGraphqlError(e))
+    // Not a real result, so keep it briefly: pages showing the empty list try Drupal again soon.
+    console.warn(`Unable to fetch view ${viewId}--${displayId}: ${describeError(e)}`)
+    cacheLife("minutes")
     return {items: [], totalItems: 0}
   }
 

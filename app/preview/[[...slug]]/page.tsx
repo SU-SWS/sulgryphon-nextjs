@@ -42,6 +42,4 @@ const PreviewContent = async ({params}: {params: Promise<Partial<Slug>>}) => {
   )
 }
 
-export const generateStaticParams = async (): Promise<Array<Partial<Slug>>> => [{slug: ["home"]}]
-
 export default PreviewPage
