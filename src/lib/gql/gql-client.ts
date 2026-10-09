@@ -15,14 +15,14 @@ const REQUEST_TIMEOUT_MS = 15000
 
 /** Base class for every failed GraphQL request. Check for a subclass to tell the causes apart. */
 export class ClientError extends Error {
-  constructor(message: string, options?: ErrorOptions) {
-    super(message, options)
-    this.name = new.target.name
-  }
+  // Names are literal strings: production builds minify class names, which would turn logs into "f: ...".
+  name = "ClientError"
 }
 
 /** Drupal could not be reached: connection refused, DNS failure, or no answer within the timeout. */
 export class NetworkError extends ClientError {
+  name = "NetworkError"
+
   constructor(
     message: string,
     readonly timedOut: boolean,
@@ -34,6 +34,8 @@ export class NetworkError extends ClientError {
 
 /** Drupal answered with an error status or a non-JSON body, such as a proxy or WAF error page. */
 export class HttpError extends ClientError {
+  name = "HttpError"
+
   constructor(
     message: string,
     readonly status: number,
@@ -45,6 +47,8 @@ export class HttpError extends ClientError {
 
 /** Drupal answered, but the response carried GraphQL errors or no data. */
 export class GraphqlError extends ClientError {
+  name = "GraphqlError"
+
   constructor(
     message: string,
     readonly errors: DrupalGraphqlError[] = []
