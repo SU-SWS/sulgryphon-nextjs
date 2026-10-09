@@ -7,7 +7,7 @@ import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/
 import {RefObject, useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ChevronDownIcon} from "@heroicons/react/24/outline"
-import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
+import useLibraryHours, {useAllLibraryHours, DayHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
@@ -46,7 +46,7 @@ type FiltersType = {
 const StudyPlaceFilteringTable = ({items}: Props) => {
   const {value: onlyOpenNow, setTrue: showOnlyOpenNow, setFalse: showOpenAndClosed} = useBoolean(false)
   const [filters, setFilters] = useState<FiltersType>({types: [], capacities: [], libraries: [], features: []})
-  const libraryHours = useLibraryHours<Record<string, LocationHours>>()
+  const libraryHours = useAllLibraryHours()
   const filterLocations = useCallback(
     (showingItems: StudyPlaces[]) => {
       const rightNow = new Date()
@@ -277,7 +277,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
   useOutsideClick(containerRef, collapseHours)
   const id = useId()
-  const libraryHours = useLibraryHours<LocationHours>(hoursId)
+  const libraryHours = useLibraryHours(hoursId)
   const todayLibraryHours = useTodayLibraryHours(hoursId)
 
   // If the user presses escape on the keyboard, close the submenus.

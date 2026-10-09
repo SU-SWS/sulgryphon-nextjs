@@ -21,10 +21,23 @@ export type LocationHours = {
   }[]
 }
 
-const useLibraryHours = <T extends Record<string, LocationHours> | LocationHours>(branchId?: string): T => {
-  const {isLoading, isError, data} = useDataFetch<Record<string, LocationHours>>("/api/library-hours")
-  if (isError || isLoading || !data) return {} as T
-  const branchLocation = branchId?.includes("/") ? branchId?.substring(0, branchId?.indexOf("/")) : branchId
-  return (branchLocation ? data[branchLocation] : data) as T
+// Stable while loading, so components that memoize on the hours don't recompute every render.
+const NO_HOURS: Record<string, LocationHours> = {}
+
+/**
+ * Opening hours for every location from /api/library-hours, keyed by location id. Empty until loaded.
+ */
+export const useAllLibraryHours = (): Record<string, LocationHours> =>
+  useDataFetch<Record<string, LocationHours>>("/api/library-hours").data ?? NO_HOURS
+
+/**
+ * Opening hours for one branch, e.g. `green`, or `green/location` for an additional location within
+ * that branch. `undefined` while loading or if the branch is unknown.
+ */
+const useLibraryHours = (branchId?: string): LocationHours | undefined => {
+  const hours = useAllLibraryHours()
+  // Additional locations are listed under their branch, and the API keys branches in lowercase.
+  return branchId ? hours[branchId.split("/")[0].toLowerCase()] : undefined
 }
+
 export default useLibraryHours

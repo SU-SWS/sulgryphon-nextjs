@@ -8,7 +8,7 @@ import {RefObject, useCallback, useId, useRef} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Address from "@/components/patterns/elements/address"
-import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
+import useLibraryHours, {useAllLibraryHours, DayHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
@@ -32,7 +32,7 @@ type Props = {
 }
 
 const BranchLocationFilteringTable = ({items}: Props) => {
-  const libraryHours = useLibraryHours<Record<string, LocationHours>>()
+  const libraryHours = useAllLibraryHours()
   const {value: onlyOpenNow, setTrue: showOnlyOpenNow, setFalse: showOpenAndClosed} = useBoolean(false)
 
   const filterLocations = () => {
@@ -189,7 +189,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
   useOutsideClick(containerRef, collapseHours)
   const id = useId()
-  const libraryHours = useLibraryHours<LocationHours>(hoursId)
+  const libraryHours = useLibraryHours(hoursId)
   const todayLibraryHours = useTodayLibraryHours(hoursId)
 
   // If the user presses escape on the keyboard, close the submenus.
