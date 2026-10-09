@@ -4,9 +4,12 @@ import {INFINITE_CACHE} from "next/dist/lib/constants"
 const drupalUrl = new URL(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL as string)
 
 const nextConfig: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: false,
   cacheLife: {
+    // Safety net for any `use cache` scope that doesn't name a profile.
     default: {
-      stale: undefined,
+      stale: INFINITE_CACHE,
       revalidate: INFINITE_CACHE,
       expire: INFINITE_CACHE,
     },

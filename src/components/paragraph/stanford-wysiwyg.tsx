@@ -3,7 +3,7 @@ import {HTMLAttributes} from "react"
 import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
-  text?: string
+  text?: string | null
 }
 
 const StanfordWysiwyg = ({text, className, ...props}: Props) => {

@@ -1,9 +1,9 @@
 import formatHtml from "@/lib/format-html"
 import NodeCardDisplay from "@/components/node/node-card"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
+import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
-import {getEntityFromPath} from "@/lib/gql/fetcher"
+import {getEntityFromPath} from "@/lib/gql/gql-queries"
 import {HTMLAttributes} from "react"
 
 type EntityProps = HTMLAttributes<HTMLDivElement> & {

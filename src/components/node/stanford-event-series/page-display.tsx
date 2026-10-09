@@ -1,5 +1,5 @@
 import NodeListDisplay from "@/components/node/node-list-display"
-import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordEventSeries} from "@/lib/gql/__generated__/graphql"
 import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"

@@ -4,7 +4,7 @@ import {TabsProvider, useTabs} from "@mui/base/useTabs"
 import {useTab} from "@mui/base/useTab"
 import {useTabPanel} from "@mui/base/useTabPanel"
 import {TabsListProvider, useTabsList} from "@mui/base/useTabsList"
-import {HTMLAttributes, SyntheticEvent, useRef} from "react"
+import {HTMLAttributes, Suspense, SyntheticEvent, useRef} from "react"
 import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
 import {UseTabsParameters} from "@mui/base/useTabs/useTabs.types"
@@ -27,19 +27,39 @@ type TabsProps = HTMLAttributes<HTMLDivElement> & {
   orientation?: UseTabsParameters["orientation"]
 }
 
-export const Tabs = ({paramId = "tab", orientation, defaultTab, children, ...props}: TabsProps) => {
+/**
+ * The selected tab comes from the URL, which isn't known while the page is prerendered. The fallback
+ * renders the default tab so the content is still in the static HTML, then the URL's tab takes over.
+ */
+export const Tabs = (props: TabsProps) => (
+  <Suspense fallback={<TabsBase {...props} />}>
+    <TabsFromUrl {...props} />
+  </Suspense>
+)
+
+const TabsFromUrl = ({paramId = "tab", ...props}: TabsProps) => {
+  const paramValue = useSearchParams().get(paramId)
+  return <TabsBase paramId={paramId} paramValue={paramValue} {...props} />
+}
+
+const TabsBase = ({
+  paramId = "tab",
+  paramValue,
+  orientation,
+  defaultTab,
+  children,
+  ...props
+}: TabsProps & {paramValue?: string | null}) => {
   const screen = useScreen({initializeWithValue: false})
   const isVertical = (screen && screen.width < 768) || orientation === "vertical"
 
-  const searchParams = useSearchParams()
   const router = useRouter()
   const onChange = (_e: SyntheticEvent | null, value: number | string | null) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(window.location.search)
     params.delete(paramId)
     if (value) params.set(paramId, `${value}`)
     router.replace(`?${params.toString()}${window.location.hash || ""}`, {scroll: false})
   }
-  const paramValue = searchParams.get(paramId)
   const initialTab = (paramValue && parseInt(paramValue)) || defaultTab
 
   const {contextValue} = useTabs({

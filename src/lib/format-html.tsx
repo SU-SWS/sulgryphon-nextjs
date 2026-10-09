@@ -13,7 +13,7 @@ import {ElementType} from "react"
 import type {DOMNode} from "html-dom-parser"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
-const formatHtml = (html?: string, isDarkBg?: boolean) => {
+const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
   const options: HTMLReactParserOptions = {
     replace: domNode => {
       if (domNode instanceof Element) {

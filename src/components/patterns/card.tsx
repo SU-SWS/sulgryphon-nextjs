@@ -3,7 +3,7 @@ import {ReactNodeLike} from "prop-types"
 import formatHtml from "@/lib/format-html"
 import {DrupalLink} from "@/components/patterns/link"
 import {ElementType, HTMLAttributes, JSX} from "react"
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 
 type Props = HTMLAttributes<HTMLDivElement> & {

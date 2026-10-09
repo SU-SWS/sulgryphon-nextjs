@@ -1,10 +1,5 @@
-import {notFound} from "next/navigation"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
-import Page from "../../page"
+import HomePage from "@/components/node/stanford-page/home-page/home-page"
 
-const PreviewHomePage = async () => {
-  if (!(await isPreviewMode())) notFound()
-  return <Page />
-}
+const PreviewHomePage = () => <HomePage previewMode />
 
 export default PreviewHomePage

@@ -1,5 +1,5 @@
 import {HTMLAttributes} from "react"
-import {ParagraphSulHomeImage} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphSulHomeImage} from "@/lib/gql/__generated__/graphql"
 import Image from "next/image"
 import formatHtml from "@/lib/format-html"
 import Wave from "@/components/patterns/wave"

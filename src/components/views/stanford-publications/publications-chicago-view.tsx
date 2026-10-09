@@ -1,5 +1,5 @@
 import StanfordPublicationListItem from "@/components/node/stanford-publication/list-item"
-import {NodeStanfordPublication} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPublication} from "@/lib/gql/__generated__/graphql"
 
 interface Props {
   items: NodeStanfordPublication[]

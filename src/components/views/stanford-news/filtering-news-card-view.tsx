@@ -1,8 +1,8 @@
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import {JSX} from "react"
 import StanfordNewsCard from "@/components/node/stanford-news/card"
 import FilteringNewsCardViewClient from "@/components/views/stanford-news/filtering-news-card-view.client"
-import {graphqlClient} from "@/lib/gql/fetcher"
+import {getNewsTypeOptions} from "@/lib/gql/gql-queries"
 
 interface Props {
   items: NodeStanfordNews[]
@@ -21,10 +21,7 @@ interface Props {
 }
 
 const FilteringNewsCardView = async ({items, hasHeading, totalItems, loadPage}: Props) => {
-  const newsTypes = (await graphqlClient().NewsTypes()).termStanfordNewsTopics.nodes.map(term => ({
-    value: term.uuid,
-    label: term.name,
-  }))
+  const newsTypes = await getNewsTypeOptions()
 
   return (
     <FilteringNewsCardViewClient loadPage={loadPage} totalItems={totalItems} typeOptions={newsTypes}>

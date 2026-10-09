@@ -1,7 +1,6 @@
 import OneColumn from "@/components/paragraph/rows/one-column"
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphUnion} from "@/lib/gql/__generated__/graphql"
 import {getParagraphBehaviors} from "@/components/paragraph"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import SectionHeading from "@/components/patterns/section-heading"
@@ -30,11 +29,6 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
     gridCols = "@6xl:grid-cols-2-1"
   }
 
-  const draftProps: Record<string, string> = {}
-  if (await isPreviewMode()) {
-    draftProps["data-columns"] = "2"
-  }
-
   return (
     <div
       className={clsx({
@@ -59,7 +53,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
           headingGradient={!!config.display_heading_gradient}
         />
       )}
-      <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2" {...draftProps}>
+      <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2">
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}

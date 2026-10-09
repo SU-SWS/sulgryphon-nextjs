@@ -4,7 +4,7 @@ import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/2
 import {HTMLAttributes} from "react"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
-import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphSulContactCard} from "@/lib/gql/__generated__/graphql"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphSulContactCard

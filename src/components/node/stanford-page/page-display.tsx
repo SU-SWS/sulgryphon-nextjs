@@ -1,5 +1,5 @@
 import Rows from "@/components/paragraph/rows/rows"
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPage} from "@/lib/gql/__generated__/graphql"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import RosetteIcon from "@/components/patterns/icons/RosetteIcon"
 import InteriorPage from "@/components/layout/interior-page"

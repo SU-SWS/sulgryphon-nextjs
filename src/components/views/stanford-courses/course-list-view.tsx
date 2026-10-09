@@ -1,5 +1,5 @@
 import StanfordCourseListItem from "@/components/node/stanford-course/list-item"
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/graphql"
 
 interface Props {
   items: NodeStanfordCourse[]

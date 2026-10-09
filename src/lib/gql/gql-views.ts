@@ -1,5 +1,3 @@
-import {JSX} from "react"
-import View from "@/components/views/view"
 import {
   Maybe,
   NodeStanfordEvent,
@@ -7,37 +5,41 @@ import {
   NodeStanfordPage,
   NodeStanfordPerson,
   NodeUnion,
+  SearchDocument,
   SearchFilterInput,
+  SearchQuery,
+  SearchQueryVariables,
   SortDirection,
+  StanfordBasicPagesDocument,
+  StanfordBasicPagesQuery,
   StanfordBasicPagesQueryVariables,
   StanfordBasicPagesSortKeys,
-} from "@/lib/gql/__generated__/drupal.d"
-import {graphqlClient} from "@/lib/gql/fetcher"
+  StanfordNewsDocument,
+  StanfordNewsQuery,
+  StanfordNewsQueryVariables,
+  StanfordPersonDocument,
+  StanfordPersonQuery,
+  StanfordPersonQueryVariables,
+  StanfordSharedTagsDocument,
+  StanfordSharedTagsQuery,
+  StanfordSharedTagsQueryVariables,
+  SulBranchLocationsDocument,
+  SulBranchLocationsQuery,
+  SulEventsDocument,
+  SulEventsQuery,
+  SulEventsQueryVariables,
+  SulEventsSharedTagsDocument,
+  SulEventsSharedTagsQuery,
+  SulEventsSharedTagsQueryVariables,
+  SulStudyPlacesDocument,
+  SulStudyPlacesQuery,
+} from "@/lib/gql/__generated__/graphql"
+import {graphqlClient} from "@/lib/gql/gql-client"
+import {cacheTag} from "next/cache"
 
 export const VIEW_PAGE_SIZE = 21
 
-export const loadViewPage = async (
-  viewId: string,
-  displayId: string,
-  contextualFilter: string[],
-  hasHeadline: boolean,
-  pageSize: number = VIEW_PAGE_SIZE,
-  page: number,
-  filter?: Maybe<Record<string, string | number | Array<string | number>>>
-): Promise<JSX.Element> => {
-  "use server"
-
-  const {items, totalItems} = await getViewPagedItems(viewId, displayId, contextualFilter, pageSize, page, filter)
-  return (
-    <View
-      viewId={viewId}
-      displayId={displayId}
-      items={items}
-      headingLevel={hasHeadline ? "h3" : "h2"}
-      totalItems={totalItems}
-    />
-  )
-}
+export type ViewFilter = Maybe<Record<string, string | number | Array<string | number>>>
 
 export const getViewPagedItems = async (
   viewId: string,
@@ -45,9 +47,9 @@ export const getViewPagedItems = async (
   contextualFilter?: Maybe<string[]>,
   pageSize?: Maybe<number>,
   page?: Maybe<number>,
-  filter?: Maybe<Record<string, string | number | Array<string | number>>>
+  filter?: ViewFilter
 ): Promise<{items: NodeUnion[]; totalItems: number}> => {
-  "use server"
+  "use cache: remote"
 
   let items: NodeUnion[] = []
   let totalItems = 0
@@ -70,9 +72,9 @@ export const getViewPagedItems = async (
     sul_people: "views:stanford_person",
     sul_events: "views:stanford_event",
   }
-  const tags = ["views", viewTags[viewId]]
+  cacheTag("all-cache", "views", viewTags[viewId] || "views:all")
 
-  const client = graphqlClient({next: {tags}})
+  const client = graphqlClient()
   let contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
   let graphqlResponse
 
@@ -82,13 +84,13 @@ export const getViewPagedItems = async (
     switch (`${viewId}--${displayId}`) {
       case "sul_study_places--study_places":
       case "sul_study_places--study_places_table":
-        graphqlResponse = await client.sulStudyPlaces()
+        graphqlResponse = await client.request<SulStudyPlacesQuery>(SulStudyPlacesDocument)
         items = graphqlResponse.sulStudyPlaces?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.sulStudyPlaces?.pageInfo.total || 0
         break
 
       case "sul_branch_locations--branch_locations_table":
-        graphqlResponse = await client.sulBranchLocations()
+        graphqlResponse = await client.request<SulBranchLocationsQuery>(SulBranchLocationsDocument)
         items = graphqlResponse.sulBranchLocations?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.sulBranchLocations?.pageInfo.total || 0
         break
@@ -96,7 +98,10 @@ export const getViewPagedItems = async (
       case "sul_events--shared_tags_cards":
       case "sul_events--shared_tags_cards_desc":
         contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
-        graphqlResponse = await client.sulEventsSharedTags({contextualFilters, sortDir, ...queryVariables})
+        graphqlResponse = await client.request<SulEventsSharedTagsQuery, SulEventsSharedTagsQueryVariables>(
+          SulEventsSharedTagsDocument,
+          {contextualFilters, sortDir, ...queryVariables}
+        )
         items = graphqlResponse.sulEventsSharedTags?.results as unknown as NodeUnion[]
         break
 
@@ -113,7 +118,7 @@ export const getViewPagedItems = async (
           ],
           contextualFilter
         )
-        graphqlResponse = await client.sulEvents({
+        graphqlResponse = await client.request<SulEventsQuery, SulEventsQueryVariables>(SulEventsDocument, {
           contextualFilters,
           filter: {
             ...filter,
@@ -126,7 +131,7 @@ export const getViewPagedItems = async (
         break
 
       case "sul_events--past_events_list_block":
-        graphqlResponse = await client.sulEvents({
+        graphqlResponse = await client.request<SulEventsQuery, SulEventsQueryVariables>(SulEventsDocument, {
           contextualFilters,
           ...queryVariables,
         })
@@ -137,7 +142,7 @@ export const getViewPagedItems = async (
       case "sul_news--filtering_cards":
       case "sul_news--block_1":
       case "sul_news--vertical_cards":
-        graphqlResponse = await client.stanfordNews({
+        graphqlResponse = await client.request<StanfordNewsQuery, StanfordNewsQueryVariables>(StanfordNewsDocument, {
           contextualFilters,
           filter,
           ...queryVariables,
@@ -147,7 +152,10 @@ export const getViewPagedItems = async (
         break
 
       case "search--search":
-        graphqlResponse = await client.search({filter: filter as SearchFilterInput, ...queryVariables})
+        graphqlResponse = await client.request<SearchQuery, SearchQueryVariables>(SearchDocument, {
+          filter: filter as SearchFilterInput,
+          ...queryVariables,
+        })
         items = graphqlResponse.search?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.search?.pageInfo.total || 0
         break
@@ -158,10 +166,13 @@ export const getViewPagedItems = async (
       case "stanford_basic_pages--basic_page_type_list":
       case "stanford_basic_pages--viewfield_block_1":
         contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
-        graphqlResponse = await client.stanfordBasicPages({
-          contextualFilters,
-          ...queryVariables,
-        })
+        graphqlResponse = await client.request<StanfordBasicPagesQuery, StanfordBasicPagesQueryVariables>(
+          StanfordBasicPagesDocument,
+          {
+            contextualFilters,
+            ...queryVariables,
+          }
+        )
         items = graphqlResponse.stanfordBasicPages?.results as unknown as NodeStanfordPage[]
         totalItems = graphqlResponse.stanfordBasicPages?.pageInfo.total || 0
         break
@@ -206,7 +217,7 @@ export const getViewPagedItems = async (
       //
       // case "stanford_news--block_1":
       // case "stanford_news--vertical_cards":
-      //   graphqlResponse = await client.stanfordNews({
+      //   graphqlResponse = await client.request<StanfordNewsQuery, StanfordNewsQueryVariables>(StanfordNewsDocument, {
       //     contextualFilters,
       //     ...queryVariables,
       //   })
@@ -218,10 +229,13 @@ export const getViewPagedItems = async (
       case "sul_people--table_list_all":
         queryVariables.pageSize = 999
       case "stanford_person--grid_list_all":
-        graphqlResponse = await client.stanfordPerson({
-          contextualFilters,
-          ...queryVariables,
-        })
+        graphqlResponse = await client.request<StanfordPersonQuery, StanfordPersonQueryVariables>(
+          StanfordPersonDocument,
+          {
+            contextualFilters,
+            ...queryVariables,
+          }
+        )
         items = graphqlResponse.stanfordPerson?.results as unknown as NodeStanfordPerson[]
         totalItems = graphqlResponse.stanfordPerson?.pageInfo.total || 0
         break
@@ -238,10 +252,13 @@ export const getViewPagedItems = async (
 
       case "stanford_shared_tags--card_grid":
         contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth", "type"], contextualFilter)
-        graphqlResponse = await client.stanfordSharedTags({
-          contextualFilters,
-          ...queryVariables,
-        })
+        graphqlResponse = await client.request<StanfordSharedTagsQuery, StanfordSharedTagsQueryVariables>(
+          StanfordSharedTagsDocument,
+          {
+            contextualFilters,
+            ...queryVariables,
+          }
+        )
         items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.stanfordSharedTags?.pageInfo.total || 0
         break

@@ -6,7 +6,7 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import {useBoolean} from "usehooks-ts"
-import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
+import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/graphql"
 import {usePathname} from "next/navigation"
 import {getActiveTrail} from "@/lib/drupal/utils"
 

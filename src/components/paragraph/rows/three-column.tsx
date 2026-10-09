@@ -1,7 +1,6 @@
 import OneColumn from "@/components/paragraph/rows/one-column"
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphUnion} from "@/lib/gql/__generated__/graphql"
 import {getParagraphBehaviors} from "@/components/paragraph"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import SectionHeading from "@/components/patterns/section-heading"
@@ -22,11 +21,6 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
     item => !["left", "right"].includes(getParagraphBehaviors(item).layout_paragraphs?.region || "main")
   )
   const rightItems = items.filter(item => getParagraphBehaviors(item).layout_paragraphs?.region === "right")
-
-  const draftProps: Record<string, string> = {}
-  if (await isPreviewMode()) {
-    draftProps["data-columns"] = "3"
-  }
 
   return (
     <div
@@ -55,7 +49,6 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
       <div
         className={clsx("centered flex w-full flex-col justify-between gap-40 md:flex-row md:flex-wrap lg:flex-nowrap")}
         data-columns="3"
-        {...draftProps}
       >
         <OneColumn
           items={leftItems}

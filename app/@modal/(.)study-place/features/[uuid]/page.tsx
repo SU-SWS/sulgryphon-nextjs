@@ -1,15 +1,24 @@
+import {Suspense} from "react"
 import InterceptionModal from "@/components/patterns/modals/interception-modal"
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features"
-import {graphqlClient} from "@/lib/gql/fetcher"
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {getNodeByUuid} from "@/lib/gql/gql-queries"
+import {NodeUnion} from "@/lib/gql/__generated__/graphql"
 
-const Page = async (props: {params: Promise<{uuid: string}>}) => {
+type Props = {params: Promise<{uuid: string}>}
+
+// The uuid is only known per request, so the content renders inside a Suspense boundary.
+const Page = (props: Props) => (
+  <Suspense>
+    <StudyPlaceFeaturesPage params={props.params} />
+  </Suspense>
+)
+
+const StudyPlaceFeaturesPage = async (props: Props) => {
   const params = await props.params
 
   const {uuid} = params
 
-  const query = await graphqlClient().Node({uuid})
-  const node = query.node as NodeUnion
+  const node = await getNodeByUuid<NodeUnion>(uuid)
   if (!node) return
   if (node.__typename !== "NodeSulStudyPlace") return
 

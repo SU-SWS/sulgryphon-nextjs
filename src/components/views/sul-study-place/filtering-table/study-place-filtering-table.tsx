@@ -2,9 +2,8 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
+import {Table, Thead, Tbody, Tr, Th, Td} from "@/components/patterns/responsive-table"
+import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/graphql"
 import {RefObject, useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ChevronDownIcon} from "@heroicons/react/24/outline"

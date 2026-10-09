@@ -1,11 +1,11 @@
-import {getConfigPageField} from "@/lib/gql/fetcher"
+import {getConfigPageField} from "@/lib/gql/gql-queries"
 import {
   MetaTagUnion,
   MetaTagValue as MetaTagValueType,
   MetaTagProperty as MetaTagPropertyType,
   StanfordBasicSiteSetting,
   NodeInterface,
-} from "@/lib/gql/__generated__/drupal.d"
+} from "@/lib/gql/__generated__/graphql"
 import {JSX} from "react"
 
 type Props = {

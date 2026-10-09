@@ -1,4 +1,4 @@
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import LoadMoreList from "@/components/patterns/load-more-list"
 import {JSX} from "react"
 import StanfordNewsCard from "@/components/node/stanford-news/card"

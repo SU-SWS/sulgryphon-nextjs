@@ -1,8 +1,7 @@
 import {NextRequest, NextResponse} from "next/server"
 import {redirect} from "next/navigation"
 import {cookies} from "next/headers"
-
-export const revalidate = 0
+import {secretsMatch} from "@/lib/security"
 
 export const GET = async (request: NextRequest) => {
   const secret = request.nextUrl.searchParams.get("secret")
@@ -10,12 +9,13 @@ export const GET = async (request: NextRequest) => {
 
   // Check the secret and next parameters
   // This secret should only be known to this route handler and the CMS
-  if (secret !== process.env.DRUPAL_PREVIEW_SECRET) return NextResponse.json({message: "Invalid token"}, {status: 401})
+  if (!(await secretsMatch(secret, process.env.DRUPAL_PREVIEW_SECRET)))
+    return NextResponse.json({message: "Invalid token"}, {status: 401})
 
   if (!slug) return NextResponse.json({message: "Invalid slug path"}, {status: 401})
 
   const cookieValues = await cookies()
-  cookieValues.set("preview", secret, {
+  cookieValues.set("preview", secret as string, {
     maxAge: 60 * 60,
     httpOnly: true,
     sameSite: "none",

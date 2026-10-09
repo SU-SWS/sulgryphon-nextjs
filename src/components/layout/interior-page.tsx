@@ -1,7 +1,7 @@
 import {HtmlHTMLAttributes} from "react"
-import {BookLink, MenuItem, NodeStanfordNews, NodeStanfordPage, NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {BookLink, MenuItem, NodeStanfordNews, NodeStanfordPage, NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 import SecondaryMenu from "@/components/menu/secondary-menu"
-import {getMenu} from "@/lib/gql/fetcher"
+import {getMenu} from "@/lib/gql/gql-queries"
 import OnThisPage from "@/components/patterns/on-this-page"
 import DrupalLink from "@/components/patterns/elements/drupal-link"
 

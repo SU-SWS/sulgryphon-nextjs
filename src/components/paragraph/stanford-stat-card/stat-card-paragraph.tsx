@@ -1,5 +1,5 @@
 import {HtmlHTMLAttributes} from "react"
-import {ParagraphStanfordStatCard} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphStanfordStatCard} from "@/lib/gql/__generated__/graphql"
 import StanfordWysiwyg from "@/components/paragraph/stanford-wysiwyg"
 import Link from "@/components/patterns/elements/drupal-link"
 import ReverseVisualOrder from "@/components/patterns/reverse-visual-order"

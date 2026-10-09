@@ -3,7 +3,7 @@ import {ChevronRightIcon, MapPinIcon} from "@heroicons/react/20/solid"
 import {HTMLAttributes, JSX} from "react"
 import {twMerge} from "tailwind-merge"
 import {clsx} from "clsx"
-import {Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {Link as LinkType} from "@/lib/gql/__generated__/graphql"
 
 export const DrupalLinkButton = ({
   href,

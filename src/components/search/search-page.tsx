@@ -1,5 +1,5 @@
-import {getViewPagedItems, loadViewPage} from "@/lib/gql/gql-views"
-import View from "@/components/views/view"
+import {getViewPagedItems} from "@/lib/gql/gql-views"
+import View, {loadViewPage} from "@/components/views/view"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 
 type Props = {

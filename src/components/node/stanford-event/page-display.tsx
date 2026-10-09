@@ -5,18 +5,18 @@ import formatHtml from "@/lib/format-html"
 import {redirect} from "next/navigation"
 import EmailLink from "@/components/patterns/elements/email-link"
 import TelephoneLink from "@/components/patterns/elements/telephone-link"
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"
+import PastEventNotice from "@/components/node/stanford-event/past-event-notice"
 
 const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   if (node.suEventSource?.url) redirect(node.suEventSource.url)
 
-  const inPast = new Date(node.suEventDateTime.end_value * 1000) < new Date()
-  const start = new Date(node.suEventDateTime.value * 1000)
-  const end = new Date(node.suEventDateTime.end_value * 1000)
+  const start = new Date(parseInt(node.suEventDateTime.value) * 1000)
+  const end = new Date(parseInt(node.suEventDateTime.end_value) * 1000)
 
   let dateTimeString
   if (
@@ -97,7 +97,9 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
           {node.title}
         </h1>
       </InternalHeaderBanner>
-      {inPast && <div className="uppercase text-black-70">Past Event</div>}
+      <PastEventNotice endTime={end.getTime()} className="uppercase text-black-70">
+        Past Event
+      </PastEventNotice>
 
       {node.suEventType && node.suEventType.length > 0 && (
         <div>
@@ -133,7 +135,9 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
                   {dateTimeString}
                 </time>
               </div>
-              {inPast && <div className="ml-[31px] pt-4 text-14 text-black-70 md:text-16">This event has passed.</div>}
+              <PastEventNotice endTime={end.getTime()} className="ml-[31px] pt-4 text-14 text-black-70 md:text-16">
+                This event has passed.
+              </PastEventNotice>
             </div>
 
             {(node.suEventLocation || node.suEventAltLoc) && (

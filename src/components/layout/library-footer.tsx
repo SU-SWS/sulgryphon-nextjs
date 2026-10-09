@@ -6,7 +6,7 @@ import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon"
 import TwitterIcon from "@/components/patterns/icons/TwitterIcon"
 import InstagramIcon from "@/components/patterns/icons/InstagramIcon"
 import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon"
-import {ReactNode} from "react"
+import {ReactNode, Suspense} from "react"
 import HomePageSquirrel from "@/components/layout/home-page-squirrel"
 
 const LibraryFooter = () => {
@@ -22,7 +22,9 @@ const LibraryFooter = () => {
         <div>
           <Lockup />
         </div>
-        <HomePageSquirrel />
+        <Suspense>
+          <HomePageSquirrel />
+        </Suspense>
       </div>
 
       <div className="centered relative grid w-full gap-2xl text-center @8xl:grid-cols-2 @8xl:text-left @12xl:grid-cols-4">

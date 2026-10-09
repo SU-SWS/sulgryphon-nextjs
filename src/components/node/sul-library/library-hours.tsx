@@ -11,7 +11,7 @@ import {useBoolean} from "usehooks-ts"
 
 const LibraryHeaderHours = ({hoursId}: {hoursId: string}) => {
   return (
-    <ErrorBoundary fallback={<></>} onError={e => console.error(e.message)}>
+    <ErrorBoundary fallback={<></>} onError={e => console.error(e instanceof Error ? e.message : e)}>
       <CachedClientFetch>
         <LibraryHeaderHoursComponent hoursId={hoursId} />
       </CachedClientFetch>

@@ -1,8 +1,9 @@
+import {Suspense} from "react"
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import {notFound} from "next/navigation"
-import {graphqlClient} from "@/lib/gql/fetcher"
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {getNodeByUuid} from "@/lib/gql/gql-queries"
+import {NodeUnion} from "@/lib/gql/__generated__/graphql"
 
 export const metadata = {
   title: "Study Place Features",
@@ -11,16 +12,21 @@ export const metadata = {
   },
 }
 
-export const revalidate = false
-export const dynamic = "force-static"
+type Props = {params: Promise<{uuid: string}>}
 
-const Page = async (props: {params: Promise<{uuid: string}>}) => {
+// The uuid is only known per request, so the content renders inside a Suspense boundary.
+const Page = (props: Props) => (
+  <Suspense>
+    <StudyPlaceFeaturesPage params={props.params} />
+  </Suspense>
+)
+
+const StudyPlaceFeaturesPage = async (props: Props) => {
   const params = await props.params
 
   const {uuid} = params
 
-  const query = await graphqlClient().Node({uuid})
-  const node = query.node as NodeUnion
+  const node = await getNodeByUuid<NodeUnion>(uuid)
   if (!node) notFound()
   if (node.__typename !== "NodeSulStudyPlace") notFound()
 

@@ -7,8 +7,8 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/20/solid"
-import {getConfigPage} from "@/lib/gql/fetcher"
-import {StanfordGlobalMessage} from "@/lib/gql/__generated__/drupal.d"
+import {getConfigPage} from "@/lib/gql/gql-queries"
+import {StanfordGlobalMessage} from "@/lib/gql/__generated__/graphql"
 import {JSX} from "react"
 
 const GlobalMessage = async () => {

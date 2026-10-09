@@ -15,7 +15,9 @@ import {
   NodeSulLibrary,
   NodeSulStudyPlace,
   NodeUnion,
-} from "@/lib/gql/__generated__/drupal.d"
+  Maybe,
+} from "@/lib/gql/__generated__/graphql"
+import {getViewPagedItems, VIEW_PAGE_SIZE, ViewFilter} from "@/lib/gql/gql-views"
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view"
 import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
 import {JSX} from "react"
@@ -134,6 +136,34 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
     <div>
       Need to build this view: <em>{component}</em>
     </div>
+  )
+}
+
+/**
+ * Server action that fetches one page of a Drupal view and renders it.
+ *
+ * Bound by list paragraphs and the site search to load subsequent pages on the client.
+ */
+export const loadViewPage = async (
+  viewId: string,
+  displayId: string,
+  contextualFilter: Maybe<string[]>,
+  hasHeadline: boolean,
+  pageSize: number = VIEW_PAGE_SIZE,
+  page: number,
+  filter?: ViewFilter
+): Promise<JSX.Element> => {
+  "use server"
+
+  const {items, totalItems} = await getViewPagedItems(viewId, displayId, contextualFilter, pageSize, page, filter)
+  return (
+    <View
+      viewId={viewId}
+      displayId={displayId}
+      items={items}
+      headingLevel={hasHeadline ? "h3" : "h2"}
+      totalItems={totalItems}
+    />
   )
 }
 

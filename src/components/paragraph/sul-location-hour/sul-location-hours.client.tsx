@@ -10,7 +10,7 @@ import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/drupal.d"
+import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/graphql"
 import Link from "next/link"
 import formatHtml from "@/lib/format-html"
 

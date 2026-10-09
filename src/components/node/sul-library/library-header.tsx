@@ -7,7 +7,7 @@ import Image from "next/image"
 import LibraryHeaderHours from "./library-hours"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 
 const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
   const bannerImageUrl = node.suLibraryBanner?.mediaImage.url

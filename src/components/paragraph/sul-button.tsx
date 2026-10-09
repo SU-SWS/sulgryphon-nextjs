@@ -3,7 +3,7 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import useIsCentered from "@/lib/hooks/useIsCentered"
 import {HTMLAttributes, useRef} from "react"
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 import clsx from "clsx"
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid"

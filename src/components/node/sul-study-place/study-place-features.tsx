@@ -3,7 +3,7 @@ import Image from "next/image"
 import {BuildingLibraryIcon, MapPinIcon} from "@heroicons/react/24/outline"
 import StudyPlaceHours from "./study-place-today-hours"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
 
 interface ModalProps {
   branchHours?: Maybe<string>

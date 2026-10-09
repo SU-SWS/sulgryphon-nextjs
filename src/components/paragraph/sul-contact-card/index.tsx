@@ -1,7 +1,7 @@
 import NodeReferenceCard from "@/components/paragraph/sul-contact-card/node-reference-card"
 import ManualFieldsCard from "@/components/paragraph/sul-contact-card/manual-fields-card"
 import {HTMLAttributes} from "react"
-import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphSulContactCard} from "@/lib/gql/__generated__/graphql"
 
 type ContactCardProps = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphSulContactCard
