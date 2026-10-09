@@ -24,7 +24,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
   const honeypotRef = useRef<HTMLInputElement>(null)
   inputProps = {
     id: inputId + "-search",
-    className: "input w-full p-10 rounded",
+    className: "input w-full p-10 rounded-[0.3rem]",
     // @ts-expect-error Placeholder does exist on an input element.
     placeholder: "Search",
     name: "q",
@@ -63,7 +63,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
         className="relative flex flex-col gap-xs @xl:flex-row @xl:items-end @3xl:gap-xl"
         onSubmit={formSubmit}
       >
-        <div className="flex-grow">
+        <div className="grow">
           {/* eslint-disable-next-line react-hooks/refs */}
           <label className="mb-2 text-white" htmlFor={inputProps.id}>
             Keyword Search
@@ -74,7 +74,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
         <HoneypotField ref={honeypotRef} />
         <button
           type="submit"
-          className="rounded-full bg-digital-red p-15 text-16 text-white transition hover:bg-cardinal-red-dark hocus:underline md:text-18"
+          className="rounded-full bg-digital-red p-15 text-16 text-white transition hover:bg-cardinal-red-dark md:text-18 hocus:underline"
         >
           Search
         </button>

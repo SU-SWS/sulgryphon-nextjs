@@ -2,13 +2,12 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import {Table, Thead, Tbody, Tr, Th, Td} from "react-super-responsive-table"
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css"
-import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/drupal.d"
+import {Table, Thead, Tbody, Tr, Th, Td} from "@/components/patterns/responsive-table"
+import {MediaImage, NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/graphql"
 import {RefObject, useCallback, useId, useRef, useState} from "react"
 import SelectList from "@/components/patterns/elements/select-list"
 import {ChevronDownIcon} from "@heroicons/react/24/outline"
-import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
+import useLibraryHours, {useAllLibraryHours, DayHours} from "@/lib/hooks/useLibraryHours"
 import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
@@ -47,7 +46,7 @@ type FiltersType = {
 const StudyPlaceFilteringTable = ({items}: Props) => {
   const {value: onlyOpenNow, setTrue: showOnlyOpenNow, setFalse: showOpenAndClosed} = useBoolean(false)
   const [filters, setFilters] = useState<FiltersType>({types: [], capacities: [], libraries: [], features: []})
-  const libraryHours = useLibraryHours<Record<string, LocationHours>>()
+  const libraryHours = useAllLibraryHours()
   const filterLocations = useCallback(
     (showingItems: StudyPlaces[]) => {
       const rightNow = new Date()
@@ -116,7 +115,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-col flex-wrap items-center justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">
             {!!Object.keys(libraryHours).length && (
-              <fieldset className="mb-10 mr-0 flex h-fit w-full items-center sm:mb-0">
+              <fieldset className="mr-0 mb-10 flex h-fit w-full items-center sm:mb-0">
                 <legend className="sr-only">Show only open now or all locations</legend>
                 <ToggleOption checked={!onlyOpenNow} onChange={showOpenAndClosed} first name="study-place-open">
                   All locations
@@ -162,23 +161,23 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             Showing {displayedItems.length} of {items.length}
           </caption>
           <Thead className="sr-only lg:not-sr-only">
-            <Tr className="block sm:hidden lg:!table-row">
-              <Th className="type-1 block min-w-[100px] pl-[0px] md:table-cell lg:pr-32" scope="col">
+            <Tr className="block sm:hidden lg:table-row!">
+              <Th className="block min-w-[100px] pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
-              <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
+              <Th className="block pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
                 Place
               </Th>
-              <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
+              <Th className="block pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
                 Library
               </Th>
               <Th
-                className="type-1 block pl-[0px] text-center md:table-cell md:text-left lg:pr-32 lg:text-center"
+                className="block pl-[0px] text-center type-1 md:table-cell md:text-left lg:pr-32 lg:text-center"
                 scope="col"
               >
                 Open/Closed
               </Th>
-              <Th className="type-1 block pl-[0px] md:table-cell lg:pr-32" scope="col">
+              <Th className="block pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
                 Features
               </Th>
             </Tr>
@@ -188,7 +187,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             {displayedItems.map(item => (
               <Tr
                 key={item.uuid}
-                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:!table-row lg:max-h-none"
+                className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:table-row! lg:max-h-none"
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">
                   {item.branchImageUrl && (
@@ -209,18 +208,19 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   scope="row"
                   className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
-                  <div className="pt-0 text-16 font-normal leading-display">
+                  <div className="pt-0 text-16 leading-display font-normal">
                     <span className="mb-[0px] font-sans text-20 font-semibold">
                       {[item.donorName, item.studyType].filter(item => !!item).join(" ")}
                     </span>
-                    {item.roomNumber && <div className="type-0 relative">Room-{item.roomNumber}</div>}
-                    {item.capacity && <div className="type-0 relative">{item.capacity}</div>}
+                    {item.roomNumber && <div className="relative type-0">Room-{item.roomNumber}</div>}
+                    {item.capacity && <div className="relative type-0">{item.capacity}</div>}
                   </div>
                 </Th>
-                <Td className="min-w-1/5 block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
+                <Td className="block w-auto sm:border-b sm:border-black-40 md:text-left lg:table-cell lg:w-1/5 lg:pr-32">
                   <Link
+                    prefetch={false}
                     href={item.branchPath || "#"}
-                    className="mb-16 block w-fit text-16 font-normal leading-cozy underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
+                    className="mb-16 block w-fit text-16 leading-cozy font-normal underline transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red lg:mb-0"
                   >
                     <div>{item.branchTitle}</div>
                   </Link>
@@ -245,7 +245,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button mb-16 w-fit whitespace-nowrap border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-snug text-cardinal-red hocus:bg-cardinal-red hocus:text-white hocus:shadow-button md:w-full lg:w-fit"
+                      className="button mb-16 w-fit border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-snug whitespace-nowrap text-cardinal-red md:w-full lg:w-fit hocus:bg-cardinal-red hocus:text-white hocus:shadow-button"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
@@ -278,7 +278,7 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   const {value: expandedHours, setFalse: collapseHours, toggle: toggleExpandedHours} = useBoolean(false)
   useOutsideClick(containerRef, collapseHours)
   const id = useId()
-  const libraryHours = useLibraryHours<LocationHours>(hoursId)
+  const libraryHours = useLibraryHours(hoursId)
   const todayLibraryHours = useTodayLibraryHours(hoursId)
 
   // If the user presses escape on the keyboard, close the submenus.
@@ -318,13 +318,13 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
   return (
     <div ref={containerRef} className="relative flex text-16 leading-cozy lg:block">
       {isOpen && (
-        <span className="mb-8 mr-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
+        <span className="mr-8 mb-8 block w-fit rounded-full bg-digital-green p-10 text-white sm:text-center md:my-0 md:mr-5 md:ml-0 md:text-left lg:m-0 lg:mx-auto lg:mb-4 lg:text-center">
           Open
         </span>
       )}
 
       {!isOpen && (
-        <span className="mr-8 flex w-fit items-center sm:text-center md:my-0 md:ml-0 md:mr-5 md:text-left lg:m-0 lg:mx-auto lg:text-center">
+        <span className="mr-8 flex w-fit items-center sm:text-center md:my-0 md:mr-5 md:ml-0 md:text-left lg:m-0 lg:mx-auto lg:text-center">
           Closed
         </span>
       )}

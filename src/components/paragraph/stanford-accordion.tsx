@@ -1,5 +1,5 @@
 import {ElementType, HtmlHTMLAttributes} from "react"
-import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 import formatHtml from "@/lib/format-html"
 import Accordion, {AccordionHeaderChoice} from "@/components/patterns/elements/accordion"
@@ -35,7 +35,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
       </div>
 
       {paragraph.suFaqDescription && (
-        <div className="wysiwyg centered relative mb-20">{formatHtml(paragraph.suFaqDescription.processed)}</div>
+        <div className="wysiwyg relative centered mb-20">{formatHtml(paragraph.suFaqDescription.processed)}</div>
       )}
 
       {paragraph.suFaqQuestions?.map(question => (
@@ -46,7 +46,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
           button={question.suAccordionTitle}
           headingLevel={accordionHeadingLevel}
         >
-          <div className="wysiwyg centered relative">{formatHtml(question.suAccordionBody.processed)}</div>
+          <div className="wysiwyg relative centered">{formatHtml(question.suAccordionBody.processed)}</div>
         </Accordion>
       ))}
     </div>

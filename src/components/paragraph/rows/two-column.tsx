@@ -1,7 +1,6 @@
 import OneColumn from "@/components/paragraph/rows/one-column"
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphUnion} from "@/lib/gql/__generated__/graphql"
 import {getParagraphBehaviors} from "@/components/paragraph"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
 import {clsx} from "clsx"
 import SectionHeading from "@/components/patterns/section-heading"
@@ -30,21 +29,16 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
     gridCols = "@6xl:grid-cols-2-1"
   }
 
-  const draftProps: Record<string, string> = {}
-  if (await isPreviewMode()) {
-    draftProps["data-columns"] = "2"
-  }
-
   return (
     <div
       className={clsx({
-        "pb-20 pt-20": !!config?.bg_color,
+        "pt-20 pb-20": !!config?.bg_color,
         "px-30": config?.bg_color && !fullWidth,
         "pt-0": config?.top_padding === "none",
         "pt-40": config?.top_padding === "more",
         "mb-0": config?.bottom_margin === "none",
         "pb-0": config?.bottom_padding === "none",
-        "bg-foggy-light": config?.bg_color === "f4f4f4",
+        "bg-fog-light": config?.bg_color === "f4f4f4",
         "bg-[#ebeae4]": config?.bg_color === "ebeae5",
         "bg-[#dcecef]": config?.bg_color === "dcecef",
         "bg-[#dcefec]": config?.bg_color === "dcefec",
@@ -59,13 +53,13 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
           headingGradient={!!config.display_heading_gradient}
         />
       )}
-      <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2" {...draftProps}>
+      <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2">
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}
           config={{top_padding: "none", bottom_margin: "none"}}
           className={clsx({
-            "relative after:absolute after:-right-15 after:top-0 after:h-full min-[900px]:after:w-1 min-[900px]:after:bg-black":
+            "relative after:absolute after:top-0 after:-right-15 after:h-full min-[900px]:after:w-1 min-[900px]:after:bg-black":
               config?.vertical_dividers,
           })}
         />

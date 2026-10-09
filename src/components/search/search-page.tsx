@@ -1,5 +1,6 @@
-import {getViewPagedItems, loadViewPage} from "@/lib/gql/gql-views"
-import View from "@/components/views/view"
+import {getViewPagedItems} from "@/lib/gql/gql-views"
+import View, {loadViewPage} from "@/components/views/view"
+import {signViewConfig} from "@/lib/view-config"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 
 type Props = {
@@ -12,7 +13,14 @@ const SiteSearch = async ({searchKey}: Props) => {
 
   const loadSearchPage = async (page: number) => {
     "use server"
-    return loadViewPage("search", "search", [], false, 12, page, {key: searchKey})
+    const config = signViewConfig({
+      viewId: "search",
+      displayId: "search",
+      contextualFilter: [],
+      hasHeadline: false,
+      pageSize: 12,
+    })
+    return config ? loadViewPage(config, page, {key: searchKey}) : <></>
   }
 
   return (
@@ -28,7 +36,7 @@ const SiteSearch = async ({searchKey}: Props) => {
             <input name="search" />
           </label>
         </div>
-        <div className="flex-grow">
+        <div className="grow">
           <label className="mb-8 text-28 font-semibold text-black" htmlFor="keyword-search">
             Search this site
           </label>
@@ -47,7 +55,7 @@ const SiteSearch = async ({searchKey}: Props) => {
         </div>
       </form>
 
-      <h2 className="rs-pt-2 type-3 m-0 pb-36">Results</h2>
+      <h2 className="m-0 rs-pt-2 pb-36 type-3">Results</h2>
       {viewItems.length === 0 && <p>No results found for the given search keywords. Please try again.</p>}
 
       {viewItems.length > 0 && (

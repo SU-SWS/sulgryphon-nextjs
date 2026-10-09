@@ -24,6 +24,7 @@ tsconfig.tsbuildinfo
 /.next/
 /out/
 .next
+next-env.d.ts
 
 # production
 /build
@@ -50,3 +51,4 @@ lerna-debug.log*
 /certificates/*
 # Local Netlify folder
 .netlify
+.env*

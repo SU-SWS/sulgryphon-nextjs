@@ -1,5 +1,5 @@
 "use client"
-import {HTMLAttributes, useEffect, useId, useRef, useState} from "react"
+import {HTMLAttributes, useEffect, useId, useRef, useState, useSyncExternalStore} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 import {sendGAEvent} from "@next/third-parties/google"
@@ -8,18 +8,38 @@ import HoneypotField from "@/components/patterns/elements/honeypot-field"
 type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]
 }
-export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
-  const [displayedChild, setDisplayedChild] = useState(-1)
+// The banner picked for the current mount. useSyncExternalStore requires a stable snapshot, so the
+// pick is held here until the banner unmounts.
+let randomChild: number | undefined
 
-  useEffect(() => {
-    setDisplayedChild(Math.floor(Math.random() * children.length))
-  }, [children])
+const getRandomChild = (length: number) => {
+  if (randomChild === undefined || randomChild >= length) randomChild = Math.floor(Math.random() * length)
+  return randomChild
+}
+
+const subscribe = () => () => {}
+
+export const SulHomeBannerRandomClient = ({children, ...props}: Props) => {
+  // The server snapshot is -1, so the prerendered page shows the placeholder and the random pick
+  // only happens in the browser.
+  const displayedChild = useSyncExternalStore(
+    subscribe,
+    () => getRandomChild(children.length),
+    () => -1
+  )
+
+  // Pick a new banner the next time it mounts.
+  useEffect(
+    () => () => {
+      randomChild = undefined
+    },
+    []
+  )
 
   return (
     <div {...props}>
-      {/* To avoid initial loading of an image and then switching to another, 
-      display an empty container and allow the children to display after 
-      the useEffect completes. */}
+      {/* To avoid initial loading of an image and then switching to another,
+      display an empty container until the banner is picked in the browser. */}
       {displayedChild === -1 && <div className="relative h-400" />}
       {displayedChild >= 0 && children[displayedChild]}
     </div>
@@ -82,7 +102,7 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <select
           id={`${inputId}-action`}
-          className="h-40 w-full border-0 bg-none text-16 font-semibold leading-normal hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
+          className="h-40 w-full border-0 bg-none text-16 leading-normal font-semibold hover:cursor-pointer md:w-auto md:min-w-[15rem] md:text-20 xl:text-22"
           onChange={e => setFormAction(e.target.value)}
           value={formAction}
         >
@@ -91,7 +111,7 @@ export const SulHomeBannerFormClient = () => {
           <option value="https://searchworks.stanford.edu/articles">Articles+</option>
           <option value="/search">This site</option>
         </select>
-        <PlayIcon className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 rotate-90" width={20} />
+        <PlayIcon className="pointer-events-none absolute top-1/2 right-0 z-10 -translate-y-1/2 rotate-90" width={20} />
         {formAction === "https://searchworks.stanford.edu/articles" && (
           <input type="hidden" name="f[eds_search_limiters_facet][]" value="Direct access to full text" />
         )}
@@ -103,7 +123,7 @@ export const SulHomeBannerFormClient = () => {
       >
         <MagnifyingGlassIcon
           width={30}
-          className="absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 md:hidden"
+          className="absolute top-1/2 left-1/2 block -translate-x-1/2 -translate-y-1/2 md:hidden"
         />
         <span aria-hidden className="hidden md:block">
           Search

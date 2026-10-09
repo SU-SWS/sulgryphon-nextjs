@@ -13,7 +13,7 @@ import {
   Maybe,
   Link as LinkType,
   ParagraphSulFeatCollectionSulCollectionCardsUnion,
-} from "@/lib/gql/__generated__/drupal.d"
+} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 import HeaderGradientLine from "../patterns/header-gradient-line"
 import clsx from "clsx"
@@ -44,7 +44,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   }
 
   return (
-    <section className="centered relative" ref={ref} {...props}>
+    <section className="relative centered" ref={ref} {...props}>
       {headline && (
         <header
           className={clsx("mb-40", {
@@ -58,7 +58,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         </header>
       )}
 
-      <div className="relative @container">
+      <div className="@container relative">
         <ul className="list-unstyled grid gap-x-40 gap-y-30 sm:grid-cols-2 xl:grid-cols-3">
           {cards.map(card => (
             <li key={card.uuid}>
@@ -84,20 +84,20 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         {!styles?.disable_wave_background && (
           <>
             {fullWidth && (
-              <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+              <div className="absolute top-[130px] left-0 z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
                 <div className="relative flex h-full w-full flex-col">
-                  <Wave className="rotate-180 -scale-x-100 transform" />
-                  <div className="flex-grow" />
+                  <Wave className="-scale-x-100 rotate-180 transform" />
+                  <div className="grow" />
                   <Wave className="-scale-x-100 transform" />
                 </div>
               </div>
             )}
             {!fullWidth && (
               <OnlyIfCentered elem={ref}>
-                <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+                <div className="absolute top-[130px] left-0 z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
                   <div className="relative flex h-full w-full flex-col">
-                    <Wave className="rotate-180 -scale-x-100 transform" />
-                    <div className="flex-grow" />
+                    <Wave className="-scale-x-100 rotate-180 transform" />
+                    <div className="grow" />
                     <Wave className="-scale-x-100 transform" />
                   </div>
                 </div>

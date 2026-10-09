@@ -1,5 +1,4 @@
 import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
-import Image from "next/image"
 import {
   DrupalActionLink,
   DrupalLinkBigButton,
@@ -9,11 +8,11 @@ import {
 } from "@/components/patterns/link"
 import Oembed from "@/components/patterns/elements/oembed"
 import {twMerge} from "tailwind-merge"
-import {ElementType} from "react"
+import {ElementType, ImgHTMLAttributes} from "react"
 import type {DOMNode} from "html-dom-parser"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
-const formatHtml = (html?: string, isDarkBg?: boolean) => {
+const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
   const options: HTMLReactParserOptions = {
     replace: domNode => {
       if (domNode instanceof Element) {
@@ -126,7 +125,7 @@ const formatHtml = (html?: string, isDarkBg?: boolean) => {
           case "h3":
           case "h4":
             if (nodeProps.className?.includes("sul-gradient-accent")) {
-              nodeProps.className += " !mb-0 shrink-0 "
+              nodeProps.className += " mb-0! shrink-0 "
               return (
                 <div className="centered mb-40 flex w-full flex-row items-center justify-between gap-16">
                   <NodeName {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</NodeName>
@@ -235,37 +234,12 @@ const formatHtml = (html?: string, isDarkBg?: boolean) => {
     if (image instanceof Element) {
       let {src} = image.attribs
       const {alt, width, height} = image.attribs
-      const {class: classes} = node.attribs
 
       if (src.substring(0, 1) === "/") {
         src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src
       }
 
-      return (
-        <>
-          {width && height && (
-            <Image
-              className={fixClasses(classes)}
-              src={src.trim()}
-              alt={alt ? alt.trim() : ""}
-              height={parseInt(height)}
-              width={parseInt(width)}
-            />
-          )}
-
-          {(!width || !height) && (
-            <div className="relative aspect-[16/9] overflow-hidden">
-              <Image
-                className="object-cover object-center"
-                src={src.trim()}
-                alt={alt ? alt.trim() : ""}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 900px) 50vw, (max-width: 1700px) 33vw, 500px"
-              />
-            </div>
-          )}
-        </>
-      )
+      return <WysiwygImage src={src} alt={alt} height={height} width={width} />
     }
 
     return <>{domToReact(node.children as DOMNode[], options)}</>
@@ -274,3 +248,17 @@ const formatHtml = (html?: string, isDarkBg?: boolean) => {
   return parse(html ?? "", options)
 }
 export default formatHtml
+
+/**
+ * Plain `<img>` rather than `next/image` on purpose.
+ *
+ * Editors embed an image *style* derivative, so Drupal has already resized the file for the context it
+ * appears in. Those urls carry a per-image `?itok=` token, and Drupal returns 403 for a derivative
+ * requested without a valid token until the file exists on disk, so the token has to reach the browser
+ * intact. Sending these through the optimizer would also mean a second, billed transformation of an
+ * already sized image, for little more than a format conversion.
+ */
+const WysiwygImage = ({src, alt, ...props}: ImgHTMLAttributes<HTMLImageElement> & {src: string}) => (
+  // eslint-disable-next-line @next/next/no-img-element -- see above
+  <img src={src.trim()} alt={alt?.trim() || ""} loading="lazy" decoding="async" {...props} />
+)

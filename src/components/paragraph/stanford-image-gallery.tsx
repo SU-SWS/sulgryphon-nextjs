@@ -7,7 +7,7 @@ import Modal from "@/components/patterns/modals/modal"
 import {HTMLAttributes, useState} from "react"
 import formatHtml from "@/lib/format-html"
 import {buildUrl} from "@/lib/drupal/utils"
-import {ParagraphStanfordGallery} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphStanfordGallery} from "@/lib/gql/__generated__/graphql"
 
 type StanfordImageGalleryProps = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordGallery
@@ -17,8 +17,8 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
   const [modalOpen, setModalOpen] = useState("")
 
   return (
-    <div className="centered relative" {...props}>
-      {paragraph.suGalleryHeadline && <h2 className="type-5 text-center">{paragraph.suGalleryHeadline}</h2>}
+    <div className="relative centered" {...props}>
+      {paragraph.suGalleryHeadline && <h2 className="text-center type-5">{paragraph.suGalleryHeadline}</h2>}
       {paragraph.suGalleryDescription && <div>{formatHtml(paragraph.suGalleryDescription.processed)}</div>}
 
       {paragraph.suGalleryImages && (
@@ -47,7 +47,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                 </div>
 
                 {image.suGalleryCaption && (
-                  <figcaption className="text-righ table-caption caption-bottom text-16 font-normal italic leading">
+                  <figcaption className="text-righ table-caption caption-bottom text-16 leading-normal font-normal italic">
                     {formatHtml(image.suGalleryCaption)}
                   </figcaption>
                 )}
@@ -72,7 +72,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
                     {image.suGalleryCaption && (
                       <figcaption
                         id={image.uuid}
-                        className="mt-10 table-caption w-full caption-bottom bg-white p-10 text-right text-16 font-normal leading"
+                        className="mt-10 table-caption w-full caption-bottom bg-white p-10 text-right text-16 leading-normal font-normal"
                       >
                         {image.suGalleryCaption}
                       </figcaption>

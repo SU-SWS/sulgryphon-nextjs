@@ -6,11 +6,10 @@ import {MapPinIcon} from "@heroicons/react/24/solid"
 import Image from "next/image"
 import {HTMLAttributes, useId, useState} from "react"
 import {ErrorBoundary} from "react-error-boundary"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 import Link from "next/link"
 import MoonStarsIcon from "@/components/patterns/icons/MoonStarsIcon"
 
@@ -22,9 +21,7 @@ const TodayHours = ({libraries, ...props}: HoursProps) => {
   if (!libraries || libraries.length === 0) return
   return (
     <ErrorBoundary fallback={<></>}>
-      <CachedClientFetch>
-        <LibrariesTodayHours libraries={libraries} {...props} />
-      </CachedClientFetch>
+      <LibrariesTodayHours libraries={libraries} {...props} />
     </ErrorBoundary>
   )
 }
@@ -51,7 +48,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
   return (
     <div {...props}>
       <Card
-        className="rounded border-0"
+        className="rounded-[0.3rem] border-0"
         image={
           imageUrl && (
             <Image
@@ -66,7 +63,7 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
         footer={
           <div className="relative pb-140 md:rs-pb-8">
             <div className="absolute w-full">
-              <h2 id={formId} className="type-2 mb-03em font-bold leading-tight text-black">
+              <h2 id={formId} className="mb-03em type-2 leading-tight font-bold text-black">
                 Today&apos;s hours
               </h2>
               <div className="mb-10">
@@ -96,10 +93,11 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
           </div>
         }
       />
-      <div className="rs-px-1 w-full bg-cardinal-red py-9 text-16 text-white shadow-md">
+      <div className="w-full bg-cardinal-red py-9 rs-px-1 text-16 text-white shadow-md">
         <MoonStarsIcon className="mr-02em inline" />
         <span className="font-bold">New!</span>{" "}
         <Link
+          prefetch={false}
           href="/extended-green-library-hours"
           className="grow-0 font-normal text-white underline hocus:text-white hocus:no-underline"
         >

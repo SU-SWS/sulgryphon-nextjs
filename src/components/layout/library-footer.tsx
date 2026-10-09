@@ -6,26 +6,28 @@ import LinkedInIcon from "@/components/patterns/icons/LinkedInIcon"
 import TwitterIcon from "@/components/patterns/icons/TwitterIcon"
 import InstagramIcon from "@/components/patterns/icons/InstagramIcon"
 import YoutubeIcon from "@/components/patterns/icons/YoutubeIcon"
-import {ReactNode} from "react"
+import {ReactNode, Suspense} from "react"
 import HomePageSquirrel from "@/components/layout/home-page-squirrel"
 
 const LibraryFooter = () => {
   return (
-    <div className="rs-mt-6 bg-fog-light pb-30 text-black @container">
+    <div className="@container rs-mt-6 bg-fog-light pb-30 text-black">
       <div>
-        <svg viewBox="0 0 1500 100" aria-hidden={true} className="bg-gradient-to-t from-fog-light to-transparent">
+        <svg viewBox="0 0 1500 100" aria-hidden={true} className="bg-linear-to-t/srgb from-fog-light to-transparent">
           <path d="M1500,0 L1500,100 1200,100 1200,0" className="fill-fog-light"></path>
           <path d="M0,0 Q500,10 700,45 Q1200,130 1500,0" stroke="#fff" className="fill-white"></path>
         </svg>
       </div>
-      <div className="centered relative mb-50 mt-25 flex flex-row justify-between gap-2xl @3xl:mt-50 @5xl:mt-0">
+      <div className="relative mt-25 centered mb-50 flex flex-row justify-between gap-2xl @3xl:mt-50 @5xl:mt-0">
         <div>
           <Lockup />
         </div>
-        <HomePageSquirrel />
+        <Suspense>
+          <HomePageSquirrel />
+        </Suspense>
       </div>
 
-      <div className="centered relative grid w-full gap-2xl text-center @8xl:grid-cols-2 @8xl:text-left @12xl:grid-cols-4">
+      <div className="relative centered grid w-full gap-2xl text-center @8xl:grid-cols-2 @8xl:text-left @12xl:grid-cols-4">
         <div>
           <address className="mb-30">
             557 Escondido Mall

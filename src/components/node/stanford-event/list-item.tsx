@@ -2,7 +2,7 @@ import {CalendarDaysIcon, MapPinIcon, ClockIcon} from "@heroicons/react/24/outli
 import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import {getDateString, getTimeString} from "@/lib/getDateTime"
 
 interface Props {
@@ -12,8 +12,8 @@ interface Props {
 
 const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   const HeadingElement = h3Heading ? "h3" : "h2"
-  const start = new Date(node.suEventDateTime.value * 1000)
-  const end = new Date(node.suEventDateTime.end_value * 1000)
+  const start = new Date(parseInt(node.suEventDateTime.value) * 1000)
+  const end = new Date(parseInt(node.suEventDateTime.end_value) * 1000)
 
   // Fix difference between server side render and client side render. Replace any strange characters.
   const dateString = getDateString(start, end)?.replace(/[^a-zA-Z0-9 ,:\-|]/, " ")
@@ -23,7 +23,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
 
   return (
-    <article {...props} className="mx-auto flex flex-col gap-16 @container sm:flex-row">
+    <article {...props} className="@container mx-auto flex flex-col gap-16 sm:flex-row">
       {imageUrl && (
         <div className="relative aspect-[4/3] h-fit w-full shrink-0 overflow-hidden sm:max-w-180" aria-hidden="true">
           <Image
@@ -45,27 +45,27 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
           </HeadingElement>
 
           {node.suEventType?.[0]?.name && (
-            <div className="order-1 mr-5 inline text-16 font-semibold uppercase text-cardinal-red">
+            <div className="order-1 mr-5 inline text-16 font-semibold text-cardinal-red uppercase">
               {node.suEventType?.[0].name}
             </div>
           )}
         </div>
         <div className="flex flex-col gap-[.5rem]">
           <div className="flex text-16 sm:text-18">
-            <CalendarDaysIcon title="Date" width={20} className="mr-20 flex-shrink-0" />
+            <CalendarDaysIcon title="Date" width={20} className="mr-20 shrink-0" />
             {dateString}
           </div>
 
           {timeString && (
             <div className="flex text-16 sm:text-18">
-              <ClockIcon title="Hours" width={20} className="mr-20 flex-shrink-0" />
+              <ClockIcon title="Hours" width={20} className="mr-20 shrink-0" />
               {timeString}
             </div>
           )}
 
           {(node.suEventMapLink?.url || node.suEventAltLoc) && (
             <div className="flex text-16 sm:text-18">
-              <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
+              <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
 
               {/* Localist Map link */}
               {node.suEventMapLink?.url && (
@@ -84,7 +84,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
           {node.sulEventExperience === "virtual" && (
             <div className="flex text-16 sm:text-18">
-              <MapPinIcon title="Location" width={20} className="mr-20 flex-shrink-0" />
+              <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
               <span>Virtual event</span>
             </div>
           )}

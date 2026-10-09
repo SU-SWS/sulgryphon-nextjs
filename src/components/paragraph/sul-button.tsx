@@ -3,7 +3,7 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import useIsCentered from "@/lib/hooks/useIsCentered"
 import {HTMLAttributes, useRef} from "react"
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 import clsx from "clsx"
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid"
@@ -53,7 +53,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Prop
             "bg-black-true": isBlackBackground,
             "bg-black-10": !isBlackBackground,
             "w-screen": fullWidth && isCentered && !isCtaVariant,
-            "h-fit w-fit rounded border-2 border-black-10 bg-fog-light px-10 py-6 lg:ml-auto": isCtaVariant,
+            "h-fit w-fit rounded-[0.3rem] border-2 border-black-10 bg-fog-light px-10 py-6 lg:ml-auto": isCtaVariant,
           })
         )}
       >
@@ -73,7 +73,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Prop
                 clsx({
                   "text-white": isBlackBackground,
                   "type-3": !isCtaVariant,
-                  "type-0 mb-0 font-semibold": isCtaVariant,
+                  "mb-0 type-0 font-semibold": isCtaVariant,
                 })
               )}
             >

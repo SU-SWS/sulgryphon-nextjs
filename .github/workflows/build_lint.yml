@@ -1,21 +1,18 @@
 
 name: Build & Lint
 on: [push]
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 jobs:
   lint:
     name: Lint & TS Check
     runs-on: ubuntu-latest
     container:
-      image: node:20
+      image: node:24
       env:
         NEXT_PUBLIC_DRUPAL_BASE_URL: http://localhost
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Restore Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             node_modules
@@ -35,7 +32,7 @@ jobs:
     container:
       image: pookmish/drupal8ci:php8.3
       env:
-        BUILD_PAGES: 100
+        BUILD_PAGES: 500
         BUILD_COMPLETE: 'true'
         LIBGUIDE_CLIENT_ID: ${{ secrets.LIBGUIDE_CLIENT_ID }}
         LIBGUIDE_CLIENT_SECRET: ${{ secrets.LIBGUIDE_CLIENT_SECRET }}
@@ -59,15 +56,15 @@ jobs:
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
           if_key_exists: fail
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: "SU-SWS/ace-stanfordlagunita"
-          ref: '3.x'
-      - uses: actions/checkout@v4
+          ref: '4.x'
+      - uses: actions/checkout@v7
         with:
           path: frontend
       - name: Restore Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             vendor
@@ -93,14 +90,16 @@ jobs:
           apachectl stop && apachectl start &&
           composer install -n &&
           drush drupal:sync --site=library -n &&
-          drush sqlq 'truncate config_pages__su_site_algolia_index; truncate config_pages__su_site_algolia_key; truncate config_pages__su_site_algolia_id'
+          drush sqlq 'truncate config_pages__su_site_algolia_id' &&
+          curl http://localhost
       - name: Build Frontend
         run: |
           cd $GITHUB_WORKSPACE/frontend &&
           cp .env.example .env.local &&
           sed -i -r "s|NEXT_PUBLIC_DRUPAL_BASE_URL.*|NEXT_PUBLIC_DRUPAL_BASE_URL=http://localhost|g" .env.local &&
+          sed -i -r 's/BUILD_PAGES=.*/BUILD_PAGES=-1/g' .env.local &&
           cd $GITHUB_WORKSPACE &&
-          drush su-next-connect >> $GITHUB_WORKSPACE/frontend/.env.local &&
+          drush stanford-decoupled:connect-next >> $GITHUB_WORKSPACE/frontend/.env.local &&
           cd $GITHUB_WORKSPACE/frontend &&
           yarn &&
           yarn build

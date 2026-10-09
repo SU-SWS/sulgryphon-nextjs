@@ -12,7 +12,7 @@ const FullScreenBackground = ({
   const isCentered = useIsCentered(compareRef)
   return (
     <div
-      className={(isCentered ? "ml-[calc(-50vw+50%)] w-screen " : "w-full ") + "absolute left-0 top-0 z-[-10] h-full"}
+      className={(isCentered ? "ml-[calc(-50vw+50%)] w-screen " : "w-full ") + "absolute top-0 left-0 z-[-10] h-full"}
     >
       <div className="relative h-full w-full bg-black-true" {...props}>
         {children}

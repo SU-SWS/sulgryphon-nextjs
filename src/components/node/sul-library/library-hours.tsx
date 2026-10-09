@@ -2,7 +2,6 @@
 
 import {ClockIcon} from "@heroicons/react/24/outline"
 import {ErrorBoundary} from "react-error-boundary"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import {useId, useRef} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
@@ -11,10 +10,8 @@ import {useBoolean} from "usehooks-ts"
 
 const LibraryHeaderHours = ({hoursId}: {hoursId: string}) => {
   return (
-    <ErrorBoundary fallback={<></>} onError={e => console.error(e.message)}>
-      <CachedClientFetch>
-        <LibraryHeaderHoursComponent hoursId={hoursId} />
-      </CachedClientFetch>
+    <ErrorBoundary fallback={<></>} onError={e => console.error(e instanceof Error ? e.message : e)}>
+      <LibraryHeaderHoursComponent hoursId={hoursId} />
     </ErrorBoundary>
   )
 }
@@ -33,14 +30,14 @@ const LibraryHeaderHoursComponent = ({hoursId}: {hoursId: string}) => {
 
   return (
     <>
-      <div className="type-1 mb-20 flex text-black-true">
+      <div className="mb-20 flex type-1 text-black-true">
         <ClockIcon title="Hours" width={19} className="mr-10 inline" />
         {hoursDisplay}
       </div>
 
       <div ref={ref} className="relative">
         <button
-          className="group mb-5 w-full rounded border border-black-10 px-15 py-5 shadow-md"
+          className="group mb-5 w-full rounded-[0.3rem] border border-black-10 px-15 py-5 shadow-md"
           aria-expanded={expandedHours}
           onClick={toggleExpandedHours}
           aria-controls={elementId}
@@ -59,7 +56,7 @@ const LibraryHeaderHoursComponent = ({hoursId}: {hoursId: string}) => {
           id={elementId}
           className={
             (expandedHours ? "block" : "hidden") +
-            " list-unstyled absolute left-0 top-full z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md"
+            " list-unstyled absolute top-full left-0 z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md"
           }
         >
           {selectOptions.map(day => (

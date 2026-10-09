@@ -9,7 +9,7 @@ import {formatDate} from "@/lib/format-date"
 import NewsPrintButton from "@/components/node/stanford-news/print-button"
 import {redirect} from "next/navigation"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
@@ -45,7 +45,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
         backupDescription={node.suNewsDek || getFirstText(node.suNewsComponents)}
       />
       <InternalHeaderBanner>
-        <div className="mx-auto mb-65 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+        <div className="mx-auto mt-48 mb-65 flex w-full max-w-[calc(100vw-10rem)] flex-col p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
           <h1 id={node.uuid} className="order-2 mb-0">
             {node.title}
           </h1>
@@ -53,13 +53,13 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
           {node.suNewsTopics && (
             <div className="order-1 mb-1">
               {node.suNewsTopics.slice(0, 1).map(topic => (
-                <span key={topic.uuid} className="text-16 font-semibold uppercase text-cardinal-red md:text-18">
+                <span key={topic.uuid} className="text-16 font-semibold text-cardinal-red uppercase md:text-18">
                   {topic.name}
                 </span>
               ))}
             </div>
           )}
-          {node.suNewsDek && <p className="order-3 mb-0 text-20 leading sm:text-22">{node.suNewsDek}</p>}
+          {node.suNewsDek && <p className="order-3 mb-0 text-20 leading-normal sm:text-22">{node.suNewsDek}</p>}
         </div>
       </InternalHeaderBanner>
       <div className="centered mb-40 2xl:w-2/3">
@@ -121,7 +121,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
       <hr className="mx-auto mb-40 w-1/2 text-black-40" />
 
       {imageUrl && (
-        <figure className="centered mx-auto mb-40 table w-full">
+        <figure className="mx-auto centered mb-40 table w-full">
           <span className="relative mx-auto block aspect-[16/9]">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
@@ -135,7 +135,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
       {node.suNewsBanner?.__typename === "MediaVideo" && (
         <figure className="mb-100 table w-full">
-          <span className="centered relative mx-auto block aspect-[16/9] w-10/12">
+          <span className="relative mx-auto centered block aspect-[16/9] w-10/12">
             <Oembed url={node.suNewsBanner.mediaOembedVideo} />
           </span>
           {node.suNewsBannerMediaCaption && (
@@ -157,7 +157,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
           ))}
         </div>
       )}
-      <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
+      <footer className="centered rs-py-4">Last updated {lastUpdated}</footer>
     </article>
   )
 }

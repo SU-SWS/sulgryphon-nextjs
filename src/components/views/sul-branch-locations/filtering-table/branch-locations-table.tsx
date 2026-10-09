@@ -1,8 +1,7 @@
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 import BranchLocationFilteringTable, {
   BranchLocation,
 } from "@/components/views/sul-branch-locations/filtering-table/branch-locations-filtering-table"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 
 interface Props {
   items: NodeSulLibrary[]
@@ -25,10 +24,6 @@ const SulBranchLocationTableView = async ({items}: Props) => {
     })
   })
 
-  return (
-    <CachedClientFetch>
-      <BranchLocationFilteringTable items={trimmedItems} />
-    </CachedClientFetch>
-  )
+  return <BranchLocationFilteringTable items={trimmedItems} />
 }
 export default SulBranchLocationTableView

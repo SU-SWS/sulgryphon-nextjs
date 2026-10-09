@@ -3,7 +3,7 @@ import Image from "next/image"
 import {BuildingLibraryIcon, MapPinIcon} from "@heroicons/react/24/outline"
 import StudyPlaceHours from "./study-place-today-hours"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
 
 interface ModalProps {
   branchHours?: Maybe<string>
@@ -42,8 +42,8 @@ const StudyPlaceFeatures = ({
   const imageAlt = roomImageAlt || contactImageAlt
 
   return (
-    <div className={"flex w-full flex-row rounded border-0 bg-white leading-display shadow-md"}>
-      <div className="rs-py-3 rs-px-3 hidden w-1/2 md:block">
+    <div className={"flex w-full flex-row rounded-[0.3rem] border-0 bg-white leading-display shadow-md"}>
+      <div className="hidden w-1/2 rs-py-3 rs-px-3 md:block">
         {imageUrl && (
           <div className={"relative aspect-[16/9] overflow-hidden"}>
             <Image
@@ -59,16 +59,16 @@ const StudyPlaceFeatures = ({
         )}
       </div>
 
-      <div className="card-body rs-pb-3 rs-px-3 rs-pt-7 w-full items-start md:rs-pt-3">
-        <div className="pt-0 text-18 font-normal leading-display">
+      <div className="card-body w-full items-start rs-pt-7 rs-px-3 rs-pb-3 md:rs-pt-3">
+        <div className="pt-0 text-18 leading-display font-normal">
           <h2 id={headingId} className="rs-mb-1 type-2">
             {[roomDonorName, type].filter(item => !!item).join(" ")}
           </h2>
           <div className="leading-tight">
             {branchHours && <StudyPlaceHours hoursId={branchHours} />}
 
-            <div className={`type-1 relative flex flex-row items-start ${roomNumber ? "mb-20" : "rs-mb-2"}`}>
-              <MapPinIcon title="Location" width={19} className="mr-12 mt-01em flex-shrink-0 md:mt-0" />
+            <div className={`relative flex flex-row items-start type-1 ${roomNumber ? "mb-20" : "rs-mb-2"}`}>
+              <MapPinIcon title="Location" width={19} className="mt-01em mr-12 shrink-0 md:mt-0" />
               <Link
                 href={branchUrl || "#"}
                 className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
@@ -78,8 +78,8 @@ const StudyPlaceFeatures = ({
             </div>
 
             {roomNumber && (
-              <div className="rs-mb-2 type-1 relative flex flex-row items-start">
-                <BuildingLibraryIcon title="Library" className="mr-12 h-24 w-24 flex-shrink-0" />
+              <div className="relative rs-mb-2 flex flex-row items-start type-1">
+                <BuildingLibraryIcon title="Library" className="mr-12 h-24 w-24 shrink-0" />
 
                 <div>Room-{roomNumber}</div>
               </div>

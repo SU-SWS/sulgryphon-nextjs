@@ -1,4 +1,4 @@
-import {NodeSulStudyPlace} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
 import NodePageMetadata from "../node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"
 

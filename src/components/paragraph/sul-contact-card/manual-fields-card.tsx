@@ -4,7 +4,7 @@ import {ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/2
 import {HTMLAttributes} from "react"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
-import {ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphSulContactCard} from "@/lib/gql/__generated__/graphql"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphSulContactCard
@@ -24,9 +24,9 @@ const ManualFieldsCard = ({paragraph}: Props) => {
 
   return (
     <div className="@container">
-      <div className="flex w-full flex-col rounded border-0 leading-display shadow-md @6xl:flex-row">
+      <div className="flex w-full flex-col rounded-[0.3rem] border-0 leading-display shadow-md @6xl:flex-row">
         {imageUrl && (
-          <div className="relative aspect-[16/9] flex-shrink-0 overflow-hidden @6xl:w-1/2">
+          <div className="relative aspect-[16/9] shrink-0 overflow-hidden @6xl:w-1/2">
             <Image
               className="static object-cover object-center"
               src={buildUrl(imageUrl).toString()}
@@ -37,14 +37,14 @@ const ManualFieldsCard = ({paragraph}: Props) => {
           </div>
         )}
 
-        <div className="card-body rs-px-2 rs-py-4 flex-grow bg-black-true">
-          <div className="pt-0 text-18 font-normal leading-display">
+        <div className="card-body grow bg-black-true rs-py-4 rs-px-2">
+          <div className="pt-0 text-18 leading-display font-normal">
             {paragraph.sulContactTitle && <h2 className="rs-mb-1 type-3 text-white">{paragraph.sulContactTitle}</h2>}
 
             <div className="leading-tight text-white md:rs-pr-2">
               {(paragraph.sulContactHours || paragraph.sulContactLink?.url) && (
-                <div className="rs-mb-0 type-1 relative flex flex-row">
-                  <ClockIcon title="Hours" width={19} className="mr-12 mt-01em flex-shrink-0" />
+                <div className="relative rs-mb-0 flex flex-row type-1">
+                  <ClockIcon title="Hours" width={19} className="mt-01em mr-12 shrink-0" />
                   <div className="rs-mb-neg2 text-white sm:mb-0">
                     {paragraph.sulContactHours}
 
@@ -63,25 +63,25 @@ const ManualFieldsCard = ({paragraph}: Props) => {
               )}
 
               {paragraph.sulContactPhone && (
-                <div className="rs-mb-0 type-1 relative flex flex-row items-center">
-                  <PhoneIcon title="Phone" width={19} className="mr-12 flex-shrink-0" />
+                <div className="relative rs-mb-0 flex flex-row items-center type-1">
+                  <PhoneIcon title="Phone" width={19} className="mr-12 shrink-0" />
                   {paragraph.sulContactPhone}
                 </div>
               )}
 
               {paragraph.sulContactEmail && (
-                <div className="rs-mb-0 type-1 relative flex flex-row items-center">
-                  <EnvelopeIcon title="Email" width={19} className="mr-12 mt-02em flex-shrink-0" />
+                <div className="relative rs-mb-0 flex flex-row items-center type-1">
+                  <EnvelopeIcon title="Email" width={19} className="mt-02em mr-12 shrink-0" />
                   <EmailLink
                     email={paragraph.sulContactEmail}
-                    className="break-words font-normal text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
+                    className="font-normal wrap-anywhere text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
                   />
                 </div>
               )}
 
               {paragraph.sulContactAddress && (
-                <div className="type-1 relative flex items-center">
-                  <MapPinIcon title="Location" width={19} className="mr-12 flex-shrink-0" />
+                <div className="relative flex items-center type-1">
+                  <MapPinIcon title="Location" width={19} className="mr-12 shrink-0" />
 
                   {paragraph.sulContactMapLink?.url && (
                     <Link

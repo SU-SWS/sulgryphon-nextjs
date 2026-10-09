@@ -1,5 +1,5 @@
 import {HTMLAttributes} from "react"
-import {ParagraphSulHomeBanner} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphSulHomeBanner} from "@/lib/gql/__generated__/graphql"
 import {
   SulHomeBannerFormClient,
   SulHomeBannerRandomClient,

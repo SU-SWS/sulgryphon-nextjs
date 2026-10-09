@@ -4,7 +4,7 @@ import Card from "@/components/patterns/card"
 import HorizontalCard from "@/components/patterns/horizontal-card"
 import Oembed from "@/components/patterns/elements/oembed"
 import {buildUrl} from "@/lib/drupal/utils"
-import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
+import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {ElementType, HTMLAttributes} from "react"
 import {clsx} from "clsx"
 import {appendCredit, getImageCredit} from "@/lib/image-credit"
@@ -57,7 +57,7 @@ const StanfordCard = ({
   }
 
   return (
-    <div className={clsx("relative", {"centered mx-auto w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
+    <div className={clsx("relative", {"mx-auto centered w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
       {isHorizontal && (
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="h-full" />}

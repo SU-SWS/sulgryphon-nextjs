@@ -6,7 +6,7 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import {useBoolean} from "usehooks-ts"
-import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
+import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/graphql"
 import {usePathname} from "next/navigation"
 import {getActiveTrail} from "@/lib/drupal/utils"
 
@@ -44,20 +44,20 @@ const SecondaryMenu = ({menuItems, currentPath}: {menuItems: MenuItem[]; current
 
   return (
     <aside className="relative order-first lg:w-1/3 2xl:w-1/4">
-      {menuOpen && <div className="fixed left-0 top-0 z-10 h-screen w-full backdrop-blur-sm lg:hidden" />}
+      {menuOpen && <div className="fixed top-0 left-0 z-10 h-screen w-full backdrop-blur-xs lg:hidden" />}
 
       <button
         onClick={toggleMenuOpen}
-        className="mx-auto mb-20 flex w-5/6 items-center border border-t-8 border-archway bg-foggy-light text-archway-light lg:hidden"
+        className="mx-auto mb-20 flex w-5/6 items-center border border-t-8 border-archway bg-fog-light text-archway-light lg:hidden"
         aria-expanded={menuOpen ? "true" : "false"}
       >
-        <span className="relative block flex-grow p-20 text-left font-semibold">{currentPageTitle}</span>
+        <span className="relative block grow p-20 text-left font-semibold">{currentPageTitle}</span>
         <ChevronDownIcon width={40} className="mr-20" />
       </button>
 
       <div ref={ref}>
         <nav className={isDesktop || menuOpen ? "block" : "hidden"} aria-label="Secondary Navigation">
-          <ul className="list-unstyled absolute left-0 top-0 z-40 mb-20 w-full border border-t-8 border-archway bg-white py-20 shadow-lg lg:relative lg:z-0">
+          <ul className="list-unstyled absolute top-0 left-0 z-40 mb-20 w-full border border-t-8 border-archway bg-white py-20 shadow-lg lg:relative lg:z-0">
             {subTree.map(item => (
               <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} />
             ))}
@@ -85,7 +85,7 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, children}: Si
         <Link
           href={url || "#"}
           className={
-            "relative block flex-grow p-10 no-underline hover:underline " +
+            "relative block grow p-10 no-underline hover:underline " +
             (isActive ? "text-white hocus:text-white" : "text-black-90 hocus:text-archway")
           }
           aria-current={isActive ? "page" : undefined}

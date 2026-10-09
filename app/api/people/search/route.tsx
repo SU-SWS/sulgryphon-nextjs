@@ -1,11 +1,15 @@
 import {NextRequest, NextResponse} from "next/server"
-import {graphqlClient} from "@/lib/gql/fetcher"
-import {StanfordPersonSearchQuery, NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
+import {describeError, graphqlClient} from "@/lib/gql/gql-client"
+import {
+  StanfordPersonSearchDocument,
+  StanfordPersonSearchQuery,
+  StanfordPersonSearchQueryVariables,
+  NodeStanfordPerson,
+} from "@/lib/gql/__generated__/graphql"
+import {cacheLife, cacheTag} from "next/cache"
 
 // Extract the actual type of items in the results array
 type StanfordPersonResultItem = NonNullable<NonNullable<StanfordPersonSearchQuery["stanfordPerson"]>["results"][number]>
-
-export const dynamic = "force-dynamic"
 
 // Create a simplified API response type based on the GraphQL NodeStanfordPerson type
 type PersonSearchResult = {
@@ -28,18 +32,27 @@ type PersonSearchResult = {
   path: NodeStanfordPerson["path"]
 }
 
-const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> => {
-  try {
-    // Get all stanford persons using pagination to fetch ALL results
-    let allResults: StanfordPersonResultItem[] = []
-    let page = 0
-    let hasMorePages = true
+/**
+ * Fetch every person once and cache the full list, so each search only filters it in memory
+ * instead of paging through Drupal again.
+ */
+const getAllPeople = async (): Promise<StanfordPersonResultItem[]> => {
+  "use cache: remote"
 
+  cacheTag("all-cache", "views", "views:stanford_person")
+  let allResults: StanfordPersonResultItem[] = []
+  let page = 0
+  let hasMorePages = true
+
+  try {
     while (hasMorePages) {
-      const data = await graphqlClient().stanfordPersonSearch({
-        pageSize: 999, // Fetch large batch to reduce API calls
-        page: page,
-      })
+      const data = await graphqlClient().request<StanfordPersonSearchQuery, StanfordPersonSearchQueryVariables>(
+        StanfordPersonSearchDocument,
+        {
+          pageSize: 999, // Fetch large batch to reduce API calls
+          page: page,
+        }
+      )
 
       if (data.stanfordPerson?.results) {
         allResults = allResults.concat(data.stanfordPerson.results)
@@ -54,6 +67,18 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
         hasMorePages = false
       }
     }
+  } catch (e) {
+    // Don't cache a partial or empty directory as if it were complete; try again within minutes.
+    console.warn("Unable to fetch people for search: " + describeError(e))
+    cacheLife("minutes")
+    return []
+  }
+  return allResults
+}
+
+const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> => {
+  try {
+    const allResults = await getAllPeople()
 
     if (!allResults.length) {
       return []
@@ -106,33 +131,31 @@ const getPersonSearch = async (keywords: string): Promise<PersonSearchResult[]> 
     )
 
     // Transform to API response format
-    return filteredResults.map(
-      (person): PersonSearchResult => ({
-        id: person.uuid,
-        firstName: person.suPersonFirstName || "",
-        lastName: person.suPersonLastName || "",
-        fullTitle: person.suPersonFullTitle || undefined,
-        photo: person.suPersonPhoto?.mediaImage?.url
-          ? {
-              url: person.suPersonPhoto.mediaImage.url,
-              alt: person.suPersonPhoto.mediaImage.alt || undefined,
-            }
-          : undefined,
-        body: person.body?.processed || undefined,
-        email: person.suPersonEmail || undefined,
-        telephone: person.suPersonTelephone || undefined,
-        mailCode: person.suPersonMailCode || undefined,
-        research:
-          person.suPersonResearch
-            ?.map((r: {processed?: string | null}) => r.processed)
-            .filter((text): text is string => Boolean(text)) || undefined,
-        personTypes:
-          person.suPersonTypeGroup?.map(type => ({
-            name: type.name,
-          })) || undefined,
-        path: person.path || "",
-      })
-    )
+    return filteredResults.map((person): PersonSearchResult => ({
+      id: person.uuid,
+      firstName: person.suPersonFirstName || "",
+      lastName: person.suPersonLastName || "",
+      fullTitle: person.suPersonFullTitle || undefined,
+      photo: person.suPersonPhoto?.mediaImage?.url
+        ? {
+            url: person.suPersonPhoto.mediaImage.url,
+            alt: person.suPersonPhoto.mediaImage.alt || undefined,
+          }
+        : undefined,
+      body: person.body?.processed || undefined,
+      email: person.suPersonEmail || undefined,
+      telephone: person.suPersonTelephone || undefined,
+      mailCode: person.suPersonMailCode || undefined,
+      research:
+        person.suPersonResearch
+          ?.map((r: {processed?: string | null}) => r.processed)
+          .filter((text): text is string => Boolean(text)) || undefined,
+      personTypes:
+        person.suPersonTypeGroup?.map(type => ({
+          name: type.name,
+        })) || undefined,
+      path: person.path || "",
+    }))
   } catch (error) {
     console.error("Failed to fetch person search results:", error)
     return []

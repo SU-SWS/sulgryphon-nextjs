@@ -9,7 +9,7 @@ import SearchModal from "@/components/search/search-modal"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import {usePathname} from "next/navigation"
 import {useBoolean} from "usehooks-ts"
-import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
+import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/graphql"
 import {getActiveTrail} from "@/lib/drupal/utils"
 import {twMerge} from "tailwind-merge"
 import {sendGAEvent} from "@next/third-parties/google"
@@ -46,7 +46,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   return (
     <div ref={ref} className="mx-auto w-full max-w-1500 lg:px-40 3xl:px-0">
       <button
-        className="absolute right-20 top-20 z-20 border-b-2 border-transparent text-black-true hocus:border-black-true lg:hidden"
+        className="absolute top-20 right-20 z-20 border-b-2 border-transparent text-black-true lg:hidden hocus:border-black-true"
         onClick={openCloseMenu}
         aria-expanded={menuOpen ? "true" : "false"}
       >
@@ -58,7 +58,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
         <div
           aria-hidden={!isDesktop && !menuOpen}
           className={
-            "absolute z-10 h-[calc(100vh-100px)] w-full -translate-y-full overflow-y-scroll border-t-4 border-cardinal-red bg-black-true py-20 lg:relative lg:block lg:h-auto lg:transform-none lg:animate-none lg:overflow-visible lg:border-0 lg:bg-transparent lg:py-0 lg:pb-0" +
+            "absolute z-10 h-[calc(100vh-100px)] w-full -translate-y-full overflow-y-scroll border-t-4 border-cardinal-red bg-black-true py-20 lg:relative lg:block lg:h-auto lg:translate-none lg:transform-none lg:animate-none lg:overflow-visible lg:border-0 lg:bg-transparent lg:py-0 lg:pb-0" +
             (menuOpen ? " animate-slide-down" : addCloseAnimation ? " animate-slide-up" : "")
           }
         >
@@ -85,11 +85,11 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               !isDesktop && !menuOpen ? "hidden" : "block"
             )}
           >
-            <div className="mb-10 mr-20 text-left">Quick links:</div>
-            <ul className="list-unstyled flex flex-wrap items-center gap-10 @container">
+            <div className="mr-20 mb-10 text-left">Quick links:</div>
+            <ul className="list-unstyled @container flex flex-wrap items-center gap-10">
               <li className="m-0">
                 <Link
-                  className="text-white no-underline hocus:text-white hocus:underline @sm:border-r @sm:border-white @sm:pr-10"
+                  className="text-white no-underline @sm:border-r @sm:border-white @sm:pr-10 hocus:text-white hocus:underline"
                   href="https://searchworks.stanford.edu/"
                   onClick={() =>
                     trackMenuClick({
@@ -289,13 +289,13 @@ const MenuItem = ({
           href={url.length >= 1 ? url : "#"}
           onClick={handleMenuClick}
           className={twMerge(
-            "flex w-full items-center p-20 text-white no-underline hocus:text-white hocus:underline lg:text-black-true",
+            "flex w-full items-center p-20 text-white no-underline lg:text-black-true hocus:text-white hocus:underline",
             menuLevel > 0 ? "lg:hocus:bg-black-10 lg:hocus:text-archway" : "lg:hocus:text-archway",
             getLinkBorderClasses()
           )}
           aria-current={activeTrail.at(-1) === id ? "page" : undefined}
         >
-          <div className={twMerge("w-full shrink-0 text-nowrap pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
+          <div className={twMerge("w-full shrink-0 pl-30 text-nowrap lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
         </Link>
       )}
 
@@ -303,7 +303,7 @@ const MenuItem = ({
         <button
           tabIndex={tabIndex}
           className={twMerge(
-            "group flex w-full items-center p-20 text-left font-semibold text-white hocus:bg-black hocus:text-white lg:text-black-true lg:hocus:bg-transparent lg:hocus:text-archway",
+            "group flex w-full items-center p-20 text-left font-semibold text-white lg:text-black-true hocus:bg-black hocus:text-white lg:hocus:bg-transparent lg:hocus:text-archway",
             getLinkBorderClasses()
           )}
           onClick={toggleSubmenu}
@@ -391,7 +391,7 @@ const DropDownButton = ({
   return (
     <button
       className={twMerge(
-        "after:z-5 group absolute right-0 top-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] lg:relative lg:h-auto",
+        "group absolute top-0 right-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] lg:relative lg:h-auto",
         menuLevel >= 1 ? "lg:bg-fog-light" : "lg:w-[40px] lg:bg-transparent"
       )}
       onClick={onButtonClick}

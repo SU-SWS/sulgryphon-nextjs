@@ -111,7 +111,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
         onSubmit={handleSearchSubmit}
       >
         <div className="relative w-full md:w-[435px]">
-          <label className="pl-15 text-18 font-semibold leading-display" htmlFor={id}>
+          <label className="pl-15 text-18 leading-display font-semibold" htmlFor={id}>
             Search by event title
           </label>
 
@@ -125,14 +125,14 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
 
           <button
             type="button"
-            className="absolute bottom-6 right-32 z-10 peer-placeholder-shown:hidden"
+            className="absolute right-32 bottom-6 z-10 peer-placeholder-shown:hidden"
             aria-label="Clear keyword search"
             onClick={clearSearch}
           >
             <XMarkIcon className="pr-5 text-black-50" width={30} />
           </button>
 
-          <button type="submit" className="absolute bottom-6 right-10 z-10">
+          <button type="submit" className="absolute right-10 bottom-6 z-10">
             <MagnifyingGlassIcon className="text-digital-red-dark" width={25} />
             <span className="sr-only">Search</span>
           </button>
@@ -156,7 +156,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
         </div>
       </form>
 
-      <div className="flex-grow">
+      <div className="grow">
         <ul {...ulProps}>
           {items.map((item, i) => (
             <li
@@ -180,7 +180,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
             onClick={showMoreItems}
             disabled={isPending}
             className={clsx(
-              "cta-button group mx-auto mt-32 block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-24 font-semibold leading-display text-white no-underline transition-colors hocus:bg-cardinal-red-dark hocus:text-white hocus:underline md:text-18",
+              "cta-button group mx-auto mt-32 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-24 leading-display font-semibold text-white no-underline transition-colors md:text-18 hocus:bg-cardinal-red-dark hocus:text-white hocus:underline",
               {"cursor-none bg-archway": isPending}
             )}
           >

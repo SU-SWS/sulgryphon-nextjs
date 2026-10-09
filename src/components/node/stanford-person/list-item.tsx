@@ -2,13 +2,13 @@ import Image from "next/image"
 import Link from "@/components/patterns/elements/drupal-link"
 import LibCal from "./libcal"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/graphql"
 
 const StanfordPersonListItem = ({node, ...props}: {node: NodeStanfordPerson}) => {
   const imageUrl = node.suPersonPhoto?.mediaImage.url
 
   return (
-    <article className="flex w-full flex-col gap-lg bg-white leading-display text-black @container" {...props}>
+    <article className="@container flex w-full flex-col gap-lg bg-white leading-display text-black" {...props}>
       {imageUrl && (
         <div className="relative mx-auto aspect-[1/1] w-[130px] overflow-hidden rounded-full @lg:w-[215px]">
           <Image
@@ -22,7 +22,7 @@ const StanfordPersonListItem = ({node, ...props}: {node: NodeStanfordPerson}) =>
       )}
       <div>
         <Link href={node.path || "#"} className="text-digital-red no-underline hocus:text-black hocus:underline">
-          <h2 className="type-1 mb-[0.2em] font-semibold">{node.title}</h2>
+          <h2 className="mb-[0.2em] type-1 font-semibold">{node.title}</h2>
         </Link>
         <div className="type-0 leading-snug">{node.suPersonShortTitle}</div>
       </div>

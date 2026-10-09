@@ -1,15 +1,18 @@
 import InterceptionModal from "@/components/patterns/modals/interception-modal"
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features"
-import {graphqlClient} from "@/lib/gql/fetcher"
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {getNodeByUuid} from "@/lib/gql/gql-queries"
+import {NodeUnion} from "@/lib/gql/__generated__/graphql"
 
-const Page = async (props: {params: Promise<{uuid: string}>}) => {
+type Props = {params: Promise<{uuid: string}>}
+
+// Params are awaited outside Suspense on purpose, as in [...slug]: each study place renders on its first
+// request and is then cached, instead of rendering on every visit.
+const Page = async (props: Props) => {
   const params = await props.params
 
   const {uuid} = params
 
-  const query = await graphqlClient().Node({uuid})
-  const node = query.node as NodeUnion
+  const node = await getNodeByUuid<NodeUnion>(uuid)
   if (!node) return
   if (node.__typename !== "NodeSulStudyPlace") return
 
@@ -40,3 +43,6 @@ const Page = async (props: {params: Promise<{uuid: string}>}) => {
   )
 }
 export default Page
+
+// Cache Components needs one param to validate the route. Real study places render on their first request.
+export const generateStaticParams = async () => [{uuid: "00000000-0000-0000-0000-000000000000"}]

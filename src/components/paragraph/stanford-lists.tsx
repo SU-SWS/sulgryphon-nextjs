@@ -1,11 +1,12 @@
 import formatHtml from "@/lib/format-html"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import {HTMLAttributes} from "react"
-import {ParagraphStanfordList} from "@/lib/gql/__generated__/drupal.d"
-import View from "@/components/views/view"
+import {ParagraphStanfordList} from "@/lib/gql/__generated__/graphql"
+import View, {loadViewPage} from "@/components/views/view"
 import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
-import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
+import {getViewPagedItems, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
+import {signViewConfig} from "@/lib/view-config"
 import clsx from "clsx"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
@@ -38,6 +39,17 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   const ListWrapper: ElementType =
     paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" ? "section" : "div"
+
+  const signedConfig =
+    addLoadMore && viewId && displayId
+      ? signViewConfig({
+          viewId,
+          displayId,
+          contextualFilter: paragraph.suListView?.contextualFilter || [],
+          hasHeadline: !!paragraph.suListHeadline,
+          pageSize: VIEW_PAGE_SIZE,
+        })
+      : undefined
 
   return (
     <ListWrapper
@@ -77,18 +89,7 @@ const ListParagraph = async ({paragraph}: Props) => {
           viewId={viewId}
           displayId={displayId}
           headingLevel={paragraph.suListHeadline ? "h3" : "h2"}
-          loadPage={
-            addLoadMore
-              ? loadViewPage.bind(
-                  null,
-                  viewId,
-                  displayId,
-                  paragraph.suListView?.contextualFilter || [],
-                  !!paragraph.suListHeadline,
-                  VIEW_PAGE_SIZE
-                )
-              : undefined
-          }
+          loadPage={signedConfig ? loadViewPage.bind(null, signedConfig) : undefined}
           totalItems={addLoadMore ? totalItems : viewItems.length}
         />
       )}

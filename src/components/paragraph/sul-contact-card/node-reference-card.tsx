@@ -2,11 +2,10 @@ import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node-reference-card-hours"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeSulLibrary, ParagraphSulContactCard} from "@/lib/gql/__generated__/drupal.d"
-import {getEntityFromPath} from "@/lib/gql/fetcher"
+import {NodeSulLibrary, ParagraphSulContactCard} from "@/lib/gql/__generated__/graphql"
+import {getEntityFromPath} from "@/lib/gql/gql-queries"
 
 interface Props {
   paragraph: ParagraphSulContactCard
@@ -31,9 +30,9 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
 
   return (
     <div className="@container">
-      <div className="flex w-full flex-col rounded border-0 leading-display shadow-md @6xl:flex-row">
+      <div className="flex w-full flex-col rounded-[0.3rem] border-0 leading-display shadow-md @6xl:flex-row">
         {imageUrl && (
-          <div className="relative aspect-[16/9] flex-shrink-0 overflow-hidden @6xl:w-1/2">
+          <div className="relative aspect-[16/9] shrink-0 overflow-hidden @6xl:w-1/2">
             <Image
               className="static object-cover object-center"
               src={buildUrl(imageUrl).toString()}
@@ -44,8 +43,8 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
           </div>
         )}
 
-        <div className="card-body rs-px-2 rs-py-4 flex-grow items-start bg-black-true">
-          <div className="pt-0 text-18 font-normal leading-display">
+        <div className="card-body grow items-start bg-black-true rs-py-4 rs-px-2">
+          <div className="pt-0 text-18 leading-display font-normal">
             {contactBranch?.path ? (
               <Link
                 href={contactBranch?.path}
@@ -59,31 +58,29 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
 
             <div className="leading-tight text-white md:rs-pr-2">
               {contactBranch?.suLibraryHours && (
-                <CachedClientFetch>
-                  <NodeReferenceCardHours branchId={contactBranch?.suLibraryHours} branchName={contactBranch?.title} />
-                </CachedClientFetch>
+                <NodeReferenceCardHours branchId={contactBranch?.suLibraryHours} branchName={contactBranch?.title} />
               )}
 
               {contactBranch?.suLibraryPhone && (
-                <div className="rs-mb-0 type-0 relative flex flex-row items-center">
-                  <PhoneIcon title="Phone" width={19} className="mr-12 flex-shrink-0" />
+                <div className="relative rs-mb-0 flex flex-row items-center type-0">
+                  <PhoneIcon title="Phone" width={19} className="mr-12 shrink-0" />
                   {contactBranch?.suLibraryPhone}
                 </div>
               )}
 
               {contactBranch?.suLibraryEmail && (
-                <div className="rs-mb-0 type-0 relative flex flex-row items-center">
-                  <EnvelopeIcon title="Email" width={19} className="mr-12 mt-02em flex-shrink-0" />
+                <div className="relative rs-mb-0 flex flex-row items-center type-0">
+                  <EnvelopeIcon title="Email" width={19} className="mt-02em mr-12 shrink-0" />
                   <EmailLink
                     email={contactBranch?.suLibraryEmail}
-                    className="break-words font-normal text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
+                    className="font-normal wrap-anywhere text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
                   />
                 </div>
               )}
 
               {contactBranch?.suLibraryAddress && (
-                <div className="type-0 relative flex flex-row items-start">
-                  <MapPinIcon title="Location" width={19} className="mr-12 mt-01em flex-shrink-0 md:mt-0" />
+                <div className="relative flex flex-row items-start type-0">
+                  <MapPinIcon title="Location" width={19} className="mt-01em mr-12 shrink-0 md:mt-0" />
 
                   {contactBranch?.suLibraryMapLink?.url ? (
                     <Link

@@ -1,9 +1,9 @@
 import formatHtml from "@/lib/format-html"
 import NodeCardDisplay from "@/components/node/node-card"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
+import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
-import {getEntityFromPath} from "@/lib/gql/fetcher"
+import {getEntityFromPath} from "@/lib/gql/gql-queries"
 import {HTMLAttributes} from "react"
 
 type EntityProps = HTMLAttributes<HTMLDivElement> & {
@@ -43,7 +43,7 @@ const StanfordEntity = async ({
   const gridClass = entities.length >= 3 ? gridClasses[2] : gridClasses[(entities.length % 3) - 1]
 
   return (
-    <div className="centered relative @container" {...props}>
+    <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {headline && headingBehavior !== "remove" && (
           <h2 id={headerId} className={twMerge("mb-40 text-left", headingBehavior === "hide" && "sr-only")}>

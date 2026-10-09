@@ -1,5 +1,3 @@
-import {JSX} from "react"
-import View from "@/components/views/view"
 import {
   Maybe,
   NodeStanfordEvent,
@@ -7,36 +5,129 @@ import {
   NodeStanfordPage,
   NodeStanfordPerson,
   NodeUnion,
+  SearchDocument,
   SearchFilterInput,
+  SearchQuery,
+  SearchQueryVariables,
   SortDirection,
+  StanfordBasicPagesDocument,
+  StanfordBasicPagesQuery,
   StanfordBasicPagesQueryVariables,
   StanfordBasicPagesSortKeys,
-} from "@/lib/gql/__generated__/drupal.d"
-import {graphqlClient} from "@/lib/gql/fetcher"
+  StanfordNewsDocument,
+  StanfordNewsQuery,
+  StanfordNewsQueryVariables,
+  StanfordPersonDocument,
+  StanfordPersonQuery,
+  StanfordPersonQueryVariables,
+  StanfordSharedTagsDocument,
+  StanfordSharedTagsQuery,
+  StanfordSharedTagsQueryVariables,
+  SulBranchLocationsDocument,
+  SulBranchLocationsQuery,
+  SulEventsDocument,
+  SulEventsQuery,
+  SulEventsQueryVariables,
+  SulEventsSharedTagsDocument,
+  SulEventsSharedTagsQuery,
+  SulEventsSharedTagsQueryVariables,
+  SulStudyPlacesDocument,
+  SulStudyPlacesQuery,
+} from "@/lib/gql/__generated__/graphql"
+import {describeError, graphqlClient} from "@/lib/gql/gql-client"
+import {cacheLife, cacheTag} from "next/cache"
 
 export const VIEW_PAGE_SIZE = 21
 
-export const loadViewPage = async (
-  viewId: string,
-  displayId: string,
-  contextualFilter: string[],
-  hasHeadline: boolean,
-  pageSize: number = VIEW_PAGE_SIZE,
-  page: number,
-  filter?: Maybe<Record<string, string | number | Array<string | number>>>
-): Promise<JSX.Element> => {
-  "use server"
+export type ViewFilter = Maybe<Record<string, string | number | Array<string | number>>>
 
-  const {items, totalItems} = await getViewPagedItems(viewId, displayId, contextualFilter, pageSize, page, filter)
-  return (
-    <View
-      viewId={viewId}
-      displayId={displayId}
-      items={items}
-      headingLevel={hasHeadline ? "h3" : "h2"}
-      totalItems={totalItems}
-    />
-  )
+/** Every view display this site queries. Anything else is rejected before it reaches Drupal or the cache. */
+const SUPPORTED_DISPLAYS = new Set([
+  "sul_study_places--study_places",
+  "sul_study_places--study_places_table",
+  "sul_branch_locations--branch_locations_table",
+  "sul_events--shared_tags_cards",
+  "sul_events--shared_tags_cards_desc",
+  "sul_events--cards_desc",
+  "sul_events--cards",
+  "sul_events--list_page",
+  "sul_events--filtered_list",
+  "sul_events--past_events_list_block",
+  "sul_news--filtering_cards",
+  "sul_news--block_1",
+  "sul_news--vertical_cards",
+  "search--search",
+  "stanford_basic_pages--card_grid_alpha",
+  "stanford_basic_pages--basic_page_type_list",
+  "stanford_basic_pages--viewfield_block_1",
+  "sul_people--randomized_card_grid",
+  "sul_people--table_list_all",
+  "stanford_person--grid_list_all",
+  "stanford_shared_tags--card_grid",
+])
+
+/** Filter keys the site's list views send. Free-text ones are what a visitor types. */
+const FREE_TEXT_FILTERS = ["key", "title", "search"]
+const OPTION_FILTERS = ["type", "eventType", "date"]
+const MAX_PAGE = 100
+const MAX_VALUE_LENGTH = 100
+const MAX_CONTEXTUAL_FILTERS = 4
+
+const hasFreeText = (filter?: ViewFilter) =>
+  FREE_TEXT_FILTERS.some(key => typeof filter?.[key] === "string" && (filter[key] as string).length > 0)
+
+/**
+ * Validate a view request that came from the browser.
+ *
+ * The "load more" server action is a public endpoint, and every distinct set of arguments is a Drupal
+ * query and a cache entry. Only displays the site uses are allowed, numbers are clamped, and filters are
+ * limited to known keys with short string values. Free text is trimmed and lowercased so equivalent
+ * searches share a cache entry.
+ *
+ * @returns The arguments to pass to {@link getViewPagedItems}, or `undefined` to reject the request.
+ */
+export const sanitizeViewRequest = (
+  viewId: unknown,
+  displayId: unknown,
+  contextualFilter: unknown,
+  pageSize: unknown,
+  page: unknown,
+  filter: unknown
+): Parameters<typeof getViewPagedItems> | undefined => {
+  if (typeof viewId !== "string" || typeof displayId !== "string") return
+  if (!SUPPORTED_DISPLAYS.has(`${viewId}--${displayId}`)) return
+
+  const toInt = (value: unknown, min: number, max: number, fallback: number) =>
+    typeof value === "number" && Number.isFinite(value) ? Math.min(Math.max(Math.trunc(value), min), max) : fallback
+
+  const cleanString = (value: unknown) =>
+    typeof value === "string" ? value.trim().slice(0, MAX_VALUE_LENGTH) : undefined
+
+  const contextual = Array.isArray(contextualFilter)
+    ? contextualFilter
+        .slice(0, MAX_CONTEXTUAL_FILTERS)
+        .map(cleanString)
+        .filter((value): value is string => value !== undefined)
+    : undefined
+
+  let cleanFilter: Record<string, string> | undefined
+  if (filter && typeof filter === "object") {
+    cleanFilter = {}
+    for (const key of [...FREE_TEXT_FILTERS, ...OPTION_FILTERS]) {
+      let value = cleanString((filter as Record<string, unknown>)[key])
+      if (value && FREE_TEXT_FILTERS.includes(key)) value = value.toLowerCase()
+      if (value) cleanFilter[key] = value
+    }
+  }
+
+  return [
+    viewId,
+    displayId,
+    contextual,
+    toInt(pageSize, 1, VIEW_PAGE_SIZE, VIEW_PAGE_SIZE),
+    toInt(page, 0, MAX_PAGE, 0),
+    cleanFilter,
+  ]
 }
 
 export const getViewPagedItems = async (
@@ -45,9 +136,9 @@ export const getViewPagedItems = async (
   contextualFilter?: Maybe<string[]>,
   pageSize?: Maybe<number>,
   page?: Maybe<number>,
-  filter?: Maybe<Record<string, string | number | Array<string | number>>>
+  filter?: ViewFilter
 ): Promise<{items: NodeUnion[]; totalItems: number}> => {
-  "use server"
+  "use cache: remote"
 
   let items: NodeUnion[] = []
   let totalItems = 0
@@ -70,9 +161,9 @@ export const getViewPagedItems = async (
     sul_people: "views:stanford_person",
     sul_events: "views:stanford_event",
   }
-  const tags = ["views", viewTags[viewId]]
+  cacheTag("all-cache", "views", viewTags[viewId] || "views:all")
 
-  const client = graphqlClient({next: {tags}})
+  const client = graphqlClient()
   let contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
   let graphqlResponse
 
@@ -82,13 +173,13 @@ export const getViewPagedItems = async (
     switch (`${viewId}--${displayId}`) {
       case "sul_study_places--study_places":
       case "sul_study_places--study_places_table":
-        graphqlResponse = await client.sulStudyPlaces()
+        graphqlResponse = await client.request<SulStudyPlacesQuery>(SulStudyPlacesDocument)
         items = graphqlResponse.sulStudyPlaces?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.sulStudyPlaces?.pageInfo.total || 0
         break
 
       case "sul_branch_locations--branch_locations_table":
-        graphqlResponse = await client.sulBranchLocations()
+        graphqlResponse = await client.request<SulBranchLocationsQuery>(SulBranchLocationsDocument)
         items = graphqlResponse.sulBranchLocations?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.sulBranchLocations?.pageInfo.total || 0
         break
@@ -96,7 +187,10 @@ export const getViewPagedItems = async (
       case "sul_events--shared_tags_cards":
       case "sul_events--shared_tags_cards_desc":
         contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
-        graphqlResponse = await client.sulEventsSharedTags({contextualFilters, sortDir, ...queryVariables})
+        graphqlResponse = await client.request<SulEventsSharedTagsQuery, SulEventsSharedTagsQueryVariables>(
+          SulEventsSharedTagsDocument,
+          {contextualFilters, sortDir, ...queryVariables}
+        )
         items = graphqlResponse.sulEventsSharedTags?.results as unknown as NodeUnion[]
         break
 
@@ -113,7 +207,7 @@ export const getViewPagedItems = async (
           ],
           contextualFilter
         )
-        graphqlResponse = await client.sulEvents({
+        graphqlResponse = await client.request<SulEventsQuery, SulEventsQueryVariables>(SulEventsDocument, {
           contextualFilters,
           filter: {
             ...filter,
@@ -126,7 +220,7 @@ export const getViewPagedItems = async (
         break
 
       case "sul_events--past_events_list_block":
-        graphqlResponse = await client.sulEvents({
+        graphqlResponse = await client.request<SulEventsQuery, SulEventsQueryVariables>(SulEventsDocument, {
           contextualFilters,
           ...queryVariables,
         })
@@ -137,7 +231,7 @@ export const getViewPagedItems = async (
       case "sul_news--filtering_cards":
       case "sul_news--block_1":
       case "sul_news--vertical_cards":
-        graphqlResponse = await client.stanfordNews({
+        graphqlResponse = await client.request<StanfordNewsQuery, StanfordNewsQueryVariables>(StanfordNewsDocument, {
           contextualFilters,
           filter,
           ...queryVariables,
@@ -147,7 +241,10 @@ export const getViewPagedItems = async (
         break
 
       case "search--search":
-        graphqlResponse = await client.search({filter: filter as SearchFilterInput, ...queryVariables})
+        graphqlResponse = await client.request<SearchQuery, SearchQueryVariables>(SearchDocument, {
+          filter: filter as SearchFilterInput,
+          ...queryVariables,
+        })
         items = graphqlResponse.search?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.search?.pageInfo.total || 0
         break
@@ -158,10 +255,13 @@ export const getViewPagedItems = async (
       case "stanford_basic_pages--basic_page_type_list":
       case "stanford_basic_pages--viewfield_block_1":
         contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth"], contextualFilter)
-        graphqlResponse = await client.stanfordBasicPages({
-          contextualFilters,
-          ...queryVariables,
-        })
+        graphqlResponse = await client.request<StanfordBasicPagesQuery, StanfordBasicPagesQueryVariables>(
+          StanfordBasicPagesDocument,
+          {
+            contextualFilters,
+            ...queryVariables,
+          }
+        )
         items = graphqlResponse.stanfordBasicPages?.results as unknown as NodeStanfordPage[]
         totalItems = graphqlResponse.stanfordBasicPages?.pageInfo.total || 0
         break
@@ -206,7 +306,7 @@ export const getViewPagedItems = async (
       //
       // case "stanford_news--block_1":
       // case "stanford_news--vertical_cards":
-      //   graphqlResponse = await client.stanfordNews({
+      //   graphqlResponse = await client.request<StanfordNewsQuery, StanfordNewsQueryVariables>(StanfordNewsDocument, {
       //     contextualFilters,
       //     ...queryVariables,
       //   })
@@ -218,10 +318,13 @@ export const getViewPagedItems = async (
       case "sul_people--table_list_all":
         queryVariables.pageSize = 999
       case "stanford_person--grid_list_all":
-        graphqlResponse = await client.stanfordPerson({
-          contextualFilters,
-          ...queryVariables,
-        })
+        graphqlResponse = await client.request<StanfordPersonQuery, StanfordPersonQueryVariables>(
+          StanfordPersonDocument,
+          {
+            contextualFilters,
+            ...queryVariables,
+          }
+        )
         items = graphqlResponse.stanfordPerson?.results as unknown as NodeStanfordPerson[]
         totalItems = graphqlResponse.stanfordPerson?.pageInfo.total || 0
         break
@@ -238,10 +341,13 @@ export const getViewPagedItems = async (
 
       case "stanford_shared_tags--card_grid":
         contextualFilters = getContextualFilters(["term_node_taxonomy_name_depth", "type"], contextualFilter)
-        graphqlResponse = await client.stanfordSharedTags({
-          contextualFilters,
-          ...queryVariables,
-        })
+        graphqlResponse = await client.request<StanfordSharedTagsQuery, StanfordSharedTagsQueryVariables>(
+          StanfordSharedTagsDocument,
+          {
+            contextualFilters,
+            ...queryVariables,
+          }
+        )
         items = graphqlResponse.stanfordSharedTags?.results as unknown as NodeUnion[]
         totalItems = graphqlResponse.stanfordSharedTags?.pageInfo.total || 0
         break
@@ -251,10 +357,14 @@ export const getViewPagedItems = async (
         break
     }
   } catch (e) {
-    if (e instanceof Error) console.warn(e.message)
+    // Not a real result, so keep it briefly: pages showing the empty list try Drupal again soon.
+    console.warn(`Unable to fetch view ${viewId}--${displayId}: ${describeError(e)}`)
+    cacheLife("minutes")
     return {items: [], totalItems: 0}
   }
 
+  // A typed search is effectively unbounded: keep its results for hours rather than forever.
+  if (hasFreeText(filter)) cacheLife("hours")
   return {items, totalItems}
 }
 

@@ -1,0 +1,40 @@
+/**
+ * Negative responsive spacing steps that Decanter 8 removed, with Decanter 7's exact values. Kept as
+ * single utilities (rather than `mt-11 md:mt-12 2xl:mt-13`) so they still lose to variants such as a
+ * parent's `*:mt-0`, as they did in v7.
+ */
+@utility rs-mt-neg1 {
+  margin-top: 1.1rem;
+
+  @media (min-width: 768px) {
+    margin-top: 1.2rem;
+  }
+
+  @media (min-width: 1500px) {
+    margin-top: 1.3rem;
+  }
+}
+
+@utility rs-p-neg1 {
+  padding: 1.1rem;
+
+  @media (min-width: 768px) {
+    padding: 1.2rem;
+  }
+
+  @media (min-width: 1500px) {
+    padding: 1.3rem;
+  }
+}
+
+@utility rs-mb-neg2 {
+  margin-bottom: 0.8rem;
+
+  @media (min-width: 768px) {
+    margin-bottom: 0.9rem;
+  }
+
+  @media (min-width: 1500px) {
+    margin-bottom: 1rem;
+  }
+}

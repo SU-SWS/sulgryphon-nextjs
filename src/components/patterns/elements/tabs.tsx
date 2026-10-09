@@ -1,18 +1,13 @@
 "use client"
 
-import {TabsProvider, useTabs} from "@mui/base/useTabs"
-import {useTab} from "@mui/base/useTab"
-import {useTabPanel} from "@mui/base/useTabPanel"
-import {TabsListProvider, useTabsList} from "@mui/base/useTabsList"
-import {HTMLAttributes, SyntheticEvent, useRef} from "react"
+import {Tabs as BaseTabs, type TabsTab} from "@base-ui/react/tabs"
+import {HTMLAttributes, ReactNode, Suspense, useState} from "react"
 import {clsx} from "clsx"
 import {twMerge} from "tailwind-merge"
-import {UseTabsParameters} from "@mui/base/useTabs/useTabs.types"
-import {useRouter, useSearchParams} from "next/navigation"
+import {useSearchParams} from "next/navigation"
 import {useScreen} from "usehooks-ts"
 
-// View the API for all the tab components here: https://mui.com/base-ui/react-tabs/hooks-api/.
-type TabsProps = HTMLAttributes<HTMLDivElement> & {
+type TabsProps = Omit<HTMLAttributes<HTMLDivElement>, "defaultValue"> & {
   /**
    * The query parameter in the URL for sharing or reloading.
    */
@@ -20,75 +15,96 @@ type TabsProps = HTMLAttributes<HTMLDivElement> & {
   /**
    * Default tab for initial rendering.
    */
-  defaultTab?: UseTabsParameters["defaultValue"]
+  defaultTab?: number
   /**
    * Which direction the tabs are displayed.
    */
-  orientation?: UseTabsParameters["orientation"]
+  orientation?: "horizontal" | "vertical"
 }
 
-export const Tabs = ({paramId = "tab", orientation, defaultTab, children, ...props}: TabsProps) => {
+/**
+ * The selected tab comes from the URL, which isn't known while the page is prerendered. The fallback
+ * renders the default tab so the content is still in the static HTML, then the URL's tab takes over.
+ */
+export const Tabs = (props: TabsProps) => (
+  <Suspense fallback={<TabsBase {...props} />}>
+    <TabsFromUrl {...props} />
+  </Suspense>
+)
+
+const TabsFromUrl = ({paramId = "tab", ...props}: TabsProps) => {
+  const paramValue = useSearchParams().get(paramId)
+  return <TabsBase paramId={paramId} paramValue={paramValue} {...props} />
+}
+
+const TabsBase = ({
+  paramId = "tab",
+  paramValue,
+  orientation,
+  defaultTab,
+  children,
+  ...props
+}: TabsProps & {paramValue?: string | null}) => {
   const screen = useScreen({initializeWithValue: false})
   const isVertical = (screen && screen.width < 768) || orientation === "vertical"
 
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const onChange = (_e: SyntheticEvent | null, value: number | string | null) => {
-    const params = new URLSearchParams(searchParams)
+  // Controlled, and only seeded from the URL. Writing the selection back to the URL re-renders this with a
+  // new param, and Base UI rejects an uncontrolled `defaultValue` that changes after mount.
+  const [activeTab, setActiveTab] = useState<TabsTab.Value>(
+    () => (paramValue && parseInt(paramValue)) || defaultTab || 0
+  )
+
+  const onValueChange = (value: TabsTab.Value) => {
+    setActiveTab(value)
+    const params = new URLSearchParams(window.location.search)
     params.delete(paramId)
     if (value) params.set(paramId, `${value}`)
-    router.replace(`?${params.toString()}${window.location.hash || ""}`, {scroll: false})
+    // The native History API keeps useSearchParams in sync without fetching the page from the server again.
+    window.history.replaceState(null, "", `?${params.toString()}${window.location.hash || ""}`)
   }
-  const paramValue = searchParams.get(paramId)
-  const initialTab = (paramValue && parseInt(paramValue)) || defaultTab
-
-  const {contextValue} = useTabs({
-    orientation: isVertical ? "vertical" : "horizontal",
-    defaultValue: initialTab || 0,
-    onChange,
-    selectionFollowsFocus: true,
-  })
 
   return (
-    <TabsProvider value={contextValue}>
-      <div {...props}>{children}</div>
-    </TabsProvider>
-  )
-}
-
-export const TabsList = ({children, ...props}: HTMLAttributes<HTMLDivElement>) => {
-  const screen = useScreen({initializeWithValue: false})
-  const rootRef = useRef<HTMLDivElement>(null)
-  const {contextValue, orientation, getRootProps} = useTabsList({rootRef})
-  const isVertical = (screen && screen.width < 768) || orientation === "vertical"
-
-  return (
-    <TabsListProvider value={contextValue}>
-      <div {...props} {...getRootProps()} className={twMerge("flex", clsx({"flex-col": isVertical}), props.className)}>
-        {children}
-      </div>
-    </TabsListProvider>
-  )
-}
-
-export const Tab = ({children, ...props}: HTMLAttributes<HTMLButtonElement>) => {
-  const rootRef = useRef<HTMLButtonElement>(null)
-  const {getRootProps} = useTab({rootRef})
-
-  return (
-    <button {...props} {...getRootProps()}>
+    <BaseTabs.Root
+      {...props}
+      value={activeTab}
+      orientation={isVertical ? "vertical" : "horizontal"}
+      onValueChange={onValueChange}
+    >
       {children}
-    </button>
+    </BaseTabs.Root>
   )
 }
 
-export const TabPanel = ({children, ...props}: HTMLAttributes<HTMLElement>) => {
-  const rootRef = useRef<HTMLDivElement>(null)
-  const {getRootProps} = useTabPanel({rootRef})
-
+export const TabsList = ({children, className, ...props}: HTMLAttributes<HTMLDivElement>) => {
   return (
-    <section {...props} {...getRootProps()} role="tabpanel">
+    <BaseTabs.List
+      {...props}
+      // Moving focus with the arrow keys also selects the tab.
+      activateOnFocus
+      className={({orientation}) => twMerge("flex", clsx({"flex-col": orientation === "vertical"}), className)}
+    >
       {children}
-    </section>
+    </BaseTabs.List>
+  )
+}
+
+export const Tab = ({
+  value,
+  children,
+  ...props
+}: Omit<HTMLAttributes<HTMLButtonElement>, "defaultValue"> & {value: number; children?: ReactNode}) => {
+  return (
+    <BaseTabs.Tab {...props} value={value}>
+      {children}
+    </BaseTabs.Tab>
+  )
+}
+
+export const TabPanel = ({value, children, ...props}: HTMLAttributes<HTMLElement> & {value: number}) => {
+  return (
+    // Inactive panels stay mounted (hidden), so every panel's content is in the page HTML.
+    <BaseTabs.Panel {...props} value={value} keepMounted render={<section />}>
+      {children}
+    </BaseTabs.Panel>
   )
 }

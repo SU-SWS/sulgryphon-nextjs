@@ -6,7 +6,7 @@ import LibCal from "@/components/node/stanford-person/libcal"
 import {LibGuideSection} from "@/components/node/stanford-person/libguide"
 import fetchLibGuides from "@/lib/libguides"
 import EmailLink from "@/components/patterns/elements/email-link"
-import {NodeStanfordPerson} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPerson} from "@/lib/gql/__generated__/graphql"
 import Paragraph from "@/components/paragraph"
 import NumberLink from "@/components/patterns/elements/number-link"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
@@ -39,7 +39,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
         backupDescription={node.suPersonFullTitle || getCleanDescription(node.body?.processed)}
       />
       <InternalHeaderBanner>
-        <div className="mx-auto mb-40 mt-48 flex w-full max-w-[calc(100vw-10rem)] flex-col items-center gap-32 p-0 md:mb-10 md:max-w-[calc(100vw-20rem)] md:flex-row 3xl:max-w-[calc(1500px-20rem)]">
+        <div className="mx-auto mt-48 mb-40 flex w-full max-w-[calc(100vw-10rem)] flex-col items-center gap-32 p-0 md:mb-10 md:max-w-[calc(100vw-20rem)] md:flex-row 3xl:max-w-[calc(1500px-20rem)]">
           <div className="order-2 flex flex-col">
             <h1 id={node.uuid} className="mb-0">
               {node.title}
@@ -70,14 +70,14 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
       </InternalHeaderBanner>
       <div className="centered grid gap-2xl md:grid-cols-6">
         <div className="flex flex-col gap-40 md:col-span-4">
-          {node.body && <div className="text-20 last:children:mb-0">{formatHtml(node.body.processed)}</div>}
+          {node.body && <div className="text-20 *:last:mb-0">{formatHtml(node.body.processed)}</div>}
 
           {node.suPersonProfileLink?.url && (
             <DrupalLinkButton href={node.suPersonProfileLink.url}>{node.suPersonProfileLink.title}</DrupalLinkButton>
           )}
 
           {node.suPersonComponents && (
-            <div className="*:mb-40 last:*:mb-0">
+            <div className="*:mb-40 *:last:mb-0">
               {node.suPersonComponents.map(paragraph => (
                 <Paragraph key={paragraph.uuid} paragraph={paragraph} />
               ))}
@@ -138,7 +138,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
             node.suPersonEmail) && (
             <div>
               <h2 className="text-24">Contact</h2>
-              <ul className="list-none p-0 children:mb-[0.4rem] last:children:mb-0">
+              <ul className="list-none p-0 *:mb-[0.4rem] *:last:mb-0">
                 {node.suPersonTelephone && (
                   <li className="flex flex-row items-center">
                     <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
@@ -160,7 +160,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                 {node.suPersonEmail && (
                   <li className="flex flex-row items-center">
                     <EnvelopeIcon title="Email" width={24} className="mr-4 text-digital-blue" />
-                    <EmailLink className="break-words" email={node.suPersonEmail} />
+                    <EmailLink className="wrap-anywhere" email={node.suPersonEmail} />
                   </li>
                 )}
                 {node.suPersonMailCode && <li>Mail Code: {node.suPersonMailCode}</li>}
@@ -169,11 +169,11 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           )}
 
           {(node.suPersonLocationName || node.suPersonLocationAddress || node.suPersonMapUrl) && (
-            <div className="children:mb-[0.4rem] last:children:mb-0">
+            <div className="*:mb-[0.4rem] *:last:mb-0">
               {node.suPersonLocationName && <div className="text-16 md:text-18">{node.suPersonLocationName}</div>}
 
               {node.suPersonLocationAddress && (
-                <div className="children:mb-0">{formatHtml(node.suPersonLocationAddress.processed)}</div>
+                <div className="*:mb-0">{formatHtml(node.suPersonLocationAddress.processed)}</div>
               )}
 
               {node.suPersonMapUrl?.url && (
@@ -190,12 +190,12 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {node.suPersonLinks && (
             <div>
               <h2 className="text-24">Links</h2>
-              <ul className="list-none p-0 children:mb-[0.4rem] last:children:mb-0">
+              <ul className="list-none p-0 *:mb-[0.4rem] *:last:mb-0">
                 {node.suPersonLinks.map((link, index) => {
                   if (!link.url) return
                   return (
                     <li key={`person-link-${index}`} className="m-0">
-                      <Link href={link.url} className={"leading text-blue-600 no-underline hocus:text-black"}>
+                      <Link href={link.url} className={"leading-normal text-blue-600 no-underline hocus:text-black"}>
                         {link.title}
                       </Link>
                     </li>
@@ -207,7 +207,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
           {node.sulPersonLibcalId && <LibCal libcalId={node.sulPersonLibcalId} srText={node.title} />}
         </div>
       </div>
-      <footer className="rs-mb-0 rs-mt-4 centered">Last updated {lastUpdated}</footer>
+      <footer className="rs-mt-4 centered rs-mb-0">Last updated {lastUpdated}</footer>
     </article>
   )
 }
