@@ -2,7 +2,6 @@ import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {EnvelopeIcon, MapPinIcon, PhoneIcon} from "@heroicons/react/24/outline"
 import NodeReferenceCardHours from "@/components/paragraph/sul-contact-card/node-reference-card-hours"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulLibrary, ParagraphSulContactCard} from "@/lib/gql/__generated__/graphql"
@@ -59,9 +58,7 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
 
             <div className="leading-tight text-white md:rs-pr-2">
               {contactBranch?.suLibraryHours && (
-                <CachedClientFetch>
-                  <NodeReferenceCardHours branchId={contactBranch?.suLibraryHours} branchName={contactBranch?.title} />
-                </CachedClientFetch>
+                <NodeReferenceCardHours branchId={contactBranch?.suLibraryHours} branchName={contactBranch?.title} />
               )}
 
               {contactBranch?.suLibraryPhone && (
