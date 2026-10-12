@@ -121,19 +121,19 @@ const SulPeopleTableView = ({items}: Props) => {
           </caption>
           <Thead className="sr-only lg:not-sr-only lg:border-b lg:border-black-40">
             <Tr className="block sm:hidden lg:table-row!">
-              <Th className="block min-w-[100px] pl-[0px] lg:table-cell" scope="col">
+              <Th className="block min-w-[100px] pl-0 lg:table-cell" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
-              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
+              <Th className="block pl-0 text-24 lg:table-cell" scope="col">
                 Name/Title
               </Th>
-              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
+              <Th className="block pl-0 text-24 lg:table-cell" scope="col">
                 Expertise
               </Th>
-              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
+              <Th className="block pl-0 text-24 lg:table-cell" scope="col">
                 Contact
               </Th>
-              <Th className="block pl-[0px] text-24 lg:table-cell" scope="col">
+              <Th className="block pl-0 text-24 lg:table-cell" scope="col">
                 Schedule
               </Th>
             </Tr>
@@ -150,7 +150,7 @@ const SulPeopleTableView = ({items}: Props) => {
                     <Link
                       prefetch={false}
                       href={item.path || "#"}
-                      className="relative mb-16 block aspect-[1/1] w-[200px] overflow-hidden rounded-full md:mb-32 lg:mb-0 lg:w-[68px]"
+                      className="relative mb-16 block aspect-square w-[200px] overflow-hidden rounded-full md:mb-32 lg:mb-0 lg:w-[68px]"
                       aria-hidden="true"
                       tabIndex={-1}
                     >

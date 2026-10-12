@@ -80,19 +80,19 @@ const BranchLocationFilteringTable = ({items}: Props) => {
       <Table className="responsive-table responsive-table-branches sm:ml-0">
         <Thead className="sr-only xl:not-sr-only">
           <Tr className="block sm:hidden xl:table-row!">
-            <Th className="block min-w-[100px] pl-[0px] type-1 md:table-cell xl:pr-16" scope="col">
+            <Th className="block min-w-[100px] pl-0 type-1 md:table-cell xl:pr-16" scope="col">
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="block min-w-[100px] pl-[0px] text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
+            <Th className="block min-w-[100px] pl-0 text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
               Library
             </Th>
-            <Th className="block pl-[0px] text-center type-1 whitespace-nowrap md:table-cell xl:rs-pr-5 xl:pr-20">
+            <Th className="block pl-0 text-center type-1 whitespace-nowrap md:table-cell xl:rs-pr-5 xl:pr-20">
               Open/Closed
             </Th>
-            <Th className="block pl-[0px] text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
+            <Th className="block pl-0 text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
               Contact
             </Th>
-            <Th className="block pl-[0px] text-center type-1 whitespace-nowrap md:table-cell md:text-left">Address</Th>
+            <Th className="block pl-0 text-center type-1 whitespace-nowrap md:table-cell md:text-left">Address</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -117,7 +117,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
           <Link
             prefetch={false}
             href={href}
-            className="relative my-16 block aspect-[3/2] w-[300px] max-w-[338px] overflow-hidden md:w-[360px] xl:max-w-[125px]"
+            className="relative my-16 block aspect-3/2 w-[300px] max-w-[338px] overflow-hidden md:w-[360px] xl:max-w-[125px]"
             aria-hidden="true"
             tabIndex={-1}
           >

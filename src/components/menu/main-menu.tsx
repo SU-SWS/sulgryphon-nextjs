@@ -224,7 +224,7 @@ const MenuItem = ({
   const active = activeTrail.includes(id)
 
   // Helper for tailwind JIT to add the classes.
-  const titleSpacing: string[] = ["ml-[0px]", "ml-[30px]", "ml-[60px]", "ml-[90px]", "ml-[120px]"]
+  const titleSpacing: string[] = ["ml-0", "ml-[30px]", "ml-[60px]", "ml-[90px]", "ml-[120px]"]
   const belowItems = children && children?.length > 0 ? children : []
 
   useEffect(() => closeSubmenu(), [browserUrl, closeSubmenu])

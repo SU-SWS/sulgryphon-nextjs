@@ -77,7 +77,7 @@ const Card = ({
     >
       {image && (
         <div className="relative h-fit w-full">
-          <div className="relative aspect-[16/9]">{image}</div>
+          <div className="relative aspect-video">{image}</div>
           {caption && (
             <div className="absolute bottom-0 z-10 w-full bg-black/80 p-10">
               <div className="mx-auto w-fit text-16 leading-normal font-medium text-white">{caption}</div>
@@ -86,7 +86,7 @@ const Card = ({
         </div>
       )}
 
-      {video && <div className="relative aspect-[16/9] overflow-hidden">{video}</div>}
+      {video && <div className="relative aspect-video overflow-hidden">{video}</div>}
 
       <div className="card-body items-start px-24 py-30">
         {superHeader && <span className="mb-0 type-0 leading-display font-bold">{superHeader}</span>}

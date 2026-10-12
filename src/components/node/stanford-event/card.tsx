@@ -27,7 +27,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
     <article {...props} className="@container mx-auto">
       <div className="relative flex flex-col gap-xs">
         {imageUrl && (
-          <div className={"relative aspect-[4/3] overflow-hidden border"} aria-hidden="true">
+          <div className={"relative aspect-4/3 overflow-hidden border"} aria-hidden="true">
             <Image
               className="object-cover object-center"
               src={buildUrl(imageUrl).toString()}

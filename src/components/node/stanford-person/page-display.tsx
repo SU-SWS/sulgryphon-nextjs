@@ -55,7 +55,7 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
 
           {node.suPersonPhoto && (
             <div className="order-1">
-              <div className="relative aspect-[1/1] w-220">
+              <div className="relative aspect-square w-220">
                 <Image
                   src={buildUrl(node.suPersonPhoto?.mediaImage.url).toString()}
                   alt=""

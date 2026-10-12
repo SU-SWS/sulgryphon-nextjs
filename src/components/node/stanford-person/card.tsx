@@ -28,7 +28,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
         {imageUrl && (
           <div className="relative flex justify-center pb-70 @lg:pb-80">
             <div className="absolute top-[-11rem]">
-              <div className="relative aspect-[1/1] w-[130px] overflow-hidden rounded-full @lg:w-[150px]">
+              <div className="relative aspect-square w-[130px] overflow-hidden rounded-full @lg:w-[150px]">
                 <Image
                   className="rounded-full object-cover"
                   src={buildUrl(imageUrl).toString()}
@@ -69,7 +69,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
       <div className="mt-0 hidden w-full flex-col border-x border-t border-b-5 border-solid border-black-10 border-b-digital-red bg-white rs-pt-2 rs-px-2 rs-pb-3 leading-display text-black shadow-md @[510px]:flex @3xl:flex-row">
         {imageUrl && (
           <div className="mx-auto mb-50 flex items-center @3xl:mr-50 @3xl:mb-0 @3xl:ml-0">
-            <div className="relative aspect-[1/1] w-[155px]">
+            <div className="relative aspect-square w-[155px]">
               <Image
                 src={buildUrl(imageUrl).toString()}
                 alt=""

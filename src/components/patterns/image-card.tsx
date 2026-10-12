@@ -35,7 +35,7 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
       )}
     >
       {imageUrl && (
-        <div className="relative aspect-[16/9] w-full">
+        <div className="relative aspect-video w-full">
           <Image
             className="object-cover object-center"
             src={imageUrl}
@@ -56,7 +56,7 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
 export const ImageCardSkeleton = () => {
   return (
     <div className="centered w-full border border-black-10 pb-20 shadow-lg xl:max-w-[980px]">
-      <div className="aspect-[16/9] w-full bg-black-10"></div>
+      <div className="aspect-video w-full bg-black-10"></div>
     </div>
   )
 }

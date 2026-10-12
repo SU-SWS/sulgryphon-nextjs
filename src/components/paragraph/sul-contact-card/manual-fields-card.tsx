@@ -26,7 +26,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
     <div className="@container">
       <div className="flex w-full flex-col rounded-[0.3rem] border-0 leading-display shadow-md @6xl:flex-row">
         {imageUrl && (
-          <div className="relative aspect-[16/9] shrink-0 overflow-hidden @6xl:w-1/2">
+          <div className="relative aspect-video shrink-0 overflow-hidden @6xl:w-1/2">
             <Image
               className="static object-cover object-center"
               src={buildUrl(imageUrl).toString()}

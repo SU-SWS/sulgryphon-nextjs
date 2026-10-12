@@ -162,22 +162,22 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
           </caption>
           <Thead className="sr-only lg:not-sr-only">
             <Tr className="block sm:hidden lg:table-row!">
-              <Th className="block min-w-[100px] pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
+              <Th className="block min-w-[100px] pl-0 type-1 md:table-cell lg:pr-32" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
-              <Th className="block pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
+              <Th className="block pl-0 type-1 md:table-cell lg:pr-32" scope="col">
                 Place
               </Th>
-              <Th className="block pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
+              <Th className="block pl-0 type-1 md:table-cell lg:pr-32" scope="col">
                 Library
               </Th>
               <Th
-                className="block pl-[0px] text-center type-1 md:table-cell md:text-left lg:pr-32 lg:text-center"
+                className="block pl-0 text-center type-1 md:table-cell md:text-left lg:pr-32 lg:text-center"
                 scope="col"
               >
                 Open/Closed
               </Th>
-              <Th className="block pl-[0px] type-1 md:table-cell lg:pr-32" scope="col">
+              <Th className="block pl-0 type-1 md:table-cell lg:pr-32" scope="col">
                 Features
               </Th>
             </Tr>
@@ -191,7 +191,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
               >
                 <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">
                   {item.branchImageUrl && (
-                    <div className="relative my-16 block aspect-[3/2] w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
+                    <div className="relative my-16 block aspect-3/2 w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
                       <Image
                         className="object-contain"
                         src={item.branchImageUrl}
@@ -209,7 +209,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   className="block w-auto pl-0 md:text-left lg:table-cell lg:w-1/5 lg:border-b lg:border-black-40 lg:pr-32"
                 >
                   <div className="pt-0 text-16 leading-display font-normal">
-                    <span className="mb-[0px] font-sans text-20 font-semibold">
+                    <span className="mb-0 font-sans text-20 font-semibold">
                       {[item.donorName, item.studyType].filter(item => !!item).join(" ")}
                     </span>
                     {item.roomNumber && <div className="relative type-0">Room-{item.roomNumber}</div>}
