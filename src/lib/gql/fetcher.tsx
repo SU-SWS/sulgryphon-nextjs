@@ -43,6 +43,28 @@ export const graphqlClient = (requestConfig: Omit<RequestInit, "method"> = {}, i
 
 type DrupalGraphqlError = GraphQLError & {debugMessage: string}
 
+/**
+ * Whether Drupal actually answered the query.
+ *
+ * graphql-request throws ClientError in two unrelated situations: when Drupal
+ * responds 2xx with a GraphQL `errors` array (the query ran, so the answer is
+ * authoritative), and when the HTTP request itself fails — a 403 from the WAF,
+ * a 5xx from origin. Transport failures (DNS, timeout, socket) are not
+ * ClientError at all. Only the first case tells us anything about content.
+ *
+ * Callers must not turn a failed question into cached data. An empty result
+ * returned here is indistinguishable from "Drupal says there is nothing", and
+ * both nextCache and the prerendered page will store it as fact.
+ */
+export const isDrupalResponse = (e: unknown): e is ClientError =>
+  e instanceof ClientError && e.response.status >= 200 && e.response.status < 300
+
+export const describeGraphqlError = (e: ClientError): string => {
+  // @ts-expect-error Client error type doesn't define the debugMessage, but it's there.
+  const messages = e.response.errors?.map((error: DrupalGraphqlError) => error.debugMessage || error.message)
+  return [...new Set(messages)].join(" ")
+}
+
 export const getEntityFromPath = async <T extends NodeUnion>(
   path: string,
   previewMode?: boolean,
@@ -64,13 +86,15 @@ export const getEntityFromPath = async <T extends NodeUnion>(
           teaser: !!teaser,
         })
       } catch (e) {
-        if (e instanceof ClientError) {
-          // @ts-expect-error Client error type doesn't define the debugMessage, but it's there.
-          const messages = e.response.errors?.map((error: DrupalGraphqlError) => error.debugMessage || error.message)
-          console.warn([...new Set(messages)].join(" "))
-        } else {
-          console.warn(e instanceof Error ? e.message : "An error occurred")
-        }
+        // Rethrow anything that is not an answer from Drupal. Returning {} here
+        // gets memoized by nextCache and read by callers as "this path has no
+        // entity", which renders notFound(). On a route with `revalidate = false`
+        // that 404 is then prerendered and served from the edge indefinitely —
+        // a transient 403 becomes a permanent outage. Throwing instead fails the
+        // revalidation, and Next keeps serving the last good version.
+        if (!isDrupalResponse(e)) throw e
+
+        console.warn(describeGraphqlError(e))
         return {}
       }
 
@@ -96,7 +120,12 @@ export const getConfigPage = cache(
         try {
           query = await graphqlClient({next: {tags: ["config-pages"]}}).ConfigPages()
         } catch (e) {
-          console.error("Unable to fetch config pages", e instanceof Error ? e.message : undefined)
+          // See getEntityFromPath. Caching `undefined` on a failed request renders
+          // a 200 page with no menus, footer or global messages — a degradation
+          // that returns a success status, so nothing downstream detects it.
+          if (!isDrupalResponse(e)) throw e
+
+          console.error("Unable to fetch config pages", describeGraphqlError(e))
           return
         }
 

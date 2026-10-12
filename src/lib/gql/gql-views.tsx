@@ -12,7 +12,7 @@ import {
   StanfordBasicPagesQueryVariables,
   StanfordBasicPagesSortKeys,
 } from "@/lib/gql/__generated__/drupal.d"
-import {graphqlClient} from "@/lib/gql/fetcher"
+import {describeGraphqlError, graphqlClient, isDrupalResponse} from "@/lib/gql/fetcher"
 
 export const VIEW_PAGE_SIZE = 21
 
@@ -251,7 +251,13 @@ export const getViewPagedItems = async (
         break
     }
   } catch (e) {
-    if (e instanceof Error) console.warn(e.message)
+    // See getEntityFromPath in fetcher.tsx. An empty result set has to mean
+    // Drupal said the view is empty, not that we failed to ask it — otherwise a
+    // 403 renders a 200 page with silently missing content, which gets stored in
+    // the prerendered output and reported by nobody.
+    if (!isDrupalResponse(e)) throw e
+
+    console.warn(describeGraphqlError(e))
     return {items: [], totalItems: 0}
   }
 
