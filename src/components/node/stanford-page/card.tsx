@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "@/components/patterns/elements/drupal-link"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordPage} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordPage} from "@/lib/gql/__generated__/graphql"
 
 interface Props {
   node: NodeStanfordPage
@@ -18,7 +18,7 @@ const StanfordPageCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article {...props}>
       {imageUrl && (
-        <div className="relative mb-30 aspect-[16/9] overflow-hidden" aria-hidden="true">
+        <div className="relative mb-30 aspect-video overflow-hidden" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}

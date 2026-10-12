@@ -1,8 +1,8 @@
 "use client"
 
 import {liteClient} from "algoliasearch/lite"
-import {useInfiniteHits, useInstantSearch, useSearchBox} from "react-instantsearch"
-import {InstantSearchNext} from "react-instantsearch-nextjs"
+import {InstantSearch, useInfiniteHits, useInstantSearch, useSearchBox} from "react-instantsearch"
+import {history} from "instantsearch.js/es/lib/routers"
 import {usePathname} from "next/navigation"
 import {useEffect, useMemo, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
@@ -19,15 +19,17 @@ const AlgoliaSearch = ({appId, indexName, apiKey}: Props) => {
   // Memoised so InstantSearch isn't handed a brand new client on every render.
   const searchClient = useMemo(() => liteClient(appId, apiKey), [appId, apiKey])
 
+  // Searching only in the browser (not during server rendering) keeps /search a static page served from the
+  // CDN. The page is noindex, so server-rendered results added nothing but a function call per visit.
   return (
-    <InstantSearchNext
+    <InstantSearch
       key={pathname}
       indexName={indexName}
       searchClient={searchClient}
       future={{preserveSharedStateOnUnmount: true}}
       insights
       routing={{
-        router: {cleanUrlOnDispose: false},
+        router: history<Record<string, string>>({cleanUrlOnDispose: false}),
         stateMapping: {
           stateToRoute(uiState): Record<string, string> {
             const query = uiState[indexName]?.query
@@ -46,7 +48,7 @@ const AlgoliaSearch = ({appId, indexName, apiKey}: Props) => {
         <SearchBox />
         <Results />
       </div>
-    </InstantSearchNext>
+    </InstantSearch>
   )
 }
 
@@ -81,7 +83,7 @@ const SearchBox = () => {
           <input name="search" />
         </label>
       </div>
-      <div className="flex-grow">
+      <div className="grow">
         <label className="mb-8 text-28 font-semibold text-black" htmlFor="keyword-search">
           Search this site
         </label>
@@ -158,7 +160,7 @@ const Results = () => {
         {announcement}
       </span>
 
-      {hasQuery && <h2 className="rs-pt-2 type-3 m-0 pb-36">Results</h2>}
+      {hasQuery && <h2 className="m-0 rs-pt-2 pb-36 type-3">Results</h2>}
 
       {hasQuery && unavailable && <p>Search is temporarily unavailable. Please try again in a few minutes.</p>}
 
@@ -172,7 +174,7 @@ const Results = () => {
                 key={hit.objectID}
                 ref={i === focusIndex ? focusItemRef : undefined}
                 tabIndex={i === focusIndex ? -1 : undefined}
-                className="border-b border-black-20 pb-10 pt-10 first:pt-0 last:pb-0 last-of-type:border-0"
+                className="border-b border-black-20 pt-10 pb-10 first:pt-0 last:pb-0 last-of-type:border-0"
               >
                 <AlgoliaHit hit={hit} onSend={() => sendEvent("click", hit, "Result Clicked")} />
               </li>
@@ -181,7 +183,7 @@ const Results = () => {
           {!isLastPage && (
             <button
               type="button"
-              className="cta-button group rs-mt-neg1 mx-auto block w-fit rounded-full bg-digital-red px-26 pb-11 pt-10 text-16 font-semibold leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true disabled:opacity-50 hocus:text-white hocus:underline md:text-18"
+              className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true disabled:opacity-50 md:text-18 hocus:text-white hocus:underline"
               disabled={pending}
               aria-disabled={pending}
               onClick={() => {

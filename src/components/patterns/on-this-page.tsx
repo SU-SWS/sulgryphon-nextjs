@@ -15,7 +15,7 @@ const OnThisPage = ({children}: OnThisPageProps) => {
           {children}
         </SulAccordion>
       </div>
-      <div className="sticky top-0 hidden h-fit w-300 bg-fog-light px-24 pb-40 pt-16 lg:block">
+      <div className="sticky top-0 hidden h-fit w-300 bg-fog-light px-24 pt-16 pb-40 lg:block">
         <HeadingList />
         {children}
       </div>

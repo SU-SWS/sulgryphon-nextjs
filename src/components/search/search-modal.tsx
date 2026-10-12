@@ -19,7 +19,7 @@ const SearchModal = () => {
     <>
       <Link
         href="/all"
-        className="group block aspect-1 rounded-full bg-digital-red p-5 hocus:bg-digital-red-dark"
+        className="group block aspect-square rounded-full bg-digital-red p-5 hocus:bg-digital-red-dark"
         onClick={toggleModal}
         aria-haspopup="dialog"
         prefetch={false}
