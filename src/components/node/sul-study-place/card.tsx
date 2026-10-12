@@ -19,7 +19,7 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
     <>
       <div className="@container flex w-full flex-col rounded-[0.3rem] border-0 leading-display shadow-md">
         {imageUrl && (
-          <div className={"relative aspect-[16/9] overflow-hidden"}>
+          <div className={"relative aspect-video overflow-hidden"}>
             <Image
               className="static object-cover object-center"
               src={buildUrl(imageUrl).toString()}

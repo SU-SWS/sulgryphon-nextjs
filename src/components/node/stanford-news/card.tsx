@@ -19,7 +19,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article {...props} className="relative">
       {imageUrl && (
-        <div className="relative mb-10 aspect-[16/9] overflow-hidden" aria-hidden="true">
+        <div className="relative mb-10 aspect-video overflow-hidden" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}

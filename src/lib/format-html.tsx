@@ -221,7 +221,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
       let {"data-src": iframeSrc} = iframe && iframe.attribs
       iframeSrc = decodeURIComponent(iframeSrc).replace(/^.*url=(.*)?&.*$/, "$1")
       return (
-        <div className="relative clear-both aspect-[16/9] overflow-hidden">
+        <div className="relative clear-both aspect-video overflow-hidden">
           <Oembed className="h-full w-full" url={iframeSrc} />
         </div>
       )

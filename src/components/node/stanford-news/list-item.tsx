@@ -30,7 +30,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
           {node.suNewsDek && <div className="rs-mb-1 text-22 leading-normal">{node.suNewsDek}</div>}
         </div>
         {imageUrl && (
-          <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
+          <div className="relative aspect-video overflow-hidden" aria-hidden="true">
             <Image
               className="object-cover object-center"
               src={buildUrl(imageUrl).toString()}

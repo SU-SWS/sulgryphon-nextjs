@@ -10,7 +10,7 @@ const StanfordPersonListItem = ({node, ...props}: {node: NodeStanfordPerson}) =>
   return (
     <article className="@container flex w-full flex-col gap-lg bg-white leading-display text-black" {...props}>
       {imageUrl && (
-        <div className="relative mx-auto aspect-[1/1] w-[130px] overflow-hidden rounded-full @lg:w-[215px]">
+        <div className="relative mx-auto aspect-square w-[130px] overflow-hidden rounded-full @lg:w-[215px]">
           <Image
             src={buildUrl(imageUrl).toString()}
             alt=""

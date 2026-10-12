@@ -67,7 +67,7 @@ const HorizontalCard = ({
         <div className="grid items-center gap-2xl @9xl:grid-cols-2 @10xl:gap-30">
           {(image || video) && (
             <div className="relative h-fit w-full">
-              <div className="relative aspect-[4/3] w-full overflow-hidden @8xl:aspect-[5/3]">
+              <div className="relative aspect-4/3 w-full overflow-hidden @8xl:aspect-5/3">
                 {image}
                 {video}
               </div>

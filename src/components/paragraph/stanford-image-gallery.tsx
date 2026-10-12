@@ -27,7 +27,7 @@ const StanfordImageGallery = ({paragraph, ...props}: StanfordImageGalleryProps) 
             if (!image.suGalleryImage?.url) return
             return (
               <figure key={image.uuid} className="table h-fit">
-                <div className="relative aspect-[16/9] w-full">
+                <div className="relative aspect-video w-full">
                   <Link
                     href={buildUrl(image.suGalleryImage?.url).toString()}
                     className=""

@@ -151,7 +151,7 @@
 
 /* Styles for react-tiny-oembed containers */
 div .__embed_column,
-.aspect-\[16\/9\] .__embed_column {
+.aspect-video .__embed_column {
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -159,7 +159,7 @@ div .__embed_column,
   margin-bottom: 1.6em;
 }
 
-.aspect-\[16\/9\] .__embed_column iframe {
+.aspect-video .__embed_column iframe {
   width: 100%;
   height: 100%;
 }

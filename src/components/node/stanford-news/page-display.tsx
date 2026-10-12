@@ -122,7 +122,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
       {imageUrl && (
         <figure className="mx-auto centered mb-40 table w-full">
-          <span className="relative mx-auto block aspect-[16/9]">
+          <span className="relative mx-auto block aspect-video">
             <Image className="object-cover" src={buildUrl(imageUrl).toString()} alt={imageAlt || ""} fill />
           </span>
           {bannerCaption && (
@@ -135,7 +135,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
 
       {node.suNewsBanner?.__typename === "MediaVideo" && (
         <figure className="mb-100 table w-full">
-          <span className="relative mx-auto centered block aspect-[16/9] w-10/12">
+          <span className="relative mx-auto centered block aspect-video w-10/12">
             <Oembed url={node.suNewsBanner.mediaOembedVideo} />
           </span>
           {node.suNewsBannerMediaCaption && (

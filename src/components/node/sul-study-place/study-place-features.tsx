@@ -45,7 +45,7 @@ const StudyPlaceFeatures = ({
     <div className={"flex w-full flex-row rounded-[0.3rem] border-0 bg-white leading-display shadow-md"}>
       <div className="hidden w-1/2 rs-py-3 rs-px-3 md:block">
         {imageUrl && (
-          <div className={"relative aspect-[16/9] overflow-hidden"}>
+          <div className={"relative aspect-video overflow-hidden"}>
             <Image
               className="static object-cover object-center"
               src={buildUrl(imageUrl).toString()}

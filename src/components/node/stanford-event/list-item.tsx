@@ -25,7 +25,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
   return (
     <article {...props} className="@container mx-auto flex flex-col gap-16 sm:flex-row">
       {imageUrl && (
-        <div className="relative aspect-[4/3] h-fit w-full shrink-0 overflow-hidden sm:max-w-180" aria-hidden="true">
+        <div className="relative aspect-4/3 h-fit w-full shrink-0 overflow-hidden sm:max-w-180" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}

@@ -26,7 +26,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
   return (
     <figure className="relative centered" {...props}>
       {imageUrl && (
-        <div className="relative mb-10 aspect-[16/9] overflow-hidden">
+        <div className="relative mb-10 aspect-video overflow-hidden">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
@@ -38,7 +38,7 @@ const StanfordMediaCaption = ({caption, image, videoUrl, link, ...props}: Props)
       )}
 
       {videoUrl && (
-        <div className="relative aspect-[16/9] overflow-hidden">
+        <div className="relative aspect-video overflow-hidden">
           <Oembed url={videoUrl} className="h-full" />
         </div>
       )}
