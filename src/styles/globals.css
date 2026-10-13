@@ -57,3 +57,15 @@ div .__embed_column,
     }
   }
 }
+
+/* Styles for the UL marker in wysiwyg content */
+.wysiwyg ul {
+  list-style-type: disc;
+  ul {
+    list-style-type: circle;
+    ul {
+      list-style-type: square;
+    }
+  }
+}
+
