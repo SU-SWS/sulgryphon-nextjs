@@ -1375,6 +1375,7 @@ export const ConfigPagesDocument = gql`
       suSiteAlgoliaId
       suSiteAlgoliaIndex
       suSiteAlgoliaSearch
+      suSiteAlgoliaUi
       suSiteDropdowns
       suSiteMenuLevels
       suSiteName
