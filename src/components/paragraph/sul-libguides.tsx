@@ -2,7 +2,7 @@ import formatHtml from "@/lib/format-html"
 import {HTMLAttributes} from "react"
 import Libguide from "@/components/node/stanford-person/libguide"
 import fetchLibGuides from "@/lib/libguides"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe} from "@/lib/gql/__generated__/graphql"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>
@@ -14,7 +14,7 @@ const SulLibguides = async ({headline, description, libguideId, ...props}: Props
   const guides = await fetchLibGuides({subjectId: libguideId})
 
   return (
-    <div className="centered relative lg:max-w-[980px]" {...props}>
+    <div className="relative centered lg:max-w-[980px]" {...props}>
       {headline && <h2>{headline}</h2>}
       {description && <div>{formatHtml(description)}</div>}
 

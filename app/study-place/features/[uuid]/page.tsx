@@ -1,8 +1,8 @@
 import StudyPlaceFeatures from "@/components/node/sul-study-place/study-place-features"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import {notFound} from "next/navigation"
-import {graphqlClient} from "@/lib/gql/fetcher"
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {getNodeByUuid} from "@/lib/gql/gql-queries"
+import {NodeUnion} from "@/lib/gql/__generated__/graphql"
 
 export const metadata = {
   title: "Study Place Features",
@@ -11,16 +11,16 @@ export const metadata = {
   },
 }
 
-export const revalidate = false
-export const dynamic = "force-static"
+type Props = {params: Promise<{uuid: string}>}
 
-const Page = async (props: {params: Promise<{uuid: string}>}) => {
+// Params are awaited outside Suspense on purpose, as in [...slug]: each study place renders on its first
+// request and is then cached, instead of rendering on every visit.
+const Page = async (props: Props) => {
   const params = await props.params
 
   const {uuid} = params
 
-  const query = await graphqlClient().Node({uuid})
-  const node = query.node as NodeUnion
+  const node = await getNodeByUuid<NodeUnion>(uuid)
   if (!node) notFound()
   if (node.__typename !== "NodeSulStudyPlace") notFound()
 
@@ -33,7 +33,7 @@ const Page = async (props: {params: Promise<{uuid: string}>}) => {
   return (
     <main id="main-content">
       <InternalHeaderBanner>
-        <h1 className="relative mx-auto mb-50 mt-80 w-full max-w-[calc(100vw-10rem)] p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
+        <h1 className="relative mx-auto mt-80 mb-50 w-full max-w-[calc(100vw-10rem)] p-0 md:mt-100 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]">
           {node.title} Features
         </h1>
       </InternalHeaderBanner>
@@ -58,3 +58,6 @@ const Page = async (props: {params: Promise<{uuid: string}>}) => {
 }
 
 export default Page
+
+// Cache Components needs one param to validate the route. Real study places render on their first request.
+export const generateStaticParams = async () => [{uuid: "00000000-0000-0000-0000-000000000000"}]

@@ -1,4 +1,4 @@
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import LoadMoreList from "@/components/patterns/load-more-list"
 import StanfordEventCard from "@/components/node/stanford-event/card"
 import {JSX} from "react"

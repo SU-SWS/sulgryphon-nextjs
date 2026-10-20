@@ -1,4 +1,4 @@
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe} from "@/lib/gql/__generated__/graphql"
 import {clsx} from "clsx"
 
 const StanfordSpacer = ({size}: {size?: Maybe<"spacer-reduced" | "spacer-minimal" | string>}) => {

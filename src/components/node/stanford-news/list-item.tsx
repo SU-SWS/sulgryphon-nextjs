@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "@/components/patterns/elements/drupal-link"
 import {formatDate} from "@/lib/format-date"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 
 interface Props {
   node: NodeStanfordNews
@@ -27,10 +27,10 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
           <Link className="text-digital-red no-underline hover:underline" href={goToUrl}>
             <HeadingElement className="type-2">{node.title}</HeadingElement>
           </Link>
-          {node.suNewsDek && <div className="rs-mb-1 text-22 leading">{node.suNewsDek}</div>}
+          {node.suNewsDek && <div className="rs-mb-1 text-22 leading-normal">{node.suNewsDek}</div>}
         </div>
         {imageUrl && (
-          <div className="relative aspect-[16/9] overflow-hidden" aria-hidden="true">
+          <div className="relative aspect-video overflow-hidden" aria-hidden="true">
             <Image
               className="object-cover object-center"
               src={buildUrl(imageUrl).toString()}

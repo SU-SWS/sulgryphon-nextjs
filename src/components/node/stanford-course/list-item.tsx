@@ -1,11 +1,11 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import formatHtml from "@/lib/format-html"
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/graphql"
 
 const StanfordCourseListItem = ({node, ...props}: {node: NodeStanfordCourse}) => {
   return (
     <article {...props}>
-      <span className="font-bold leading-cozy">
+      <span className="leading-cozy font-bold">
         {node.suCourseSubject?.name}
         {node.suCourseCode}
 
@@ -21,11 +21,11 @@ const StanfordCourseListItem = ({node, ...props}: {node: NodeStanfordCourse}) =>
       </Link>
       {node.suCourseInstructors && (
         <div className="mb-20 sm:flex">
-          <h3 className="mb-0 mr-[10px] text-16 font-bold leading-snug xl:text-18 2xl:text-19">Instructors: </h3>
+          <h3 className="mr-[10px] mb-0 text-16 leading-snug font-bold xl:text-18 2xl:text-19">Instructors: </h3>
           {node.suCourseInstructors?.map((instructor, index) => (
             <span
               key={`course-instructor-${index}`}
-              className="text-16 font-normal leading-cozy xl:text-18 2xl:text-19"
+              className="text-16 leading-cozy font-normal xl:text-18 2xl:text-19"
             >
               {(index ? ", " : "") + instructor}
             </span>

@@ -196,7 +196,7 @@ const HeadingList = () => {
 
   return (
     <nav aria-label="on this page menu">
-      <h2 data-skip-heading className="type-1 hidden font-sans font-semibold lg:mb-8 lg:block">
+      <h2 data-skip-heading className="hidden font-sans type-1 font-semibold lg:mb-8 lg:block">
         On this page
       </h2>
       <ul className="list-none p-0">
@@ -206,7 +206,7 @@ const HeadingList = () => {
               href={`#${heading.id}`}
               aria-label={heading.isDuplicateLink && pageH1 ? `${pageH1}: ${heading.text}` : undefined}
               className={twMerge(
-                "type-0 block break-words px-10 py-2 font-sans font-normal leading text-black no-underline hocus:bg-black-10 hocus:underline lg:border-l-4 lg:p-0 lg:pl-16 lg:hocus:bg-transparent",
+                "block px-10 py-2 font-sans type-0 leading-normal font-normal wrap-anywhere text-black no-underline lg:border-l-4 lg:p-0 lg:pl-16 hocus:bg-black-10 hocus:underline lg:hocus:bg-transparent",
                 activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
               )}
             >

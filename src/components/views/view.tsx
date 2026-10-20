@@ -15,7 +15,9 @@ import {
   NodeSulLibrary,
   NodeSulStudyPlace,
   NodeUnion,
-} from "@/lib/gql/__generated__/drupal.d"
+} from "@/lib/gql/__generated__/graphql"
+import {getViewPagedItems, sanitizeViewRequest, ViewFilter} from "@/lib/gql/gql-views"
+import {verifyViewConfig} from "@/lib/view-config"
 import SulPeopleTableView from "@/components/views/sul-people/sul-people-table-view"
 import StudyPlaceTable from "@/components/views/sul-study-place/filtering-table/study-place-table"
 import {JSX} from "react"
@@ -134,6 +136,35 @@ const View = async ({viewId, displayId, items, totalItems, loadPage, headingLeve
     <div>
       Need to build this view: <em>{component}</em>
     </div>
+  )
+}
+
+/**
+ * Server action that fetches one page of a Drupal view and renders it.
+ *
+ * Bound by list paragraphs and the site search to load subsequent pages on the client. The list's
+ * configuration arrives signed by the server (see signViewConfig); only the page number and filter values
+ * come from the browser, and both are validated.
+ */
+export const loadViewPage = async (signedConfig: string, page: number, filter?: ViewFilter): Promise<JSX.Element> => {
+  "use server"
+
+  // Server actions are public POST endpoints: any caller can send any arguments.
+  const config = verifyViewConfig(signedConfig)
+  const request =
+    config &&
+    sanitizeViewRequest(config.viewId, config.displayId, config.contextualFilter, config.pageSize, page, filter)
+  if (!config || !request) return <></>
+
+  const {items, totalItems} = await getViewPagedItems(...request)
+  return (
+    <View
+      viewId={config.viewId}
+      displayId={config.displayId}
+      items={items}
+      headingLevel={config.hasHeadline ? "h3" : "h2"}
+      totalItems={totalItems}
+    />
   )
 }
 

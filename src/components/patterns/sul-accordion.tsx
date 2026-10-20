@@ -49,7 +49,7 @@ const SulAccordion = ({button, children, headingLevel = "h2", headingProps, ...p
       aria-labelledby={`${id}-button`}
       className={twMerge("relative w-full", props.className)}
     >
-      <Heading className="type-0 mb-0 font-sans font-semibold" {...headingProps}>
+      <Heading className="mb-0 font-sans type-0 font-semibold" {...headingProps}>
         <button
           {...buttonProps}
           className={twMerge(
@@ -58,7 +58,7 @@ const SulAccordion = ({button, children, headingLevel = "h2", headingProps, ...p
           )}
         >
           {button}
-          <span className="grow-1 m-4 font-normal text-black transition">
+          <span className="m-4 font-normal text-black transition">
             {expanded && <ChevronUpIcon height={20} className="ml-auto shrink-0" />}
 
             {!expanded && <ChevronDownIcon height={20} className="ml-auto shrink-0" />}
