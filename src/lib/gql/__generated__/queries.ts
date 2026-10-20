@@ -65,7 +65,6 @@ export const FragmentTextSummaryFragmentDoc = gql`
 export const FragmentLinkAttributesFragmentDoc = gql`
     fragment FragmentLinkAttributes on LinkAttributes {
   ariaLabel
-  ariaLabelledBy
 }
     `;
 export const FragmentLinkFragmentDoc = gql`
