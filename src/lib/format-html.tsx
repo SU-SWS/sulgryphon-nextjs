@@ -239,7 +239,9 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
         src = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL + src
       }
 
-      return <WysiwygImage src={src} alt={alt} height={height} width={width} />
+      return (
+        <WysiwygImage className={fixClasses(node.attribs.class)} src={src} alt={alt} height={height} width={width} />
+      )
     }
 
     return <>{domToReact(node.children as DOMNode[], options)}</>

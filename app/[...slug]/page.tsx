@@ -2,7 +2,6 @@ import NodePageDisplay from "@/components/node"
 import {notFound, permanentRedirect, redirect} from "next/navigation"
 import {getAllNodes, getEntityFromPath} from "@/lib/gql/gql-queries"
 import {NodeUnion} from "@/lib/gql/__generated__/graphql"
-import EditorAlertBanner from "@/components/patterns/elements/editor-alert-banner"
 import FlushCache from "@/components/patterns/elements/flush-cache"
 import {getPathFromContext, PageProps, Slug} from "@/lib/drupal/utils"
 
@@ -30,7 +29,6 @@ const NodePage = async (props: PageProps) => {
   return (
     <main id="main-content" className="mb-50">
       {process.env.VERCEL_ENV !== "production" && <FlushCache currentPath={path} />}
-      {!entity.status && <EditorAlertBanner message="Unpublished Content" />}
       <NodePageDisplay node={entity} />
     </main>
   )
