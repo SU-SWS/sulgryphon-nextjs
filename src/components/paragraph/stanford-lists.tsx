@@ -95,7 +95,7 @@ const ListParagraph = async ({paragraph}: Props) => {
 
       {paragraph.suListButton?.url && (
         <DrupalLinkButton
-          {...paragraph.suListButton.attributes}
+          aria-label={paragraph.suListButton.attributes?.ariaLabel || undefined}
           className="mx-auto mt-0"
           href={paragraph.suListButton.url}
         >

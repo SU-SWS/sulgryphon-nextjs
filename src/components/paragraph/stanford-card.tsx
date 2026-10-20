@@ -45,16 +45,9 @@ const StanfordCard = ({
 }: Props) => {
   const isHorizontal = orientation === "horizontal"
 
-  const cardLink = link ? {...link} : undefined
-
   const imageUrl = image?.mediaImage.url
   const imageAlt = image?.mediaImage.alt || ""
   const captionWithCredit = appendCredit(caption, getImageCredit(image))
-
-  if (headerId && cardLink?.attributes?.ariaLabel && cardLink?.attributes?.ariaLabel === header) {
-    cardLink.attributes.ariaLabelledBy = headerId
-    delete cardLink.attributes.ariaLabel
-  }
 
   return (
     <div className={clsx("relative", {"centered mx-auto w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
@@ -76,7 +69,7 @@ const StanfordCard = ({
           header={header}
           superHeader={superHeader}
           body={body}
-          link={cardLink}
+          link={link}
           cardBgColor={cardBgColor}
           hideRosette={hideRosette}
           headerId={headerId}
@@ -103,7 +96,7 @@ const StanfordCard = ({
           header={header}
           superHeader={superHeader}
           body={body}
-          link={cardLink}
+          link={link}
           linkStyle={linkStyle}
           headerId={headerId}
           headingLevel={headingTag}
