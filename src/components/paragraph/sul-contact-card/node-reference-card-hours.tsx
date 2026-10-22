@@ -18,8 +18,8 @@ const NodeReferenceCardHours = ({branchId, branchName}: {branchId: string; branc
         : "Opens at " + openingTime
 
   return (
-    <div className="rs-mb-0 type-0 relative flex flex-row items-start">
-      <ClockIcon width={19} className="mr-12 mt-01em flex-shrink-0" title="Hours" />
+    <div className="relative rs-mb-0 flex flex-row items-start type-0">
+      <ClockIcon width={19} className="mt-01em mr-12 shrink-0" title="Hours" />
       <div className="text-white">
         {isOpen && (
           <>

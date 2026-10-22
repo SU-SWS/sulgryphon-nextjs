@@ -1,7 +1,7 @@
 import {ViewDisplayProps} from "@/components/views/view"
 import LoadMoreList from "@/components/patterns/load-more-list"
 import Link from "@/components/patterns/elements/drupal-link"
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {NodeUnion} from "@/lib/gql/__generated__/graphql"
 import {getCleanDescription, getFirstText} from "@/lib/text-tools"
 
 const SearchListView = async ({items, totalItems, loadPage}: ViewDisplayProps) => {

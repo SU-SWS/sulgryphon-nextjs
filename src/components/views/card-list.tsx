@@ -1,5 +1,5 @@
 import NodeCard from "@/components/node/node-card"
-import {NodeUnion} from "@/lib/gql/__generated__/drupal.d"
+import {NodeUnion} from "@/lib/gql/__generated__/graphql"
 import {twMerge} from "tailwind-merge"
 
 const CardList = ({items, h3Heading}: {items: NodeUnion[]; h3Heading?: boolean}) => {

@@ -5,18 +5,18 @@ import formatHtml from "@/lib/format-html"
 import {redirect} from "next/navigation"
 import EmailLink from "@/components/patterns/elements/email-link"
 import TelephoneLink from "@/components/patterns/elements/telephone-link"
-import {NodeStanfordEvent} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"
+import PastEventNotice from "@/components/node/stanford-event/past-event-notice"
 
 const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
   if (node.suEventSource?.url) redirect(node.suEventSource.url)
 
-  const inPast = new Date(node.suEventDateTime.end_value * 1000) < new Date()
-  const start = new Date(node.suEventDateTime.value * 1000)
-  const end = new Date(node.suEventDateTime.end_value * 1000)
+  const start = new Date(parseInt(node.suEventDateTime.value) * 1000)
+  const end = new Date(parseInt(node.suEventDateTime.end_value) * 1000)
 
   let dateTimeString
   if (
@@ -92,12 +92,14 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       <InternalHeaderBanner>
         <h1
           id={node.uuid}
-          className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+          className="relative mx-auto mt-75 mb-10 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           {node.title}
         </h1>
       </InternalHeaderBanner>
-      {inPast && <div className="uppercase text-black-70">Past Event</div>}
+      <PastEventNotice endTime={end.getTime()} className="text-black-70 uppercase">
+        Past Event
+      </PastEventNotice>
 
       {node.suEventType && node.suEventType.length > 0 && (
         <div>
@@ -110,7 +112,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
       )}
 
       {node.suEventSubheadline && <h2 className="rs-mb-1 type-3">{node.suEventSubheadline}</h2>}
-      {node.suEventDek && <div className="rs-mb-4 text-22 leading">{node.suEventDek}</div>}
+      {node.suEventDek && <div className="rs-mb-4 text-22 leading-normal">{node.suEventDek}</div>}
 
       {node.suEventSponsor && (
         <div className="rs-pb-3">
@@ -122,26 +124,28 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
         </div>
       )}
 
-      <div className="mx-auto mb-[50px] w-[80%] border border-[#c6c6c6] p-[40px] shadow-sm">
+      <div className="mx-auto mb-[50px] w-[80%] border border-[#c6c6c6] p-[40px] shadow-xs">
         <h2 className="type-1">Event Details:</h2>
-        <div className="grid-gap grid-cols-2 gap-lg md:grid">
+        <div className="grid-cols-2 grid-gap gap-lg md:grid">
           <div>
             <div>
               <div className="mt-20 flex flex-row items-start">
-                <CalendarIcon className="mr-06em inline-block w-[24px] flex-shrink-0" />
+                <CalendarIcon className="mr-06em inline-block w-[24px] shrink-0" />
                 <time dateTime={node.suEventDateTime.value} className="text-16 md:text-18">
                   {dateTimeString}
                 </time>
               </div>
-              {inPast && <div className="ml-[31px] pt-4 text-14 text-black-70 md:text-16">This event has passed.</div>}
+              <PastEventNotice endTime={end.getTime()} className="ml-[31px] pt-4 text-14 text-black-70 md:text-16">
+                This event has passed.
+              </PastEventNotice>
             </div>
 
             {(node.suEventLocation || node.suEventAltLoc) && (
               <div>
                 {node.suEventLocation && (
                   <div className="flex flex-col">
-                    <div className="mb-4 mt-40 flex flex-row items-start">
-                      <MapIcon title="Location" className="mr-06em inline-block w-[24px] flex-shrink-0" />
+                    <div className="mt-40 mb-4 flex flex-row items-start">
+                      <MapIcon title="Location" className="mr-06em inline-block w-[24px] shrink-0" />
                       <h3 className="text-16 md:text-18">Location</h3>
                     </div>
                     <div className="ml-36">
@@ -157,8 +161,8 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
                 )}
                 {node.suEventAltLoc && (
                   <div>
-                    <div className="mb-4 mt-40 flex flex-row items-start">
-                      <MapIcon title="Location" className="mr-06em inline-block w-[24px] flex-shrink-0" />
+                    <div className="mt-40 mb-4 flex flex-row items-start">
+                      <MapIcon title="Location" className="mr-06em inline-block w-[24px] shrink-0" />
                       <h3 className="text-16 md:text-18">Location</h3>
                     </div>
                     <div className="ml-36 leading-snug">{node.suEventAltLoc}</div>
@@ -177,19 +181,19 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
           <div>
             {(node.suEventTelephone || node.suEventEmail) && (
               <div>
-                <div className="mb-4 mt-40 flex flex-row items-start md:mt-20">
-                  <PhoneIcon title="Phone" className="mr-06em inline-block w-[24px] flex-shrink-0" />
+                <div className="mt-40 mb-4 flex flex-row items-start md:mt-20">
+                  <PhoneIcon title="Phone" className="mr-06em inline-block w-[24px] shrink-0" />
                   <h3 className="text-16 md:text-18">Contact</h3>
                 </div>
                 {node.suEventTelephone && <TelephoneLink tel={node.suEventTelephone} className="mb-4 ml-36 block" />}
-                {node.suEventEmail && <EmailLink email={node.suEventEmail} className="ml-36 block break-words" />}
+                {node.suEventEmail && <EmailLink email={node.suEventEmail} className="ml-36 block wrap-anywhere" />}
               </div>
             )}
 
             {node.suEventAudience && (
               <div>
-                <div className="mb-4 mt-40 flex flex-row items-start">
-                  <UserGroupIcon title="Person" className="mr-06em inline-block w-[24px] flex-shrink-0" />
+                <div className="mt-40 mb-4 flex flex-row items-start">
+                  <UserGroupIcon title="Person" className="mr-06em inline-block w-[24px] shrink-0" />
                   <h3 className="text-16 md:text-18">This event is open to:</h3>
                 </div>
                 {node.suEventAudience.map(audience => (

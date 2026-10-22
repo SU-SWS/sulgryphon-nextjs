@@ -1,5 +1,5 @@
 import {decode} from "html-entities"
-import {Maybe, MediaImage} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe, MediaImage} from "@/lib/gql/__generated__/graphql"
 
 /**
  * Text placed between an image caption and the image credit.

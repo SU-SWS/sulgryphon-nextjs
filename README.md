@@ -224,12 +224,20 @@ can easily fetch every single piece of information in a single request to build 
 are fetched separately to allow us to make them more dynamic in the future and also to avoid some unwanted errors that
 come from the first render in Drupal.
 
-GraphQL types and fetch methods are generated automatically using `yarn graphql`. If a content type, field, vocabulary,
+GraphQL types and typed query documents are generated automatically using `yarn graphql`. If a content type, field, vocabulary,
 paragraph type, etc. are created/edited/deleted in the Drupal environment, the queries in [./src/lib/gql](./src/lib/gql)
 will need to be updated. Most of the changes can be implemented in the [fragments.drupal.gql](./src/lib/gql/fragments.drupal.gql)
 file. To make it easy, Drupal provides fragments you can copy as a starting point. Navigate to `/admin/config/graphql_compose/fragments`
 to view those fragments. Once the fragments and/or queries have been modified, simply run `yarn graphql` to rebuild the
-typescript types and fetcher queries.
+typescript types and query documents.
+
+Queries are executed with `graphqlClient().request<Query>(QueryDocument, variables)` from
+[gql-client.ts](./src/lib/gql/gql-client.ts). Fetch functions live in [gql-queries.ts](./src/lib/gql/gql-queries.ts)
+and [gql-views.ts](./src/lib/gql/gql-views.ts). Each is cached with `"use cache: remote"` and tagged with `cacheTag()`:
+every entry carries `all-cache` plus a group tag (`paths`, `menus`, `config-pages`, `views`, `taxonomy`, `nodes`) and a
+specific tag such as `paths:/about`, `menu:main` or `views:stanford_news`. `/api/revalidate` invalidates those tags:
+`GET ?secret=&path=` clears `paths:<path>` (or `/tags/a/b` clears tags `a` and `b`), and `POST` with a
+`Authorization: Bearer <secret>` header accepts `{"paths": [], "tags": []}`.
 
 If a field is added in the Drupal environment that is "required", that field must be populated for each entity. GraphQL
 is strict and will throw an error if you include that field in a query, but the data is null. To solve this, either

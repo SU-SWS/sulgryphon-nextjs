@@ -1,7 +1,7 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import {formatDate} from "@/lib/format-date"
 
 interface Props {
@@ -19,7 +19,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
   return (
     <article {...props} className="relative">
       {imageUrl && (
-        <div className="relative mb-10 aspect-[16/9] overflow-hidden" aria-hidden="true">
+        <div className="relative mb-10 aspect-video overflow-hidden" aria-hidden="true">
           <Image
             className="object-cover object-center"
             src={buildUrl(imageUrl).toString()}
@@ -41,7 +41,7 @@ const StanfordNewsCard = ({node, h3Heading, ...props}: Props) => {
         </HeadingElement>
 
         {node.suNewsTopics?.[0]?.name && (
-          <div className="order-first mb-0 text-16 font-semibold uppercase text-cardinal-red">
+          <div className="order-first mb-0 text-16 font-semibold text-cardinal-red uppercase">
             {node.suNewsTopics[0].name}
           </div>
         )}
