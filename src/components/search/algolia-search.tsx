@@ -93,7 +93,7 @@ const SearchBox = () => {
             name="q"
             type="search"
             ref={inputRef}
-            className="input w-full rounded-full border border-cool-grey p-10 [&::-webkit-search-cancel-button]:mr-25"
+            className="input w-full rounded-full border border-cool-grey p-10 [&::-webkit-search-cancel-button]:mr-25 [&::-webkit-search-cancel-button]:cursor-pointer"
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             maxLength={512}
