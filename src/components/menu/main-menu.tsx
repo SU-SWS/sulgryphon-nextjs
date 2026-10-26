@@ -59,7 +59,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
           aria-hidden={!isDesktop && !menuOpen}
           className={
             "absolute z-10 h-[calc(100vh-100px)] w-full -translate-y-full overflow-y-scroll border-t-4 border-cardinal-red bg-black-true py-20 lg:relative lg:block lg:h-auto lg:translate-none lg:transform-none lg:animate-none lg:overflow-visible lg:border-0 lg:bg-transparent lg:py-0 lg:pb-0" +
-            (menuOpen ? " translate-none! animate-slide-down" : addCloseAnimation ? " animate-slide-up" : "")
+            (menuOpen ? " translate-none animate-slide-down" : addCloseAnimation ? " animate-slide-up" : "")
           }
         >
           <SearchForm
