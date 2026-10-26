@@ -2,7 +2,7 @@ import OneColumn from "@/components/paragraph/rows/one-column"
 import {ParagraphUnion} from "@/lib/gql/__generated__/graphql"
 import {getParagraphBehaviors} from "@/components/paragraph"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import SectionHeading from "@/components/patterns/section-heading"
 
 export type ThreeColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
@@ -24,7 +24,7 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
 
   return (
     <div
-      className={clsx({
+      className={cn({
         "pt-20 pb-20": !!config?.bg_color,
         "px-30": config?.bg_color && !fullWidth,
         "pt-0": config?.top_padding === "none",
@@ -47,13 +47,13 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
         />
       )}
       <div
-        className={clsx("centered flex w-full flex-col justify-between gap-40 md:flex-row md:flex-wrap lg:flex-nowrap")}
+        className={cn("centered flex w-full flex-col justify-between gap-40 md:flex-row md:flex-wrap lg:flex-nowrap")}
         data-columns="3"
       >
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}
-          className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
+          className={cn("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
             "relative after:absolute after:top-0 after:-right-45 after:h-full md:after:w-1 md:after:bg-black":
               config?.vertical_dividers,
           })}
@@ -61,7 +61,7 @@ const ThreeColumn = async ({items, fullWidth, config}: Props) => {
         <OneColumn
           items={mainItems}
           fullWidth={fullWidth}
-          className={clsx("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
+          className={cn("mx-auto w-full md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]", {
             "relative after:absolute after:top-0 after:-right-45 after:h-full lg:after:w-1 lg:after:bg-black":
               config?.vertical_dividers,
           })}

@@ -1,6 +1,6 @@
 import {ElementType, HtmlHTMLAttributes} from "react"
 import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import formatHtml from "@/lib/format-html"
 import Accordion, {AccordionHeaderChoice} from "@/components/patterns/elements/accordion"
 import ExpandCollapseAll from "@/components/patterns/elements/expand-collapse-all"
@@ -24,7 +24,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
   }
 
   return (
-    <div {...props} className={twMerge("mx-auto w-full lg:max-w-[98rem]", props.className)}>
+    <div {...props} className={cn("mx-auto w-full lg:max-w-[98rem]", props.className)}>
       <div className="rs-mb-1 flex flex-col items-center justify-between gap-20 md:flex-row">
         {paragraph.suFaqHeadline && (
           <Heading id={paragraph.uuid} className="mb-0 text-left">

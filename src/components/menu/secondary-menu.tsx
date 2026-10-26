@@ -9,6 +9,7 @@ import {useBoolean} from "usehooks-ts"
 import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/graphql"
 import {usePathname} from "next/navigation"
 import {getActiveTrail} from "@/lib/drupal/utils"
+import cn from "@/lib/utils/className"
 
 const getCurrentPageTitle = (activeTrail: string[], items: MenuItem[], trail: string[]): string | undefined => {
   const currentItem = items.find(item => item.id === trail.at(0))
@@ -56,7 +57,10 @@ const SecondaryMenu = ({menuItems, currentPath}: {menuItems: MenuItem[]; current
       </button>
 
       <div ref={ref}>
-        <nav className={isDesktop || menuOpen ? "block" : "hidden"} aria-label="Secondary Navigation">
+        <nav
+          className={cn({block: isDesktop || menuOpen, hidden: !isDesktop && !menuOpen})}
+          aria-label="Secondary Navigation"
+        >
           <ul className="list-unstyled absolute top-0 left-0 z-40 mb-20 w-full border border-t-8 border-archway bg-white py-20 shadow-lg lg:relative lg:z-0">
             {subTree.map(item => (
               <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} />
@@ -80,14 +84,14 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, children}: Si
   const depthClasses = ["pl-0", "pl-30", "pl-60", "pl-90", "pl-120"]
 
   return (
-    <li className={`m-0`}>
-      <div className={"flex " + depthClasses[menuLevel] + (isActive ? " bg-archway" : "")}>
+    <li className="m-0">
+      <div className={cn("flex", depthClasses[menuLevel], {"bg-archway": isActive})}>
         <Link
           href={url || "#"}
-          className={
-            "relative block grow p-10 no-underline hover:underline " +
-            (isActive ? "text-white hocus:text-white" : "text-black-90 hocus:text-archway")
-          }
+          className={cn("relative block grow p-10 no-underline hover:underline", {
+            "text-white hocus:text-white": isActive,
+            "text-black-90 hocus:text-archway": !isActive,
+          })}
           aria-current={isActive ? "page" : undefined}
         >
           {title}
@@ -97,18 +101,18 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, children}: Si
           <div className="relative flex items-center">
             <button className="group mr-20" onClick={toggleSubmenu} aria-expanded={submenuOpen ? "true" : "false"}>
               <span
-                className={
-                  "mx-auto block w-fit border-b-2 border-transparent " +
-                  (isActive ? "group-hocus:border-white" : "group-hocus:border-archway")
-                }
+                className={cn("mx-auto block w-fit border-b-2 border-transparent", {
+                  "group-hocus:border-white": isActive,
+                  "group-hocus:border-archway": !isActive,
+                })}
               >
                 <ChevronDownIcon
                   width={40}
-                  className={
-                    "transition-all " +
-                    (submenuOpen ? " scale-y-[-1]" : "") +
-                    (isActive ? " text-white group-hocus:text-white" : " group-hocus:text-archway")
-                  }
+                  className={cn(
+                    "transition-all",
+                    {"scale-y-[-1]": submenuOpen},
+                    {"text-white group-hocus:text-white": isActive, "group-hocus:text-archway": !isActive}
+                  )}
                 />
               </span>
               <span className="sr-only">{title.trim() + " submenu"}</span>
@@ -118,7 +122,7 @@ const SideMenuItem = ({id, title, url, activeTrail, menuLevel = 0, children}: Si
       </div>
 
       {children?.length > 0 && (
-        <ul className={"list-unstyled" + (submenuOpen ? " block" : " hidden")}>
+        <ul className={cn("list-unstyled", {block: submenuOpen, hidden: !submenuOpen})}>
           {children.map(item => (
             <SideMenuItem key={item.id} activeTrail={activeTrail} {...item} menuLevel={menuLevel + 1} />
           ))}

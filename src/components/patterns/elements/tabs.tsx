@@ -2,8 +2,7 @@
 
 import {Tabs as BaseTabs, type TabsTab} from "@base-ui/react/tabs"
 import {HTMLAttributes, ReactNode, Suspense, useState} from "react"
-import {clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import {useSearchParams} from "next/navigation"
 import {useScreen} from "usehooks-ts"
 
@@ -81,7 +80,7 @@ export const TabsList = ({children, className, ...props}: HTMLAttributes<HTMLDiv
       {...props}
       // Moving focus with the arrow keys also selects the tab.
       activateOnFocus
-      className={({orientation}) => twMerge("flex", clsx({"flex-col": orientation === "vertical"}), className)}
+      className={({orientation}) => cn("flex", {"flex-col": orientation === "vertical"}, className)}
     >
       {children}
     </BaseTabs.List>

@@ -14,7 +14,7 @@ import Paragraph from "@/components/paragraph"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getFirstText} from "@/lib/text-tools"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import {appendCredit, getImageCredit} from "@/lib/image-credit"
 
 const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
@@ -152,7 +152,7 @@ const StanfordNews = async ({node, ...props}: {node: NodeStanfordNews}) => {
             <Paragraph
               key={paragraph.uuid}
               paragraph={paragraph}
-              className={clsx({"lg:max-w-800": paragraph.__typename === "ParagraphStanfordWysiwyg"})}
+              className={cn({"lg:max-w-800": paragraph.__typename === "ParagraphStanfordWysiwyg"})}
             />
           ))}
         </div>

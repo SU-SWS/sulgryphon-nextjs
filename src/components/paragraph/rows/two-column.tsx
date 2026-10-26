@@ -2,7 +2,7 @@ import OneColumn from "@/components/paragraph/rows/one-column"
 import {ParagraphUnion} from "@/lib/gql/__generated__/graphql"
 import {getParagraphBehaviors} from "@/components/paragraph"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import SectionHeading from "@/components/patterns/section-heading"
 
 export type TwoColumnConfig = NonNullable<ParagraphBehaviors["layout_paragraphs"]>["config"] & {
@@ -31,7 +31,7 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
 
   return (
     <div
-      className={clsx({
+      className={cn({
         "pt-20 pb-20": !!config?.bg_color,
         "px-30": config?.bg_color && !fullWidth,
         "pt-0": config?.top_padding === "none",
@@ -53,12 +53,12 @@ const TwoColumn = async ({items, fullWidth, config}: Props) => {
           headingGradient={!!config.display_heading_gradient}
         />
       )}
-      <div className={clsx("centered grid w-full gap-40", gridCols)} data-columns="2">
+      <div className={cn("centered grid w-full gap-40", gridCols)} data-columns="2">
         <OneColumn
           items={leftItems}
           fullWidth={fullWidth}
           config={{top_padding: "none", bottom_margin: "none"}}
-          className={clsx({
+          className={cn({
             "relative after:absolute after:top-0 after:-right-15 after:h-full min-[900px]:after:w-1 min-[900px]:after:bg-black":
               config?.vertical_dividers,
           })}

@@ -5,7 +5,7 @@ import {useBoolean, useCounter} from "usehooks-ts"
 import {ArrowPathIcon} from "@heroicons/react/20/solid"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 export type LoadMoreListProps = HtmlHTMLAttributes<HTMLDivElement> & {
   /**
@@ -68,7 +68,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
   }, [focusOnElement, setFocusOnItem])
 
   return (
-    <div {...props} className={twMerge("relative", props.className)}>
+    <div {...props} className={cn("relative", props.className)}>
       {isPending && (
         <div className="absolute top-0 left-0 z-20 h-full w-full bg-black-30/80">
           <div className="absolute bottom-20 left-1/2 -translate-x-[25px]">

@@ -13,6 +13,7 @@ import {useBoolean, useEventListener} from "usehooks-ts"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import ToggleOption from "@/components/patterns/toggle-option"
+import cn from "@/lib/utils/className"
 
 export type BranchLocation = {
   uuid: NodeSulLibrary["uuid"]
@@ -244,10 +245,14 @@ const BranchHours = ({hoursId}: {hoursId: string}) => {
 
         <button ref={buttonRef} onClick={toggleExpandedHours} aria-controls={id} aria-expanded={expandedHours}>
           <span className="sr-only">Show this weeks hours</span>
-          <ChevronDownIcon width={20} className={expandedHours ? "rotate-180 transition" : "transition"} />
+          <ChevronDownIcon width={20} className={cn("transition", {"rotate-180": expandedHours})} />
         </button>
       </div>
-      <div id={id} className={expandedHours ? "absolute top-full z-10 block" : "hidden"} role="region">
+      <div
+        id={id}
+        className={cn({"absolute top-full z-10 block": expandedHours, hidden: !expandedHours})}
+        role="region"
+      >
         <div className="w-300 border border-black-60 bg-white p-20 text-left">
           <div className="mb-10 font-bold">Hours this week</div>
           {thisWeekHours.map(dayHours => (

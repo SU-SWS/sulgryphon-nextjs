@@ -1,6 +1,6 @@
 import {Maybe} from "@/lib/gql/__generated__/graphql"
 import StanfordWordMark from "@/components/images/stanford-wordmark"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 const LockupLogo = ({
   logoUrl,
@@ -26,10 +26,10 @@ const LockupLogo = ({
         <StanfordWordMark
           aria-label={`Stanford ${siteName} Logo`}
           role="img"
-          className={twMerge(
-            "block max-h-[30px] w-auto max-w-[12rem] no-underline xl:max-w-400",
-            whiteText ? "text-white" : "text-cardinal-red"
-          )}
+          className={cn("block max-h-[30px] w-auto max-w-[12rem] no-underline xl:max-w-400", {
+            "text-white": whiteText,
+            "text-cardinal-red": !whiteText,
+          })}
         />
       )}
     </>

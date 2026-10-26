@@ -4,6 +4,7 @@ import {BuildingLibraryIcon, MapPinIcon} from "@heroicons/react/24/outline"
 import StudyPlaceHours from "./study-place-today-hours"
 import {buildUrl} from "@/lib/drupal/utils"
 import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
 
 interface ModalProps {
   branchHours?: Maybe<string>
@@ -67,7 +68,9 @@ const StudyPlaceFeatures = ({
           <div className="leading-tight">
             {branchHours && <StudyPlaceHours hoursId={branchHours} />}
 
-            <div className={`relative flex flex-row items-start type-1 ${roomNumber ? "mb-20" : "rs-mb-2"}`}>
+            <div
+              className={cn("relative flex flex-row items-start type-1", {"mb-20": roomNumber, "rs-mb-2": !roomNumber})}
+            >
               <MapPinIcon title="Location" width={19} className="mt-01em mr-12 shrink-0 md:mt-0" />
               <Link
                 href={branchUrl || "#"}

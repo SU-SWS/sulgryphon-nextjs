@@ -6,7 +6,7 @@ import Oembed from "@/components/patterns/elements/oembed"
 import {buildUrl} from "@/lib/drupal/utils"
 import {MediaImage, Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {ElementType, HTMLAttributes} from "react"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import {appendCredit, getImageCredit} from "@/lib/image-credit"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -50,7 +50,7 @@ const StanfordCard = ({
   const captionWithCredit = appendCredit(caption, getImageCredit(image))
 
   return (
-    <div className={clsx("relative", {"mx-auto centered w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
+    <div className={cn("relative", {"mx-auto centered w-full lg:max-w-[980px]": !isHorizontal})} {...props}>
       {isHorizontal && (
         <HorizontalCard
           video={videoUrl && <Oembed url={videoUrl} className="h-full" />}

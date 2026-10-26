@@ -4,8 +4,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import useIsCentered from "@/lib/hooks/useIsCentered"
 import {HTMLAttributes, useRef} from "react"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
-import clsx from "clsx"
+import cn from "@/lib/utils/className"
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -35,47 +34,35 @@ const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Prop
 
   return (
     <div
-      className={twMerge(
-        "relative",
-        clsx({
-          "w-full": !fullWidth || !isCentered || isCtaVariant,
-          "full-screen": fullWidth && isCentered && !isCtaVariant,
-          centered: isCtaVariant,
-        })
-      )}
+      className={cn("relative", {
+        "w-full": !fullWidth || !isCentered || isCtaVariant,
+        "full-screen": fullWidth && isCentered && !isCtaVariant,
+        centered: isCtaVariant,
+      })}
       ref={ref}
       {...props}
     >
       <div
-        className={twMerge(
-          "py-50",
-          clsx({
-            "bg-black-true": isBlackBackground,
-            "bg-black-10": !isBlackBackground,
-            "w-screen": fullWidth && isCentered && !isCtaVariant,
-            "h-fit w-fit rounded-[0.3rem] border-2 border-black-10 bg-fog-light px-10 py-6 lg:ml-auto": isCtaVariant,
-          })
-        )}
+        className={cn("py-50", {
+          "bg-black-true": isBlackBackground,
+          "bg-black-10": !isBlackBackground,
+          "w-screen": fullWidth && isCentered && !isCtaVariant,
+          "h-fit w-fit rounded-[0.3rem] border-2 border-black-10 bg-fog-light px-10 py-6 lg:ml-auto": isCtaVariant,
+        })}
       >
         <div
-          className={twMerge(
-            "centered",
-            clsx({
-              "flex flex-row gap-10": isCtaVariant,
-            })
-          )}
+          className={cn("centered", {
+            "flex flex-row gap-10": isCtaVariant,
+          })}
         >
           {headline && (
             <h2
               id={headerId}
-              className={twMerge(
-                "shrink-0 text-center",
-                clsx({
-                  "text-white": isBlackBackground,
-                  "type-3": !isCtaVariant,
-                  "mb-0 type-0 font-semibold": isCtaVariant,
-                })
-              )}
+              className={cn("shrink-0 text-center", {
+                "text-white": isBlackBackground,
+                "type-3": !isCtaVariant,
+                "mb-0 type-0 font-semibold": isCtaVariant,
+              })}
             >
               {headline}
             </h2>
@@ -84,13 +71,10 @@ const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Prop
           {link?.url && (
             <Link
               href={link.url}
-              className={twMerge(
-                "mx-auto block w-fit text-center",
-                clsx({
-                  button: !isCtaVariant,
-                  group: isCtaVariant,
-                })
-              )}
+              className={cn("mx-auto block w-fit text-center", {
+                button: !isCtaVariant,
+                group: isCtaVariant,
+              })}
               {...linkAttributes}
             >
               {link.title}

@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useCallback, useEffect, useState} from "react"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import {useDebounceCallback, useEventListener} from "usehooks-ts"
 
 type Heading = {
@@ -10,27 +10,35 @@ type Heading = {
   isDuplicateLink: boolean
 }
 
-type PageLink = {
-  text: string
-  href: string
-  context: string
+const isVisible = (el: Element) =>
+  el.checkVisibility({contentVisibilityAuto: true, opacityProperty: true, visibilityProperty: true})
+
+const normalizeText = (el: Element) => el.textContent?.trim().replace(/\s+/g, " ") ?? ""
+
+// Cache Components keeps previously visited pages in the DOM (hidden with display: none), each with its own
+// #main-content, so only the visible one belongs to the current page.
+const getMainContent = () => Array.from(document.querySelectorAll("#main-content")).find(isVisible)
+
+// Visible h2 elements in the main content that are not opted out.
+const getHeadingElements = () => {
+  const mainContent = getMainContent()
+  if (!mainContent) return []
+  return Array.from(mainContent.querySelectorAll<HTMLHeadingElement>("h2:not([data-skip-heading])")).filter(
+    el => !el.closest(".no-anchor, .sr-only") && isVisible(el)
+  )
 }
+
+// Find the element for an id on the current page. A hidden page can hold an element with the same id.
+const getVisibleElementById = (id: string) =>
+  Array.from(document.querySelectorAll(`[id="${CSS.escape(id)}"]`)).find(isVisible)
 
 const HeadingList = () => {
   const [headings, setHeadings] = useState<Array<Heading>>([])
   const [activeHeading, setActiveHeading] = useState<string>("")
   const [pageH1, setPageH1] = useState<string>("")
 
-  const getPageContext = (element: Element): string => {
-    if (element.closest("nav")) return "navigation"
-    if (element.closest("footer")) return "footer"
-    if (element.closest("header")) return "header"
-    if (element.closest("main")) return "main"
-    return "other"
-  }
-
   const debouncedHandleScroll = useDebounceCallback(() => {
-    const firstHeading = document.querySelector("#main-content h2:not([data-skip-heading])")
+    const firstHeading = getHeadingElements()[0]
     if (!firstHeading || !activeHeading) return
 
     const headingRect = firstHeading.getBoundingClientRect()
@@ -43,156 +51,94 @@ const HeadingList = () => {
 
   const handleAnchor = useCallback(() => {
     const hash = window.location.hash.slice(1)
-    if (hash) {
-      const targetElement = document.getElementById(hash)
-      if (targetElement) {
-        setTimeout(() => {
-          targetElement.scrollIntoView({behavior: "smooth", block: "start"})
-          setActiveHeading(hash)
-        }, 100)
-      }
+    if (!hash) return
+
+    const targetElement = getVisibleElementById(hash)
+    if (targetElement) {
+      setTimeout(() => {
+        targetElement.scrollIntoView({behavior: "smooth", block: "start"})
+        setActiveHeading(hash)
+      }, 100)
     }
   }, [])
 
+  // Scan the visible page for headings, giving each one a valid, unique id.
+  const scanHeadings = useCallback(() => {
+    const mainContent = getMainContent()
+    const elements = getHeadingElements()
+
+    // Text of every link on the current page, skipping hidden pages. A heading that matches an existing link gets
+    // the page title in its label, so the on-this-page link can be told apart.
+    const linkTexts = new Set<string>()
+    document.querySelectorAll("a").forEach(link => {
+      const linkMainContent = link.closest("#main-content")
+      if (linkMainContent && linkMainContent !== mainContent) return
+      linkTexts.add(normalizeText(link).toLowerCase())
+    })
+
+    const existingIds = new Set<string>()
+    const items: Heading[] = []
+
+    elements.forEach(heading => {
+      const text = normalizeText(heading)
+      if (!text) return
+
+      let id = heading.getAttribute("id")
+      const hasInvalidId = id && (/^[^a-z]/i.test(id) || /[^a-z0-9-_]/i.test(id))
+
+      if (!id || hasInvalidId) {
+        id = text.toLowerCase().replace(/[^a-z0-9]/g, "-")
+        if (/^[^a-z]/i.test(id)) id = `heading-${id}`
+
+        let newId = id
+        let headingIndex = 0
+        while (mainContent?.querySelector(`#${CSS.escape(newId)}`) || existingIds.has(newId)) {
+          newId = `${id}-${headingIndex}`
+          headingIndex++
+        }
+        heading.setAttribute("id", newId)
+        id = newId
+      }
+
+      existingIds.add(id)
+      items.push({text, id, isDuplicateLink: linkTexts.has(text.toLowerCase())})
+    })
+
+    const h1 = mainContent?.querySelector("h1")
+    setPageH1(h1 ? normalizeText(h1) : "")
+    setHeadings(items)
+    return elements
+  }, [])
+
   useEffect(() => {
+    let observer: IntersectionObserver | undefined
+
+    // Give streamed content a moment to arrive before scanning.
     const timeoutId = setTimeout(() => {
-      // Get page H1
-      const h1 = document.querySelector("h1")
-      const h1Text = h1?.textContent?.trim() || ""
+      const elements = scanHeadings()
 
-      // First, get all h2 headings
-      const h2Elements = document.querySelectorAll("#main-content h2:not([data-skip-heading])")
-      const headingTexts = new Set<string>()
-
-      h2Elements.forEach(heading => {
-        const text = heading.textContent?.trim().replace(/\s+/g, " ")
-        if (text) {
-          headingTexts.add(text.toLowerCase())
-        }
-      })
-
-      // Now scan all links on the page
-      const linksByText = new Map<string, PageLink[]>()
-
-      document.querySelectorAll("a").forEach(link => {
-        const text = link.textContent?.trim().replace(/\s+/g, " ")
-        if (text) {
-          const pageLink: PageLink = {
-            text,
-            href: link.getAttribute("href") || "",
-            context: getPageContext(link),
-          }
-
-          const key = text.toLowerCase()
-          if (!linksByText.has(key)) {
-            linksByText.set(key, [])
-          }
-          linksByText.get(key)!.push(pageLink)
-        }
-      })
-
-      // A heading is a duplicate if:
-      // 1. There's already a link with that text elsewhere on the page
-      // 2. OR there are multiple links with that text going to different places
-      const duplicateLinksMap = new Set<string>()
-
-      headingTexts.forEach(headingText => {
-        const links = linksByText.get(headingText)
-        if (links && links.length > 0) {
-          // There's at least one other link with this text
-          // (The on-this-page link will be added later, so any existing link means duplicate)
-          duplicateLinksMap.add(headingText)
-        }
-      })
-
-      // Also check for same text -> different hrefs
-      linksByText.forEach((links, text) => {
-        if (links.length > 1) {
-          const uniqueHrefs = new Set(links.map(l => l.href))
-          if (uniqueHrefs.size > 1) {
-            duplicateLinksMap.add(text)
-          }
-        }
-      })
-
-      const allHeadings: Heading[] = []
-      const existingIds = new Set<string>()
-
-      h2Elements.forEach(heading => {
-        const headingText = heading.textContent
-        if (!headingText) return
-
-        const trimmedText = headingText.trim().replace(/\s+/g, " ")
-        const normalizedText = trimmedText.toLowerCase()
-
-        // Get or generate a valid ID
-        let id = heading.getAttribute("id")
-
-        const hasInvalidId = id && (/^[^a-z]/i.test(id) || /[^a-z0-9-_]/i.test(id))
-
-        if (!id || hasInvalidId) {
-          id = trimmedText.toLowerCase().replace(/[^a-z0-9]/g, "-")
-
-          if (/^[^a-z]/i.test(id)) {
-            id = `heading-${id}`
-          }
-
-          let newId = id
-          let headingIndex = 0
-
-          while (document.getElementById(newId) || existingIds.has(newId)) {
-            newId = `${id}-${headingIndex}`
-            headingIndex++
-          }
-          heading.setAttribute("id", newId)
-          id = newId
-        }
-
-        existingIds.add(id)
-
-        const isDupe = duplicateLinksMap.has(normalizedText)
-
-        allHeadings.push({
-          text: headingText,
-          id,
-          isDuplicateLink: isDupe,
-        })
-      })
-
-      // Set state once with all data
-      setPageH1(h1Text)
-      setHeadings(allHeadings)
-
-      // Set up intersection observer
-      const observer = new IntersectionObserver(
+      observer = new IntersectionObserver(
         entries => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              setActiveHeading(entry.target.id)
-            }
+            if (entry.isIntersecting) setActiveHeading(entry.target.id)
           })
         },
-        {
-          rootMargin: "0px 0px -80% 0px",
-          threshold: 0,
-        }
+        {rootMargin: "0px 0px -80% 0px", threshold: 0}
       )
-
-      h2Elements.forEach(heading => observer.observe(heading))
+      elements.forEach(heading => observer?.observe(heading))
       handleAnchor()
-
-      return () => observer.disconnect()
     }, 250)
 
-    return () => clearTimeout(timeoutId)
-  }, [handleAnchor])
+    return () => {
+      clearTimeout(timeoutId)
+      observer?.disconnect()
+    }
+  }, [scanHeadings, handleAnchor])
 
   useEventListener("scroll", debouncedHandleScroll)
   useEventListener("hashchange", handleAnchor)
 
-  if (headings.length === 0) {
-    return null
-  }
+  if (headings.length === 0) return null
 
   return (
     <nav aria-label="on this page menu">
@@ -205,9 +151,12 @@ const HeadingList = () => {
             <a
               href={`#${heading.id}`}
               aria-label={heading.isDuplicateLink && pageH1 ? `${pageH1}: ${heading.text}` : undefined}
-              className={twMerge(
+              className={cn(
                 "block px-10 py-2 font-sans type-0 leading-normal font-normal wrap-anywhere text-black no-underline lg:border-l-4 lg:p-0 lg:pl-16 hocus:bg-black-10 hocus:underline lg:hocus:bg-transparent",
-                activeHeading === heading.id ? "border-cardinal-red" : "border-transparent"
+                {
+                  "border-cardinal-red": activeHeading === heading.id,
+                  "border-transparent": activeHeading !== heading.id,
+                }
               )}
             >
               {heading.text}

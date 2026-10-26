@@ -5,7 +5,7 @@ import {
   SulHomeBannerRandomClient,
 } from "@/components/paragraph/sul-home-banner/sul-home-banner.client"
 import SulHomeImage from "@/components/paragraph/sul-home-image/sul-home-image"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphSulHomeBanner
@@ -14,7 +14,7 @@ const SulHomeBanner = ({paragraph, ...props}: Props) => {
   if (!paragraph.sulHomeImages) return
 
   return (
-    <div {...props} className={twMerge("relative mb-50", props.className)}>
+    <div {...props} className={cn("relative mb-50", props.className)}>
       <div className="relative top-[15%] z-10 w-full md:absolute xl:top-1/4">
         <div className="centered">
           <SulHomeBannerFormClient />

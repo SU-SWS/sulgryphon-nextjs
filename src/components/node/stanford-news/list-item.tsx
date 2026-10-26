@@ -3,6 +3,7 @@ import Link from "@/components/patterns/elements/drupal-link"
 import {formatDate} from "@/lib/format-date"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
 
 interface Props {
   node: NodeStanfordNews
@@ -22,7 +23,7 @@ const StanfordNewsListItem = ({node, h3Heading, ...props}: Props) => {
       <div className="mb-14 text-18">
         {node.suNewsPublishingDate && <>{formatDate(node.suNewsPublishingDate.time)}</>}
       </div>
-      <div className={"grid gap-2xl " + (imageUrl ? "grid-cols-3-1" : "")}>
+      <div className={cn("grid gap-2xl", {"grid-cols-3-1": imageUrl})}>
         <div>
           <Link className="text-digital-red no-underline hover:underline" href={goToUrl}>
             <HeadingElement className="type-2">{node.title}</HeadingElement>
