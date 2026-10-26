@@ -2,6 +2,7 @@
 
 import {HTMLAttributes, RefObject, useId, useRef} from "react"
 import {useBoolean, useOnClickOutside} from "usehooks-ts"
+import cn from "@/lib/utils/className"
 
 type Props = {
   initiallyVisible?: boolean
@@ -32,7 +33,7 @@ const useAccordion = ({initiallyVisible, panelId, buttonId}: Props = {}) => {
     "aria-labelledby": buttonId || `${id}--button`,
     id: panelId || `${id}--panel`,
     role: "region",
-    className: expanded ? "block absolute left-0 top-full z-[10]" : "hidden",
+    className: cn({"block absolute left-0 top-full z-[10]": expanded, hidden: !expanded}),
   }
 
   return {

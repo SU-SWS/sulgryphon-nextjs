@@ -5,9 +5,8 @@ import {useBoolean, useCounter} from "usehooks-ts"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
 import {MagnifyingGlassIcon, XMarkIcon} from "@heroicons/react/20/solid"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import ToggleOption from "@/components/patterns/toggle-option"
-import clsx from "clsx"
 
 type EventFilters = {
   search?: string
@@ -105,7 +104,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
   }
 
   return (
-    <div {...props} className={twMerge("relative", props.className)}>
+    <div {...props} className={cn("relative", props.className)}>
       <form
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-16 md:mb-60 md:flex-nowrap md:gap-30"
         onSubmit={handleSearchSubmit}
@@ -179,7 +178,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
           <button
             onClick={showMoreItems}
             disabled={isPending}
-            className={clsx(
+            className={cn(
               "cta-button group mx-auto mt-32 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-24 leading-display font-semibold text-white no-underline transition-colors md:text-18 hocus:bg-cardinal-red-dark hocus:text-white hocus:underline",
               {"cursor-none bg-archway": isPending}
             )}

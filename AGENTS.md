@@ -150,7 +150,7 @@ Development mode does not bypass the check. The home page previews at `/preview`
 - Entry point: `src/styles/index.css`. It imports `decanter` (keeps the **62.5% root font size**, so `1rem` = 10px
   and all rem values assume this), `decanter/forms`, the site CSS files, and holds the `@theme` block (breakpoints
   `xs` 440px and `3xl` 1600px, container sizes, `grid-cols-1-2`-style columns, animations).
-- Merge classes with `twMerge` / `clsx` (tailwind-merge v3).
+- Merge classes with `cn()` from `@/lib/utils/className` (clsx plus a tailwind-merge v3 that knows Decanter's `type-*`/`text-NN` font sizes and `rs-*` spacing). Importing `twMerge` or `clsx` directly is a lint error.
 - Prettier sorts classes using `tailwindStylesheet` in `.prettierrc`. Run `yarn lint` (or `eslint --fix`) after
   editing classes.
 

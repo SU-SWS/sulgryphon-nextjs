@@ -14,9 +14,8 @@ import {
   Link as LinkType,
   ParagraphSulFeatCollectionSulCollectionCardsUnion,
 } from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import HeaderGradientLine from "../patterns/header-gradient-line"
-import clsx from "clsx"
 import StatCardParagraph from "./stanford-stat-card/stat-card-paragraph"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
@@ -47,7 +46,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
     <section className="relative centered" ref={ref} {...props}>
       {headline && (
         <header
-          className={clsx("mb-40", {
+          className={cn("mb-40", {
             "flex flex-row items-center justify-between gap-16": styles?.display_heading_gradient,
           })}
         >
@@ -113,7 +112,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
           url={link?.url}
           title={link?.title}
           linkStyle={styles?.link_display_style}
-          className={twMerge("mx-auto mt-0 mt-40", linkAttributes?.className)}
+          className={cn("mx-auto mt-0 mt-40", linkAttributes?.className)}
         />
       )}
     </section>

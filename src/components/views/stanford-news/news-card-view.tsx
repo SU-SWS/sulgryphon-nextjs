@@ -2,7 +2,7 @@ import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import LoadMoreList from "@/components/patterns/load-more-list"
 import {JSX} from "react"
 import StanfordNewsCard from "@/components/node/stanford-news/card"
-import clsx from "clsx"
+import cn from "@/lib/utils/className"
 
 interface Props {
   items: NodeStanfordNews[]
@@ -22,13 +22,13 @@ const NewsCardView = async ({items, hasHeading, totalItems, loadPage}: Props) =>
     <LoadMoreList
       className="@container"
       ulProps={{
-        className: clsx("list-unstyled gap-40", {
+        className: cn("list-unstyled gap-40", {
           "flex flex-col justify-between md:flex-row md:flex-wrap lg:flex-nowrap": items.length === 3,
           "grid @4xl:grid-cols-2 @7xl:grid-cols-3": items.length !== 3,
         }),
       }}
       liProps={{
-        className: clsx("w-full mx-auto", {
+        className: cn("w-full mx-auto", {
           "md:w-[calc(50%_-_5rem)] lg:w-[calc(33.3%_-_5rem)]": items.length === 3,
           "max-w-500": items.length !== 3,
         }),

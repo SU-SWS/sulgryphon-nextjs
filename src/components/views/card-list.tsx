@@ -1,6 +1,6 @@
 import NodeCard from "@/components/node/node-card"
 import {NodeUnion} from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 const CardList = ({items, h3Heading}: {items: NodeUnion[]; h3Heading?: boolean}) => {
   const gridClasses = ["", "@4xl:grid-cols-2", "@4xl:grid-cols-2 @7xl:grid-cols-3"]
@@ -8,7 +8,7 @@ const CardList = ({items, h3Heading}: {items: NodeUnion[]; h3Heading?: boolean})
 
   return (
     <div className="@container">
-      <ul className={twMerge("list-unstyled grid gap-40", gridClass)}>
+      <ul className={cn("list-unstyled grid gap-40", gridClass)}>
         {items
           .filter(item => !!item?.uuid)
           .map(item => (

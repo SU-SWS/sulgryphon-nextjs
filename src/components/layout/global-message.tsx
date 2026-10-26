@@ -10,6 +10,7 @@ import {
 import {getConfigPage} from "@/lib/gql/gql-queries"
 import {StanfordGlobalMessage} from "@/lib/gql/__generated__/graphql"
 import {JSX} from "react"
+import cn from "@/lib/utils/className"
 
 const GlobalMessage = async () => {
   const configPage = await getConfigPage<StanfordGlobalMessage>("StanfordGlobalMessage")
@@ -56,7 +57,7 @@ const GlobalMessage = async () => {
   const chosenOption = options[configPage.suGlobalMsgType || "success"]
 
   return (
-    <div className={"relative z-30 lg:z-0 " + chosenOption.bgColor + " " + chosenOption.textColor}>
+    <div className={cn("relative z-30 lg:z-0", chosenOption.bgColor, chosenOption.textColor)}>
       <div className="centered flex gap-2xl py-20">
         <div className="flex shrink-0 items-center justify-center">
           {chosenOption.icon}

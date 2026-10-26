@@ -2,7 +2,7 @@ import formatHtml from "@/lib/format-html"
 import {DrupalLink} from "@/components/patterns/link"
 import {ElementType, HTMLAttributes, JSX, ReactNode} from "react"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNode>
@@ -70,7 +70,7 @@ const Card = ({
     <CardWrapper
       {...restProps}
       aria-label={headerText}
-      className={twMerge(
+      className={cn(
         "card block w-full border border-solid border-black-10 bg-white leading-display text-black shadow-md",
         props.className
       )}
@@ -94,7 +94,7 @@ const Card = ({
         {header && (
           <Heading
             id={actualHeadingId}
-            className={twMerge("mb-03em text-24 font-bold tracking-[-0.2px]", hideHeading && "sr-only")}
+            className={cn("mb-03em text-24 font-bold tracking-[-0.2px]", hideHeading && "sr-only")}
           >
             {header}
           </Heading>
@@ -104,7 +104,7 @@ const Card = ({
 
         {footer && (
           <div
-            className={twMerge(
+            className={cn(
               // In Tailwind v3 a caller's padding (e.g. "p-0") always beat Decanter's rs-* spacing; keep that.
               !/(^|\s)(\S+:)?p[ty]?-/.test(footerClasses || "") && "rs-pt-0",
               "text-18 leading-display font-normal",

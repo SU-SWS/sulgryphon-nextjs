@@ -7,7 +7,7 @@ import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
 import {getViewPagedItems, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
 import {signViewConfig} from "@/lib/view-config"
-import clsx from "clsx"
+import cn from "@/lib/utils/className"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -53,20 +53,20 @@ const ListParagraph = async ({paragraph}: Props) => {
 
   return (
     <ListWrapper
-      className={clsx("centered flex flex-col", {
+      className={cn("centered flex flex-col", {
         "gap-xl": behaviors.list_paragraph?.heading_behavior == "show",
       })}
       aria-labelledby={ListWrapper === "section" ? paragraph.uuid : undefined}
     >
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
         <div
-          className={clsx("mb-20", {
+          className={cn("mb-20", {
             "flex items-center justify-between gap-16": behaviors.sul_list_styles?.display_heading_gradient,
           })}
         >
           <h2
             id={paragraph.uuid}
-            className={clsx("m-0 md:shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
+            className={cn("m-0 md:shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
           >
             {paragraph.suListHeadline}
           </h2>

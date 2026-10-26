@@ -1,6 +1,6 @@
 import formatHtml from "@/lib/format-html"
 import {HTMLAttributes} from "react"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   text?: string | null
@@ -8,7 +8,7 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 
 const StanfordWysiwyg = ({text, className, ...props}: Props) => {
   return (
-    <div className={twMerge("wysiwyg relative centered lg:max-w-[980px]", className)} {...props}>
+    <div className={cn("wysiwyg relative centered lg:max-w-[980px]", className)} {...props}>
       {text && <>{formatHtml(text)}</>}
     </div>
   )

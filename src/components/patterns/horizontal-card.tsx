@@ -3,8 +3,7 @@ import formatHtml from "@/lib/format-html"
 import {ElementType, HTMLAttributes, useRef, ReactNode} from "react"
 import Link from "@/components/patterns/elements/drupal-link"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import RosetteIcon from "./icons/RosetteIcon"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
@@ -54,12 +53,12 @@ const HorizontalCard = ({
     <div
       {...props}
       ref={ref}
-      className={twMerge(
+      className={cn(
         "@container relative",
-        clsx({
+        {
           "bg-cardinal-red text-white": cardBgColor === "cardinal_red",
           "bg-fog-light text-black-true": cardBgColor !== "cardinal_red",
-        }),
+        },
         props.className
       )}
     >
@@ -87,19 +86,16 @@ const HorizontalCard = ({
                 )}
 
                 {header && (
-                  <Heading
-                    id={headerId}
-                    className={twMerge("word-break mb-0 text-26 md:text-28", hideHeading && "sr-only")}
-                  >
+                  <Heading id={headerId} className={cn("word-break mb-0 text-26 md:text-28", hideHeading && "sr-only")}>
                     {header}
                   </Heading>
                 )}
               </div>
             </div>
-            <div className={clsx({"m-0 @10xl:rs-ml-2": !hideRosette})}>
+            <div className={cn({"m-0 @10xl:rs-ml-2": !hideRosette})}>
               {body && (
                 <div
-                  className={clsx("[&_p]:text-20", {
+                  className={cn("[&_p]:text-20", {
                     "[&_a:not(.cta-button)]:text-white [&_a:not(.cta-button)]:hocus:text-black-true":
                       cardBgColor === "cardinal_red",
                   })}
@@ -113,14 +109,14 @@ const HorizontalCard = ({
               {link?.url && (
                 <Link
                   href={link.url}
-                  className={twMerge(
+                  className={cn(
                     "cta-button group mt-32 block w-fit rounded-full border-2 px-26 pt-10 pb-11 text-24 leading-display font-semibold no-underline transition-colors md:text-18 hocus:underline",
-                    clsx({
+                    {
                       "border-white bg-white text-cardinal-red hocus:bg-black-true hocus:text-white":
                         cardBgColor === "cardinal_red",
                       "border-cardinal-red bg-cardinal-red text-white hocus:bg-black-true hocus:text-white":
                         cardBgColor !== "cardinal_red",
-                    })
+                    }
                   )}
                   {...linkAttributes}
                 >

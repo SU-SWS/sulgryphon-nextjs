@@ -3,7 +3,7 @@
 import {Select} from "@base-ui/react/select"
 import {ReactNode, useId, useState} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 export type SelectOption = {
   value: string
@@ -47,16 +47,13 @@ const Option = ({value, disabled, children}: {value: string; disabled?: boolean;
     // A list item, as before, so the base `li` text size still applies.
     render={<li />}
     className={({selected, highlighted}) =>
-      twMerge(
-        "m-0 mb-2 cursor-pointer overflow-hidden px-10 py-2 hocus:underline",
-        selected
-          ? "bg-archway text-white " + (highlighted ? "underline" : "")
-          : highlighted
-            ? "bg-black-10 text-black underline"
-            : disabled
-              ? "cursor-default font-semibold text-cardinal-red hocus:no-underline"
-              : "hocus:bg-black-10 hocus:text-black"
-      )
+      cn("m-0 mb-2 cursor-pointer overflow-hidden px-10 py-2 hocus:underline", {
+        "bg-archway text-white": selected,
+        underline: highlighted,
+        "bg-black-10 text-black": !selected && highlighted,
+        "cursor-default font-semibold text-cardinal-red hocus:no-underline": !selected && !highlighted && disabled,
+        "hocus:bg-black-10 hocus:text-black": !selected && !highlighted && !disabled,
+      })
     }
   >
     <Select.ItemText>{children}</Select.ItemText>
@@ -97,15 +94,15 @@ const SelectList = ({
         }}
       >
         <Select.Trigger
-          className={
-            "w-full border border-black-40 px-5 py-9 pl-15 text-left leading-tight " +
-            (optionChosen ? "rounded-3xl" : " rounded-full")
-          }
+          className={cn("w-full border border-black-40 px-5 py-9 pl-15 text-left leading-tight", {
+            "rounded-3xl": optionChosen,
+            "rounded-full": !optionChosen,
+          })}
           aria-labelledby={labeledBy}
         >
           <div className="flex flex-wrap justify-between">
             {label && (
-              <div className={"relative " + (optionChosen ? "top-[-15px] w-full type-0" : "type-0")}>
+              <div className={cn("relative type-0", {"top-[-15px] w-full": optionChosen})}>
                 <div id={labelId} className="w-fit bg-white px-5">
                   {label}
                 </div>

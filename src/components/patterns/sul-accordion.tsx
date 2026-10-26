@@ -2,7 +2,7 @@
 
 import {HTMLAttributes, JSX, useId} from "react"
 import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/20/solid"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import useAccordion from "@/lib/hooks/useAccordion"
 
 type Props = HTMLAttributes<HTMLElement> & {
@@ -43,16 +43,11 @@ const SulAccordion = ({button, children, headingLevel = "h2", headingProps, ...p
 
   const Heading = headingLevel === "h2" ? "h2" : headingLevel === "h3" ? "h3" : "h3"
   return (
-    <section
-      {...props}
-      ref={ref}
-      aria-labelledby={`${id}-button`}
-      className={twMerge("relative w-full", props.className)}
-    >
+    <section {...props} ref={ref} aria-labelledby={`${id}-button`} className={cn("relative w-full", props.className)}>
       <Heading className="mb-0 font-sans type-0 font-semibold" {...headingProps}>
         <button
           {...buttonProps}
-          className={twMerge(
+          className={cn(
             "relative flex w-full items-center justify-between rounded-full border border-black-40 px-5 py-9 pl-15 text-left",
             buttonProps?.className
           )}
@@ -68,7 +63,7 @@ const SulAccordion = ({button, children, headingLevel = "h2", headingProps, ...p
 
       <div
         {...panelProps}
-        className={twMerge(
+        className={cn(
           "max-h-[300px] w-full overflow-y-scroll border border-black-20 bg-white shadow-lg",
           panelProps.className
         )}

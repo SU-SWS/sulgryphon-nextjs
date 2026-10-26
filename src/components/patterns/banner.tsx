@@ -1,6 +1,7 @@
 import Card from "@/components/patterns/card"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import {ElementType, HTMLAttributes, ReactNode} from "react"
+import cn from "@/lib/utils/className"
 
 type BannerProps = HTMLAttributes<HTMLDivElement> & {
   image?: Maybe<ReactNode>
@@ -36,7 +37,10 @@ const Banner = ({
 
       {hasCardText && (
         <div
-          className={`mx-auto block @8xl:absolute @8xl:top-auto @8xl:bottom-36 ${overlayPosition === "right" ? "@8xl:right-36" : "@8xl:left-36"}`}
+          className={cn("mx-auto block @8xl:absolute @8xl:top-auto @8xl:bottom-36", {
+            "@8xl:right-36": overlayPosition === "right",
+            "@8xl:left-36": overlayPosition !== "right",
+          })}
         >
           <div className="card relative border border-solid border-black-10 bg-white leading-display text-black shadow-sm @8xl:max-w-[50%]">
             <Card

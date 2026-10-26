@@ -7,7 +7,7 @@ import {
   DrupalLocationLink,
 } from "@/components/patterns/link"
 import Oembed from "@/components/patterns/elements/oembed"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import {ElementType, ImgHTMLAttributes} from "react"
 import type {DOMNode} from "html-dom-parser"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
@@ -68,7 +68,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
               )
             }
 
-            nodeProps.className = twMerge(
+            nodeProps.className = cn(
               "hocus:underline transition-colors hocus:bg-black-10 focus:bg-none hocus:text-cardinal-red active:text-cardinal-red",
               nodeProps.className
             )
@@ -82,7 +82,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
             return <pre {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</pre>
 
           case "figure":
-            nodeProps.className = twMerge(
+            nodeProps.className = cn(
               nodeProps.className,
               "table mb-20",
               nodeProps.className.includes("center") && "*:mx-auto",

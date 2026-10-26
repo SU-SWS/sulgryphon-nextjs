@@ -83,27 +83,31 @@
   --animate-menu-x-morph-a: menu-x-morph-a 0.4s ease forwards;
   --animate-menu-x-morph-b: menu-x-morph-b 0.4s ease forwards;
   --animate-menu-x-morph-c: menu-x-morph-c 0.4s ease forwards;
-  --animate-menu-x-morph-r-a: menu-x-morph-a 0.4s ease reverse forwards;
-  --animate-menu-x-morph-r-b: menu-x-morph-b 0.4s ease reverse forwards;
-  --animate-menu-x-morph-r-c: menu-x-morph-c 0.4s ease reverse forwards;
+  /* The reverse animations need their own keyframe names: a browser only restarts an animation when its name
+     changes, so flipping `animation-direction` on the same keyframes jumps to the end instead of animating. */
+  --animate-menu-x-morph-r-a: menu-x-morph-r-a 0.4s ease forwards;
+  --animate-menu-x-morph-r-b: menu-x-morph-r-b 0.4s ease forwards;
+  --animate-menu-x-morph-r-c: menu-x-morph-r-c 0.4s ease forwards;
 
+  /* Animate `translate`, not `transform`: v4's translate-* utilities set the separate `translate` property, which
+     would stack with a transform and push the panel off screen before the close animation starts. */
   @keyframes slide-up {
     0% {
-      transform: translateY(0%);
+      translate: 0 0;
     }
     100% {
-      transform: translateY(-100%);
+      translate: 0 -100%;
       visibility: hidden;
     }
   }
 
   @keyframes slide-down {
     0% {
-      transform: translateY(-100%);
+      translate: 0 -100%;
       visibility: hidden;
     }
     100% {
-      transform: translateY(0%);
+      translate: 0 0;
     }
   }
 
@@ -131,6 +135,30 @@
     }
     100% {
       transform: translateY(-10px) rotate(-45deg);
+    }
+  }
+  @keyframes menu-x-morph-r-a {
+    0% {
+      transform: translateY(10px) rotate(45deg);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+  }
+  @keyframes menu-x-morph-r-b {
+    0% {
+      transform: rotate(-45deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+  }
+  @keyframes menu-x-morph-r-c {
+    0% {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    50% {
+      transform: translateY(-10px);
     }
   }
 }

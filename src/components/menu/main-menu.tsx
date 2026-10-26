@@ -11,7 +11,7 @@ import {usePathname} from "next/navigation"
 import {useBoolean} from "usehooks-ts"
 import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/graphql"
 import {getActiveTrail} from "@/lib/drupal/utils"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import {sendGAEvent} from "@next/third-parties/google"
 
 // Google Analytics: Track the click of a menu item
@@ -57,17 +57,17 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
       <div className="relative">
         <div
           aria-hidden={!isDesktop && !menuOpen}
-          className={
-            "absolute z-10 h-[calc(100vh-100px)] w-full -translate-y-full overflow-y-scroll border-t-4 border-cardinal-red bg-black-true py-20 lg:relative lg:block lg:h-auto lg:translate-none lg:transform-none lg:animate-none lg:overflow-visible lg:border-0 lg:bg-transparent lg:py-0 lg:pb-0" +
-            (menuOpen ? " translate-none animate-slide-down" : addCloseAnimation ? " animate-slide-up" : "")
-          }
+          className={cn(
+            "absolute z-10 h-[calc(100vh-100px)] w-full -translate-y-full overflow-y-scroll border-t-4 border-cardinal-red bg-black-true py-20 lg:relative lg:block lg:h-auto lg:translate-none lg:transform-none lg:animate-none lg:overflow-visible lg:border-0 lg:bg-transparent lg:py-0 lg:pb-0",
+            {"animate-slide-down": menuOpen, "animate-slide-up": !menuOpen && addCloseAnimation}
+          )}
         >
           <SearchForm
-            className={twMerge("px-20 pb-20 lg:hidden", !isDesktop && !menuOpen ? "hidden" : "block")}
+            className={cn("px-20 pb-20 lg:hidden", {hidden: !isDesktop && !menuOpen, block: isDesktop || menuOpen})}
             action="/all"
             inputProps={{className: "p-10 w-full rounded-full lg:hidden"}}
           />
-          <nav aria-label="Main Menu" className={!isDesktop && !menuOpen ? "hidden" : "block"}>
+          <nav aria-label="Main Menu" className={cn({hidden: !isDesktop && !menuOpen, block: isDesktop || menuOpen})}>
             <ul className="list-unstyled m-0 p-0 lg:flex lg:justify-end">
               {menuItems.map(item => (
                 <MenuItem key={item.id} {...item} activeTrail={activeTrail} />
@@ -80,10 +80,10 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
           </nav>
 
           <nav
-            className={twMerge(
-              "mt-40 flex items-center justify-center gap-10 p-40 text-center text-white lg:hidden",
-              !isDesktop && !menuOpen ? "hidden" : "block"
-            )}
+            className={cn("mt-40 flex items-center justify-center gap-10 p-40 text-center text-white lg:hidden", {
+              hidden: !isDesktop && !menuOpen,
+              block: isDesktop || menuOpen,
+            })}
           >
             <div className="mr-20 mb-10 text-left">Quick links:</div>
             <ul className="list-unstyled @container flex flex-wrap items-center gap-10">
@@ -288,28 +288,29 @@ const MenuItem = ({
           tabIndex={tabIndex}
           href={url.length >= 1 ? url : "#"}
           onClick={handleMenuClick}
-          className={twMerge(
+          className={cn(
             "flex w-full items-center p-20 text-white no-underline lg:text-black-true hocus:text-white hocus:underline",
-            menuLevel > 0 ? "lg:hocus:bg-black-10 lg:hocus:text-archway" : "lg:hocus:text-archway",
+            "lg:hocus:text-archway",
+            {"lg:hocus:bg-black-10": menuLevel > 0},
             getLinkBorderClasses()
           )}
           aria-current={activeTrail.at(-1) === id ? "page" : undefined}
         >
-          <div className={twMerge("w-full shrink-0 pl-30 text-nowrap lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
+          <div className={cn("w-full shrink-0 pl-30 text-nowrap lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
         </Link>
       )}
 
       {(!url || url.length === 0) && (
         <button
           tabIndex={tabIndex}
-          className={twMerge(
+          className={cn(
             "group flex w-full items-center p-20 text-left font-semibold text-white lg:text-black-true hocus:bg-black hocus:text-white lg:hocus:bg-transparent lg:hocus:text-archway",
             getLinkBorderClasses()
           )}
           onClick={toggleSubmenu}
           aria-expanded={submenuOpen ? "true" : "false"}
         >
-          <span className={twMerge("w-full shrink-0 pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</span>
+          <span className={cn("w-full shrink-0 pl-30 lg:pl-0", titleSpacing[menuLevel])}>{title}</span>
         </button>
       )}
 
@@ -328,9 +329,9 @@ const MenuItem = ({
           <ul
             aria-hidden={!submenuOpen}
             data-attribute-menu-level={menuLevel}
-            className={twMerge(
+            className={cn(
               "list-unstyled m-0 w-full p-0 lg:top-full lg:w-[200%] lg:bg-white",
-              submenuOpen ? "block" : "hidden",
+              {block: submenuOpen, hidden: !submenuOpen},
               menuLevel == 0 && "lg:absolute lg:shadow-lg xl:right-auto"
             )}
           >
@@ -354,22 +355,22 @@ const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}: {open: boolean; add
   return (
     <span className="mx-auto block w-[30px]">
       <span
-        className={twMerge(
-          "mb-[5px] block h-[5px] w-full rounded-full bg-black",
-          open ? "animate-menu-x-morph-a" : addCloseAnimation ? "animate-menu-x-morph-r-a" : ""
-        )}
+        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+          "animate-menu-x-morph-a": open,
+          "animate-menu-x-morph-r-a": !open && addCloseAnimation,
+        })}
       />
       <span
-        className={twMerge(
-          "mb-[5px] block h-[5px] w-full rounded-full bg-black",
-          open ? "animate-menu-x-morph-b" : addCloseAnimation ? "animate-menu-x-morph-r-b" : ""
-        )}
+        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+          "animate-menu-x-morph-b": open,
+          "animate-menu-x-morph-r-b": !open && addCloseAnimation,
+        })}
       />
       <span
-        className={twMerge(
-          "mb-[5px] block h-[5px] w-full rounded-full bg-black",
-          open ? "animate-menu-x-morph-c" : addCloseAnimation ? "animate-menu-x-morph-r-c" : ""
-        )}
+        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+          "animate-menu-x-morph-c": open,
+          "animate-menu-x-morph-r-c": !open && addCloseAnimation,
+        })}
       />
     </span>
   )
@@ -390,16 +391,16 @@ const DropDownButton = ({
 }) => {
   return (
     <button
-      className={twMerge(
+      className={cn(
         "group absolute top-0 right-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] lg:relative lg:h-auto",
-        menuLevel >= 1 ? "lg:bg-fog-light" : "lg:w-[40px] lg:bg-transparent"
+        {"lg:bg-fog-light": menuLevel >= 1, "lg:w-[40px] lg:bg-transparent": menuLevel < 1}
       )}
       onClick={onButtonClick}
       {...props}
     >
       <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus:border-white lg:group-hocus:border-archway">
         <ChevronDownIcon
-          className={twMerge(
+          className={cn(
             "mx-auto text-white transition-all lg:text-black-true lg:group-hocus:text-archway",
             isOpen && "scale-y-[-1]"
           )}

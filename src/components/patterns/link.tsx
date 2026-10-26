@@ -1,8 +1,7 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import {ChevronRightIcon, MapPinIcon} from "@heroicons/react/20/solid"
 import {HTMLAttributes, JSX} from "react"
-import {twMerge} from "tailwind-merge"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import {Link as LinkType} from "@/lib/gql/__generated__/graphql"
 
 export const DrupalLinkButton = ({
@@ -16,7 +15,7 @@ export const DrupalLinkButton = ({
     <Link
       href={href}
       {...props}
-      className={clsx(
+      className={cn(
         "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors md:text-18 hocus:underline",
         {
           "border-2 border-white bg-transparent text-white hover:bg-white hover:text-digital-red focus:bg-black-true focus:text-white":
@@ -47,7 +46,7 @@ export const DrupalLinkSecondaryButton = ({
     <Link
       href={href}
       {...props}
-      className={clsx(
+      className={cn(
         "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pt-10 pb-11 text-16 leading-display font-semibold text-digital-red no-underline transition-colors md:text-18 hocus:text-white hocus:underline",
         {
           "hover:border-cardinal-red-xdark hover:bg-digital-red focus:border-white focus:bg-black-true focus:text-white":
@@ -73,7 +72,7 @@ export const DrupalLinkBigButton = ({
     <Link
       href={href}
       {...props}
-      className={twMerge(
+      className={cn(
         "cta-button font-large group rs-mt-neg1 block w-fit rounded-full bg-digital-red px-36 py-16 text-16 leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true md:text-18 hocus:text-white hocus:underline",
         className
       )}
@@ -104,7 +103,7 @@ export const DrupalActionLink = ({
       {...props}
       href={href}
       title={shouldIncludeTitle ? title : undefined}
-      className={twMerge(
+      className={cn(
         "hocus:su-dark-brick rs-mt-neg1 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
         props.className
       )}
@@ -139,7 +138,7 @@ export const DrupalLocationLink = ({
       {...props}
       href={href}
       title={shouldIncludeTitle ? title : undefined}
-      className={twMerge(
+      className={cn(
         "hocus:su-dark-brick relative underline active:text-cardinal-red hocus:bg-black-10",
         props.className
       )}

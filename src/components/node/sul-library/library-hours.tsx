@@ -7,6 +7,7 @@ import {useId, useRef} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import {useBoolean} from "usehooks-ts"
+import cn from "@/lib/utils/className"
 
 const LibraryHeaderHours = ({hoursId}: {hoursId: string}) => {
   return (
@@ -45,19 +46,16 @@ const LibraryHeaderHoursComponent = ({hoursId}: {hoursId: string}) => {
           <div className="flex items-center justify-between text-21">
             See hours for this week
             <span className="w-fit border-b-2 border-transparent group-hocus:border-archway">
-              <ChevronDownIcon
-                width={40}
-                className={(expandedHours ? "scale-y-[-1]" : "") + " group-hocus:text-archway"}
-              />
+              <ChevronDownIcon width={40} className={cn("group-hocus:text-archway", {"scale-y-[-1]": expandedHours})} />
             </span>
           </div>
         </button>
         <ul
           id={elementId}
-          className={
-            (expandedHours ? "block" : "hidden") +
-            " list-unstyled absolute top-full left-0 z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md"
-          }
+          className={cn(
+            "list-unstyled absolute top-full left-0 z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md",
+            {block: expandedHours, hidden: !expandedHours}
+          )}
         >
           {selectOptions.map(day => (
             <li key={day.value} className="mb-10 flex items-center text-21">

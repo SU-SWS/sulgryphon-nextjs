@@ -2,7 +2,7 @@ import Image from "next/image"
 import Oembed from "@/components/patterns/elements/oembed"
 import {ElementType, HTMLAttributes} from "react"
 import {Maybe} from "@/lib/gql/__generated__/graphql"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLElement | HTMLDivElement> & {
   /**
@@ -29,7 +29,7 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
   return (
     <CardWrapper
       {...props}
-      className={twMerge(
+      className={cn(
         "relative centered w-full border border-black-10 bg-white shadow-lg xl:max-w-[980px]",
         props.className
       )}

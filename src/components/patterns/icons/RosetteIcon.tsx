@@ -1,5 +1,5 @@
 import {SVGProps} from "react"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 
 const RosetteIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -8,7 +8,7 @@ const RosetteIcon = (props: SVGProps<SVGSVGElement>) => (
     version="1.1"
     viewBox="0 0 504 504.019"
     {...props}
-    className={twMerge("fill-white", props.className)}
+    className={cn("fill-white", props.className)}
   >
     <path
       d="M251.98,2.002C114.145,2.002,2,114.18,2,252.02s112.145,249.997,249.98,249.997,250.02-112.162,250.02-249.997S389.866,2.002,251.98,2.002ZM251.98,475.288c-123.284,0-223.27-99.966-223.27-223.267S128.696,28.747,251.98,28.747s223.309,99.967,223.309,223.273-99.975,223.267-223.309,223.267Z"
