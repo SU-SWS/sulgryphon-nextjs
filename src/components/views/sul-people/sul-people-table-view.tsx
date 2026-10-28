@@ -58,7 +58,7 @@ const SulPeopleTableView = ({items}: Props) => {
         onSubmit={e => e.preventDefault()}
         action="javascript:void(0);"
       >
-        <div className="relative w-full md:w-[435px]">
+        <div className="relative w-full md:w-435">
           <label className="pl-15 text-18 leading-display font-semibold" htmlFor={id}>
             Search by name, title, or subject
           </label>
@@ -95,7 +95,7 @@ const SulPeopleTableView = ({items}: Props) => {
             <span className="sr-only">Search</span>
           </button>
         </div>
-        <div className="w-full self-end md:w-[435px]">
+        <div className="w-full self-end md:w-435">
           <fieldset className="mx-auto flex w-fit items-center rounded-full">
             <legend className="sr-only">Filter by speciality</legend>
             <ToggleOption checked={!typeFilter} onChange={() => setTypeFilter("")} first name="people-specialist">
@@ -119,9 +119,9 @@ const SulPeopleTableView = ({items}: Props) => {
           <caption className="sr-only" aria-live="polite" aria-atomic>
             Showing {displayedItems.length} of {items.length}
           </caption>
-          <Thead className="sr-only lg:not-sr-only lg:border-b lg:border-black-40">
-            <Tr className="block sm:hidden lg:table-row!">
-              <Th className="block min-w-[100px] pl-0 lg:table-cell" scope="col">
+          <Thead className="sr-only border-t-0 lg:not-sr-only lg:border-b lg:border-black-40">
+            <Tr className="block border-t-0 sm:hidden lg:table-row!">
+              <Th className="block min-w-100 pl-0 lg:table-cell" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
               <Th className="block pl-0 text-24 lg:table-cell" scope="col">
@@ -145,12 +145,12 @@ const SulPeopleTableView = ({items}: Props) => {
                 key={item.uuid}
                 className="block pt-16 sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left md:first:pt-0 lg:table-row! lg:max-h-none"
               >
-                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px]">
+                <Td className="table-image m-auto flex min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 sm:first:border-0 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-125">
                   {item.photoUrl && (
                     <Link
                       prefetch={false}
                       href={item.path || "#"}
-                      className="relative mb-16 block aspect-square w-[200px] overflow-hidden rounded-full md:mb-32 lg:mb-0 lg:w-[68px]"
+                      className="relative mb-16 block aspect-square w-xs overflow-hidden rounded-full md:mb-32 lg:mb-0 lg:w-68"
                       aria-hidden="true"
                       tabIndex={-1}
                     >

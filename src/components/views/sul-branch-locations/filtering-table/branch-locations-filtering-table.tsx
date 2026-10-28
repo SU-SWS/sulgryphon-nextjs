@@ -80,11 +80,11 @@ const BranchLocationFilteringTable = ({items}: Props) => {
 
       <Table className="responsive-table responsive-table-branches sm:ml-0">
         <Thead className="sr-only xl:not-sr-only">
-          <Tr className="block sm:hidden xl:table-row!">
-            <Th className="block min-w-[100px] pl-0 type-1 md:table-cell xl:pr-16" scope="col">
+          <Tr className="block border-t-0 sm:hidden xl:table-row!">
+            <Th className="block min-w-100 pl-0 type-1 md:table-cell xl:pr-16" scope="col">
               <span className="sr-only">Photo</span>
             </Th>
-            <Th className="block min-w-[100px] pl-0 text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
+            <Th className="block min-w-100 pl-0 text-center type-1 whitespace-nowrap md:table-cell md:text-left xl:rs-pr-5 xl:pr-20">
               Library
             </Th>
             <Th className="block pl-0 text-center type-1 whitespace-nowrap md:table-cell xl:rs-pr-5 xl:pr-20">
@@ -118,7 +118,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
           <Link
             prefetch={false}
             href={href}
-            className="relative my-16 block aspect-3/2 w-[300px] max-w-[338px] overflow-hidden md:w-[360px] xl:max-w-[125px]"
+            className="relative my-16 block aspect-3/2 w-300 max-w-338 overflow-hidden md:w-xl xl:max-w-125"
             aria-hidden="true"
             tabIndex={-1}
           >
@@ -133,7 +133,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         <Link
           prefetch={false}
           href={href}
-          className="m-auto mb-16 inline-block w-fit text-center text-[20px] font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red md:m-[unset] md:w-auto md:text-left hocus:underline"
+          className="m-auto mb-16 inline-block w-fit text-center text-20 font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red md:m-[unset] md:w-auto md:text-left hocus:underline"
         >
           <span className="mb-0 font-sans text-20 font-semibold">{title}</span>
         </Link>

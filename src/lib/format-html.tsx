@@ -84,7 +84,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
           case "figure":
             nodeProps.className = cn(
               nodeProps.className,
-              "table mb-20",
+              "table mb-20 [&_tr]:border-t-0",
               nodeProps.className.includes("center") && "*:mx-auto",
               !nodeProps.className.includes("float") && "w-full"
             )
