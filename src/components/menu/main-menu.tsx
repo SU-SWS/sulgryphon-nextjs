@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "@/components/patterns/elements/drupal-link"
-import {useEffect, useRef} from "react"
+import {useEffect, useRef, useSyncExternalStore} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import {useIsDesktop} from "@/lib/hooks/useIsDesktop"
 import SearchForm from "@/components/search/search-form"
@@ -26,13 +26,18 @@ const trackMenuClick = (menuItem: {label: string; url: string; menuLevel?: numbe
   })
 }
 
+const subscribe = () => () => {}
+const clientSnapshot = () => true
+const serverSnapshot = () => false
+
 const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   const ref = useRef<HTMLDivElement>(null)
   const {value: menuOpen, setFalse: closeMenu, toggle: toggleMenu} = useBoolean(false)
   const {value: addCloseAnimation, setValue: setAddCloseAnimation} = useBoolean(false)
 
   const browserUrl = usePathname()
-  const activeTrail = getActiveTrail(menuItems, usePathname() || "")
+  const hydrated = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot)
+  const activeTrail = hydrated ? getActiveTrail(menuItems, browserUrl || "") : []
   const isDesktop = useIsDesktop()
 
   const openCloseMenu = () => {
