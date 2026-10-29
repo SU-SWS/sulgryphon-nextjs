@@ -30,7 +30,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: pookmish/drupal8ci:php8.3
+      image: pookmish/drupal8ci:php8.4
       env:
         BUILD_PAGES: 500
         BUILD_COMPLETE: 'true'
