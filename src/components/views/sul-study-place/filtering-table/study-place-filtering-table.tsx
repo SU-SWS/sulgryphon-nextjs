@@ -162,8 +162,8 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
             Showing {displayedItems.length} of {items.length}
           </caption>
           <Thead className="sr-only lg:not-sr-only">
-            <Tr className="block sm:hidden lg:table-row!">
-              <Th className="block min-w-[100px] pl-0 type-1 md:table-cell lg:pr-32" scope="col">
+            <Tr className="block border-t-0 sm:hidden lg:table-row!">
+              <Th className="block min-w-100 pl-0 type-1 md:table-cell lg:pr-32" scope="col">
                 <span className="sr-only">Photo</span>
               </Th>
               <Th className="block pl-0 type-1 md:table-cell lg:pr-32" scope="col">
@@ -190,9 +190,9 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                 key={item.uuid}
                 className="block sm:flex-col sm:flex-wrap md:grid md:grid-cols-2 md:grid-rows-[repeat(5,minmax(0,auto))] md:justify-items-start md:gap-x-20 md:text-left lg:table-row! lg:max-h-none"
               >
-                <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-[125px] lg:pr-32">
+                <Td className="table-image m-auto block min-h-fit w-auto place-content-center justify-center sm:border-b sm:border-black-40 md:row-span-5 lg:table-cell lg:min-h-fit lg:w-125 lg:pr-32">
                   {item.branchImageUrl && (
-                    <div className="relative my-16 block aspect-3/2 w-auto max-w-[338px] overflow-hidden md:w-[360px] lg:max-w-[125px]">
+                    <div className="relative my-16 block aspect-3/2 w-auto max-w-338 overflow-hidden md:w-xl lg:max-w-125">
                       <Image
                         className="object-contain"
                         src={item.branchImageUrl}
@@ -246,7 +246,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
                   {item.libCalId && (
                     <a
                       href={`https://appointments.library.stanford.edu/space/${item.libCalId}`}
-                      className="button mb-16 w-fit border border-solid border-cardinal-red bg-white py-[4px] text-16 leading-snug whitespace-nowrap text-cardinal-red md:w-full lg:w-fit hocus:bg-cardinal-red hocus:text-white hocus:shadow-button"
+                      className="button mb-16 w-fit border border-solid border-cardinal-red bg-white py-4 text-16 leading-snug whitespace-nowrap text-cardinal-red md:w-full lg:w-fit hocus:bg-cardinal-red hocus:text-white hocus:shadow-button"
                       aria-haspopup="dialog"
                     >
                       <div className="flex items-center justify-end gap-xs md:justify-center lg:justify-end">
