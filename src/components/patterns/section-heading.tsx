@@ -1,5 +1,5 @@
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe} from "@/lib/gql/__generated__/graphql"
 
 type Props = {
   heading: string

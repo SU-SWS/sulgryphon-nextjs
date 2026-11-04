@@ -1,12 +1,13 @@
 import formatHtml from "@/lib/format-html"
 import {DrupalLinkButton} from "@/components/patterns/link"
 import {HTMLAttributes} from "react"
-import {ParagraphStanfordList} from "@/lib/gql/__generated__/drupal.d"
-import View from "@/components/views/view"
+import {ParagraphStanfordList} from "@/lib/gql/__generated__/graphql"
+import View, {loadViewPage} from "@/components/views/view"
 import {getParagraphBehaviors} from "@/components/paragraph/index"
 import {ElementType} from "react"
-import {getViewPagedItems, loadViewPage, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
-import clsx from "clsx"
+import {getViewPagedItems, VIEW_PAGE_SIZE} from "@/lib/gql/gql-views"
+import {signViewConfig} from "@/lib/view-config"
+import cn from "@/lib/utils/className"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -39,22 +40,33 @@ const ListParagraph = async ({paragraph}: Props) => {
   const ListWrapper: ElementType =
     paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" ? "section" : "div"
 
+  const signedConfig =
+    addLoadMore && viewId && displayId
+      ? signViewConfig({
+          viewId,
+          displayId,
+          contextualFilter: paragraph.suListView?.contextualFilter || [],
+          hasHeadline: !!paragraph.suListHeadline,
+          pageSize: VIEW_PAGE_SIZE,
+        })
+      : undefined
+
   return (
     <ListWrapper
-      className={clsx("centered flex flex-col", {
+      className={cn("centered flex flex-col", {
         "gap-xl": behaviors.list_paragraph?.heading_behavior == "show",
       })}
       aria-labelledby={ListWrapper === "section" ? paragraph.uuid : undefined}
     >
       {paragraph.suListHeadline && behaviors.list_paragraph?.heading_behavior !== "remove" && (
         <div
-          className={clsx("mb-20", {
+          className={cn("mb-20", {
             "flex items-center justify-between gap-16": behaviors.sul_list_styles?.display_heading_gradient,
           })}
         >
           <h2
             id={paragraph.uuid}
-            className={clsx("m-0 md:shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
+            className={cn("m-0 md:shrink-0", {"sr-only": behaviors.list_paragraph?.heading_behavior === "hide"})}
           >
             {paragraph.suListHeadline}
           </h2>
@@ -77,25 +89,14 @@ const ListParagraph = async ({paragraph}: Props) => {
           viewId={viewId}
           displayId={displayId}
           headingLevel={paragraph.suListHeadline ? "h3" : "h2"}
-          loadPage={
-            addLoadMore
-              ? loadViewPage.bind(
-                  null,
-                  viewId,
-                  displayId,
-                  paragraph.suListView?.contextualFilter || [],
-                  !!paragraph.suListHeadline,
-                  VIEW_PAGE_SIZE
-                )
-              : undefined
-          }
+          loadPage={signedConfig ? loadViewPage.bind(null, signedConfig) : undefined}
           totalItems={addLoadMore ? totalItems : viewItems.length}
         />
       )}
 
       {paragraph.suListButton?.url && (
         <DrupalLinkButton
-          {...paragraph.suListButton.attributes}
+          aria-label={paragraph.suListButton.attributes?.ariaLabel || undefined}
           className="mx-auto mt-0"
           href={paragraph.suListButton.url}
         >

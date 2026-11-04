@@ -2,19 +2,17 @@
 
 import {ClockIcon} from "@heroicons/react/24/outline"
 import {ErrorBoundary} from "react-error-boundary"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import {useId, useRef} from "react"
 import {ChevronDownIcon} from "@heroicons/react/20/solid"
 import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import {useBoolean} from "usehooks-ts"
+import cn from "@/lib/utils/className"
 
 const LibraryHeaderHours = ({hoursId}: {hoursId: string}) => {
   return (
-    <ErrorBoundary fallback={<></>} onError={e => console.error(e.message)}>
-      <CachedClientFetch>
-        <LibraryHeaderHoursComponent hoursId={hoursId} />
-      </CachedClientFetch>
+    <ErrorBoundary fallback={<></>} onError={e => console.error(e instanceof Error ? e.message : e)}>
+      <LibraryHeaderHoursComponent hoursId={hoursId} />
     </ErrorBoundary>
   )
 }
@@ -33,14 +31,14 @@ const LibraryHeaderHoursComponent = ({hoursId}: {hoursId: string}) => {
 
   return (
     <>
-      <div className="type-1 mb-20 flex text-black-true">
+      <div className="mb-20 flex type-1 text-black-true">
         <ClockIcon title="Hours" width={19} className="mr-10 inline" />
         {hoursDisplay}
       </div>
 
       <div ref={ref} className="relative">
         <button
-          className="group mb-5 w-full rounded border border-black-10 px-15 py-5 shadow-md"
+          className="group mb-5 w-full rounded-[0.3rem] border border-black-10 px-15 py-5 shadow-md"
           aria-expanded={expandedHours}
           onClick={toggleExpandedHours}
           aria-controls={elementId}
@@ -48,19 +46,16 @@ const LibraryHeaderHoursComponent = ({hoursId}: {hoursId: string}) => {
           <div className="flex items-center justify-between text-21">
             See hours for this week
             <span className="w-fit border-b-2 border-transparent group-hocus:border-archway">
-              <ChevronDownIcon
-                width={40}
-                className={(expandedHours ? "scale-y-[-1]" : "") + " group-hocus:text-archway"}
-              />
+              <ChevronDownIcon width={40} className={cn("group-hocus:text-archway", {"scale-y-[-1]": expandedHours})} />
             </span>
           </div>
         </button>
         <ul
           id={elementId}
-          className={
-            (expandedHours ? "block" : "hidden") +
-            " list-unstyled absolute left-0 top-full z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md"
-          }
+          className={cn(
+            "list-unstyled absolute top-full left-0 z-10 w-full border border-black-10 bg-white px-20 py-15 shadow-md",
+            {block: expandedHours, hidden: !expandedHours}
+          )}
         >
           {selectOptions.map(day => (
             <li key={day.value} className="mb-10 flex items-center text-21">

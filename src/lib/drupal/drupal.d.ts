@@ -1,5 +1,5 @@
 import {DayHours} from "@/lib/hooks/useLibraryHours"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
+import {Maybe} from "@/lib/gql/__generated__/graphql"
 
 export type ParagraphBehaviors = {
   layout_paragraphs?: {

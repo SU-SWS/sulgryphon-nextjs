@@ -4,4 +4,10 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /all/
 Disallow: /all?
+Disallow: /search
+Disallow: /calendar/
+Disallow: /study-place/
+Disallow: /preview
 crawl-delay: 30
+
+Sitemap: https://library.stanford.edu/sitemap.xml

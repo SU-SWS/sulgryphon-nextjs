@@ -5,7 +5,7 @@ import {LockupProps} from "@/components/patterns/elements/lockup/lockup"
 const LockupB = ({line1, line2, siteName, logoUrl}: LockupProps) => {
   return (
     <div className="py-10">
-      <Link href="/" className="text-black no-underline">
+      <Link prefetch={false} href="/" className="text-black no-underline">
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="mt-auto">
             <LockupLogo logoUrl={logoUrl} siteName={siteName} />

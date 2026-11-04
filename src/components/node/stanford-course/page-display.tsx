@@ -1,6 +1,6 @@
 import formatHtml from "@/lib/format-html"
 import Link from "@/components/patterns/elements/drupal-link"
-import {NodeStanfordCourse} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordCourse} from "@/lib/gql/__generated__/graphql"
 import InternalHeaderBanner from "@/components/patterns/internal-header-banner"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"
@@ -17,7 +17,7 @@ const StanfordCourse = ({node, ...props}: {node: NodeStanfordCourse}) => {
       <InternalHeaderBanner>
         <h1
           id={node.uuid}
-          className="relative mx-auto mb-10 mt-75 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
+          className="relative mx-auto mt-75 mb-10 flex w-full max-w-[calc(100vw-10rem)] flex-row gap-20 p-0 md:max-w-[calc(100vw-20rem)] 3xl:max-w-[calc(1500px-20rem)]"
         >
           {node.title}
         </h1>

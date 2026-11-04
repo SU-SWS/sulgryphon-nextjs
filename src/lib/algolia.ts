@@ -1,5 +1,5 @@
-import {getConfigPage} from "@/lib/gql/fetcher"
-import {StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
+import {getConfigPage} from "@/lib/gql/gql-queries"
+import {StanfordBasicSiteSetting} from "@/lib/gql/__generated__/graphql"
 
 // /search is force-dynamic and getAlgoliaCredential() is uncached, so without this each of the
 // warnings below would be logged on every page view.

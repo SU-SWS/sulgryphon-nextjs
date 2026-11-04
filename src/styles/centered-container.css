@@ -1,0 +1,24 @@
+/**
+ * Centered container: full width up to a gutter on each side, capped at 1240px on wide screens.
+ *
+ * Registered with `@utility` rather than `@layer components` so that variants such as `lg:centered`
+ * still generate CSS.
+ */
+@utility centered {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(100vw - 100px);
+
+  @variant lg {
+    max-width: calc(100vw - 160px);
+  }
+
+  @variant xl {
+    max-width: calc(100vw - 200px);
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-width: 1240px;
+  }
+}

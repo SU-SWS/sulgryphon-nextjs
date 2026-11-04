@@ -1,6 +1,6 @@
 import {ElementType, HtmlHTMLAttributes} from "react"
-import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/drupal.d"
-import {twMerge} from "tailwind-merge"
+import {ParagraphStanfordFaq} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
 import formatHtml from "@/lib/format-html"
 import Accordion, {AccordionHeaderChoice} from "@/components/patterns/elements/accordion"
 import ExpandCollapseAll from "@/components/patterns/elements/expand-collapse-all"
@@ -24,7 +24,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
   }
 
   return (
-    <div {...props} className={twMerge("mx-auto w-full lg:max-w-[98rem]", props.className)}>
+    <div {...props} className={cn("mx-auto w-full lg:max-w-[98rem]", props.className)}>
       <div className="rs-mb-1 flex flex-col items-center justify-between gap-20 md:flex-row">
         {paragraph.suFaqHeadline && (
           <Heading id={paragraph.uuid} className="mb-0 text-left">
@@ -35,7 +35,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
       </div>
 
       {paragraph.suFaqDescription && (
-        <div className="wysiwyg centered relative mb-20">{formatHtml(paragraph.suFaqDescription.processed)}</div>
+        <div className="wysiwyg relative centered mb-20">{formatHtml(paragraph.suFaqDescription.processed)}</div>
       )}
 
       {paragraph.suFaqQuestions?.map(question => (
@@ -46,7 +46,7 @@ const StanfordAccordionParagraph = ({paragraph, ...props}: Props) => {
           button={question.suAccordionTitle}
           headingLevel={accordionHeadingLevel}
         >
-          <div className="wysiwyg centered relative">{formatHtml(question.suAccordionBody.processed)}</div>
+          <div className="wysiwyg relative centered">{formatHtml(question.suAccordionBody.processed)}</div>
         </Accordion>
       ))}
     </div>

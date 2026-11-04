@@ -7,9 +7,10 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/20/solid"
-import {getConfigPage} from "@/lib/gql/fetcher"
-import {StanfordGlobalMessage} from "@/lib/gql/__generated__/drupal.d"
+import {getConfigPage} from "@/lib/gql/gql-queries"
+import {StanfordGlobalMessage} from "@/lib/gql/__generated__/graphql"
 import {JSX} from "react"
+import cn from "@/lib/utils/className"
 
 const GlobalMessage = async () => {
   const configPage = await getConfigPage<StanfordGlobalMessage>("StanfordGlobalMessage")
@@ -23,7 +24,7 @@ const GlobalMessage = async () => {
     {bgColor: string; textColor: string; linkClasses: string; icon: JSX.Element}
   > = {
     plain: {
-      bgColor: "bg-foggy-light",
+      bgColor: "bg-fog-light",
       textColor: "text-black-true",
       linkClasses: "w-fit transition text-black-true hocus:text-black hocus:bg-sky",
       icon: <BellIcon width={30} />,
@@ -56,9 +57,9 @@ const GlobalMessage = async () => {
   const chosenOption = options[configPage.suGlobalMsgType || "success"]
 
   return (
-    <div className={"relative z-30 lg:z-0 " + chosenOption.bgColor + " " + chosenOption.textColor}>
+    <div className={cn("relative z-30 lg:z-0", chosenOption.bgColor, chosenOption.textColor)}>
       <div className="centered flex gap-2xl py-20">
-        <div className="flex flex-shrink-0 items-center justify-center">
+        <div className="flex shrink-0 items-center justify-center">
           {chosenOption.icon}
           {configPage.suGlobalMsgLabel}
         </div>

@@ -10,7 +10,7 @@ const HoneypotField = ({ref}: {ref: Ref<HTMLInputElement>}) => {
     // Hidden both visually and from assistive tech (aria-hidden + off-screen + tabIndex -1
     // + autoComplete off). Humans never populate it; bots that fill every field do.
     // Do NOT use sr-only here - that is announced by screen readers.
-    <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
+    <div aria-hidden="true" className="absolute top-[-9999px] left-[-9999px] h-0 w-0 overflow-hidden">
       <label htmlFor={honeypotId}>Leave this field blank</label>
       <input
         id={honeypotId}

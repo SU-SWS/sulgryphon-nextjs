@@ -1,6 +1,6 @@
 import Link from "@/components/patterns/elements/drupal-link"
 import SearchModal from "@/components/search/search-modal"
-import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/drupal.d"
+import {MenuItem as MenuItemType} from "@/lib/gql/__generated__/graphql"
 
 const FallbackMainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
   return (

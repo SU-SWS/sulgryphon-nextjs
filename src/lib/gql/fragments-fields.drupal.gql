@@ -9,7 +9,6 @@ fragment FragmentLink on Link {
 
 fragment FragmentLinkAttributes on LinkAttributes {
   ariaLabel
-  ariaLabelledBy
 }
 
 fragment FragmentTextSummary on TextSummary {

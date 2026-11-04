@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Oembed from "@/components/patterns/elements/oembed"
 import {ElementType, HTMLAttributes} from "react"
-import {Maybe} from "@/lib/gql/__generated__/drupal.d"
-import {twMerge} from "tailwind-merge"
+import {Maybe} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLElement | HTMLDivElement> & {
   /**
@@ -29,13 +29,13 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
   return (
     <CardWrapper
       {...props}
-      className={twMerge(
-        "centered relative w-full border border-black-10 bg-white shadow-lg xl:max-w-[980px]",
+      className={cn(
+        "relative centered w-full border border-black-10 bg-white shadow-lg xl:max-w-[980px]",
         props.className
       )}
     >
       {imageUrl && (
-        <div className="relative aspect-[16/9] w-full">
+        <div className="relative aspect-video w-full">
           <Image
             className="object-cover object-center"
             src={imageUrl}
@@ -56,7 +56,7 @@ const ImageCard = ({imageUrl, imageAlt, videoUrl, isArticle, children, ...props}
 export const ImageCardSkeleton = () => {
   return (
     <div className="centered w-full border border-black-10 pb-20 shadow-lg xl:max-w-[980px]">
-      <div className="aspect-[16/9] w-full bg-black-10"></div>
+      <div className="aspect-video w-full bg-black-10"></div>
     </div>
   )
 }

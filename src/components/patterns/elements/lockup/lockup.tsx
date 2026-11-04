@@ -12,8 +12,8 @@ import LockupR from "@/components/patterns/elements/lockup/lockup-r"
 import LockupS from "@/components/patterns/elements/lockup/lockup-s"
 import LockupT from "@/components/patterns/elements/lockup/lockup-t"
 import LockupLogo from "@/components/patterns/elements/lockup/lockup-logo"
-import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/drupal.d"
-import {getConfigPage, getConfigPageField} from "@/lib/gql/fetcher"
+import {LockupSetting, Maybe, StanfordBasicSiteSetting} from "@/lib/gql/__generated__/graphql"
+import {getConfigPage, getConfigPageField} from "@/lib/gql/gql-queries"
 
 export interface LockupProps {
   useDefault?: Maybe<boolean>
@@ -48,11 +48,11 @@ export const Lockup = async () => {
 
   if (!lockupSettingsConfig?.suLockupEnabled) {
     return (
-      <Link href="/" className="flex flex-col text-black no-underline sm:flex-row sm:items-center">
+      <Link prefetch={false} href="/" className="flex flex-col text-black no-underline sm:flex-row sm:items-center">
         <div className="border-black py-2 pr-9 sm:border-r-2">
           <LockupLogo {...lockupProps} />
         </div>
-        <div className="text-nowrap font-sans text-21 font-normal text-black sm:relative sm:top-[5px] sm:pl-9 xl:text-23 2xl:text-26">
+        <div className="font-sans text-21 font-normal text-nowrap text-black sm:relative sm:top-[5px] sm:pl-9 xl:text-23 2xl:text-26">
           {siteName || "Stanford University Libraries"}
         </div>
       </Link>
@@ -99,7 +99,7 @@ export const Lockup = async () => {
     case "none":
     default:
       return (
-        <Link href="/" className="flex flex-col gap-4 no-underline sm:flex-row">
+        <Link prefetch={false} href="/" className="flex flex-col gap-4 no-underline sm:flex-row">
           <LockupLogo {...lockupProps} />
         </Link>
       )

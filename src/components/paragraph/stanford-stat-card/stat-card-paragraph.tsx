@@ -1,11 +1,11 @@
 import {HtmlHTMLAttributes} from "react"
-import {ParagraphStanfordStatCard} from "@/lib/gql/__generated__/drupal.d"
+import {ParagraphStanfordStatCard} from "@/lib/gql/__generated__/graphql"
 import StanfordWysiwyg from "@/components/paragraph/stanford-wysiwyg"
 import Link from "@/components/patterns/elements/drupal-link"
 import ReverseVisualOrder from "@/components/patterns/reverse-visual-order"
 import ImageCard from "@/components/patterns/image-card"
 import CountUpNumber from "@/components/patterns/count-up"
-import {clsx} from "clsx"
+import cn from "@/lib/utils/className"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
@@ -15,7 +15,7 @@ type Props = HtmlHTMLAttributes<HTMLDivElement> & {
 const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
   const headerTagChoice = (paragraph.suStatHeadlineLvl || "h2").split(".", 2)
   const headerTag = headerTagChoice[0]
-  const headerClasses = clsx(
+  const headerClasses = cn(
     headerTagChoice[1]?.replace(".", " ").replace("su-font-splash", "type-2 font-bold") || undefined,
     {"sr-only": paragraph.suStatHeadingHide}
   )
@@ -51,10 +51,10 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
   return (
     <ImageCard
       {...props}
-      className={clsx({
+      className={cn({
         "text-center": paragraph.suStatCentered,
         "text-white [&_a]:text-white": whiteText,
-        "border-0 bg-transparent shadow-none children:gap-10 children:px-10 children:py-0": transparentBg,
+        "border-0 bg-transparent shadow-none *:gap-10 *:px-10 *:py-0": transparentBg,
         "bg-white": paragraph.suStatBgColor?.color === "ffffff",
         "bg-black": paragraph.suStatBgColor?.color === "2e2d29",
         "bg-cool-grey": paragraph.suStatBgColor?.color === "53565a",
@@ -64,7 +64,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         "bg-lagunita": paragraph.suStatBgColor?.color === "007c92",
         "bg-palo-alto": paragraph.suStatBgColor?.color === "175e54",
         "bg-poppy": paragraph.suStatBgColor?.color === "e98300",
-        "bg-foggy-light": paragraph.suStatBgColor?.color === "f4f4f4",
+        "bg-fog-light": paragraph.suStatBgColor?.color === "f4f4f4",
         "bg-spirited": paragraph.suStatBgColor?.color === "e04f39",
       })}
       aria-labelledby={paragraph.suStatHeadline ? paragraph.uuid : undefined}
@@ -78,8 +78,8 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             {headerTag === "h2" && (
               <h2
                 id={paragraph.uuid}
-                className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                className={cn("mb-0", headerClasses, {
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -88,8 +88,8 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             {headerTag === "h3" && (
               <h3
                 id={paragraph.uuid}
-                className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                className={cn("mb-0", headerClasses, {
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -98,8 +98,8 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             {headerTag === "h4" && (
               <h4
                 id={paragraph.uuid}
-                className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                className={cn("mb-0", headerClasses, {
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -107,8 +107,8 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             )}
             {headerTag === "div" && (
               <div
-                className={clsx("mb-0", headerClasses, {
-                  "text-22 font-normal leading-display lg:text-24": transparentBg,
+                className={cn("mb-0", headerClasses, {
+                  "text-22 leading-display font-normal lg:text-24": transparentBg,
                 })}
               >
                 {paragraph.suStatHeadline}
@@ -123,7 +123,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
             <div className="block">
               <span
                 aria-hidden="true"
-                className={clsx(`fa-${paragraph.suStatIcon.iconName} ${paragraph.suStatIcon.style} text-[60px]`, {
+                className={cn(`fa-${paragraph.suStatIcon.iconName} ${paragraph.suStatIcon.style} text-[60px]`, {
                   "text-cardinal-red": allowTextColors && paragraph.suStatIconColor?.color === "8c1515",
                   "text-plum": allowTextColors && paragraph.suStatIconColor?.color === "620059",
                   "text-lagunita": allowTextColors && paragraph.suStatIconColor?.color === "007c92",
@@ -140,7 +140,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
               end={parseFloat(statMatches[1])}
               prefix={prefix}
               suffix={(statMatches && statMatches[2]) || undefined}
-              className={clsx("font-bold", {
+              className={cn("font-bold", {
                 "text-cardinal-red": allowTextColors && paragraph.suStatStatColor?.color === "8c1515",
                 "text-plum": allowTextColors && paragraph.suStatStatColor?.color === "620059",
                 "text-lagunita": allowTextColors && paragraph.suStatStatColor?.color === "007c92",
@@ -162,7 +162,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
       <StanfordWysiwyg text={paragraph.suStatBody?.processed} />
       {paragraph.suStatButton?.url && (
         <Link
-          className={clsx(
+          className={cn(
             "group flex w-fit items-center gap-3 rounded-[3.5rem] leading-display text-digital-red no-underline transition duration-500 ease-in-out hocus:underline",
             {
               "border-2 border-digital-red px-26 py-8 hocus:border-black hocus:bg-black hocus:text-white":
@@ -177,7 +177,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
           {paragraph.suStatButton.title}
 
           {paragraph.suStatLinkStyle !== "button" && (
-            <ChevronRightIcon className="group-hocus:translate-x-1.5 shrink-0 transition-all" width={20} />
+            <ChevronRightIcon className="shrink-0 transition-all" width={20} />
           )}
         </Link>
       )}

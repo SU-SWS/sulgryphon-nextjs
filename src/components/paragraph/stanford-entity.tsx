@@ -1,9 +1,9 @@
 import formatHtml from "@/lib/format-html"
 import NodeCardDisplay from "@/components/node/node-card"
 import {DrupalLinkButton} from "@/components/patterns/link"
-import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/drupal.d"
-import {twMerge} from "tailwind-merge"
-import {getEntityFromPath} from "@/lib/gql/fetcher"
+import {NodeUnion, Maybe, Link as LinkType, NodeInterface} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
+import {getEntityFromPath} from "@/lib/gql/gql-queries"
 import {HTMLAttributes} from "react"
 
 type EntityProps = HTMLAttributes<HTMLDivElement> & {
@@ -43,17 +43,17 @@ const StanfordEntity = async ({
   const gridClass = entities.length >= 3 ? gridClasses[2] : gridClasses[(entities.length % 3) - 1]
 
   return (
-    <div className="centered relative @container" {...props}>
+    <div className="@container relative centered" {...props}>
       <div className={wrapperClasses}>
         {headline && headingBehavior !== "remove" && (
-          <h2 id={headerId} className={twMerge("mb-40 text-left", headingBehavior === "hide" && "sr-only")}>
+          <h2 id={headerId} className={cn("mb-40 text-left", headingBehavior === "hide" && "sr-only")}>
             {headline}
           </h2>
         )}
         {description && <div className="mb-40">{formatHtml(description)}</div>}
 
         {entities && (
-          <div className={`mb-40 grid gap-[90px] ${gridClass}`} aria-live="polite">
+          <div className={cn("mb-40 grid gap-[90px]", gridClass)} aria-live="polite">
             {entities.map(item => (
               <div key={item.uuid} className="mx-auto w-full">
                 <EntityCard path={item.path} h3Heading={!!headline} />

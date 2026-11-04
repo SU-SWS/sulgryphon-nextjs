@@ -1,7 +1,7 @@
 import Rows from "@/components/paragraph/rows/rows"
 import LibraryAdditionalHours from "@/components/node/sul-library/library-additional-hours"
 import formatHtml from "@/lib/format-html"
-import {NodeSulLibrary} from "@/lib/gql/__generated__/drupal.d"
+import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
 import {redirect} from "next/navigation"
 import LibraryHeader from "./library-header"
 import InteriorPage from "@/components/layout/interior-page"
@@ -20,7 +20,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
   })
 
   return (
-    <article {...props} className="mb-50 @container" aria-labelledby={node.uuid}>
+    <article {...props} className="@container mb-50" aria-labelledby={node.uuid}>
       <NodePageMetadata
         pageTitle={node.title}
         metatags={node.metatag}
@@ -32,7 +32,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
       {!fullWidth && (
         <InteriorPage node={node} currentPath={node.path || "#"}>
           {node.suLibraryHours && (
-            <div className="centered mx-auto mb-50 w-full lg:max-w-[980px]">
+            <div className="mx-auto centered mb-50 w-full lg:max-w-[980px]">
               <LibraryAdditionalHours hoursId={node.suLibraryHours} />
             </div>
           )}
@@ -40,7 +40,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
           {node.suLibraryParagraphs && <Rows components={node.suLibraryParagraphs} />}
 
           {node.sulLibraryA11y && (
-            <div className="centered mx-auto mb-50 w-full py-20 lg:max-w-[980px]">
+            <div className="mx-auto centered mb-50 w-full py-20 lg:max-w-[980px]">
               <h2 className="type-3">Accessibility</h2>
               {formatHtml(node.sulLibraryA11y.processed)}
             </div>
@@ -51,7 +51,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
       {fullWidth && (
         <>
           {node.suLibraryHours && (
-            <div className="centered mx-auto mb-50 w-full lg:max-w-[980px]">
+            <div className="mx-auto centered mb-50 w-full lg:max-w-[980px]">
               <LibraryAdditionalHours hoursId={node.suLibraryHours} />
             </div>
           )}
@@ -59,7 +59,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
           {node.suLibraryParagraphs && <Rows components={node.suLibraryParagraphs} fullWidth />}
 
           {node.sulLibraryA11y && (
-            <div className="centered mx-auto mb-50 w-full py-20 lg:max-w-[980px]">
+            <div className="mx-auto centered mb-50 w-full py-20 lg:max-w-[980px]">
               <h2 className="type-3">Accessibility</h2>
               {formatHtml(node.sulLibraryA11y.processed)}
             </div>
@@ -67,7 +67,7 @@ const SulLibrary = async ({node, ...props}: {node: NodeSulLibrary}) => {
         </>
       )}
 
-      <footer className="rs-py-4 centered">Last updated {lastUpdated}</footer>
+      <footer className="centered rs-py-4">Last updated {lastUpdated}</footer>
     </article>
   )
 }

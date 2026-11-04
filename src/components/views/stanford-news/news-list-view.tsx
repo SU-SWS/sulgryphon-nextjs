@@ -1,5 +1,5 @@
 import StanfordNewsListItem from "@/components/node/stanford-news/list-item"
-import {NodeStanfordNews} from "@/lib/gql/__generated__/drupal.d"
+import {NodeStanfordNews} from "@/lib/gql/__generated__/graphql"
 import {JSX} from "react"
 import LoadMoreList from "@/components/patterns/load-more-list"
 

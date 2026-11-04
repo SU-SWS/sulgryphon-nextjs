@@ -1,15 +1,9 @@
-import {revalidatePath, revalidateTag} from "next/cache"
+import {flushPathCache} from "@/components/patterns/elements/flush-cache-action"
 
 const FlushCache = ({currentPath}: {currentPath: string}) => {
-  const clearCache = async () => {
-    "use server"
-
-    revalidatePath(currentPath)
-    revalidateTag(`paths:${currentPath}`, "max")
-  }
-
   return (
-    <form action={clearCache} className="fixed bottom-0 z-50">
+    <form action={flushPathCache} className="fixed bottom-0 z-50">
+      <input type="hidden" name="path" value={currentPath} />
       <button type="submit" className="rounded-full bg-white p-4 hocus:underline">
         Clear this page cache
       </button>

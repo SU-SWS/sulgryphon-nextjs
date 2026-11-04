@@ -15,7 +15,7 @@ const NewsSocialLink = ({prefix, suffix = "", children, ...props}: Props) => {
   if (!isClient) return
 
   return (
-    <ErrorBoundary fallback={<></>} onError={e => console.error(e.message)}>
+    <ErrorBoundary fallback={<></>} onError={e => console.error(e instanceof Error ? e.message : e)}>
       <Link href={`${prefix}${document.URL}${suffix}`} prefetch={false} {...props}>
         {children}
       </Link>

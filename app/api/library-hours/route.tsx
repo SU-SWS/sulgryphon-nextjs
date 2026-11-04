@@ -2,6 +2,7 @@ import {deserialize} from "@/lib/drupal/deserialize"
 import {NextResponse} from "next/server"
 import {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
 import {LibraryHours} from "@/lib/drupal/drupal"
+import {cacheLife, cacheTag} from "next/cache"
 
 export type FetchedApiData = {
   data: {
@@ -24,10 +25,13 @@ export type FetchedApiData = {
   }[]
 }
 
-export const dynamic = "force-static"
-export const revalidate = 28800
-
 const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
+  "use cache: remote"
+
+  // Hours change throughout the week, so refresh every 8 hours.
+  cacheLife({revalidate: 28800, expire: 86400})
+  cacheTag("all-cache", "library-hours")
+
   const from = new Date()
   from.setDate(from.getDate() - from.getDay())
   const to = new Date()
@@ -47,9 +51,8 @@ const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
     })
 
   const deserializedData = deserialize(data) as LibraryHours[]
-  if (!deserializedData) {
-    return {}
-  }
+  // Throw rather than return an empty result so the failure isn't cached and the next request can try again.
+  if (!deserializedData?.length) throw new Error("Failed to fetch library hours")
 
   const locations: Record<
     string,
@@ -86,9 +89,4 @@ const getLibraryHours = async (): Promise<Record<string, LocationHours>> => {
 
   return locations
 }
-export const GET = async () => {
-  const hours = await getLibraryHours()
-  // If no data, throw an error so the next request can try again.
-  if (Object.keys(hours).length === 0) throw new Error("Failed to fetch data")
-  return NextResponse.json(hours)
-}
+export const GET = async () => NextResponse.json(await getLibraryHours())

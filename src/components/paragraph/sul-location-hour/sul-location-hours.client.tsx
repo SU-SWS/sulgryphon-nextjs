@@ -6,11 +6,10 @@ import {MapPinIcon} from "@heroicons/react/24/solid"
 import Image from "next/image"
 import {HTMLAttributes, useId, useState} from "react"
 import {ErrorBoundary} from "react-error-boundary"
-import CachedClientFetch from "@/components/utils/cached-client-fetch"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
-import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/drupal.d"
+import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/graphql"
 import Link from "next/link"
 import formatHtml from "@/lib/format-html"
 
@@ -24,9 +23,7 @@ const SulLocationHoursClient = ({libraries, alert, ...props}: HoursProps) => {
   if (!libraries || libraries.length === 0) return
   return (
     <ErrorBoundary fallback={<></>}>
-      <CachedClientFetch>
-        <LibrariesTodayHours libraries={libraries} alert={alert} {...props} />
-      </CachedClientFetch>
+      <LibrariesTodayHours libraries={libraries} alert={alert} {...props} />
     </ErrorBoundary>
   )
 }
@@ -67,11 +64,11 @@ const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => 
             />
             {alert && (
               <span className="absolute bottom-0 z-10 w-full bg-cardinal-red p-10">
-                <span className="mx-auto flex w-fit items-center gap-10 text-12 font-semibold leading-normal text-white sm:text-16">
+                <span className="mx-auto flex w-fit items-center gap-10 text-12 leading-normal font-semibold text-white sm:text-16">
                   {icon && (
                     <span aria-hidden="true" className={`fa-${icon.iconName} ${icon.style} text-16 text-white`} />
                   )}
-                  <span className="[&_a:active]:text-white [&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black [&_a]:text-white">
+                  <span className="[&_a]:text-white [&_a:active]:text-white [&_a:focus]:bg-white [&_a:focus]:text-black [&_a:hover]:bg-white [&_a:hover]:text-black">
                     {formatHtml(alert?.processed)}
                   </span>
                 </span>

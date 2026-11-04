@@ -13,10 +13,9 @@ import {
   Maybe,
   Link as LinkType,
   ParagraphSulFeatCollectionSulCollectionCardsUnion,
-} from "@/lib/gql/__generated__/drupal.d"
-import {twMerge} from "tailwind-merge"
+} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
 import HeaderGradientLine from "../patterns/header-gradient-line"
-import clsx from "clsx"
 import StatCardParagraph from "./stanford-stat-card/stat-card-paragraph"
 
 type Props = HTMLAttributes<HTMLTableSectionElement> & {
@@ -44,10 +43,10 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
   }
 
   return (
-    <section className="centered relative" ref={ref} {...props}>
+    <section className="relative centered" ref={ref} {...props}>
       {headline && (
         <header
-          className={clsx("mb-40", {
+          className={cn("mb-40", {
             "flex flex-row items-center justify-between gap-16": styles?.display_heading_gradient,
           })}
         >
@@ -58,7 +57,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         </header>
       )}
 
-      <div className="relative @container">
+      <div className="@container relative">
         <ul className="list-unstyled grid gap-x-40 gap-y-30 sm:grid-cols-2 xl:grid-cols-3">
           {cards.map(card => (
             <li key={card.uuid}>
@@ -84,20 +83,20 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
         {!styles?.disable_wave_background && (
           <>
             {fullWidth && (
-              <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+              <div className="absolute top-[130px] left-0 z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
                 <div className="relative flex h-full w-full flex-col">
-                  <Wave className="rotate-180 -scale-x-100 transform" />
-                  <div className="flex-grow" />
+                  <Wave className="-scale-x-100 rotate-180 transform" />
+                  <div className="grow" />
                   <Wave className="-scale-x-100 transform" />
                 </div>
               </div>
             )}
             {!fullWidth && (
               <OnlyIfCentered elem={ref}>
-                <div className="absolute left-0 top-[130px] z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
+                <div className="absolute top-[130px] left-0 z-[-10] ml-[calc(-50vw+50%)] h-[calc(100%-260px)] w-screen bg-black-10">
                   <div className="relative flex h-full w-full flex-col">
-                    <Wave className="rotate-180 -scale-x-100 transform" />
-                    <div className="flex-grow" />
+                    <Wave className="-scale-x-100 rotate-180 transform" />
+                    <div className="grow" />
                     <Wave className="-scale-x-100 transform" />
                   </div>
                 </div>
@@ -113,7 +112,7 @@ const SulFeaturedCollection = ({headerId, headline, link, cards, styles, fullWid
           url={link?.url}
           title={link?.title}
           linkStyle={styles?.link_display_style}
-          className={twMerge("mx-auto mt-0 mt-40", linkAttributes?.className)}
+          className={cn("mx-auto mt-0 mt-40", linkAttributes?.className)}
         />
       )}
     </section>

@@ -1,22 +1,20 @@
 "use client"
-import {ReactNodeLike} from "prop-types"
 import formatHtml from "@/lib/format-html"
-import {ElementType, HTMLAttributes, useRef} from "react"
+import {ElementType, HTMLAttributes, useRef, ReactNode} from "react"
 import Link from "@/components/patterns/elements/drupal-link"
-import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/drupal.d"
-import {twMerge} from "tailwind-merge"
-import {clsx} from "clsx"
+import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
+import cn from "@/lib/utils/className"
 import RosetteIcon from "./icons/RosetteIcon"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
-  video?: Maybe<ReactNodeLike>
-  image?: Maybe<ReactNodeLike>
+  video?: Maybe<ReactNode>
+  image?: Maybe<ReactNode>
   caption?: Maybe<string>
   cardBgColor?: "fog_light" | "cardinal_red"
   hideRosette?: Maybe<boolean>
   superHeader?: Maybe<string>
   header?: Maybe<string>
-  footer?: Maybe<ReactNodeLike>
+  footer?: Maybe<ReactNode>
   body?: Maybe<string>
   link?: Maybe<LinkType>
   headerId?: string
@@ -55,26 +53,26 @@ const HorizontalCard = ({
     <div
       {...props}
       ref={ref}
-      className={twMerge(
-        "relative @container",
-        clsx({
+      className={cn(
+        "@container relative",
+        {
           "bg-cardinal-red text-white": cardBgColor === "cardinal_red",
           "bg-fog-light text-black-true": cardBgColor !== "cardinal_red",
-        }),
+        },
         props.className
       )}
     >
-      <div className="rs-p-1 relative w-full leading-display @container @6xl:rs-px-5 @8xl:centered @8xl:py-[5.6rem] @13xl:px-0">
+      <div className="@container relative w-full rs-p-1 leading-display @6xl:rs-px-5 @8xl:centered @8xl:py-[5.6rem] @13xl:px-0">
         <div className="grid items-center gap-2xl @9xl:grid-cols-2 @10xl:gap-30">
           {(image || video) && (
             <div className="relative h-fit w-full">
-              <div className="relative aspect-[4/3] w-full overflow-hidden @8xl:aspect-[5/3]">
+              <div className="relative aspect-4/3 w-full overflow-hidden @8xl:aspect-5/3">
                 {image}
                 {video}
               </div>
               {caption && (
-                <div className="absolute bottom-0 z-10 w-full bg-black bg-opacity-80 p-10">
-                  <div className="text-16 font-medium leading-normal text-white">{caption}</div>
+                <div className="absolute bottom-0 z-10 w-full bg-black/80 p-10">
+                  <div className="text-16 leading-normal font-medium text-white">{caption}</div>
                 </div>
               )}
             </div>
@@ -84,24 +82,21 @@ const HorizontalCard = ({
               {!hideRosette && <RosetteIcon height={64} width={64} className="object-contain" />}
               <div>
                 {superHeader && (
-                  <span className="mb-0 text-16 font-normal uppercase leading-display md:text-18">{superHeader}</span>
+                  <span className="mb-0 text-16 leading-display font-normal uppercase md:text-18">{superHeader}</span>
                 )}
 
                 {header && (
-                  <Heading
-                    id={headerId}
-                    className={twMerge("word-break lg:text-32 mb-0 text-26 md:text-28", hideHeading && "sr-only")}
-                  >
+                  <Heading id={headerId} className={cn("word-break mb-0 text-26 md:text-28", hideHeading && "sr-only")}>
                     {header}
                   </Heading>
                 )}
               </div>
             </div>
-            <div className={clsx({"m-0 @10xl:rs-ml-2": !hideRosette})}>
+            <div className={cn({"m-0 @10xl:rs-ml-2": !hideRosette})}>
               {body && (
                 <div
-                  className={clsx("[&_p]:text-20", {
-                    "[&_a:not(.cta-button)]:text-white hocus:[&_a:not(.cta-button)]:text-black-true":
+                  className={cn("[&_p]:text-20", {
+                    "[&_a:not(.cta-button)]:text-white [&_a:not(.cta-button)]:hocus:text-black-true":
                       cardBgColor === "cardinal_red",
                   })}
                 >
@@ -109,19 +104,19 @@ const HorizontalCard = ({
                 </div>
               )}
 
-              {footer && <div className="rs-pt-0 text-18 font-normal leading-display text-digital-red">{footer}</div>}
+              {footer && <div className="rs-pt-0 text-18 leading-display font-normal text-digital-red">{footer}</div>}
 
               {link?.url && (
                 <Link
                   href={link.url}
-                  className={twMerge(
-                    "cta-button group mt-32 block w-fit rounded-full border-2 px-26 pb-11 pt-10 text-24 font-semibold leading-display no-underline transition-colors hocus:underline md:text-18",
-                    clsx({
+                  className={cn(
+                    "cta-button group mt-32 block w-fit rounded-full border-2 px-26 pt-10 pb-11 text-24 leading-display font-semibold no-underline transition-colors md:text-18 hocus:underline",
+                    {
                       "border-white bg-white text-cardinal-red hocus:bg-black-true hocus:text-white":
                         cardBgColor === "cardinal_red",
                       "border-cardinal-red bg-cardinal-red text-white hocus:bg-black-true hocus:text-white":
                         cardBgColor !== "cardinal_red",
-                    })
+                    }
                   )}
                   {...linkAttributes}
                 >

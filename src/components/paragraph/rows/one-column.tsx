@@ -1,10 +1,8 @@
 import {HTMLAttributes} from "react"
 import Paragraph from "@/components/paragraph"
-import {ParagraphUnion} from "@/lib/gql/__generated__/drupal.d"
-import {isPreviewMode} from "@/lib/drupal/is-draft-mode"
+import {ParagraphUnion} from "@/lib/gql/__generated__/graphql"
 import {ParagraphBehaviors} from "@/lib/drupal/drupal.d"
-import {clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
+import cn from "@/lib/utils/className"
 import SectionHeading from "@/components/patterns/section-heading"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -14,35 +12,28 @@ type Props = HTMLAttributes<HTMLDivElement> & {
 }
 
 const OneColumn = async ({items, fullWidth, config, className}: Props) => {
-  const draftProps: Record<string, string> = {}
-  if (await isPreviewMode()) {
-    draftProps["data-columns"] = "1"
-  }
   return (
     <div
-      className={twMerge(
-        clsx(
-          "flex flex-col gap-90",
-          {
-            "pb-20 pt-20": !!config?.bg_color,
-            "pb-90 pt-40": config?.bg_color,
-            "px-30": config?.bg_color && !fullWidth,
-            "pt-0": config?.top_padding === "none",
-            "pt-60": config?.top_padding === "more",
-            "mb-0": config?.bottom_margin === "none",
-            "pb-0": config?.bottom_padding === "none",
-            "bg-foggy-light": config?.bg_color === "f4f4f4",
-            "bg-[#ebeae4]": config?.bg_color === "ebeae5",
-            "bg-[#dcecef]": config?.bg_color === "dcecef",
-            "bg-[#dcefec]": config?.bg_color === "dcefec",
-            "bg-[#f2e8f1]": config?.bg_color === "f2e8f1",
-            "bg-[#f7ecde]": config?.bg_color === "f7ecde",
-          },
-          className
-        )
+      className={cn(
+        "flex flex-col gap-90",
+        {
+          "pt-20 pb-20": !!config?.bg_color,
+          "pt-40 pb-90": config?.bg_color,
+          "px-30": config?.bg_color && !fullWidth,
+          "pt-0": config?.top_padding === "none",
+          "pt-60": config?.top_padding === "more",
+          "mb-0": config?.bottom_margin === "none",
+          "pb-0": config?.bottom_padding === "none",
+          "bg-fog-light": config?.bg_color === "f4f4f4",
+          "bg-[#ebeae4]": config?.bg_color === "ebeae5",
+          "bg-[#dcecef]": config?.bg_color === "dcecef",
+          "bg-[#dcefec]": config?.bg_color === "dcefec",
+          "bg-[#f2e8f1]": config?.bg_color === "f2e8f1",
+          "bg-[#f7ecde]": config?.bg_color === "f7ecde",
+        },
+        className
       )}
       data-columns="1"
-      {...draftProps}
     >
       {config?.heading && (
         <SectionHeading

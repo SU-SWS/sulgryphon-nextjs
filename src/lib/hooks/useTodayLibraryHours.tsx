@@ -1,6 +1,6 @@
 "use client"
 
-import useLibraryHours, {DayHours, LocationHours} from "@/lib/hooks/useLibraryHours"
+import useLibraryHours, {DayHours} from "@/lib/hooks/useLibraryHours"
 import {getLibrarySelectOptions, HoursSelectOption} from "@/components/node/sul-library/library-select-options"
 import {useIsClient} from "usehooks-ts"
 
@@ -16,7 +16,7 @@ type HoursProps = {
 }
 
 const useTodayLibraryHours = (branchId?: string): HoursProps | undefined => {
-  const libraryHours = useLibraryHours<LocationHours>(branchId)
+  const libraryHours = useLibraryHours(branchId)
   if (!useIsClient() || !libraryHours || !libraryHours?.primaryHours) {
     return
   }
