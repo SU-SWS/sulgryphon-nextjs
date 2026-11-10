@@ -109,7 +109,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 link-on-dark"
+                  className="link-on-dark mr-20"
                   href="https://searchworks.stanford.edu/articles"
                   onClick={() =>
                     trackMenuClick({
@@ -124,7 +124,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 link-on-dark"
+                  className="link-on-dark mr-20"
                   href="https://mylibrary.stanford.edu/"
                   onClick={() =>
                     trackMenuClick({
@@ -139,7 +139,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 link-on-dark"
+                  className="link-on-dark mr-20"
                   href="/all"
                   prefetch={false}
                   onClick={() =>
@@ -155,7 +155,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 link-on-dark"
+                  className="link-on-dark mr-20"
                   href="/library-accessibility"
                   onClick={() =>
                     trackMenuClick({
@@ -170,7 +170,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 link-on-dark"
+                  className="link-on-dark mr-20"
                   href="/contact-us"
                   onClick={() =>
                     trackMenuClick({

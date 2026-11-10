@@ -100,7 +100,7 @@ export const DrupalActionLink = ({
       {...props}
       href={href}
       title={shouldIncludeTitle ? title : undefined}
-      className={cn("rs-mt-neg1 link-cta", props.className)}
+      className={cn("link-cta", props.className)}
     >
       {children}
       <span className="whitespace-nowrap">
