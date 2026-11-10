@@ -42,10 +42,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
         )}
 
         <div className="flex flex-col gap-15 text-center">
-          <Link
-            href={node.path || "#"}
-            className="text-black no-underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:underline"
-          >
+          <Link href={node.path || "#"} className="link-card">
             <HeadingElement className="mb-03em text-24 font-bold">{node.title}</HeadingElement>
           </Link>
           {node.suPersonFullTitle && <div className="text-18 @lg:type-0">{node.suPersonFullTitle}</div>}
@@ -81,10 +78,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
           </div>
         )}
         <div className="flex flex-col gap-[1rem]">
-          <Link
-            href={node.path || "#"}
-            className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
-          >
+          <Link href={node.path || "#"} className="link-card">
             <HeadingElement className="type-1">{node.title}</HeadingElement>
           </Link>
 

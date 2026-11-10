@@ -6,6 +6,7 @@ import {ArrowPathIcon} from "@heroicons/react/20/solid"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
 import cn from "@/lib/utils/className"
+import {primaryButtonClasses} from "@/components/patterns/button-styles"
 
 export type LoadMoreListProps = HtmlHTMLAttributes<HTMLDivElement> & {
   /**
@@ -96,7 +97,10 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
       {items.length < totalItems && loadPage && (
         <button
           type="button"
-          className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true md:text-18 hocus:text-white hocus:underline"
+          className={cn(
+            "cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
+            primaryButtonClasses
+          )}
           onClick={showMoreItems}
         >
           {buttonText ? buttonText : "Load more"}

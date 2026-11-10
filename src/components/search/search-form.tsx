@@ -3,6 +3,8 @@
 import {FormEvent, HTMLAttributes, Suspense, useId, useRef} from "react"
 import {useRouter, useSearchParams} from "next/navigation"
 import HoneypotField from "@/components/patterns/elements/honeypot-field"
+import cn from "@/lib/utils/className"
+import {primaryButtonClasses} from "@/components/patterns/button-styles"
 
 type FormProps = HTMLAttributes<HTMLDivElement> & {
   action: string
@@ -72,10 +74,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
           <input {...inputProps} ref={inputRef} />
         </div>
         <HoneypotField ref={honeypotRef} />
-        <button
-          type="submit"
-          className="rounded-full bg-digital-red p-15 text-16 text-white transition hover:bg-cardinal-red-dark md:text-18 hocus:underline"
-        >
+        <button type="submit" className={cn("rounded-full p-15 text-16 md:text-18", primaryButtonClasses)}>
           Search
         </button>
       </form>

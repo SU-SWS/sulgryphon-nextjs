@@ -19,14 +19,14 @@ const SearchModal = () => {
     <>
       <Link
         href="/all"
-        className="group block aspect-square rounded-full bg-digital-red p-5 hocus:bg-digital-red-dark"
+        className="group block aspect-square rounded-full bg-digital-red p-5 transition-colors hover:bg-digital-red-dark focus-visible:bg-digital-red-dark focus-visible:focus-ring-pill active:bg-black-true"
         onClick={toggleModal}
         aria-haspopup="dialog"
         prefetch={false}
       >
         <MagnifyingGlassIcon
           width={30}
-          className="mt-[-1px] border-b border-transparent p-4 text-white group-hocus:border-white"
+          className="mt-[-1px] border-b border-transparent p-4 text-white group-hover:border-white group-focus-visible:border-white group-active:border-transparent"
         />
         <span className="sr-only">Search</span>
       </Link>
@@ -40,29 +40,23 @@ const SearchModal = () => {
 
           <p className="p-20 text-center text-white">
             Search gives results from this site,{" "}
-            <Link href="https://searchworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">
+            <Link href="https://searchworks.stanford.edu/" className="link-on-dark">
               catalog
             </Link>
             ,{" "}
-            <Link
-              href="https://searchworks.stanford.edu/articles"
-              className="text-white hocus:text-white hocus:no-underline"
-            >
+            <Link href="https://searchworks.stanford.edu/articles" className="link-on-dark">
               articles+
             </Link>
             ,{" "}
-            <Link
-              href="https://guides.library.stanford.edu/"
-              className="text-white hocus:text-white hocus:no-underline"
-            >
+            <Link href="https://guides.library.stanford.edu/" className="link-on-dark">
               guides
             </Link>
             ,{" "}
-            <Link href="https://exhibits.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">
+            <Link href="https://exhibits.stanford.edu/" className="link-on-dark">
               online exhibits
             </Link>
             , and{" "}
-            <Link href="https://earthworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">
+            <Link href="https://earthworks.stanford.edu/" className="link-on-dark">
               EarthWorks
             </Link>
             .

@@ -16,29 +16,23 @@ const HomePageBanner = async () => {
             <SearchForm action="/all" className="@container mb-20" />
             <p>
               Search gives results from this site,{" "}
-              <Link href="https://searchworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">
+              <Link href="https://searchworks.stanford.edu/" className="link-on-dark">
                 catalog
               </Link>
               ,&nbsp;
-              <Link
-                href="https://searchworks.stanford.edu/articles"
-                className="text-white hocus:text-white hocus:no-underline"
-              >
+              <Link href="https://searchworks.stanford.edu/articles" className="link-on-dark">
                 articles+
               </Link>
               ,&nbsp;
-              <Link
-                href="https://guides.library.stanford.edu/"
-                className="text-white hocus:text-white hocus:no-underline"
-              >
+              <Link href="https://guides.library.stanford.edu/" className="link-on-dark">
                 guides
               </Link>
               ,&nbsp;
-              <Link href="https://exhibits.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">
+              <Link href="https://exhibits.stanford.edu/" className="link-on-dark">
                 online exhibits
               </Link>
               , and&nbsp;
-              <Link href="https://earthworks.stanford.edu/" className="text-white hocus:text-white hocus:no-underline">
+              <Link href="https://earthworks.stanford.edu/" className="link-on-dark">
                 EarthWorks
               </Link>
               .

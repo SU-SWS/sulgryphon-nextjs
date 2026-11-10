@@ -41,10 +41,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         <div className="flex flex-col items-start gap-xs">
           <div className="mb-5 flex flex-col">
             <HeadingElement className="order-2 text-18 font-bold tracking-[-0.2px] sm:text-20">
-              <Link
-                href={goToUrl}
-                className="stretched-link text-black-true no-underline hocus:text-brick-dark hocus:underline"
-              >
+              <Link href={goToUrl} className="stretched-link link-card">
                 {node.title}
               </Link>
             </HeadingElement>

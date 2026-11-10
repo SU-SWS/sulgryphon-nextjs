@@ -7,6 +7,8 @@ import {usePathname} from "next/navigation"
 import {useEffect, useMemo, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import AlgoliaHit, {AlgoliaHitRecord} from "@/components/search/algolia-hit"
+import cn from "@/lib/utils/className"
+import {primaryButtonClasses} from "@/components/patterns/button-styles"
 
 type Props = {
   appId: string
@@ -183,7 +185,10 @@ const Results = () => {
           {!isLastPage && (
             <button
               type="button"
-              className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true disabled:opacity-50 md:text-18 hocus:text-white hocus:underline"
+              className={cn(
+                "cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold disabled:opacity-50 md:text-18",
+                primaryButtonClasses
+              )}
               disabled={pending}
               aria-disabled={pending}
               onClick={() => {
