@@ -7,6 +7,7 @@ import ImageCard from "@/components/patterns/image-card"
 import CountUpNumber from "@/components/patterns/count-up"
 import cn from "@/lib/utils/className"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
+import {secondaryButtonClasses} from "@/components/patterns/button-styles"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordStatCard
@@ -160,14 +161,16 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         </div>
       </ReverseVisualOrder>
       <StanfordWysiwyg text={paragraph.suStatBody?.processed} />
-      {paragraph.suStatButton?.url && (
+      {paragraph.suStatButton?.url && paragraph.suStatLinkStyle === "button" && (
+        // Secondary button. The spec has no dark background row, so on dark cards it keeps its white outline and
+        // gets the focus ring, like the other dark background buttons.
         <Link
           className={cn(
-            "group flex w-fit items-center gap-3 rounded-[3.5rem] leading-display text-digital-red no-underline transition duration-500 ease-in-out hocus:underline",
+            "flex w-fit items-center gap-3 rounded-[3.5rem] px-26 py-8 leading-display",
+            whiteText
+              ? "border-2 border-white text-white no-underline transition-colors hover:bg-black hover:text-white hover:underline focus-visible:bg-black focus-visible:text-white focus-visible:underline focus-visible:focus-ring-pill active:bg-black-true active:no-underline"
+              : secondaryButtonClasses,
             {
-              "border-2 border-digital-red px-26 py-8 hocus:border-black hocus:bg-black hocus:text-white":
-                paragraph.suStatLinkStyle === "button",
-              "border-white text-white hocus:text-white": whiteText,
               "mx-auto": paragraph.suStatCentered,
               "text-18": transparentBg,
             }
@@ -175,10 +178,21 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
           href={paragraph.suStatButton.url}
         >
           {paragraph.suStatButton.title}
+        </Link>
+      )}
 
-          {paragraph.suStatLinkStyle !== "button" && (
-            <ChevronRightIcon className="shrink-0 transition-all" width={20} />
-          )}
+      {paragraph.suStatButton?.url && paragraph.suStatLinkStyle !== "button" && (
+        // CTA link, or an in-line link on a dark card. Both are inline-block or inline, so the card's text-center
+        // centers them.
+        <Link
+          className={cn("leading-display", whiteText ? "link-on-dark" : "link-cta", {"text-18": transparentBg})}
+          href={paragraph.suStatButton.url}
+        >
+          {paragraph.suStatButton.title}
+          <span className="whitespace-nowrap">
+            &#65279;
+            <ChevronRightIcon height={20} className="inline-block h-full" />
+          </span>
         </Link>
       )}
     </ImageCard>

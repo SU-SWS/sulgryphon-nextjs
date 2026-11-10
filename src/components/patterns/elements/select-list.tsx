@@ -145,8 +145,11 @@ const SelectList = ({
             {/* The chosen values, for screen readers, as the visible ones are outside the trigger. */}
             {optionChosen && (
               <span className="sr-only">
-                {chosenValues.map(item => (
-                  <span key={item}>{getLabel(item, options)}, </span>
+                {chosenValues.map((item, index) => (
+                  <span key={item}>
+                    {index > 0 && ", "}
+                    {getLabel(item, options)}
+                  </span>
                 ))}
               </span>
             )}

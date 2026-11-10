@@ -4,6 +4,8 @@ import Link from "@/components/patterns/elements/drupal-link"
 import {HTMLAttributes, useEffect, useId, useRef, useState} from "react"
 import {useAutoAnimate} from "@formkit/auto-animate/react"
 import {LibGuide} from "@/lib/drupal/drupal"
+import {primaryButtonClasses} from "@/components/patterns/button-styles"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   guides: LibGuide[]
@@ -69,7 +71,7 @@ export const LibGuideSection = ({heading, guides}: {heading: string; guides: Lib
 
       {moreGuides.length > 0 && (
         <button
-          className="button mt-20 block"
+          className={cn("button mt-20 block", primaryButtonClasses)}
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}

@@ -15,9 +15,35 @@
 */
 
 @layer base {
+  /*
+    The outline color is set before focus too (invisible while the outline style is none). Otherwise an element
+    with `transition-colors`, which includes outline-color, fades the ring in from its text color.
+  */
+  :where(a, button, summary, [role="button"], [tabindex], input, select, textarea) {
+    outline-color: var(--color-digital-blue);
+  }
+
   :where(a, button, summary, [role="button"], [tabindex]):focus-visible {
     outline: 0.3rem solid var(--color-digital-blue);
     outline-offset: 0.4rem;
+  }
+}
+
+/*
+  Form controls. The @tailwindcss/forms reset (loaded by decanter/forms) gives them a 1px #2563EB ring and border
+  on any :focus. Its rules are in the base layer but output after this file, at higher specificity than the rule
+  above, so these live in the components layer, which beats base whatever the order. Utilities still override
+  them. Browsers treat focus in a text field as keyboard focus, so those also show the outline after a click.
+*/
+@layer components {
+  :is(input, select, textarea):focus {
+    box-shadow: none;
+    border-color: var(--color-digital-blue);
+  }
+
+  :is(input, select, textarea):focus-visible {
+    outline: 0.3rem solid var(--color-digital-blue);
+    outline-offset: 0.2rem;
   }
 }
 
@@ -34,8 +60,8 @@
   Links in running text stay inline, so they wrap with the paragraph. A browser paints an inline element line by
   line (each line's background, then its text), so anything that reaches above a line would cover the descenders
   of the line before it. Their box therefore only grows sideways: real padding, cancelled by a negative margin so
-  nothing moves, and repeated on every line with box-decoration-break. The focus outline sits on that padding
-  edge.
+  nothing moves, and repeated on every line with box-decoration-break. The focus ring sits on that padding edge,
+  drawn as an inset shadow (see link-inline).
 
   Standalone links (card headlines, CTA links) are inline-block: one rectangle with even sides, painted before
   any of its text, so a box-shadow can extend it on all sides without covering anything. The 0.4rem focus
@@ -58,8 +84,15 @@
     text-decoration-line: none;
   }
 
+  /*
+    The ring is drawn inside the padding, as an inset shadow that paints under the text: an outline outside it
+    would cover the next word, and one inset would be drawn over the text. The transparent outline still shows
+    in forced-colors (high contrast) mode, which drops shadows.
+  */
   &:focus-visible {
+    outline: 0.3rem solid transparent;
     outline-offset: 0;
+    box-shadow: inset 0 0 0 0.3rem var(--color-digital-blue);
   }
 
   &:active {
@@ -89,7 +122,9 @@
   }
 
   &:focus-visible {
+    outline: 0.3rem solid transparent;
     outline-offset: 0;
+    box-shadow: inset 0 0 0 0.3rem var(--color-digital-blue);
   }
 
   &:active {

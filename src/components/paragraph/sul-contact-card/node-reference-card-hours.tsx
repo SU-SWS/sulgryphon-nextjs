@@ -29,10 +29,7 @@ const NodeReferenceCardHours = ({branchId, branchName}: {branchId: string; branc
 
         {hoursDisplay}
         <span className="mx-5">&nbsp;/&nbsp;</span>
-        <a
-          className="font-normal text-white hocus:text-illuminating-dark hocus:no-underline"
-          href={`https://library-hours.stanford.edu/libraries/${branchId}`}
-        >
+        <a className="link-on-dark font-normal" href={`https://library-hours.stanford.edu/libraries/${branchId}`}>
           See all hours<span className="sr-only">&nbsp;for&nbsp;{branchName}</span>
         </a>
       </div>

@@ -6,6 +6,8 @@ import SulStudyPlaceCard from "@/components/node/sul-study-place/card"
 import SelectList, {SelectValue} from "@/components/patterns/elements/select-list"
 import autoAnimate from "@formkit/auto-animate"
 import {NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
+import {primaryButtonClasses} from "@/components/patterns/button-styles"
+import cn from "@/lib/utils/className"
 
 interface SelectOption {
   value: string
@@ -126,10 +128,10 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
           />
         </fieldset>
 
-        <button type="submit" className="button mr-20 text-16 md:text-18">
+        <button type="submit" className={cn("button mr-20 text-16 md:text-18", primaryButtonClasses)}>
           Filter
         </button>
-        <button className="button text-16 md:text-18" onClick={handleReset}>
+        <button className={cn("button text-16 md:text-18", primaryButtonClasses)} onClick={handleReset}>
           Reset
         </button>
       </form>
