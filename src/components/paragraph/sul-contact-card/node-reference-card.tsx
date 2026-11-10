@@ -46,9 +46,13 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
         <div className="card-body grow items-start bg-black-true rs-py-4 rs-px-2">
           <div className="pt-0 text-18 leading-display font-normal">
             {contactBranch?.path ? (
-              <Link href={contactBranch?.path} className="link-on-dark">
-                <h2 className="rs-mb-1 type-2">{contactBranch?.title}</h2>
-              </Link>
+              // The link goes inside the heading: link-on-dark is inline, so around a block its box splits and the
+              // hover box and focus ring land on empty fragments above and below the text.
+              <h2 className="rs-mb-1 type-2">
+                <Link href={contactBranch.path} className="link-on-dark">
+                  {contactBranch.title}
+                </Link>
+              </h2>
             ) : (
               <h2 className="rs-mb-1 type-2 text-white">{paragraph.sulContactTitle}</h2>
             )}

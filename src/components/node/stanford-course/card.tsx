@@ -26,9 +26,11 @@ const StanfordCourseCard = ({node, h3Heading, ...props}: Props) => {
           )}
         </span>
       </div>
-      <Link href={node.path || "#"} className="link-card">
-        <HeadingElement className="text-24 font-bold">{node.title}</HeadingElement>
-      </Link>
+      <HeadingElement className="text-24 font-bold">
+        <Link href={node.path || "#"} className="link-card">
+          {node.title}
+        </Link>
+      </HeadingElement>
     </article>
   )
 }
