@@ -148,36 +148,45 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         {""}
       </Td>
       <Td className="block w-auto sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:rs-pr-5 xl:pr-20 xl:align-middle">
+        {/* The icons are inside the links so they share the links' states, as in the person contact links. */}
         {phone && (
-          <a
-            href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-            className="m-auto flex w-fit items-center justify-center gap-4 text-16 leading-normal font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:m-[unset] md:justify-start"
-          >
-            <PhoneIcon title="Phone Number" width={20} />
-            {phone}
-          </a>
+          <div className="text-center md:text-left">
+            <a
+              href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
+              className="link-cta text-16 leading-normal font-semibold"
+            >
+              <span className="whitespace-nowrap">
+                <PhoneIcon aria-hidden="true" width={20} className="mr-4 inline-block align-text-bottom" />
+                &#65279;
+              </span>
+              {phone}
+            </a>
+          </div>
         )}
         {email && (
-          <a
-            href={`mailto:${email}`}
-            className="m-auto mb-16 flex w-fit items-center justify-center gap-4 text-16 leading-normal font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:mx-[unset] md:justify-start xl:mb-0"
-          >
-            <EnvelopeIcon title="Email" width={20} />
-            {email}
-          </a>
+          <div className="mb-16 text-center md:text-left xl:mb-0">
+            <a href={`mailto:${email}`} className="link-cta text-16 leading-normal font-semibold wrap-anywhere">
+              <span className="whitespace-nowrap">
+                <EnvelopeIcon aria-hidden="true" width={20} className="mr-4 inline-block align-text-bottom" />
+                &#65279;
+              </span>
+              {email}
+            </a>
+          </div>
         )}
         {/* Without this, the responsive table library injects a "&nbsp;". */}
         {""}
       </Td>
       <Td className="block w-auto text-16 leading-normal sm:border-b sm:border-black-40 xl:table-cell xl:w-1/4 xl:align-middle">
         {address && mapUrl && (
-          <div className="pb-16 xl:pb-0">
-            <a href={mapUrl} className="flex items-center justify-center gap-4 md:justify-start">
-              <MapPinIcon title="Map" width={20} className="min-w-20" />
-              <Address
-                {...address}
-                className="text-center font-normal no-underline hover:bg-black-10 hover:text-brick-dark hover:underline focus:bg-none md:text-left"
-              />
+          <div className="pb-16 text-center md:text-left xl:pb-0">
+            {/* A block-level flex row inside the link keeps the icon beside the multi-line address and still
+                takes the link's hover underline. */}
+            <a href={mapUrl} className="link-cta font-semibold">
+              <span className="flex items-center gap-4">
+                <MapPinIcon aria-hidden="true" width={20} className="min-w-20" />
+                <Address {...address} className="text-center md:text-left" />
+              </span>
             </a>
           </div>
         )}

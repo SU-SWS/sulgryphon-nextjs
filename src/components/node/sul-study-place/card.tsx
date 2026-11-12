@@ -54,13 +54,17 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
 
             <div className="leading-tight">
               {node.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours} />}
-              <div className="relative mb-20 flex flex-row items-start type-0">
-                <MapPinIcon title="Location" width={19} className="mt-01em mr-12 shrink-0 md:mt-0" />
+              <div className="relative mb-20 type-0">
+                {/* The link goes inside the block, with the icon inside the link so it shares its states. */}
                 <Link
                   href={node.sulStudyBranch.path || "#"}
-                  className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                  className="link-cta pl-[31px] -indent-[31px] font-semibold"
                 >
-                  <div>{node.sulStudyBranch.title}</div>
+                  <span className="whitespace-nowrap">
+                    <MapPinIcon aria-hidden="true" width={19} className="mr-12 inline-block align-text-bottom" />
+                    &#65279;
+                  </span>
+                  {node.sulStudyBranch.title}
                 </Link>
               </div>
 

@@ -50,12 +50,11 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
           {node.suPersonFullTitle && <div className="text-18 @lg:type-0">{node.suPersonFullTitle}</div>}
           <div className="flex flex-col items-center gap-10">
             {node.suPersonEmail && (
-              <div className="flex w-fit items-center">
-                <EnvelopeIcon title="Email" width={20} className="mr-3 shrink-0 text-digital-blue" />
-
+              <div>
                 <EmailLink
                   email={node.suPersonEmail}
-                  className="text-18 wrap-anywhere text-digital-blue no-underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red @lg:text-18"
+                  icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-3 inline-block align-text-bottom" />}
+                  className="link-cta text-18 font-semibold wrap-anywhere"
                 />
               </div>
             )}
@@ -89,12 +88,11 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
           {node.suPersonFullTitle && <div className="type-0">{node.suPersonFullTitle}</div>}
 
           {node.suPersonEmail && (
-            <div className="">
-              <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block text-digital-blue" />
-
+            <div>
               <EmailLink
                 email={node.suPersonEmail}
-                className="wrap-anywhere text-digital-blue no-underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6 inline-block align-text-bottom" />}
+                className="link-cta pl-[26px] -indent-[26px] font-semibold wrap-anywhere"
               />
             </div>
           )}

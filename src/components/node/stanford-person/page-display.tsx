@@ -140,27 +140,49 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
               <h2 className="text-24">Contact</h2>
               <ul className="list-none p-0 *:mb-[0.4rem] *:last:mb-0">
                 {node.suPersonTelephone && (
-                  <li className="flex flex-row items-center">
-                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
-                    <NumberLink tel={node.suPersonTelephone} />
+                  <li>
+                    <NumberLink
+                      tel={node.suPersonTelephone}
+                      icon={<PhoneIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />}
+                      className="link-cta pl-[28px] -indent-[28px] font-semibold"
+                    />
                   </li>
                 )}
                 {node.suPersonMobilePhone && (
-                  <li className="flex flex-row items-center">
-                    <DevicePhoneMobileIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
-                    <NumberLink tel={node.suPersonMobilePhone} />
+                  <li>
+                    <NumberLink
+                      tel={node.suPersonMobilePhone}
+                      icon={
+                        <DevicePhoneMobileIcon
+                          aria-hidden="true"
+                          width={24}
+                          className="mr-4 inline-block align-text-bottom"
+                        />
+                      }
+                      className="link-cta pl-[28px] -indent-[28px] font-semibold"
+                    />
                   </li>
                 )}
                 {node.suPersonFax && (
-                  <li className="flex flex-row items-center">
-                    <PrinterIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
-                    <NumberLink tel={node.suPersonFax} />
+                  <li>
+                    <NumberLink
+                      tel={node.suPersonFax}
+                      icon={
+                        <PrinterIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />
+                      }
+                      className="link-cta pl-[28px] -indent-[28px] font-semibold"
+                    />
                   </li>
                 )}
                 {node.suPersonEmail && (
-                  <li className="flex flex-row items-center">
-                    <EnvelopeIcon title="Email" width={24} className="mr-4 text-digital-blue" />
-                    <EmailLink className="wrap-anywhere" email={node.suPersonEmail} />
+                  <li>
+                    <EmailLink
+                      email={node.suPersonEmail}
+                      icon={
+                        <EnvelopeIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />
+                      }
+                      className="link-cta pl-[28px] -indent-[28px] font-semibold wrap-anywhere"
+                    />
                   </li>
                 )}
                 {node.suPersonMailCode && <li>Mail Code: {node.suPersonMailCode}</li>}
@@ -177,9 +199,15 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
               )}
 
               {node.suPersonMapUrl?.url && (
-                <div className="flex flex-row items-center">
-                  <MapIcon title="Location" width={24} className="mr-4 text-digital-blue" />
-                  <Link href={node.suPersonMapUrl.url} className="text-16 md:text-18">
+                <div>
+                  <Link
+                    href={node.suPersonMapUrl.url}
+                    className="link-cta pl-[28px] -indent-[28px] text-16 font-semibold md:text-18"
+                  >
+                    <span className="whitespace-nowrap">
+                      <MapIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />
+                      &#65279;
+                    </span>
                     Map
                   </Link>
                 </div>

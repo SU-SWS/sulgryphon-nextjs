@@ -69,9 +69,15 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         )}
 
         {node.suEventMapLink?.url && (
-          <div className="flex text-16 sm:text-18">
-            <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
-            <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>
+          <div className="text-16 sm:text-18">
+            <Link
+              href={node.suEventMapLink?.url.replaceAll(" ", "%20")}
+              className="link-cta pl-[40px] -indent-[40px] font-semibold"
+            >
+              <span className="whitespace-nowrap">
+                <MapPinIcon aria-hidden="true" width={20} className="mr-20 inline-block align-text-bottom" />
+                &#65279;
+              </span>
               {node.suEventAltLoc || node.suEventMapLink?.title}
             </Link>
           </div>

@@ -21,6 +21,8 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
   const imageUrl = node.sulEventImage?.mediaImage.url
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
+  const locationUrl = node.suEventMapLink?.url || node.sulEventAltLocLink?.url
+  const locationText = node.suEventMapLink?.url ? node.suEventAltLoc || node.suEventMapLink.title : node.suEventAltLoc
 
   return (
     <article {...props} className="@container mx-auto flex flex-col gap-16 sm:flex-row">
@@ -64,21 +66,23 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
           )}
 
           {(node.suEventMapLink?.url || node.suEventAltLoc) && (
-            <div className="flex text-16 sm:text-18">
-              <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
-
-              {/* Localist Map link */}
-              {node.suEventMapLink?.url && (
-                <Link href={node.suEventMapLink.url}>{node.suEventAltLoc || node.suEventMapLink.title}</Link>
+            <div className="text-16 sm:text-18">
+              {/* Localist map link, else the alternative link. The icon goes inside the link to share its states. */}
+              {locationUrl ? (
+                <Link href={locationUrl} className="link-cta pl-[40px] -indent-[40px] font-semibold">
+                  <span className="whitespace-nowrap">
+                    <MapPinIcon aria-hidden="true" width={20} className="mr-20 inline-block align-text-bottom" />
+                    &#65279;
+                  </span>
+                  {locationText}
+                </Link>
+              ) : (
+                // Plain text
+                <div className="flex">
+                  <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
+                  <span>{node.suEventAltLoc}</span>
+                </div>
               )}
-
-              {/* Alternative link */}
-              {!node.suEventMapLink?.url && node.sulEventAltLocLink?.url && (
-                <Link href={node.sulEventAltLocLink?.url}>{node.suEventAltLoc}</Link>
-              )}
-
-              {/* Plain text */}
-              {!node.suEventMapLink?.url && !node.sulEventAltLocLink?.url && <span>{node.suEventAltLoc}</span>}
             </div>
           )}
 

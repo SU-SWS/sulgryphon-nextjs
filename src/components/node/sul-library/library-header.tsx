@@ -66,50 +66,72 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
                         {node.suLibraryPhone}
                       </div>
                     )}
+                    {/*
+                      The email and map icons go inside their links so they share the links' states. From md the
+                      icons hang in the gutter like the phone icon: the link is pulled left by the icon and its gap, with
+                      a hanging indent, so every line stays aligned and the hover box still covers the icon.
+                    */}
                     {node.suLibraryEmail && (
-                      <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
-                        <EnvelopeIcon
-                          width={19}
-                          title="Email"
-                          className="mt-01em mr-12 md:absolute md:top-02em md:left-[-38px] md:mt-0"
+                      <div className="relative mt-20 mb-4 type-1 md:mt-18">
+                        <EmailLink
+                          email={node.suLibraryEmail}
+                          icon={
+                            <EnvelopeIcon
+                              aria-hidden="true"
+                              width={19}
+                              className="mr-12 inline-block align-middle md:mr-[19px]"
+                            />
+                          }
+                          className="link-cta pl-[31px] -indent-[31px] font-semibold wrap-anywhere md:-ml-[38px] md:pl-[38px] md:-indent-[38px]"
                         />
-                        <EmailLink email={node.suLibraryEmail} className="wrap-anywhere no-underline hocus:underline" />
                       </div>
                     )}
-                    {node.suLibraryAddress && (
-                      <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
-                        <MapPinIcon
-                          title="Location"
-                          width={19}
-                          className="mt-01em mr-12 md:absolute md:top-01em md:left-[-38px] md:mt-0"
-                        />
-                        {node.suLibraryMapLink?.url ? (
-                          <Link href={node.suLibraryMapLink.url} className="no-underline hocus:underline">
-                            <div>
-                              {node.suLibraryAddress?.addressLine1}
-                              <span className="sr-only">&nbsp;</span>
-                            </div>
-                            <div>
-                              {node.suLibraryAddress.addressLine2}
-                              <span className="sr-only">&nbsp;</span>
-                            </div>
-                            <div>
-                              {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
-                              {node.suLibraryAddress.postalCode}
-                            </div>
+                    {node.suLibraryAddress &&
+                      (node.suLibraryMapLink?.url ? (
+                        <div className="relative mt-20 mb-4 type-1 md:mt-18">
+                          <Link
+                            href={node.suLibraryMapLink.url}
+                            className="link-cta pl-[31px] -indent-[31px] font-semibold md:-ml-[38px] md:pl-[38px] md:-indent-[38px]"
+                          >
+                            <span className="whitespace-nowrap">
+                              <MapPinIcon
+                                aria-hidden="true"
+                                width={19}
+                                className="mr-12 inline-block align-middle md:mr-[19px]"
+                              />
+                              &#65279;
+                            </span>
+                            {node.suLibraryAddress.addressLine1}
+                            <span className="sr-only">&nbsp;</span>
+                            <br />
+                            {node.suLibraryAddress.addressLine2 && (
+                              <>
+                                {node.suLibraryAddress.addressLine2}
+                                <span className="sr-only">&nbsp;</span>
+                                <br />
+                              </>
+                            )}
+                            {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
+                            {node.suLibraryAddress.postalCode}
                           </Link>
-                        ) : (
-                          <>
+                        </div>
+                      ) : (
+                        <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
+                          <MapPinIcon
+                            title="Location"
+                            width={19}
+                            className="mt-01em mr-12 md:absolute md:top-01em md:left-[-38px] md:mt-0"
+                          />
+                          <div>
                             <div>{node.suLibraryAddress.addressLine1}</div>
                             <div>{node.suLibraryAddress.addressLine2}</div>
                             <div>
                               {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
                               {node.suLibraryAddress.postalCode}
                             </div>
-                          </>
-                        )}
-                      </div>
-                    )}
+                          </div>
+                        </div>
+                      ))}
                   </div>
                   {node.suLibraryHours && <LibraryHeaderHours hoursId={node.suLibraryHours} />}
                 </>
