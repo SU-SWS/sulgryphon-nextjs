@@ -14,6 +14,7 @@ import useOutsideClick from "@/lib/hooks/useOutsideClick"
 import useTodayLibraryHours from "@/lib/hooks/useTodayLibraryHours"
 import ToggleOption from "@/components/patterns/toggle-option"
 import cn from "@/lib/utils/className"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 export type BranchLocation = {
   uuid: NodeSulLibrary["uuid"]
@@ -155,22 +156,19 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
               href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
               className="link-cta text-16 leading-normal font-semibold"
             >
-              <span className="whitespace-nowrap">
-                <PhoneIcon aria-hidden="true" width={20} className="mr-4 inline-block align-text-bottom" />
-                &#65279;
-              </span>
-              {phone}
+              <IconLinkContent icon={<PhoneIcon aria-hidden="true" width={20} className="mr-4" />}>
+                <span className="sr-only">Phone: </span>
+                {phone}
+              </IconLinkContent>
             </a>
           </div>
         )}
         {email && (
           <div className="mb-16 text-center md:text-left xl:mb-0">
             <a href={`mailto:${email}`} className="link-cta text-16 leading-normal font-semibold wrap-anywhere">
-              <span className="whitespace-nowrap">
-                <EnvelopeIcon aria-hidden="true" width={20} className="mr-4 inline-block align-text-bottom" />
-                &#65279;
-              </span>
-              {email}
+              <IconLinkContent icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-4" />}>
+                {email}
+              </IconLinkContent>
             </a>
           </div>
         )}
@@ -181,10 +179,11 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         {address && mapUrl && (
           <div className="pb-16 text-center md:text-left xl:pb-0">
             {/* A block-level flex row inside the link keeps the icon beside the multi-line address and still
-                takes the link's hover underline. */}
+                takes the link's hover underline. icon-link-content gives it the icon links' gray hover box. */}
             <a href={mapUrl} className="link-cta font-semibold">
-              <span className="flex items-center gap-4">
+              <span className="icon-link-content flex items-center gap-4">
                 <MapPinIcon aria-hidden="true" width={20} className="min-w-20" />
+                <span className="sr-only">Map: </span>
                 <Address {...address} className="text-center md:text-left" />
               </span>
             </a>

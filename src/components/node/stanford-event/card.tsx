@@ -4,6 +4,7 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import {getDateString, getTimeString} from "@/lib/getDateTime"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 interface Props {
   node: NodeStanfordEvent
@@ -70,15 +71,10 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
 
         {node.suEventMapLink?.url && (
           <div className="text-16 sm:text-18">
-            <Link
-              href={node.suEventMapLink?.url.replaceAll(" ", "%20")}
-              className="link-cta pl-[40px] -indent-[40px] font-semibold"
-            >
-              <span className="whitespace-nowrap">
-                <MapPinIcon aria-hidden="true" width={20} className="mr-20 inline-block align-text-bottom" />
-                &#65279;
-              </span>
-              {node.suEventAltLoc || node.suEventMapLink?.title}
+            <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")} className="link-cta font-semibold">
+              <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={20} className="mr-20" />}>
+                {node.suEventAltLoc || node.suEventMapLink?.title}
+              </IconLinkContent>
             </Link>
           </div>
         )}

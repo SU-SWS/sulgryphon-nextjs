@@ -4,6 +4,7 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import {getDateString, getTimeString} from "@/lib/getDateTime"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 interface Props {
   node: NodeStanfordEvent
@@ -69,12 +70,10 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
             <div className="text-16 sm:text-18">
               {/* Localist map link, else the alternative link. The icon goes inside the link to share its states. */}
               {locationUrl ? (
-                <Link href={locationUrl} className="link-cta pl-[40px] -indent-[40px] font-semibold">
-                  <span className="whitespace-nowrap">
-                    <MapPinIcon aria-hidden="true" width={20} className="mr-20 inline-block align-text-bottom" />
-                    &#65279;
-                  </span>
-                  {locationText}
+                <Link href={locationUrl} className="link-cta font-semibold">
+                  <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={20} className="mr-20" />}>
+                    {locationText}
+                  </IconLinkContent>
                 </Link>
               ) : (
                 // Plain text

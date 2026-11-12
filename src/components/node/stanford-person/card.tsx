@@ -53,7 +53,7 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
               <div>
                 <EmailLink
                   email={node.suPersonEmail}
-                  icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-3 inline-block align-text-bottom" />}
+                  icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-3" />}
                   className="link-cta text-18 font-semibold wrap-anywhere"
                 />
               </div>
@@ -91,8 +91,8 @@ const StanfordPersonCard = ({node, h3Heading, ...props}: Props) => {
             <div>
               <EmailLink
                 email={node.suPersonEmail}
-                icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6 inline-block align-text-bottom" />}
-                className="link-cta pl-[26px] -indent-[26px] font-semibold wrap-anywhere"
+                icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6" />}
+                className="link-cta font-semibold wrap-anywhere"
               />
             </div>
           )}

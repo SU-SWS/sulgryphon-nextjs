@@ -2,6 +2,7 @@
 
 import Obfuscate from "react-obfuscate"
 import {ComponentProps, HTMLAttributes, HTMLProps, JSX, ReactNode, useState} from "react"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 /** react-obfuscate passes other props on to the <a>, but its types don't say so. */
 const ObfuscateLink = Obfuscate as (
@@ -12,12 +13,21 @@ const ObfuscateLink = Obfuscate as (
 const reverse = (text: string) => text.split("").reverse().join("").replace("(", ")").replace(")", "(")
 
 /**
- * An optional icon goes inside the link, so it takes the link's colour and hover box. react-obfuscate would render
- * the icon right to left too, so with an icon the number's reversal is applied to the number's own span and lifted
- * on the first hover or focus, as react-obfuscate does.
+ * An optional icon goes inside the link, so it takes the link's colour and hover box (see IconLinkContent).
+ * react-obfuscate would render the icon right to left too, so with an icon the number's reversal is applied to the
+ * number's own span, and lifted when react-obfuscate reveals the real link: on focus, mouse-over or the context menu.
+ * The capture-phase handlers listen to those same events without replacing react-obfuscate's own handlers.
+ *
+ * `label` is screen-reader text read before the number (e.g. "Mobile: "). It sits outside the reversed span.
  */
-const NumberLink = ({tel, icon, className}: {tel: string; icon?: ReactNode} & HTMLProps<HTMLAnchorElement>) => {
+const NumberLink = ({
+  tel,
+  icon,
+  label,
+  className,
+}: {tel: string; icon?: ReactNode; label?: string} & HTMLProps<HTMLAnchorElement>) => {
   const [revealed, setRevealed] = useState(false)
+  const reveal = () => setRevealed(true)
 
   if (!icon) return <ObfuscateLink tel={tel} className={className} />
 
@@ -26,11 +36,14 @@ const NumberLink = ({tel, icon, className}: {tel: string; icon?: ReactNode} & HT
       tel={tel}
       className={className}
       obfuscateChildren={false}
-      onMouseEnter={() => setRevealed(true)}
-      onFocusCapture={() => setRevealed(true)}
+      onFocusCapture={reveal}
+      onMouseOverCapture={reveal}
+      onContextMenuCapture={reveal}
     >
-      <span className="whitespace-nowrap">{icon}&#65279;</span>
-      {revealed ? tel : <span style={{unicodeBidi: "bidi-override", direction: "rtl"}}>{reverse(tel)}</span>}
+      <IconLinkContent icon={icon}>
+        {label && <span className="sr-only">{label}</span>}
+        {revealed ? tel : <span style={{unicodeBidi: "bidi-override", direction: "rtl"}}>{reverse(tel)}</span>}
+      </IconLinkContent>
     </ObfuscateLink>
   )
 }

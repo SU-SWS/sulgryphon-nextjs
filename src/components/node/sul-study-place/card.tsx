@@ -5,6 +5,7 @@ import StudyPlaceHours from "./study-place-today-hours"
 import {CalendarDaysIcon, ChevronRightIcon} from "@heroicons/react/20/solid"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulStudyPlace, TermUnion} from "@/lib/gql/__generated__/graphql"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
   // Filter out empty terms and deduplicate terms by their ID.
@@ -56,15 +57,10 @@ const SulStudyPlaceCard = ({node}: {node: NodeSulStudyPlace}) => {
               {node.sulStudyBranch?.suLibraryHours && <StudyPlaceHours hoursId={node.sulStudyBranch.suLibraryHours} />}
               <div className="relative mb-20 type-0">
                 {/* The link goes inside the block, with the icon inside the link so it shares its states. */}
-                <Link
-                  href={node.sulStudyBranch.path || "#"}
-                  className="link-cta pl-[31px] -indent-[31px] font-semibold"
-                >
-                  <span className="whitespace-nowrap">
-                    <MapPinIcon aria-hidden="true" width={19} className="mr-12 inline-block align-text-bottom" />
-                    &#65279;
-                  </span>
-                  {node.sulStudyBranch.title}
+                <Link href={node.sulStudyBranch.path || "#"} className="link-cta font-semibold">
+                  <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12" />}>
+                    {node.sulStudyBranch.title}
+                  </IconLinkContent>
                 </Link>
               </div>
 

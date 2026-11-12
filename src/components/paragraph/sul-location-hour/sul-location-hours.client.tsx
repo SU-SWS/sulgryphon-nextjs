@@ -11,6 +11,8 @@ import SelectList from "@/components/patterns/elements/select-list"
 import {buildUrl} from "@/lib/drupal/utils"
 import {Text, NodeSulLibrary, Maybe, FontawesomeIconType} from "@/lib/gql/__generated__/graphql"
 import Link from "next/link"
+import {DrupalActionLink} from "@/components/patterns/link"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 import formatHtml from "@/lib/format-html"
 
 type HoursProps = HTMLAttributes<HTMLDivElement> & {
@@ -84,7 +86,9 @@ const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => 
             <h2 id={formId} className="mb-03em text-24 font-bold">
               Library hours
             </h2>
-            <a href="https://library-hours.stanford.edu/libraries">See all hours</a>
+            <DrupalActionLink href="https://library-hours.stanford.edu/libraries" className="font-normal">
+              See all hours
+            </DrupalActionLink>
           </div>
 
           <div className="mb-10">
@@ -99,10 +103,11 @@ const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => 
             {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
 
             {library?.suLibraryMapLink?.url && (
-              <Link href={library.suLibraryMapLink.url} prefetch={false} className="flex items-center">
+              <Link href={library.suLibraryMapLink.url} prefetch={false} className="link-cta font-normal">
                 <span className="sr-only">{library.title}&nbsp;</span>
-                <MapPinIcon title="Map" width={25} className="mr-5" />
-                Location
+                <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={25} className="mr-5" />}>
+                  Location
+                </IconLinkContent>
               </Link>
             )}
           </div>

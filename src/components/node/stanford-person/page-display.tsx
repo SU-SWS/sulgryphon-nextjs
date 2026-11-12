@@ -14,6 +14,7 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   const libGuides = node.sulPersonLibguideId
@@ -143,8 +144,9 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                   <li>
                     <NumberLink
                       tel={node.suPersonTelephone}
-                      icon={<PhoneIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />}
-                      className="link-cta pl-[28px] -indent-[28px] font-semibold"
+                      label="Phone: "
+                      icon={<PhoneIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold"
                     />
                   </li>
                 )}
@@ -152,14 +154,9 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                   <li>
                     <NumberLink
                       tel={node.suPersonMobilePhone}
-                      icon={
-                        <DevicePhoneMobileIcon
-                          aria-hidden="true"
-                          width={24}
-                          className="mr-4 inline-block align-text-bottom"
-                        />
-                      }
-                      className="link-cta pl-[28px] -indent-[28px] font-semibold"
+                      label="Mobile: "
+                      icon={<DevicePhoneMobileIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold"
                     />
                   </li>
                 )}
@@ -167,10 +164,9 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                   <li>
                     <NumberLink
                       tel={node.suPersonFax}
-                      icon={
-                        <PrinterIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />
-                      }
-                      className="link-cta pl-[28px] -indent-[28px] font-semibold"
+                      label="Fax: "
+                      icon={<PrinterIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold"
                     />
                   </li>
                 )}
@@ -178,10 +174,8 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
                   <li>
                     <EmailLink
                       email={node.suPersonEmail}
-                      icon={
-                        <EnvelopeIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />
-                      }
-                      className="link-cta pl-[28px] -indent-[28px] font-semibold wrap-anywhere"
+                      icon={<EnvelopeIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold wrap-anywhere"
                     />
                   </li>
                 )}
@@ -200,15 +194,10 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
 
               {node.suPersonMapUrl?.url && (
                 <div>
-                  <Link
-                    href={node.suPersonMapUrl.url}
-                    className="link-cta pl-[28px] -indent-[28px] text-16 font-semibold md:text-18"
-                  >
-                    <span className="whitespace-nowrap">
-                      <MapIcon aria-hidden="true" width={24} className="mr-4 inline-block align-text-bottom" />
-                      &#65279;
-                    </span>
-                    Map
+                  <Link href={node.suPersonMapUrl.url} className="link-cta text-16 font-semibold md:text-18">
+                    <IconLinkContent icon={<MapIcon aria-hidden="true" width={24} className="mr-4" />}>
+                      Map
+                    </IconLinkContent>
                   </Link>
                 </div>
               )}

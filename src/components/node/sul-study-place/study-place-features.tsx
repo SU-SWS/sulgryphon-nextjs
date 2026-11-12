@@ -5,6 +5,7 @@ import StudyPlaceHours from "./study-place-today-hours"
 import {buildUrl} from "@/lib/drupal/utils"
 import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
 import cn from "@/lib/utils/className"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 interface ModalProps {
   branchHours?: Maybe<string>
@@ -70,12 +71,10 @@ const StudyPlaceFeatures = ({
 
             <div className={cn("relative type-1", {"mb-20": roomNumber, "rs-mb-2": !roomNumber})}>
               {/* The link goes inside the block, with the icon inside the link so it shares its states. */}
-              <Link href={branchUrl || "#"} className="link-cta pl-[31px] -indent-[31px] font-semibold">
-                <span className="whitespace-nowrap">
-                  <MapPinIcon aria-hidden="true" width={19} className="mr-12 inline-block align-text-bottom" />
-                  &#65279;
-                </span>
-                {branchTitle}
+              <Link href={branchUrl || "#"} className="link-cta font-semibold">
+                <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12" />}>
+                  {branchTitle}
+                </IconLinkContent>
               </Link>
             </div>
 

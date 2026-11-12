@@ -10,6 +10,7 @@ import {Table, Thead, Tbody, Tr, Th, Td} from "@/components/patterns/responsive-
 import {useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
 import ToggleOption from "@/components/patterns/toggle-option"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 export type TablePerson = {
   uuid: NodeStanfordPerson["uuid"]
@@ -199,8 +200,9 @@ const SulPeopleTableView = ({items}: Props) => {
                         prefetch={false}
                         className="link-cta text-16 leading-cozy font-semibold whitespace-nowrap"
                       >
-                        <EnvelopeIcon aria-hidden="true" width={20} className="mr-6 inline-block align-text-bottom" />
-                        {item.email}
+                        <IconLinkContent icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6" />}>
+                          {item.email}
+                        </IconLinkContent>
                       </Link>
                     </div>
                   )}

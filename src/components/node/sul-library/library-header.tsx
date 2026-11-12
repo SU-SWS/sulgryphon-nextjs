@@ -8,6 +8,7 @@ import LibraryHeaderHours from "./library-hours"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
   const bannerImageUrl = node.suLibraryBanner?.mediaImage.url
@@ -68,51 +69,38 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
                     )}
                     {/*
                       The email and map icons go inside their links so they share the links' states. From md the
-                      icons hang in the gutter like the phone icon: the link is pulled left by the icon and its gap, with
-                      a hanging indent, so every line stays aligned and the hover box still covers the icon.
+                      icons hang in the gutter like the phone icon: the link is pulled left by the icon and its gap,
+                      so the text stays aligned with the phone number.
                     */}
                     {node.suLibraryEmail && (
                       <div className="relative mt-20 mb-4 type-1 md:mt-18">
                         <EmailLink
                           email={node.suLibraryEmail}
-                          icon={
-                            <EnvelopeIcon
-                              aria-hidden="true"
-                              width={19}
-                              className="mr-12 inline-block align-middle md:mr-[19px]"
-                            />
-                          }
-                          className="link-cta pl-[31px] -indent-[31px] font-semibold wrap-anywhere md:-ml-[38px] md:pl-[38px] md:-indent-[38px]"
+                          icon={<EnvelopeIcon aria-hidden="true" width={19} className="mr-12 md:mr-[19px]" />}
+                          className="link-cta font-semibold wrap-anywhere md:-ml-[38px]"
                         />
                       </div>
                     )}
                     {node.suLibraryAddress &&
                       (node.suLibraryMapLink?.url ? (
                         <div className="relative mt-20 mb-4 type-1 md:mt-18">
-                          <Link
-                            href={node.suLibraryMapLink.url}
-                            className="link-cta pl-[31px] -indent-[31px] font-semibold md:-ml-[38px] md:pl-[38px] md:-indent-[38px]"
-                          >
-                            <span className="whitespace-nowrap">
-                              <MapPinIcon
-                                aria-hidden="true"
-                                width={19}
-                                className="mr-12 inline-block align-middle md:mr-[19px]"
-                              />
-                              &#65279;
-                            </span>
-                            {node.suLibraryAddress.addressLine1}
-                            <span className="sr-only">&nbsp;</span>
-                            <br />
-                            {node.suLibraryAddress.addressLine2 && (
-                              <>
-                                {node.suLibraryAddress.addressLine2}
-                                <span className="sr-only">&nbsp;</span>
-                                <br />
-                              </>
-                            )}
-                            {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
-                            {node.suLibraryAddress.postalCode}
+                          <Link href={node.suLibraryMapLink.url} className="link-cta font-semibold md:-ml-[38px]">
+                            <IconLinkContent
+                              icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12 md:mr-[19px]" />}
+                            >
+                              {node.suLibraryAddress.addressLine1}
+                              <span className="sr-only">&nbsp;</span>
+                              <br />
+                              {node.suLibraryAddress.addressLine2 && (
+                                <>
+                                  {node.suLibraryAddress.addressLine2}
+                                  <span className="sr-only">&nbsp;</span>
+                                  <br />
+                                </>
+                              )}
+                              {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
+                              {node.suLibraryAddress.postalCode}
+                            </IconLinkContent>
                           </Link>
                         </div>
                       ) : (
