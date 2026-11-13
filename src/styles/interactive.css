@@ -6,9 +6,11 @@
   - Hover and focus look the same (plus the outline on focus). Active is the pressed state: black fill for
     buttons, red text for links.
 
-  Each link pattern is one utility with its states nested, so a component uses a single class (`link-cta`) and
-  the states can't drift between copies. Don't combine one with a text color or underline utility: both live in
-  the utilities layer, so the result would depend on source order.
+  Each link and button pattern is one utility with its states nested, so a component uses a single class
+  (`link-cta`, `btn-primary`) and the states can't drift between copies. Don't combine one with a color, background,
+  border or underline utility: both live in the utilities layer, so the result would depend on source order, and
+  cn()'s tailwind-merge doesn't know these custom utilities, so it won't drop the conflicting class either.
+  Sizing, spacing and layout classes are fine.
 
   The nested :hover / :focus-visible selectors (0,2,0) also beat the `a:hover, a:focus` color rule in
   sul-base.css (0,1,1).
@@ -52,6 +54,168 @@
   outline: 0.3rem solid var(--color-digital-blue);
   outline-offset: 0;
   box-shadow: inset 0 0 0 0.2rem var(--color-white);
+}
+
+/*
+  Pill buttons. Each utility sets only colors, borders, underline and states; size, padding and shape stay with the
+  caller (or Decanter's .button). Hover and keyboard focus darken the fill and underline the text, focus adds the
+  focus-ring-pill ring, and active (pressed) is black. :active comes last, so a pressed button turns black even
+  while it's hovered or focused. Hover sits in @media (hover: hover), as Tailwind's hover: variant does, so a tap on
+  a touch screen doesn't leave it stuck.
+
+  - btn-primary: filled Digital Red.
+  - btn-secondary: white with a Digital Red border and text.
+  - btn-primary-on-dark / btn-secondary-on-dark: for dark backgrounds. The spec has no dark row. The primary one is
+    a white outline that fills white on hover and black on focus. The secondary one matches btn-secondary, except
+    that its border turns white on hover and focus so the #820000 pill stays visible on a Cardinal Red card.
+  - btn-outline-on-dark: the stat card's button on dark backgrounds. A white outline that fills Black #2E2D29 on
+    hover and focus and true black when pressed. (On a Black card the hover fill matches the card, so only the
+    underline shows.)
+*/
+@utility btn-primary {
+  @apply transition-colors;
+  background-color: var(--color-digital-red);
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-cardinal-red-dark);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    background-color: var(--color-cardinal-red-dark);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: var(--color-black-true);
+    text-decoration-line: none;
+  }
+}
+
+@utility btn-secondary {
+  @apply transition-colors;
+  border: 0.3rem solid var(--color-digital-red);
+  background-color: var(--color-white);
+  color: var(--color-digital-red);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-cardinal-red-dark);
+      background-color: var(--color-cardinal-red-dark);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    border-color: var(--color-cardinal-red-dark);
+    background-color: var(--color-cardinal-red-dark);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    border-color: var(--color-black-true);
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+    text-decoration-line: none;
+  }
+}
+
+@utility btn-primary-on-dark {
+  @apply transition-colors;
+  border: 0.2rem solid var(--color-white);
+  background-color: transparent;
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-white);
+      color: var(--color-digital-red);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+  }
+}
+
+@utility btn-secondary-on-dark {
+  @apply transition-colors;
+  border: 0.3rem solid var(--color-digital-red);
+  background-color: var(--color-white);
+  color: var(--color-digital-red);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-white);
+      background-color: var(--color-cardinal-red-dark);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    border-color: var(--color-white);
+    background-color: var(--color-cardinal-red-dark);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    border-color: var(--color-black-true);
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+    text-decoration-line: none;
+  }
+}
+
+@utility btn-outline-on-dark {
+  @apply transition-colors;
+  border: 0.2rem solid var(--color-white);
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-black);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: var(--color-black-true);
+    text-decoration-line: none;
+  }
 }
 
 /*

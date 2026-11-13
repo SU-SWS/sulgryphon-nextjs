@@ -5,7 +5,6 @@ import Link from "@/components/patterns/elements/drupal-link"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import cn from "@/lib/utils/className"
 import RosetteIcon from "./icons/RosetteIcon"
-import {primaryButtonClasses, secondaryButtonDarkBgClasses} from "@/components/patterns/button-styles"
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   video?: Maybe<ReactNode>
@@ -103,7 +102,7 @@ const HorizontalCard = ({
                   href={link.url}
                   className={cn(
                     "cta-button group mt-32 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-                    cardBgColor === "cardinal_red" ? secondaryButtonDarkBgClasses : primaryButtonClasses
+                    cardBgColor === "cardinal_red" ? "btn-secondary-on-dark" : "btn-primary"
                   )}
                   {...linkAttributes}
                 >

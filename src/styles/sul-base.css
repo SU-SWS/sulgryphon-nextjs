@@ -84,8 +84,8 @@
   }
 
   /*
-    Extends Decanter's .button with the site's size. Its colors and states come from primaryButtonClasses
-    (src/components/patterns/button-styles.ts), which as utilities beat these component rules.
+    Extends Decanter's .button with the site's size. Its colors and states come from the btn-primary utility
+    (src/styles/interactive.css), which as a utility beats these component rules.
   */
   .button {
     border-radius: 9999px;

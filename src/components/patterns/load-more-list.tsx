@@ -6,7 +6,6 @@ import {ArrowPathIcon} from "@heroicons/react/20/solid"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
 import cn from "@/lib/utils/className"
-import {primaryButtonClasses} from "@/components/patterns/button-styles"
 
 export type LoadMoreListProps = HtmlHTMLAttributes<HTMLDivElement> & {
   /**
@@ -99,7 +98,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
           type="button"
           className={cn(
             "cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-            primaryButtonClasses
+            "btn-primary"
           )}
           onClick={showMoreItems}
         >

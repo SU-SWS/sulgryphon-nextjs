@@ -3,12 +3,6 @@ import {ChevronRightIcon, MapPinIcon} from "@heroicons/react/20/solid"
 import {HTMLAttributes, JSX} from "react"
 import cn from "@/lib/utils/className"
 import {Link as LinkType} from "@/lib/gql/__generated__/graphql"
-import {
-  primaryButtonClasses,
-  primaryButtonDarkBgClasses,
-  secondaryButtonClasses,
-  secondaryButtonDarkBgClasses,
-} from "@/components/patterns/button-styles"
 
 export const DrupalLinkButton = ({
   href,
@@ -23,7 +17,7 @@ export const DrupalLinkButton = ({
       {...props}
       className={cn(
         "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-        isDarkBg ? primaryButtonDarkBgClasses : primaryButtonClasses,
+        isDarkBg ? "btn-primary-on-dark" : "btn-primary",
         className
       )}
     >
@@ -49,7 +43,7 @@ export const DrupalLinkSecondaryButton = ({
       {...props}
       className={cn(
         "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-        isDarkBg ? secondaryButtonDarkBgClasses : secondaryButtonClasses,
+        isDarkBg ? "btn-secondary-on-dark" : "btn-secondary",
         className
       )}
     >
@@ -70,7 +64,7 @@ export const DrupalLinkBigButton = ({
       {...props}
       className={cn(
         "cta-button font-large group rs-mt-neg1 block w-fit rounded-full px-36 py-16 text-16 leading-display md:text-18",
-        primaryButtonClasses,
+        "btn-primary",
         className
       )}
     >

@@ -7,7 +7,6 @@ import ImageCard from "@/components/patterns/image-card"
 import CountUpNumber from "@/components/patterns/count-up"
 import cn from "@/lib/utils/className"
 import {ChevronRightIcon} from "@heroicons/react/20/solid"
-import {secondaryButtonClasses} from "@/components/patterns/button-styles"
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   paragraph: ParagraphStanfordStatCard
@@ -162,14 +161,12 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
       </ReverseVisualOrder>
       <StanfordWysiwyg text={paragraph.suStatBody?.processed} />
       {paragraph.suStatButton?.url && paragraph.suStatLinkStyle === "button" && (
-        // Secondary button. The spec has no dark background row, so on dark cards it keeps its white outline and
-        // gets the focus ring, like the other dark background buttons.
+        // Secondary button. The spec has no dark background row, so on dark cards it keeps its white outline
+        // (btn-outline-on-dark), with the focus ring like the other dark background buttons.
         <Link
           className={cn(
             "flex w-fit items-center gap-3 rounded-[3.5rem] px-26 py-8 leading-display",
-            whiteText
-              ? "border-2 border-white text-white no-underline transition-colors hover:bg-black hover:text-white hover:underline focus-visible:bg-black focus-visible:text-white focus-visible:underline focus-visible:focus-ring-pill active:bg-black-true active:no-underline"
-              : secondaryButtonClasses,
+            whiteText ? "btn-outline-on-dark" : "btn-secondary",
             {
               "mx-auto": paragraph.suStatCentered,
               "text-18": transparentBg,

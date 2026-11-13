@@ -6,7 +6,6 @@ import {HTMLAttributes, useRef} from "react"
 import {Maybe, Link as LinkType} from "@/lib/gql/__generated__/graphql"
 import cn from "@/lib/utils/className"
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid"
-import {primaryButtonClasses} from "@/components/patterns/button-styles"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   headline?: Maybe<string>
@@ -73,7 +72,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Prop
             <Link
               href={link.url}
               className={cn("mx-auto block w-fit text-center", {
-                [`button ${primaryButtonClasses}`]: !isCtaVariant,
+                "button btn-primary": !isCtaVariant,
                 group: isCtaVariant,
               })}
               {...linkAttributes}

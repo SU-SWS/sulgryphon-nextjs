@@ -4,7 +4,6 @@ import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 import {sendGAEvent} from "@next/third-parties/google"
 import HoneypotField from "@/components/patterns/elements/honeypot-field"
-import {primaryButtonClasses} from "@/components/patterns/button-styles"
 import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
@@ -123,7 +122,7 @@ export const SulHomeBannerFormClient = () => {
       <button
         className={cn(
           "button relative m-0 block h-40 w-40 shrink-0 p-0 md:h-auto md:w-auto md:px-20 md:py-10",
-          primaryButtonClasses
+          "btn-primary"
         )}
         type="submit"
       >
