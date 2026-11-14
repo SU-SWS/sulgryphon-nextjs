@@ -13,7 +13,7 @@ const ObfuscateLink = Obfuscate as (
 const reverse = (text: string) => text.split("").reverse().join("").replace("(", ")").replace(")", "(")
 
 /**
- * An optional icon goes inside the link, so it takes the link's colour and hover box (see IconLinkContent).
+ * An optional icon goes inside the link, so it takes the link's colour (see IconLinkContent).
  * react-obfuscate would render the icon right to left too, so with an icon the number's reversal is applied to the
  * number's own span, and lifted when react-obfuscate reveals the real link: on focus, mouse-over or the context menu.
  * The capture-phase handlers listen to those same events without replacing react-obfuscate's own handlers.

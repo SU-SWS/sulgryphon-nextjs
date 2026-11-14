@@ -179,9 +179,9 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         {address && mapUrl && (
           <div className="pb-16 text-center md:text-left xl:pb-0">
             {/* A block-level flex row inside the link keeps the icon beside the multi-line address and still
-                takes the link's hover underline. icon-link-content gives it the icon links' gray hover box. */}
+                takes the link's hover underline. */}
             <a href={mapUrl} className="link-cta font-semibold">
-              <span className="icon-link-content flex items-center gap-4">
+              <span className="flex items-center gap-4">
                 <MapPinIcon aria-hidden="true" width={20} className="min-w-20" />
                 <span className="sr-only">Map: </span>
                 <Address {...address} className="text-center md:text-left" />

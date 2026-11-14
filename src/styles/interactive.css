@@ -305,7 +305,7 @@
   color: var(--color-digital-blue);
   text-decoration-line: none;
 
-  /* No background: the underline marks hover and focus. */
+  /* No background, with or without an icon: the underline marks hover and focus. */
   &:hover,
   &:focus-visible {
     color: var(--color-brick-dark);
@@ -338,24 +338,6 @@
 
   &:active::after {
     content: none;
-  }
-
-  /*
-   * Links with an icon (IconLinkContent, marked by its icon-link-content class) keep the gray box on hover and focus.
-   * It grows sideways only, to the focus frame's edge, so it never covers the lines above or below. Plain CTA links
-   * have no box.
-   */
-  &:has(> .icon-link-content):hover,
-  &:has(> .icon-link-content):focus-visible {
-    background-color: var(--color-black-10);
-    box-shadow:
-      -0.4rem 0 0 var(--color-black-10),
-      0.4rem 0 0 var(--color-black-10);
-  }
-
-  &:has(> .icon-link-content):active {
-    background-color: transparent;
-    box-shadow: none;
   }
 }
 
