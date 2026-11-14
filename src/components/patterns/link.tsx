@@ -16,13 +16,8 @@ export const DrupalLinkButton = ({
       href={href}
       {...props}
       className={cn(
-        "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors md:text-18 hocus:underline",
-        {
-          "border-2 border-white bg-transparent text-white hover:bg-white hover:text-digital-red focus:bg-black-true focus:text-white":
-            isDarkBg,
-          "bg-digital-red hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white":
-            !isDarkBg,
-        },
+        "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
+        isDarkBg ? "btn-primary-on-dark" : "btn-primary",
         className
       )}
     >
@@ -47,13 +42,8 @@ export const DrupalLinkSecondaryButton = ({
       href={href}
       {...props}
       className={cn(
-        "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full border-3 border-solid border-digital-red bg-white px-26 pt-10 pb-11 text-16 leading-display font-semibold text-digital-red no-underline transition-colors md:text-18 hocus:text-white hocus:underline",
-        {
-          "hover:border-cardinal-red-xdark hover:bg-digital-red focus:border-white focus:bg-black-true focus:text-white":
-            isDarkBg,
-          "hover:border-cardinal-red hover:bg-cardinal-red focus:border-black-true focus:bg-black-true active:border-black-true active:bg-black-true":
-            !isDarkBg,
-        },
+        "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
+        isDarkBg ? "btn-secondary-on-dark" : "btn-secondary",
         className
       )}
     >
@@ -73,7 +63,8 @@ export const DrupalLinkBigButton = ({
       href={href}
       {...props}
       className={cn(
-        "cta-button font-large group rs-mt-neg1 block w-fit rounded-full bg-digital-red px-36 py-16 text-16 leading-display text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true md:text-18 hocus:text-white hocus:underline",
+        "cta-button font-large group rs-mt-neg1 block w-fit rounded-full px-36 py-16 text-16 leading-display md:text-18",
+        "btn-primary",
         className
       )}
     >
@@ -103,10 +94,7 @@ export const DrupalActionLink = ({
       {...props}
       href={href}
       title={shouldIncludeTitle ? title : undefined}
-      className={cn(
-        "hocus:su-dark-brick rs-mt-neg1 no-underline active:text-cardinal-red hocus:bg-black-10 hocus:underline",
-        props.className
-      )}
+      className={cn("link-cta", props.className)}
     >
       {children}
       <span className="whitespace-nowrap">
@@ -138,10 +126,7 @@ export const DrupalLocationLink = ({
       {...props}
       href={href}
       title={shouldIncludeTitle ? title : undefined}
-      className={cn(
-        "hocus:su-dark-brick relative underline active:text-cardinal-red hocus:bg-black-10",
-        props.className
-      )}
+      className={cn("relative link-inline", props.className)}
     >
       <MapPinIcon title="Location" width={20} className="my-auto mr-10 inline-block h-fit" />
       {children}

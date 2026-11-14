@@ -30,10 +30,7 @@ const StanfordPageCard = ({node, h3Heading, ...props}: Props) => {
       )}
 
       <HeadingElement className="mb-20 text-24 font-bold">
-        <Link
-          className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
-          href={node.path || "#"}
-        >
+        <Link className="link-card" href={node.path || "#"}>
           {node.title}
         </Link>
       </HeadingElement>

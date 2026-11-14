@@ -83,17 +83,19 @@
     margin-right: -50vw;
   }
 
-  /* Extends Decanter's .button. */
+  /*
+    Extends Decanter's .button with the site's size. Its colors and states come from the btn-primary utility
+    (src/styles/interactive.css), which as a utility beats these component rules.
+  */
   .button {
     border-radius: 9999px;
     padding: 1.1rem 2.6rem;
     line-height: 1.2;
     font-size: 2rem;
 
-    &:active,
-    &:hover,
+    /* Decanter adds a shadow on any :focus, including a mouse click. Keyboard focus gets the ring instead. */
     &:focus {
-      background-color: var(--color-cardinal-red-dark);
+      box-shadow: none;
     }
   }
 }
@@ -103,10 +105,11 @@
   specificity (e.g. a link with `text-white` still turned black on hover, and `lg:mb-12` on a last
   list item stayed 0). In v4 every utility beats every base rule. Re-declaring them in the utilities
   layer lets specificity decide again: `.text-white` still loses, `hover:text-white` still wins.
+  Only keyboard focus changes the color, so a link clicked with the mouse keeps its own color.
 */
 @layer utilities {
   a:hover,
-  a:focus {
+  a:focus-visible {
     color: var(--color-black);
   }
 

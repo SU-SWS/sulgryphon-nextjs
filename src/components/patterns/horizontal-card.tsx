@@ -93,16 +93,7 @@ const HorizontalCard = ({
               </div>
             </div>
             <div className={cn({"m-0 @10xl:rs-ml-2": !hideRosette})}>
-              {body && (
-                <div
-                  className={cn("[&_p]:text-20", {
-                    "[&_a:not(.cta-button)]:text-white [&_a:not(.cta-button)]:hocus:text-black-true":
-                      cardBgColor === "cardinal_red",
-                  })}
-                >
-                  {formatHtml(body, cardBgColor === "cardinal_red")}
-                </div>
-              )}
+              {body && <div className="[&_p]:text-20">{formatHtml(body, cardBgColor === "cardinal_red")}</div>}
 
               {footer && <div className="rs-pt-0 text-18 leading-display font-normal text-digital-red">{footer}</div>}
 
@@ -110,13 +101,8 @@ const HorizontalCard = ({
                 <Link
                   href={link.url}
                   className={cn(
-                    "cta-button group mt-32 block w-fit rounded-full border-2 px-26 pt-10 pb-11 text-24 leading-display font-semibold no-underline transition-colors md:text-18 hocus:underline",
-                    {
-                      "border-white bg-white text-cardinal-red hocus:bg-black-true hocus:text-white":
-                        cardBgColor === "cardinal_red",
-                      "border-cardinal-red bg-cardinal-red text-white hocus:bg-black-true hocus:text-white":
-                        cardBgColor !== "cardinal_red",
-                    }
+                    "cta-button group mt-32 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
+                    cardBgColor === "cardinal_red" ? "btn-secondary-on-dark" : "btn-primary"
                   )}
                   {...linkAttributes}
                 >

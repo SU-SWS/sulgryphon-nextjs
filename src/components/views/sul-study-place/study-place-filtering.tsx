@@ -126,10 +126,10 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
           />
         </fieldset>
 
-        <button type="submit" className="button mr-20 text-16 md:text-18">
+        <button type="submit" className="button mr-20 btn-primary text-16 md:text-18">
           Filter
         </button>
-        <button className="button text-16 md:text-18" onClick={handleReset}>
+        <button className="button btn-primary text-16 md:text-18" onClick={handleReset}>
           Reset
         </button>
       </form>

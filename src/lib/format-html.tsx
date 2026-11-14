@@ -68,10 +68,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
               )
             }
 
-            nodeProps.className = cn(
-              "hocus:underline transition-colors hocus:bg-black-10 focus:bg-none hocus:text-cardinal-red active:text-cardinal-red",
-              nodeProps.className
-            )
+            nodeProps.className = cn(isDarkBg ? "link-on-dark" : "link-inline", nodeProps.className)
             return <a {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</a>
           case "div":
           case "article":

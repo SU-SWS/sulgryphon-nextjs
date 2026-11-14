@@ -1,0 +1,424 @@
+/*
+  Hover, keyboard focus and active (pressed) states from the "Buttons and Links" Figma spec.
+
+  - Keyboard focus is a Digital Blue outline on every interactive element. It uses :focus-visible, so a mouse
+    click doesn't show it.
+  - Hover and focus look the same (plus the outline on focus). Active is the pressed state: black fill for
+    buttons, red text for links.
+
+  Each link and button pattern is one utility with its states nested, so a component uses a single class
+  (`link-cta`, `btn-primary`) and the states can't drift between copies. Don't combine one with a color, background,
+  border or underline utility: both live in the utilities layer, so the result would depend on source order, and
+  cn()'s tailwind-merge doesn't know these custom utilities, so it won't drop the conflicting class either.
+  Sizing, spacing and layout classes are fine.
+
+  The nested :hover / :focus-visible selectors (0,2,0) also beat the `a:hover, a:focus` color rule in
+  sul-base.css (0,1,1).
+*/
+
+@layer base {
+  /*
+    The outline color is set before focus too (invisible while the outline style is none). Otherwise an element
+    with `transition-colors`, which includes outline-color, fades the ring in from its text color.
+  */
+  :where(a, button, summary, [role="button"], [tabindex], input, select, textarea) {
+    outline-color: var(--color-digital-blue);
+  }
+
+  :where(a, button, summary, [role="button"], [tabindex]):focus-visible {
+    outline: 0.3rem solid var(--color-digital-blue);
+    outline-offset: 0.4rem;
+  }
+}
+
+/*
+  Form controls. The @tailwindcss/forms reset (loaded by decanter/forms) gives them a 1px #2563EB ring and border
+  on any :focus. Its rules are in the base layer but output after this file, at higher specificity than the rule
+  above, so these live in the components layer, which beats base whatever the order. Utilities still override
+  them. Browsers treat focus in a text field as keyboard focus, so those also show the outline after a click.
+*/
+@layer components {
+  :is(input, select, textarea):focus {
+    box-shadow: none;
+    border-color: var(--color-digital-blue);
+  }
+
+  :is(input, select, textarea):focus-visible {
+    outline: 0.3rem solid var(--color-digital-blue);
+    outline-offset: 0.2rem;
+  }
+}
+
+/* Pill buttons and the round search button: the ring hugs the edge, with a white keyline inside it. */
+@utility focus-ring-pill {
+  outline: 0.3rem solid var(--color-digital-blue);
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 0.2rem var(--color-white);
+}
+
+/*
+  Pill buttons. Each utility sets only colors, borders, underline and states; size, padding and shape stay with the
+  caller (or Decanter's .button). Hover and keyboard focus darken the fill and underline the text, focus adds the
+  focus-ring-pill ring, and active (pressed) is black. :active comes last, so a pressed button turns black even
+  while it's hovered or focused. Hover sits in @media (hover: hover), as Tailwind's hover: variant does, so a tap on
+  a touch screen doesn't leave it stuck.
+
+  - btn-primary: filled Digital Red.
+  - btn-secondary: white with a Digital Red border and text.
+  - btn-primary-on-dark / btn-secondary-on-dark: for dark backgrounds. The spec has no dark row. The primary one is
+    a white outline that fills white on hover and black on focus. The secondary one matches btn-secondary, except
+    that its border turns white on hover and focus so the #820000 pill stays visible on a Cardinal Red card.
+  - btn-outline-on-dark: the stat card's button on dark backgrounds. A white outline that fills Black #2E2D29 on
+    hover and focus and true black when pressed. (On a Black card the hover fill matches the card, so only the
+    underline shows.)
+*/
+@utility btn-primary {
+  @apply transition-colors;
+  background-color: var(--color-digital-red);
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-cardinal-red-dark);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    background-color: var(--color-cardinal-red-dark);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: var(--color-black-true);
+    text-decoration-line: none;
+  }
+}
+
+@utility btn-secondary {
+  @apply transition-colors;
+  border: 0.3rem solid var(--color-digital-red);
+  background-color: var(--color-white);
+  color: var(--color-digital-red);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-cardinal-red-dark);
+      background-color: var(--color-cardinal-red-dark);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    border-color: var(--color-cardinal-red-dark);
+    background-color: var(--color-cardinal-red-dark);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    border-color: var(--color-black-true);
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+    text-decoration-line: none;
+  }
+}
+
+@utility btn-primary-on-dark {
+  @apply transition-colors;
+  border: 0.2rem solid var(--color-white);
+  background-color: transparent;
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-white);
+      color: var(--color-digital-red);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+  }
+}
+
+@utility btn-secondary-on-dark {
+  @apply transition-colors;
+  border: 0.3rem solid var(--color-digital-red);
+  background-color: var(--color-white);
+  color: var(--color-digital-red);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-white);
+      background-color: var(--color-cardinal-red-dark);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    border-color: var(--color-white);
+    background-color: var(--color-cardinal-red-dark);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    border-color: var(--color-black-true);
+    background-color: var(--color-black-true);
+    color: var(--color-white);
+    text-decoration-line: none;
+  }
+}
+
+@utility btn-outline-on-dark {
+  @apply transition-colors;
+  border: 0.2rem solid var(--color-white);
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-black);
+      color: var(--color-white);
+      text-decoration-line: underline;
+    }
+  }
+
+  &:focus-visible {
+    @apply focus-ring-pill;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: var(--color-black-true);
+    text-decoration-line: none;
+  }
+}
+
+/*
+  Text links show a Black-10 box when hovered or focused, a little larger than the text.
+
+  Links in running text stay inline, so they wrap with the paragraph. A browser paints an inline element line by
+  line (each line's background, then its text), so anything that reaches above a line would cover the descenders
+  of the line before it. Their box therefore only grows sideways: real padding, cancelled by a negative margin so
+  nothing moves, and repeated on every line with box-decoration-break. The focus ring sits on that padding edge,
+  drawn as an inset shadow (see link-inline).
+
+  Standalone links (card headlines, CTA links) are inline-block: one rectangle with even sides, painted before
+  any of its text, so a box-shadow can extend it on all sides without covering anything. The 0.4rem focus
+  outline offset puts the blue box on the shadow's edge.
+*/
+
+/* In-line link in body text. */
+@utility link-inline {
+  color: var(--color-digital-blue);
+  text-decoration-line: underline;
+  margin-inline: -0.4rem;
+  padding-inline: 0.4rem;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--color-black-10);
+    color: var(--color-brick-dark);
+    text-decoration-line: none;
+  }
+
+  /*
+    The ring is drawn inside the padding, as an inset shadow that paints under the text: an outline outside it
+    would cover the next word, and one inset would be drawn over the text. The transparent outline still shows
+    in forced-colors (high contrast) mode, which drops shadows.
+  */
+  &:focus-visible {
+    outline: 0.3rem solid transparent;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 0.3rem var(--color-digital-blue);
+  }
+
+  &:active {
+    background-color: transparent;
+    color: var(--color-digital-red);
+    text-decoration-line: underline;
+  }
+}
+
+/*
+  In-line link on a dark background. Per the spec, the active state drops the underline and keeps the white
+  text, so it is distinguished from body text by weight only.
+*/
+@utility link-on-dark {
+  color: var(--color-white);
+  text-decoration-line: underline;
+  margin-inline: -0.4rem;
+  padding-inline: 0.4rem;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--color-black-10);
+    color: var(--color-brick-dark);
+    text-decoration-line: none;
+  }
+
+  &:focus-visible {
+    outline: 0.3rem solid transparent;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 0.3rem var(--color-digital-blue);
+  }
+
+  &:active {
+    background-color: transparent;
+    color: var(--color-white);
+    text-decoration-line: none;
+  }
+}
+
+/* Call to action link (blue, with a chevron). */
+@utility link-cta {
+  display: inline-block;
+  position: relative;
+  color: var(--color-digital-blue);
+  text-decoration-line: none;
+
+  /* No background, with or without an icon: the underline marks hover and focus. */
+  &:hover,
+  &:focus-visible {
+    color: var(--color-brick-dark);
+    text-decoration-line: underline;
+  }
+
+  /*
+   * The focus ring is a 0.3rem frame within the link's own height, so it never covers the line above or below in
+   * stacked lists (phone over email, event rows). It reaches only 0.4rem past each side (Figma's CTA row shows about
+   * 1.2rem), because some CTA links sit inside a sentence and a wider frame would cover the neighbouring words. It's
+   * drawn on ::after so it doesn't change the layout or fight margin classes callers add. Forced-colors mode keeps
+   * the frame's border, so the outline is turned off rather than doubled.
+   */
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::after {
+    content: "";
+    position: absolute;
+    inset: 0 -0.4rem;
+    border: 0.3rem solid var(--color-digital-blue);
+    pointer-events: none;
+  }
+
+  &:active {
+    color: var(--color-digital-red);
+    text-decoration-line: underline;
+  }
+
+  &:active::after {
+    content: none;
+  }
+}
+
+/* Card headline link. */
+@utility link-card {
+  display: inline-block;
+  /*
+   * Room for the focus frame at the sides, cancelled by the negative margin so the text doesn't move. link-cta draws
+   * its frame on ::after instead, but card headlines can't: news and event cards use Decanter's stretched-link,
+   * which needs this link's ::after (and the link left unpositioned) to cover the whole card.
+   */
+  margin-inline: -0.4rem;
+  padding-inline: 0.4rem;
+  color: var(--color-black);
+  text-decoration-line: none;
+
+  /* No background: the underline marks hover and focus. */
+  &:hover,
+  &:focus-visible {
+    color: var(--color-brick-dark);
+    text-decoration-line: underline;
+  }
+
+  /*
+   * The same 0.3rem frame as link-cta, 0.4rem past the text on each side and within the headline's own height, so it
+   * doesn't cover the category label above or the date below. It's an outline drawn inside the box, so it also
+   * shows in forced-colors mode.
+   */
+  &:focus-visible {
+    outline: 0.3rem solid var(--color-digital-blue);
+    outline-offset: -0.3rem;
+  }
+
+  &:active {
+    outline: none;
+    color: var(--color-digital-red);
+    text-decoration-line: underline;
+  }
+}
+
+/* Header utility links (Contact Us, My Account, ...). */
+@utility link-utility {
+  color: var(--color-black);
+  font-weight: var(--font-weight-normal);
+  text-decoration-line: none;
+  text-decoration-thickness: from-font;
+  text-underline-position: from-font;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--color-archway);
+    text-decoration-line: underline;
+  }
+
+  &:focus-visible {
+    border-radius: 0.5rem;
+  }
+
+  &:active {
+    color: var(--color-digital-red);
+    text-decoration-line: underline;
+  }
+}
+
+/* "Close" button on the black modal overlays. */
+@utility link-close {
+  color: var(--color-white);
+  text-decoration-line: none;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--color-black-10);
+    box-shadow: 0 0 0 0.4rem var(--color-black-10);
+    color: var(--color-brick-dark);
+    text-decoration-line: underline;
+  }
+
+  &:active {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--color-white);
+    text-decoration-line: none;
+  }
+}

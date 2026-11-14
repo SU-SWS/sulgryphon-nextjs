@@ -5,6 +5,7 @@ import StudyPlaceHours from "./study-place-today-hours"
 import {buildUrl} from "@/lib/drupal/utils"
 import {Maybe, NodeSulStudyPlace} from "@/lib/gql/__generated__/graphql"
 import cn from "@/lib/utils/className"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 interface ModalProps {
   branchHours?: Maybe<string>
@@ -68,15 +69,12 @@ const StudyPlaceFeatures = ({
           <div className="leading-tight">
             {branchHours && <StudyPlaceHours hoursId={branchHours} />}
 
-            <div
-              className={cn("relative flex flex-row items-start type-1", {"mb-20": roomNumber, "rs-mb-2": !roomNumber})}
-            >
-              <MapPinIcon title="Location" width={19} className="mt-01em mr-12 shrink-0 md:mt-0" />
-              <Link
-                href={branchUrl || "#"}
-                className="transition-colors hover:bg-black-10 hover:text-brick-dark hover:no-underline focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
-              >
-                <div>{branchTitle}</div>
+            <div className={cn("relative type-1", {"mb-20": roomNumber, "rs-mb-2": !roomNumber})}>
+              {/* The link goes inside the block, with the icon inside the link so it shares its states. */}
+              <Link href={branchUrl || "#"} className="link-cta font-semibold">
+                <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12" />}>
+                  {branchTitle}
+                </IconLinkContent>
               </Link>
             </div>
 

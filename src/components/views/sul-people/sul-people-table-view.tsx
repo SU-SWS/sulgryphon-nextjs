@@ -10,6 +10,7 @@ import {Table, Thead, Tbody, Tr, Th, Td} from "@/components/patterns/responsive-
 import {useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
 import ToggleOption from "@/components/patterns/toggle-option"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 export type TablePerson = {
   uuid: NodeStanfordPerson["uuid"]
@@ -197,10 +198,11 @@ const SulPeopleTableView = ({items}: Props) => {
                       <Link
                         href={`mailto:${item.email}`}
                         prefetch={false}
-                        className="text-16 leading-cozy font-normal whitespace-nowrap text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                        className="link-cta text-16 leading-cozy font-semibold whitespace-nowrap"
                       >
-                        <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block" />
-                        {item.email}
+                        <IconLinkContent icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6" />}>
+                          {item.email}
+                        </IconLinkContent>
                       </Link>
                     </div>
                   )}

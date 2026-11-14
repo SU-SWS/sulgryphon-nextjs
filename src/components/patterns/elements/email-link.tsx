@@ -1,12 +1,14 @@
 "use client"
 
 import {Email} from "react-obfuscate-email"
-import {HTMLProps} from "react"
+import {HTMLProps, ReactNode} from "react"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
-const EmailLink = ({email, ...props}: {email: string} & HTMLProps<HTMLAnchorElement>) => {
+/** An optional icon goes inside the link, so it takes the link's colour (see IconLinkContent). */
+const EmailLink = ({email, icon, ...props}: {email: string; icon?: ReactNode} & HTMLProps<HTMLAnchorElement>) => {
   return (
     <Email email={email} {...props}>
-      {email}
+      {icon ? <IconLinkContent icon={icon}>{email}</IconLinkContent> : email}
     </Email>
   )
 }

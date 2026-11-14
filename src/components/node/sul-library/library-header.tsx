@@ -8,6 +8,7 @@ import LibraryHeaderHours from "./library-hours"
 import EmailLink from "@/components/patterns/elements/email-link"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeSulLibrary} from "@/lib/gql/__generated__/graphql"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
   const bannerImageUrl = node.suLibraryBanner?.mediaImage.url
@@ -66,50 +67,59 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
                         {node.suLibraryPhone}
                       </div>
                     )}
+                    {/*
+                      The email and map icons go inside their links so they share the links' states. From md the
+                      icons hang in the gutter like the phone icon: the link is pulled left by the icon and its gap,
+                      so the text stays aligned with the phone number.
+                    */}
                     {node.suLibraryEmail && (
-                      <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
-                        <EnvelopeIcon
-                          width={19}
-                          title="Email"
-                          className="mt-01em mr-12 md:absolute md:top-02em md:left-[-38px] md:mt-0"
+                      <div className="relative mt-20 mb-4 type-1 md:mt-18">
+                        <EmailLink
+                          email={node.suLibraryEmail}
+                          icon={<EnvelopeIcon aria-hidden="true" width={19} className="mr-12 md:mr-[19px]" />}
+                          className="link-cta font-semibold wrap-anywhere md:-ml-[38px]"
                         />
-                        <EmailLink email={node.suLibraryEmail} className="wrap-anywhere no-underline hocus:underline" />
                       </div>
                     )}
-                    {node.suLibraryAddress && (
-                      <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
-                        <MapPinIcon
-                          title="Location"
-                          width={19}
-                          className="mt-01em mr-12 md:absolute md:top-01em md:left-[-38px] md:mt-0"
-                        />
-                        {node.suLibraryMapLink?.url ? (
-                          <Link href={node.suLibraryMapLink.url} className="no-underline hocus:underline">
-                            <div>
-                              {node.suLibraryAddress?.addressLine1}
+                    {node.suLibraryAddress &&
+                      (node.suLibraryMapLink?.url ? (
+                        <div className="relative mt-20 mb-4 type-1 md:mt-18">
+                          <Link href={node.suLibraryMapLink.url} className="link-cta font-semibold md:-ml-[38px]">
+                            <IconLinkContent
+                              icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12 md:mr-[19px]" />}
+                            >
+                              {node.suLibraryAddress.addressLine1}
                               <span className="sr-only">&nbsp;</span>
-                            </div>
-                            <div>
-                              {node.suLibraryAddress.addressLine2}
-                              <span className="sr-only">&nbsp;</span>
-                            </div>
-                            <div>
+                              <br />
+                              {node.suLibraryAddress.addressLine2 && (
+                                <>
+                                  {node.suLibraryAddress.addressLine2}
+                                  <span className="sr-only">&nbsp;</span>
+                                  <br />
+                                </>
+                              )}
                               {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
                               {node.suLibraryAddress.postalCode}
-                            </div>
+                            </IconLinkContent>
                           </Link>
-                        ) : (
-                          <>
+                        </div>
+                      ) : (
+                        <div className="relative mt-20 mb-4 flex flex-row items-start type-1 md:mt-18">
+                          <MapPinIcon
+                            title="Location"
+                            width={19}
+                            className="mt-01em mr-12 md:absolute md:top-01em md:left-[-38px] md:mt-0"
+                          />
+                          <div>
                             <div>{node.suLibraryAddress.addressLine1}</div>
                             <div>{node.suLibraryAddress.addressLine2}</div>
                             <div>
                               {node.suLibraryAddress.locality}, {node.suLibraryAddress.administrativeArea}{" "}
                               {node.suLibraryAddress.postalCode}
                             </div>
-                          </>
-                        )}
-                      </div>
-                    )}
+                          </div>
+                        </div>
+                      ))}
                   </div>
                   {node.suLibraryHours && <LibraryHeaderHours hoursId={node.suLibraryHours} />}
                 </>

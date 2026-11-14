@@ -11,10 +11,7 @@ const StanfordPublicationCard = ({node, ...props}: {node: NodeStanfordPublicatio
           <div className="rs-mb-2 text-16 md:text-18 2xl:text-19">{node.suPublicationCitation?.__typename}</div>
         }
         header={
-          <Link
-            className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
-            href={node.path || "#"}
-          >
+          <Link className="link-card" href={node.path || "#"}>
             {node.title}
           </Link>
         }

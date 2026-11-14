@@ -4,6 +4,7 @@ import {MagnifyingGlassIcon} from "@heroicons/react/16/solid"
 import {PlayIcon} from "@heroicons/react/16/solid"
 import {sendGAEvent} from "@next/third-parties/google"
 import HoneypotField from "@/components/patterns/elements/honeypot-field"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode[]
@@ -88,7 +89,8 @@ export const SulHomeBannerFormClient = () => {
         </label>
         <MagnifyingGlassIcon width={40} className="hidden sm:block" />
         <input
-          className="block h-40 w-full min-w-[25rem] border-0 text-16 focus-within:border md:min-w-[32rem] md:text-20 xl:min-w-[35rem] xl:text-22"
+          // The wrapper is overflow-hidden, so the focus outline is drawn inside the field.
+          className="block h-40 w-full min-w-[25rem] border-0 text-16 focus-within:border focus-visible:-outline-offset-3 md:min-w-[32rem] md:text-20 xl:min-w-[35rem] xl:text-22"
           name="q"
           id={inputId}
           placeholder="Search for books, articles, and more"
@@ -118,7 +120,10 @@ export const SulHomeBannerFormClient = () => {
       </div>
       <HoneypotField ref={honeypotRef} />
       <button
-        className="button relative m-0 block h-40 w-40 shrink-0 p-0 md:h-auto md:w-auto md:px-20 md:py-10"
+        className={cn(
+          "button relative m-0 block h-40 w-40 shrink-0 p-0 md:h-auto md:w-auto md:px-20 md:py-10",
+          "btn-primary"
+        )}
         type="submit"
       >
         <MagnifyingGlassIcon
