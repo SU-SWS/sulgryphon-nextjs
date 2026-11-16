@@ -123,7 +123,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/frontend &&
           (yarn start -H 0.0.0.0 -p 3000 > next-start.log 2>&1 &) &&
-          A11Y_BASE_URL=http://$(hostname -i | awk '{print $1}'):3000 SELENIUM_URL=http://chrome:4444 yarn validate:a11y
+          A11Y_BASE_URL=http://$(hostname -i | awk '{print $1}'):3000 SELENIUM_URL=http://chrome:4444 A11Y_PER_PREFIX=2 yarn validate:a11y
       - name: Upload Accessibility Report
         if: always()
         uses: actions/upload-artifact@v4

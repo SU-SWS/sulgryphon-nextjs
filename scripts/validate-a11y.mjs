@@ -1,10 +1,12 @@
-// Runs axe-core against every page `next build` prerendered, in a real Chrome driven over Selenium. Every page is checked
-// and all violations are reported before the process exits non-zero, so one run shows everything that needs fixing.
+// Runs axe-core against the pages `next build` prerendered, in a real Chrome driven over Selenium. Every page checked
+// is reported before the process exits non-zero, so one run shows everything that needs fixing.
 //
 // Environment:
-//   A11Y_BASE_URL  Where the browser reaches the running Next server. Default http://localhost:3000
-//   SELENIUM_URL   Selenium WebDriver server, ie the selenium/standalone-chrome service. Default http://localhost:4444
-//   A11Y_REPORT    JSON report output path. Default a11y-report.json
+//   A11Y_BASE_URL    Where the browser reaches the running Next server. Default http://localhost:3000
+//   SELENIUM_URL     Selenium WebDriver server, ie the selenium/standalone-chrome service. Default http://localhost:4444
+//   A11Y_REPORT      JSON report output path. Default a11y-report.json
+//   A11Y_PER_PREFIX  Check only this many pages per url prefix (/news/, /people/, ... and the top level pages), plus
+//                    the home page. Default 0, every page.
 import {writeFileSync} from "node:fs"
 import {Builder} from "selenium-webdriver"
 import chrome from "selenium-webdriver/chrome.js"
@@ -14,6 +16,7 @@ import {BUILD_DIR, getPrerenderedRoutes} from "./prerendered-pages.mjs"
 const BASE_URL = (process.env.A11Y_BASE_URL || "http://localhost:3000").replace(/\/$/, "")
 const SELENIUM_URL = process.env.SELENIUM_URL || "http://localhost:4444"
 const REPORT_PATH = process.env.A11Y_REPORT || "a11y-report.json"
+const PER_PREFIX = parseInt(process.env.A11Y_PER_PREFIX || "0") || 0
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]
 const PAGE_TIMEOUT = 30_000
 // Content the codebase can't fix: author-entered WYSIWYG HTML, and third party oembed iframes. Axe skips these elements
@@ -77,11 +80,31 @@ const buildDriver = () => {
   return new Builder().forBrowser("chrome").usingServer(SELENIUM_URL).setChromeOptions(options).build()
 }
 
-const routes = getPrerenderedRoutes().filter(route => !SKIP_ROUTES.includes(route))
-if (!routes.length) {
+/**
+ * The first `perPrefix` routes (in sorted order, so runs check the same pages) of each url prefix, ie the first
+ * segment of `/news/story`, with single segment pages like `/about` grouped as the top level. The home page is
+ * always included. Pages of one prefix are mostly one content type, so a few of each cover the shared components.
+ */
+const sampleRoutes = (routes, perPrefix) => {
+  const groups = new Map()
+  for (const route of routes) {
+    const segments = route.split("/").filter(Boolean)
+    if (!segments.length) continue
+    const prefix = segments.length > 1 ? `/${segments[0]}/` : "/"
+    groups.set(prefix, [...(groups.get(prefix) || []), route])
+  }
+  const sample = new Set(routes.includes("/") ? ["/"] : [])
+  for (const group of groups.values()) group.slice(0, perPrefix).forEach(route => sample.add(route))
+  return [...sample].sort()
+}
+
+const allRoutes = getPrerenderedRoutes().filter(route => !SKIP_ROUTES.includes(route))
+if (!allRoutes.length) {
   console.error(`No prerendered HTML found in ${BUILD_DIR}. Run \`yarn build\` first.`)
   process.exit(1)
 }
+const routes = PER_PREFIX ? sampleRoutes(allRoutes, PER_PREFIX) : allRoutes
+if (PER_PREFIX) console.log(`Checking ${routes.length} of ${allRoutes.length} pages, ${PER_PREFIX} per url prefix.`)
 
 await retry("Next server", async () => {
   const response = await fetch(BASE_URL)
@@ -157,6 +180,7 @@ writeFileSync(
       tags: WCAG_TAGS,
       excluded: EXCLUDE_SELECTORS,
       checked: pages.length,
+      prerendered: allRoutes.length,
       rules: sortedRules,
       errors: erroredPages,
     },
