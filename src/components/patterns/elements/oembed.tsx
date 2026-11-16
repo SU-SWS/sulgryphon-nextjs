@@ -4,6 +4,7 @@ import {ArrowPathIcon} from "@heroicons/react/20/solid"
 import Embed, {defaultProviders} from "react-tiny-oembed"
 import {HTMLAttributes} from "react"
 import {useIntersectionObserver} from "usehooks-ts"
+import cn from "@/lib/utils/className"
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   url: string
@@ -27,7 +28,8 @@ const Oembed = ({url, ...props}: Props) => {
   ]
 
   return (
-    <div ref={ref} {...props}>
+    // The oembed class marks third party embeds, which the accessibility check (scripts/validate-a11y.mjs) skips.
+    <div ref={ref} {...props} className={cn("oembed", props.className)}>
       {isIntersecting && <Embed url={url} LoadingFallbackElement={<Loading />} providers={oembedProviders} />}
     </div>
   )

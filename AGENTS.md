@@ -22,7 +22,14 @@ yarn build      # next build --webpack
 yarn preview    # build then next start
 yarn lint       # eslint ./src ./app && tsc  (what CI runs)
 yarn graphql    # regenerate GraphQL types from Drupal (reads .env.local)
+yarn validate:html  # html-validate the prerendered pages (after `yarn build`)
+yarn validate:a11y  # axe-core (WCAG 2.2 AA) in Chrome over Selenium on the prerendered pages (needs `yarn start`)
 ```
+
+- `validate:a11y` reads `A11Y_BASE_URL` (default `http://localhost:3000`), `SELENIUM_URL` (default
+  `http://localhost:4444`, e.g. `docker run --rm -p 4444:4444 --shm-size=2g selenium/standalone-chrome:130.0`) and
+  `A11Y_REPORT` (default `a11y-report.json`). It skips `.wysiwyg` and `.oembed` content, which the code can't fix.
+- CI (`build_lint.yml`) builds against a real Drupal, then runs both checks. The a11y report is uploaded as an artifact.
 
 - `BUILD_COMPLETE=true` prerenders every Drupal node at build time. Keep it `false` locally: only a placeholder
   (`/home`) is prerendered, and other pages render on first request and are then cached.
