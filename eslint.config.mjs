@@ -48,6 +48,20 @@ const esLintConfig = defineConfig([
       ],
     },
   },
+  {
+    // Flag deprecated APIs (anything marked `@deprecated`, e.g. React's FormEvent), which tsc doesn't report. The rule
+    // needs type information, so it only runs on files in the TypeScript project.
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-deprecated": "error",
+    },
+  },
   globalIgnores(["**/__generated__/**/*", "src/styles/**/*"]),
 ])
 export default esLintConfig

@@ -35,6 +35,8 @@ yarn validate:a11y  # axe-core (WCAG 2.2 AA) in Chrome over Selenium on the prer
   (`/home`) is prerendered, and other pages render on first request and are then cached.
 - Only one `next dev` can run per project. If one is already running (usually on port 3000), use it.
 - The pre-commit hook (`.githooks/pre-commit`, installed by `postinstall`) runs Prettier on staged `.tsx` files.
+- ESLint runs `@typescript-eslint/no-deprecated` with type information, so using anything marked `@deprecated` (e.g.
+  React's `FormEvent`; use `SubmitEvent` or `ChangeEvent`) fails `yarn lint`. tsc alone doesn't report deprecations.
 - Vercel installs with `yarn workspaces focus --production`, so dev dependencies are absent in production builds.
   That's why `next.config.ts` ignores type errors outside CI. Rely on `yarn lint` / CI for type checking.
 

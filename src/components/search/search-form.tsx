@@ -1,6 +1,6 @@
 "use client"
 
-import {FormEvent, HTMLAttributes, useEffect, useId, useRef} from "react"
+import {HTMLAttributes, SubmitEvent, useEffect, useId, useRef} from "react"
 import {useRouter} from "next/navigation"
 import HoneypotField from "@/components/patterns/elements/honeypot-field"
 
@@ -32,7 +32,7 @@ const SearchForm = ({action = "/search", inputProps = {}, ...props}: FormProps) 
 
   const router = useRouter()
 
-  const formSubmit = (e: FormEvent) => {
+  const formSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     // Bot trap: a human never fills the visually/SR-hidden honeypot field.
     // A populated value means an automated submission — block it before it
     // reaches the external /all (discover.stanford.edu) app.
