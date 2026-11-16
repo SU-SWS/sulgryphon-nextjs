@@ -1,16 +1,8 @@
-import {stringify} from "qs"
 import {MenuItem, NodeInterface} from "@/lib/gql/__generated__/graphql"
 
-export const buildUrl = (path: string, params?: string | Record<string, string> | URLSearchParams): URL => {
-  const url = new URL(path.charAt(0) === "/" ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}` : path)
-
-  if (params) {
-    // Use instead URLSearchParams for nested params.
-    url.search = stringify(params)
-  }
-
-  return url
-}
+/** An absolute URL: paths starting with `/` are resolved against the Drupal base url. */
+export const buildUrl = (path: string): URL =>
+  new URL(path.charAt(0) === "/" ? `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${path}` : path)
 
 export const getActiveTrail = (menuItems: MenuItem[], currentPath: NodeInterface["path"]) => {
   const getActiveTrailInner = (menuItems: MenuItem[], trail: string[] = []): string[] => {

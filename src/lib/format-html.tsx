@@ -1,4 +1,4 @@
-import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps} from "html-react-parser"
+import parse, {HTMLReactParserOptions, Element, domToReact, attributesToProps, type DOMNode} from "html-react-parser"
 import {
   DrupalActionLink,
   DrupalLinkBigButton,
@@ -9,7 +9,6 @@ import {
 import Oembed from "@/components/patterns/elements/oembed"
 import cn from "@/lib/utils/className"
 import {ElementType, ImgHTMLAttributes} from "react"
-import type {DOMNode} from "html-dom-parser"
 import HeaderGradientLine from "@/components/patterns/header-gradient-line"
 
 const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
