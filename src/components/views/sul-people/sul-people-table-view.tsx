@@ -57,7 +57,6 @@ const SulPeopleTableView = ({items}: Props) => {
       <form
         className="mx-auto mb-32 flex w-fit flex-wrap justify-center gap-30 lg:flex-nowrap"
         onSubmit={e => e.preventDefault()}
-        action="javascript:void(0);"
       >
         <div className="relative w-full md:w-435">
           <label className="pl-15 text-18 leading-display font-semibold" htmlFor={id}>

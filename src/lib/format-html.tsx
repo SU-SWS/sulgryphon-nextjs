@@ -26,6 +26,10 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
               nodeProps.href = "#"
             }
             nodeProps.href = nodeProps.href.replace(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL ?? "", "")
+            // Keep in-page links pointing at their heading after toAnchorId (below) rewrites its id.
+            if (nodeProps.href.startsWith("#") && /\s|%20/.test(nodeProps.href)) {
+              nodeProps.href = `#${toAnchorId(nodeProps.href.slice(1))}`
+            }
 
             if (nodeProps.className?.includes("button--big")) {
               return (
@@ -120,6 +124,9 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
           case "h2":
           case "h3":
           case "h4":
+          case "h5":
+          case "h6":
+            if (typeof nodeProps.id === "string") nodeProps.id = toAnchorId(nodeProps.id)
             if (nodeProps.className?.includes("sul-gradient-accent")) {
               nodeProps.className += " mb-0! shrink-0 "
               return (
@@ -134,6 +141,20 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
         }
       }
     },
+  }
+
+  /**
+   * Editors type heading ids by hand as link anchors, sometimes with spaces ("Reading Room policies"), which isn't a
+   * valid id. Spaces become hyphens, and links to the heading are rewritten the same way.
+   */
+  const toAnchorId = (id: string): string => {
+    let decoded = id
+    try {
+      decoded = decodeURIComponent(id)
+    } catch {
+      // Not percent-encoded.
+    }
+    return decoded.trim().replace(/\s+/g, "-")
   }
 
   const fixClasses = (classes: string | boolean): string => {

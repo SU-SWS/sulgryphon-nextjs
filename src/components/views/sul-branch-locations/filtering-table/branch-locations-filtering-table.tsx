@@ -65,7 +65,7 @@ const BranchLocationFilteringTable = ({items}: Props) => {
 
   return (
     <div className="pb-[32px]">
-      <form action="javascript:void(0);">
+      <form onSubmit={e => e.preventDefault()}>
         <fieldset className="mx-auto rs-mb-1 flex h-25 w-fit items-center rounded-full">
           <legend className="sr-only">Filter by speciality</legend>
 
