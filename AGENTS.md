@@ -28,7 +28,8 @@ yarn validate:a11y  # axe-core (WCAG 2.2 AA) in Chrome over Selenium on the prer
 
 - `validate:a11y` reads `A11Y_BASE_URL` (default `http://localhost:3000`), `SELENIUM_URL` (default
   `http://localhost:4444`, e.g. `docker run --rm -p 4444:4444 --shm-size=2g selenium/standalone-chrome:130.0`) and
-  `A11Y_REPORT` (default `a11y-report.json`). It skips `.wysiwyg` and `.oembed` content, which the code can't fix.
+  `A11Y_REPORT` (default `a11y-report.json`). `A11Y_PER_PREFIX=2` checks only 2 pages per url prefix (`/news/`,
+  `/people/`, ..., and the top level pages) plus the home page; CI uses that. Unset, every page is checked. It skips `.wysiwyg` and `.oembed` content, which the code can't fix.
 - CI (`build_lint.yml`) builds against a real Drupal, then runs both checks. The a11y report is uploaded as an artifact.
 
 - `BUILD_COMPLETE=true` prerenders every Drupal node at build time. Keep it `false` locally: only a placeholder

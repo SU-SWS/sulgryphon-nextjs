@@ -170,7 +170,7 @@ const StanfordEvent = async ({node, ...props}: {node: NodeStanfordEvent}) => {
                 )}
 
                 {node.suEventMapLink?.url && (
-                  <Link href={node.suEventMapLink.url} className="ml-36 block">
+                  <Link href={node.suEventMapLink.url.replaceAll(" ", "%20")} className="ml-36 block">
                     {node.suEventMapLink.title}
                   </Link>
                 )}
