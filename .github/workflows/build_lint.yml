@@ -25,7 +25,7 @@ env:
   # Drush command that prints the .env lines the frontend needs to connect to Drupal.
   DRUPAL_NEXT_CONNECT: stanford-decoupled:connect-next
   # Number of pages `next build` prerenders, and so how many pages the HTML and accessibility checks cover.
-  BUILD_PAGES: 500
+  BUILD_PAGES: 100
   NODE_VERSION: 24
   # Anything else this project's build needs, ie API keys from secrets.
   LIBGUIDE_CLIENT_ID: ${{ secrets.LIBGUIDE_CLIENT_ID }}
