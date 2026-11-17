@@ -12,14 +12,14 @@ env:
   DRUPAL_REF: 4.x
   # 'true' builds against the Drupal branch with the same name as this branch when one exists, otherwise DRUPAL_REF.
   # `N.x` branches always use DRUPAL_REF, since both repositories use those names for unrelated major versions.
-  DRUPAL_MATCH_BRANCH: 'false'
+  DRUPAL_MATCH_BRANCH: 'true'
   # Directory in docroot/sites. Also the `--site` option for drush drupal:sync and drupal:install.
   DRUPAL_SITE: library
   # Where the database comes from when there's no cached copy: "sync" copies production over SSH (needs the SSH_KEY and
   # KNOWN_HOSTS secrets), "install" does a fresh `drush drupal:install`.
   DRUPAL_DB_SOURCE: sync
   # How long a cached database is reused, as a `date` format: `%F` is daily, `%G-W%V` is weekly.
-  DRUPAL_DB_CACHE_PERIOD: '%F'
+  DRUPAL_DB_CACHE_PERIOD: '%G-W%V'
   # SQL to run after the database is ready, ie to blank out third party keys. Leave empty for none.
   DRUPAL_CI_SQL: 'truncate config_pages__su_site_algolia_id'
   # Drush command that prints the .env lines the frontend needs to connect to Drupal.
