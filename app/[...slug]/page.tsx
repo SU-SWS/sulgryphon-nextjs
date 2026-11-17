@@ -35,14 +35,18 @@ const NodePage = async (props: PageProps) => {
 }
 
 export const generateStaticParams = async (): Promise<Array<Slug>> => {
+  // BUILD_PAGES is the number of pages to prerender: 0 (the default) for none, -1 for all, or the first N.
+  const pagesToBuild = parseInt(process.env.BUILD_PAGES || "0") || 0
+
   // Cache Components requires at least one param to validate the route's static shell. `/home` is
   // the home page alias, which next.config.ts redirects to `/`, so it never serves stale content.
-  if (process.env.BUILD_COMPLETE !== "true") return [{slug: ["home"]}]
+  if (pagesToBuild === 0) return [{slug: ["home"]}]
 
   const params = (await getAllNodes())
     .map(node => node.path)
     .filter(path => !!path && path !== "/" && !path.startsWith("/node/"))
     .map(path => ({slug: (path as string).split("/").filter(part => !!part)}))
+    .slice(0, pagesToBuild < 0 ? undefined : pagesToBuild)
 
   // If Drupal couldn't be reached, build the placeholder and let every page render on its first request.
   return params.length ? params : [{slug: ["home"]}]

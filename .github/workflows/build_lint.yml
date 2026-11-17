@@ -28,7 +28,6 @@ env:
   BUILD_PAGES: 500
   NODE_VERSION: 24
   # Anything else this project's build needs, ie API keys from secrets.
-  BUILD_COMPLETE: 'true'
   LIBGUIDE_CLIENT_ID: ${{ secrets.LIBGUIDE_CLIENT_ID }}
   LIBGUIDE_CLIENT_SECRET: ${{ secrets.LIBGUIDE_CLIENT_SECRET }}
   STANFORD_ENCRYPT: ${{ secrets.STANFORD_ENCRYPT }}

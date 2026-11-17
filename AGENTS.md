@@ -32,8 +32,9 @@ yarn validate:a11y  # axe-core (WCAG 2.2 AA) in Chrome over Selenium on the prer
   `/people/`, ..., and the top level pages) plus the home page; CI uses that. Unset, every page is checked. It skips `.wysiwyg` and `.oembed` content, which the code can't fix.
 - CI (`build_lint.yml`) builds against a real Drupal, then runs both checks. The a11y report is uploaded as an artifact.
 
-- `BUILD_COMPLETE=true` prerenders every Drupal node at build time. Keep it `false` locally: only a placeholder
-  (`/home`) is prerendered, and other pages render on first request and are then cached.
+- `BUILD_PAGES` is the number of Drupal nodes prerendered at build time: `0` (the default) for none, `-1` for all, or
+  the first N (CI builds 500). Keep it `0` locally: only a placeholder (`/home`) is prerendered, and other pages
+  render on first request and are then cached.
 - Only one `next dev` can run per project. If one is already running (usually on port 3000), use it.
 - The pre-commit hook (`.githooks/pre-commit`, installed by `postinstall`) runs Prettier on staged `.tsx` files.
 - ESLint runs `@typescript-eslint/no-deprecated` with type information, so using anything marked `@deprecated` (e.g.
@@ -209,13 +210,13 @@ codegen), `DRUPAL_PREVIEW_SECRET`, `DRUPAL_REVALIDATE_SECRET`.
 
 Optional: `LIBGUIDE_CLIENT_ID` / `LIBGUIDE_CLIENT_SECRET`, `ALGOLIA_ID` / `ALGOLIA_INDEX` / `ALGOLIA_KEY` (search-only
 key; overrides the Drupal Site Settings), `DRUPAL_REQUEST_HEADER` (JSON headers, e.g. WAF bypass),
-`NEXT_PUBLIC_GA_MEASUREMENT_ID`, `BUILD_COMPLETE`. See `.env.example`.
+`NEXT_PUBLIC_GA_MEASUREMENT_ID`, `BUILD_PAGES`. See `.env.example`.
 
 `NEXT_PUBLIC_*` values are inlined at build time; changing them needs a rebuild.
 
 ## Verifying changes
 
-- Run `yarn lint` and a `BUILD_COMPLETE=false yarn build`. The build is where Cache Components validation runs.
+- Run `yarn lint` and a `BUILD_PAGES=0 yarn build`. The build is where Cache Components validation runs.
 - For visual or behavioural checks, run `next start` on a spare port and check real pages: the home page, a library
   page (`/libraries/cecil-h-green-library`), the tables (`/libraries/places-to-study`,
   `/libraries/branches-and-centers`), and `/test-paragraphs` (all paragraph types).
