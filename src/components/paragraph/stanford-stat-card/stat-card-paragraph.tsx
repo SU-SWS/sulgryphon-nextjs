@@ -166,7 +166,7 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         <Link
           className={cn(
             "flex w-fit items-center gap-3 rounded-[3.5rem] px-26 py-8 leading-display",
-            whiteText ? "btn-outline-on-dark" : "btn-secondary",
+            {"btn-outline-on-dark": whiteText, "btn-secondary": !whiteText},
             {
               "mx-auto": paragraph.suStatCentered,
               "text-18": transparentBg,
@@ -182,7 +182,11 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         // CTA link, or an in-line link on a dark card. Both are inline-block or inline, so the card's text-center
         // centers them.
         <Link
-          className={cn("leading-display", whiteText ? "link-on-dark" : "link-cta", {"text-18": transparentBg})}
+          className={cn("leading-display", {
+            "link-on-dark": whiteText,
+            "link-cta": !whiteText,
+            "text-18": transparentBg,
+          })}
           href={paragraph.suStatButton.url}
         >
           {paragraph.suStatButton.title}

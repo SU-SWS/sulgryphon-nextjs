@@ -41,7 +41,7 @@ const SelectedChip = ({
   onRemove: (_event: MouseEvent<HTMLButtonElement>) => void
   disabled?: boolean
 }) => (
-  <span className="mb-2 flex w-fit max-w-full items-stretch overflow-hidden rounded-[0.5rem] bg-archway pl-12 text-16 leading-tight text-white has-[button:focus-visible]:bg-fog-light has-[button:focus-visible]:text-archway has-[button:focus-visible]:outline-3 has-[button:focus-visible]:-outline-offset-3 has-[button:focus-visible]:outline-digital-blue has-[button:hover]:bg-fog-light has-[button:hover]:text-archway">
+  <span className="mb-2 flex w-fit max-w-full items-stretch overflow-hidden rounded-lg bg-archway pl-12 text-16 leading-tight text-white has-[button:focus-visible]:bg-fog-light has-[button:focus-visible]:text-archway has-[button:focus-visible]:outline-3 has-[button:focus-visible]:-outline-offset-3 has-[button:focus-visible]:outline-digital-blue has-[button:hover]:bg-fog-light has-[button:hover]:text-archway">
     <span className="overflow-hidden py-6 pr-6 text-ellipsis whitespace-nowrap">{children}</span>
     <button
       type="button"

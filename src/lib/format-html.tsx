@@ -68,7 +68,7 @@ const formatHtml = (html?: string | null, isDarkBg?: boolean) => {
               )
             }
 
-            nodeProps.className = cn(isDarkBg ? "link-on-dark" : "link-inline", nodeProps.className)
+            nodeProps.className = cn({"link-on-dark": isDarkBg, "link-inline": !isDarkBg}, nodeProps.className)
             return <a {...nodeProps}>{domToReact(domNode.children as DOMNode[], options)}</a>
           case "div":
           case "article":

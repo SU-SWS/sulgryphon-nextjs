@@ -86,9 +86,7 @@ const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => 
             <h2 id={formId} className="mb-03em text-24 font-bold">
               Library hours
             </h2>
-            <DrupalActionLink href="https://library-hours.stanford.edu/libraries" className="font-normal">
-              See all hours
-            </DrupalActionLink>
+            <DrupalActionLink href="https://library-hours.stanford.edu/libraries">See all hours</DrupalActionLink>
           </div>
 
           <div className="mb-10">
@@ -103,7 +101,7 @@ const LibrariesTodayHours = ({libraries, alert, icon, ...props}: HoursProps) => 
             {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
 
             {library?.suLibraryMapLink?.url && (
-              <Link href={library.suLibraryMapLink.url} prefetch={false} className="link-cta font-normal">
+              <Link href={library.suLibraryMapLink.url} prefetch={false} className="link-cta">
                 <span className="sr-only">{library.title}&nbsp;</span>
                 <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={25} className="mr-5" />}>
                   Location

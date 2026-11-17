@@ -134,7 +134,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         <Link
           prefetch={false}
           href={href}
-          className="m-auto mb-16 inline-block w-fit text-center text-20 font-semibold no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red md:m-[unset] md:w-auto md:text-left hocus:underline"
+          className="link-cta m-auto mb-16 w-fit text-center text-20 font-semibold md:m-[unset] md:w-auto md:text-left"
         >
           <span className="mb-0 font-sans text-20 font-semibold">{title}</span>
         </Link>

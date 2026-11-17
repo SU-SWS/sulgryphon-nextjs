@@ -17,7 +17,7 @@ export const DrupalLinkButton = ({
       {...props}
       className={cn(
         "cta-button btn--primary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-        isDarkBg ? "btn-primary-on-dark" : "btn-primary",
+        {"btn-primary-on-dark": isDarkBg, "btn-primary": !isDarkBg},
         className
       )}
     >
@@ -43,7 +43,7 @@ export const DrupalLinkSecondaryButton = ({
       {...props}
       className={cn(
         "cta-button btn--secondary group rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-        isDarkBg ? "btn-secondary-on-dark" : "btn-secondary",
+        {"btn-secondary-on-dark": isDarkBg, "btn-secondary": !isDarkBg},
         className
       )}
     >
@@ -63,8 +63,7 @@ export const DrupalLinkBigButton = ({
       href={href}
       {...props}
       className={cn(
-        "cta-button font-large group rs-mt-neg1 block w-fit rounded-full px-36 py-16 text-16 leading-display md:text-18",
-        "btn-primary",
+        "cta-button font-large group rs-mt-neg1 block w-fit rounded-full btn-primary px-36 py-16 text-16 leading-display md:text-18",
         className
       )}
     >

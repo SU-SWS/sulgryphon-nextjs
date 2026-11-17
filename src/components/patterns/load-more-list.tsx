@@ -96,10 +96,7 @@ const LoadMoreList = ({buttonText, children, ulProps, liProps, totalItems, loadP
       {items.length < totalItems && loadPage && (
         <button
           type="button"
-          className={cn(
-            "cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-            "btn-primary"
-          )}
+          className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full btn-primary px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18"
           onClick={showMoreItems}
         >
           {buttonText ? buttonText : "Load more"}

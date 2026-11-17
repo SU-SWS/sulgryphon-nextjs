@@ -80,12 +80,10 @@ const LibrariesTodayHours = ({libraries, ...props}: {libraries: HoursProps["libr
                 {library?.suLibraryHours && <TodayLibraryHours branchId={library.suLibraryHours} />}
 
                 <div className="flex justify-between">
-                  <DrupalActionLink href="https://library-hours.stanford.edu/libraries" className="font-normal">
-                    See all hours
-                  </DrupalActionLink>
+                  <DrupalActionLink href="https://library-hours.stanford.edu/libraries">See all hours</DrupalActionLink>
 
                   {library?.suLibraryMapLink?.url && (
-                    <Link href={library.suLibraryMapLink.url} prefetch={false} className="link-cta font-normal">
+                    <Link href={library.suLibraryMapLink.url} prefetch={false} className="link-cta">
                       <span className="sr-only">{library.title}&nbsp;</span>
                       <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={25} className="mr-5" />}>
                         Location

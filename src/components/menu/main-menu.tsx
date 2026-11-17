@@ -294,7 +294,7 @@ const MenuItem = ({
           href={url.length >= 1 ? url : "#"}
           onClick={handleMenuClick}
           className={cn(
-            "group/navlink flex w-full items-center p-20 text-white no-underline focus-visible:outline-offset-[-0.4rem] lg:text-black-true hocus-visible:text-white hocus-visible:underline",
+            "group/navlink flex w-full items-center p-20 text-white no-underline focus-visible:-outline-offset-4 lg:text-black-true hocus-visible:text-white hocus-visible:underline",
             "lg:hocus-visible:text-archway",
             {
               "lg:hocus-visible:bg-black-10": menuLevel > 0,
@@ -308,8 +308,10 @@ const MenuItem = ({
           <div
             className={cn(
               "w-full shrink-0 pl-30 text-nowrap lg:pl-0",
-              menuLevel == 0 &&
-                "lg:group-focus-visible/navlink:rounded-[0.5rem] lg:group-focus-visible/navlink:outline-3 lg:group-focus-visible/navlink:outline-offset-4 lg:group-focus-visible/navlink:outline-digital-blue",
+              {
+                "lg:group-focus-visible/navlink:rounded-lg lg:group-focus-visible/navlink:outline-3 lg:group-focus-visible/navlink:outline-offset-4 lg:group-focus-visible/navlink:outline-digital-blue":
+                  menuLevel == 0,
+              },
               titleSpacing[menuLevel]
             )}
           >
@@ -322,7 +324,7 @@ const MenuItem = ({
         <button
           tabIndex={tabIndex}
           className={cn(
-            "group flex w-full items-center p-20 text-left font-semibold text-white focus-visible:outline-offset-[-0.4rem] lg:text-black-true hocus-visible:bg-black hocus-visible:text-white lg:hocus-visible:bg-transparent lg:hocus-visible:text-archway",
+            "group flex w-full items-center p-20 text-left font-semibold text-white focus-visible:-outline-offset-4 lg:text-black-true hocus-visible:bg-black hocus-visible:text-white lg:hocus-visible:bg-transparent lg:hocus-visible:text-archway",
             getLinkBorderClasses()
           )}
           onClick={toggleSubmenu}
@@ -371,21 +373,21 @@ const MenuItem = ({
 
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}: {open: boolean; addCloseAnimation: boolean}) => {
   return (
-    <span className="mx-auto block w-[30px]">
+    <span className="mx-auto block w-30">
       <span
-        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+        className={cn("mb-5 block h-5 w-full rounded-full bg-black", {
           "animate-menu-x-morph-a": open,
           "animate-menu-x-morph-r-a": !open && addCloseAnimation,
         })}
       />
       <span
-        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+        className={cn("mb-5 block h-5 w-full rounded-full bg-black", {
           "animate-menu-x-morph-b": open,
           "animate-menu-x-morph-r-b": !open && addCloseAnimation,
         })}
       />
       <span
-        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+        className={cn("mb-5 block h-5 w-full rounded-full bg-black", {
           "animate-menu-x-morph-c": open,
           "animate-menu-x-morph-r-c": !open && addCloseAnimation,
         })}
@@ -410,16 +412,16 @@ const DropDownButton = ({
   return (
     <button
       className={cn(
-        "group absolute top-0 right-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] focus-visible:outline-offset-[-0.4rem] lg:relative lg:h-auto lg:focus-visible:outline-hidden",
-        {"lg:bg-fog-light": menuLevel >= 1, "lg:w-[40px] lg:bg-transparent": menuLevel < 1}
+        "group absolute top-0 right-0 z-20 h-68 w-70 bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-30 hover:after:content-[''] focus-visible:-outline-offset-4 lg:relative lg:h-auto lg:focus-visible:outline-hidden",
+        {"lg:bg-fog-light": menuLevel >= 1, "lg:w-40 lg:bg-transparent": menuLevel < 1}
       )}
       onClick={onButtonClick}
       {...props}
     >
       {/* On desktop the focus box goes around the chevron rather than the whole button. */}
-      <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus-visible:border-white lg:group-focus-visible:rounded-[0.5rem] lg:group-focus-visible:outline-3 lg:group-focus-visible:outline-offset-2 lg:group-focus-visible:outline-digital-blue lg:group-hocus-visible:border-archway">
+      <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus-visible:border-white lg:group-focus-visible:rounded-lg lg:group-focus-visible:outline-3 lg:group-focus-visible:outline-offset-2 lg:group-focus-visible:outline-digital-blue lg:group-hocus-visible:border-archway">
         <ChevronDownIcon
-          className={cn("mx-auto text-white transition-all lg:text-black-true", isOpen && "scale-y-[-1]")}
+          className={cn("mx-auto text-white transition-all lg:text-black-true", {"-scale-y-100": isOpen})}
           height={40}
         />
       </span>

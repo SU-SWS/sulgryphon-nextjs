@@ -170,11 +170,7 @@ const SulPeopleTableView = ({items}: Props) => {
                   className="block w-auto px-0 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4 lg:py-16 lg:pr-72"
                 >
                   {item.title && (
-                    <Link
-                      prefetch={false}
-                      href={item.path || "#"}
-                      className="mb-16 inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
-                    >
+                    <Link prefetch={false} href={item.path || "#"} className="link-cta mb-16">
                       <span className="mb-0 font-sans text-20 font-semibold" id={item.uuid}>
                         {item.title}
                       </span>

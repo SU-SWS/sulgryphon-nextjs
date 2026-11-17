@@ -5,7 +5,6 @@ import GlobalMessage from "@/components/layout/global-message"
 import FallbackMainMenu from "@/components/menu/fallback-main-menu"
 import {Suspense} from "react"
 import {getMenu} from "@/lib/gql/gql-queries"
-import cn from "@/lib/utils/className"
 
 const Header = async () => {
   const menuItems = await getMenu()
@@ -48,10 +47,7 @@ const Header = async () => {
                 <li>
                   <Link
                     href="/support-stanford-libraries"
-                    className={cn(
-                      "cta-button group mt-0 block w-fit rounded-full px-16 py-6 text-16 leading-normal font-normal whitespace-nowrap",
-                      "btn-primary"
-                    )}
+                    className="cta-button group mt-0 block w-fit rounded-full btn-primary px-16 py-6 text-16 leading-normal font-normal whitespace-nowrap"
                   >
                     Donate now
                   </Link>

@@ -102,7 +102,10 @@ const HorizontalCard = ({
                   href={link.url}
                   className={cn(
                     "cta-button group mt-32 block w-fit rounded-full px-26 pt-10 pb-11 text-16 leading-display font-semibold md:text-18",
-                    cardBgColor === "cardinal_red" ? "btn-secondary-on-dark" : "btn-primary"
+                    {
+                      "btn-secondary-on-dark": cardBgColor === "cardinal_red",
+                      "btn-primary": cardBgColor !== "cardinal_red",
+                    }
                   )}
                   {...linkAttributes}
                 >
