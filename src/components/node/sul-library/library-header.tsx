@@ -89,12 +89,10 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
                               icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12 md:mr-19" />}
                             >
                               {node.suLibraryAddress.addressLine1}
-                              <span className="sr-only">&nbsp;</span>
                               <br />
                               {node.suLibraryAddress.addressLine2 && (
                                 <>
                                   {node.suLibraryAddress.addressLine2}
-                                  <span className="sr-only">&nbsp;</span>
                                   <br />
                                 </>
                               )}

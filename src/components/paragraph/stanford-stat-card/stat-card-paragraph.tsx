@@ -164,14 +164,12 @@ const StatCardParagraph = ({paragraph, disableAnimation, ...props}: Props) => {
         // Secondary button. The spec has no dark background row, so on dark cards it keeps its white outline
         // (btn-outline-on-dark), with the focus ring like the other dark background buttons.
         <Link
-          className={cn(
-            "flex w-fit items-center gap-3 rounded-[3.5rem] px-26 py-8 leading-display",
-            {"btn-outline-on-dark": whiteText, "btn-secondary": !whiteText},
-            {
-              "mx-auto": paragraph.suStatCentered,
-              "text-18": transparentBg,
-            }
-          )}
+          className={cn("flex w-fit items-center gap-3 rounded-[3.5rem] px-26 py-8 leading-display", {
+            "btn-outline-on-dark": whiteText,
+            "btn-secondary": !whiteText,
+            "mx-auto": paragraph.suStatCentered,
+            "text-18": transparentBg,
+          })}
           href={paragraph.suStatButton.url}
         >
           {paragraph.suStatButton.title}
