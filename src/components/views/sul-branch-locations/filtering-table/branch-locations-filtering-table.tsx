@@ -152,10 +152,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         {/* The icons are inside the links so they share the links' states, as in the person contact links. */}
         {phone && (
           <div className="text-center md:text-left">
-            <a
-              href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`}
-              className="link-cta text-16 leading-normal font-semibold"
-            >
+            <a href={`tel:${phone.replaceAll(/[^0-9]/g, "")}`} className="link-cta text-16 leading-normal font-normal">
               <IconLinkContent icon={<PhoneIcon aria-hidden="true" width={20} className="mr-4" />}>
                 <span className="sr-only">Phone: </span>
                 {phone}
@@ -165,7 +162,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
         )}
         {email && (
           <div className="mb-16 text-center md:text-left xl:mb-0">
-            <a href={`mailto:${email}`} className="link-cta text-16 leading-normal font-semibold wrap-anywhere">
+            <a href={`mailto:${email}`} className="link-cta text-16 leading-normal font-normal wrap-anywhere">
               <IconLinkContent icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-4" />}>
                 {email}
               </IconLinkContent>
@@ -180,7 +177,7 @@ const TableRow = ({uuid, imageUrl, path, extUrl, title, phone, email, mapUrl, ad
           <div className="pb-16 text-center md:text-left xl:pb-0">
             {/* A block-level flex row inside the link keeps the icon beside the multi-line address and still
                 takes the link's hover underline. */}
-            <a href={mapUrl} className="link-cta font-semibold">
+            <a href={mapUrl} className="link-cta font-normal">
               <span className="flex items-center gap-4">
                 <MapPinIcon aria-hidden="true" width={20} className="min-w-20" />
                 <span className="sr-only">Map: </span>

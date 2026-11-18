@@ -194,7 +194,7 @@ const SulPeopleTableView = ({items}: Props) => {
                       <Link
                         href={`mailto:${item.email}`}
                         prefetch={false}
-                        className="link-cta text-16 leading-cozy font-semibold whitespace-nowrap"
+                        className="link-cta text-16 leading-cozy font-normal whitespace-nowrap"
                       >
                         <IconLinkContent icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6" />}>
                           {item.email}

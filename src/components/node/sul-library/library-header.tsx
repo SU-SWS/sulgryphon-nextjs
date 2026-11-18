@@ -76,17 +76,17 @@ const LibraryHeader = ({node}: {node: NodeSulLibrary}) => {
                       <div className="relative mt-20 mb-4 type-1 md:mt-18">
                         <EmailLink
                           email={node.suLibraryEmail}
-                          icon={<EnvelopeIcon aria-hidden="true" width={19} className="mr-12 md:mr-[19px]" />}
-                          className="link-cta font-semibold wrap-anywhere md:-ml-[38px]"
+                          icon={<EnvelopeIcon aria-hidden="true" width={19} className="mr-12 md:mr-19" />}
+                          className="link-cta font-semibold wrap-anywhere md:-ml-38"
                         />
                       </div>
                     )}
                     {node.suLibraryAddress &&
                       (node.suLibraryMapLink?.url ? (
                         <div className="relative mt-20 mb-4 type-1 md:mt-18">
-                          <Link href={node.suLibraryMapLink.url} className="link-cta font-semibold md:-ml-[38px]">
+                          <Link href={node.suLibraryMapLink.url} className="link-cta font-semibold md:-ml-38">
                             <IconLinkContent
-                              icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12 md:mr-[19px]" />}
+                              icon={<MapPinIcon aria-hidden="true" width={19} className="mr-12 md:mr-19" />}
                             >
                               {node.suLibraryAddress.addressLine1}
                               <span className="sr-only">&nbsp;</span>

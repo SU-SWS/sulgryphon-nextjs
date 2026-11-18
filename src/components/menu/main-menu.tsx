@@ -309,7 +309,7 @@ const MenuItem = ({
             className={cn(
               "w-full shrink-0 pl-30 text-nowrap lg:pl-0",
               {
-                "lg:group-focus-visible/navlink:rounded-lg lg:group-focus-visible/navlink:outline-3 lg:group-focus-visible/navlink:outline-offset-4 lg:group-focus-visible/navlink:outline-digital-blue":
+                "lg:group-focus-visible/navlink:focus-ring-box lg:group-focus-visible/navlink:outline-offset-4":
                   menuLevel == 0,
               },
               titleSpacing[menuLevel]
@@ -419,7 +419,7 @@ const DropDownButton = ({
       {...props}
     >
       {/* On desktop the focus box goes around the chevron rather than the whole button. */}
-      <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus-visible:border-white lg:group-focus-visible:rounded-lg lg:group-focus-visible:outline-3 lg:group-focus-visible:outline-offset-2 lg:group-focus-visible:outline-digital-blue lg:group-hocus-visible:border-archway">
+      <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus-visible:border-white lg:group-focus-visible:focus-ring-box lg:group-focus-visible:outline-offset-2 lg:group-hocus-visible:border-archway">
         <ChevronDownIcon
           className={cn("mx-auto text-white transition-all lg:text-black-true", {"-scale-y-100": isOpen})}
           height={40}

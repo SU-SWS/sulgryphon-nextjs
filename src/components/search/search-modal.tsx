@@ -19,14 +19,14 @@ const SearchModal = () => {
     <>
       <Link
         href="/all"
-        className="group block aspect-square rounded-full bg-digital-red p-5 transition-colors focus-visible:focus-ring-pill active:bg-black-true hocus:bg-digital-red-dark"
+        className="group block aspect-square rounded-full bg-digital-red p-5 transition-colors focus-visible:focus-ring-pill active:bg-black-true hocus-visible:bg-digital-red-dark"
         onClick={toggleModal}
         aria-haspopup="dialog"
         prefetch={false}
       >
         <MagnifyingGlassIcon
           width={30}
-          className="-mt-1 border-b border-transparent p-4 text-white group-active:border-transparent group-hocus:border-white"
+          className="-mt-1 border-b border-transparent p-4 text-white group-active:border-transparent group-hocus-visible:border-white"
         />
         <span className="sr-only">Search</span>
       </Link>
