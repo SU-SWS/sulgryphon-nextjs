@@ -11,7 +11,8 @@
   - Sizes use the spacing scale (`--spacing(3)` = 0.3rem), so focus rings scale with the text like everything else.
 
   Each link and button pattern is one utility with its states nested, so a component uses a single class
-  (`link-cta`, `btn-primary`) and the states can't drift between copies. Don't combine one with a color, background,
+  (`link-cta`, `btn-primary`) and the states can't drift between copies. Each one fades its colors
+  (transition-colors, 250ms: Decanter 8's --default-transition-duration), as the links and buttons did on 1.x. Don't combine one with a color, background,
   border or underline utility: both live in the utilities layer, so the result would depend on source order.
   (cn() treats the btn-* and link-* utilities as one group, so a later one replaces an earlier one, but it doesn't
   know which color or border utilities each one sets.) Sizing, spacing and layout classes are fine.
@@ -84,9 +85,10 @@
 }
 
 /*
-  Pill buttons. Each utility sets only colors, borders, underline and states; size, padding and shape stay with the
-  caller (or Decanter's .button). Hover and keyboard focus darken the fill and underline the text, focus adds the
-  focus-ring-pill ring, and active (pressed) is black.
+  Pill buttons. Each utility sets only colors, borders, underline and states, and fades the color changes
+  (transition-colors, through btn-base); size, padding and shape stay with the caller (or Decanter's .button). Hover
+  and keyboard focus darken the fill and underline the text, focus adds the focus-ring-pill ring, and active
+  (pressed) is black with no underline.
 
   - btn-primary: filled Digital Red.
   - btn-secondary: white with a Digital Red border and text.
@@ -170,6 +172,7 @@
   &:active {
     background-color: var(--color-black-true);
     color: var(--color-white);
+    text-decoration-line: none;
   }
 }
 
@@ -222,7 +225,12 @@
 
 /* The box shared by link-inline and link-on-dark: sizing, hover/focus fill and the focus ring. */
 @utility link-box {
-  @apply box-decoration-clone;
+  @apply box-decoration-clone transition-colors;
+  /*
+    Transparent before focus as well as during it. transition-colors includes outline-color, so starting from the
+    base-layer Digital Blue would flash a blue ring that fades to the transparent focus outline.
+  */
+  outline-color: transparent;
   margin-inline: --spacing(-4);
   padding-inline: --spacing(4);
 
@@ -275,6 +283,7 @@
 
 /* Call to action link (blue, with a chevron). */
 @utility link-cta {
+  @apply transition-colors;
   display: inline-block;
   position: relative;
   color: var(--color-digital-blue);
@@ -317,6 +326,7 @@
 
 /* Card headline link. */
 @utility link-card {
+  @apply transition-colors;
   display: inline-block;
   /*
    * Room for the focus frame at the sides, cancelled by the negative margin so the text doesn't move. link-cta draws
@@ -353,6 +363,7 @@
 
 /* Header utility links (Contact Us, My Account, ...). */
 @utility link-utility {
+  @apply transition-colors;
   color: var(--color-black);
   font-weight: var(--font-weight-normal);
   text-decoration-line: none;
@@ -376,6 +387,15 @@
 
 /* "Close" button on the black modal overlays. */
 @utility link-close {
+  @apply transition-colors;
+  /*
+    transition-colors' list plus box-shadow, so the Black-10 halo fades in with the fill instead of showing as a ring
+    around a lighter centre. Duration and easing stay transition-colors'. outline-color doesn't change (the
+    base-layer rule sets it to Digital Blue before focus), so the focus outline still appears at full color.
+  */
+  transition-property:
+    color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from,
+    --tw-gradient-via, --tw-gradient-to, box-shadow;
   color: var(--color-white);
   text-decoration-line: none;
 

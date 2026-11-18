@@ -106,9 +106,17 @@
   list item stayed 0). In v4 every utility beats every base rule. Re-declaring them in the utilities
   layer lets specificity decide again: `.text-white` still loses, `hover:text-white` still wins.
   Only keyboard focus changes the color, so a link clicked with the mouse keeps its own color.
+  Hover is guarded by (hover: hover), like Tailwind's hover: variant and the btn-* and link-* utilities. On a touch
+  screen the browser keeps :hover on a link after a tap, and since those utilities' own hover rules don't apply
+  there, this rule would turn their text black.
 */
 @layer utilities {
-  a:hover,
+  @media (hover: hover) {
+    a:hover {
+      color: var(--color-black);
+    }
+  }
+
   a:focus-visible {
     color: var(--color-black);
   }
