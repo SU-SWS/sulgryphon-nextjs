@@ -51,7 +51,7 @@ const RootLayout = ({children, modal}: {children: ReactNode; modal: ReactNode}) 
           <DrupalWindowSync />
         </Suspense>
         <nav aria-label="Skip link">
-          <a className="skiplink" href="#main-content">
+          <a className="skiplink hover:text-white focus-visible:text-white" href="#main-content">
             Skip to main content
           </a>
         </nav>
