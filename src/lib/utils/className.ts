@@ -9,7 +9,7 @@ const textClasses = Array.from({length: 20}, (_, i) => `text-${i + 11}`)
 
 const typographyClasses = [...textClasses, ...typeClasses]
 
-const customTwMerge = extendTailwindMerge({
+const customTwMerge = extendTailwindMerge<"interactive">({
   extend: {
     classGroups: {
       "font-size": typographyClasses,
@@ -31,6 +31,16 @@ const customTwMerge = extendTailwindMerge({
       py: [(value: string) => value.startsWith("rs-py-")],
       ps: [(value: string) => value.startsWith("rs-ps-")],
       pe: [(value: string) => value.startsWith("rs-pe-")],
+      // The link and button state utilities in src/styles/interactive.css. Each sets colors, background, border
+      // and underline for every state, so a later one replaces an earlier one. They still shouldn't be combined
+      // with color, background, border or underline utilities: tailwind-merge doesn't know which of those each one
+      // sets, so it keeps both. (focus-ring-pill and focus-ring-box only draw a ring, so they aren't in the group.)
+      interactive: [
+        (value: string) =>
+          /^(btn-(base|fill-red-dark|primary|secondary|primary-on-dark|secondary-on-dark|outline-on-dark)|link-(box|inline|on-dark|cta|card|utility|close))$/.test(
+            value
+          ),
+      ],
     },
   },
 })

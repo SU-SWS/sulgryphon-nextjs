@@ -7,10 +7,7 @@ const StanfordEventSeriesCard = ({node, ...props}: {node: NodeStanfordEventSerie
     <article {...props}>
       <Card
         header={
-          <Link
-            className="text-black underline active:text-digital-red active:no-underline hocus:text-brick-dark hocus:no-underline"
-            href={node.path || "#"}
-          >
+          <Link className="link-card" href={node.path || "#"}>
             {node.title}
           </Link>
         }

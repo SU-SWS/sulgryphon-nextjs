@@ -4,6 +4,7 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import {getDateString, getTimeString} from "@/lib/getDateTime"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 interface Props {
   node: NodeStanfordEvent
@@ -41,10 +42,7 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         <div className="flex flex-col items-start gap-xs">
           <div className="mb-5 flex flex-col">
             <HeadingElement className="order-2 text-18 font-bold tracking-[-0.2px] sm:text-20">
-              <Link
-                href={goToUrl}
-                className="stretched-link text-black-true no-underline hocus:text-brick-dark hocus:underline"
-              >
+              <Link href={goToUrl} className="stretched-link link-card">
                 {node.title}
               </Link>
             </HeadingElement>
@@ -72,10 +70,11 @@ const StanfordEventCard = ({node, h3Heading, ...props}: Props) => {
         )}
 
         {node.suEventMapLink?.url && (
-          <div className="flex text-16 sm:text-18">
-            <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
-            <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")}>
-              {node.suEventAltLoc || node.suEventMapLink?.title}
+          <div className="text-16 sm:text-18">
+            <Link href={node.suEventMapLink?.url.replaceAll(" ", "%20")} className="link-cta font-semibold">
+              <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={20} className="mr-20" />}>
+                {node.suEventAltLoc || node.suEventMapLink?.title}
+              </IconLinkContent>
             </Link>
           </div>
         )}

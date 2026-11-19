@@ -32,11 +32,11 @@ const Header = async () => {
             <nav className="hidden lg:block" aria-label="User links">
               <ul className="list-unstyled flex items-baseline gap-24">
                 <li className="flex shrink-0 items-start">
-                  <Link className="text-16 font-normal text-black" href="https://searchworks.stanford.edu/">
+                  <Link className="link-utility text-16" href="https://searchworks.stanford.edu/">
                     SearchWorks Catalog
                   </Link>
                   <Link
-                    className="ml-10 border-l border-black pl-10 text-16 font-normal text-black"
+                    className="ml-10 link-utility border-l border-black pl-10 text-16"
                     href="https://searchworks.stanford.edu/articles"
                   >
                     Articles+
@@ -47,7 +47,7 @@ const Header = async () => {
                 <li>
                   <Link
                     href="/support-stanford-libraries"
-                    className="cta-button group mt-0 block w-fit rounded-full bg-digital-red px-16 py-6 text-16 leading-normal font-normal whitespace-nowrap text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true hocus:text-white hocus:underline"
+                    className="cta-button group mt-0 block w-fit rounded-full btn-primary px-16 py-6 text-16 leading-normal font-normal whitespace-nowrap"
                   >
                     Donate now
                   </Link>
@@ -67,7 +67,7 @@ const Header = async () => {
 const HeaderLink = ({href, text}: {href: string; text: string}) => {
   return (
     <li>
-      <Link className="text-16 font-normal text-nowrap text-black" href={href}>
+      <Link className="link-utility text-16 text-nowrap" href={href}>
         {text}
       </Link>
     </li>

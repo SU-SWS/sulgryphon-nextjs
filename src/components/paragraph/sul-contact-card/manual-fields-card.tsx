@@ -51,10 +51,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
                     {paragraph.sulContactHours && paragraph.sulContactLink?.url && <span className="mx-5">/</span>}
 
                     {paragraph.sulContactLink?.url && (
-                      <Link
-                        className="font-normal text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
-                        href={paragraph.sulContactLink?.url}
-                      >
+                      <Link className="link-on-dark font-normal" href={paragraph.sulContactLink?.url}>
                         {paragraph.sulContactLink?.title}
                       </Link>
                     )}
@@ -72,10 +69,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
               {paragraph.sulContactEmail && (
                 <div className="relative rs-mb-0 flex flex-row items-center type-1">
                   <EnvelopeIcon title="Email" width={19} className="mt-02em mr-12 shrink-0" />
-                  <EmailLink
-                    email={paragraph.sulContactEmail}
-                    className="font-normal wrap-anywhere text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
-                  />
+                  <EmailLink email={paragraph.sulContactEmail} className="link-on-dark font-normal wrap-anywhere" />
                 </div>
               )}
 
@@ -84,10 +78,7 @@ const ManualFieldsCard = ({paragraph}: Props) => {
                   <MapPinIcon title="Location" width={19} className="mr-12 shrink-0" />
 
                   {paragraph.sulContactMapLink?.url && (
-                    <Link
-                      href={paragraph.sulContactMapLink.url}
-                      className="font-normal text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
-                    >
+                    <Link href={paragraph.sulContactMapLink.url} className="link-on-dark font-normal">
                       {addressString}
                     </Link>
                   )}

@@ -10,6 +10,7 @@ import {Table, Thead, Tbody, Tr, Th, Td} from "@/components/patterns/responsive-
 import {useId, useRef, useState} from "react"
 import {MagnifyingGlassIcon} from "@heroicons/react/24/solid"
 import ToggleOption from "@/components/patterns/toggle-option"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 export type TablePerson = {
   uuid: NodeStanfordPerson["uuid"]
@@ -169,11 +170,7 @@ const SulPeopleTableView = ({items}: Props) => {
                   className="block w-auto px-0 text-center sm:p-0 md:text-left lg:table-cell lg:w-1/4 lg:py-16 lg:pr-72"
                 >
                   {item.title && (
-                    <Link
-                      prefetch={false}
-                      href={item.path || "#"}
-                      className="mb-16 inline-block text-digital-blue no-underline hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red hocus:underline"
-                    >
+                    <Link prefetch={false} href={item.path || "#"} className="link-cta mb-16">
                       <span className="mb-0 font-sans text-20 font-semibold" id={item.uuid}>
                         {item.title}
                       </span>
@@ -197,10 +194,11 @@ const SulPeopleTableView = ({items}: Props) => {
                       <Link
                         href={`mailto:${item.email}`}
                         prefetch={false}
-                        className="text-16 leading-cozy font-normal whitespace-nowrap text-digital-blue underline transition-colors hover:bg-black-10 hover:text-brick-dark focus:bg-none focus:text-cardinal-red active:text-cardinal-red"
+                        className="link-cta text-16 leading-cozy font-normal whitespace-nowrap"
                       >
-                        <EnvelopeIcon title="Email" width={20} className="mr-6 inline-block" />
-                        {item.email}
+                        <IconLinkContent icon={<EnvelopeIcon aria-hidden="true" width={20} className="mr-6" />}>
+                          {item.email}
+                        </IconLinkContent>
                       </Link>
                     </div>
                   )}

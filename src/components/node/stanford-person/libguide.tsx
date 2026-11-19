@@ -69,7 +69,7 @@ export const LibGuideSection = ({heading, guides}: {heading: string; guides: Lib
 
       {moreGuides.length > 0 && (
         <button
-          className="button mt-20 block"
+          className="button mt-20 block btn-primary"
           ref={buttonRef}
           onClick={() => setShowMore(!showMore)}
           aria-expanded={!showMore}

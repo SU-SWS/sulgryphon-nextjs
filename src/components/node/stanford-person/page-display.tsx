@@ -14,6 +14,7 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import NodePageMetadata from "@/components/node/node-page-metadata"
 import {getCleanDescription} from "@/lib/text-tools"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
   const libGuides = node.sulPersonLibguideId
@@ -140,27 +141,42 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
               <h2 className="text-24">Contact</h2>
               <ul className="list-none p-0 *:mb-[0.4rem] *:last:mb-0">
                 {node.suPersonTelephone && (
-                  <li className="flex flex-row items-center">
-                    <PhoneIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
-                    <NumberLink tel={node.suPersonTelephone} />
+                  <li>
+                    <NumberLink
+                      tel={node.suPersonTelephone}
+                      label="Phone: "
+                      icon={<PhoneIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold"
+                    />
                   </li>
                 )}
                 {node.suPersonMobilePhone && (
-                  <li className="flex flex-row items-center">
-                    <DevicePhoneMobileIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
-                    <NumberLink tel={node.suPersonMobilePhone} />
+                  <li>
+                    <NumberLink
+                      tel={node.suPersonMobilePhone}
+                      label="Mobile: "
+                      icon={<DevicePhoneMobileIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold"
+                    />
                   </li>
                 )}
                 {node.suPersonFax && (
-                  <li className="flex flex-row items-center">
-                    <PrinterIcon title="Phone" width={24} className="mr-4 text-digital-blue" />
-                    <NumberLink tel={node.suPersonFax} />
+                  <li>
+                    <NumberLink
+                      tel={node.suPersonFax}
+                      label="Fax: "
+                      icon={<PrinterIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold"
+                    />
                   </li>
                 )}
                 {node.suPersonEmail && (
-                  <li className="flex flex-row items-center">
-                    <EnvelopeIcon title="Email" width={24} className="mr-4 text-digital-blue" />
-                    <EmailLink className="wrap-anywhere" email={node.suPersonEmail} />
+                  <li>
+                    <EmailLink
+                      email={node.suPersonEmail}
+                      icon={<EnvelopeIcon aria-hidden="true" width={24} className="mr-4" />}
+                      className="link-cta font-semibold wrap-anywhere"
+                    />
                   </li>
                 )}
                 {node.suPersonMailCode && <li>Mail Code: {node.suPersonMailCode}</li>}
@@ -177,10 +193,11 @@ const StanfordPerson = async ({node, ...props}: {node: NodeStanfordPerson}) => {
               )}
 
               {node.suPersonMapUrl?.url && (
-                <div className="flex flex-row items-center">
-                  <MapIcon title="Location" width={24} className="mr-4 text-digital-blue" />
-                  <Link href={node.suPersonMapUrl.url} className="text-16 md:text-18">
-                    Map
+                <div>
+                  <Link href={node.suPersonMapUrl.url} className="link-cta text-16 font-semibold md:text-18">
+                    <IconLinkContent icon={<MapIcon aria-hidden="true" width={24} className="mr-4" />}>
+                      Map
+                    </IconLinkContent>
                   </Link>
                 </div>
               )}

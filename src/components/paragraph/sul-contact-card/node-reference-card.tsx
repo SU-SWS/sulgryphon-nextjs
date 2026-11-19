@@ -46,12 +46,13 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
         <div className="card-body grow items-start bg-black-true rs-py-4 rs-px-2">
           <div className="pt-0 text-18 leading-display font-normal">
             {contactBranch?.path ? (
-              <Link
-                href={contactBranch?.path}
-                className="text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
-              >
-                <h2 className="rs-mb-1 type-2">{contactBranch?.title}</h2>
-              </Link>
+              // The link goes inside the heading: link-on-dark is inline, so around a block its box splits and the
+              // hover box and focus ring land on empty fragments above and below the text.
+              <h2 className="rs-mb-1 type-2">
+                <Link href={contactBranch.path} className="link-on-dark">
+                  {contactBranch.title}
+                </Link>
+              </h2>
             ) : (
               <h2 className="rs-mb-1 type-2 text-white">{paragraph.sulContactTitle}</h2>
             )}
@@ -71,10 +72,7 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
               {contactBranch?.suLibraryEmail && (
                 <div className="relative rs-mb-0 flex flex-row items-center type-0">
                   <EnvelopeIcon title="Email" width={19} className="mt-02em mr-12 shrink-0" />
-                  <EmailLink
-                    email={contactBranch?.suLibraryEmail}
-                    className="font-normal wrap-anywhere text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
-                  />
+                  <EmailLink email={contactBranch?.suLibraryEmail} className="link-on-dark font-normal wrap-anywhere" />
                 </div>
               )}
 
@@ -83,10 +81,7 @@ const NodeReferenceCard = async ({paragraph}: Props) => {
                   <MapPinIcon title="Location" width={19} className="mt-01em mr-12 shrink-0 md:mt-0" />
 
                   {contactBranch?.suLibraryMapLink?.url ? (
-                    <Link
-                      href={contactBranch?.suLibraryMapLink.url}
-                      className="font-normal text-white underline active:text-digital-red-light hocus:text-illuminating-dark hocus:no-underline"
-                    >
+                    <Link href={contactBranch?.suLibraryMapLink.url} className="link-on-dark font-normal">
                       <div>{addressString}</div>
                     </Link>
                   ) : (

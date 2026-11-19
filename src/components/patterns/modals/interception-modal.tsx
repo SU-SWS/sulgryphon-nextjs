@@ -40,7 +40,7 @@ const InterceptionModal = ({children, ...props}: HTMLAttributes<HTMLDialogElemen
       {...props}
     >
       <ReactFocusLock returnFocus>
-        <button type="button" onClick={onDismiss} className="fixed top-50 right-50 flex text-white hocus:underline">
+        <button type="button" onClick={onDismiss} className="fixed top-50 right-50 flex link-close">
           Close<span className="sr-only"> Overlay</span>
           <XMarkIcon className="ml-5" width={25} />
         </button>

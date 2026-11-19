@@ -183,7 +183,7 @@ const Results = () => {
           {!isLastPage && (
             <button
               type="button"
-              className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full bg-digital-red px-26 pt-10 pb-11 text-16 leading-display font-semibold text-white no-underline transition-colors hover:bg-cardinal-red-dark focus:bg-black-true active:bg-black-true disabled:opacity-50 md:text-18 hocus:text-white hocus:underline"
+              className="cta-button group mx-auto rs-mt-neg1 block w-fit rounded-full btn-primary px-26 pt-10 pb-11 text-16 leading-display font-semibold disabled:opacity-50 md:text-18"
               disabled={pending}
               aria-disabled={pending}
               onClick={() => {

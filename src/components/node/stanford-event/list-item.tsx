@@ -4,6 +4,7 @@ import Image from "next/image"
 import {buildUrl} from "@/lib/drupal/utils"
 import {NodeStanfordEvent} from "@/lib/gql/__generated__/graphql"
 import {getDateString, getTimeString} from "@/lib/getDateTime"
+import IconLinkContent from "@/components/patterns/elements/icon-link-content"
 
 interface Props {
   node: NodeStanfordEvent
@@ -21,6 +22,8 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
   const imageUrl = node.sulEventImage?.mediaImage.url
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
+  const locationUrl = node.suEventMapLink?.url || node.sulEventAltLocLink?.url
+  const locationText = node.suEventMapLink?.url ? node.suEventAltLoc || node.suEventMapLink.title : node.suEventAltLoc
 
   return (
     <article {...props} className="@container mx-auto flex flex-col gap-16 sm:flex-row">
@@ -39,7 +42,7 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
       <div className="flex flex-col items-start">
         <div className="mb-5 flex flex-col">
           <HeadingElement className="order-2 mb-0 text-18 font-bold tracking-[-0.2px] sm:text-20">
-            <Link href={goToUrl} className="text-black-true no-underline hocus:text-brick-dark hocus:underline">
+            <Link href={goToUrl} className="link-card">
               {node.title}
             </Link>
           </HeadingElement>
@@ -64,21 +67,21 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
           )}
 
           {(node.suEventMapLink?.url || node.suEventAltLoc) && (
-            <div className="flex text-16 sm:text-18">
-              <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
-
-              {/* Localist Map link */}
-              {node.suEventMapLink?.url && (
-                <Link href={node.suEventMapLink.url}>{node.suEventAltLoc || node.suEventMapLink.title}</Link>
+            <div className="text-16 sm:text-18">
+              {/* Localist map link, else the alternative link. The icon goes inside the link to share its states. */}
+              {locationUrl ? (
+                <Link href={locationUrl} className="link-cta font-semibold">
+                  <IconLinkContent icon={<MapPinIcon aria-hidden="true" width={20} className="mr-20" />}>
+                    {locationText}
+                  </IconLinkContent>
+                </Link>
+              ) : (
+                // Plain text
+                <div className="flex">
+                  <MapPinIcon title="Location" width={20} className="mr-20 shrink-0" />
+                  <span>{node.suEventAltLoc}</span>
+                </div>
               )}
-
-              {/* Alternative link */}
-              {!node.suEventMapLink?.url && node.sulEventAltLocLink?.url && (
-                <Link href={node.sulEventAltLocLink?.url}>{node.suEventAltLoc}</Link>
-              )}
-
-              {/* Plain text */}
-              {!node.suEventMapLink?.url && !node.sulEventAltLocLink?.url && <span>{node.suEventAltLoc}</span>}
             </div>
           )}
 

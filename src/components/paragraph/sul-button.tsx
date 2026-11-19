@@ -72,7 +72,7 @@ const SulButton = ({headerId, headline, link, styles, fullWidth, ...props}: Prop
             <Link
               href={link.url}
               className={cn("mx-auto block w-fit text-center", {
-                button: !isCtaVariant,
+                "button btn-primary": !isCtaVariant,
                 group: isCtaVariant,
               })}
               {...linkAttributes}

@@ -72,10 +72,7 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
           <input {...inputProps} ref={inputRef} />
         </div>
         <HoneypotField ref={honeypotRef} />
-        <button
-          type="submit"
-          className="rounded-full bg-digital-red p-15 text-16 text-white transition hover:bg-cardinal-red-dark md:text-18 hocus:underline"
-        >
+        <button type="submit" className="rounded-full btn-primary p-15 text-16 md:text-18">
           Search
         </button>
       </form>

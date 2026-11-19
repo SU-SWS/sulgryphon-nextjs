@@ -53,11 +53,7 @@ const Modal = ({children, isOpen, onClose, labelledBy}: ModalProps) => {
         >
           <div className={"pointer-events-auto absolute h-full w-screen basefont-19"}>
             <div>
-              <button
-                type="button"
-                onClick={onClose}
-                className={"absolute top-50 right-50 flex text-white hocus:underline"}
-              >
+              <button type="button" onClick={onClose} className="absolute top-50 right-50 flex link-close">
                 Close<span className="sr-only"> Overlay</span>
                 <XMarkIcon className="mt-[-3px] ml-10" width={25} />
               </button>

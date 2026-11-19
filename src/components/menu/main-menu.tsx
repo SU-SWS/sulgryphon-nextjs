@@ -94,7 +94,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
             <ul className="list-unstyled @container flex flex-wrap items-center gap-10">
               <li className="m-0">
                 <Link
-                  className="text-white no-underline @sm:border-r @sm:border-white @sm:pr-10 hocus:text-white hocus:underline"
+                  className="link-on-dark @sm:border-r @sm:border-white @sm:pr-10"
                   href="https://searchworks.stanford.edu/"
                   onClick={() =>
                     trackMenuClick({
@@ -109,7 +109,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 text-white no-underline hocus:text-white hocus:underline"
+                  className="link-on-dark mr-20"
                   href="https://searchworks.stanford.edu/articles"
                   onClick={() =>
                     trackMenuClick({
@@ -124,7 +124,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 text-white no-underline hocus:text-white hocus:underline"
+                  className="link-on-dark mr-20"
                   href="https://mylibrary.stanford.edu/"
                   onClick={() =>
                     trackMenuClick({
@@ -139,7 +139,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 text-white no-underline hocus:text-white hocus:underline"
+                  className="link-on-dark mr-20"
                   href="/all"
                   prefetch={false}
                   onClick={() =>
@@ -155,7 +155,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 text-white no-underline hocus:text-white hocus:underline"
+                  className="link-on-dark mr-20"
                   href="/library-accessibility"
                   onClick={() =>
                     trackMenuClick({
@@ -170,7 +170,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="mr-20 text-white no-underline hocus:text-white hocus:underline"
+                  className="link-on-dark mr-20"
                   href="/contact-us"
                   onClick={() =>
                     trackMenuClick({
@@ -185,7 +185,7 @@ const MainMenu = ({menuItems}: {menuItems: MenuItemType[]}) => {
               </li>
               <li className="m-0">
                 <Link
-                  className="text-white no-underline hocus:text-white hocus:underline"
+                  className="link-on-dark"
                   href="/support-stanford-libraries"
                   onClick={() =>
                     trackMenuClick({
@@ -254,7 +254,7 @@ const MenuItem = ({
         classes.push("after:absolute")
         classes.push("after:bottom-0")
         classes.push("after:left-20")
-        classes.push("lg:after:bg-cardinal-red")
+        classes.push("lg:after:bg-digital-red")
         classes.push("after:h-[4px]")
         classes.push(belowItems.length > 0 ? "after:w-[calc(100%-60px)]" : "after:w-[calc(100%-40px)]")
       }
@@ -294,14 +294,29 @@ const MenuItem = ({
           href={url.length >= 1 ? url : "#"}
           onClick={handleMenuClick}
           className={cn(
-            "flex w-full items-center p-20 text-white no-underline lg:text-black-true hocus:text-white hocus:underline",
-            "lg:hocus:text-archway",
-            {"lg:hocus:bg-black-10": menuLevel > 0},
+            "group/navlink flex w-full items-center p-20 text-white no-underline focus-visible:-outline-offset-4 lg:text-black-true hocus-visible:text-white hocus-visible:underline",
+            "lg:hocus-visible:text-archway",
+            {
+              "lg:hocus-visible:bg-black-10": menuLevel > 0,
+              // The focus box goes around the label (below), not the padded link.
+              "lg:focus-visible:outline-hidden": menuLevel == 0,
+            },
             getLinkBorderClasses()
           )}
           aria-current={activeTrail.at(-1) === id ? "page" : undefined}
         >
-          <div className={cn("w-full shrink-0 pl-30 text-nowrap lg:pl-0", titleSpacing[menuLevel])}>{title}</div>
+          <div
+            className={cn(
+              "w-full shrink-0 pl-30 text-nowrap lg:pl-0",
+              {
+                "lg:group-focus-visible/navlink:focus-ring-box lg:group-focus-visible/navlink:outline-offset-4":
+                  menuLevel == 0,
+              },
+              titleSpacing[menuLevel]
+            )}
+          >
+            {title}
+          </div>
         </Link>
       )}
 
@@ -309,7 +324,7 @@ const MenuItem = ({
         <button
           tabIndex={tabIndex}
           className={cn(
-            "group flex w-full items-center p-20 text-left font-semibold text-white lg:text-black-true hocus:bg-black hocus:text-white lg:hocus:bg-transparent lg:hocus:text-archway",
+            "group flex w-full items-center p-20 text-left font-semibold text-white focus-visible:-outline-offset-4 lg:text-black-true hocus-visible:bg-black hocus-visible:text-white lg:hocus-visible:bg-transparent lg:hocus-visible:text-archway",
             getLinkBorderClasses()
           )}
           onClick={toggleSubmenu}
@@ -358,21 +373,21 @@ const MenuItem = ({
 
 const MobileOpenMenuButtonIcon = ({open, addCloseAnimation}: {open: boolean; addCloseAnimation: boolean}) => {
   return (
-    <span className="mx-auto block w-[30px]">
+    <span className="mx-auto block w-30">
       <span
-        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+        className={cn("mb-5 block h-5 w-full rounded-full bg-black", {
           "animate-menu-x-morph-a": open,
           "animate-menu-x-morph-r-a": !open && addCloseAnimation,
         })}
       />
       <span
-        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+        className={cn("mb-5 block h-5 w-full rounded-full bg-black", {
           "animate-menu-x-morph-b": open,
           "animate-menu-x-morph-r-b": !open && addCloseAnimation,
         })}
       />
       <span
-        className={cn("mb-[5px] block h-[5px] w-full rounded-full bg-black", {
+        className={cn("mb-5 block h-5 w-full rounded-full bg-black", {
           "animate-menu-x-morph-c": open,
           "animate-menu-x-morph-r-c": !open && addCloseAnimation,
         })}
@@ -397,18 +412,16 @@ const DropDownButton = ({
   return (
     <button
       className={cn(
-        "group absolute top-0 right-0 z-20 h-[68px] w-[70px] bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-[30px] hover:after:content-[''] lg:relative lg:h-auto",
-        {"lg:bg-fog-light": menuLevel >= 1, "lg:w-[40px] lg:bg-transparent": menuLevel < 1}
+        "group absolute top-0 right-0 z-20 h-68 w-70 bg-black after:absolute after:bottom-25 after:left-5 after:block after:h-1 after:w-30 hover:after:content-[''] focus-visible:-outline-offset-4 lg:relative lg:h-auto lg:focus-visible:outline-hidden",
+        {"lg:bg-fog-light": menuLevel >= 1, "lg:w-40 lg:bg-transparent": menuLevel < 1}
       )}
       onClick={onButtonClick}
       {...props}
     >
-      <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus:border-white lg:group-hocus:border-archway">
+      {/* On desktop the focus box goes around the chevron rather than the whole button. */}
+      <span className="mx-auto block w-fit border-b-2 border-transparent transition group-hocus-visible:border-white lg:group-focus-visible:focus-ring-box lg:group-focus-visible:outline-offset-2 lg:group-hocus-visible:border-archway">
         <ChevronDownIcon
-          className={cn(
-            "mx-auto text-white transition-all lg:text-black-true lg:group-hocus:text-archway",
-            isOpen && "scale-y-[-1]"
-          )}
+          className={cn("mx-auto text-white transition-all lg:text-black-true", {"-scale-y-100": isOpen})}
           height={40}
         />
       </span>
