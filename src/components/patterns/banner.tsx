@@ -30,7 +30,7 @@ const Banner = ({
   const hasCardText = header || superHeader || body || link
 
   return (
-    <div className="hero @container relative mx-auto h-full w-full lg:max-h-500" {...props}>
+    <div className="hero @container relative mx-auto h-full w-full" {...props}>
       <div className="relative max-h-500 min-h-[30rem] w-full overflow-hidden bg-[grey] @8xl:min-h-[50rem]">
         {image}
       </div>
