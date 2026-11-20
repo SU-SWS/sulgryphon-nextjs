@@ -1,7 +1,7 @@
 "use client"
 
-import {FormEvent, HTMLAttributes, Suspense, useId, useRef} from "react"
-import {useRouter, useSearchParams} from "next/navigation"
+import {HTMLAttributes, SubmitEvent, useEffect, useId, useRef} from "react"
+import {useRouter} from "next/navigation"
 import HoneypotField from "@/components/patterns/elements/honeypot-field"
 
 type FormProps = HTMLAttributes<HTMLDivElement> & {
@@ -9,16 +9,7 @@ type FormProps = HTMLAttributes<HTMLDivElement> & {
   inputProps?: Omit<HTMLAttributes<HTMLInputElement>, "ref">
 }
 
-const SearchForm = ({...props}: FormProps) => {
-  return (
-    <Suspense fallback={<></>}>
-      <SearchFormComponent {...props} />
-    </Suspense>
-  )
-}
-
-const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: FormProps) => {
-  const params = useSearchParams()
+const SearchForm = ({action = "/search", inputProps = {}, ...props}: FormProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const inputId = useId()
   const honeypotRef = useRef<HTMLInputElement>(null)
@@ -28,14 +19,20 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
     // @ts-expect-error Placeholder does exist on an input element.
     placeholder: "Search",
     name: "q",
-    ref: useRef(undefined),
-    defaultValue: (params ? params.get("q") : "") as string,
     ...inputProps,
   }
 
+  // Prefill the current search from `?q=` once hydrated. Reading `useSearchParams()` during render would bail the form
+  // (and the main menu around it) out of the static prerender: React then renders it client side only, and the
+  // prerendered HTML closes </body></html> before Next's own scripts.
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search).get("q")
+    if (query && inputRef.current && !inputRef.current.value) inputRef.current.value = query
+  }, [])
+
   const router = useRouter()
 
-  const formSubmit = (e: FormEvent) => {
+  const formSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     // Bot trap: a human never fills the visually/SR-hidden honeypot field.
     // A populated value means an automated submission — block it before it
     // reaches the external /all (discover.stanford.edu) app.
@@ -64,11 +61,9 @@ const SearchFormComponent = ({action = "/search", inputProps = {}, ...props}: Fo
         onSubmit={formSubmit}
       >
         <div className="grow">
-          {/* eslint-disable-next-line react-hooks/refs */}
           <label className="mb-2 text-white" htmlFor={inputProps.id}>
             Keyword Search
           </label>
-          {/* eslint-disable-next-line react-hooks/refs */}
           <input {...inputProps} ref={inputRef} />
         </div>
         <HoneypotField ref={honeypotRef} />

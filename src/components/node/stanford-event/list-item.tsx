@@ -22,7 +22,8 @@ const StanfordEventListItem = ({node, h3Heading, ...props}: Props) => {
 
   const imageUrl = node.sulEventImage?.mediaImage.url
   const goToUrl = (node.suEventSource?.url || node.path || "#").replaceAll(" ", "%20")
-  const locationUrl = node.suEventMapLink?.url || node.sulEventAltLocLink?.url
+  // Localist sends the address with raw spaces, which aren't valid in a url.
+  const locationUrl = (node.suEventMapLink?.url || node.sulEventAltLocLink?.url)?.replaceAll(" ", "%20")
   const locationText = node.suEventMapLink?.url ? node.suEventAltLoc || node.suEventMapLink.title : node.suEventAltLoc
 
   return (

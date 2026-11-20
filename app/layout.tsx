@@ -40,11 +40,7 @@ export const metadata = {
 
 const RootLayout = ({children, modal}: {children: ReactNode; modal: ReactNode}) => {
   return (
-    <html
-      lang="en"
-      className={twJoin(sourceSans3.className, stanford.variable, "scroll-smooth")}
-      data-scroll-behavior="smooth"
-    >
+    <html lang="en" className={twJoin(sourceSans3.className, stanford.variable)} data-scroll-behavior="smooth">
       <body>
         {/* Reads the pathname, which isn't known for every route at build time. */}
         <Suspense>

@@ -54,7 +54,7 @@ export const SulHomeBannerFormClient = () => {
 
   // Google Analytics: Track the selected search option when the user submits the form.
   // Helps measure actual search behavior by logging which resource option was used.
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     // Bot trap: a human never fills the visually/SR-hidden honeypot field.

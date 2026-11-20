@@ -1,4 +1,4 @@
-import {FormEvent, HTMLAttributes} from "react"
+import {ChangeEvent, HTMLAttributes} from "react"
 import cn from "@/lib/utils/className"
 import {CheckIcon} from "@heroicons/react/16/solid"
 
@@ -13,7 +13,7 @@ const ToggleOption = ({
 }: HTMLAttributes<HTMLLabelElement> & {
   name: string
   checked: boolean
-  onChange: (_e: FormEvent<HTMLInputElement>) => void
+  onChange: (_e: ChangeEvent<HTMLInputElement>) => void
   first?: boolean
   last?: boolean
   defaultChecked?: boolean

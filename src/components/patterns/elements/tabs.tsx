@@ -1,9 +1,8 @@
 "use client"
 
 import {Tabs as BaseTabs, type TabsTab} from "@base-ui/react/tabs"
-import {HTMLAttributes, ReactNode, Suspense, useState} from "react"
+import {HTMLAttributes, ReactNode, useEffect, useState} from "react"
 import cn from "@/lib/utils/className"
-import {useSearchParams} from "next/navigation"
 import {useScreen} from "usehooks-ts"
 
 type TabsProps = Omit<HTMLAttributes<HTMLDivElement>, "defaultValue"> & {
@@ -22,43 +21,28 @@ type TabsProps = Omit<HTMLAttributes<HTMLDivElement>, "defaultValue"> & {
 }
 
 /**
- * The selected tab comes from the URL, which isn't known while the page is prerendered. The fallback
- * renders the default tab so the content is still in the static HTML, then the URL's tab takes over.
+ * The prerendered page shows the default tab. The URL's tab is selected once hydrated: reading
+ * `useSearchParams()` during render would bail the tabs out of the prerender, so they'd be rendered client side only.
  */
-export const Tabs = (props: TabsProps) => (
-  <Suspense fallback={<TabsBase {...props} />}>
-    <TabsFromUrl {...props} />
-  </Suspense>
-)
-
-const TabsFromUrl = ({paramId = "tab", ...props}: TabsProps) => {
-  const paramValue = useSearchParams().get(paramId)
-  return <TabsBase paramId={paramId} paramValue={paramValue} {...props} />
-}
-
-const TabsBase = ({
-  paramId = "tab",
-  paramValue,
-  orientation,
-  defaultTab,
-  children,
-  ...props
-}: TabsProps & {paramValue?: string | null}) => {
+export const Tabs = ({paramId = "tab", orientation, defaultTab, children, ...props}: TabsProps) => {
   const screen = useScreen({initializeWithValue: false})
   const isVertical = (screen && screen.width < 768) || orientation === "vertical"
 
-  // Controlled, and only seeded from the URL. Writing the selection back to the URL re-renders this with a
-  // new param, and Base UI rejects an uncontrolled `defaultValue` that changes after mount.
-  const [activeTab, setActiveTab] = useState<TabsTab.Value>(
-    () => (paramValue && parseInt(paramValue)) || defaultTab || 0
-  )
+  // Controlled, and seeded from the URL once. Base UI rejects an uncontrolled `defaultValue` that changes after mount.
+  const [activeTab, setActiveTab] = useState<TabsTab.Value>(defaultTab || 0)
+
+  useEffect(() => {
+    const urlTab = parseInt(new URLSearchParams(window.location.search).get(paramId) || "")
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- The URL is only readable after hydration.
+    if (urlTab) setActiveTab(urlTab)
+  }, [paramId])
 
   const onValueChange = (value: TabsTab.Value) => {
     setActiveTab(value)
     const params = new URLSearchParams(window.location.search)
     params.delete(paramId)
     if (value) params.set(paramId, `${value}`)
-    // The native History API keeps useSearchParams in sync without fetching the page from the server again.
+    // The native History API updates the URL without fetching the page from the server again.
     window.history.replaceState(null, "", `?${params.toString()}${window.location.hash || ""}`)
   }
 

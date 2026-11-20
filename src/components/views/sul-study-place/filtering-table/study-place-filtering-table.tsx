@@ -111,7 +111,7 @@ const StudyPlaceFilteringTable = ({items}: Props) => {
 
   return (
     <div className="@container">
-      <form onSubmit={e => e.preventDefault()} action="javascript:void(0);">
+      <form onSubmit={e => e.preventDefault()}>
         <fieldset className="text-18">
           <legend className="sr-only">Filter places to study</legend>
           <div className="mb-30 flex w-full flex-col flex-wrap items-center justify-center gap-15 *:w-full *:min-w-[250px] sm:flex-row sm:*:w-fit">

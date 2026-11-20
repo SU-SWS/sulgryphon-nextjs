@@ -1,6 +1,6 @@
 "use client"
 
-import {FormEvent, MouseEvent, RefObject, useEffect, useRef, useState} from "react"
+import {MouseEvent, RefObject, SubmitEvent, useEffect, useRef, useState} from "react"
 import {SignalIcon} from "@heroicons/react/20/solid"
 import SulStudyPlaceCard from "@/components/node/sul-study-place/card"
 import SelectList, {SelectValue} from "@/components/patterns/elements/select-list"
@@ -54,7 +54,7 @@ const StudyPlacesFiltering = ({items}: {items: NodeSulStudyPlace[]}) => {
   capacityOptions = capacityOptions.sort((a, b) => a.label.localeCompare(b.label))
   libraryOptions = libraryOptions.sort((a, b) => a.label.localeCompare(b.label))
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     const filteredItems = items.filter(
       (item: NodeSulStudyPlace) =>

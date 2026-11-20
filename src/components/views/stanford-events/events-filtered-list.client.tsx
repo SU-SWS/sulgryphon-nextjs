@@ -1,6 +1,6 @@
 "use client"
 import {LoadMoreListProps} from "@/components/patterns/load-more-list"
-import {useLayoutEffect, useRef, useId, useState, JSX, FormEvent} from "react"
+import {useLayoutEffect, useRef, useId, useState, JSX, SubmitEvent} from "react"
 import {useBoolean, useCounter} from "usehooks-ts"
 import useServerAction from "@/lib/hooks/useServerAction"
 import useFocusOnRender from "@/lib/hooks/useFocusOnRender"
@@ -84,7 +84,7 @@ const EventsFilteredListClient = ({buttonText, children, ulProps, liProps, total
     }
   }
 
-  const handleSearchSubmit = (e: FormEvent) => {
+  const handleSearchSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     applyFilters(keywordRef.current?.value)
   }

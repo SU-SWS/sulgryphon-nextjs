@@ -52,3 +52,7 @@ lerna-debug.log*
 # Local Netlify folder
 .netlify
 .env*
+
+# accessibility check report (yarn validate:a11y)
+a11y-report.json
+next-start.log
